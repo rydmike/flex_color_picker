@@ -1,3 +1,7 @@
-## [0.0.1] - TODO: Add release date.
+# Changelog
 
-* TODO: Describe initial release.
+All notable changes to the ColorPicker will be documented in this file.
+
+## [1.0.0] - October 29, 2020
+
+* First release on pub.dev

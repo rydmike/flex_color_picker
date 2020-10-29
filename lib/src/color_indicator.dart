@@ -17,7 +17,7 @@ class ColorIndicator extends StatelessWidget {
     this.color = Colors.blue,
     this.width = 40,
     this.height = 40,
-    this.borderRadius = 20,
+    this.borderRadius = 10,
     this.hasBorder = false,
     this.borderColor,
   })  : assert(isSelected != null, 'isSelected cannot be null.'),

@@ -223,7 +223,7 @@ class ColorPicker extends StatefulWidget {
   /// and any. Default includes material and accent.
   final Map<ColorPickerSwatch, bool> swatchAvailable;
 
-  /// A [colorSwatchNameMap] with custom swatches can be provided. It is used
+  /// Color swatch to name map, with custom swatches can be provided. It is used
   /// as swatch selection for the [ColorPickerSwatch.custom] option in the selector.
   final Map<ColorSwatch<Object>, String> colorSwatchNameMap;
 
@@ -244,8 +244,7 @@ class ColorPicker extends StatefulWidget {
   ///
   /// This is often called as
   /// pickedColor = await ColorPicker('constructor values').dialog('dialog parameters'),
-  /// to create a ColorPicker and show it in a dialog in one go and get the picked
-  /// or cancelled color as a result.
+  /// to create a ColorPicker and show it in a dialog in one go.
   ///
   /// The [showPickerDialog] method is a convenience member to show the [ColorPicker]
   /// widget in a modal dialog. It re-implements the standard ´showDialog´ function
@@ -273,17 +272,9 @@ class ColorPicker extends StatefulWidget {
     /// The string value defaults to 'SELECT'.
     String selectLabel,
 
-    /// If true, the dialog can be closed by clicking outside, this will result in
-    /// returning the [color] that the [ColorPicker] widget was created with.
+    /// If true, the dialog can be closed by clicking outside.
     /// Defaults to true.
     bool barrierDismissible = true,
-
-    // In master channel, since version v1.18.1-pre.11, we can now set the
-    // barrier color for the standard showDialog function. Previously this
-    // was not possible and a re-implementation of showDialog that exposed
-    // barrier color from the lower function showGeneralDialog was used.
-    // The old implementation is for now kept in the commented out section
-    // further below.
 
     /// The background transparency color of the dialog barrier.
     /// Defaults to [Colors.black12] which is considerably lighter than the
@@ -291,8 +282,15 @@ class ColorPicker extends StatefulWidget {
     /// on app behind the dialog. If this is not desired, set it back to
     /// [Colors.black54] when you call [showPickerDialog].
     Color barrierColor = Colors.black12,
+
+    /// By default the dialog respects safe are requirements for the device.
     bool useSafeArea = true,
+
+    /// By default we use the root navigator for the dialog, this normally ensures
+    /// that it shows above all other screen items.
     bool useRootNavigator = true,
+
+    /// Route settings for the dialog.
     RouteSettings routeSettings,
 
     /// If you need to you can provide BoxConstraints to constrain the size
@@ -420,11 +418,15 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   void _initSelectedValue(bool isInit) {
-    // Will not force update the saturaton and value on wheel (H)SV part
+    // Will not force update the saturation and value on wheel (H)SV part
     _forcedUpdate = false;
 
     // Set alignment to widget value, but if it is null, set it to center
     _alignment = widget.crossAxisAlignment ?? CrossAxisAlignment.center;
+
+    // If no custom color map is provided (null) we use an empty map.
+    final Map<ColorSwatch<Object>, String> colorsNameMap =
+        widget.colorSwatchNameMap ?? <ColorSwatch<Object>, String>{};
 
     // A map with the color swatch lists for each of the enum values
     _swatchColorLists = <ColorPickerSwatch, List<ColorSwatch<Object>>>{
@@ -432,11 +434,16 @@ class _ColorPickerState extends State<ColorPicker> {
       ColorPickerSwatch.material: ColorTools.primaryColors,
       ColorPickerSwatch.accent: ColorTools.accentColors,
       ColorPickerSwatch.bw: ColorTools.blackAndWhite,
-      ColorPickerSwatch.custom: widget.colorSwatchNameMap.keys.toList(),
+      ColorPickerSwatch.custom: colorsNameMap.keys.toList(),
       ColorPickerSwatch.any: <ColorSwatch<Object>>[
         ColorTools.primarySwatch(_selectedColor)
       ],
     };
+
+    // Set useCustomSwatch to false i no custom data or value for it was provided.
+    bool _useCustomSwatch =
+        widget.swatchAvailable[ColorPickerSwatch.custom] ?? false;
+    if (widget.colorSwatchNameMap == null) _useCustomSwatch = false;
 
     // A map that contains true for each swatch that we are using.
     // This map contains defaults if no value is provided, it makes it
@@ -452,8 +459,7 @@ class _ColorPickerState extends State<ColorPicker> {
           widget.swatchAvailable[ColorPickerSwatch.accent] ?? true,
       ColorPickerSwatch.bw:
           widget.swatchAvailable[ColorPickerSwatch.bw] ?? false,
-      ColorPickerSwatch.custom:
-          widget.swatchAvailable[ColorPickerSwatch.custom] ?? false,
+      ColorPickerSwatch.custom: _useCustomSwatch,
       ColorPickerSwatch.any:
           widget.swatchAvailable[ColorPickerSwatch.any] ?? true,
     };

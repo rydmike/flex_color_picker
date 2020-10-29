@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Color tool functions used e.g. by ColorPicker. The functions are wrapped in
-/// [ColorTools] class to name space them. These color helpers can be used
+/// the [ColorTools] class to name space them. These color helpers can be used
 /// on their own outside the ColorPicker widget if so desired.
-//
+///
 /// There are helpers for:
 /// * Get English names for the colors.
 /// * Find if a color belongs to a color swatch.
@@ -17,7 +17,7 @@ class ColorTools {
   /// A list of the standard Material Primary color swatches.
   ///
   /// This Material colors swatch list also exists in the Flutter
-  /// framework in colors.dart as a static const [Colors.primaries],
+  /// SDK in colors.dart as a static const [Colors.primaries],
   /// but that list excludes grey and we needed that included too,
   /// hence this custom version.
   static const List<ColorSwatch<Object>> primaryColors = <ColorSwatch<Object>>[
@@ -232,7 +232,7 @@ class ColorTools {
     whiteShade: 'White',
   };
 
-  /// A combined list of both color material and accent swatches.
+  /// A combined list of both color material primary and accent swatches.
   ///
   /// Can be used if you want a color picker that mixes and includes both the
   /// the primary material colors and the accent colors in the same picker.
@@ -706,7 +706,7 @@ class ColorTools {
       }
     }
     // If all the above did not yield a name, it has no defined name
-    // so we just return an empty string
+    // then we just return an empty string
     return '';
   }
 

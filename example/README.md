@@ -1,16 +1,16 @@
-# example
+# Flutter ColorPicker Example
 
-A new Flutter project.
+A simple example application using the Flutter ColorPicker package.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To see the example on a device or simulator, clone the ColorPicker repository and run the example:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+cd example/
+flutter run --release
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The result is a basic default picker on the canvas and one picker that opens in the provided dialog, which is configured to have a few more options present.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![ColorPicker Basic](/resources/ColorPickerSimpleDemo.png)

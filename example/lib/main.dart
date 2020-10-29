@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:color_picker/color_picker.dart';
 
 void main() => runApp(const DemoApp());
@@ -9,32 +8,13 @@ class DemoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Make status bar transparent in Android, results in an iPhone like look
-    // when used in combination with the AppBar theme below
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material Color Picker',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Colors.grey[50],
-        // This AppBarTheme setup is part of emulating the light iPhone
-        // appbar look on both Android and iOS, when using Material AppBar
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          // Using a barely transparent white appbar, it is not a frosted
-          // glass effect, but much cheaper to render than such a filter effect
-          color: Colors.white.withOpacity(0.9),
-          iconTheme: const IconThemeData(color: Colors.black),
+        scaffoldBackgroundColor: Colors.blueGrey[50],
+        appBarTheme: const AppBarTheme(
           elevation: 0,
         ),
         // Make a prettier button theme that is based on same color as
@@ -57,13 +37,10 @@ class ColorPickerPage extends StatefulWidget {
 }
 
 class _ColorPickerPageState extends State<ColorPickerPage> {
-  final Color startColor = Colors.blue;
-  final Color startColorDialog = Colors.red;
   Color screenPickerColor;
   Color dialogPickerColor;
-  // Color dialogPickerColor2;
 
-  static final Map<ColorPickerSwatch, bool> _swatchAvailable =
+  static final Map<ColorPickerSwatch, bool> swatchesAvailable =
       <ColorPickerSwatch, bool>{
     ColorPickerSwatch.both: false,
     ColorPickerSwatch.material: true,
@@ -73,35 +50,36 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ColorPickerSwatch.any: true,
   };
 
-  // Define some custom colors, that we will convert to ColorSwatch:es
-  // and set in a list. The first ones below are by the way the new colors
-  // Google used in the Material spec as default colors in the guide.
-  static const Color _googleNewPrimary = Color(0xFF6200EE);
-  static const Color _googleNewPrimaryVariant = Color(0xFF3700B3);
-  static const Color _googleNewSecondary = Color(0xFF03DAC6);
-  static const Color _googleNewSecondaryVariant = Color(0xFF018786);
-  static const Color _googleNewError = Color(0xFFB00020);
-  static const Color _googleNewErrorDark = Color(0xFFCF6679);
-  static const Color _mrBlue = Color(0xFF174378);
+  // Define some custom colors.
+  static const Color googlePrimary = Color(0xFF6200EE);
+  static const Color googlePrimaryVariant = Color(0xFF3700B3);
+  static const Color googleSecondary = Color(0xFF03DAC6);
+  static const Color googleSecondaryVariant = Color(0xFF018786);
+  static const Color googleError = Color(0xFFB00020);
+  static const Color googleErrorDark = Color(0xFFCF6679);
+  static const Color mrBlue = Color(0xFF174378);
 
-  // Make a custom color swatch to name map from the above custom colors
-  final Map<ColorSwatch<Object>, String> _customColorNameMap =
+  // Make a custom color swatch to name map from the above custom colors.
+  final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
-    ColorTools.createPrimaryColor(_googleNewPrimary): 'G Purple',
-    ColorTools.createPrimaryColor(_googleNewPrimaryVariant): 'G Purple Variant',
-    ColorTools.createAccentColor(_googleNewSecondary): 'G Teal',
-    ColorTools.createAccentColor(_googleNewSecondaryVariant): 'G Teal Variant',
-    ColorTools.createPrimaryColor(_googleNewError): 'G Error',
-    ColorTools.createPrimaryColor(_googleNewErrorDark): 'G Error Dark',
-    ColorTools.createPrimaryColor(_mrBlue): 'MrBlue',
+    ColorTools.createPrimaryColor(googlePrimary): 'G Purple',
+    ColorTools.createPrimaryColor(googlePrimaryVariant): 'G Purple Variant',
+    ColorTools.createAccentColor(googleSecondary): 'G Teal',
+    ColorTools.createAccentColor(googleSecondaryVariant): 'G Teal Variant',
+    ColorTools.createPrimaryColor(googleError): 'G Error',
+    ColorTools.createPrimaryColor(googleErrorDark): 'G Error Dark',
+    ColorTools.createPrimaryColor(mrBlue): 'MrBlue',
   };
 
   @override
   void initState() {
     super.initState();
-    screenPickerColor ??= startColor;
-    dialogPickerColor ??= startColorDialog;
-    // dialogPickerColor2 ??= startColorDialog;
+    // To get a color show up as selected by default when calling the picker
+    // start with a given color in a Swatch, not just with a Swatch, like
+    // Colors.blue or Colors.red, the color will not get pre-selected in the
+    // picker then.
+    screenPickerColor = Colors.blue[500];
+    dialogPickerColor = Colors.red[700];
   }
 
   @override
@@ -110,10 +88,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       appBar: AppBar(
         elevation: 1,
         centerTitle: true,
-        title: const Text(
-          'Color Picker Simple Demo',
-          style: TextStyle(color: Colors.black),
-        ),
+        title: const Text('Color Picker Simple Demo'),
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
@@ -142,40 +117,35 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                         'Select color shade',
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      subWheelHeading: Text(
-                        'Selected color and its material shades',
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      swatchAvailable: _swatchAvailable,
-                      colorSwatchNameMap: _customColorNameMap,
                     ),
                   ),
                 ),
               ),
 
-              // Show the selected color
+              // Show the selected color.
               ListTile(
                 title: const Text('Select color above to change this color'),
                 subtitle: Text(
                   ColorTools.colorNameAndHexCode(
                     screenPickerColor,
-                    colorSwatchNameMap: _customColorNameMap,
+                    colorSwatchNameMap: colorsNameMap,
                   ),
                 ),
-                trailing: const ColorIndicator(
+                trailing: ColorIndicator(
                   height: 44,
                   width: 44,
                   borderRadius: 22,
+                  color: screenPickerColor,
                 ),
               ),
 
-              // Show the selected color
+              // Pick color in a dialog.
               ListTile(
                 title: const Text('Click this color to change it in a dialog'),
                 subtitle: Text(
                   ColorTools.colorNameAndHexCode(
                     dialogPickerColor,
-                    colorSwatchNameMap: _customColorNameMap,
+                    colorSwatchNameMap: colorsNameMap,
                   ),
                 ),
                 trailing: ColorIndicator(
@@ -220,11 +190,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subWheelHeading: Text(
-        'Selected color and its Material like shades',
+        'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      swatchAvailable: _swatchAvailable,
-      colorSwatchNameMap: _customColorNameMap,
+      swatchAvailable: swatchesAvailable,
+      colorSwatchNameMap: colorsNameMap,
     ).showPickerDialog(
       context,
       constraints:
