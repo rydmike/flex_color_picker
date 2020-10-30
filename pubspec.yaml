@@ -1,8 +1,7 @@
 name: color_picker
-description: A highly customizable Flutter color picker.
+description: A customizable Flutter color picker.
 version: 1.0.0-dev.1
 homepage: https://github.com/rydmike/color_picker
-author: Mike Rydstrom
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
