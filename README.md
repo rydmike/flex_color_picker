@@ -58,7 +58,7 @@ You can also try a live web example of the ColorPicker [here](https://rydmike.co
 
 The source code for the Web demo, which is just a slightly more elaborate example than the basic sample bundled with the package, is available [here](https://github.com/rydmike/color_picker_demo).
 
-![ColorPicker WEB demo](/resources/ColorPickerWeb.gif)
+![ColorPicker WEB demo](/resources/ColorPickerWebDemo.gif)
 
 ## Introduction to the ColorPicker
 
@@ -289,4 +289,4 @@ You can connect the color to theme colors and modify your application's theme co
 
 The above introduction was a walk through of the bundled example, please see the example section for its complete source code.
 
-There are more configuration options available for the `ColorPicker`. Use the API reference guide for additional information. You can also study the more complete [live web example](https://rydmike.com/democolorpicke/) and its [source code](https://github.com/rydmike/color_picker_demo).
+There are more configuration options available for the `ColorPicker`. Use the API reference guide for additional information. You can also study the more complete [live web example](https://rydmike.com/democolorpicker/) and its [source code](https://github.com/rydmike/color_picker_demo).
