@@ -20,9 +20,5 @@ linter:
     # Not necessary for examples
     public_member_api_docs: false
 
-    # For packages consider keeping this rule ON, for private apps and libs, you might want to skip it.
-    # prefer_asserts_with_message: true
-
     # Useful for packages but not for apps
     type_annotate_public_apis: false
-

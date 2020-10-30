@@ -289,7 +289,7 @@ class _WheelPainter extends CustomPainter {
     final double _shortestRectSide =
         math.min(size.width, size.height).toDouble();
 
-    final Rect rectCricle = Rect.fromCenter(
+    final Rect rectCircle = Rect.fromCenter(
         center: _center,
         width: _shortestRectSide - wheelWidth,
         height: _shortestRectSide - wheelWidth);
@@ -303,7 +303,7 @@ class _WheelPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = wheelWidth;
       canvas.drawArc(
-        rectCricle,
+        rectCircle,
         sRad,
         sRad - eRad,
         false,
@@ -369,7 +369,7 @@ class _WheelPainter extends CustomPainter {
     }
 
     // Define paint style for the selection thumbs:
-    // Outer black cricle
+    // Outer black circle
     final Paint _paintBlack = Paint()
       ..color = Colors.black
       ..strokeWidth = 5
@@ -380,14 +380,13 @@ class _WheelPainter extends CustomPainter {
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
-    // Define the selection thum position on the color wheel
+    // Define the selection thumb position on the color wheel
     final Offset _wheel = _Wheel.hueToVector(
         (colorHue + 360.0) * math.pi / 180.0, _radius, _center);
-    // debugPrint('Wheel=$_wheel Hue=$colorHue');
 
     // Draw the wider black circle first, then draw the smaller white circle
     // on top of it, giving the appearance of a white indicator with black
-    // edges arund it.
+    // edges around it.
     canvas.drawCircle(_wheel, wheelWidth / 2 + 4, _paintBlack);
     canvas.drawCircle(_wheel, wheelWidth / 2 + 4, _paintWhite);
 
@@ -402,7 +401,7 @@ class _WheelPainter extends CustomPainter {
 
     // Draw the wider black circle first, then draw the smaller white circle
     // on top of it, giving the appearance of a white indicator with black
-    // edges arund it.
+    // edges around it.
     canvas.drawCircle(paletteVector, 12, _paintBlack);
     canvas.drawCircle(paletteVector, 12, _paintWhite);
   }

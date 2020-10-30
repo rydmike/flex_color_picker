@@ -1,6 +1,6 @@
-# ColorPicker
+# Flex ColorPicker
 
-ColorPicker is a highly configurable color picker for Flutter. The ColorPicker can show anywhere
+The Flex ColorPicker is a configurable color picker for Flutter. The `ColorPicker` can show anywhere
 from 1 to 6 different color picking tools that you can use to choose colors from.
 
 ![ColorPicker variations upper](/resources/ColorPickerAllSize50-upper.png)
@@ -30,13 +30,13 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  color_picker:
+  flex_color_picker:
 ```
 
 In your library file add the following import:
 
 ```dart
-import 'package:color_picker/color_picker.dart';
+import 'package:flex_color_picker/color_picker.dart';
 ```
 
 ### Example Application
