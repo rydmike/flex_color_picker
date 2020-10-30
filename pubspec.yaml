@@ -1,6 +1,6 @@
 name: flex_color_picker
 description: A customizable Flutter color picker.
-version: 1.0.0-dev.1
+version: 1.0.0-dev.2
 homepage: https://github.com/rydmike/flex_color_picker
 
 environment:
