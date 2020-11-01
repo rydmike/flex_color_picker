@@ -2,24 +2,29 @@ import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-/// A HSV wheel style color picker for Flutter.
+// The ColorWheelPicker below is a rewrite of a similar picker in the package:
+// https://pub.dev/packages/flutter_hsvcolor_picker
+// The class WheelPicker in the above package was been re-purposed as the HSV color
+// wheel picker for ColorPicker and it has undergone major rewrites.
+// Credit and original rights belong GitHub user:
+// https://github.com/ysdy44
+// that committed the original code. No license file is provided for the
+// public Flutter package and GitHub repo:
+// https://github.com/fluttercandies/flutter_hsvcolor_picker
+// Rewrites include, but are not limited to:
+// The original version did not work on scrolling surfaces due to:
+// https://github.com/flutter/flutter/issues/50776
+// It did not work on Flutter Web since it used un-implemented API on Web:
+// https://github.com/flutter/flutter/issues/57752
+// https://github.com/flutter/flutter/issues/41389
+// Both these Flutter issues were addressed in the rewrite by working
+// around them using alternative implementations.
+
+/// A HSV color wheel based color picker for Flutter used by ColorPicker.
 ///
-/// The [ColorWheelPicker] is a rewrite of the similar picker in the package:
-/// https://pub.dev/packages/flutter_hsvcolor_picker
-/// The class WheelPicker in the package has been re-purposed as the HSV color
-/// wheel picker for the ColorPicker and undergone major rewrites.
-/// Credit and original rights belong GitHub user:
-/// https://github.com/ysdy44
-/// that have committed the code. No license file is provided for the public
-/// Flutter package and GitHub repo:
-/// https://github.com/fluttercandies/flutter_hsvcolor_picker
-///
-/// The original version did not work on scrolling surfaces due to:
-/// https://github.com/flutter/flutter/issues/50776
-/// nor did it work on flutter Web since it used un-implemented API on Web
-/// https://github.com/flutter/flutter/issues/50776
-/// Both these Flutter issues were addressed in the rewrite by working
-/// around them with alternative implementations.
+/// The color wheel picker uses a custom painter to draw the HSV color wheel
+/// and rectangle. It can also be used on its own in other color picker
+/// implementations.
 class ColorWheelPicker extends StatefulWidget {
   /// Default constructor
   const ColorWheelPicker({
@@ -37,27 +42,29 @@ class ColorWheelPicker extends StatefulWidget {
         assert(forcedUpdate != null, 'May not be null'),
         super(key: key);
 
-  /// The starting color value
+  /// The starting color value.
   final Color color;
 
-  /// Callback that returns the currently selected color in the Wheel as a
-  /// normal [Color]. (A previous version used HSV color.)
+  /// Callback that returns the currently selected color in the color wheel as a
+  /// normal [Color].
   final ValueChanged<Color> onChanged;
 
-  /// The width of the color wheel in px.
+  /// The width of the color wheel in dp.
   final double wheelWidth;
 
-  /// Set to true, to draw a border around the circle and rectangle color control
+  /// Set to true to draw a border around the circle and rectangle color control.
+  /// Defaults to false.
   final bool hasBorder;
 
   /// Color of the border around around the circle and rectangle control
+  /// Defaults to theme of context divider color.
   final Color borderColor;
 
-  /// Forced update is set to true when the saturation or color value in the
-  /// underlying RGB color has changed saturation and value in the corresponding
-  /// HSV color. This occurs when user clicks the shade selector under the color
-  /// wheel and it causes a need to invalidate the XY coordinates for the
-  /// HSV colors saturation and value.
+  /// Forced update is set to true by ColorPicker when the saturation or color
+  /// value in the underlying RGB color has changed saturation and value in
+  /// the corresponding HSV color. This occurs when user clicks the shade
+  /// selector under the color wheel and it causes a need to invalidate the
+  /// XY coordinates for the HSV colors saturation and value.
   final bool forcedUpdate;
 
   @override
@@ -133,7 +140,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _center = Offset(_size.width / 2, _size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
-    // Did do the onStart on the square Palette box?
+    // Did the onStart on the square Palette box?
     isPalette =
         _vector.dx.abs() < _squareRadius && _vector.dy.abs() < _squareRadius;
     // We started on the square palette box
@@ -154,7 +161,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorValue,
       ).toColor());
 
-      // No, then we started on the color wheel
+      // Else, we did the onStart on the color wheel
     } else {
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
@@ -396,8 +403,6 @@ class _WheelPainter extends CustomPainter {
     final double _paletteY =
         _Wheel.valueToVector(colorValue, _squareRadius, _center.dy);
     final Offset paletteVector = Offset(_paletteX, _paletteY);
-    // debugPrint('X=$_paletteX  Saturation=$colorSaturation');
-    // debugPrint('Y=$_paletteY  Value=$colorValue');
 
     // Draw the wider black circle first, then draw the smaller white circle
     // on top of it, giving the appearance of a white indicator with black

@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
-/// Color tool functions used e.g. by ColorPicker. The functions are wrapped in
-/// the [ColorTools] class to name space them. These color helpers can be used
-/// on their own outside the ColorPicker widget if so desired.
+/// Static color tool functions used internally by the Flex ColorPicker.
 ///
-/// There are helpers for:
-/// * Get English names for the colors.
-/// * Find if a color belongs to a color swatch.
+/// These color helpers can be used on their own outside the Flex ColorPicker
+/// if so desired. Available functions include:
+/// * English names for the Material primary and accent colors.
+/// * Maps of color swatches to their names.
+/// * Check if a given color belongs to a color swatch.
 /// * Get the swatch a color belongs to.
-/// * Create material and accent like swatches of a color.
+/// * Create material and accent like swatches of a single color.
+/// * Get the color name of a color belonging to a color swatch and its index.
 class ColorTools {
   // Private constructor, does not show up in code completion, useful when
   // there are only static functions and we have nothing to construct.
   ColorTools._();
 
-  /// A list of the standard Material Primary color swatches.
-  ///
-  /// This Material colors swatch list also exists in the Flutter
-  /// SDK in colors.dart as a static const [Colors.primaries],
-  /// but that list excludes grey and we needed that included too,
-  /// hence this custom version.
+  // This Material colors swatch list also exists in the Flutter
+  // SDK in colors.dart as a static const [Colors.primaries],
+  // but that list excludes grey and this picker want to include it too,
+  // hence this custom version of the Material primary colors list.
+
+  /// List of all the standard Material primary color swatches.
   static const List<ColorSwatch<Object>> primaryColors = <ColorSwatch<Object>>[
     Colors.red,
     Colors.pink,
@@ -38,11 +39,11 @@ class ColorTools {
     Colors.orange,
     Colors.deepOrange,
     Colors.brown,
+    Colors.blueGrey,
     Colors.grey,
-    Colors.blueGrey
   ];
 
-  // Static string name for all the material primary colors
+  // Static string names for all the material primary colors
   /// English name for Material red color.
   static String redName = 'Red';
 
@@ -100,9 +101,9 @@ class ColorTools {
   /// English name for Material blue grey color.
   static String blueGreyName = 'Blue-grey';
 
-  /// Static map of Material Primary colors swatches and their English names.
+  /// Map of Material primary colors swatches and their English names.
   ///
-  /// Use the [ColorSwatch] as key to get its English name string as
+  /// Use [ColorSwatch] as key to get its English name string as
   /// defined by the Material standard.
   static Map<ColorSwatch<Object>, String> primaryColorNames =
       <ColorSwatch<Object>, String>{
@@ -123,16 +124,15 @@ class ColorTools {
     Colors.orange: orangeName,
     Colors.deepOrange: deepOrangeName,
     Colors.brown: brownName,
-    Colors.grey: greyName,
     Colors.blueGrey: blueGreyName,
+    Colors.grey: greyName,
   };
 
-  /// A list of the standard Material Accent color swatches.
-  ///
-  /// This Material colors swatch list also exists in the Flutter
-  /// framework in colors.dart as a static const [Colors.accents], since we
-  /// used a custom version for the primary material colors, we might
-  /// as well use one for the accents too.
+  // This Material colors swatch list also exists in the Flutter
+  // framework in colors.dart as a static const [Colors.accents], since we
+  // used a custom version for the primary material colors, we might
+  // as well use one for the accents too.
+  /// List of all the standard Material accent color swatches.
   static const List<ColorSwatch<Object>> accentColors = <ColorSwatch<Object>>[
     Colors.redAccent,
     Colors.pinkAccent,
@@ -152,10 +152,10 @@ class ColorTools {
     Colors.deepOrangeAccent,
   ];
 
-  /// Static map of Material Accent colors swatches and their English names.
+  /// Map of Material accent colors swatches and their English names.
   ///
   /// Use [ColorSwatch] as key to get its English name string as defined
-  /// by the Material standard
+  /// by the Material standard.
   static Map<ColorSwatch<Object>, String> accentColorsNames =
       <ColorSwatch<Object>, String>{
     Colors.redAccent: 'Red accent',
@@ -179,7 +179,7 @@ class ColorTools {
   /// A color swatch for almost black colors, ending in black.
   ///
   /// These are none transparent shades of close to black values, useful when
-  /// you want slightly off-black values that are not transparent.
+  /// you want slightly off black values that are not transparent.
   static const ColorSwatch<Object> blackShade = ColorSwatch<Object>(
     0xFF141414,
     <int, Color>{
@@ -199,7 +199,7 @@ class ColorTools {
   /// A color swatch for almost white colors, starting in white.
   ///
   /// These are none transparent shades of close to white values, useful when
-  /// you want slightly off-white values that are not transparent.
+  /// you want slightly off white values that are not transparent.
   static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
     0xFFEFEFEF,
     <int, Color>{
@@ -216,7 +216,7 @@ class ColorTools {
     },
   );
 
-  /// The [blackShade] and [whiteShade] in a color swatch list
+  /// The [blackShade] and [whiteShade] in a list color swatches.
   static const List<ColorSwatch<Object>> blackAndWhite = <ColorSwatch<Object>>[
     blackShade,
     whiteShade,
@@ -224,21 +224,20 @@ class ColorTools {
 
   /// Static map of black and white shades and their English names.
   ///
-  /// Use [ColorSwatch] as key to get its English name string as defined
-  /// by the Material standard
+  /// Use [ColorSwatch] as key to get their English names.
   static Map<ColorSwatch<Object>, String> blackAndWhiteNames =
       <ColorSwatch<Object>, String>{
     blackShade: 'Black',
     whiteShade: 'White',
   };
 
-  /// A combined list of both color material primary and accent swatches.
+  /// A list with both primary and accent color Material swatches.
   ///
-  /// Can be used if you want a color picker that mixes and includes both the
+  /// This list is used to create a color picker that mixes and includes both the
   /// the primary material colors and the accent colors in the same picker.
   /// The related colors are grouped after each other so that they come in
-  /// logical color order.
-  static const List<ColorSwatch<Object>> bothPrimaryAndAccentColors =
+  /// related color order, not in primary and accent order.
+  static const List<ColorSwatch<Object>> primaryAndAccentColors =
       <ColorSwatch<Object>>[
     Colors.red,
     Colors.redAccent,
@@ -273,13 +272,13 @@ class ColorTools {
     Colors.deepOrange,
     Colors.deepOrangeAccent,
     Colors.brown,
+    Colors.blueGrey,
     Colors.grey,
-    Colors.blueGrey
   ];
 
-  /// Check if a color is included in any Material primary color swatch.
+  /// Check if the given color is included in any Material primary color swatch.
   ///
-  /// If the color is a Material primary color, return true, otherwise false.
+  /// Returns true if the color is a Material primary color, otherwise false.
   static bool isPrimaryColor(Color color) {
     final List<int> index = <int>[
       50,
@@ -292,27 +291,26 @@ class ColorTools {
       700,
       800,
       850,
-      900
+      900,
     ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return true; // Color found in a swatch so we return true
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return true; // Color found in a swatch, return true.
         }
       }
     }
-    // Did not find the given color in any standard Material color swatch,
-    // so we return false
+    // Color was not in any standard Material primary color swatch, return false.
     return false;
   }
 
   /// Returns a Material primary color swatch for the color given to it.
   ///
   /// If the color is a part of a standard material primary color swatch,
-  /// then the standard primary color swatch will be returned.
-  /// If the color is not a Material standard primary color, it will create a
-  /// material swatch for the given color using the given color
-  /// as the mid [500] value and return this created custom primary color Swatch.
+  /// then the standard primary color swatch is returned.
+  /// If the color is not a Material standard primary color, creates a
+  /// material primary swatch for the given color using the given color
+  /// as the mid [500] index value and returns this created custom primary color swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static MaterialColor primarySwatch(Color color) {
     final List<int> index = <int>[
@@ -326,35 +324,36 @@ class ColorTools {
       700,
       800,
       850,
-      900
+      900,
     ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return swatch
-              as MaterialColor; // Color found in a swatch so we return it
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return swatch as MaterialColor; // Color found in a swatch, return it.
         }
       }
     }
-    // Did not find the given color in a standard Material color swatch,
-    // so make a custom material swatch based on the given color and return it.
+    // Did not find the given color in a standard Material color swatch, make
+    // a custom material primary swatch based on the given color and return it.
     return createPrimaryColor(color);
   }
 
   // Found this little Material shade calculation gem here:
   // https://medium.com/@filipvk/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
   // Originally made by by Filip Velickovic https://filipvk.bitbucket.io/
-  //
-  /// Create a Material color primary swatch from a given single color.
+
+  /// Create a primary color Material swatch from a given color value.
   ///
-  /// The provided color is used as the Material swatch default color [500] in
-  /// the returned swatch, with lighter hues for lower index and darker hues for
-  /// higher indexes.
+  /// The provided color value is used as the Material swatch default color [500]
+  /// in the returned swatch, with lighter hues for lower indexes and darker
+  /// shades for higher index values.
+  ///
   /// If you give this function a standard Material color [500] value,
   /// eg Colors.red[500] it will not return the same swatch as Colors.red.
   /// This function is an approximation and gives an automated way of creating
   /// a material like primary swatch.
-  /// The official Material colors contain hand tuned hues. To get
+  ///
+  /// The official Material colors contain hand tuned color swatches. To get
   /// an official Material swatch from a color use [primarySwatch] that
   /// returns the real Material swatch first for a color, if it is a standard
   /// Material primary color and then a Material like swatch, if it was
@@ -370,7 +369,7 @@ class ColorTools {
       0.6,
       0.7,
       0.8,
-      0.9
+      0.9,
     ];
     final Map<int, Color> swatch = <int, Color>{};
     final int r = color.red, g = color.green, b = color.blue;
@@ -386,20 +385,19 @@ class ColorTools {
     return MaterialColor(color.value, swatch);
   }
 
-  /// Check if a color is included in any Material Accent color swatch
+  /// Check if the given color is included in any Material accent color swatch.
   ///
-  /// If the color is a Material Accent color, return true, otherwise false.
+  /// Returns true if the color is a Material accent color, otherwise false.
   static bool isAccentColor(Color color) {
     final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return true; // Color found in a swatch so we return true
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return true; // Color found in a swatch, return true.
         }
       }
     }
-    // Did not find the given color in any standard Material color swatch,
-    // so we return false
+    // Color was not in any standard Material accent color swatch, return false.
     return false;
   }
 
@@ -407,33 +405,32 @@ class ColorTools {
   ///
   /// If the color is a part of a standard material accent color swatch,
   /// then the standard accent color swatch will be returned.
-  /// If the color is not a Material standard accent color, it will create a
-  /// material swatch for the given color using the given color
-  /// as [200] value and return this created custom color accent Swatch.
+  /// If the color is not a Material standard accent color, creates a
+  /// material accent swatch for the given color using the given color
+  /// as [200] index value and return this created custom color accent swatch.
   /// This color swatch can then be used as a accent Material color swatch.
   static MaterialAccentColor accentSwatch(Color color) {
     final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return swatch
-              as MaterialAccentColor; // Found in a swatch, return swatch
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return swatch as MaterialAccentColor; // Found in a swatch, return it.
         }
       }
     }
-    // Did not find the given color in a standard Material accent swatch,
-    // so lets make our own accent swatch based on the given color
+    // Did not find the given color in a standard Material accent swatch, make
+    // a custom material accent swatch based on the given color and return it.
     return createAccentColor(color);
   }
 
   // This is an accentSwatch version made based on this gem:
   // https://medium.com/@filipvk/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
   // Which was originally made by Filip Velickovic https://filipvk.bitbucket.io/
-  //
-  /// Create an Accent color swatch from a given single color.
+
+  /// Create an Accent color swatch from a given single color value.
   ///
   /// The provided color is used as the Accent swatch default color [200] in the
-  /// returned swatch with lighter hues for lower index and darker hues
+  /// returned swatch with lighter hues for lower index and darker shades
   /// for higher indexes.
   static MaterialAccentColor createAccentColor(Color color) {
     final List<double> strengths = <double>[0.1, 0.2, 0.4, 0.7];
@@ -450,9 +447,9 @@ class ColorTools {
     return MaterialAccentColor(color.value, swatch);
   }
 
-  /// Check if a color is included in the custom black and white swatches
+  /// Check if a color is included in the custom black and white swatches.
   ///
-  /// If the color is a black or white swatch, return true, otherwise false.
+  /// Returns true if the color is a black or white swatch, otherwise false.
   static bool isBlackAndWhiteColor(Color color) {
     final List<int> index = <int>[
       50,
@@ -464,12 +461,12 @@ class ColorTools {
       600,
       700,
       800,
-      900
+      900,
     ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return true; // Color found in a swatch so we return true
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return true; // Color found in a swatch, return true.
         }
       }
     }
@@ -497,12 +494,12 @@ class ColorTools {
       700,
       800,
       850,
-      900
+      900,
     ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in index) {
-        if (swatch[i] == color) {
-          return swatch; // Color found in a swatch so we return it
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          return swatch; // Color found in a swatch, return it.
         }
       }
     }
@@ -513,7 +510,7 @@ class ColorTools {
 
   /// Check if a color is included in a custom color swatches.
   ///
-  /// If the color is a custom swatch, return true, otherwise false.
+  /// Returns true if the color is a custom swatch, otherwise false.
   static bool isCustomColor(
       Color color, Map<ColorSwatch<Object>, String> customSwatch) {
     if (customSwatch != null) {
@@ -527,17 +524,17 @@ class ColorTools {
         600,
         700,
         800,
-        900
+        900,
       ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in index) {
-          if (swatch[i] == color) {
-            return true; // Color found in a swatch so we return true
+          if (swatch[i] == color || swatch[i]?.value == color?.value) {
+            return true; // Color found in a swatch, return true.
           }
         }
       }
     }
-    // Did not find the given color in any black or white swatch, return false
+    // Did not find the given color in a custom swatch, return false.
     return false;
   }
 
@@ -562,11 +559,11 @@ class ColorTools {
         600,
         700,
         800,
-        900
+        900,
       ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in index) {
-          if (swatch[i] == color) {
+          if (swatch[i] == color || swatch[i]?.value == color?.value) {
             return swatch; // Color found in a swatch so we return it
           }
         }
@@ -599,26 +596,14 @@ class ColorTools {
     }
   }
 
-  // IMPORTANT: The name getter does not work if the color value has been
-  // assigned from a material color without choosing the swatch! Is it because
-  // the none index value is an int? Maybe, why is that so anyway?
-  // After adding the check:
-  // || swatch[i].value == color.value
-  // to the: if (swatch[i] == color || swatch[i].value == color.value)
-  // the [colorName] function works even if the Color value has been assigned
-  // from swatch color like so: _passColor = Colors.red;
-  // and not from its index, like so: _passColor = Colors.red[500];
-  // which also works. This is a bit weird, as the extra check was not needed
-  // or did not even work on the above checks where we look if a color is in
-  // a swatch in e.g. the isPrimaryColor function.
-  //
-  /// The function returns the official Material color
-  /// name for the color passed to it.
+  /// Returns the Material swatch name or custom color swatch name for a
+  /// given color.
   ///
-  /// It includes the shade index if the flag [withIndex] is true.
+  /// The name will include the color shade index if the flag [withIndex] is true.
+  ///
   /// If the given color is not a material color or one of the accents colors,
-  /// an empty string is returned. I can also take as input a custom color
-  /// swatch to name map, and return a custom name for any color found in
+  /// an empty string is returned. THe function can also take as input an optional
+  /// custom color swatch to name map and return a custom name for any color found in
   /// any of the custom color swatches in the map.
   static String colorName(Color color,
       {Map<ColorSwatch<Object>, String> colorSwatchNameMap,
@@ -634,13 +619,13 @@ class ColorTools {
       700,
       850,
       800,
-      900
+      900,
     ];
 
-    // If it is a black or white shade, return name, shade and HEX string.
+    // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color) {
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
           if (withIndex) {
             return '${blackAndWhiteNames[swatch]} [$i]';
           } else {
@@ -650,11 +635,10 @@ class ColorTools {
       }
     }
 
-    // If it is a primary color, return name, shade and HEX string.
-    // We also check the 850 index that is used by grey color!
+    // If it is a primary color, return name, shade and and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color) {
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
           if (withIndex) {
             return '${primaryColorNames[swatch]} [$i]';
           } else {
@@ -664,11 +648,11 @@ class ColorTools {
       }
     }
 
-    // If it is an accent color, return name, shade and HEX string.
+    // If it is an accent color, return name, shade and optional index.
     index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColorsNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color) {
+        if (swatch[i] == color || swatch[i]?.value == color?.value) {
           if (withIndex) {
             return '${accentColorsNames[swatch]} [$i]';
           } else {
@@ -679,7 +663,8 @@ class ColorTools {
     }
 
     // If we have a custom color and name map passed, we will check if the color
-    // exists in it as well and what name it has in the map.
+    // exists in it as well and what name it has in the map and
+    // return name, shade and optional index.
     if (colorSwatchNameMap != null) {
       final List<int> index = <int>[
         50,
@@ -691,11 +676,11 @@ class ColorTools {
         600,
         700,
         800,
-        900
+        900,
       ];
       for (final ColorSwatch<Object> swatch in colorSwatchNameMap.keys) {
         for (final int i in index) {
-          if (swatch[i] == color) {
+          if (swatch[i] == color || swatch[i]?.value == color?.value) {
             if (withIndex) {
               return '${colorSwatchNameMap[swatch]} [$i]';
             } else {
@@ -705,8 +690,8 @@ class ColorTools {
         }
       }
     }
-    // If all the above did not yield a name, it has no defined name
-    // then we just return an empty string
+    // If all the above did not yield a name, it has no defined name,
+    // return an empty string.
     return '';
   }
 

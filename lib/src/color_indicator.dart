@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// A Material card widget used as a color indicator and color select
-/// area, typically by the ColorPicker but can be used on its own as well as
-/// color indicator e.g. in a LisTile trailing widget.
+/// A Material widget used as a color indicator and color selector by the ColorPicker.
+/// Can also be used on its own as a color indicator e.g. in a LisTile widget.
 ///
-/// Has adjustable selection indicator icon and convenience properties for rounded
-/// corners and border.
+/// The color indicator has adjustable, height, width, selection indicator icon and
+/// convenience properties for rounded corners and optional border.
 class ColorIndicator extends StatelessWidget {
   /// Default constructor
   const ColorIndicator({
@@ -13,7 +12,7 @@ class ColorIndicator extends StatelessWidget {
     this.onSelect,
     this.isSelected = false,
     this.elevation = 0,
-    this.selectedIndicator = Icons.check,
+    this.selectedIcon = Icons.check,
     this.color = Colors.blue,
     this.width = 40,
     this.height = 40,
@@ -22,7 +21,7 @@ class ColorIndicator extends StatelessWidget {
     this.borderColor,
   })  : assert(isSelected != null, 'isSelected cannot be null.'),
         assert(elevation >= 0, 'Elevation must be greater or equal to 0.'),
-        assert(selectedIndicator != null,
+        assert(selectedIcon != null,
             'Selection indicator icon data cannot be null.'),
         assert(color != null, 'Color may not be null.'),
         assert(width != null, 'Width may not be null.'),
@@ -34,46 +33,51 @@ class ColorIndicator extends StatelessWidget {
         assert(hasBorder != null, 'HasBorder boolean cannot be null.'),
         super(key: key);
 
-  /// Callback for when the color indicator is 'selected' (tapped).
-  /// To disable selection and the tapping ink effect pass a null callback.
+  /// Void callback, called when the color indicator is tapped.
+  /// To disable selection and the tapping ink effect assign a null callback.
   final VoidCallback onSelect;
 
-  /// The color indicator is selected and the [selectedIndicator] will be shown.
+  /// The color indicator is selected and the [selectedIcon] will be shown.
   final bool isSelected;
 
-  /// Material elevation of the color indicator, if null defaults to 0.
+  /// Material elevation of the color indicator. Defaults to 0.
   final double elevation;
 
-  /// An icon used to indicate that the color indicator is selected.
-  /// Defaults to a check mark.
-  final IconData selectedIndicator;
+  /// Icon data icon used to indicate that the color indicator is selected.
+  /// Defaults to a check mark ([Icons.check]).
+  ///
+  /// The size of the [selectedIcon] is 60% of the smaller of [width]
+  /// and [height]. The color of indicator icon is black or white based on
+  /// on what contrast best with the selected color.
+  final IconData selectedIcon;
 
-  /// The color that color indicator shows.
+  /// The background color of the color indicator.
   final Color color;
-
-  /// Height of the color indicator.
-  final double height;
 
   /// Width of the color indicator.
   final double width;
 
+  /// Height of the color indicator.
+  final double height;
+
   /// Border radius of the color indicator
   final double borderRadius;
 
-  /// Set to true if a 1 px outline border should be drawn around the
-  /// color indicator.
+  /// Set to true if a 1 dp outline border should be drawn around the
+  /// color indicator. Defaults to false.
   final bool hasBorder;
 
-  /// Color the border on the color indicator.
+  /// Color of the border on the color indicator.
   /// Defaults to theme of context divider color.
   final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
-    // Set icon color to black on light color and to white on dark color
-    final bool _isLight =
+    // The indicator color is light.
+    final bool isLight =
         ThemeData.estimateBrightnessForColor(color) == Brightness.light;
-    final Color _iconColor = _isLight ? Colors.black : Colors.white;
+    // Set icon color to black on light color and to white on dark color.
+    final Color iconColor = isLight ? Colors.black : Colors.white;
 
     // If no border color is given, we use the theme divider color as
     // border color, it is typically a suitable grey color
@@ -93,21 +97,21 @@ class ColorIndicator extends StatelessWidget {
           border: hasBorder ? Border.all(color: _borderColor) : null,
         ),
         // Using an extra transparent Material wrapper on an InkWell is a
-        // trick used to get Ink and Hover effects on colored or
-        // gradient background widgets
+        // pattern used to get Ink and Hover effects on colored or
+        // gradient background widgets.
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: onSelect,
-            // The default hover effect on colors is too faint, this is slightly more
-            // pronounced, this is an opinionated choice.
-            hoverColor: _isLight ? Colors.black12 : Colors.white24,
+            // The default hover effect on colors is too faint, this is slightly
+            // more pronounced, this is an opinionated choice for this use case.
+            hoverColor: isLight ? Colors.black12 : Colors.white24,
             child: isSelected
                 ? Icon(
-                    selectedIndicator,
-                    color: _iconColor,
-                    // We size the select icon so it always fits nicely
-                    // and proportionally looks nice in the color indicator.
+                    selectedIcon,
+                    color: iconColor,
+                    // Size the select icon so it always fits nicely
+                    // and looks nice proportionally in the color indicator.
                     // The 0.6 value is just based on what looked good enough.
                     size: width < height ? width * 0.6 : height * 0.6,
                   )

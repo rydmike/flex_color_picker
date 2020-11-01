@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/color_picker.dart';
 
-void main() => runApp(const DemoApp());
+void main() => runApp(const ColorPickerDemo());
 
-class DemoApp extends StatelessWidget {
-  const DemoApp({Key key}) : super(key: key);
+class ColorPickerDemo extends StatelessWidget {
+  const ColorPickerDemo({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Material Color Picker',
+      title: 'ColorPicker',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         scaffoldBackgroundColor: Colors.blueGrey[50],
         appBarTheme: const AppBarTheme(
           elevation: 0,
         ),
-        // Make a prettier button theme that is based on same color as
-        // the primary color, otherwise buttons are grey and ugly.
         buttonTheme: ButtonThemeData(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo),
           textTheme: ButtonTextTheme.primary,
@@ -40,17 +38,17 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   Color screenPickerColor;
   Color dialogPickerColor;
 
-  static final Map<ColorPickerSwatch, bool> swatchesAvailable =
-      <ColorPickerSwatch, bool>{
-    ColorPickerSwatch.both: false,
-    ColorPickerSwatch.material: true,
-    ColorPickerSwatch.accent: true,
-    ColorPickerSwatch.bw: false,
-    ColorPickerSwatch.custom: true,
-    ColorPickerSwatch.any: true,
+  static final Map<ColorPickerType, bool> pickersEnabled =
+      <ColorPickerType, bool>{
+    ColorPickerType.both: false,
+    ColorPickerType.primary: true,
+    ColorPickerType.accent: true,
+    ColorPickerType.bw: false,
+    ColorPickerType.custom: true,
+    ColorPickerType.wheel: true,
   };
 
-  // Define some custom colors.
+  // Define some custom colors for the custom picker segment.
   static const Color googlePrimary = Color(0xFF6200EE);
   static const Color googlePrimaryVariant = Color(0xFF3700B3);
   static const Color googleSecondary = Color(0xFF03DAC6);
@@ -74,12 +72,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   @override
   void initState() {
     super.initState();
-    // To get a color show up as selected by default when calling the picker
-    // start with a given color in a Swatch, not just with a Swatch, like
-    // Colors.blue or Colors.red, the color will not get pre-selected in the
-    // picker then.
-    screenPickerColor = Colors.blue[500];
-    dialogPickerColor = Colors.red[700];
+    screenPickerColor = Colors.blue;
+    dialogPickerColor = Colors.red;
   }
 
   @override
@@ -88,7 +82,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       appBar: AppBar(
         elevation: 1,
         centerTitle: true,
-        title: const Text('Color Picker Simple Demo'),
+        title: const Text('ColorPicker Demo'),
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
@@ -96,7 +90,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Color picker demo in a raised card
               SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -104,16 +97,17 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   child: Card(
                     elevation: 2,
                     child: ColorPicker(
-                      size: 44,
-                      borderRadius: 22,
                       color: screenPickerColor,
                       onColorChanged: (Color color) =>
                           setState(() => screenPickerColor = color),
+                      width: 44,
+                      height: 44,
+                      borderRadius: 22,
                       heading: Text(
                         'Select color',
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      subHeading: Text(
+                      subheading: Text(
                         'Select color shade',
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
@@ -125,15 +119,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               // Show the selected color.
               ListTile(
                 title: const Text('Select color above to change this color'),
-                subtitle: Text(
-                  ColorTools.colorNameAndHexCode(
-                    screenPickerColor,
-                    colorSwatchNameMap: colorsNameMap,
-                  ),
-                ),
+                subtitle:
+                    Text(ColorTools.colorNameAndHexCode(screenPickerColor)),
                 trailing: ColorIndicator(
-                  height: 44,
                   width: 44,
+                  height: 44,
                   borderRadius: 22,
                   color: screenPickerColor,
                 ),
@@ -149,15 +139,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   ),
                 ),
                 trailing: ColorIndicator(
-                  height: 40,
-                  width: 40,
+                  width: 44,
+                  height: 44,
                   borderRadius: 3,
                   color: dialogPickerColor,
                   onSelect: () async {
-                    final Color _colorBeforeDialog = dialogPickerColor;
+                    final Color colorBeforeDialog = dialogPickerColor;
                     if (!(await colorPickerDialog())) {
                       setState(() {
-                        dialogPickerColor = _colorBeforeDialog;
+                        dialogPickerColor = colorBeforeDialog;
                       });
                     }
                   },
@@ -175,30 +165,32 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       color: dialogPickerColor,
       onColorChanged: (Color color) =>
           setState(() => dialogPickerColor = color),
-      showNameSelected: true,
-      size: 40,
+      showColorNameCode: true,
+      width: 40,
+      height: 40,
       borderRadius: 3,
-      padding: 8,
+      hasBorder: true,
       spacing: 3,
       runSpacing: 3,
+      wheelDiameter: 160,
       heading: Text(
         'Select color',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      subHeading: Text(
+      subheading: Text(
         'Select color shade',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      subWheelHeading: Text(
+      wheelSubheading: Text(
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      swatchAvailable: swatchesAvailable,
-      colorSwatchNameMap: colorsNameMap,
+      usedColorPickerTypes: pickersEnabled,
+      customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,
       constraints:
-          const BoxConstraints(minHeight: 475, minWidth: 480, maxWidth: 480),
+          const BoxConstraints(minHeight: 445, minWidth: 400, maxWidth: 400),
     );
   }
 }
