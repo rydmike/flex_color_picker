@@ -12,9 +12,11 @@ All notable changes to the **ColorPicker** will be documented in this file.
 
 ## To do list
 
-* Add tests for the ColorPicker and its supporting classes.
-* Review and correct any initial documentation mistakes and typos.
-* For the any color selector, add text input to select a known given color based on HEX code.
-* Maybe: Add other types of "any" color selector.
-* Maybe: Add a color selected with the any color selector to the custom colors section.
-* Maybe: Store selected colors added to the custom colors section.
+- [x] Review and update the API
+- [x] Review and correct documentation mistakes and typos, first pass done anyway.
+- [ ] Figure out why images show up OK in Github readme.md repo, but not on pub.dev.
+- [ ] For the wheel color selector, add text input to get a given color based on entered HEX code.
+- [ ] Version 1.x.0: Add first set of tests for the ColorPicker and its supporting classes.
+- [ ] Maybe version 2.x.0: Add more types of color selector.
+- [ ] Maybe version 2.x.0: Add a color selected with the wheel color selector to the custom colors section.
+- [ ] Maybe version 2.x.0: Store colors added to the custom colors section.

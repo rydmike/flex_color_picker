@@ -49,7 +49,7 @@ enum ColorPickerType {
 /// the shades on the wheel picker will then show where those colors are on the
 /// HSV wheel. If a selected color is not any of the defined ones, then the
 /// wheel picker will always generate a new shade from the selected color,
-/// using the selected color as the new primary swatch [500] midpoint.
+/// using the selected color as the new primary swatch 500 index midpoint.
 class ColorPicker extends StatefulWidget {
   /// Default constructor for the color picker.
   const ColorPicker({
