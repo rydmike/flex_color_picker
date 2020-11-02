@@ -53,9 +53,9 @@ The result is a default color picker with only the primary and accent color pick
 
 ![ColorPicker Basic](/resources/ColorPickerSimpleDemo.png)
 
-### Live Web Example
+### [Live Web Example](https://rydmike.com/democolorpicker)
 
-You can also try a live web example of the ColorPicker [here](https://rydmike.com/democolorpicker). With the web demo you can modify many of the ColorPicker's API values and use it as a tool to find settings and a style that fits your application.
+You can also try a live web example of the [ColorPicker here](https://rydmike.com/democolorpicker). With the web demo you can modify many of the ColorPicker's API values and use it as a tool to find settings and a style that fits your application.
 
 The source code for the Web demo, which is a slightly more elaborate example than the basic sample bundled with the package, is available separately [here](https://github.com/rydmike/color_picker_demo).
 
