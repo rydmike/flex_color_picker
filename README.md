@@ -1,12 +1,12 @@
 # Flex ColorPicker
 
-**NOTE:** This is a development preview release. The package is still under development.
+**NOTE:** This is a development preview release. The package is still under development. The API may still be modified before its first official release.
 
 Flex ColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used for the pick items can be customized.
 
 ![ColorPicker variations upper](/resources/ColorPickerAllSize50-upper.png)
 
-The different types of available pickers are:
+#### The different types of available pickers are
 
 1. Material primary colors and its shades. `ColorPickerType.primary`
 2. Material accent colors and its shades. `ColorPickerType.accent`
@@ -15,11 +15,11 @@ The different types of available pickers are:
 5. Custom material like colors and their shades, that you define and name. `ColorPickerType.custom`
 6. A HSV color wheel picker, that allows you to select any color. Material primary color like shades for the selected color are computed automatically. `ColorPickerType.wheel`
 
-When you show more than one color selection tool, a slider allows you to select which one to use. You can configure the color picker to include any of the above color pickers. Showing pickers 1 and 2, together with picker 3 is not very useful, they are available as optional ways of showing and selecting the standard Material primary and accent colors.
+When you show more than one color selection tool, a segmented sliding control allows you to select which one to use. You can configure the color picker to include any of the above color pickers. Showing pickers 1 and 2, together with picker 3 is not very useful, they are available as optional ways of showing and selecting the standard Material primary and accent colors.
 
-You provide the color picker with its heading and sub heading, usually Text widgets with appropriate style. You also define if the Material shades can be selected or not and if the selected color names and values are shown in the picker. If the value is shown, the picker includes a button that allows you to copy the selected color code to the clipboard.
+You provide the color picker with its heading and sub heading, typically Text widgets with appropriate style. You also define if the Material shades can be selected or not, if the selected color names and values are shown in the picker. If the color HEX RGB code is shown, the picker includes a button that allows you to copy the selected color code to the clipboard.
 
-The shape, size and spacing of the color picker items can be modified. There is a built in dialog that can be used to show and use the `ColorPicker` in a pre-made dialog. You can also make your own dialog and just use the color picker in your own custom dialog.
+The shape, size and spacing of the color picker items can be modified. There is a built in dialog that can be used to show and use the `ColorPicker` in a pre-made dialog. You can of course also make your own dialog and just use the color picker widget in your own custom dialog.
 
 ![ColorPicker variations upper](/resources/ColorPickerAllSize50-lower.png)
 
@@ -42,14 +42,14 @@ import 'package:flex_color_picker/color_picker.dart';
 
 ### Example Application
 
-To try a basic example of the ColorPicker on a device or simulator, clone the ColorPicker repository and run the example:
+To try a basic example of the ColorPicker on a device or simulator, clone the flex color picker repository and run the example:
 
 ```bash
 cd example/
 flutter run --release
 ```
 
-The result is a default picker with only the primary and accent color picker available, plus another picker that opens up in a dialog, with all pickers enabled, except 3 `ColorPickerType.both` and 4 `ColorPickerType.bw`.
+The result is a default color picker with only the primary and accent color pickers available. Plus another picker that opens up in a dialog, with all pickers enabled, except 3 `ColorPickerType.both` and 4 `ColorPickerType.bw`.
 
 ![ColorPicker Basic](/resources/ColorPickerSimpleDemo.png)
 
@@ -59,7 +59,7 @@ You can also try a live web example of the ColorPicker [here](https://rydmike.co
 
 The source code for the Web demo, which is a slightly more elaborate example than the basic sample bundled with the package, is available separately [here](https://github.com/rydmike/color_picker_demo).
 
-![ColorPicker WEB demo](/resources/ColorPickerWebDemo.gif)
+![ColorPicker WEB demo](/resources/WebDemo.png)
 
 ## Introduction to the ColorPicker
 
