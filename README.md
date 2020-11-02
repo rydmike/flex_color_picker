@@ -37,7 +37,7 @@ dependencies:
 In your library file add the following import:
 
 ```dart
-import 'package:flex_color_picker/color_picker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 ```
 
 ### Example Application
