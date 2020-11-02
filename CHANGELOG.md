@@ -2,11 +2,9 @@
 
 All notable changes to the **ColorPicker** will be documented in this file.
 
-The first public release was released with version 1.0.0-dev.2 as a pre-release.
+## [1.0.0-dev.3] - November 2, 2020
 
-The package has been used as is, in a few private projects. It was refactored to a package and made public. The code was taken mostly as it was with some minor improvements.
-
-Later updates may refine and improve it further. Some of the APIs and naming could use improvements, but that would break our internal usage of it as well, so it was left as is for now. As always with open source packages, use at your own discretion and risk.
+* Significant API name changes and cleanup. Decided to implement previously planned changes before the official release, even if it also will impact our own older usage of the package, when we move to using the published version as well.
 
 ## [1.0.0-dev.2] - October 30, 2020
 
