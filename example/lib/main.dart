@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flex_color_picker/color_picker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 void main() => runApp(const ColorPickerDemo());
 
