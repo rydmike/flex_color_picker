@@ -1,6 +1,6 @@
 name: flex_color_picker
 description: A customizable Flutter primary, accent and custom color picker. Includes an optional HSV wheel color picker.
-version: 1.0.0-dev.3
+version: 1.0.0-dev.4
 homepage: https://github.com/rydmike/flex_color_picker
 
 environment:
