@@ -234,7 +234,7 @@ class ColorTools {
 
   /// A list with both primary and accent color Material swatches.
   ///
-  /// This list is used to create a color picker that mixes and includes both the
+  /// This list is used to create a color picker that mixes and includes both
   /// the primary material colors and the accent colors in the same picker.
   /// The related colors are grouped after each other so that they come in
   /// related color order, not in primary and accent order.
@@ -301,7 +301,7 @@ class ColorTools {
         }
       }
     }
-    // Color was not in any standard Material primary color swatch, return false.
+    // Color was not in any primary color swatch, return false.
     return false;
   }
 
@@ -309,9 +309,9 @@ class ColorTools {
   ///
   /// If the color is a part of a standard material primary color swatch,
   /// then the standard primary color swatch is returned.
-  /// If the color is not a Material standard primary color, creates a
-  /// material primary swatch for the given color using the given color
-  /// as the mid [500] index value and returns this created custom primary color swatch.
+  /// If the color is not a Material standard primary color, creates a material
+  /// primary swatch for the given color using the given color as the mid 500
+  /// index value and returns this created custom primary color swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static MaterialColor primarySwatch(Color color) {
     final List<int> index = <int>[
@@ -345,12 +345,12 @@ class ColorTools {
 
   /// Create a primary color Material swatch from a given color value.
   ///
-  /// The provided color value is used as the Material swatch default color [500]
+  /// The provided color value is used as the Material swatch default color 500
   /// in the returned swatch, with lighter hues for lower indexes and darker
   /// shades for higher index values.
   ///
-  /// If you give this function a standard Material color [500] value,
-  /// eg Colors.red[500] it will not return the same swatch as Colors.red.
+  /// If you give this function a standard Material color index 500 value,
+  /// eg `Colors.red[500]` it will not return the same swatch as `Colors.red`.
   /// This function is an approximation and gives an automated way of creating
   /// a material like primary swatch.
   ///
@@ -480,8 +480,8 @@ class ColorTools {
   /// If the color is a part of a black and white color swatch,
   /// then the Black or White color swatch will be returned.
   /// If the color is not in these swatches, it will create a
-  /// primary material swatch for the given color using the given color
-  /// as the mid [500] value and return this created custom primary color Swatch.
+  /// primary material swatch for the given color using the given color as
+  /// the mid 500 value and return this created custom primary color Swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static ColorSwatch<Object> blackAndWhiteSwatch(Color color) {
     final List<int> index = <int>[
@@ -545,7 +545,7 @@ class ColorTools {
   /// then the custom color swatch will be returned.
   /// If the color is not in these swatches, it will create a
   /// primary material swatch for the given color using the given color
-  /// as the mid [500] value and return this created custom primary color Swatch.
+  /// as the mid 500 value and return this created custom primary color Swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static ColorSwatch<Object> customSwatch(
       Color color, Map<ColorSwatch<Object>, String> customSwatch) {
@@ -600,12 +600,11 @@ class ColorTools {
   /// Returns the Material swatch name or custom color swatch name for a
   /// given color.
   ///
-  /// The name will include the color shade index if the flag [withIndex] is true.
-  ///
+  /// The name will include the color index if the flag [withIndex] is true.
   /// If the given color is not a material color or one of the accents colors,
-  /// an empty string is returned. THe function can also take as input an optional
-  /// custom color swatch to name map and return a custom name for any color found in
-  /// any of the custom color swatches in the map.
+  /// an empty string is returned. THe function can also take as input an
+  /// optional custom color swatch to name map and return a custom name for any
+  /// color found in any of the custom color swatches in the map.
   static String colorName(Color color,
       {Map<ColorSwatch<Object>, String> colorSwatchNameMap,
       bool withIndex = true}) {

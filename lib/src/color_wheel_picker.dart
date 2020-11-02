@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 // The ColorWheelPicker below is a rewrite of a similar picker in the package:
 // https://pub.dev/packages/flutter_hsvcolor_picker
-// The class WheelPicker in the above package was been re-purposed as the HSV color
-// wheel picker for ColorPicker and it has undergone major rewrites.
+// The class WheelPicker in the above package was been re-purposed as the HSV
+// color wheel picker for ColorPicker and it has undergone major rewrites.
 // Credit and original rights belong GitHub user:
 // https://github.com/ysdy44
 // that committed the original code. No license file is provided for the
@@ -52,7 +52,7 @@ class ColorWheelPicker extends StatefulWidget {
   /// The width of the color wheel in dp.
   final double wheelWidth;
 
-  /// Set to true to draw a border around the circle and rectangle color control.
+  /// Set to true to draw a border around the color controls.
   /// Defaults to false.
   final bool hasBorder;
 
@@ -152,8 +152,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       colorValue = _Wheel.vectorToValue(_vector.dy, _squareRadius)
           .clamp(0.0, 1.0) as double;
 
-      // Make a HSV color from its component values and convert to RGB and return
-      // this color in the callback
+      // Make a HSV color from its component values and convert to RGB and
+      // return this color in the callback.
       widget.onChanged(HSVColor.fromAHSV(
         color.alpha,
         colorHue,
@@ -165,7 +165,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     } else {
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
-      // Convert the color to normal RGB color before it is returned via callback
+      // Convert the color to normal RGB value before returning it via callback.
       widget.onChanged(HSVColor.fromAHSV(
         color.alpha,
         colorHue,
@@ -196,8 +196,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       colorValue = _Wheel.vectorToValue(_vector.dy, _squareRadius)
           .clamp(0.0, 1.0) as double;
 
-      // Make a HSV color from its component values and convert to RGB and return
-      // this color in the callback
+      // Make a HSV color from its component values and convert to RGB and
+      // return this color in the callback.
       widget.onChanged(
           HSVColor.fromAHSV(color.alpha, colorHue, colorSaturation, colorValue)
               .toColor());
@@ -206,7 +206,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     } else {
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
-      // Convert the color to normal RGB color before it is returned via callback
+      // Convert the color to normal RGB color before it is returned.
       widget.onChanged(HSVColor.fromAHSV(
         color.alpha,
         colorHue,

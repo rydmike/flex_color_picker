@@ -628,8 +628,8 @@ class _ColorPickerState extends State<ColorPicker> {
     // with explicit null values, in this case we do not want that so we still
     // check for nulls here as well and use default labels if null is given.
 
-    // Map of swatch choices and its widgets for the Cupertino segmented control,
-    // gets initialized in the initSelectedValue() function.
+    // Map of swatch choices and its widgets for the Cupertino segmented
+    // control, gets initialized in the initSelectedValue() function.
     final Map<ColorPickerType, Widget> pickerTypes = <ColorPickerType, Widget>{
       if (pickersEnabled[ColorPickerType.both])
         ColorPickerType.both: Padding(

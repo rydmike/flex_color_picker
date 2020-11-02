@@ -157,10 +157,6 @@ linter:
     # This project doesn't use Flutter-style todos
     flutter_style_todos: false
 
-    # Using this rule will sometimes force a line of 81 characters to be split in two.
-    # As long as we try to respect that 80 characters limit, going slightly above is fine.
-    lines_longer_than_80_chars: false
-
     # Disabled for now until we have NNBD, as it otherwise conflicts with `missing_return`
     no_default_cases: false
 

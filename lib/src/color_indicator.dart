@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// A Material widget used as a color indicator and color selector by the ColorPicker.
-/// Can also be used on its own as a color indicator e.g. in a LisTile widget.
+/// A Material widget used as a color indicator and color selector by the
+/// ColorPicker.
 ///
-/// The color indicator has adjustable, height, width, selection indicator icon and
-/// convenience properties for rounded corners and optional border.
+/// The color indicator can also be used on its own as a color indicator e.g.
+/// in a LisTile widget. It has adjustable, height, width, selection indicator
+/// icon and convenience properties for rounded corners and optional border.
 class ColorIndicator extends StatelessWidget {
   /// Default constructor
   const ColorIndicator({
