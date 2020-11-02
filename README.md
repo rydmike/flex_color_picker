@@ -145,7 +145,7 @@ First we define our custom colors and from our single color definitions we creat
   static const Color googleSecondaryVariant = Color(0xFF018786);
   static const Color googleError = Color(0xFFB00020);
   static const Color googleErrorDark = Color(0xFFCF6679);
-  static const Color mrBlue = Color(0xFF174378);
+  static const Color blueBlues = Color(0xFF174378);
 
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
@@ -156,20 +156,7 @@ First we define our custom colors and from our single color definitions we creat
     ColorTools.createAccentColor(googleSecondaryVariant): 'G Teal Variant',
     ColorTools.createPrimaryColor(googleError): 'G Error',
     ColorTools.createPrimaryColor(googleErrorDark): 'G Error Dark',
-    ColorTools.createPrimaryColor(mrBlue): 'MrBlue',
-  };
-```
-
-Create a `Map` from the `ColorPickerSwatch` enum values to a boolean value, that defines which color picker tools we want to show and use in the `ColorPicker`. In the example below we include Material primary, accent and the above custom colors plus the HSV color wheel, that allows us to select any color. We did not include the picker that combines the primary and accent colors in the same picker.
-
-```dart
-  static final Map<ColorPickerType, bool> pickersEnabled = <ColorPickerType, bool>{
-    ColorPickerType.both: false,
-    ColorPickerType.primary: true,
-    ColorPickerType.accent: true,
-    ColorPickerType.bw: false,
-    ColorPickerType.custom: true,
-    ColorPickerType.wheel: true,
+    ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
   };
 ```
 
@@ -218,6 +205,9 @@ We use another `ListTile` to display a `ColorIndicator`, that we style a bit dif
 
 Create a method to show the dialog. The `colorPickerDialog` is an asynchronous boolean function, that returns `true` if the user closed the dialog picker with the **Select** button. If **Cancel** was selected or user dismissed the dialog by clicking outside of it, `false` is returned.
 
+The `pickerEnabled` takes a map with `ColorPickerType` enum keys to a boolean values map. It defines which color pickers we want to show and use in the `ColorPicker`. In the example below we include Material primary, accent and the above custom colors, plus the HSV color wheel, that allows us to select any color. We did not include the picker that combines the primary and accent colors in the same picker nor the black and white shades picker.
+
+
 ```dart
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
@@ -244,7 +234,14 @@ Create a method to show the dialog. The `colorPickerDialog` is an asynchronous b
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      pickersEnabled: pickersEnabled,
+      pickersEnabled: const <ColorPickerType, bool>{
+        ColorPickerType.both: false,
+        ColorPickerType.primary: true,
+        ColorPickerType.accent: true,
+        ColorPickerType.bw: false,
+        ColorPickerType.custom: true,
+        ColorPickerType.wheel: true,
+      },
       customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,
