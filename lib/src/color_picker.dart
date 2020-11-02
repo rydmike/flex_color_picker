@@ -76,7 +76,7 @@ class ColorPicker extends StatefulWidget {
     this.wheelHasBorder = false,
     //
     // Color picker types shown and used by the color picker.
-    this.usedColorPickerTypes = const <ColorPickerType, bool>{
+    this.pickersEnabled = const <ColorPickerType, bool>{
       ColorPickerType.both: false,
       ColorPickerType.primary: true,
       ColorPickerType.accent: true,
@@ -128,12 +128,11 @@ class ColorPicker extends StatefulWidget {
         assert(elevation != null, 'Elevation cannot be null.'),
         assert(padding != null, 'Padding pixel value cannot be null.'),
         assert(spacing != null, 'Spacing pixel value cannot be null.'),
-        assert(
-            runSpacing != null, 'Run spacing pixel value cannot be null.'),
+        assert(runSpacing != null, 'Run spacing pixel value cannot be null.'),
         assert(pickerTypeLabels != null,
             'Segment selector labels cannot be null.'),
-        assert(usedColorPickerTypes != null,
-            'Used color picker types cannot be null.'),
+        assert(
+            pickersEnabled != null, 'Used color picker types cannot be null.'),
         assert(
             wheelDiameter == null ||
                 (wheelDiameter >= 100 && wheelDiameter <= 500),
@@ -225,7 +224,7 @@ class ColorPicker extends StatefulWidget {
   /// By default a map that that sets primary and accent pickers to true is
   /// used if no or a null map is given.
   /// Any undefined or missing enum keys in a given map are treated as false.
-  final Map<ColorPickerType, bool> usedColorPickerTypes;
+  final Map<ColorPickerType, bool> pickersEnabled;
 
   /// Heading widget for the color picker. Typically a Text widget,
   /// e.g. Text('Select color'). If not provided or null, there is no
@@ -487,7 +486,8 @@ class _ColorPickerState extends State<ColorPicker> {
   // We need a map we can guarantee has no gaps, so we make a local
   // version of it that is always complete,
   // gets initialized in the initSelectedValue() function.
-  Map<ColorPickerType, bool> pickerTypeEnabled;
+  Map<ColorPickerType, bool> pickersEnabled;
+  Map<ColorPickerType, bool> oldPickersEnabled;
 
   // A boolean that is only true when we have more than one
   // swatch group available, if there is just one picker enabled
@@ -503,25 +503,25 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void initState() {
-    super.initState();
-
     // Set the selected color to the widget constructor provided start color
     selectedColor = widget.color;
-
     // Initialize other values
-    initSelectedValue(true);
+    initSelectedValue(findPicker: true);
+    super.initState();
   }
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
     // Initialize the values again because the underlying widget changed.
-    initSelectedValue(false);
+    // If the available color picker selection was changed we need to find
+    // the picker again and set the findPicker option to true.
+    initSelectedValue(
+        findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
+    super.didUpdateWidget(oldWidget);
   }
 
-  void initSelectedValue(bool isInit) {
-    // Will not force update the saturation and value on wheel (H)SV part.
+  void initSelectedValue({bool findPicker = false}) {
+    // Init will not force update the saturation and value on wheel (H)SV part.
     forcedUpdate = false;
 
     // Set alignment to widget value, but if it is null, set it to center.
@@ -544,12 +544,12 @@ class _ColorPickerState extends State<ColorPicker> {
       ],
     };
 
-    // Set useCustomSwatch to false if not custom data for it was provided,
-    // even if using the swatch might have been true, we have to have some
+    // Set useCustomPicker to false if no custom data for it was provided,
+    // even if using custom picker might have been true, we have to have some
     // custom color swatches as well to be able to use them.
-    bool useCustomSwatch =
-        widget.usedColorPickerTypes[ColorPickerType.custom] ?? false;
-    if (widget.customColorSwatchesAndNames == null) useCustomSwatch = false;
+    bool useCustomPicker =
+        widget.pickersEnabled[ColorPickerType.custom] ?? false;
+    if (widget.customColorSwatchesAndNames == null) useCustomPicker = false;
 
     // Color picker type to boolean for each enabled case.
     // This local map of the widget provided version always contains defaults
@@ -558,54 +558,54 @@ class _ColorPickerState extends State<ColorPicker> {
     // provide values for any values that we want to deviate from the default
     // and keep the other values at default, a simple version of a
     // 'CopyWith' method.
-    pickerTypeEnabled = <ColorPickerType, bool>{
+    pickersEnabled = <ColorPickerType, bool>{
       ColorPickerType.both:
-          widget.usedColorPickerTypes[ColorPickerType.both] ?? false,
+          widget.pickersEnabled[ColorPickerType.both] ?? false,
       ColorPickerType.primary:
-          widget.usedColorPickerTypes[ColorPickerType.primary] ?? true,
+          widget.pickersEnabled[ColorPickerType.primary] ?? true,
       ColorPickerType.accent:
-          widget.usedColorPickerTypes[ColorPickerType.accent] ?? true,
-      ColorPickerType.bw:
-          widget.usedColorPickerTypes[ColorPickerType.bw] ?? false,
-      ColorPickerType.custom: useCustomSwatch,
+          widget.pickersEnabled[ColorPickerType.accent] ?? true,
+      ColorPickerType.bw: widget.pickersEnabled[ColorPickerType.bw] ?? false,
+      ColorPickerType.custom: useCustomPicker,
       ColorPickerType.wheel:
-          widget.usedColorPickerTypes[ColorPickerType.wheel] ?? true,
+          widget.pickersEnabled[ColorPickerType.wheel] ?? false,
     };
+    // debugPrint(pickersEnabled.toString());
 
     // We use the picker selector segment control only if more than one picker
     // is enabled in the color picker. If anybody ever reads this code
     // I admit, this kind of logic is a bit tricky. Imo looping over them and
     // counting the ones that are true and returning true if the count is > 1
     // is also imo more understandable, but this was interesting to try :)
-    usePickerSelector = pickerTypeEnabled.values
-            .fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) >
-        1;
+    usePickerSelector =
+        pickersEnabled.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) >
+            1;
 
     // If we have a picker selector, we will build with selected picker and
     // select the segment as active where we found the given active color.
     if (usePickerSelector) {
-      if (isInit) activePicker = findSwatchInSelector(selectedColor);
+      if (findPicker) activePicker = findColorInSelector(selectedColor);
       // If in a rebuild and the swatch was removed, we use the first one
       // that is still left in the segment control.
-      if (!pickerTypeEnabled.containsKey(activePicker)) {
-        activePicker = pickerTypeEnabled.keys.toList()[0];
+      if (!pickersEnabled.containsKey(activePicker)) {
+        activePicker = pickersEnabled.keys.toList()[0];
       }
     }
     // If we don't have segment control selector, we use the only
     // swatch selection that is is still true without showing a
     // segment control
     else {
-      if (pickerTypeEnabled[ColorPickerType.both]) {
+      if (pickersEnabled[ColorPickerType.both]) {
         activePicker = ColorPickerType.both;
-      } else if (pickerTypeEnabled[ColorPickerType.primary]) {
+      } else if (pickersEnabled[ColorPickerType.primary]) {
         activePicker = ColorPickerType.primary;
-      } else if (pickerTypeEnabled[ColorPickerType.accent]) {
+      } else if (pickersEnabled[ColorPickerType.accent]) {
         activePicker = ColorPickerType.accent;
-      } else if (pickerTypeEnabled[ColorPickerType.bw]) {
+      } else if (pickersEnabled[ColorPickerType.bw]) {
         activePicker = ColorPickerType.bw;
-      } else if (pickerTypeEnabled[ColorPickerType.custom]) {
+      } else if (pickersEnabled[ColorPickerType.custom]) {
         activePicker = ColorPickerType.custom;
-      } else if (pickerTypeEnabled[ColorPickerType.wheel]) {
+      } else if (pickersEnabled[ColorPickerType.wheel]) {
         activePicker = ColorPickerType.wheel;
       }
       // If they were all false we show the Material primary swatches.
@@ -631,7 +631,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // Map of swatch choices and its widgets for the Cupertino segmented control,
     // gets initialized in the initSelectedValue() function.
     final Map<ColorPickerType, Widget> pickerTypes = <ColorPickerType, Widget>{
-      if (pickerTypeEnabled[ColorPickerType.both])
+      if (pickersEnabled[ColorPickerType.both])
         ColorPickerType.both: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -641,7 +641,7 @@ class _ColorPickerState extends State<ColorPicker> {
             style: segmentTextStyle,
           ),
         ),
-      if (pickerTypeEnabled[ColorPickerType.primary])
+      if (pickersEnabled[ColorPickerType.primary])
         ColorPickerType.primary: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -651,7 +651,7 @@ class _ColorPickerState extends State<ColorPicker> {
             style: segmentTextStyle,
           ),
         ),
-      if (pickerTypeEnabled[ColorPickerType.accent])
+      if (pickersEnabled[ColorPickerType.accent])
         ColorPickerType.accent: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -661,7 +661,7 @@ class _ColorPickerState extends State<ColorPicker> {
             style: segmentTextStyle,
           ),
         ),
-      if (pickerTypeEnabled[ColorPickerType.bw])
+      if (pickersEnabled[ColorPickerType.bw])
         ColorPickerType.bw: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -671,7 +671,7 @@ class _ColorPickerState extends State<ColorPicker> {
             style: segmentTextStyle,
           ),
         ),
-      if (pickerTypeEnabled[ColorPickerType.custom])
+      if (pickersEnabled[ColorPickerType.custom])
         ColorPickerType.custom: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -681,7 +681,7 @@ class _ColorPickerState extends State<ColorPicker> {
             style: segmentTextStyle,
           ),
         ),
-      if (pickerTypeEnabled[ColorPickerType.wheel])
+      if (pickersEnabled[ColorPickerType.wheel])
         ColorPickerType.wheel: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
@@ -724,9 +724,9 @@ class _ColorPickerState extends State<ColorPicker> {
     // in it as a last resort.
     activeSwatch ??= activeColorSwatchList[0];
 
-    // The resulting used text theme: if null was passed in we assign it
+    // The resulting used text theme, if null was passed in we assign it
     // a default of Theme.of(context).textTheme.subtitle2;
-    final TextStyle _effectiveTextTheme =
+    final TextStyle effectiveTextTheme =
         widget.colorNameCodeTextStyle ?? Theme.of(context).textTheme.subtitle2;
 
     // A tooltip for copying the color code via an icon button
@@ -810,23 +810,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ),
               ),
             ),
-          // If show names of colors is enabled, we show the names,
-          // if we are not showing shade colors, then we show the complete name
-          // in the main color with code.
-          if (widget.showColorNameCode &&
-              !widget.enableShadesSelection &&
-              activePicker != ColorPickerType.wheel)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              // We use selectable text so it can be selected and copied.
-              child: SelectableText(
-                ColorTools.colorNameAndHexCode(selectedColor,
-                    colorSwatchNameMap: widget.customColorSwatchesAndNames),
-                style: _effectiveTextTheme,
-              ),
-            ),
           // The shades color selection part is only visible if enabled and we
-          // show sub-heading if we have one in such a case for the none
+          // show sub-heading (if we have one in such a case) for the none
           // wheel case.
           if (widget.subheading != null &&
               widget.enableShadesSelection &&
@@ -836,7 +821,7 @@ class _ColorPickerState extends State<ColorPicker> {
               child: widget.subheading,
             ),
           // The shades color selection part is only visible if enabled and
-          // we show sub-heading if we have one in such a case for the none
+          // we show sub-heading (if we have one in such a case) for the none
           // wheel case.
           if (widget.wheelSubheading != null &&
               widget.enableShadesSelection &&
@@ -857,8 +842,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ],
               ),
             ),
-          // Show the name and codes of selected shade color, if enabled.
-          if (widget.enableShadesSelection && widget.showColorNameCode)
+          // Show the name and codes of selected color, if enabled.
+          if (widget.showColorNameCode)
             Row(
               mainAxisAlignment: rowAlignment,
               children: <Widget>[
@@ -867,7 +852,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     selectedColor,
                     colorSwatchNameMap: widget.customColorSwatchesAndNames,
                   ),
-                  style: _effectiveTextTheme,
+                  style: effectiveTextTheme,
                 ),
                 // Icon button that copies the color code to the clipboard.
                 IconButton(
@@ -891,8 +876,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Build all the main colors in the active color swatch list.
   List<Widget> buildMainColors(List<ColorSwatch<Object>> colorSwatches) {
-    final double borderRadius =
-        widget.borderRadius ?? widget.width / 4.0;
+    final double borderRadius = widget.borderRadius ?? widget.width / 4.0;
     return <Widget>[
       for (final ColorSwatch<Object> colorSwatch in colorSwatches)
         ColorIndicator(
@@ -912,8 +896,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Build all the shade colors for the selected main color swatch.
   List<Widget> buildShadesColors(ColorSwatch<Object> color) {
-    final double borderRadius =
-        widget.borderRadius ?? widget.width / 4.0;
+    final double borderRadius = widget.borderRadius ?? widget.width / 4.0;
     return <Widget>[
       for (final Color color in getMaterialColorShades(color))
         ColorIndicator(
@@ -935,16 +918,16 @@ class _ColorPickerState extends State<ColorPicker> {
     ];
   }
 
-  // Locate in which available Cupertino segment with its color swatches a
-  // given color can be found in and return that picker type enum.
+  // Locate in which available picker with its color swatches a
+  // given color can be found in and return that pickers enum type.
   // This is used to activate the correct Cupertino segment for the provided
   // color, so that it can be selected and shown as selected.
-  ColorPickerType findSwatchInSelector(Color color) {
+  ColorPickerType findColorInSelector(Color color) {
     // Search for the given color in any of the swatches that are set
     // as available in the selector and return the swatch where we find
     // the color.
     for (final ColorPickerType key in typeToSwatchMap.keys) {
-      if (pickerTypeEnabled[key]) {
+      if (pickersEnabled[key]) {
         for (final ColorSwatch<Object> swatch in typeToSwatchMap[key]) {
           if (isShadeOfMain(swatch, color)) return key;
         }
@@ -953,7 +936,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // If we did not find the color in any of the swatches in the selector, we
     // will just return the first swatch available in the selector.
     for (final ColorPickerType key in typeToSwatchMap.keys) {
-      if (pickerTypeEnabled[key]) {
+      if (pickersEnabled[key]) {
         return key;
       }
     }

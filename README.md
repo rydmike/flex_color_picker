@@ -47,7 +47,7 @@ cd example/
 flutter run --release
 ```
 
-The result is a default picker with only the primary and accent color picker available, plus another picker that opens in a dialog, with all except picker 3 enabled.
+The result is a default picker with only the primary and accent color picker available, plus another picker that opens up in a dialog, with all pickers enabled, except 3 `ColorPickerType.both` and 4 `ColorPickerType.bw`.
 
 ![ColorPicker Basic](/resources/ColorPickerSimpleDemo.png)
 
@@ -55,7 +55,7 @@ The result is a default picker with only the primary and accent color picker ava
 
 You can also try a live web example of the ColorPicker [here](https://rydmike.com/democolorpicker). With the web demo you can modify many of the ColorPicker's API values and use it as a tool to find settings and a style that fits your application.
 
-The source code for the Web demo, which is just a slightly more elaborate example than the basic sample bundled with the package, is available separately [here](https://github.com/rydmike/color_picker_demo).
+The source code for the Web demo, which is a slightly more elaborate example than the basic sample bundled with the package, is available separately [here](https://github.com/rydmike/color_picker_demo).
 
 ![ColorPicker WEB demo](/resources/ColorPickerWebDemo.gif)
 
@@ -163,14 +163,13 @@ First we define our custom colors and from our single color definitions we creat
 Create a `Map` from the `ColorPickerSwatch` enum values to a boolean value, that defines which color picker tools we want to show and use in the `ColorPicker`. In the example below we include Material primary, accent and the above custom colors plus the HSV color wheel, that allows us to select any color. We did not include the picker that combines the primary and accent colors in the same picker.
 
 ```dart
-  static final Map<ColorPickerSwatch, bool> pickersEnabled =
-      <ColorPickerSwatch, bool>{
-    ColorPickerSwatch.both: false,
-    ColorPickerSwatch.material: true,
-    ColorPickerSwatch.accent: true,
-    ColorPickerSwatch.bw: true,
-    ColorPickerSwatch.custom: true,
-    ColorPickerSwatch.any: true,
+  static final Map<ColorPickerType, bool> pickersEnabled = <ColorPickerType, bool>{
+    ColorPickerType.both: false,
+    ColorPickerType.primary: true,
+    ColorPickerType.accent: true,
+    ColorPickerType.bw: false,
+    ColorPickerType.custom: true,
+    ColorPickerType.wheel: true,
   };
 ```
 
@@ -245,7 +244,7 @@ Create a method to show the dialog. The `colorPickerDialog` is an asynchronous b
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      usedColorPickerTypes: pickersEnabled,
+      pickersEnabled: pickersEnabled,
       customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,

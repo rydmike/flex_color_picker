@@ -38,6 +38,16 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   Color screenPickerColor;
   Color dialogPickerColor;
 
+  static final Map<ColorPickerType, bool> pickersEnabled =
+      <ColorPickerType, bool>{
+    ColorPickerType.both: false,
+    ColorPickerType.primary: true,
+    ColorPickerType.accent: true,
+    ColorPickerType.bw: false,
+    ColorPickerType.custom: true,
+    ColorPickerType.wheel: true,
+  };
+
   // Define some custom colors for the custom picker segment.
   static const Color googlePrimary = Color(0xFF6200EE);
   static const Color googlePrimaryVariant = Color(0xFF3700B3);
@@ -45,7 +55,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   static const Color googleSecondaryVariant = Color(0xFF018786);
   static const Color googleError = Color(0xFFB00020);
   static const Color googleErrorDark = Color(0xFFCF6679);
-  static const Color blueBlues = Color(0xFF174378);
+  static const Color mrBlue = Color(0xFF174378);
 
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
@@ -56,7 +66,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ColorTools.createAccentColor(googleSecondaryVariant): 'G Teal Variant',
     ColorTools.createPrimaryColor(googleError): 'G Error',
     ColorTools.createPrimaryColor(googleErrorDark): 'G Error Dark',
-    ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
+    ColorTools.createPrimaryColor(mrBlue): 'MrBlue',
   };
 
   @override
@@ -87,6 +97,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   child: Card(
                     elevation: 2,
                     child: ColorPicker(
+                      pickersEnabled: <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: false,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: true,
+                        ColorPickerType.wheel: true,
+                      },
+                      customColorSwatchesAndNames: colorsNameMap,
                       color: screenPickerColor,
                       onColorChanged: (Color color) =>
                           setState(() => screenPickerColor = color),
@@ -175,14 +194,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
-      pickersEnabled: const <ColorPickerType, bool>{
-        ColorPickerType.both: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.accent: true,
-        ColorPickerType.bw: false,
-        ColorPickerType.custom: true,
-        ColorPickerType.wheel: true,
-      },
+      pickersEnabled: pickersEnabled,
       customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,

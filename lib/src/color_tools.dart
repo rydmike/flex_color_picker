@@ -181,7 +181,7 @@ class ColorTools {
   /// These are none transparent shades of close to black values, useful when
   /// you want slightly off black values that are not transparent.
   static const ColorSwatch<Object> blackShade = ColorSwatch<Object>(
-    0xFF141414,
+    0xFF0A0A0A,
     <int, Color>{
       50: Color(0xFF121212),
       100: Color(0xFF111111),
@@ -201,14 +201,15 @@ class ColorTools {
   /// These are none transparent shades of close to white values, useful when
   /// you want slightly off white values that are not transparent.
   static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
-    0xFFEFEFEF,
+    0xFFFAFAFB,
     <int, Color>{
       50: Color(0xFFFFFFFF),
       100: Color(0xFFFEFEFE),
       200: Color(0xFFFDFDFD),
       300: Color(0xFFFCFCFC),
       400: Color(0xFFFBFBFB),
-      500: Color(0xFFFAFAFA),
+      // Last digit B on purpose to make value different from Grey[50].
+      500: Color(0xFFFAFAFB),
       600: Color(0xFFF9F9F9),
       700: Color(0xFFF8F8F8),
       800: Color(0xFFF7F7F7),
