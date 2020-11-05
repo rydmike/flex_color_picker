@@ -88,7 +88,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: dialogPickerColor,
         centerTitle: true,
         title: const Text('ColorPicker Demo'),
       ),
@@ -161,6 +160,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   },
                 ),
               ),
+
+              // Theme mode toggle
               SwitchListTile.adaptive(
                 title: const Text('Turn ON for dark mode'),
                 subtitle: const Text('Turn OFF for light mode'),

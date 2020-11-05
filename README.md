@@ -111,12 +111,11 @@ ColorPicker(
 ),
 ```
 
-You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of static helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use it in a `ListTile` `subtitle` property to describe the selected color. We show its Material color name and index, we also use `nameThatColor` function that will name any provided color, based on the closest matching color from a list consisting of 1566 named colors.
+You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of static helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use `ColorTools.colorNameAndHexCode` in a `ListTile` `subtitle` property to describe the selected color. We show its Material color name and index and Flutter style HEX code. We also use `ColorTools.nameThatColor` function, that will name any provided color based on the closest matching color from a list consisting of 1566 named colors.
 
 ```dart
 ListTile(
   title: const Text('Select color above to change this color'),
-  subtitle: Text(ColorTools.colorNameAndHexCode(screenPickerColor)),
   subtitle: Text('${ColorTools.colorNameAndHexCode(screenPickerColor)} '
                  'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
   trailing: ColorIndicator(
@@ -257,7 +256,9 @@ The `pickerEnabled` takes a map with `ColorPickerType` enum keys to a boolean va
   }
 ```
 
-The above example uses a few more styling properties, but most importantly it uses the `showPickerDialog` method to show the defined `ColorPicker` in a dialog. The dialog needs a context, so we pass it along to it.
+The above example uses a few more styling properties, to make it more compact and to show the general color name as well as the HEX color code of the selected color in the dialog. With the color code indicator you can also copy the color code with the copy icon button. When the wheel picker is active you can enter RGB hex color and the wheel will move to select the color matching the entered HEX code.
+
+Most importantly the above example uses the `showPickerDialog` method to show the defined `ColorPicker` in a pre-made dialog. The dialog needs a context, so we pass it along to it.
 
 We also define size constraints for the dialog. If you do not define size constraints, it will auto size to fit the dialog content. Using constraints allows the dialog to keep the same size when the content size changes slightly as you switch between the different color selection tools you enabled. It looks better if the dialog size does not change when you switch picker type with the selector. The color wheel picker in particular will often require a bit more space. The wheel size can be customized as well, it does however become more difficult to operate if it is made very small. In this example it is on purposes of the lower side of still usable size.
 
@@ -285,6 +286,8 @@ As can be seen below, now the selected color in the dialog changes the `AppBar`'
 You can connect the color to theme colors and modify your application's theme color values interactively as well, but that goes beyond the scope of this example.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemoAppBar.gif?raw=true" alt="ColorPicker appbar demo"/>
+
+The example also includes a light and dark theme mode toggle so you can test the look and operation of the color picker in dark mode.
 
 ## Going deeper
 
