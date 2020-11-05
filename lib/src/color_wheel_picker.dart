@@ -14,19 +14,26 @@ import 'package:flutter/material.dart';
 // Rewrites include, but are not limited to:
 // The original version did not work on scrolling surfaces due to:
 // https://github.com/flutter/flutter/issues/50776
-// It did not work on Flutter Web since it used un-implemented API on Web:
+// It did not work on Flutter Web since it used the sweep gradient which was an
+// un-implemented API on Flutter Web:
 // https://github.com/flutter/flutter/issues/57752
 // https://github.com/flutter/flutter/issues/41389
 // Both these Flutter issues were addressed in the rewrite by working
-// around them using alternative implementations.
+// around them using alternative implementations. The issues #57752 and #41389
+// concerning the un-implemented sweep gradient have now also been resolved
+// by the Flutter team by implementing the previously used not supported
+// API aon WEB as well. The work around implementation is still being used here
+// and is even preferred, since it results in a more accurate Hue wheel. The
+// previously used sweep gradient that did not work on Web was actually an
+// approximation of the hue values.
 
-/// A HSV color wheel based color picker for Flutter used by ColorPicker.
+/// A HSV color wheel based color picker for Flutter, used by ColorPicker.
 ///
 /// The color wheel picker uses a custom painter to draw the HSV color wheel
 /// and rectangle. It can also be used on its own in other color picker
 /// implementations.
 class ColorWheelPicker extends StatefulWidget {
-  /// Default constructor
+  /// Default constructor for the color wheel picker.
   const ColorWheelPicker({
     Key key,
     @required this.color,
@@ -34,19 +41,17 @@ class ColorWheelPicker extends StatefulWidget {
     this.wheelWidth = 16.0,
     this.hasBorder = false,
     this.borderColor,
-    this.forcedUpdate = false,
   })  : assert(color != null, 'A non null Color must be given.'),
         assert(wheelWidth != null && wheelWidth >= 4 && wheelWidth <= 50,
             'The Wheel width may not be null and must be between 4 and 50dp'),
         assert(hasBorder != null, 'May not be null'),
-        assert(forcedUpdate != null, 'May not be null'),
         super(key: key);
 
-  /// The starting color value.
+  /// The starting color value for the wheel color picker.
   final Color color;
 
-  /// Callback that returns the currently selected color in the color wheel as a
-  /// normal [Color].
+  /// Callback that returns the currently selected color in the color wheel as
+  /// a [Color].
   final ValueChanged<Color> onChanged;
 
   /// The width of the color wheel in dp.
@@ -56,16 +61,9 @@ class ColorWheelPicker extends StatefulWidget {
   /// Defaults to false.
   final bool hasBorder;
 
-  /// Color of the border around around the circle and rectangle control
-  /// Defaults to theme of context divider color.
+  /// Color of the border around around the circle and rectangle control.
+  /// Defaults to theme of context for the divider color.
   final Color borderColor;
-
-  /// Forced update is set to true by ColorPicker when the saturation or color
-  /// value in the underlying RGB color has changed saturation and value in
-  /// the corresponding HSV color. This occurs when user clicks the shade
-  /// selector under the color wheel and it causes a need to invalidate the
-  /// XY coordinates for the HSV colors saturation and value.
-  final bool forcedUpdate;
 
   @override
   _ColorWheelPickerState createState() => _ColorWheelPickerState();
@@ -90,34 +88,56 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   double colorSaturation;
   double colorValue;
 
+  // Hue was updated
+  bool internalColorChange;
+
   @override
   void initState() {
     colorHue = color.hue;
     colorSaturation = color.saturation;
     colorValue = color.value;
+    // Never an internal change on first init
+    internalColorChange = false;
     super.initState();
   }
 
   @override
   void didUpdateWidget(ColorWheelPicker oldWidget) {
-    if (widget.forcedUpdate) {
-      // The color value is the Y-axis on the shade square
-      if (color.value != colorValue) {
-        colorValue = color.value;
+    // If the color is being manipulated with this widget itself, it sets a
+    // flag called "internalColorChange" to true. If it is true, we do not
+    // want to react to didUpdateWidget change that potentially happens via
+    // onChanged callback also changing the widget.color value in via the
+    // parent. For internal updates we already know the color and its hue,
+    // saturation and value and do not want to update them.
+    // If we were to update them be calculating HSV again from incoming RGB
+    // color, we might change the current Hue and Color values due to rounding
+    // errors and also because if it is white or black, the hue and color values
+    // are 'undetermined' and moves us to "red" Hue and do wheel HSV values do
+    // not stay where we put them while operating the wheel.
+    if (!internalColorChange) {
+      // Change color wheel hue value
+      if (color.hue != colorHue) {
+        colorHue = color.hue;
       }
       // The color saturation is the X-axis on the shade square
       if (color.saturation != colorSaturation) {
         colorSaturation = color.saturation;
       }
+      // The color value is the Y-axis on the shade square
+      if (color.value != colorValue) {
+        colorValue = color.value;
+      }
     }
+    // We always set internalColorChange to false after
+    internalColorChange = false;
     super.didUpdateWidget(oldWidget);
   }
 
-  /// Get the widget color, but convert to HSV color that we need internally
+  // Get the widget color, but convert to HSV color that we need internally
   HSVColor get color => HSVColor.fromColor(widget.color);
 
-  /// Get the radius of the wheel, it is half of the shortest side of the
-  /// surrounding rectangle minus the defined width of the color wheel.
+  // Get the radius of the wheel, it is half of the shortest side of the
+  // surrounding rectangle minus the defined width of the color wheel.
   double wheelRadius(Size size) =>
       math.min(size.width, size.height).toDouble() / 2 - widget.wheelWidth;
   double squareRadius(double radius) =>
@@ -131,6 +151,10 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   }
 
   void onStart(Offset offset) {
+    // We are updating the color value internally, we do not want to react to
+    // didUpdateWidget updates of the color value passed back in to the widget.
+    internalColorChange = true;
+
     final RenderBox renderBox =
         paletteKey.currentContext.findRenderObject() as RenderBox;
     final Size _size = renderBox.size;
@@ -176,6 +200,10 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   }
 
   void onUpdate(Offset offset) {
+    // We are updating the color value internally, we do not want to react to
+    // didUpdateWidget updates of the color value passed back in to the widget.
+    internalColorChange = true;
+
     final RenderBox renderBox =
         paletteKey.currentContext.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
@@ -228,6 +256,12 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // event handler, so these drag events were used instead, works fine
       // as a workaround. See this issue for more info:
       // https://github.com/flutter/flutter/issues/50776
+      //
+      // Would be nicer if onPanDown worked, because then we could get
+      // co-ordinates on finger/mouse down, now we only get it after finger or
+      // mouse is down and we have moved it slightly, so it is not as nice as
+      // would like to have it, but since I have not seen any other resolution
+      // to the above Flutter issue yet, this is the best we can do for now.
       onVerticalDragStart: (DragStartDetails details) =>
           onStart(details.globalPosition),
       onVerticalDragUpdate: (DragUpdateDetails details) =>
@@ -415,6 +449,7 @@ class _WheelPainter extends CustomPainter {
   bool shouldRepaint(_WheelPainter other) => true;
 }
 
+// Draw the wheel part of the widget.
 class _Wheel {
   static double vectorToHue(Offset vector) =>
       (((math.atan2(vector.dy, vector.dx)) * 180.0 / math.pi) + 360.0) % 360.0;

@@ -3,32 +3,46 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 
 void main() => runApp(const ColorPickerDemo());
 
-class ColorPickerDemo extends StatelessWidget {
+class ColorPickerDemo extends StatefulWidget {
   const ColorPickerDemo({Key key}) : super(key: key);
+
+  @override
+  _ColorPickerDemoState createState() => _ColorPickerDemoState();
+}
+
+class _ColorPickerDemoState extends State<ColorPickerDemo> {
+  ThemeMode themeMode;
+
+  @override
+  void initState() {
+    themeMode = ThemeMode.light;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ColorPicker',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Colors.blueGrey[50],
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-        ),
-        buttonTheme: ButtonThemeData(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo),
-          textTheme: ButtonTextTheme.primary,
-        ),
+      theme: ThemeData.from(colorScheme: const ColorScheme.highContrastLight())
+          .copyWith(scaffoldBackgroundColor: Colors.grey[50]),
+      darkTheme:
+          ThemeData.from(colorScheme: const ColorScheme.highContrastDark()),
+      themeMode: themeMode,
+      home: ColorPickerPage(
+        themeMode: (ThemeMode mode) {
+          setState(() {
+            themeMode = mode;
+          });
+        },
       ),
-      home: const ColorPickerPage(),
     );
   }
 }
 
 class ColorPickerPage extends StatefulWidget {
-  const ColorPickerPage({Key key}) : super(key: key);
+  const ColorPickerPage({Key key, this.themeMode}) : super(key: key);
+  final ValueChanged<ThemeMode> themeMode;
 
   @override
   _ColorPickerPageState createState() => _ColorPickerPageState();
@@ -37,25 +51,28 @@ class ColorPickerPage extends StatefulWidget {
 class _ColorPickerPageState extends State<ColorPickerPage> {
   Color screenPickerColor;
   Color dialogPickerColor;
+  bool isDark;
 
   // Define some custom colors for the custom picker segment.
-  static const Color googlePrimary = Color(0xFF6200EE);
-  static const Color googlePrimaryVariant = Color(0xFF3700B3);
-  static const Color googleSecondary = Color(0xFF03DAC6);
-  static const Color googleSecondaryVariant = Color(0xFF018786);
-  static const Color googleError = Color(0xFFB00020);
-  static const Color googleErrorDark = Color(0xFFCF6679);
+  // The 'guide' color values are from
+  // https://material.io/design/color/the-color-system.html#color-theme-creation
+  static const Color guidePrimary = Color(0xFF6200EE);
+  static const Color guidePrimaryVariant = Color(0xFF3700B3);
+  static const Color guideSecondary = Color(0xFF03DAC6);
+  static const Color guideSecondaryVariant = Color(0xFF018786);
+  static const Color guideError = Color(0xFFB00020);
+  static const Color guideErrorDark = Color(0xFFCF6679);
   static const Color blueBlues = Color(0xFF174378);
 
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
-    ColorTools.createPrimaryColor(googlePrimary): 'G Purple',
-    ColorTools.createPrimaryColor(googlePrimaryVariant): 'G Purple Variant',
-    ColorTools.createAccentColor(googleSecondary): 'G Teal',
-    ColorTools.createAccentColor(googleSecondaryVariant): 'G Teal Variant',
-    ColorTools.createPrimaryColor(googleError): 'G Error',
-    ColorTools.createPrimaryColor(googleErrorDark): 'G Error Dark',
+    ColorTools.createPrimaryColor(guidePrimary): 'Guide Purple',
+    ColorTools.createPrimaryColor(guidePrimaryVariant): 'Guide Purple Variant',
+    ColorTools.createAccentColor(guideSecondary): 'Guide Teal',
+    ColorTools.createAccentColor(guideSecondaryVariant): 'Guide Teal Variant',
+    ColorTools.createPrimaryColor(guideError): 'Guide Error',
+    ColorTools.createPrimaryColor(guideErrorDark): 'Guide Error Dark',
     ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
   };
 
@@ -64,13 +81,14 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     super.initState();
     screenPickerColor = Colors.blue;
     dialogPickerColor = Colors.red;
+    isDark = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
+        // backgroundColor: dialogPickerColor,
         centerTitle: true,
         title: const Text('ColorPicker Demo'),
       ),
@@ -95,12 +113,13 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                       borderRadius: 22,
                       heading: Text(
                         'Select color',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                       subheading: Text(
                         'Select color shade',
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
+                      showMaterialName: true,
                     ),
                   ),
                 ),
@@ -110,7 +129,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               ListTile(
                 title: const Text('Select color above to change this color'),
                 subtitle:
-                    Text(ColorTools.colorNameAndHexCode(screenPickerColor)),
+                    Text('${ColorTools.colorNameAndHexCode(screenPickerColor)} '
+                        'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
                 trailing: ColorIndicator(
                   width: 44,
                   height: 44,
@@ -123,15 +143,13 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               ListTile(
                 title: const Text('Click this color to change it in a dialog'),
                 subtitle: Text(
-                  ColorTools.colorNameAndHexCode(
-                    dialogPickerColor,
-                    colorSwatchNameMap: colorsNameMap,
-                  ),
+                  '${ColorTools.colorNameAndHexCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+                  'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
                 ),
                 trailing: ColorIndicator(
                   width: 44,
                   height: 44,
-                  borderRadius: 3,
+                  borderRadius: 4,
                   color: dialogPickerColor,
                   onSelect: () async {
                     final Color colorBeforeDialog = dialogPickerColor;
@@ -143,6 +161,17 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   },
                 ),
               ),
+              SwitchListTile.adaptive(
+                title: const Text('Turn ON for dark mode'),
+                subtitle: const Text('Turn OFF for light mode'),
+                value: isDark,
+                onChanged: (bool value) {
+                  setState(() {
+                    isDark = value;
+                    widget.themeMode(isDark ? ThemeMode.dark : ThemeMode.light);
+                  });
+                },
+              )
             ],
           ),
         ),
@@ -155,13 +184,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       color: dialogPickerColor,
       onColorChanged: (Color color) =>
           setState(() => dialogPickerColor = color),
-      showColorNameCode: true,
       width: 40,
       height: 40,
-      borderRadius: 3,
-      hasBorder: true,
-      spacing: 3,
-      runSpacing: 3,
+      borderRadius: 4,
+      spacing: 6,
+      runSpacing: 6,
       wheelDiameter: 160,
       heading: Text(
         'Select color',
@@ -175,6 +202,12 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
+      showMaterialName: true,
+      showColorName: true,
+      showColorCode: true,
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.caption,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
@@ -187,7 +220,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ).showPickerDialog(
       context,
       constraints:
-          const BoxConstraints(minHeight: 445, minWidth: 400, maxWidth: 400),
+          const BoxConstraints(minHeight: 450, minWidth: 400, maxWidth: 400),
     );
   }
 }

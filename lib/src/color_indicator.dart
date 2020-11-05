@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 /// in a LisTile widget. It has adjustable, height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
 class ColorIndicator extends StatelessWidget {
-  /// Default constructor
+  /// Default constructor for the color indicator.
   const ColorIndicator({
     Key key,
     this.onSelect,

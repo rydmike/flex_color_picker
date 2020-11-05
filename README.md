@@ -17,9 +17,9 @@ Flex ColorPicker is a customizable color picker for Flutter. The `ColorPicker` c
 
 When you show more than one color picker, a segmented sliding control allows you to select which one to use. You can configure the `ColorPicker` to include any of the above color pickers. Showing pickers 1 and 2, together with picker 3 is not very useful, they are available as optional ways of showing and selecting the standard Material primary and accent colors.
 
-You provide the color picker with its heading and sub headings, typically Text widgets with appropriate style. You also define if the Material shades can be selected or not and if the selected color names and values are shown in the picker. If the color HEX RGB code is shown, the picker includes a button that allows you to copy the selected color code to the clipboard.
+Give the color picker a heading and a subheading for the color shades, typically Text widgets with appropriate style. Decide if the Material shades can be selected or not and if the selected color names and values are shown in the picker. If the color HEX RGB code is shown, the picker includes a button that allows you to copy the selected color code to the clipboard.
 
-The shape, size and spacing of the color picker items can be modified. There is a built in dialog that can be used to show and use the `ColorPicker` in a pre-made dialog. You can of course also make your own dialog and just use the color picker widget in your own custom dialog.
+The shape, size and spacing of the color picker items can be modified. There is a built in dialog that can be used to show and use the `ColorPicker` in a pre-made dialog. You can of course also make your own dialog and just use the color picker widget in your custom dialog.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-lower.png?raw=true" alt="ColorPicker variations lower"/>
 
@@ -111,12 +111,14 @@ ColorPicker(
 ),
 ```
 
-You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of statical helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use it in a `ListTile` `subtitle` property to describe the selected color.
+You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of static helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use it in a `ListTile` `subtitle` property to describe the selected color. We show its Material color name and index, we also use `nameThatColor` function that will name any provided color, based on the closest matching color from a list consisting of 1566 named colors.
 
 ```dart
 ListTile(
   title: const Text('Select color above to change this color'),
   subtitle: Text(ColorTools.colorNameAndHexCode(screenPickerColor)),
+  subtitle: Text('${ColorTools.colorNameAndHexCode(screenPickerColor)} '
+                 'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
   trailing: ColorIndicator(
     width: 44,
     height: 44,
@@ -139,24 +141,25 @@ For the dialog example we will show all the built in picker color selection opti
 First we define our custom colors and from our single color definitions we create primary and accent color swatches, by using `ColorTools.createPrimaryColor` or alternatively `ColorTools.createAccentColor` for accent color swatches. We add these color swatches to a `ColorSwatch` Map, that we map to our own custom names for our custom color swatches. You don't have to use the `ColorTools` to create the color swatches from a given single color, you can just as well define and use your own custom hand tuned `ColorSwatch` swatches, but the functions are convenient helpers that can make Material like color swatches from a single color.
 
 ```dart
-  // Define custom colors.
-  static const Color googlePrimary = Color(0xFF6200EE);
-  static const Color googlePrimaryVariant = Color(0xFF3700B3);
-  static const Color googleSecondary = Color(0xFF03DAC6);
-  static const Color googleSecondaryVariant = Color(0xFF018786);
-  static const Color googleError = Color(0xFFB00020);
-  static const Color googleErrorDark = Color(0xFFCF6679);
+  // Define custom colors. The 'guide' color values are from
+  // https://material.io/design/color/the-color-system.html#color-theme-creation
+  static const Color guidePrimary = Color(0xFF6200EE);
+  static const Color guidePrimaryVariant = Color(0xFF3700B3);
+  static const Color guideSecondary = Color(0xFF03DAC6);
+  static const Color guideSecondaryVariant = Color(0xFF018786);
+  static const Color guideError = Color(0xFFB00020);
+  static const Color guideErrorDark = Color(0xFFCF6679);
   static const Color blueBlues = Color(0xFF174378);
 
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
-    ColorTools.createPrimaryColor(googlePrimary): 'G Purple',
-    ColorTools.createPrimaryColor(googlePrimaryVariant): 'G Purple Variant',
-    ColorTools.createAccentColor(googleSecondary): 'G Teal',
-    ColorTools.createAccentColor(googleSecondaryVariant): 'G Teal Variant',
-    ColorTools.createPrimaryColor(googleError): 'G Error',
-    ColorTools.createPrimaryColor(googleErrorDark): 'G Error Dark',
+    ColorTools.createPrimaryColor(guidePrimary): 'Guide Purple',
+    ColorTools.createPrimaryColor(guidePrimaryVariant): 'Guide Purple Variant',
+    ColorTools.createAccentColor(guideSecondary): 'Guide Teal',
+    ColorTools.createAccentColor(guideSecondaryVariant): 'Guide Teal Variant',
+    ColorTools.createPrimaryColor(guideError): 'Guide Error',
+    ColorTools.createPrimaryColor(guideErrorDark): 'Guide Error Dark',
     ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
   };
 ```
@@ -182,15 +185,13 @@ We use another `ListTile` to display a `ColorIndicator`, that we style a bit dif
   ListTile(
     title: const Text('Click this color to change it in a dialog'),
     subtitle: Text(
-      ColorTools.colorNameAndHexCode(
-        dialogPickerColor,
-        colorSwatchNameMap: colorsNameMap,
-      ),
+      '${ColorTools.colorNameAndHexCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+      'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
     ),
     trailing: ColorIndicator(
       width: 44,
       height: 44,
-      borderRadius: 3,
+      borderRadius: 4,
       color: dialogPickerColor,
       onSelect: () async {
         final Color colorBeforeDialog = dialogPickerColor;
@@ -215,13 +216,11 @@ The `pickerEnabled` takes a map with `ColorPickerType` enum keys to a boolean va
       color: dialogPickerColor,
       onColorChanged: (Color color) =>
           setState(() => dialogPickerColor = color),
-      showNameSelected: true,
       width: 40,
       height: 40,
-      borderRadius: 3,
-      hasBorder: true,
-      spacing: 3,
-      runSpacing: 3,
+      borderRadius: 4,
+      spacing: 6,
+      runSpacing: 6,
       wheelDiameter: 160,
       heading: Text(
         'Select color',
@@ -235,6 +234,12 @@ The `pickerEnabled` takes a map with `ColorPickerType` enum keys to a boolean va
         'Selected color and its material like shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
+      showMaterialName: true,
+      showColorName: true,
+      showColorCode: true,
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.caption,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
@@ -247,7 +252,7 @@ The `pickerEnabled` takes a map with `ColorPickerType` enum keys to a boolean va
     ).showPickerDialog(
       context,
       constraints:
-          const BoxConstraints(minHeight: 445, minWidth: 400, maxWidth: 400),
+          const BoxConstraints(minHeight: 450, minWidth: 400, maxWidth: 400),
     );
   }
 ```
