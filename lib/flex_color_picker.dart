@@ -1,3 +1,5 @@
+/// A customizable Flutter primary, accent and custom color picker. Includes
+/// an optional HSV wheel color picker.
 library flex_color_picker;
 
 export 'src/color_indicator.dart' show ColorIndicator;

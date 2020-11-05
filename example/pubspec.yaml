@@ -7,7 +7,7 @@ environment:
 
 dependencies:
   flex_color_picker:
-    path: ../../flex_color_picker/
+    path: ../
 
   flutter:
     sdk: flutter
@@ -16,6 +16,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# The following section is specific to Flutter.
 flutter:
   uses-material-design: true

@@ -13,4 +13,4 @@ flutter run --release
 
 The result is a basic default picker on the canvas and one picker that opens in the provided dialog, which is configured to have a few more options present.
 
-![ColorPicker Basic](/resources/ColorPickerSimpleDemo.png)
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemo.png?raw=true" alt="ColorPicker Basic"/>

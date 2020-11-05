@@ -337,7 +337,7 @@ class ColorTools {
     }
     // Did not find the given color in a standard Material color swatch, make
     // a custom material primary swatch based on the given color and return it.
-    return createPrimaryColor(color);
+    return createPrimarySwatch(color);
   }
 
   // Found this little Material shade calculation gem here:
@@ -360,7 +360,7 @@ class ColorTools {
   /// returns the real Material swatch first for a color, if it is a standard
   /// Material primary color and then a Material like swatch, if it was
   /// not a standard material primary color hue.
-  static MaterialColor createPrimaryColor(Color color) {
+  static MaterialColor createPrimarySwatch(Color color) {
     final List<double> strengths = <double>[
       0.05,
       0.1,
@@ -422,7 +422,7 @@ class ColorTools {
     }
     // Did not find the given color in a standard Material accent swatch, make
     // a custom material accent swatch based on the given color and return it.
-    return createAccentColor(color);
+    return createAccentSwatch(color);
   }
 
   // This is an accentSwatch version made based on this gem:
@@ -434,7 +434,7 @@ class ColorTools {
   /// The provided color is used as the Accent swatch default color [200] in the
   /// returned swatch with lighter hues for lower index and darker shades
   /// for higher indexes.
-  static MaterialAccentColor createAccentColor(Color color) {
+  static MaterialAccentColor createAccentSwatch(Color color) {
     final List<double> strengths = <double>[0.1, 0.2, 0.4, 0.7];
     final Map<int, Color> swatch = <int, Color>{};
     final int r = color.red, g = color.green, b = color.blue;
@@ -507,7 +507,7 @@ class ColorTools {
     }
     // Did not find the given color in a standard Material color swatch,
     // so make a custom material swatch based on the given color and return it.
-    return createPrimaryColor(color);
+    return createPrimarySwatch(color);
   }
 
   /// Check if a color is included in a custom color swatches.
@@ -573,7 +573,7 @@ class ColorTools {
     }
     // Did not find the given color in the custom color swatch,
     // so make a custom material swatch based on the given color and return it.
-    return createPrimaryColor(color);
+    return createPrimarySwatch(color);
   }
 
   /// Returns the official Material color name for the color passed to it,
@@ -585,16 +585,16 @@ class ColorTools {
   /// names and their shade index. The function also accepts an optional
   /// color swatch to name map that can be used to look-up name of custom
   /// material like color swatches.
-  static String colorNameAndHexCode(Color color,
+  static String materialNameAndCode(Color color,
       {Map<ColorSwatch<Object>, String> colorSwatchNameMap}) {
     final String _name =
-        colorName(color, colorSwatchNameMap: colorSwatchNameMap);
+        materialName(color, colorSwatchNameMap: colorSwatchNameMap);
 
     if (_name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
-      return '(0x${colorHexCode(color)})';
+      return '(0x${colorCode(color)})';
     } else {
-      return '$_name (0x${colorHexCode(color)})';
+      return '$_name (0x${colorCode(color)})';
     }
   }
 
@@ -606,7 +606,7 @@ class ColorTools {
   /// an empty string is returned. THe function can also take as input an
   /// optional custom color swatch to name map and return a custom name for any
   /// color found in any of the custom color swatches in the map.
-  static String colorName(Color color,
+  static String materialName(Color color,
       {Map<ColorSwatch<Object>, String> colorSwatchNameMap,
       bool withIndex = true}) {
     List<int> index = <int>[
@@ -697,7 +697,7 @@ class ColorTools {
   }
 
   /// Return the color value as a HexCode string in uppercase.
-  static String colorHexCode(Color color) {
+  static String colorCode(Color color) {
     return color.value.toRadixString(16).toUpperCase();
   }
 

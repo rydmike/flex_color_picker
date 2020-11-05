@@ -4,8 +4,16 @@ All notable changes to the **ColorPicker** will be documented in this file.
 
 ## [1.0.0] - November 5, 2020
 * First official release.
-* Still pending minor check before publishing it on pub.dev. This row will be deleted when published on pub.dev.
-* Updated the Live web demo version to use the released package.
+* Example and documentation updated.
+* Updated the live Web demo version to use the released package.
+* New API: Added `shouldUpdate` to the color wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API that is not needed unless you make your own picker for scratch and you want to use the wheel picker in your picker.
+* Final API name tweaks before version 1.0.0 release:
+* Renamed: API `createPrimaryColor` -> `createPrimarySwatch`
+* Renamed: API `createAccentColor` -> `createAccentSwatch`
+* Renamed: API `colorNameAndHexCode` -> `materialNameAndCode`
+* Renamed: API `colorName` -> `materialName`
+* Renamed: API `colorHexCode` -> `colorCode`
+
 
 ## [1.0.0-dev.5] - November 5, 2020
 
@@ -14,7 +22,7 @@ All notable changes to the **ColorPicker** will be documented in this file.
 * New API `showColorName` to display an English color name for any selected color, not just the Material color names or custom named color swatches. It has text style that can be defined as well `colorNameTextStyle`.
 * New API `colorCodeIcon` that exposes the color code icon so it can be customized.
 * New API `enableTooltips` to enable current and future tooltips used in the picker. Currently only the copy color code button has a tooltip.
-* A new method was introduced in ColorTools called `nameThatColor(Color color)`. It returns a name for any color passed to it, only supports English names. It is based on a Dart port of http://chir.ag/projects/ntc.
+* A new method was introduced in ColorTools called `nameThatColor(Color color)`. It returns a name for any color passed to it, only supports English names. It is based on a Dart port of http://chir.ag/projects/ntc and it contains 1566 named colors. It matches a given color to the closest similar color and returns its name.
 * Updated the example.
 * Documentation updates.
 
@@ -39,7 +47,7 @@ All notable changes to the **ColorPicker** will be documented in this file.
 - [x] For the color wheel picker, add text input to get a given color based on entered HEX code.
 - [x] Add "name that color" function that can give a name to "any" color in English.
 - [x] Release version 1.0.0.
-- [ ] Publish version 1.0.0 on pub.dev.
+- [x] Publish version 1.0.0 on pub.dev.
 - [ ] Version 1.0.x: Add first set of tests for the ColorPicker and its supporting classes.
 - [ ] Version 1.1.0: Finalize the tests.
 - [ ] Maybe version 2.0.x: Add more color picker types.

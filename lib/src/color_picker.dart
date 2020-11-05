@@ -682,9 +682,9 @@ class _ColorPickerState extends State<ColorPicker> {
     };
 
     // We use the picker selector segment control only if more than one picker
-    // is enabled in the color picker. If anybody ever reads this code
-    // I admit, this kind of logic is a bit tricky. Imo looping over them and
-    // counting the ones that are true and returning true if the count is > 1
+    // is enabled in the color picker. If anybody ever reads this comment
+    // I admit, this kind of logic is a bit tricky. Imo looping over the items
+    // and counting the ones that are true and returning true if count is > 1,
     // is also imo more understandable, but this was interesting to try. :)
     usePickerSelector =
         pickersEnabled.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) >
@@ -821,8 +821,8 @@ class _ColorPickerState extends State<ColorPicker> {
             selectedColor, widget.customColorSwatchesAndNames);
       }
     }
-    // If we did not find the selected color in the active swatch list
-    // we set active swatch to the first swatch in active list, just
+    // Did not find the selected color in the active swatch list,
+    // set active swatch to the first swatch in active list, just
     // to get a selection, this is a fall back from an error situation
     // where a selected color was passed to the color picker that was
     // not found in any of the provided swatches in active pickers. Note that
@@ -951,7 +951,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   Padding(
                     padding: EdgeInsets.only(bottom: widget.columnSpacing),
                     child: Text(
-                      ColorTools.colorName(selectedColor,
+                      ColorTools.materialName(selectedColor,
                           colorSwatchNameMap:
                               widget.customColorSwatchesAndNames),
                       style: effectiveMaterialNameStyle,
@@ -1172,7 +1172,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     textController = _TextEditingControllerWithCursorPosition();
     textFocusNode = FocusNode();
     color = widget.color;
-    colorHexCode = ColorTools.colorHexCode(widget.color);
+    colorHexCode = ColorTools.colorCode(widget.color);
     // The colorHexCode is always a Flutter/Dart style '0xFFRRGGBB' style
     // String of the passed in color value, so this is safe. In other cases
     // you should consider possible parsing errors too:
@@ -1192,11 +1192,11 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
   void didUpdateWidget(covariant _ColorCodeField oldWidget) {
     if (oldWidget.color != widget.color) {
       color = widget.color;
-      colorHexCode = ColorTools.colorHexCode(widget.color);
+      colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
 
-    // TODO: Remove this when there is a fix for the Flutter issue:
+    // TODO: Remove when there is a fix for Flutter issue #48099.
     // https://github.com/flutter/flutter/issues/48099
     // On Web and Windows platform the `enableInteractiveSelection:false` does
     // not work, you can still select text. On Windows you can even delete/cut
@@ -1207,7 +1207,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     if (oldWidget.readOnly != widget.readOnly) {
       textController.clear();
       color = widget.color;
-      colorHexCode = ColorTools.colorHexCode(widget.color);
+      colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
     super.didUpdateWidget(oldWidget);
@@ -1237,13 +1237,6 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     final double iconSize = fontSize * 1.1;
     final double borderRadius = fontSize * 1.2;
     final double fieldWidth = fontSize * 10;
-
-    // debugPrint('Color code font size: $fontSize');
-    // debugPrint('Color code icon size: $iconSize');
-    // debugPrint('Color code border radius: $borderRadius');
-    // debugPrint('Color code field width: $fieldWidth');
-    // debugPrint('readOnly: ${widget.readOnly}');
-    // debugPrint('enableInteractiveSelection: ${!widget.readOnly}');
 
     return SizedBox(
       width: fieldWidth,
@@ -1295,7 +1288,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
             onPressed: () {
               Clipboard.setData(
                 ClipboardData(
-                  text: '0x${ColorTools.colorHexCode(color)}',
+                  text: '0x${ColorTools.colorCode(color)}',
                 ),
               );
             },

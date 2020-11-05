@@ -60,10 +60,12 @@ class ColorWheelPicker extends StatefulWidget {
   final double wheelWidth;
 
   /// Set to true to draw a border around the color controls.
+  ///
   /// Defaults to false.
   final bool hasBorder;
 
   /// Color of the border around around the circle and rectangle control.
+  ///
   /// Defaults to theme of context for the divider color.
   final Color borderColor;
 
@@ -97,9 +99,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   double colorSaturation;
   double colorValue;
 
-  // TODO Remove Hue was updated
-  // bool internalColorChange = false;
-
   @override
   void initState() {
     colorHue = color.hue;
@@ -111,10 +110,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   @override
   void didUpdateWidget(ColorWheelPicker oldWidget) {
     // Only if widget.shouldUpdate is true will we change color. It is set to
-    // tru by parent when it has updated the widget.color value and it needs
-    // to updated the custom painted color wheel.
-    // If the color is being manipulated with this widget itself
-
+    // true by parent when it has updated the widget.color value and it needs
+    // to update the custom painted color wheel.
     if (widget.shouldUpdate) {
       // Change color wheel hue value
       if (color.hue != colorHue) {

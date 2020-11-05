@@ -67,13 +67,13 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
-    ColorTools.createPrimaryColor(guidePrimary): 'Guide Purple',
-    ColorTools.createPrimaryColor(guidePrimaryVariant): 'Guide Purple Variant',
-    ColorTools.createAccentColor(guideSecondary): 'Guide Teal',
-    ColorTools.createAccentColor(guideSecondaryVariant): 'Guide Teal Variant',
-    ColorTools.createPrimaryColor(guideError): 'Guide Error',
-    ColorTools.createPrimaryColor(guideErrorDark): 'Guide Error Dark',
-    ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
+    ColorTools.createPrimarySwatch(guidePrimary): 'Guide Purple',
+    ColorTools.createPrimarySwatch(guidePrimaryVariant): 'Guide Purple Variant',
+    ColorTools.createAccentSwatch(guideSecondary): 'Guide Teal',
+    ColorTools.createAccentSwatch(guideSecondaryVariant): 'Guide Teal Variant',
+    ColorTools.createPrimarySwatch(guideError): 'Guide Error',
+    ColorTools.createPrimarySwatch(guideErrorDark): 'Guide Error Dark',
+    ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
   };
 
   @override
@@ -142,7 +142,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               ListTile(
                 title: const Text('Select color above to change this color'),
                 subtitle:
-                    Text('${ColorTools.colorNameAndHexCode(screenPickerColor)} '
+                    Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
                         'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
                 trailing: ColorIndicator(
                   width: 44,
@@ -156,7 +156,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               ListTile(
                 title: const Text('Click this color to change it in a dialog'),
                 subtitle: Text(
-                  '${ColorTools.colorNameAndHexCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+                  '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
                   'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
                 ),
                 trailing: ColorIndicator(

@@ -287,6 +287,10 @@ You can connect the color to theme colors and modify your application's theme co
 
 The example also includes a light and dark theme mode toggle so you can test the look and operation of the color picker in dark mode.
 
+Flex ColorPicker works on all Flutter platforms, Android, iOS, Web, Windows, MacOS and Linux. Here is an example of the demo application running on Windows desktop.
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
+
 ## Going deeper
 
 The above introduction was a walk through of the bundled example, please see the example section for the complete source code.
