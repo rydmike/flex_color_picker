@@ -163,6 +163,13 @@ linter:
     # Conflicts with 'always_specify_types' that is used, so then we can't have this rule either.
     omit_local_variable_types: false
 
+    # We want to create other instances classes via static helpers in another
+    # class. This lint rules complains about that too. I'm OK with it preferring it
+    # if we use statics to create an instance from within the same class.
+    # But this lint rule sometimes complains of the above usage too. It did not
+    # always do that, seems to be a new thing.
+    prefer_constructors_over_static_methods: false
+
     # Conflicts with `prefer_single_quotes`
     # Single quotes are easier to type and don't compromise on readability. If you don't mind mixing
     # and matching then turning OFF `prefer_single_quotes` works too, but I thought it was cleaner

@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
-        "FFRRGGBB"
+        "FFRRGGBB",
+        "interps"
     ],
     "cSpell.ignoreWords": [
         "masala",
         "paco"
-    ]
+    ],
+    "dart.flutterSdkPath": "C:\\Users\\mryds\\fvm\\versions\\dev"
 }

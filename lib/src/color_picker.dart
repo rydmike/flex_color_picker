@@ -606,8 +606,16 @@ class _ColorPickerState extends State<ColorPicker> {
   // The content alignment
   CrossAxisAlignment alignment;
 
+  // Wheel picker should update? Whenever the wheel picker is updated outside
+  // the wheel picker, we need to send a signal back that it should update.
+  bool wheelShouldUpdate = true;
+
   @override
   void initState() {
+    // Always update the wheel when ColorPicker is initialized, but not in
+    // didUpdateWidget.
+    wheelShouldUpdate = true;
+
     // Set the selected color to the widget constructor provided start color
     selectedColor = widget.color;
     // Initialize other values
@@ -886,8 +894,13 @@ class _ColorPickerState extends State<ColorPicker> {
                   color: selectedColor,
                   wheelWidth: widget.wheelWidth,
                   hasBorder: widget.wheelHasBorder,
+                  shouldUpdate: wheelShouldUpdate,
                   onChanged: (Color color) {
                     setState(() {
+                      // Always on a color change callback from the wheel, set
+                      // wheelShouldUpdate to false, it already knows its color,
+                      // only if it is modified externally should it update.
+                      wheelShouldUpdate = false;
                       selectedColor = color;
                       widget.onColorChanged(selectedColor);
                     });
@@ -970,6 +983,9 @@ class _ColorPickerState extends State<ColorPicker> {
               onColorChanged: (Color color) {
                 setState(() {
                   selectedColor = color;
+                  // Color changed outside wheel picker, the code was edited,
+                  // it should update!
+                  wheelShouldUpdate = true;
                   if (widget.onColorChanged != null) {
                     widget.onColorChanged(color);
                   }
@@ -1052,6 +1068,9 @@ class _ColorPickerState extends State<ColorPicker> {
   // A color was selected, update state and notify parent via callback.
   void onColorSelected(Color color) {
     setState(() {
+      // Color changed outside wheel picker, a new shade or color was
+      // selected outside the wheel, it should update!
+      wheelShouldUpdate = true;
       selectedColor = color;
       if (widget.onColorChanged != null) widget.onColorChanged(color);
     });

@@ -41,10 +41,12 @@ class ColorWheelPicker extends StatefulWidget {
     this.wheelWidth = 16.0,
     this.hasBorder = false,
     this.borderColor,
+    this.shouldUpdate = false,
   })  : assert(color != null, 'A non null Color must be given.'),
         assert(wheelWidth != null && wheelWidth >= 4 && wheelWidth <= 50,
             'The Wheel width may not be null and must be between 4 and 50dp'),
-        assert(hasBorder != null, 'May not be null'),
+        assert(hasBorder != null, 'Has border may not be null'),
+        assert(shouldUpdate != null, 'shouldUpdate may not be null'),
         super(key: key);
 
   /// The starting color value for the wheel color picker.
@@ -64,6 +66,13 @@ class ColorWheelPicker extends StatefulWidget {
   /// Color of the border around around the circle and rectangle control.
   /// Defaults to theme of context for the divider color.
   final Color borderColor;
+
+  /// If the widget color update should also update the wheel, set to true.
+  /// This should be set to true by parent every time [color] has been updated
+  /// by parent and not internally by operating the wheel.
+  ///
+  /// Defaults to false.
+  final bool shouldUpdate;
 
   @override
   _ColorWheelPickerState createState() => _ColorWheelPickerState();
@@ -88,33 +97,25 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   double colorSaturation;
   double colorValue;
 
-  // Hue was updated
-  bool internalColorChange;
+  // TODO Remove Hue was updated
+  // bool internalColorChange = false;
 
   @override
   void initState() {
     colorHue = color.hue;
     colorSaturation = color.saturation;
     colorValue = color.value;
-    // Never an internal change on first init
-    internalColorChange = false;
     super.initState();
   }
 
   @override
   void didUpdateWidget(ColorWheelPicker oldWidget) {
-    // If the color is being manipulated with this widget itself, it sets a
-    // flag called "internalColorChange" to true. If it is true, we do not
-    // want to react to didUpdateWidget change that potentially happens via
-    // onChanged callback also changing the widget.color value in via the
-    // parent. For internal updates we already know the color and its hue,
-    // saturation and value and do not want to update them.
-    // If we were to update them be calculating HSV again from incoming RGB
-    // color, we might change the current Hue and Color values due to rounding
-    // errors and also because if it is white or black, the hue and color values
-    // are 'undetermined' and moves us to "red" Hue and do wheel HSV values do
-    // not stay where we put them while operating the wheel.
-    if (!internalColorChange) {
+    // Only if widget.shouldUpdate is true will we change color. It is set to
+    // tru by parent when it has updated the widget.color value and it needs
+    // to updated the custom painted color wheel.
+    // If the color is being manipulated with this widget itself
+
+    if (widget.shouldUpdate) {
       // Change color wheel hue value
       if (color.hue != colorHue) {
         colorHue = color.hue;
@@ -128,14 +129,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorValue = color.value;
       }
     }
-    // We always set internalColorChange to false after
-    internalColorChange = false;
     super.didUpdateWidget(oldWidget);
   }
 
   // Get the widget color, but convert to HSV color that we need internally
   HSVColor get color => HSVColor.fromColor(widget.color);
-
   // Get the radius of the wheel, it is half of the shortest side of the
   // surrounding rectangle minus the defined width of the color wheel.
   double wheelRadius(Size size) =>
@@ -151,10 +149,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   }
 
   void onStart(Offset offset) {
-    // We are updating the color value internally, we do not want to react to
-    // didUpdateWidget updates of the color value passed back in to the widget.
-    internalColorChange = true;
-
     final RenderBox renderBox =
         paletteKey.currentContext.findRenderObject() as RenderBox;
     final Size _size = renderBox.size;
@@ -200,10 +194,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   }
 
   void onUpdate(Offset offset) {
-    // We are updating the color value internally, we do not want to react to
-    // didUpdateWidget updates of the color value passed back in to the widget.
-    internalColorChange = true;
-
     final RenderBox renderBox =
         paletteKey.currentContext.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
@@ -223,7 +213,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // Calculate the color value
       colorValue = _Wheel.vectorToValue(_vector.dy, _squareRadius)
           .clamp(0.0, 1.0) as double;
-
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
       widget.onChanged(

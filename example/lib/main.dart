@@ -78,10 +78,10 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 
   @override
   void initState() {
-    super.initState();
     screenPickerColor = Colors.blue;
     dialogPickerColor = Colors.red;
     isDark = false;
+    super.initState();
   }
 
   @override
