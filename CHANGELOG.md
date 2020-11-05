@@ -2,6 +2,11 @@
 
 All notable changes to the **ColorPicker** will be documented in this file.
 
+## [1.0.0] - November 5, 2020
+* First official release.
+* Still pending minor check before publishing it on pub.dev. This row will be deleted when published on pub.dev.
+* Updated the Live web demo version to use the released package.
+
 ## [1.0.0-dev.5] - November 5, 2020
 
 * Added a feature on the wheel color picker that enables entry of a hex RGB value to select a color.
@@ -33,7 +38,8 @@ All notable changes to the **ColorPicker** will be documented in this file.
 - [x] Fix doc images that show up OK in Github readme.md, but not on pub.dev.
 - [x] For the color wheel picker, add text input to get a given color based on entered HEX code.
 - [x] Add "name that color" function that can give a name to "any" color in English.
-- [ ] Release version 1.0.0.
+- [x] Release version 1.0.0.
+- [ ] Publish version 1.0.0 on pub.dev.
 - [ ] Version 1.0.x: Add first set of tests for the ColorPicker and its supporting classes.
 - [ ] Version 1.1.0: Finalize the tests.
 - [ ] Maybe version 2.0.x: Add more color picker types.

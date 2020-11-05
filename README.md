@@ -1,7 +1,5 @@
 # Flex ColorPicker
 
-**NOTE:** This is a development preview release. The package is still under development. The API may still be modified before its first official release.
-
 Flex ColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used for the pick items can be customized.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
@@ -95,7 +93,7 @@ ColorPicker(
 
 The result will look like this:
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPicker01.png?raw=true" alt="ColorPicker default"/>
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPicker01.png?raw=true" alt="ColorPicker default" width="300"/>
 
 Change the pick item style, by giving it a defined size and let's make it circular:
 
@@ -129,7 +127,7 @@ ListTile(
 
 This gives us round color pick items and an indicator for the selected color:
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPicker02.png?raw=true" alt="ColorPicker round with indicator"/>
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPicker02.png?raw=true" alt="ColorPicker round with indicator" width="300"/>
 
 ## ColorPicker as a Dialog
 
@@ -266,7 +264,7 @@ The end result of the above setup is a `ListTile` where the trailing color indic
 
 As the `dialogPickerColor` color is changed in the dialog, the `ColorIndicator`'s color also changes interactively. If the selection is cancelled the `ColorIndicator`'s original color is restored.
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemo.gif?raw=true" alt="ColorPicker dialog demo"/>
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemo.gif?raw=true" alt="ColorPicker dialog demo" width="300"/>
 
 
 As an extra exercise, and to better see this interactive change of the color when it is modified in the dialog, try connecting the `dialogPickerColor` value to the `AppBar`'s `backgroundColor` property. Did you manage to do it? What happened?
@@ -285,7 +283,7 @@ As can be seen below, now the selected color in the dialog changes the `AppBar`'
 
 You can connect the color to theme colors and modify your application's theme color values interactively as well, but that goes beyond the scope of this example.
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemoAppBar.gif?raw=true" alt="ColorPicker appbar demo"/>
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemoAppBar.gif?raw=true" alt="ColorPicker appbar demo" width="300"/>
 
 The example also includes a light and dark theme mode toggle so you can test the look and operation of the color picker in dark mode.
 
