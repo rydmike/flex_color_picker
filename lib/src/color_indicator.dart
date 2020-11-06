@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// ColorPicker.
 ///
 /// The color indicator can also be used on its own as a color indicator e.g.
-/// in a LisTile widget. It has adjustable, height, width, selection indicator
+/// in a ListTile widget. It has adjustable, height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
 class ColorIndicator extends StatelessWidget {
   /// Default constructor for the color indicator.
