@@ -291,10 +291,12 @@ Flex ColorPicker works on all Flutter platforms, Android, iOS, Web, Windows, Mac
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
 
-## Going deeper
+## Additional resources
 
-The above introduction was a walk through of the bundled example, please see the example section for the complete source code.
+The above introduction was a walk through of the bundled example, please see the [example section](https://pub.dev/packages/flex_color_picker/example) for the complete source code.
 
-There are more configuration options available for the `ColorPicker`. Use the API reference guide for additional information. You can also study the more complete [live web example](https://rydmike.com/democolorpicker/) and its [source code](https://github.com/rydmike/color_picker_demo).
+There are more configuration options available for the `ColorPicker`, use the [API reference guide](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for additional information.
+
+You can also try the more complete [live web example](https://rydmike.com/democolorpicker/) and study its [source code here](https://github.com/rydmike/color_picker_demo).
 
 Happy color picking!
