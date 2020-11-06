@@ -109,12 +109,12 @@ ColorPicker(
 ),
 ```
 
-You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of static helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use `ColorTools.colorNameAndHexCode` in a `ListTile` `subtitle` property to describe the selected color. We show its Material color name and index and Flutter style HEX code. We also use `ColorTools.nameThatColor` function, that will name any provided color based on the closest matching color from a list consisting of 1566 named colors.
+You can use same the `ColorIndicator` Widget that the `ColorPicker` uses internally as a color indicator. Here we use it in a `ListTile` as its trailing property to show the selected color. The `ColorPicker` also includes `ColorTools`, a set of static helper functions, that you can use to display names of the standard material colors and their shade index value, as well as an optional Flutter style Hex color code. Below we use `ColorTools.materialNameAndCode` in a `ListTile` `subtitle` property to describe the selected color. We show its Material color name and index and Flutter style HEX code. We also use `ColorTools.nameThatColor` function, that will name any provided color based on the closest matching color from a list consisting of 1566 named colors.
 
 ```dart
 ListTile(
   title: const Text('Select color above to change this color'),
-  subtitle: Text('${ColorTools.colorNameAndHexCode(screenPickerColor)} '
+  subtitle: Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
                  'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
   trailing: ColorIndicator(
     width: 44,
@@ -135,7 +135,7 @@ A common use case for a color picker is to show a color selection widget and all
 
 For the dialog example we will show all the built in picker color selection options, except the one that shows both primary and accent colors in the same picker and we also add custom colors to the **Custom** colors section of the `ColorPicker`.
 
-First we define our custom colors and from our single color definitions we create primary and accent color swatches, by using `ColorTools.createPrimaryColor` or alternatively `ColorTools.createAccentColor` for accent color swatches. We add these color swatches to a `ColorSwatch` Map, that we map to our own custom names for our custom color swatches. You don't have to use the `ColorTools` to create the color swatches from a given single color, you can just as well define and use your own custom hand tuned `ColorSwatch` swatches, but the functions are convenient helpers that can make Material like color swatches from a single color.
+First we define our custom colors and from our single color definitions we create primary and accent color swatches, by using `ColorTools.createPrimarySwatch` or alternatively `ColorTools.createAccentSwatch` for accent color swatches. We add these color swatches to a `ColorSwatch` Map, that we map to our own custom names for our custom color swatches. You don't have to use the `ColorTools` to create the color swatches from a given single color, you can just as well define and use your own custom hand tuned `ColorSwatch` swatches, but the functions are convenient helpers that can make Material like color swatches from a single color.
 
 ```dart
   // Define custom colors. The 'guide' color values are from
@@ -151,13 +151,13 @@ First we define our custom colors and from our single color definitions we creat
   // Make a custom color swatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
-    ColorTools.createPrimaryColor(guidePrimary): 'Guide Purple',
-    ColorTools.createPrimaryColor(guidePrimaryVariant): 'Guide Purple Variant',
-    ColorTools.createAccentColor(guideSecondary): 'Guide Teal',
-    ColorTools.createAccentColor(guideSecondaryVariant): 'Guide Teal Variant',
-    ColorTools.createPrimaryColor(guideError): 'Guide Error',
-    ColorTools.createPrimaryColor(guideErrorDark): 'Guide Error Dark',
-    ColorTools.createPrimaryColor(blueBlues): 'Blue blues',
+    ColorTools.createPrimarySwatch(guidePrimary): 'Guide Purple',
+    ColorTools.createPrimarySwatch(guidePrimaryVariant): 'Guide Purple Variant',
+    ColorTools.createAccentSwatch(guideSecondary): 'Guide Teal',
+    ColorTools.createAccentSwatch(guideSecondaryVariant): 'Guide Teal Variant',
+    ColorTools.createPrimarySwatch(guideError): 'Guide Error',
+    ColorTools.createPrimarySwatch(guideErrorDark): 'Guide Error Dark',
+    ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
   };
 ```
 
@@ -182,7 +182,7 @@ We use another `ListTile` to display a `ColorIndicator`, that we style a bit dif
   ListTile(
     title: const Text('Click this color to change it in a dialog'),
     subtitle: Text(
-      '${ColorTools.colorNameAndHexCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+      '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
       'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
     ),
     trailing: ColorIndicator(
