@@ -3,25 +3,47 @@ import 'package:flutter/material.dart';
 
 /// Static color tool functions used internally by the Flex ColorPicker.
 ///
-/// These color helpers can be used on their own outside the Flex ColorPicker
-/// if so desired. Available functions include:
-/// * English names for the Material primary and accent colors.
+/// These color helpers can also be used on their own outside the Flex
+/// ColorPicker if so desired. Available functions include:
+///
+/// * Get English name strings for the Material primary and accent colors.
 /// * Maps of color swatches to their names.
-/// * Check if a given color belongs to a color swatch.
-/// * Get the swatch a color belongs to.
+/// * Functions to check if a given color belongs to a given color swatch.
+/// * Find the swatch a color belongs to.
 /// * Create material and accent like swatches of a single color.
-/// * Get the color name of a color belonging to a color swatch and its index.
+/// * Get the color name of a color belonging to a swatch and its swatch index.
+/// * A "name that color" function that gives an English name to any color.
+///
+/// The static color names are not const on purpose, they have default values
+/// for their English Material color names. If you need to translate them
+/// setup a function that modifies them as needed once in your app,
+/// something simple like this may be all you need:
+///
+/// ```
+/// void main() {
+///   translateColorNames();
+///   runApp(const ColorPickerDemo());
+/// }
+///
+/// void translateColorNames() {
+/// ColorTools.redName = 'Röd';
+/// ColorTools.blueName = 'Blå';
+///   :
+/// }
+/// ```
+/// In a real app you would be using translated strings from whatever
+/// translation tool you are using and not just two Swedish examples.
 class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
   ColorTools._();
 
-  // This Material colors swatch list also exists in the Flutter
-  // SDK in colors.dart as a static const [Colors.primaries],
-  // but that list excludes grey and this picker want to include it too,
-  // hence this custom version of the Material primary colors list.
-
   /// List of all the standard Material primary color swatches.
+  ///
+  /// A Material primary colors swatch list also exists in the Flutter
+  /// SDK in colors.dart as a static const [Colors.primaries],
+  /// but that list excludes grey. To make the grey color available to the
+  /// color picker this list includes it as well.
   static const List<ColorSwatch<Object>> primaryColors = <ColorSwatch<Object>>[
     Colors.red,
     Colors.pink,
@@ -45,67 +67,67 @@ class ColorTools {
   ];
 
   // Static string names for all the material primary colors
-  /// English name for Material red color.
+
+  /// Name of Material red color. Default value is its English name.
   static String redName = 'Red';
 
-  /// English name for Material pink color.
+  /// Name of Material pink color. Default value is its English name.
   static String pinkName = 'Pink';
 
-  /// English name for Material purple color.
+  /// English name for Material purple color. Default value is its English name.
   static String purpleName = 'Purple';
 
-  /// English name for Material deep purple color.
+  /// Name of Material deep purple color. Default value is its English name.
   static String deepPurpleName = 'Deep purple';
 
-  /// English name for Material indigo color.
+  /// Name of Material indigo color. Default value is its English name.
   static String indigoName = 'Indigo';
 
-  /// English name for Material blue color.
+  /// English name for Material blue color. Default value is its English name.
   static String blueName = 'Blue';
 
-  /// English name for Material light blue color.
+  /// Name of Material light blue color. Default value is its English name.
   static String lightBlueName = 'Light blue';
 
-  /// English name for Material cyan color.
+  /// Name of Material cyan color. Default value is its English name.
   static String cyanName = 'Cyan';
 
-  /// English name for Material teal color.
+  /// Name of Material teal color. Default value is its English name.
   static String tealName = 'Teal';
 
-  /// English name for Material green color.
+  /// Name of Material green color. Default value is its English name.
   static String greenName = 'Green';
 
-  /// English name for Material light green color.
+  /// Name of Material light green color. Default value is its English name.
   static String lightGreenName = 'Light green';
 
-  /// English name for Material lime color.
+  /// Name of Material lime color. Default value is its English name.
   static String limeName = 'Lime';
 
-  /// English name for Material yellow color.
+  /// Name of Material yellow color. Default value is its English name.
   static String yellowName = 'Yellow';
 
-  /// English name for Material amber color.
+  /// Name of Material amber color. Default value is its English name.
   static String amberName = 'Amber';
 
-  /// English name for Material orange color.
+  /// Name of Material orange color. Default value is its English name.
   static String orangeName = 'Orange';
 
-  /// English name for Material deep orange color.
+  /// Name of Material deep orange color. Default value is its English name.
   static String deepOrangeName = 'Deep orange';
 
-  /// English name for Material brown color.
+  /// Name of Material brown color. Default value is its English name.
   static String brownName = 'Brown';
 
-  /// English name for Material grey color.
+  /// Name of Material grey color. Default value is its English name.
   static String greyName = 'Grey';
 
-  /// English name for Material blue grey color.
+  /// Name of Material blue grey color. Default value is its English name.
   static String blueGreyName = 'Blue-grey';
 
-  /// Map of Material primary colors swatches and their English names.
+  /// Map of Material primary colors swatches and their names.
   ///
-  /// Use [ColorSwatch] as key to get its English name string as
-  /// defined by the Material standard.
+  /// Use a primary [ColorSwatch] as key to get its current name string.
   static Map<ColorSwatch<Object>, String> primaryColorNames =
       <ColorSwatch<Object>, String>{
     Colors.red: redName,
@@ -129,11 +151,10 @@ class ColorTools {
     Colors.grey: greyName,
   };
 
-  // This Material colors swatch list also exists in the Flutter
-  // framework in colors.dart as a static const [Colors.accents], since we
-  // used a custom version for the primary material colors, we might
-  // as well use one for the accents too.
   /// List of all the standard Material accent color swatches.
+  ///
+  /// A Material accents colors swatch list also exists in the Flutter
+  /// SDK in colors.dart as a static const [Colors.accents].
   static const List<ColorSwatch<Object>> accentColors = <ColorSwatch<Object>>[
     Colors.redAccent,
     Colors.pinkAccent,
@@ -153,28 +174,79 @@ class ColorTools {
     Colors.deepOrangeAccent,
   ];
 
-  /// Map of Material accent colors swatches and their English names.
+  /// Name of Material red accent color. Default value is its English name.
+  static String redAccentName = 'Red accent';
+
+  /// Name of Material pink accent color. Default value is its English name.
+  static String pinkAccentName = 'Pink accent';
+
+  /// Name of Material purple accent color. Default value is its English name.
+  static String purpleAccentName = 'Purple accent';
+
+  /// Name of Material deep purple accent color.
+  /// Default value is its English name.
+  static String deepPurpleAccentName = 'Deep purple accent';
+
+  /// Name of Material indigo accent color. Default value is its English name.
+  static String indigoAccentName = 'Indigo accent';
+
+  /// Name of Material blue accent color. Default value is its English name.
+  static String blueAccentName = 'Blue accent';
+
+  /// Name of Material light blue accent color.
+  /// Default value is its English name.
+  static String lightBlueAccentName = 'Light blue accent';
+
+  /// Name of Material cyan accent color. Default value is its English name.
+  static String cyanAccentName = 'Cyan accent';
+
+  /// Name of Material teal accent color. Default value is its English name.
+  static String tealAccentName = 'Teal accent';
+
+  /// Name of Material green accent color. Default value is its English name.
+  static String greenAccentName = 'Green accent';
+
+  /// Name of Material light green accent color.
+  /// Default value is its English name.
+  static String lightGreenAccentName = 'Light green accent';
+
+  /// Name of Material lime accent color. Default value is its English name.
+  static String limeAccentName = 'Lime accent';
+
+  /// Name of Material yellow accent color. Default value is its English name.
+  static String yellowAccentName = 'Yellow accent';
+
+  /// Name of Material amber accent color. Default value is its English name.
+  static String amberAccentName = 'Amber accent';
+
+  /// Name of Material orange accent color. Default value is its English name.
+  static String orangeAccentName = 'Orange accent';
+
+  /// Name of Material deep orange accent color.
+  /// Default value is its English name.
+  static String deepOrangeAccentName = 'Deep orange accent';
+
+  /// Map of Material accent colors swatches and their names.
   ///
-  /// Use [ColorSwatch] as key to get its English name string as defined
-  /// by the Material standard.
+  /// Use a primary [ColorSwatch] as key to get its current name string.
   static Map<ColorSwatch<Object>, String> accentColorsNames =
       <ColorSwatch<Object>, String>{
-    Colors.redAccent: 'Red accent',
-    Colors.pinkAccent: 'Pink accent',
-    Colors.purpleAccent: 'Purple accent',
-    Colors.deepPurpleAccent: 'Deep purple accent',
-    Colors.indigoAccent: 'Indigo accent',
-    Colors.blueAccent: 'Blue accent',
-    Colors.lightBlueAccent: 'Light blue accent',
-    Colors.cyanAccent: 'Cyan accent',
-    Colors.tealAccent: 'Teal accent',
-    Colors.greenAccent: 'Green accent',
-    Colors.lightGreenAccent: 'Light green accent',
-    Colors.limeAccent: 'Lime accent',
-    Colors.yellowAccent: 'Yellow accent',
-    Colors.amberAccent: 'Amber accent',
-    Colors.orangeAccent: 'Orange accent',
-    Colors.deepOrangeAccent: 'Deep orange accent',
+    Colors.redAccent: redAccentName,
+    Colors.pinkAccent: pinkAccentName,
+    Colors.purpleAccent: purpleAccentName,
+    Colors.deepPurpleAccent: deepPurpleAccentName,
+    Colors.indigoAccent: indigoAccentName,
+    Colors.blueAccent: blueAccentName,
+    Colors.lightBlueAccent: lightBlueAccentName,
+    Colors.cyanAccent: cyanAccentName,
+    Colors.tealAccent: tealAccentName,
+    Colors.greenAccent: greenAccentName,
+    Colors.lightGreenAccent: lightGreenAccentName,
+    Colors.limeAccent: limeAccentName,
+    Colors.yellowAccent: yellowAccentName,
+    Colors.amberAccent: amberAccentName,
+    Colors.orangeAccent: orangeAccentName,
+    Colors.deepOrangeAccent: deepOrangeAccentName,
   };
 
   /// A color swatch for almost black colors, ending in black.
@@ -197,10 +269,10 @@ class ColorTools {
     },
   );
 
-  /// A color swatch for almost white colors, starting in white.
+  /// A color swatch for almost white colors, starting with white.
   ///
   /// These are none transparent shades of close to white values, useful when
-  /// you want slightly off white values that are not transparent.
+  /// you want very slightly off white values that are not transparent.
   static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
     0xFFFAFAFB,
     <int, Color>{
@@ -224,13 +296,23 @@ class ColorTools {
     whiteShade,
   ];
 
-  /// Static map of black and white shades and their English names.
+  /// Name of black and near black color swatch.
+  /// Default value is its English name.
+  static String blackShadeName = 'Black';
+
+  /// Name of white and near white color swatch.
+  /// Default value is its English name.
+  static String whiteShadeName = 'White';
+
+  /// Map of black and white swatches, with their near black and white colors
+  /// to the black and white swatch names.
   ///
-  /// Use [ColorSwatch] as key to get their English names.
+  /// Use [blackShade] or [whiteShade] swatch as key to get its current
+  /// name string.
   static Map<ColorSwatch<Object>, String> blackAndWhiteNames =
       <ColorSwatch<Object>, String>{
-    blackShade: 'Black',
-    whiteShade: 'White',
+    blackShade: blackShadeName,
+    whiteShade: whiteShadeName,
   };
 
   /// A list with both primary and accent color Material swatches.
@@ -310,9 +392,10 @@ class ColorTools {
   ///
   /// If the color is a part of a standard material primary color swatch,
   /// then the standard primary color swatch is returned.
-  /// If the color is not a Material standard primary color, creates a material
+  ///
+  /// If the color is not a Material standard primary color, create a material
   /// primary swatch for the given color using the given color as the mid 500
-  /// index value and returns this created custom primary color swatch.
+  /// index value and return this created custom primary color swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static MaterialColor primarySwatch(Color color) {
     final List<int> index = <int>[
@@ -407,6 +490,7 @@ class ColorTools {
   ///
   /// If the color is a part of a standard material accent color swatch,
   /// then the standard accent color swatch will be returned.
+  ///
   /// If the color is not a Material standard accent color, creates a
   /// material accent swatch for the given color using the given color
   /// as [200] index value and return this created custom color accent swatch.

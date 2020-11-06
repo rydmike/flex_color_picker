@@ -100,6 +100,7 @@ class ColorPicker extends StatefulWidget {
     this.showColorName = false,
     this.colorNameTextStyle,
     this.showColorCode = false,
+    this.showColorValue = false,
     this.colorCodeTextStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
@@ -158,6 +159,8 @@ class ColorPicker extends StatefulWidget {
             'Show generic color name of selected color cannot be null.'),
         assert(showColorCode != null,
             'Show color code field of selected color cannot be null.'),
+        assert(showColorValue != null,
+            'Show color int value of selected color cannot be null.'),
         assert(colorCodeIcon != null, 'Color code icon may not be null'),
         assert(enableTooltips != null, 'enableTooltips may not be null'),
         //
@@ -338,12 +341,25 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool showColorCode;
 
+  /// Set to true to show the int [Color.value] of the selected [color].
+  ///
+  /// This is a developer feature, showing the int color value can be
+  /// useful during software development. If enabled the value is shown after
+  /// the color code, if it is enabled too. For text style it uses the same
+  /// property as for the hex code [colorCodeTextStyle]. There is no copy button
+  /// for the value int value, but the value is shown using [SelectableText] so
+  /// it can be painted and copied if so required.
+  ///
+  /// Defaults to false.
+  final bool showColorValue;
+
   /// Text style for the displayed generic color name in the picker.
   ///
   /// Defaults to Theme.of(context).textTheme.body2, if not defined.
   final TextStyle colorCodeTextStyle;
 
-  /// Icon data for icon used for the copy button to copy the color code.
+  /// Icon data for icon used on the button that copies the Flutter style color
+  /// code to the to clipboard.
   ///
   /// Defaults to [Icons.copy].
   final IconData colorCodeIcon;
@@ -941,7 +957,7 @@ class _ColorPickerState extends State<ColorPicker> {
           //
           // If we show material or generic name, we enclose them in a Wrap,
           // they will be on same row nicely if there is room enough but also
-          // wrap to two rows when so needed, if both are shown at the same
+          // wrap to two rows when so needed when both are shown at the same
           // and they don't fit on one row.
           if (widget.showMaterialName || widget.showColorName)
             Wrap(
@@ -972,25 +988,42 @@ class _ColorPickerState extends State<ColorPicker> {
                   ),
               ],
             ),
-          // Show the copy and edit color code field, if enabled.
-          if (widget.showColorCode)
-            _ColorCodeField(
-              color: selectedColor,
-              readOnly: activePicker != ColorPickerType.wheel,
-              style: widget.colorCodeTextStyle,
-              icon: widget.colorCodeIcon,
-              enableTooltips: widget.enableTooltips,
-              onColorChanged: (Color color) {
-                setState(() {
-                  selectedColor = color;
-                  // Color changed outside wheel picker, the code was edited,
-                  // it should update!
-                  wheelShouldUpdate = true;
-                  if (widget.onColorChanged != null) {
-                    widget.onColorChanged(color);
-                  }
-                });
-              },
+          //
+          // If we show color code or its int value we enclose them in a Wrap,
+          // they will be on same row nicely if there is room enough but also
+          // wrap to two rows when so needed when both are shown at the same
+          // and they don't fit on one row.
+          if (widget.showColorCode || widget.showColorValue)
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                // Show the copy and edit color code field, if enabled.
+                if (widget.showColorCode)
+                  _ColorCodeField(
+                    color: selectedColor,
+                    readOnly: activePicker != ColorPickerType.wheel,
+                    style: widget.colorCodeTextStyle,
+                    icon: widget.colorCodeIcon,
+                    enableTooltips: widget.enableTooltips,
+                    onColorChanged: (Color color) {
+                      setState(() {
+                        selectedColor = color;
+                        // Color changed outside wheel picker, the code was
+                        // edited, it should update!
+                        wheelShouldUpdate = true;
+                        if (widget.onColorChanged != null) {
+                          widget.onColorChanged(color);
+                        }
+                      });
+                    },
+                  ),
+                // If we show both hex code and int value, add some
+                // hardcoded horizontal space between them.
+                if (widget.showColorCode && widget.showColorValue)
+                  const SizedBox(width: 8),
+                if (widget.showColorValue)
+                  SelectableText(selectedColor.value.toString()),
+              ],
             ),
         ],
       ),
