@@ -346,9 +346,9 @@ class ColorPicker extends StatefulWidget {
   /// This is a developer feature, showing the int color value can be
   /// useful during software development. If enabled the value is shown after
   /// the color code, if it is enabled too. For text style it uses the same
-  /// property as for the hex code [colorCodeTextStyle]. There is no copy button
-  /// for the value int value, but the value is shown using [SelectableText] so
-  /// it can be painted and copied if so required.
+  /// property as the hex code [colorCodeTextStyle]. There is no copy button
+  /// for the shown int value, but the value is using [SelectableText] widget so
+  /// it can be select painted and copied if so required.
   ///
   /// Defaults to false.
   final bool showColorValue;
