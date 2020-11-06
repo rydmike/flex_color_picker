@@ -82,7 +82,7 @@ ColorPicker(
     setState(() => screenPickerColor = color),
   heading: Text(
     'Select color',
-    style: Theme.of(context).textTheme.subtitle1,
+    style: Theme.of(context).textTheme.headline5,
   ),
   subheading: Text(
     'Select color shade',
