@@ -237,6 +237,84 @@ void main() {
     });
   });
   //
+  // Test the black color values
+  group('Verify definitions for black and near black values', () {
+    test('BlackShade [50] value is 0xFF121212', () {
+      expect(ColorTools.blackShade[50], const Color(0xFF121212));
+    });
+    test('BlackShade [100] value is 0xFF111111', () {
+      expect(ColorTools.blackShade[100], const Color(0xFF111111));
+    });
+    test('BlackShade [200] value is 0xFF101010', () {
+      expect(ColorTools.blackShade[200], const Color(0xFF101010));
+    });
+    test('BlackShade [300] value is 0xFF0E0E0E', () {
+      expect(ColorTools.blackShade[300], const Color(0xFF0E0E0E));
+    });
+    test('BlackShade [400] value is 0xFF0C0C0C', () {
+      expect(ColorTools.blackShade[400], const Color(0xFF0C0C0C));
+    });
+    test('BlackShade [500] value is 0xFF0A0A0A', () {
+      expect(ColorTools.blackShade[500], const Color(0xFF0A0A0A));
+    });
+    test('BlackShade [600] value is 0xFF080808', () {
+      expect(ColorTools.blackShade[600], const Color(0xFF080808));
+    });
+    test('BlackShade [700] value is 0xFF050505', () {
+      expect(ColorTools.blackShade[700], const Color(0xFF050505));
+    });
+    test('BlackShade [800] value is 0xFF030303', () {
+      expect(ColorTools.blackShade[800], const Color(0xFF030303));
+    });
+    test('BlackShade [900] value is 0xFF000000', () {
+      expect(ColorTools.blackShade[900], const Color(0xFF000000));
+    });
+  });
+  //
+  // Test the white color values
+  group('Verify definitions for white and near white values', () {
+    test('WhiteShade [50] value is 0xFFFFFFFF', () {
+      expect(ColorTools.whiteShade[50], const Color(0xFFFFFFFF));
+    });
+    test('WhiteShade [100] value is 0xFFFEFEFE', () {
+      expect(ColorTools.whiteShade[100], const Color(0xFFFEFEFE));
+    });
+    test('WhiteShade [200] value is 0xFFFDFDFD', () {
+      expect(ColorTools.whiteShade[200], const Color(0xFFFDFDFD));
+    });
+    test('WhiteShade [300] value is 0xFFFCFCFC', () {
+      expect(ColorTools.whiteShade[300], const Color(0xFFFCFCFC));
+    });
+    test('WhiteShade [400] value is 0xFFFBFBFB', () {
+      expect(ColorTools.whiteShade[400], const Color(0xFFFBFBFB));
+    });
+    test('WhiteShade [500] value is 0xFFFAFAFB', () {
+      expect(ColorTools.whiteShade[500], const Color(0xFFFAFAFB));
+    });
+    test('WhiteShade [600] value is 0xFFF9F9F9', () {
+      expect(ColorTools.whiteShade[600], const Color(0xFFF9F9F9));
+    });
+    test('WhiteShade [700] value is 0xFFF8F8F8', () {
+      expect(ColorTools.whiteShade[700], const Color(0xFFF8F8F8));
+    });
+    test('WhiteShade [800] value is 0xFFF7F7F7', () {
+      expect(ColorTools.whiteShade[800], const Color(0xFFF7F7F7));
+    });
+    test('WhiteShade [900] value is 0xFFF6F6F6', () {
+      expect(ColorTools.whiteShade[900], const Color(0xFFF6F6F6));
+    });
+  });
+  //
+  // Test default English black and white shade names.
+  group('Verify ColorTools English names for black and white shades.', () {
+    test('Test Black shade English name', () {
+      expect(ColorTools.blackShadeName, 'Black');
+    });
+    test('Test White shade English name', () {
+      expect(ColorTools.whiteShadeName, 'White');
+    });
+  });
+  //
   // Verify colors name maps equality
   group('Verify Colors to color names map content', () {
     test('Test primary colors to name map equality', () {
