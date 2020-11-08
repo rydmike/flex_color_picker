@@ -119,11 +119,11 @@ class ColorTools {
   /// Name of Material brown color. Default value is its English name.
   static String brownName = 'Brown';
 
-  /// Name of Material grey color. Default value is its English name.
-  static String greyName = 'Grey';
-
   /// Name of Material blue grey color. Default value is its English name.
   static String blueGreyName = 'Blue-grey';
+
+  /// Name of Material grey color. Default value is its English name.
+  static String greyName = 'Grey';
 
   /// Map of Material primary colors swatches and their names.
   ///

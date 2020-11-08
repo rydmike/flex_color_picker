@@ -4,6 +4,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 
 void main() {
   //
+  // Test primaryColors values and orders in the list.
   group('Verify ColorTools.primaryColors values and order', () {
     test('Test index 0 is red', () {
       expect(ColorTools.primaryColors[0], Colors.red);
@@ -62,12 +63,73 @@ void main() {
     test('Test index 18 is grey', () {
       expect(ColorTools.primaryColors[18], Colors.grey);
     });
-    test('Test index 19 throws range error', () {
+    test('Test index 19 throws range error, no more colors', () {
       expect(() => ColorTools.primaryColors[19], throwsRangeError);
     });
   });
   //
+  // Test default English primary color names
+  group('Verify ColorTools English names for primary colors', () {
+    test('Test Red English name', () {
+      expect(ColorTools.redName, 'Red');
+    });
+    test('Test Pink English name', () {
+      expect(ColorTools.pinkName, 'Pink');
+    });
+    test('Test Purple English name', () {
+      expect(ColorTools.purpleName, 'Purple');
+    });
+    test('Test Deep purple English name', () {
+      expect(ColorTools.deepPurpleName, 'Deep purple');
+    });
+    test('Test Indigo English name', () {
+      expect(ColorTools.indigoName, 'Indigo');
+    });
+    test('Test Blue English name', () {
+      expect(ColorTools.blueName, 'Blue');
+    });
+    test('Test Light blue English name', () {
+      expect(ColorTools.lightBlueName, 'Light blue');
+    });
+    test('Test Cyan English name', () {
+      expect(ColorTools.cyanName, 'Cyan');
+    });
+    test('Test Teal English name', () {
+      expect(ColorTools.tealName, 'Teal');
+    });
+    test('Test Green English name', () {
+      expect(ColorTools.greenName, 'Green');
+    });
+    test('Test Light green English name', () {
+      expect(ColorTools.lightGreenName, 'Light green');
+    });
+    test('Test Lime English name', () {
+      expect(ColorTools.limeName, 'Lime');
+    });
+    test('Test Yellow English name', () {
+      expect(ColorTools.yellowName, 'Yellow');
+    });
+    test('Test Amber English name', () {
+      expect(ColorTools.amberName, 'Amber');
+    });
+    test('Test Orange English name', () {
+      expect(ColorTools.orangeName, 'Orange');
+    });
+    test('Test Deep orange English name', () {
+      expect(ColorTools.deepOrangeName, 'Deep orange');
+    });
+    test('Test Brown English name', () {
+      expect(ColorTools.brownName, 'Brown');
+    });
+    test('Test Blue-grey English name', () {
+      expect(ColorTools.blueGreyName, 'Blue-grey');
+    });
+    test('Test Grey English name', () {
+      expect(ColorTools.greyName, 'Grey');
+    });
+  });
   //
+  // Test accentColors values and orders in the list.
   group('Verify ColorTools.accentColors values and order', () {
     test('Test index 0 is redAccent', () {
       expect(ColorTools.accentColors[0], Colors.redAccent);
@@ -117,12 +179,64 @@ void main() {
     test('Test index 15 is deepOrangeAccent', () {
       expect(ColorTools.accentColors[15], Colors.deepOrangeAccent);
     });
-    test('Test index 16 throws range error', () {
+    test('Test index 16 throws range error, no more colors!', () {
       expect(() => ColorTools.accentColors[16], throwsRangeError);
     });
   });
   //
+  // Test default English primary color names
+  group('Verify ColorTools English names for accent colors', () {
+    test('Test Red accent English name', () {
+      expect(ColorTools.redAccentName, 'Red accent');
+    });
+    test('Test Pink accent English name', () {
+      expect(ColorTools.pinkAccentName, 'Pink accent');
+    });
+    test('Test Purple accent English name', () {
+      expect(ColorTools.purpleAccentName, 'Purple accent');
+    });
+    test('Test Deep purple accent English name', () {
+      expect(ColorTools.deepPurpleAccentName, 'Deep purple accent');
+    });
+    test('Test Indigo accent English name', () {
+      expect(ColorTools.indigoAccentName, 'Indigo accent');
+    });
+    test('Test Blue accent English name', () {
+      expect(ColorTools.blueAccentName, 'Blue accent');
+    });
+    test('Test Light accent blue English name', () {
+      expect(ColorTools.lightBlueAccentName, 'Light blue accent');
+    });
+    test('Test Cyan accent English name', () {
+      expect(ColorTools.cyanAccentName, 'Cyan accent');
+    });
+    test('Test Teal accent English name', () {
+      expect(ColorTools.tealAccentName, 'Teal accent');
+    });
+    test('Test Green accent English name', () {
+      expect(ColorTools.greenAccentName, 'Green accent');
+    });
+    test('Test Light green accent English name', () {
+      expect(ColorTools.lightGreenAccentName, 'Light green accent');
+    });
+    test('Test Lime accent English name', () {
+      expect(ColorTools.limeAccentName, 'Lime accent');
+    });
+    test('Test Yellow accent English name', () {
+      expect(ColorTools.yellowAccentName, 'Yellow accent');
+    });
+    test('Test Amber accent English name', () {
+      expect(ColorTools.amberAccentName, 'Amber accent');
+    });
+    test('Test Orange accent English name', () {
+      expect(ColorTools.orangeAccentName, 'Orange accent');
+    });
+    test('Test Deep orange accent English name', () {
+      expect(ColorTools.deepOrangeAccentName, 'Deep orange accent');
+    });
+  });
   //
+  // Test that all SDK primary colors return true with isPrimaryColor
   group(
       'Test that all Colors.primaries return true with '
       'ColorTools.isPrimaryColor()', () {
@@ -148,7 +262,7 @@ void main() {
     }
   });
   //
-  //
+  // Test that all SDK accent colors return true with isAccentColor
   group(
       'Test that all Colors.accents return true with '
       'ColorTools.isAccentColor()', () {
