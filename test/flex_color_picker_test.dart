@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
@@ -233,6 +234,68 @@ void main() {
     });
     test('Test Deep orange accent English name', () {
       expect(ColorTools.deepOrangeAccentName, 'Deep orange accent');
+    });
+  });
+  //
+  // Verify colors name maps equality
+  group('Verify Colors to color names map content', () {
+    test('Test primary colors to name map equality', () {
+      expect(
+          const MapEquality<ColorSwatch<Object>, String>().equals(
+              ColorTools.primaryColorNames, <ColorSwatch<Object>, String>{
+            Colors.red: 'Red',
+            Colors.pink: 'Pink',
+            Colors.purple: 'Purple',
+            Colors.deepPurple: 'Deep purple',
+            Colors.indigo: 'Indigo',
+            Colors.blue: 'Blue',
+            Colors.lightBlue: 'Light blue',
+            Colors.cyan: 'Cyan',
+            Colors.teal: 'Teal',
+            Colors.green: 'Green',
+            Colors.lightGreen: 'Light green',
+            Colors.lime: 'Lime',
+            Colors.yellow: 'Yellow',
+            Colors.amber: 'Amber',
+            Colors.orange: 'Orange',
+            Colors.deepOrange: 'Deep orange',
+            Colors.brown: 'Brown',
+            Colors.blueGrey: 'Blue-grey',
+            Colors.grey: 'Grey',
+          }),
+          true);
+    });
+    test('Test accent colors to name map equality', () {
+      expect(
+          const MapEquality<ColorSwatch<Object>, String>().equals(
+              ColorTools.accentColorsNames, <ColorSwatch<Object>, String>{
+            Colors.redAccent: 'Red accent',
+            Colors.pinkAccent: 'Pink accent',
+            Colors.purpleAccent: 'Purple accent',
+            Colors.deepPurpleAccent: 'Deep purple accent',
+            Colors.indigoAccent: 'Indigo accent',
+            Colors.blueAccent: 'Blue accent',
+            Colors.lightBlueAccent: 'Light blue accent',
+            Colors.cyanAccent: 'Cyan accent',
+            Colors.tealAccent: 'Teal accent',
+            Colors.greenAccent: 'Green accent',
+            Colors.lightGreenAccent: 'Light green accent',
+            Colors.limeAccent: 'Lime accent',
+            Colors.yellowAccent: 'Yellow accent',
+            Colors.amberAccent: 'Amber accent',
+            Colors.orangeAccent: 'Orange accent',
+            Colors.deepOrangeAccent: 'Deep orange accent',
+          }),
+          true);
+    });
+    test('Test black and white to name map equality', () {
+      expect(
+          const MapEquality<ColorSwatch<Object>, String>().equals(
+              ColorTools.blackAndWhiteNames, <ColorSwatch<Object>, String>{
+            ColorTools.blackShade: 'Black',
+            ColorTools.whiteShade: 'White',
+          }),
+          true);
     });
   });
   //
