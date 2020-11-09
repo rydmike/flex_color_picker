@@ -436,6 +436,45 @@ void main() {
     }
   });
   //
+  // Reference test for create primary Swatch
+  group('Verify reference value 0xFF132B80 for createPrimarySwatch', () {
+    final MaterialColor refColor =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    test('Test swatch value is provided Color value 0xFF132B80', () {
+      expect(refColor.value, 0xFF132B80);
+    });
+    test('Test swatch index [50] reference value 0xFF7D8AB9', () {
+      expect(refColor[50], const Color(0xFF7D8AB9));
+    });
+    test('Test swatch index [100] reference value 0xFF7180B3', () {
+      expect(refColor[100], const Color(0xFF7180B3));
+    });
+    test('Test swatch index [200] reference value 0xFF5A6BA6', () {
+      expect(refColor[200], const Color(0xFF5A6BA6));
+    });
+    test('Test swatch index [300] reference value 0xFF425599', () {
+      expect(refColor[300], const Color(0xFF425599));
+    });
+    test('Test swatch index [400] reference value 0xFF2B408D', () {
+      expect(refColor[400], const Color(0xFF2B408D));
+    });
+    test('Test swatch index [500] reference value 0xFF132B80', () {
+      expect(refColor[500], const Color(0xFF132B80));
+    });
+    test('Test swatch index [600] reference value 0xFF112773', () {
+      expect(refColor[600], const Color(0xFF112773));
+    });
+    test('Test swatch index [700] reference value 0xFF0F2266', () {
+      expect(refColor[700], const Color(0xFF0F2266));
+    });
+    test('Test swatch index [800] reference value 0xFF0D1E5A', () {
+      expect(refColor[800], const Color(0xFF0D1E5A));
+    });
+    test('Test swatch index [900] reference value 0xFF0B1A4D', () {
+      expect(refColor[900], const Color(0xFF0B1A4D));
+    });
+  });
+  //
   // Test that all SDK accent colors return true with isAccentColor
   group(
       'Test that all Colors.accents return true with '
@@ -470,5 +509,26 @@ void main() {
         });
       }
     }
+  });
+  //
+  // Reference test for create accent Swatch
+  group('Verify reference value 0xFF03DAC6 for createAccentSwatch', () {
+    final MaterialAccentColor refColor =
+        ColorTools.createAccentSwatch(const Color(0xFF03DAC6));
+    test('Test swatch value is provided Color value 0xFF03DAC6', () {
+      expect(refColor.value, 0xFF03DAC6);
+    });
+    test('Test swatch index [100] reference value 0xFF1CDECC', () {
+      expect(refColor[100], const Color(0xFF1CDECC));
+    });
+    test('Test swatch index [200] reference value 0xFF03DAC6', () {
+      expect(refColor[200], const Color(0xFF03DAC6));
+    });
+    test('Test swatch index [400] reference value 0xFF02AE9E', () {
+      expect(refColor[400], const Color(0xFF02AE9E));
+    });
+    test('Test swatch index [700] reference value 0xFF026D63', () {
+      expect(refColor[700], const Color(0xFF026D63));
+    });
   });
 }
