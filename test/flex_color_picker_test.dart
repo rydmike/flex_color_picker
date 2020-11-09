@@ -304,6 +304,18 @@ void main() {
       expect(ColorTools.whiteShade[900], const Color(0xFFF6F6F6));
     });
   });
+  // Test black and white shade values and orders in the list blackAndWhite.
+  group('Verify ColorTools.blackAndWhite values and order', () {
+    test('Test index 0 is blackShade', () {
+      expect(ColorTools.blackAndWhite[0], ColorTools.blackShade);
+    });
+    test('Test index 1 is whiteShade', () {
+      expect(ColorTools.blackAndWhite[1], ColorTools.whiteShade);
+    });
+    test('Test index 2 throws range error, no more colors!', () {
+      expect(() => ColorTools.blackAndWhite[2], throwsRangeError);
+    });
+  });
   //
   // Test default English black and white shade names.
   group('Verify ColorTools English names for black and white shades.', () {
@@ -393,11 +405,32 @@ void main() {
       800,
       900
     ];
-
     for (final ColorSwatch<Object> swatch in Colors.primaries) {
       for (final int i in index) {
         test('Verify that ${swatch[i]} is a primary color ', () {
           expect(ColorTools.isPrimaryColor(swatch[i]), true);
+        });
+      }
+    }
+  });
+  // Test that all primary indexed colors find correct swatch color.
+  group('Test that all primary index colors belongs to its swatch.', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in Colors.primaries) {
+      for (final int i in index) {
+        test('Color ${swatch[i]}[$i] returns primarySwatch($swatch)} ', () {
+          expect(ColorTools.primarySwatch(swatch[i]), swatch);
         });
       }
     }
@@ -413,11 +446,27 @@ void main() {
       400,
       700,
     ];
-
     for (final ColorSwatch<Object> swatch in Colors.accents) {
       for (final int i in index) {
         test('Verify that ${swatch[i]} is an accent color ', () {
           expect(ColorTools.isAccentColor(swatch[i]), true);
+        });
+      }
+    }
+  });
+  //
+  // Test that all accent indexed colors find correct swatch color.
+  group('Test that all accent index colors belongs to its swatch.', () {
+    final List<int> index = <int>[
+      100,
+      200,
+      400,
+      700,
+    ];
+    for (final ColorSwatch<Object> swatch in Colors.accents) {
+      for (final int i in index) {
+        test('Color ${swatch[i]}[$i] returns accentSwatch($swatch)} ', () {
+          expect(ColorTools.accentSwatch(swatch[i]), swatch);
         });
       }
     }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /// Static color tool functions used internally by the Flex ColorPicker.
 ///
-/// These color helpers can also be used on their own outside the Flex
-/// ColorPicker if so desired. Available functions include:
+/// The functions have a public API and can also be used on their own
+/// outside the Flex ColorPicker if so desired. Available functions include:
 ///
 /// * Get English name strings for the Material primary and accent colors.
 /// * Maps of color swatches to their names.
