@@ -151,215 +151,6 @@ class ColorTools {
     Colors.grey: greyName,
   };
 
-  /// List of all the standard Material accent color swatches.
-  ///
-  /// A Material accents colors swatch list also exists in the Flutter
-  /// SDK in colors.dart as a static const [Colors.accents].
-  static const List<ColorSwatch<Object>> accentColors = <ColorSwatch<Object>>[
-    Colors.redAccent,
-    Colors.pinkAccent,
-    Colors.purpleAccent,
-    Colors.deepPurpleAccent,
-    Colors.indigoAccent,
-    Colors.blueAccent,
-    Colors.lightBlueAccent,
-    Colors.cyanAccent,
-    Colors.tealAccent,
-    Colors.greenAccent,
-    Colors.lightGreenAccent,
-    Colors.limeAccent,
-    Colors.yellowAccent,
-    Colors.amberAccent,
-    Colors.orangeAccent,
-    Colors.deepOrangeAccent,
-  ];
-
-  /// Name of Material red accent color. Default value is its English name.
-  static String redAccentName = 'Red accent';
-
-  /// Name of Material pink accent color. Default value is its English name.
-  static String pinkAccentName = 'Pink accent';
-
-  /// Name of Material purple accent color. Default value is its English name.
-  static String purpleAccentName = 'Purple accent';
-
-  /// Name of Material deep purple accent color.
-  /// Default value is its English name.
-  static String deepPurpleAccentName = 'Deep purple accent';
-
-  /// Name of Material indigo accent color. Default value is its English name.
-  static String indigoAccentName = 'Indigo accent';
-
-  /// Name of Material blue accent color. Default value is its English name.
-  static String blueAccentName = 'Blue accent';
-
-  /// Name of Material light blue accent color.
-  /// Default value is its English name.
-  static String lightBlueAccentName = 'Light blue accent';
-
-  /// Name of Material cyan accent color. Default value is its English name.
-  static String cyanAccentName = 'Cyan accent';
-
-  /// Name of Material teal accent color. Default value is its English name.
-  static String tealAccentName = 'Teal accent';
-
-  /// Name of Material green accent color. Default value is its English name.
-  static String greenAccentName = 'Green accent';
-
-  /// Name of Material light green accent color.
-  /// Default value is its English name.
-  static String lightGreenAccentName = 'Light green accent';
-
-  /// Name of Material lime accent color. Default value is its English name.
-  static String limeAccentName = 'Lime accent';
-
-  /// Name of Material yellow accent color. Default value is its English name.
-  static String yellowAccentName = 'Yellow accent';
-
-  /// Name of Material amber accent color. Default value is its English name.
-  static String amberAccentName = 'Amber accent';
-
-  /// Name of Material orange accent color. Default value is its English name.
-  static String orangeAccentName = 'Orange accent';
-
-  /// Name of Material deep orange accent color.
-  /// Default value is its English name.
-  static String deepOrangeAccentName = 'Deep orange accent';
-
-  /// Map of Material accent colors swatches and their names.
-  ///
-  /// Use a primary [ColorSwatch] as key to get its current name string.
-  static Map<ColorSwatch<Object>, String> accentColorsNames =
-      <ColorSwatch<Object>, String>{
-    Colors.redAccent: redAccentName,
-    Colors.pinkAccent: pinkAccentName,
-    Colors.purpleAccent: purpleAccentName,
-    Colors.deepPurpleAccent: deepPurpleAccentName,
-    Colors.indigoAccent: indigoAccentName,
-    Colors.blueAccent: blueAccentName,
-    Colors.lightBlueAccent: lightBlueAccentName,
-    Colors.cyanAccent: cyanAccentName,
-    Colors.tealAccent: tealAccentName,
-    Colors.greenAccent: greenAccentName,
-    Colors.lightGreenAccent: lightGreenAccentName,
-    Colors.limeAccent: limeAccentName,
-    Colors.yellowAccent: yellowAccentName,
-    Colors.amberAccent: amberAccentName,
-    Colors.orangeAccent: orangeAccentName,
-    Colors.deepOrangeAccent: deepOrangeAccentName,
-  };
-
-  /// A color swatch for almost black colors, ending in black.
-  ///
-  /// These are none transparent shades of close to black values, useful when
-  /// you want slightly off black values that are not transparent.
-  static const ColorSwatch<Object> blackShade = ColorSwatch<Object>(
-    0xFF0A0A0A,
-    <int, Color>{
-      50: Color(0xFF121212),
-      100: Color(0xFF111111),
-      200: Color(0xFF101010),
-      300: Color(0xFF0E0E0E),
-      400: Color(0xFF0C0C0C),
-      500: Color(0xFF0A0A0A),
-      600: Color(0xFF080808),
-      700: Color(0xFF050505),
-      800: Color(0xFF030303),
-      900: Color(0xFF000000),
-    },
-  );
-
-  /// A color swatch for almost white colors, starting with white.
-  ///
-  /// These are none transparent shades of close to white values, useful when
-  /// you want very slightly off white values that are not transparent.
-  static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
-    0xFFFAFAFB,
-    <int, Color>{
-      50: Color(0xFFFFFFFF),
-      100: Color(0xFFFEFEFE),
-      200: Color(0xFFFDFDFD),
-      300: Color(0xFFFCFCFC),
-      400: Color(0xFFFBFBFB),
-      // Last digit B on purpose to make value different from Grey[50].
-      500: Color(0xFFFAFAFB),
-      600: Color(0xFFF9F9F9),
-      700: Color(0xFFF8F8F8),
-      800: Color(0xFFF7F7F7),
-      900: Color(0xFFF6F6F6),
-    },
-  );
-
-  /// The [blackShade] and [whiteShade] in a color swatch list.
-  static const List<ColorSwatch<Object>> blackAndWhite = <ColorSwatch<Object>>[
-    blackShade,
-    whiteShade,
-  ];
-
-  /// Name of black and near black color swatch.
-  /// Default value is its English name.
-  static String blackShadeName = 'Black';
-
-  /// Name of white and near white color swatch.
-  /// Default value is its English name.
-  static String whiteShadeName = 'White';
-
-  /// Map of black and white swatches, with their near black and white colors
-  /// to the black and white swatch names.
-  ///
-  /// Use [blackShade] or [whiteShade] swatch as key to get its current
-  /// name string.
-  static Map<ColorSwatch<Object>, String> blackAndWhiteNames =
-      <ColorSwatch<Object>, String>{
-    blackShade: blackShadeName,
-    whiteShade: whiteShadeName,
-  };
-
-  /// A list with both primary and accent color Material swatches.
-  ///
-  /// This list is used to create a color picker that mixes and includes both
-  /// the primary material colors and the accent colors in the same picker.
-  /// The related colors are grouped after each other so that they come in
-  /// related color order, not in primary and accent order.
-  static const List<ColorSwatch<Object>> primaryAndAccentColors =
-      <ColorSwatch<Object>>[
-    Colors.red,
-    Colors.redAccent,
-    Colors.pink,
-    Colors.pinkAccent,
-    Colors.purple,
-    Colors.purpleAccent,
-    Colors.deepPurple,
-    Colors.deepPurpleAccent,
-    Colors.indigo,
-    Colors.indigoAccent,
-    Colors.blue,
-    Colors.blueAccent,
-    Colors.lightBlue,
-    Colors.lightBlueAccent,
-    Colors.cyan,
-    Colors.cyanAccent,
-    Colors.teal,
-    Colors.tealAccent,
-    Colors.green,
-    Colors.greenAccent,
-    Colors.lightGreen,
-    Colors.lightGreenAccent,
-    Colors.lime,
-    Colors.limeAccent,
-    Colors.yellow,
-    Colors.yellowAccent,
-    Colors.amber,
-    Colors.amberAccent,
-    Colors.orange,
-    Colors.orangeAccent,
-    Colors.deepOrange,
-    Colors.deepOrangeAccent,
-    Colors.brown,
-    Colors.blueGrey,
-    Colors.grey,
-  ];
-
   /// Check if the given color is included in any Material primary color swatch.
   ///
   /// Returns true if the color is a Material primary color, otherwise false.
@@ -470,6 +261,104 @@ class ColorTools {
     return MaterialColor(color.value, swatch);
   }
 
+  /// List of all the standard Material accent color swatches.
+  ///
+  /// A Material accents colors swatch list also exists in the Flutter
+  /// SDK in colors.dart as a static const [Colors.accents].
+  static const List<ColorSwatch<Object>> accentColors = <ColorSwatch<Object>>[
+    Colors.redAccent,
+    Colors.pinkAccent,
+    Colors.purpleAccent,
+    Colors.deepPurpleAccent,
+    Colors.indigoAccent,
+    Colors.blueAccent,
+    Colors.lightBlueAccent,
+    Colors.cyanAccent,
+    Colors.tealAccent,
+    Colors.greenAccent,
+    Colors.lightGreenAccent,
+    Colors.limeAccent,
+    Colors.yellowAccent,
+    Colors.amberAccent,
+    Colors.orangeAccent,
+    Colors.deepOrangeAccent,
+  ];
+
+  /// Name of Material red accent color. Default value is its English name.
+  static String redAccentName = 'Red accent';
+
+  /// Name of Material pink accent color. Default value is its English name.
+  static String pinkAccentName = 'Pink accent';
+
+  /// Name of Material purple accent color. Default value is its English name.
+  static String purpleAccentName = 'Purple accent';
+
+  /// Name of Material deep purple accent color.
+  /// Default value is its English name.
+  static String deepPurpleAccentName = 'Deep purple accent';
+
+  /// Name of Material indigo accent color. Default value is its English name.
+  static String indigoAccentName = 'Indigo accent';
+
+  /// Name of Material blue accent color. Default value is its English name.
+  static String blueAccentName = 'Blue accent';
+
+  /// Name of Material light blue accent color.
+  /// Default value is its English name.
+  static String lightBlueAccentName = 'Light blue accent';
+
+  /// Name of Material cyan accent color. Default value is its English name.
+  static String cyanAccentName = 'Cyan accent';
+
+  /// Name of Material teal accent color. Default value is its English name.
+  static String tealAccentName = 'Teal accent';
+
+  /// Name of Material green accent color. Default value is its English name.
+  static String greenAccentName = 'Green accent';
+
+  /// Name of Material light green accent color.
+  /// Default value is its English name.
+  static String lightGreenAccentName = 'Light green accent';
+
+  /// Name of Material lime accent color. Default value is its English name.
+  static String limeAccentName = 'Lime accent';
+
+  /// Name of Material yellow accent color. Default value is its English name.
+  static String yellowAccentName = 'Yellow accent';
+
+  /// Name of Material amber accent color. Default value is its English name.
+  static String amberAccentName = 'Amber accent';
+
+  /// Name of Material orange accent color. Default value is its English name.
+  static String orangeAccentName = 'Orange accent';
+
+  /// Name of Material deep orange accent color.
+  /// Default value is its English name.
+  static String deepOrangeAccentName = 'Deep orange accent';
+
+  /// Map of Material accent colors swatches and their names.
+  ///
+  /// Use a primary [ColorSwatch] as key to get its current name string.
+  static Map<ColorSwatch<Object>, String> accentColorsNames =
+      <ColorSwatch<Object>, String>{
+    Colors.redAccent: redAccentName,
+    Colors.pinkAccent: pinkAccentName,
+    Colors.purpleAccent: purpleAccentName,
+    Colors.deepPurpleAccent: deepPurpleAccentName,
+    Colors.indigoAccent: indigoAccentName,
+    Colors.blueAccent: blueAccentName,
+    Colors.lightBlueAccent: lightBlueAccentName,
+    Colors.cyanAccent: cyanAccentName,
+    Colors.tealAccent: tealAccentName,
+    Colors.greenAccent: greenAccentName,
+    Colors.lightGreenAccent: lightGreenAccentName,
+    Colors.limeAccent: limeAccentName,
+    Colors.yellowAccent: yellowAccentName,
+    Colors.amberAccent: amberAccentName,
+    Colors.orangeAccent: orangeAccentName,
+    Colors.deepOrangeAccent: deepOrangeAccentName,
+  };
+
   /// Check if the given color is included in any Material accent color swatch.
   ///
   /// Returns true if the color is a Material accent color, otherwise false.
@@ -532,6 +421,117 @@ class ColorTools {
     }
     return MaterialAccentColor(color.value, swatch);
   }
+
+  /// A list with both primary and accent color Material swatches.
+  ///
+  /// This list is used to create a color picker that mixes and includes both
+  /// the primary material colors and the accent colors in the same picker.
+  /// The related colors are grouped after each other so that they come in
+  /// related color order, not in primary and accent order.
+  static const List<ColorSwatch<Object>> primaryAndAccentColors =
+      <ColorSwatch<Object>>[
+    Colors.red,
+    Colors.redAccent,
+    Colors.pink,
+    Colors.pinkAccent,
+    Colors.purple,
+    Colors.purpleAccent,
+    Colors.deepPurple,
+    Colors.deepPurpleAccent,
+    Colors.indigo,
+    Colors.indigoAccent,
+    Colors.blue,
+    Colors.blueAccent,
+    Colors.lightBlue,
+    Colors.lightBlueAccent,
+    Colors.cyan,
+    Colors.cyanAccent,
+    Colors.teal,
+    Colors.tealAccent,
+    Colors.green,
+    Colors.greenAccent,
+    Colors.lightGreen,
+    Colors.lightGreenAccent,
+    Colors.lime,
+    Colors.limeAccent,
+    Colors.yellow,
+    Colors.yellowAccent,
+    Colors.amber,
+    Colors.amberAccent,
+    Colors.orange,
+    Colors.orangeAccent,
+    Colors.deepOrange,
+    Colors.deepOrangeAccent,
+    Colors.brown,
+    Colors.blueGrey,
+    Colors.grey,
+  ];
+
+  /// A color swatch for almost black colors, ending in black.
+  ///
+  /// These are none transparent shades of close to black values, useful when
+  /// you want slightly off black values that are not transparent.
+  static const ColorSwatch<Object> blackShade = ColorSwatch<Object>(
+    0xFF0A0A0A,
+    <int, Color>{
+      50: Color(0xFF121212),
+      100: Color(0xFF111111),
+      200: Color(0xFF101010),
+      300: Color(0xFF0E0E0E),
+      400: Color(0xFF0C0C0C),
+      500: Color(0xFF0A0A0A),
+      600: Color(0xFF080808),
+      700: Color(0xFF050505),
+      800: Color(0xFF030303),
+      900: Color(0xFF000000),
+    },
+  );
+
+  /// A color swatch for almost white colors, starting with white.
+  ///
+  /// These are none transparent shades of close to white values, useful when
+  /// you want very slightly off white values that are not transparent.
+  static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
+    0xFFFAFAFB,
+    <int, Color>{
+      50: Color(0xFFFFFFFF),
+      100: Color(0xFFFEFEFE),
+      200: Color(0xFFFDFDFD),
+      300: Color(0xFFFCFCFC),
+      400: Color(0xFFFBFBFB),
+      // Last digit B on purpose to make value different from Grey[50].
+      500: Color(0xFFFAFAFB),
+      600: Color(0xFFF9F9F9),
+      700: Color(0xFFF8F8F8),
+      800: Color(0xFFF7F7F7),
+      900: Color(0xFFF6F6F6),
+    },
+  );
+
+  /// The [blackShade] and [whiteShade] in a color swatch list.
+  static const List<ColorSwatch<Object>> blackAndWhite = <ColorSwatch<Object>>[
+    blackShade,
+    whiteShade,
+  ];
+
+  /// Name of black and near black color swatch.
+  /// Default value is its English name.
+  static String blackShadeName = 'Black';
+
+  /// Name of white and near white color swatch.
+  /// Default value is its English name.
+  static String whiteShadeName = 'White';
+
+  /// Map of black and white swatches, with their near black and white colors
+  /// to the black and white swatch names.
+  ///
+  /// Use [blackShade] or [whiteShade] swatch as key to get its current
+  /// name string.
+  static Map<ColorSwatch<Object>, String> blackAndWhiteNames =
+      <ColorSwatch<Object>, String>{
+    blackShade: blackShadeName,
+    whiteShade: whiteShadeName,
+  };
 
   /// Check if a color is included in the custom black and white swatches.
   ///
