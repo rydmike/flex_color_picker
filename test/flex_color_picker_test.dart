@@ -403,13 +403,22 @@ void main() {
       600,
       700,
       800,
+      850, // Only used by grey swatch
       900
     ];
-    for (final ColorSwatch<Object> swatch in Colors.primaries) {
+    // The SDK excludes the grey color, we include it.
+    final List<MaterialColor> primaries = <MaterialColor>[
+      ...Colors.primaries,
+      Colors.grey
+    ];
+
+    for (final ColorSwatch<Object> swatch in primaries) {
       for (final int i in index) {
-        test('Verify that ${swatch[i]} is a primary color ', () {
-          expect(ColorTools.isPrimaryColor(swatch[i]), true);
-        });
+        if (swatch[i] != null) {
+          test('Verify that ${swatch[i]}[$i] is a primary color ', () {
+            expect(ColorTools.isPrimaryColor(swatch[i]), true);
+          });
+        }
       }
     }
   });
@@ -425,13 +434,21 @@ void main() {
       600,
       700,
       800,
+      850, // Only used by grey swatch
       900
     ];
-    for (final ColorSwatch<Object> swatch in Colors.primaries) {
+    // The SDK excludes the grey color, we include it.
+    final List<MaterialColor> primaries = <MaterialColor>[
+      ...Colors.primaries,
+      Colors.grey
+    ];
+    for (final ColorSwatch<Object> swatch in primaries) {
       for (final int i in index) {
-        test('Color ${swatch[i]}[$i] returns primarySwatch($swatch)} ', () {
-          expect(ColorTools.primarySwatch(swatch[i]), swatch);
-        });
+        if (swatch[i] != null) {
+          test('Color ${swatch[i]}[$i] returns primarySwatch($swatch)} ', () {
+            expect(ColorTools.primarySwatch(swatch[i]), swatch);
+          });
+        }
       }
     }
   });
@@ -487,7 +504,7 @@ void main() {
     ];
     for (final ColorSwatch<Object> swatch in Colors.accents) {
       for (final int i in index) {
-        test('Verify that ${swatch[i]} is an accent color ', () {
+        test('Verify that ${swatch[i]}[$i] is an accent color ', () {
           expect(ColorTools.isAccentColor(swatch[i]), true);
         });
       }
@@ -530,5 +547,119 @@ void main() {
     test('Test swatch index [700] reference value 0xFF026D63', () {
       expect(refColor[700], const Color(0xFF026D63));
     });
+  });
+  //
+  // Test that all black and whites shades return true with isBlackAndWhiteColor
+  group(
+      'Test that all ColorsTools.blackAndWhite return true with '
+      'ColorTools.isBlackAndWhiteColor()', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in ColorTools.blackAndWhite) {
+      for (final int i in index) {
+        test('Verify that ${swatch[i]} is a blackAndWhite color ', () {
+          expect(ColorTools.isBlackAndWhiteColor(swatch[i]), true);
+        });
+      }
+    }
+  });
+  // Test that all indexed B&W color shades find correct swatch color.
+  group('Test that all B&W index colors belongs to its swatch.', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in ColorTools.blackAndWhite) {
+      for (final int i in index) {
+        test(
+            'Color ${swatch[i]}[$i] returns '
+            'blackAndWhiteSwatch($swatch)} ', () {
+          expect(ColorTools.blackAndWhiteSwatch(swatch[i]), swatch);
+        });
+      }
+    }
+  });
+  //
+  // Test that defined custom colors return true with isCustomColor
+  group(
+      'Test that defined custom color swatches return true with '
+      'ColorTools.isCustomColor()', () {
+    // Make a custom color swatch to name map for the reference values.
+    final Map<ColorSwatch<Object>, String> refCustomColors =
+        <ColorSwatch<Object>, String>{
+      ColorTools.createPrimarySwatch(const Color(0xFF132B80)): 'RefPrimary',
+      ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'RefSecondary',
+    };
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in refCustomColors.keys) {
+      for (final int i in index) {
+        if (swatch[i] != null) {
+          test('Verify that ${swatch[i]}[$i] is a custom color ', () {
+            expect(ColorTools.isCustomColor(swatch[i], refCustomColors), true);
+          });
+        }
+      }
+    }
+  });
+  // Test that all indexed custom color shades find correct swatch color.
+  group('Test that all custom index colors belongs to its swatch.', () {
+    // Make a custom color swatch to name map for the reference values.
+    final Map<ColorSwatch<Object>, String> refCustomColors =
+        <ColorSwatch<Object>, String>{
+      ColorTools.createPrimarySwatch(const Color(0xFF132B80)): 'RefPrimary',
+      ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'RefSecondary',
+    };
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in refCustomColors.keys) {
+      for (final int i in index) {
+        if (swatch[i] != null) {
+          test(
+              'Color ${swatch[i]}[$i] returns '
+              'customSwatch($swatch)} ', () {
+            expect(ColorTools.customSwatch(swatch[i], refCustomColors), swatch);
+          });
+        }
+      }
+    }
   });
 }
