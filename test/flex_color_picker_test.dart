@@ -161,6 +161,59 @@ void main() {
           true);
     });
   });
+  // Test Color names for all primary colors
+  group('Test colors names for all Material primary colors.', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      850, // Only used by grey swatch
+      900
+    ];
+    // The SDK excludes the grey color, we include it.
+    final List<MaterialColor> primaries = <MaterialColor>[
+      ...Colors.primaries,
+      Colors.grey
+    ];
+    for (final ColorSwatch<Object> swatch in primaries) {
+      for (final int i in index) {
+        if (swatch[i] != null) {
+          test(
+              'ColorTools.materialName No Index '
+              '${ColorTools.primaryColorNames[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${ColorTools.primaryColorNames[swatch]}', () {
+            expect(ColorTools.materialName(swatch[i], withIndex: false),
+                ColorTools.primaryColorNames[swatch]);
+          });
+          test(
+              'ColorTools.materialName With Index '
+              '${ColorTools.primaryColorNames[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${ColorTools.primaryColorNames[swatch]} [$i]}', () {
+            expect(ColorTools.materialName(swatch[i]),
+                '${ColorTools.primaryColorNames[swatch]} [$i]');
+          });
+          test(
+              'ColorTools.materialNameAndCode '
+              '${ColorTools.primaryColorNames[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${ColorTools.materialNameAndCode(swatch[i])}', () {
+            expect(
+                ColorTools.materialNameAndCode(swatch[i]),
+                '${ColorTools.primaryColorNames[swatch]} [$i] '
+                '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+          });
+        }
+      }
+    }
+  });
   //
   // Test that all SDK primary colors return true with isPrimaryColor
   group(
@@ -184,7 +237,6 @@ void main() {
       ...Colors.primaries,
       Colors.grey
     ];
-
     for (final ColorSwatch<Object> swatch in primaries) {
       for (final int i in index) {
         if (swatch[i] != null) {
@@ -400,6 +452,45 @@ void main() {
           true);
     });
   });
+  // Test Color names for all accent colors
+  group('Test colors names for all Material accent colors.', () {
+    final List<int> index = <int>[
+      100,
+      200,
+      400,
+      700,
+    ];
+    for (final ColorSwatch<Object> swatch in Colors.accents) {
+      for (final int i in index) {
+        test(
+            'ColorTools.materialName No Index '
+            '${ColorTools.accentColorsNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.accentColorsNames[swatch]}', () {
+          expect(ColorTools.materialName(swatch[i], withIndex: false),
+              ColorTools.accentColorsNames[swatch]);
+        });
+        test(
+            'ColorTools.materialName With Index '
+            '${ColorTools.accentColorsNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.accentColorsNames[swatch]} [$i]}', () {
+          expect(ColorTools.materialName(swatch[i]),
+              '${ColorTools.accentColorsNames[swatch]} [$i]');
+        });
+        test(
+            'ColorTools.materialNameAndCode '
+            '${ColorTools.accentColorsNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.materialNameAndCode(swatch[i])}', () {
+          expect(
+              ColorTools.materialNameAndCode(swatch[i]),
+              '${ColorTools.accentColorsNames[swatch]} [$i] '
+              '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+        });
+      }
+    }
+  });
   //
   // Test that all SDK accent colors return true with isAccentColor
   group(
@@ -563,6 +654,52 @@ void main() {
     });
   });
   //
+  // Test Color names for all B&W shade colors
+  group('Test colors names for all B&W shade colors.', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in ColorTools.blackAndWhite) {
+      for (final int i in index) {
+        test(
+            'ColorTools.materialName No Index '
+            '${ColorTools.blackAndWhiteNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.blackAndWhiteNames[swatch]}', () {
+          expect(ColorTools.materialName(swatch[i], withIndex: false),
+              ColorTools.blackAndWhiteNames[swatch]);
+        });
+        test(
+            'ColorTools.materialName With Index '
+            '${ColorTools.blackAndWhiteNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.blackAndWhiteNames[swatch]} [$i]}', () {
+          expect(ColorTools.materialName(swatch[i]),
+              '${ColorTools.blackAndWhiteNames[swatch]} [$i]');
+        });
+        test(
+            'ColorTools.materialNameAndCode '
+            '${ColorTools.blackAndWhiteNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.materialNameAndCode(swatch[i])}', () {
+          expect(
+              ColorTools.materialNameAndCode(swatch[i]),
+              '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
+              '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+        });
+      }
+    }
+  });
+  //
   // Test that all black and whites shades return true with isBlackAndWhiteColor
   group(
       'Test that all ColorsTools.blackAndWhite return true with '
@@ -680,22 +817,92 @@ void main() {
   });
   //
   // Verify colors name maps equality
-  group('Verify Colors to color names map content', () {
-    test('Test black and white to name map equality', () {
-      // Make a custom color swatch to name map for the reference values.
-      final Map<ColorSwatch<Object>, String> refCustomColors =
-          <ColorSwatch<Object>, String>{
-        ColorTools.createPrimarySwatch(const Color(0xFF132B80)): 'RefPrimary',
-        ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'RefSecondary',
-      };
+  group('Verify Custom color swatch to color names map content', () {
+    // Make a custom color swatch to name map for the reference values.
+    final MaterialColor refPrimary =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    final MaterialAccentColor refAccent =
+        ColorTools.createAccentSwatch(const Color(0xFF03DAC6));
 
+    final Map<ColorSwatch<Object>, String> refCustomColors =
+        <ColorSwatch<Object>, String>{
+      refPrimary: 'RefPrimary',
+      refAccent: 'RefSecondary'
+    };
+    test('Test custom colors swatch to name map equality', () {
       expect(
           const MapEquality<ColorSwatch<Object>, String>().equals(
-              ColorTools.blackAndWhiteNames, <ColorSwatch<Object>, String>{
-            ColorTools.blackShade: 'Black',
-            ColorTools.whiteShade: 'White',
+              refCustomColors, <ColorSwatch<Object>, String>{
+            refPrimary: 'RefPrimary',
+            refAccent: 'RefSecondary'
           }),
           true);
     });
+  });
+  //
+  // Test Color names for all primary colors
+  group('Test colors names for all defined Custom colors.', () {
+    // Make a custom color swatch to name map for the reference values.
+    final MaterialColor refPrimary =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    final MaterialAccentColor refAccent =
+        ColorTools.createAccentSwatch(const Color(0xFF03DAC6));
+
+    final Map<ColorSwatch<Object>, String> refCustomColors =
+        <ColorSwatch<Object>, String>{
+      refPrimary: 'RefPrimary',
+      refAccent: 'RefSecondary'
+    };
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ];
+    for (final ColorSwatch<Object> swatch in refCustomColors.keys) {
+      for (final int i in index) {
+        if (swatch[i] != null) {
+          test(
+              'ColorTools.materialName No Index '
+              '${refCustomColors[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${refCustomColors[swatch]}', () {
+            expect(
+                ColorTools.materialName(swatch[i],
+                    withIndex: false, colorSwatchNameMap: refCustomColors),
+                refCustomColors[swatch]);
+          });
+          test(
+              'ColorTools.materialName With Index '
+              '${refCustomColors[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${refCustomColors[swatch]} [$i]}', () {
+            expect(
+                ColorTools.materialName(swatch[i],
+                    colorSwatchNameMap: refCustomColors),
+                '${refCustomColors[swatch]} [$i]');
+          });
+          test(
+              'ColorTools.materialNameAndCode '
+              '${refCustomColors[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              // ignore: lines_longer_than_80_chars
+              '${ColorTools.materialNameAndCode(swatch[i], colorSwatchNameMap: refCustomColors)}',
+              () {
+            expect(
+                ColorTools.materialNameAndCode(swatch[i],
+                    colorSwatchNameMap: refCustomColors),
+                '${refCustomColors[swatch]} [$i] '
+                '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+          });
+        }
+      }
+    }
   });
 }
