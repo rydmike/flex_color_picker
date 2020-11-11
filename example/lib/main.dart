@@ -64,7 +64,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   static const Color guideErrorDark = Color(0xFFCF6679);
   static const Color blueBlues = Color(0xFF174378);
 
-  // Make a custom color swatch to name map from the above custom colors.
+  // Make a custom ColorSwatch to name map from the above custom colors.
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
     ColorTools.createPrimarySwatch(guidePrimary): 'Guide Purple',
@@ -97,6 +97,44 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // Pick color in a dialog.
+              ListTile(
+                title: const Text('Click this color to change it in a dialog'),
+                subtitle: Text(
+                  '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+                  'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
+                ),
+                trailing: ColorIndicator(
+                  width: 44,
+                  height: 44,
+                  borderRadius: 4,
+                  color: dialogPickerColor,
+                  onSelect: () async {
+                    final Color colorBeforeDialog = dialogPickerColor;
+                    if (!(await colorPickerDialog())) {
+                      setState(() {
+                        dialogPickerColor = colorBeforeDialog;
+                      });
+                    }
+                  },
+                ),
+              ),
+
+              // Show the selected color.
+              ListTile(
+                title: const Text('Select color below to change this color'),
+                subtitle:
+                    Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
+                        'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
+                trailing: ColorIndicator(
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  color: screenPickerColor,
+                ),
+              ),
+
+              // Show the color picker in sized box in a raised card.
               SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -120,43 +158,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                       ),
                     ),
                   ),
-                ),
-              ),
-
-              // Show the selected color.
-              ListTile(
-                title: const Text('Select color above to change this color'),
-                subtitle:
-                    Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
-                        'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
-                trailing: ColorIndicator(
-                  width: 44,
-                  height: 44,
-                  borderRadius: 22,
-                  color: screenPickerColor,
-                ),
-              ),
-
-              // Pick color in a dialog.
-              ListTile(
-                title: const Text('Click this color to change it in a dialog'),
-                subtitle: Text(
-                  '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
-                  'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
-                ),
-                trailing: ColorIndicator(
-                  width: 44,
-                  height: 44,
-                  borderRadius: 4,
-                  color: dialogPickerColor,
-                  onSelect: () async {
-                    final Color colorBeforeDialog = dialogPickerColor;
-                    if (!(await colorPickerDialog())) {
-                      setState(() {
-                        dialogPickerColor = colorBeforeDialog;
-                      });
-                    }
-                  },
                 ),
               ),
 
@@ -187,9 +188,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       width: 40,
       height: 40,
       borderRadius: 4,
-      spacing: 6,
-      runSpacing: 6,
-      wheelDiameter: 160,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
       heading: Text(
         'Select color',
         style: Theme.of(context).textTheme.subtitle1,
@@ -199,7 +200,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         style: Theme.of(context).textTheme.subtitle1,
       ),
       wheelSubheading: Text(
-        'Selected color and its material like shades',
+        'Selected color and its shades',
         style: Theme.of(context).textTheme.subtitle1,
       ),
       showMaterialName: true,
@@ -220,7 +221,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ).showPickerDialog(
       context,
       constraints:
-          const BoxConstraints(minHeight: 450, minWidth: 400, maxWidth: 400),
+          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
     );
   }
 }

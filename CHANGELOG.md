@@ -1,6 +1,10 @@
 # Changelog
 
-All notable changes to the **ColorPicker** will be documented in this file.
+All notable changes to the Flex **ColorPicker** will be documented in this file.
+
+## [1.1.1] - November 11, 2020
+* Updated the example app and documentation. The update includes updated screen shots and updated animated gifs.
+* Unit tests for ColorTools added, widget tests still pending for later updates.
 
 ## [1.1.0] - November 6, 2020
 * New API: Added `showColorValue` to optionally display the int value of the selected color. This can be used to assist developers when they need to see or copy selected color values as int numbers.
@@ -12,7 +16,7 @@ All notable changes to the **ColorPicker** will be documented in this file.
 * First official release.
 * Example and documentation updated.
 * Updated the live Web demo version to use the released package.
-* New API: Added `shouldUpdate` to the color wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API that is not needed unless you make your own picker for scratch and you want to use the wheel picker in your picker.
+* New API: Added `shouldUpdate` to the color wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API that is not needed unless you make your own picker from scratch, and you want to use the wheel picker in your own picker.
 * Final API name tweaks before version 1.0.0 release:
 * Renamed: API `createPrimaryColor` -> `createPrimarySwatch`
 * Renamed: API `createAccentColor` -> `createAccentSwatch`
@@ -44,6 +48,8 @@ All notable changes to the **ColorPicker** will be documented in this file.
 
 * First development pre-release on pub.dev.
 
+---
+
 ## To do list and planned feature updates
 
 - [x] Review and update the API.
@@ -53,8 +59,8 @@ All notable changes to the **ColorPicker** will be documented in this file.
 - [x] Add "name that color" function that can give a name to "any" color in English.
 - [x] Release version 1.0.0.
 - [x] Publish version 1.0.0 on pub.dev.
-- [ ] Version 1.1.x: Add first set of tests for the ColorPicker and its supporting classes.
-- [ ] Version 1.1.y: Finalize the tests.
+- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later.
+- [ ] Version 1.1.x: Finalize tests.
 - [ ] Maybe version 2.0.x: Add more color picker types.
 - [ ] Maybe version 2.x.x: Add a color selected with the wheel color selector to the custom colors section.
 - [ ] Maybe version 2.x.x: Store colors added to the custom colors section.
