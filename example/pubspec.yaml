@@ -1,6 +1,6 @@
 name: color_picker_example
 description: Demo of the ColorPicker package.
-version: 1.1.1
+version: 1.1.2
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

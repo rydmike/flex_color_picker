@@ -541,7 +541,8 @@ class ColorPicker extends StatefulWidget {
     cancelLabel ??= 'CANCEL';
     selectLabel ??= 'SELECT';
 
-    bool _colorWasSelected; // False if dialog cancelled, true if color selected
+    // False if dialog cancelled, true if color selected
+    bool _colorWasSelected = false;
 
     await showDialog<bool>(
         context: context,
@@ -852,6 +853,10 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle effectiveGenericNameStyle =
         widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2;
 
+    // Set the default integer code value text style to bodyText2 if not given.
+    final TextStyle effectiveCodeStyle =
+        widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2;
+
     return Padding(
       padding: widget.padding,
       child: Column(
@@ -993,9 +998,25 @@ class _ColorPickerState extends State<ColorPicker> {
           // they will be on same row nicely if there is room enough but also
           // wrap to two rows when so needed when both are shown at the same
           // and they don't fit on one row.
+          //
+          // 5.12.2020 The Wrap was changed into a Row due to a new crash issue
+          // on channels dev and master when showing the ColorPicker in a
+          // Dialog: https://github.com/flutter/flutter/issues/71687
+          // When the issue is solved this will be reverted back to a Wrap.
+          // Using a Wrap has the added benefit of breaking the color code
+          // display+input field and the rarely used int value, into two rows
+          // in case a large font is used on a narrow dialog or display and they
+          // are both configured to be shown.
+          // The Row below may overflow in some rare cases. If you do not
+          // plan to use the ColorPicker on Flutter channels and versions
+          // affected by the issue, you can still use the previous version
+          // 1.1.1 to keep using the one that still uses the Wrap implementation
+          // if you need it.
           if (widget.showColorCode || widget.showColorValue)
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
+            // Wrap(
+            Row(
+              // crossAxisAlignment: WrapCrossAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 // Show the copy and edit color code field, if enabled.
                 if (widget.showColorCode)
@@ -1022,7 +1043,10 @@ class _ColorPickerState extends State<ColorPicker> {
                 if (widget.showColorCode && widget.showColorValue)
                   const SizedBox(width: 8),
                 if (widget.showColorValue)
-                  SelectableText(selectedColor.value.toString()),
+                  SelectableText(
+                    selectedColor.value.toString(),
+                    style: effectiveCodeStyle,
+                  ),
               ],
             ),
         ],
