@@ -29,7 +29,6 @@ When the issue is resolved, the implmentation will be reverted back to a Wrap. U
 * Renamed: API `colorName` -> `materialName`
 * Renamed: API `colorHexCode` -> `colorCode`
 
-
 ## [1.0.0-dev.5] - November 5, 2020
 
 * Added a feature on the wheel color picker that enables entry of a hex RGB value to select a color.
