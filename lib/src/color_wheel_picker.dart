@@ -22,12 +22,12 @@ import 'package:flutter/material.dart';
 // around them using alternative implementations. The issues #57752 and #41389
 // concerning the un-implemented sweep gradient have now also been resolved
 // by the Flutter team by implementing the previously used not supported
-// API aon WEB as well. The work around implementation is still being used here
+// APIs on WEB as well. The work around implementation is still being used here
 // and is even preferred, since it results in a more accurate Hue wheel. The
 // previously used sweep gradient that did not work on Web was actually an
 // approximation of the hue values.
 
-/// A HSV color wheel based color picker for Flutter, used by ColorPicker.
+/// A HSV color wheel based color picker for Flutter, used by FlexColorPicker.
 ///
 /// The color wheel picker uses a custom painter to draw the HSV color wheel
 /// and rectangle. It can also be used on its own in other color picker
@@ -89,12 +89,12 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   // border color, it is typically a light grey color.
   Color borderColor;
 
-  // If true then we are dragging on the palette box,
-  // if false we are are dragging on color wheel
+  // If true, then we are dragging on the palette box.
+  // if false, then we are are dragging on color wheel.
   bool isPalette = false;
 
   // We store the HSV color components as internal state for the
-  // Hue wheel and Saturation and Value square
+  // Hue wheel, and Saturation and Value for the square.
   double colorHue;
   double colorSaturation;
   double colorValue;
@@ -155,7 +155,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _center = Offset(_size.width / 2, _size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
-    // Did the onStart on the square Palette box?
+    // Did the onStart, start on the square Palette box?
     isPalette =
         _vector.dx.abs() < _squareRadius && _vector.dy.abs() < _squareRadius;
     // We started on the square palette box
@@ -239,13 +239,12 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
     return GestureDetector(
       // There was an issue when using onPanDown, onPanStart and onPanUpdate
-      // event handler, so these drag events were used instead, works fine
+      // event handler, so these drag events were used instead, works pretty OK
       // as a workaround. See this issue for more info:
       // https://github.com/flutter/flutter/issues/50776
-      //
       // Would be nicer if onPanDown worked, because then we could get
       // co-ordinates on finger/mouse down, now we only get it after finger or
-      // mouse is down and we have moved it slightly, so it is not as nice as
+      // mouse is down and we have moved it slightly, so it is not as nice as I
       // would like to have it, but since I have not seen any other resolution
       // to the above Flutter issue yet, this is the best we can do for now.
       onVerticalDragStart: (DragStartDetails details) =>
@@ -310,7 +309,7 @@ class _WheelPainter extends CustomPainter {
     const double _step = 1;
     const double _aliasing = 0.5;
 
-    // Responsive views might force the Size to become an rectangle, thus
+    // Responsive views might force the Size to become a rectangle, thus
     // creating an ellipse, so we/ keep it as a circle by always using the
     // shortest side in the surrounding rectangle to make a square.
     final double _shortestRectSide =
@@ -338,7 +337,7 @@ class _WheelPainter extends CustomPainter {
       );
     }
 
-    // Draw a border around the color wheel
+    // Draw a border around the color wheel.
     if (hasBorder) {
       // Draw border around the inner side of the color wheel
       canvas.drawCircle(
@@ -357,7 +356,7 @@ class _WheelPainter extends CustomPainter {
             ..color = borderColor ?? Colors.grey); // Grey as fallback
     }
 
-    // Draw the color shade palette
+    // Draw the color shade palette.
     final Rect _rectBox = Rect.fromLTWH(_center.dx - _squareRadius,
         _center.dy - _squareRadius, _squareRadius * 2, _squareRadius * 2);
     final RRect rRect =
@@ -386,17 +385,17 @@ class _WheelPainter extends CustomPainter {
           ..style = PaintingStyle.fill
           ..shader = _vertical);
 
-    // Draw a border around the outer edge of the square shade picker
+    // Draw a border around the outer edge of the square shade picker.
     if (hasBorder) {
       canvas.drawRRect(
           rRect,
           Paint()
             ..style = PaintingStyle.stroke
-            ..color = borderColor ?? Colors.grey); // Grey as fallback
+            ..color = borderColor ?? Colors.grey); // Grey as fallback.
     }
 
     // Define paint style for the selection thumbs:
-    // Outer black circle
+    // Outer black circle.
     final Paint _paintBlack = Paint()
       ..color = Colors.black
       ..strokeWidth = 5
@@ -407,7 +406,7 @@ class _WheelPainter extends CustomPainter {
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
-    // Define the selection thumb position on the color wheel
+    // Define the selection thumb position on the color wheel.
     final Offset _wheel = _Wheel.hueToVector(
         (colorHue + 360.0) * math.pi / 180.0, _radius, _center);
 

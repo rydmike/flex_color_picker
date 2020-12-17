@@ -1,10 +1,10 @@
-# Flex ColorPicker
+# FlexColorPicker
 
-Flex ColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used for the pick items can be customized.
+FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used for the pick items can be customized.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
 
-#### The different types of available pickers are
+#### The different types of available color pickers are
 
 1. Material primary colors and its shades. `ColorPickerType.primary`
 2. Material accent colors and its shades. `ColorPickerType.accent`

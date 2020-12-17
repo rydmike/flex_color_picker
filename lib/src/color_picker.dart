@@ -30,13 +30,13 @@ enum ColorPickerType {
 }
 
 /// A customizable Material primary color, accent color and custom colors,
-/// color picker.
+/// color picker widget.
 ///
 /// You can configure which material color swatches can be used for color
-/// selection, any combination of both primary/accent in same picker or on
-/// separate 'pages'. There is an almost black&white shades picker page and it
-/// is possible to include a page with custom material and accent swatches and
-/// provide custom names for the swatches.
+/// selection, any combination of both primary/accent in same picker or in
+/// separate groups. There is an almost black and white shades picker page and
+/// it is possible to include a page with custom material and accent swatches
+/// using custom names for the custom swatches.
 /// It is possible to specify if only the main color in a swatch should be
 /// selectable or its shades as well.
 ///
@@ -45,7 +45,7 @@ enum ColorPickerType {
 /// selected color.
 ///
 /// If a selected color in the wheel picker belongs to any standard Material
-/// color, primary or accent and any of it's shades or any of the provided
+/// color, primary or accent, and any of its shades or any of the provided
 /// custom color swatches, then the wheel picker will not calculate swatch
 /// colors, it will instead show all the shades from the selected color's
 /// swatch. Selecting the shades on the wheel picker will then select the shade
@@ -420,12 +420,13 @@ class ColorPicker extends StatefulWidget {
   /// `showDialog` function with opinionated Cancel and Select buttons. It
   /// also by default uses a lighter barrier color. This is useful if the
   /// color picker is used to dynamically change color of a widget or entire
-  /// application theme since we can better see the impact of the color
-  /// choice behind the modal dialog if the barrier is made more transparent.
+  /// application theme, since we can then better see the impact of the color
+  /// choice behind the modal dialog when the barrier is made more transparent.
   ///
-  /// Returns a Future bool that resolves to true if the select color action
-  /// was selected and to false if the cancel action was selected when the
-  /// dialog was closed.
+  /// Returns a Future bool that resolves to true, if the select color action
+  /// was selected, and to false if the cancel action was selected, when the
+  /// dialog was closed. Clicking outside the dialog also closes it and returns
+  /// false.
   Future<bool> showPickerDialog(
     /// The dialog requires a BuildContext.
     BuildContext context, {
@@ -522,11 +523,11 @@ class ColorPicker extends StatefulWidget {
     /// You can provide BoxConstraints to constrain the size of the dialog.
     /// You might want to do this at least for the height, otherwise
     /// the dialog might jump up and down jarringly if its size changes when
-    /// you change picker type with the selector.¨
+    /// user changes the picker type with the selector.¨
     ///
-    /// Normally you would not change the picker element sizes after you
-    /// have determined what works in your implementation, so you can usually
-    /// figure out a good dialog box size that works well for your use case
+    /// Normally you would not change the picker's content element sizes after
+    /// you have determined what works in your implementation. You can usually
+    /// figure out a good dialog box size that works well for your use case,
     /// instead of allowing the color picker dialog to auto size itself,
     /// which it will do if no constraints are defined.
     BoxConstraints constraints,

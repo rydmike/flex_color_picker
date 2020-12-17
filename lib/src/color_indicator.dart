@@ -34,7 +34,7 @@ class ColorIndicator extends StatelessWidget {
         assert(hasBorder != null, 'HasBorder boolean cannot be null.'),
         super(key: key);
 
-  /// Void callback, called when the color indicator is tapped.
+  /// Called when the color indicator is tapped.
   /// To disable selection and the tapping ink effect assign a null callback.
   final VoidCallback onSelect;
 

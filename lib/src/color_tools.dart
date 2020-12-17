@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-/// Static color tool functions used internally by the Flex ColorPicker.
+/// Static color tool functions used internally by FlexColorPicker.
 ///
 /// The functions have a public API and can also be used on their own
-/// outside the Flex ColorPicker if so desired. Available functions include:
+/// outside FlexColorPicker if so desired. Available functions include:
 ///
 /// * Get English name strings for the Material primary and accent colors.
 /// * Maps of color swatches to their names.
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 /// }
 /// ```
 /// In a real app you would be using translated strings from whatever
-/// translation tool you are using and not just two Swedish examples.
+/// translation tool you are using, and not just two Swedish examples.
 class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
@@ -43,7 +43,7 @@ class ColorTools {
   /// A Material primary colors swatch list also exists in the Flutter
   /// SDK in colors.dart as a static const [Colors.primaries],
   /// but that list excludes grey. To make the grey color available to the
-  /// color picker this list includes it as well.
+  /// color picker, this list includes it as well.
   static const List<ColorSwatch<Object>> primaryColors = <ColorSwatch<Object>>[
     Colors.red,
     Colors.pink,
@@ -125,9 +125,9 @@ class ColorTools {
   /// Name of Material grey color. Default value is its English name.
   static String greyName = 'Grey';
 
-  /// Map of Material primary colors swatches and their names.
+  /// Map of Material primary color swatches and their names.
   ///
-  /// Use a primary [ColorSwatch] as key to get its current name string.
+  /// Use a primary [ColorSwatch] as key, to get its current name string.
   static Map<ColorSwatch<Object>, String> primaryColorNames =
       <ColorSwatch<Object>, String>{
     Colors.red: redName,
@@ -336,7 +336,7 @@ class ColorTools {
   /// Default value is its English name.
   static String deepOrangeAccentName = 'Deep orange accent';
 
-  /// Map of Material accent colors swatches and their names.
+  /// Map of Material accent color swatches and their names.
   ///
   /// Use a primary [ColorSwatch] as key to get its current name string.
   static Map<ColorSwatch<Object>, String> accentColorsNames =
@@ -422,7 +422,7 @@ class ColorTools {
     return MaterialAccentColor(color.value, swatch);
   }
 
-  /// A list with both primary and accent color Material swatches.
+  /// A list with both primary and accent color Material color swatches.
   ///
   /// This list is used to create a color picker that mixes and includes both
   /// the primary material colors and the accent colors in the same picker.
@@ -490,7 +490,7 @@ class ColorTools {
   /// A color swatch for almost white colors, starting with white.
   ///
   /// These are none transparent shades of close to white values, useful when
-  /// you want very slightly off white values that are not transparent.
+  /// you want slightly off white values that are not transparent.
   static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
     0xFFFAFAFB,
     <int, Color>{
@@ -795,7 +795,7 @@ class ColorTools {
   /// or name random colors or colors given as input by users.
   ///
   /// The returned color name is based on a Dart port of a JavaScript tool
-  /// called 'ntc' short for "Name That Color". The javascript project and info
+  /// called 'ntc', short for "Name That Color". The javascript project and info
   /// about it can be found here http://chir.ag/projects/ntc.
   static String nameThatColor(Color color) =>
       _ColorName.fromColor(color).getName;
@@ -809,7 +809,7 @@ class ColorTools {
 // This is also a modified Dart port of the one found in pub.dev package
 // https://pub.dev/packages/random_color by Luka Knezic. Credits and rights
 // for the original Dart port belongs to Luka Knezic.
-// This version uses const Color values for the named color codes instead of
+// This version uses const Color values for the named color codes, instead of
 // strings parsed to colors. More efficient and we can also see the color of
 // each named color code in the IDE, which is a nice feature during development.
 // Some color names with obvious spelling mistakes were also corrected.

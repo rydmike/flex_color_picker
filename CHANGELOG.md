@@ -63,8 +63,10 @@ When the issue is resolved, the implementation will be reverted back to a Wrap. 
 - [x] Add "name that color" function that can give a name to "any" color in English.
 - [x] Release version 1.0.0.
 - [x] Publish version 1.0.0 on pub.dev.
-- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later.
-- [ ] Version 1.1.x: Finalize tests.
-- [ ] Maybe version 2.0.x: Add more color picker types.
+- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
+- [ ] Version 1.1.x: Add more tests.
+- [ ] Version 1.1.y: Finalize tests.
+- [ ] Version 2.0.0-nullsafety.1: Add null safe version.
+- [ ] Maybe version 2.1.x: Add more color picker types.
 - [ ] Maybe version 2.x.x: Add a color selected with the wheel color selector to the custom colors section.
 - [ ] Maybe version 2.x.x: Store colors added to the custom colors section.

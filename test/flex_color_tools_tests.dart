@@ -841,7 +841,7 @@ void main() {
   });
   //
   // Test Color names for all primary colors
-  group('Test colors names for all defined Custom colors.', () {
+  group('Test color names for all defined Custom colors.', () {
     // Make a custom color swatch to name map for the reference values.
     final MaterialColor refPrimary =
         ColorTools.createPrimarySwatch(const Color(0xFF132B80));
