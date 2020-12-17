@@ -1,5 +1,5 @@
 name: color_picker_example
-description: Demo of the ColorPicker package.
+description: Simple example of how to use the FlexColorPicker package.
 version: 1.1.2
 
 environment:
