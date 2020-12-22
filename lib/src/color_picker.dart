@@ -65,7 +65,6 @@ class ColorPicker extends StatefulWidget {
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
     this.selectedColorIcon = Icons.check,
-    //
     // Picker item and wheel picker properties.
     this.width = 40.0,
     this.height = 40.0,
@@ -78,7 +77,6 @@ class ColorPicker extends StatefulWidget {
     this.wheelDiameter = 190,
     this.wheelWidth = 16,
     this.wheelHasBorder = false,
-    //
     // Color picker types shown and used by the color picker.
     this.pickersEnabled = const <ColorPickerType, bool>{
       ColorPickerType.both: false,
@@ -88,12 +86,10 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.custom: false,
       ColorPickerType.wheel: false,
     },
-    //
     // Headings and sub headings used by the color picker.
     this.heading,
     this.subheading,
     this.wheelSubheading,
-    //
     // Toggles to show color names and codes and their text styles.
     this.showMaterialName = false,
     this.materialNameTextStyle,
@@ -104,7 +100,6 @@ class ColorPicker extends StatefulWidget {
     this.colorCodeTextStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
-    //
     // Segmented color picker selector control properties.
     this.pickerTypeTextStyle,
     this.pickerTypeLabels = const <ColorPickerType, String>{
@@ -115,7 +110,6 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.custom: _selectCustomLabel,
       ColorPickerType.wheel: _selectWheelAnyLabel,
     },
-    //
     // Custom color swatches and name map for the custom color swatches.
     this.customColorSwatchesAndNames,
     //
@@ -484,11 +478,13 @@ class ColorPicker extends StatefulWidget {
     /// expected to be a part of the [ColorPicker].
     final EdgeInsetsGeometry contentPadding = const EdgeInsets.all(0),
 
-    /// Inset padding for all the content in dialog.
+    /// The amount of padding added to [MediaQueryData.viewInsets] on the
+    /// outside of the [ColorPicker] dialog.
     ///
-    /// Defaults to const EdgeInsets.all(0), as the inset padding is normally
-    /// expected to be a part of the padding of the [ColorPicker].
-    final EdgeInsets insetPadding = const EdgeInsets.all(0),
+    /// Defines the minimum space between the screen's edges and the dialog.
+    /// Defaults to EdgeInsets.symmetric(horizontal: 40, vertical: 24).
+    final EdgeInsets insetPadding =
+        const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
 
     /// If true, the dialog can be closed by clicking outside it.
     /// Defaults to true.

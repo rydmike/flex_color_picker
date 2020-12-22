@@ -2,6 +2,13 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [1.1.3] - December 22, 2020
+* Fixed the faulty documentation and comment for showPickerDialog parameter insetPadding.
+* Fixed the faulty default value for showPickerDialog parameter insetPadding, the new default
+  value is the same as Flutter and Material default
+  `EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0)`, as it should have been.
+* Minor documentation style correction.
+
 ## [1.1.2] - December 5, 2020
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
 When the issue is resolved, the implementation will be reverted back to a Wrap. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
@@ -64,7 +71,7 @@ When the issue is resolved, the implementation will be reverted back to a Wrap. 
 - [x] Release version 1.0.0.
 - [x] Publish version 1.0.0 on pub.dev.
 - [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
-- [ ] Version 1.1.3: Add more tests.
+- [ ] Version 1.1.4: Add more tests.
 - [ ] Version 1.1.x: Finalize tests.
 - [ ] Version 2.0.0-nullsafety.1: Add null safe version.
 - [ ] Maybe version 2.1.x: Add more color picker types.

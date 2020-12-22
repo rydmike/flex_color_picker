@@ -28,7 +28,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  flex_color_picker:
+  flex_color_picker: any
 ```
 
 In your library file add the following import:
@@ -113,7 +113,7 @@ You can use same the `ColorIndicator` Widget that the `ColorPicker` uses interna
 
 ```dart
 ListTile(
-  title: const Text('Select color above to change this color'),
+  title: const Text('Select color below to change this color'),
   subtitle: Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
                  'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
   trailing: ColorIndicator(
@@ -182,7 +182,8 @@ We use another `ListTile` to display a `ColorIndicator`, that we style a bit dif
   ListTile(
     title: const Text('Click this color to change it in a dialog'),
     subtitle: Text(
-      '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+      '${ColorTools.materialNameAndCode(dialogPickerColor, '
+      'colorSwatchNameMap: colorsNameMap)} '
       'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
     ),
     trailing: ColorIndicator(
