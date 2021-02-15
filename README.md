@@ -56,7 +56,7 @@ The result is a default color picker with only the primary and accent color pick
 
 You can also try a live web example of [**FlexColorPicker here**](https://rydmike.com/democolorpicker). With the Web demo you can modify most of the color picker's API values, and use it as a tool to find a style that fits your application.
 
-The source code for the Web demo, which is only a slightly more elaborate example than the default, is also bundled with the package source code in example/demo/main.dart.
+The source code for the Web demo, which is only a slightly more elaborate example than the default, is also bundled with the package source code in "example/lib/demo/main.dart".
 
 The WEB demo has a simple responsive view. On a normal 1080p screen you can see all the settings, and their
 impact on the picker on the same screen.
@@ -319,7 +319,6 @@ The above introduction was a walk through of the bundled example, please see the
 
 There are a few more configuration options available for the `ColorPicker`, use the [API reference guide](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for additional information.
 
-You can also try the more complete [live Web example](https://rydmike.com/democolorpicker/). Its source code is 
-also included in the package example folder in example/demo/main.dart.
+You can also try the more complete [live Web example](https://rydmike.com/democolorpicker/). Its source code is also included in the package example folder, in "example/lib/demo/main.dart".
 
 Happy color picking!

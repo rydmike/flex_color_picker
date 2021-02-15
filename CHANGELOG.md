@@ -4,8 +4,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
-* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not be resolved, 
-  however, the workaround allows for the Wrap implmentation that was chnaged to a Row in version 1.1.2 to be used
+* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved. 
+  However, the workaround allows for the Wrap implementation that was changed to a Row in version 1.1.2, to be used
   again.
 * The almost full API configurable Web example and demo, was included in the package in example/demo/mina.dart together
   with the previous default example in example/main.dart. Previously this Web example was in a separate GitHub 
@@ -24,7 +24,7 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
 ## [1.1.1] - November 11, 2020
-* Updated the example app and documentation. The update includes updated screen shots and updated animated gifs.
+* Updated the example app and documentation. The update includes updated screenshots and updated animated gifs.
 * Unit tests for ColorTools added, widget tests still pending for later updates.
 
 ## [1.1.0] - November 6, 2020
