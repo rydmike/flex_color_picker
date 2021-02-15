@@ -4,11 +4,11 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
-* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved. 
+* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved.
   However, the workaround allows for the Wrap implementation that was changed to a Row in version 1.1.2, to be used
   again.
-* The almost full API configurable Web example and demo, was included in the package in example/demo/mina.dart together
-  with the previous default example in example/main.dart. Previously this Web example was in a separate GitHub 
+* The almost full API configurable Web example and demo, was included in the package in "example/lib/demo/mina.dart" together
+  with the previous default example in "example/lib/main.dart". Previously this Web example was in a separate GitHub
   repository. The example was updated to make it responsive, to offer better usability on Web.
 
 ## [1.1.3] - December 22, 2020
