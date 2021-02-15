@@ -58,7 +58,8 @@ You can also try a live web example of [**FlexColorPicker here**](https://rydmik
 
 The source code for the Web demo, which is only a slightly more elaborate example than the default, is also bundled with the package source code in example/demo/main.dart.
 
-The live WEB picker has a responsive view, on a normal 1080p screen you should be able to see all it
+The WEB demo has a simple responsive view. On a normal 1080p screen you can see all the settings, and their
+impact on the picker on the same screen.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/null-safe/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
 
@@ -308,7 +309,7 @@ You can connect the color picking interaction to theme colors and modify your ap
 
 The example also includes a light and dark theme mode toggle, so you can test the look and operation of the color picker with a dark theme.
 
-**FlexColorPicker** works on all Flutter platforms, Android, iOS, Web, Windows, MacOS and Linux. Here is an example of the demo application running on Windows desktop.
+**FlexColorPicker** works on all Flutter platforms, Android, iOS, Web, Windows, macOS and Linux. Here is an example of the demo application running on Windows desktop.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
 
