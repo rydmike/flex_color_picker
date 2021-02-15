@@ -15,8 +15,8 @@ class _ColorPickerDemoState extends State<ColorPickerDemo> {
 
   @override
   void initState() {
-    themeMode = ThemeMode.light;
     super.initState();
+    themeMode = ThemeMode.light;
   }
 
   @override

@@ -101,14 +101,15 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   @override
   void initState() {
+    super.initState();
     colorHue = color.hue;
     colorSaturation = color.saturation;
     colorValue = color.value;
-    super.initState();
   }
 
   @override
   void didUpdateWidget(ColorWheelPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
     // Only if widget.shouldUpdate is true will we change color. It is set to
     // true by parent when it has updated the widget.color value and it needs
     // to update the custom painted color wheel.
@@ -126,7 +127,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorValue = color.value;
       }
     }
-    super.didUpdateWidget(oldWidget);
   }
 
   // Get the widget color, but convert to HSV color that we need internally

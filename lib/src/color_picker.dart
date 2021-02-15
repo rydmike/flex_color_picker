@@ -626,6 +626,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void initState() {
+    super.initState();
     // Always update the wheel when ColorPicker is initialized, but not in
     // didUpdateWidget.
     wheelShouldUpdate = true;
@@ -634,17 +635,16 @@ class _ColorPickerState extends State<ColorPicker> {
     selectedColor = widget.color;
     // Initialize other values
     initSelectedValue(findPicker: true);
-    super.initState();
   }
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
     // Initialize the values again because the underlying widget changed.
     // If the available color picker selection was changed we need to find
     // the picker again and set the findPicker option to true.
     initSelectedValue(
         findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
-    super.didUpdateWidget(oldWidget);
   }
 
   void initSelectedValue({bool findPicker = false}) {
@@ -1188,27 +1188,27 @@ class _ColorCodeField extends StatefulWidget {
         assert(enableTooltips != null, 'enableTooltips may not be null'),
         super(key: key);
 
-  // Current color value for the field
+  /// Current color value for the field
   final Color color;
 
-  // Is in read only mode, we should not be able to select either.
+  /// Is in read only mode, we should not be able to select either.
   final bool readOnly;
 
-  // Color code of the entered color string is returned back in this callback.
+  /// Color code of the entered color string is returned back in this callback.
   final ValueChanged<Color> onColorChanged;
 
-  // Text style of the color code display and edit field
-  //
-  // Defaults to Theme.of(context).textTheme.bodyText2;
+  /// Text style of the color code display and edit field
+  ///
+  /// Defaults to Theme.of(context).textTheme.bodyText2;
   final TextStyle style;
 
-  // Icon data used for the copy button of the color code.
-  //
-  // Defaults to Icons.copy.
+  /// Icon data used for the copy button of the color code.
+  ///
+  /// Defaults to Icons.copy.
   final IconData icon;
 
-  // Set to true to enable and show tooltips in this widget. Currently only
-  // the color code copy button has a tooltip.
+  /// Set to true to enable and show tooltips in this widget. Currently only
+  /// the color code copy button has a tooltip.
   final bool enableTooltips;
 
   @override
@@ -1223,6 +1223,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void initState() {
+    super.initState();
     textController = _TextEditingControllerWithCursorPosition();
     textFocusNode = FocusNode();
     color = widget.color;
@@ -1232,7 +1233,6 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     // you should consider possible parsing errors too:
     // https://stackoverflow.com/questions/55905889/how-to-get-the-last-n-characters-in-a-string-in-dart
     textController.text = colorHexCode.substring(colorHexCode.length - 6);
-    super.initState();
   }
 
   @override
@@ -1244,12 +1244,12 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void didUpdateWidget(covariant _ColorCodeField oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
       color = widget.color;
       colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
-
     // TODO: Remove when there is a fix for Flutter issue #48099.
     // https://github.com/flutter/flutter/issues/48099
     // On Web and Windows platform the `enableInteractiveSelection:false` does
@@ -1257,14 +1257,18 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     // selected text even when both the `enableInteractiveSelection:false` and
     // `readOnly: true` are set. The hack below removes any active selection
     // when the readOnly status changes, but on Windows we can still select and
-    // even delete selected text, at least there is no pre selected text.
+    // even delete selected text, but at least there is no pre-selected text.
+    // This fix should should now solve it:
+    // https://github.com/flutter/flutter/pull/70972
+    // If it works and when it lands on stable channel we can remove this,
+    // not that it will do any harm even when the fix lands, but it will no
+    // longer be needed.
     if (oldWidget.readOnly != widget.readOnly) {
       textController.clear();
       color = widget.color;
       colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -1273,7 +1277,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     final MaterialLocalizations tooltips = MaterialLocalizations.of(context);
     final String copyTooltip = tooltips?.copyButtonLabel ?? 'Copy';
 
-    // Define some opinionated style for the color code display and entry field.
+    // Define opinionated styles for the color code display and entry field.
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     final Color fieldBackground =
         isLight ? Colors.black.withAlpha(11) : Colors.white.withAlpha(33);
