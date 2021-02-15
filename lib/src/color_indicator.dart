@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 /// The color indicator can also be used on its own as a color indicator e.g.
 /// in a ListTile widget. It has adjustable, height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
+@immutable
 class ColorIndicator extends StatelessWidget {
   /// Default constructor for the color indicator.
   const ColorIndicator({
-    Key key,
+    Key? key,
     this.onSelect,
     this.isSelected = false,
     this.elevation = 0,
@@ -20,23 +21,16 @@ class ColorIndicator extends StatelessWidget {
     this.borderRadius = 10,
     this.hasBorder = false,
     this.borderColor,
-  })  : assert(isSelected != null, 'isSelected cannot be null.'),
-        assert(elevation >= 0, 'Elevation must be greater or equal to 0.'),
-        assert(selectedIcon != null,
-            'Selection indicator icon data cannot be null.'),
-        assert(color != null, 'Color may not be null.'),
-        assert(width != null, 'Width may not be null.'),
+  })  : assert(elevation >= 0, 'Elevation must be greater or equal to 0.'),
         assert(width > 0, 'Width must be positive.'),
-        assert(height != null, 'Height may not be null.'),
         assert(height > 0, 'Height must be positive.'),
         assert(borderRadius >= 0,
             'The border radius must be greater or equal to 0.'),
-        assert(hasBorder != null, 'HasBorder boolean cannot be null.'),
         super(key: key);
 
   /// Called when the color indicator is tapped.
   /// To disable selection and the tapping ink effect assign a null callback.
-  final VoidCallback onSelect;
+  final VoidCallback? onSelect;
 
   /// The color indicator is selected and the [selectedIcon] will be shown.
   final bool isSelected;
@@ -70,7 +64,7 @@ class ColorIndicator extends StatelessWidget {
 
   /// Color of the border on the color indicator.
   /// Defaults to theme of context divider color.
-  final Color borderColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +80,7 @@ class ColorIndicator extends StatelessWidget {
 
     return Material(
       type: MaterialType.card,
-      elevation: elevation ?? 0, // If null was passed we use zero
+      elevation: elevation,
       borderRadius: BorderRadius.circular(borderRadius),
       clipBehavior: Clip.antiAlias,
       child: Container(

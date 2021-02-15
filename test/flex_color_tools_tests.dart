@@ -189,7 +189,7 @@ void main() {
               '${ColorTools.primaryColorNames[swatch]} '
               '[$i] (${swatch[i]}) returns '
               '${ColorTools.primaryColorNames[swatch]}', () {
-            expect(ColorTools.materialName(swatch[i], withIndex: false),
+            expect(ColorTools.materialName(swatch[i]!, withIndex: false),
                 ColorTools.primaryColorNames[swatch]);
           });
           test(
@@ -197,18 +197,18 @@ void main() {
               '${ColorTools.primaryColorNames[swatch]} '
               '[$i] (${swatch[i]}) returns '
               '${ColorTools.primaryColorNames[swatch]} [$i]}', () {
-            expect(ColorTools.materialName(swatch[i]),
+            expect(ColorTools.materialName(swatch[i]!),
                 '${ColorTools.primaryColorNames[swatch]} [$i]');
           });
           test(
               'ColorTools.materialNameAndCode '
               '${ColorTools.primaryColorNames[swatch]} '
               '[$i] (${swatch[i]}) returns '
-              '${ColorTools.materialNameAndCode(swatch[i])}', () {
+              '${ColorTools.materialNameAndCode(swatch[i]!)}', () {
             expect(
-                ColorTools.materialNameAndCode(swatch[i]),
+                ColorTools.materialNameAndCode(swatch[i]!),
                 '${ColorTools.primaryColorNames[swatch]} [$i] '
-                '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+                '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
           });
         }
       }
@@ -241,7 +241,7 @@ void main() {
       for (final int i in index) {
         if (swatch[i] != null) {
           test('Verify that ${swatch[i]}[$i] is a primary color ', () {
-            expect(ColorTools.isPrimaryColor(swatch[i]), true);
+            expect(ColorTools.isPrimaryColor(swatch[i]!), true);
           });
         }
       }
@@ -271,7 +271,7 @@ void main() {
       for (final int i in index) {
         if (swatch[i] != null) {
           test('Color ${swatch[i]}[$i] returns primarySwatch($swatch)} ', () {
-            expect(ColorTools.primarySwatch(swatch[i]), swatch);
+            expect(ColorTools.primarySwatch(swatch[i]!), swatch);
           });
         }
       }
@@ -467,7 +467,7 @@ void main() {
             '${ColorTools.accentColorsNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
             '${ColorTools.accentColorsNames[swatch]}', () {
-          expect(ColorTools.materialName(swatch[i], withIndex: false),
+          expect(ColorTools.materialName(swatch[i]!, withIndex: false),
               ColorTools.accentColorsNames[swatch]);
         });
         test(
@@ -475,18 +475,18 @@ void main() {
             '${ColorTools.accentColorsNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
             '${ColorTools.accentColorsNames[swatch]} [$i]}', () {
-          expect(ColorTools.materialName(swatch[i]),
+          expect(ColorTools.materialName(swatch[i]!),
               '${ColorTools.accentColorsNames[swatch]} [$i]');
         });
         test(
             'ColorTools.materialNameAndCode '
             '${ColorTools.accentColorsNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
-            '${ColorTools.materialNameAndCode(swatch[i])}', () {
+            '${ColorTools.materialNameAndCode(swatch[i]!)}', () {
           expect(
-              ColorTools.materialNameAndCode(swatch[i]),
+              ColorTools.materialNameAndCode(swatch[i]!),
               '${ColorTools.accentColorsNames[swatch]} [$i] '
-              '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+              '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
         });
       }
     }
@@ -505,7 +505,7 @@ void main() {
     for (final ColorSwatch<Object> swatch in Colors.accents) {
       for (final int i in index) {
         test('Verify that ${swatch[i]}[$i] is an accent color ', () {
-          expect(ColorTools.isAccentColor(swatch[i]), true);
+          expect(ColorTools.isAccentColor(swatch[i]!), true);
         });
       }
     }
@@ -522,7 +522,7 @@ void main() {
     for (final ColorSwatch<Object> swatch in Colors.accents) {
       for (final int i in index) {
         test('Color ${swatch[i]}[$i] returns accentSwatch($swatch)} ', () {
-          expect(ColorTools.accentSwatch(swatch[i]), swatch);
+          expect(ColorTools.accentSwatch(swatch[i]!), swatch);
         });
       }
     }
@@ -675,7 +675,7 @@ void main() {
             '${ColorTools.blackAndWhiteNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
             '${ColorTools.blackAndWhiteNames[swatch]}', () {
-          expect(ColorTools.materialName(swatch[i], withIndex: false),
+          expect(ColorTools.materialName(swatch[i]!, withIndex: false),
               ColorTools.blackAndWhiteNames[swatch]);
         });
         test(
@@ -683,18 +683,18 @@ void main() {
             '${ColorTools.blackAndWhiteNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
             '${ColorTools.blackAndWhiteNames[swatch]} [$i]}', () {
-          expect(ColorTools.materialName(swatch[i]),
+          expect(ColorTools.materialName(swatch[i]!),
               '${ColorTools.blackAndWhiteNames[swatch]} [$i]');
         });
         test(
             'ColorTools.materialNameAndCode '
             '${ColorTools.blackAndWhiteNames[swatch]} '
             '[$i] (${swatch[i]}) returns '
-            '${ColorTools.materialNameAndCode(swatch[i])}', () {
+            '${ColorTools.materialNameAndCode(swatch[i]!)}', () {
           expect(
-              ColorTools.materialNameAndCode(swatch[i]),
+              ColorTools.materialNameAndCode(swatch[i]!),
               '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
-              '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+              '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
         });
       }
     }
@@ -719,7 +719,7 @@ void main() {
     for (final ColorSwatch<Object> swatch in ColorTools.blackAndWhite) {
       for (final int i in index) {
         test('Verify that ${swatch[i]} is a blackAndWhite color ', () {
-          expect(ColorTools.isBlackAndWhiteColor(swatch[i]), true);
+          expect(ColorTools.isBlackAndWhiteColor(swatch[i]!), true);
         });
       }
     }
@@ -743,7 +743,7 @@ void main() {
         test(
             'Color ${swatch[i]}[$i] returns '
             'blackAndWhiteSwatch($swatch)} ', () {
-          expect(ColorTools.blackAndWhiteSwatch(swatch[i]), swatch);
+          expect(ColorTools.blackAndWhiteSwatch(swatch[i]!), swatch);
         });
       }
     }
@@ -777,7 +777,7 @@ void main() {
       for (final int i in index) {
         if (swatch[i] != null) {
           test('Verify that ${swatch[i]}[$i] is a custom color ', () {
-            expect(ColorTools.isCustomColor(swatch[i], refCustomColors), true);
+            expect(ColorTools.isCustomColor(swatch[i]!, refCustomColors), true);
           });
         }
       }
@@ -809,7 +809,8 @@ void main() {
           test(
               'Color ${swatch[i]}[$i] returns '
               'customSwatch($swatch)} ', () {
-            expect(ColorTools.customSwatch(swatch[i], refCustomColors), swatch);
+            expect(
+                ColorTools.customSwatch(swatch[i]!, refCustomColors), swatch);
           });
         }
       }
@@ -874,7 +875,7 @@ void main() {
               '[$i] (${swatch[i]}) returns '
               '${refCustomColors[swatch]}', () {
             expect(
-                ColorTools.materialName(swatch[i],
+                ColorTools.materialName(swatch[i]!,
                     withIndex: false, colorSwatchNameMap: refCustomColors),
                 refCustomColors[swatch]);
           });
@@ -884,7 +885,7 @@ void main() {
               '[$i] (${swatch[i]}) returns '
               '${refCustomColors[swatch]} [$i]}', () {
             expect(
-                ColorTools.materialName(swatch[i],
+                ColorTools.materialName(swatch[i]!,
                     colorSwatchNameMap: refCustomColors),
                 '${refCustomColors[swatch]} [$i]');
           });
@@ -893,13 +894,13 @@ void main() {
               '${refCustomColors[swatch]} '
               '[$i] (${swatch[i]}) returns '
               // ignore: lines_longer_than_80_chars
-              '${ColorTools.materialNameAndCode(swatch[i], colorSwatchNameMap: refCustomColors)}',
+              '${ColorTools.materialNameAndCode(swatch[i]!, colorSwatchNameMap: refCustomColors)}',
               () {
             expect(
-                ColorTools.materialNameAndCode(swatch[i],
+                ColorTools.materialNameAndCode(swatch[i]!,
                     colorSwatchNameMap: refCustomColors),
                 '${refCustomColors[swatch]} [$i] '
-                '(0x${swatch[i].value.toRadixString(16).toUpperCase()})');
+                '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
           });
         }
       }

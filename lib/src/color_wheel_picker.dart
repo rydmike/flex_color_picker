@@ -35,18 +35,15 @@ import 'package:flutter/material.dart';
 class ColorWheelPicker extends StatefulWidget {
   /// Default constructor for the color wheel picker.
   const ColorWheelPicker({
-    Key key,
-    @required this.color,
-    @required this.onChanged,
+    Key? key,
+    required this.color,
+    required this.onChanged,
     this.wheelWidth = 16.0,
     this.hasBorder = false,
     this.borderColor,
     this.shouldUpdate = false,
-  })  : assert(color != null, 'A non null Color must be given.'),
-        assert(wheelWidth != null && wheelWidth >= 4 && wheelWidth <= 50,
-            'The Wheel width may not be null and must be between 4 and 50dp'),
-        assert(hasBorder != null, 'Has border may not be null'),
-        assert(shouldUpdate != null, 'shouldUpdate may not be null'),
+  })  : assert(wheelWidth >= 4 && wheelWidth <= 50,
+            'The Wheel must be between 4 and 50dp'),
         super(key: key);
 
   /// The starting color value for the wheel color picker.
@@ -67,7 +64,7 @@ class ColorWheelPicker extends StatefulWidget {
   /// Color of the border around around the circle and rectangle control.
   ///
   /// Defaults to theme of context for the divider color.
-  final Color borderColor;
+  final Color? borderColor;
 
   /// If the widget color update should also update the wheel, set to true.
   /// This should be set to true by parent every time [color] has been updated
@@ -84,20 +81,15 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   // A global key used to find our render object
   final GlobalKey paletteKey = GlobalKey();
 
-  // Border color for the circular color gradient and the color shade box.
-  // If no border color is given, we will use the theme divider color as
-  // border color, it is typically a light grey color.
-  Color borderColor;
-
   // If true, then we are dragging on the palette box.
   // if false, then we are are dragging on color wheel.
   bool isPalette = false;
 
   // We store the HSV color components as internal state for the
   // Hue wheel, and Saturation and Value for the square.
-  double colorHue;
-  double colorSaturation;
-  double colorValue;
+  late double colorHue;
+  late double colorSaturation;
+  late double colorValue;
 
   @override
   void initState() {
@@ -140,14 +132,18 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   Offset getOffset(Offset ratio) {
     final RenderBox renderBox =
-        paletteKey.currentContext.findRenderObject() as RenderBox;
+        // TODO: Maybe remove the need for this case somehow later.
+        // ignore: cast_nullable_to_non_nullable
+        paletteKey.currentContext!.findRenderObject() as RenderBox;
     final Offset startPosition = renderBox.localToGlobal(Offset.zero);
     return ratio - startPosition;
   }
 
   void onStart(Offset offset) {
     final RenderBox renderBox =
-        paletteKey.currentContext.findRenderObject() as RenderBox;
+        // TODO: Maybe remove the need for this case somehow later.
+        // ignore: cast_nullable_to_non_nullable
+        paletteKey.currentContext!.findRenderObject() as RenderBox;
     final Size _size = renderBox.size;
     final double _radius = wheelRadius(_size);
     final double _squareRadius = squareRadius(_radius);
@@ -161,11 +157,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // We started on the square palette box
     if (isPalette) {
       // Calculate the color saturation
-      colorSaturation = _Wheel.vectorToSaturation(_vector.dx, _squareRadius)
-          .clamp(0.0, 1.0) as double;
+      colorSaturation =
+          _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
       // Calculate the color value
-      colorValue = _Wheel.vectorToValue(_vector.dy, _squareRadius)
-          .clamp(0.0, 1.0) as double;
+      colorValue =
+          _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
 
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
@@ -192,7 +188,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   void onUpdate(Offset offset) {
     final RenderBox renderBox =
-        paletteKey.currentContext.findRenderObject() as RenderBox;
+        // TODO: Maybe remove the need for this case somehow later.
+        // ignore: cast_nullable_to_non_nullable
+        paletteKey.currentContext!.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
 
     final double _radius = wheelRadius(size);
@@ -205,11 +203,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // Are the updates are for the square palette box?
     if (isPalette) {
       // Calculate the color saturation
-      colorSaturation = _Wheel.vectorToSaturation(_vector.dx, _squareRadius)
-          .clamp(0.0, 1.0) as double;
+      colorSaturation =
+          _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
       // Calculate the color value
-      colorValue = _Wheel.vectorToValue(_vector.dy, _squareRadius)
-          .clamp(0.0, 1.0) as double;
+      colorValue =
+          _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
       widget.onChanged(
@@ -232,11 +230,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   @override
   Widget build(BuildContext context) {
-    // Border color for the circular color gradient and the color shade box.
-    // If no border color is given, we will use the theme divider color as
-    // border color, it is typically a light grey color.
-    borderColor = widget.borderColor ?? Theme.of(context).dividerColor;
-
     return GestureDetector(
       // There was an issue when using onPanDown, onPanStart and onPanUpdate
       // event handler, so these drag events were used instead, works pretty OK
@@ -265,7 +258,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
             colorSaturation: colorSaturation,
             colorValue: colorValue,
             hasBorder: widget.hasBorder,
-            borderColor: borderColor,
+            borderColor: widget.borderColor ?? Theme.of(context).dividerColor,
             wheelWidth: widget.wheelWidth,
           ),
         ),
@@ -276,11 +269,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
 class _WheelPainter extends CustomPainter {
   const _WheelPainter({
-    @required this.colorHue,
-    @required this.colorSaturation,
-    @required this.colorValue,
+    required this.colorHue,
+    required this.colorSaturation,
+    required this.colorValue,
     this.hasBorder = false,
-    this.borderColor,
+    required this.borderColor,
     this.ticks = 360,
     this.wheelWidth = 16,
   }) : super();
@@ -345,7 +338,7 @@ class _WheelPainter extends CustomPainter {
           _radius - wheelWidth / 2,
           Paint()
             ..style = PaintingStyle.stroke
-            ..color = borderColor ?? Colors.grey); // Grey as fallback
+            ..color = borderColor);
 
       // Draw border around the outer side of the color wheel
       canvas.drawCircle(
@@ -353,7 +346,7 @@ class _WheelPainter extends CustomPainter {
           _radius + wheelWidth / 2,
           Paint()
             ..style = PaintingStyle.stroke
-            ..color = borderColor ?? Colors.grey); // Grey as fallback
+            ..color = borderColor);
     }
 
     // Draw the color shade palette.
@@ -391,7 +384,7 @@ class _WheelPainter extends CustomPainter {
           rRect,
           Paint()
             ..style = PaintingStyle.stroke
-            ..color = borderColor ?? Colors.grey); // Grey as fallback.
+            ..color = borderColor);
     }
 
     // Define paint style for the selection thumbs:

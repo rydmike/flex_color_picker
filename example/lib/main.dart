@@ -4,14 +4,14 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 void main() => runApp(const ColorPickerDemo());
 
 class ColorPickerDemo extends StatefulWidget {
-  const ColorPickerDemo({Key key}) : super(key: key);
+  const ColorPickerDemo({Key? key}) : super(key: key);
 
   @override
   _ColorPickerDemoState createState() => _ColorPickerDemoState();
 }
 
 class _ColorPickerDemoState extends State<ColorPickerDemo> {
-  ThemeMode themeMode;
+  late ThemeMode themeMode;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _ColorPickerDemoState extends State<ColorPickerDemo> {
 }
 
 class ColorPickerPage extends StatefulWidget {
-  const ColorPickerPage({Key key, this.themeMode}) : super(key: key);
+  const ColorPickerPage({Key? key, required this.themeMode}) : super(key: key);
   final ValueChanged<ThemeMode> themeMode;
 
   @override
@@ -49,9 +49,9 @@ class ColorPickerPage extends StatefulWidget {
 }
 
 class _ColorPickerPageState extends State<ColorPickerPage> {
-  Color screenPickerColor;
-  Color dialogPickerColor;
-  bool isDark;
+  late Color screenPickerColor;
+  late Color dialogPickerColor;
+  late bool isDark;
 
   // Define some custom colors for the custom picker segment.
   // The 'guide' color values are from
@@ -89,92 +89,89 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('ColorPicker Demo'),
+        title: const Text('FlexColorPicker Demo'),
       ),
       body: Scrollbar(
-        child: SingleChildScrollView(
+        child: ListView(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Pick color in a dialog.
-              ListTile(
-                title: const Text('Click this color to change it in a dialog'),
-                subtitle: Text(
-                  '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
-                  'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
-                ),
-                trailing: ColorIndicator(
-                  width: 44,
-                  height: 44,
-                  borderRadius: 4,
-                  color: dialogPickerColor,
-                  onSelect: () async {
-                    final Color colorBeforeDialog = dialogPickerColor;
-                    if (!(await colorPickerDialog())) {
-                      setState(() {
-                        dialogPickerColor = colorBeforeDialog;
-                      });
-                    }
-                  },
-                ),
+          children: <Widget>[
+            // Pick color in a dialog.
+            ListTile(
+              title: const Text('Click this color to change it in a dialog'),
+              subtitle: Text(
+                '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
+                'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
               ),
-
-              // Show the selected color.
-              ListTile(
-                title: const Text('Select color below to change this color'),
-                subtitle:
-                    Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
-                        'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
-                trailing: ColorIndicator(
-                  width: 44,
-                  height: 44,
-                  borderRadius: 22,
-                  color: screenPickerColor,
-                ),
+              trailing: ColorIndicator(
+                width: 44,
+                height: 44,
+                borderRadius: 4,
+                color: dialogPickerColor,
+                onSelect: () async {
+                  final Color colorBeforeDialog = dialogPickerColor;
+                  if (!(await colorPickerDialog())) {
+                    setState(() {
+                      dialogPickerColor = colorBeforeDialog;
+                    });
+                  }
+                },
               ),
+            ),
 
-              // Show the color picker in sized box in a raised card.
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: Card(
-                    elevation: 2,
-                    child: ColorPicker(
-                      color: screenPickerColor,
-                      onColorChanged: (Color color) =>
-                          setState(() => screenPickerColor = color),
-                      width: 44,
-                      height: 44,
-                      borderRadius: 22,
-                      heading: Text(
-                        'Select color',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      subheading: Text(
-                        'Select color shade',
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
+            // Show the selected color.
+            ListTile(
+              title: const Text('Select color below to change this color'),
+              subtitle:
+                  Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
+                      'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
+              trailing: ColorIndicator(
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                color: screenPickerColor,
+              ),
+            ),
+
+            // Show the color picker in sized box in a raised card.
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Card(
+                  elevation: 2,
+                  child: ColorPicker(
+                    color: screenPickerColor,
+                    onColorChanged: (Color color) =>
+                        setState(() => screenPickerColor = color),
+                    width: 44,
+                    height: 44,
+                    borderRadius: 22,
+                    heading: Text(
+                      'Select color',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    subheading: Text(
+                      'Select color shade',
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),
                 ),
               ),
+            ),
 
-              // Theme mode toggle
-              SwitchListTile.adaptive(
-                title: const Text('Turn ON for dark mode'),
-                subtitle: const Text('Turn OFF for light mode'),
-                value: isDark,
-                onChanged: (bool value) {
-                  setState(() {
-                    isDark = value;
-                    widget.themeMode(isDark ? ThemeMode.dark : ThemeMode.light);
-                  });
-                },
-              )
-            ],
-          ),
+            // Theme mode toggle
+            SwitchListTile.adaptive(
+              title: const Text('Turn ON for dark mode'),
+              subtitle: const Text('Turn OFF for light mode'),
+              value: isDark,
+              onChanged: (bool value) {
+                setState(() {
+                  isDark = value;
+                  widget.themeMode(isDark ? ThemeMode.dark : ThemeMode.light);
+                });
+              },
+            )
+          ],
         ),
       ),
     );

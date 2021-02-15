@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.0] - February 15, 2021
+* First version with null safety.
+* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not be resolved, 
+  however, the workaround allows for the Wrap implmentation that was chnaged to a Row in version 1.1.2 to be used
+  again.
+* The almost full API configurable Web example and demo, was included in the package in example/demo/mina.dart together
+  with the previous default example in example/main.dart. Previously this Web example was in a separate GitHub 
+  repository. The example was updated to make it responsive, to offer better usability on Web.
+
 ## [1.1.3] - December 22, 2020
 * Fixed the faulty documentation and comment for showPickerDialog parameter insetPadding.
 * Fixed the faulty default value for showPickerDialog parameter insetPadding, the new default
@@ -11,7 +20,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
 ## [1.1.2] - December 5, 2020
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
-When the issue is resolved, the implementation will be reverted back to a Wrap. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
+When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
 ## [1.1.1] - November 11, 2020
@@ -61,19 +70,33 @@ When the issue is resolved, the implementation will be reverted back to a Wrap. 
 
 ---
 
-## To do list and planned feature updates
+# Planned Updates and New Features
 
-- [x] Review and update the API.
-- [x] Review and correct documentation mistakes and typos, first pass anyway.
-- [x] Fix doc images that show up OK in Github readme.md, but not on pub.dev.
-- [x] For the color wheel picker, add text input to get a given color based on entered HEX code.
-- [x] Add "name that color" function that can give a name to "any" color in English.
-- [x] Release version 1.0.0.
-- [x] Publish version 1.0.0 on pub.dev.
-- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
-- [ ] Version 1.1.4: Add more tests.
-- [ ] Version 1.1.x: Finalize tests.
-- [ ] Version 2.0.0-nullsafety.1: Add null safe version.
-- [ ] Maybe version 2.1.x: Add more color picker types.
-- [ ] Maybe version 2.x.x: Add a color selected with the wheel color selector to the custom colors section.
-- [ ] Maybe version 2.x.x: Store colors added to the custom colors section.
+These are the topics I currently have on the TODO list for this package. Have a new suggestion and idea?
+Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
+
+### TODO
+
+- Add more tests.
+- Finalize tests.
+- Improve existing copy/paste feature.
+- Add support for transparent on colors.  
+- Add GitHub actions for test, analyze, coverage, build and web demo deployment.   
+- Add more color picker types.
+
+### MAYBE
+- Add a color selected with the wheel color selector to the custom colors section.
+- Store colors added to the custom colors section.
+
+### COMPLETED
+
+- Review and update the API.
+- Review and correct documentation mistakes and typos, first pass anyway.
+- Fix doc images that show up OK in Github readme.md, but not on pub.dev.
+- For the color wheel picker, add text input to get a given color based on entered HEX code.
+- Add "name that color" function that can give a name to "any" color in English.
+- Release version 1.0.0.
+- Publish version 1.0.0 on pub.dev.
+- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
+- Version 2.0.0-nullsafety.0: Add null safe version.
+

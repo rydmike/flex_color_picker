@@ -170,7 +170,7 @@ class ColorTools {
     ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -204,7 +204,7 @@ class ColorTools {
     ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch as MaterialColor; // Color found in a swatch, return it.
         }
       }
@@ -366,7 +366,7 @@ class ColorTools {
     final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -388,7 +388,7 @@ class ColorTools {
     final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch as MaterialAccentColor; // Found in a swatch, return it.
         }
       }
@@ -551,7 +551,7 @@ class ColorTools {
     ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -584,7 +584,7 @@ class ColorTools {
     ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch; // Color found in a swatch, return it.
         }
       }
@@ -598,7 +598,7 @@ class ColorTools {
   ///
   /// Returns true if the color is a custom swatch, otherwise false.
   static bool isCustomColor(
-      Color color, Map<ColorSwatch<Object>, String> customSwatch) {
+      Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
       final List<int> index = <int>[
         50,
@@ -614,7 +614,7 @@ class ColorTools {
       ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in index) {
-          if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          if (swatch[i] == color || swatch[i]?.value == color.value) {
             return true; // Color found in a swatch, return true.
           }
         }
@@ -633,7 +633,7 @@ class ColorTools {
   /// as the mid 500 value and return this created custom primary color Swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static ColorSwatch<Object> customSwatch(
-      Color color, Map<ColorSwatch<Object>, String> customSwatch) {
+      Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
       final List<int> index = <int>[
         50,
@@ -649,7 +649,7 @@ class ColorTools {
       ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in index) {
-          if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          if (swatch[i] == color || swatch[i]?.value == color.value) {
             return swatch; // Color found in a swatch so we return it
           }
         }
@@ -670,7 +670,7 @@ class ColorTools {
   /// color swatch to name map that can be used to look-up name of custom
   /// material like color swatches.
   static String materialNameAndCode(Color color,
-      {Map<ColorSwatch<Object>, String> colorSwatchNameMap}) {
+      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String _name =
         materialName(color, colorSwatchNameMap: colorSwatchNameMap);
 
@@ -691,7 +691,7 @@ class ColorTools {
   /// optional custom color swatch to name map and return a custom name for any
   /// color found in any of the custom color swatches in the map.
   static String materialName(Color color,
-      {Map<ColorSwatch<Object>, String> colorSwatchNameMap,
+      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap,
       bool withIndex = true}) {
     List<int> index = <int>[
       50,
@@ -710,11 +710,11 @@ class ColorTools {
     // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${blackAndWhiteNames[swatch]} [$i]';
           } else {
-            return blackAndWhiteNames[swatch];
+            return blackAndWhiteNames[swatch]!;
           }
         }
       }
@@ -723,11 +723,11 @@ class ColorTools {
     // If it is a primary color, return name, shade and and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${primaryColorNames[swatch]} [$i]';
           } else {
-            return primaryColorNames[swatch];
+            return primaryColorNames[swatch]!;
           }
         }
       }
@@ -737,11 +737,11 @@ class ColorTools {
     index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColorsNames.keys) {
       for (final int i in index) {
-        if (swatch[i] == color || swatch[i]?.value == color?.value) {
+        if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${accentColorsNames[swatch]} [$i]';
           } else {
-            return accentColorsNames[swatch];
+            return accentColorsNames[swatch]!;
           }
         }
       }
@@ -765,11 +765,11 @@ class ColorTools {
       ];
       for (final ColorSwatch<Object> swatch in colorSwatchNameMap.keys) {
         for (final int i in index) {
-          if (swatch[i] == color || swatch[i]?.value == color?.value) {
+          if (swatch[i] == color || swatch[i]?.value == color.value) {
             if (withIndex) {
               return '${colorSwatchNameMap[swatch]} [$i]';
             } else {
-              return colorSwatchNameMap[swatch];
+              return colorSwatchNameMap[swatch]!;
             }
           }
         }
