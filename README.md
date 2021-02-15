@@ -60,7 +60,7 @@ The source code for the Web demo, which is only a slightly more elaborate exampl
 
 The live WEB picker has a responsive view, on a normal 1080p screen you should be able to see all it
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
+<img src="https://github.com/rydmike/flex_color_picker/blob/null-safe/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
 
 ## Introduction to the ColorPicker
 
