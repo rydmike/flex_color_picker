@@ -99,9 +99,9 @@ class ColorPicker extends StatefulWidget {
     this.showColorCode = false,
     this.showColorValue = false,
     this.colorCodeTextStyle,
-    this.colorCodePrefixStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
+    this.colorCodePrefixStyle,
     // Segmented color picker selector control properties.
     this.pickerTypeTextStyle,
     this.pickerTypeLabels = const <ColorPickerType, String>{
@@ -361,11 +361,6 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to Theme.of(context).textTheme.caption, if not defined.
   final TextStyle pickerTypeTextStyle;
 
-  /// The TextStyle of the prefix of the color code.
-  ///
-  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
-  final TextStyle colorCodePrefixStyle;
-
   /// A [ColorPickerType] to String map that contains labels for picker types.
   ///
   /// Default label strings are provided in English, if not defined.
@@ -402,6 +397,11 @@ class ColorPicker extends StatefulWidget {
 
   /// The color that shows the selected PickerType.
   final Color selectedPickerTypeColor;
+
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  final TextStyle colorCodePrefixStyle;
   @override
   _ColorPickerState createState() => _ColorPickerState();
 
@@ -993,6 +993,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     style: widget.colorCodeTextStyle,
                     icon: widget.colorCodeIcon,
                     enableTooltips: widget.enableTooltips,
+                    colorCodePrefixStyle: widget.colorCodePrefixStyle,
                     onColorChanged: (Color color) {
                       setState(() {
                         selectedColor = color;
@@ -1147,6 +1148,7 @@ class _ColorCodeField extends StatefulWidget {
     @required this.onColorChanged,
     this.style,
     this.icon = Icons.copy,
+    this.colorCodePrefixStyle,
     this.enableTooltips = true,
   })  : assert(color != null, 'color may not be null'),
         assert(readOnly != null, 'readOnly may not be null'),
@@ -1178,6 +1180,10 @@ class _ColorCodeField extends StatefulWidget {
   // the color code copy button has a tooltip.
   final bool enableTooltips;
 
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  final TextStyle colorCodePrefixStyle;
   @override
   _ColorCodeFieldState createState() => _ColorCodeFieldState();
 }
