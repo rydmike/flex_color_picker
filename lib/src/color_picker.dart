@@ -77,6 +77,7 @@ class ColorPicker extends StatefulWidget {
     this.wheelDiameter = 190,
     this.wheelWidth = 16,
     this.wheelHasBorder = false,
+    this.selectedPickerTypeColor,
     // Color picker types shown and used by the color picker.
     this.pickersEnabled = const <ColorPickerType, bool>{
       ColorPickerType.both: false,
@@ -98,6 +99,7 @@ class ColorPicker extends StatefulWidget {
     this.showColorCode = false,
     this.showColorValue = false,
     this.colorCodeTextStyle,
+    this.colorCodePrefixStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
     // Segmented color picker selector control properties.
@@ -114,52 +116,41 @@ class ColorPicker extends StatefulWidget {
     this.customColorSwatchesAndNames,
     //
   })  : assert(color != null, 'The color cannot be null'),
-        assert(onColorChanged != null,
-            'A color change callback function is required and cannot be null.'),
+        assert(onColorChanged != null, 'A color change callback function is required and cannot be null.'),
         assert(padding != null, 'Padding cannot be null.'),
         assert(columnSpacing != null, 'Column spacing cannot be null.'),
-        assert(columnSpacing >= 0 && columnSpacing <= 300,
-            'The picker item column spacing must be >= 0 and <= 300 dp.'),
+        assert(
+            columnSpacing >= 0 && columnSpacing <= 300, 'The picker item column spacing must be >= 0 and <= 300 dp.'),
         assert(enableShadesSelection != null, 'Select shades cannot be null.'),
         assert(includeIndex850 != null, 'includeIndex850  cannot be null.'),
         assert(selectedColorIcon != null, 'Selected indicator cannot be null.'),
         //
         assert(width != null, 'Pick item width cannot be null.'),
-        assert(width > 15 && width <= 150,
-            'The pick item width must be > 15 and <= 150 dp.'),
+        assert(width > 15 && width <= 150, 'The pick item width must be > 15 and <= 150 dp.'),
         assert(height != null, 'Picker height cannot be null.'),
-        assert(height > 15 && height <= 150,
-            'The pick item height must be > 15 and <= 150 dp.'),
+        assert(height > 15 && height <= 150, 'The pick item height must be > 15 and <= 150 dp.'),
         assert(spacing != null, 'Pick item spacing dp value cannot be null.'),
-        assert(runSpacing != null,
-            'Pick item run spacing dp value cannot be null.'),
+        assert(runSpacing != null, 'Pick item run spacing dp value cannot be null.'),
         assert(elevation != null, 'Elevation cannot be null.'),
         assert(hasBorder != null, 'Has border cannot be null.'),
         assert(
-            wheelDiameter == null ||
-                (wheelDiameter >= 100 && wheelDiameter <= 500),
+            wheelDiameter == null || (wheelDiameter >= 100 && wheelDiameter <= 500),
             'The wheel picker can be null for default size, if size is '
             'given it must be >= 100 and <= 500.'),
         assert(wheelWidth != null, 'Color wheel width cannot be null.'),
-        assert(wheelWidth >= 4 && wheelWidth <= 50,
-            'The color wheel width must be >= 4 and <= 50 dp.'),
+        assert(wheelWidth >= 4 && wheelWidth <= 50, 'The color wheel width must be >= 4 and <= 50 dp.'),
         assert(wheelHasBorder != null, 'Wheel has border cannot be null.'),
         //
         assert(pickersEnabled != null, 'Enabled pickers cannot be null.'),
         //
-        assert(showMaterialName != null,
-            'Show material name of selected color cannot be null.'),
-        assert(showColorName != null,
-            'Show generic color name of selected color cannot be null.'),
-        assert(showColorCode != null,
-            'Show color code field of selected color cannot be null.'),
-        assert(showColorValue != null,
-            'Show color int value of selected color cannot be null.'),
+        assert(showMaterialName != null, 'Show material name of selected color cannot be null.'),
+        assert(showColorName != null, 'Show generic color name of selected color cannot be null.'),
+        assert(showColorCode != null, 'Show color code field of selected color cannot be null.'),
+        assert(showColorValue != null, 'Show color int value of selected color cannot be null.'),
         assert(colorCodeIcon != null, 'Color code icon may not be null'),
         assert(enableTooltips != null, 'enableTooltips may not be null'),
         //
-        assert(pickerTypeLabels != null,
-            'Picker type selection labels cannot be null.'),
+        assert(pickerTypeLabels != null, 'Picker type selection labels cannot be null.'),
         super(key: key);
 
   /// The active color selection when the color picker is created.
@@ -370,6 +361,11 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to Theme.of(context).textTheme.caption, if not defined.
   final TextStyle pickerTypeTextStyle;
 
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  final TextStyle colorCodePrefixStyle;
+
   /// A [ColorPickerType] to String map that contains labels for picker types.
   ///
   /// Default label strings are provided in English, if not defined.
@@ -404,6 +400,8 @@ class ColorPicker extends StatefulWidget {
   /// English default label for the HSV wheel picker that can select any color.
   static const String _selectWheelAnyLabel = 'Wheel';
 
+  /// The color that shows the selected PickerType.
+  final Color selectedPickerTypeColor;
   @override
   _ColorPickerState createState() => _ColorPickerState();
 
@@ -461,8 +459,7 @@ class ColorPicker extends StatefulWidget {
     /// bar and the edges of the dialog.
     ///
     /// Defaults to const EdgeInsets.symmetric(horizontal: 16).
-    final EdgeInsetsGeometry actionsPadding =
-        const EdgeInsets.symmetric(horizontal: 16),
+    final EdgeInsetsGeometry actionsPadding = const EdgeInsets.symmetric(horizontal: 16),
 
     /// The padding that surrounds each button in [actions].
     ///
@@ -483,8 +480,7 @@ class ColorPicker extends StatefulWidget {
     ///
     /// Defines the minimum space between the screen's edges and the dialog.
     /// Defaults to EdgeInsets.symmetric(horizontal: 40, vertical: 24).
-    final EdgeInsets insetPadding =
-        const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+    final EdgeInsets insetPadding = const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
 
     /// If true, the dialog can be closed by clicking outside it.
     /// Defaults to true.
@@ -531,8 +527,7 @@ class ColorPicker extends StatefulWidget {
     assert(barrierDismissible != null, 'May not be null');
     assert(useSafeArea != null, 'May not be null');
     assert(useRootNavigator != null, 'May not be null');
-    assert(debugCheckHasMaterialLocalizations(context),
-        'A context with Material localizations is required');
+    assert(debugCheckHasMaterialLocalizations(context), 'A context with Material localizations is required');
 
     // If the Cancel and Select are null we use default values
     cancelLabel ??= 'CANCEL';
@@ -626,7 +621,6 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void initState() {
-    super.initState();
     // Always update the wheel when ColorPicker is initialized, but not in
     // didUpdateWidget.
     wheelShouldUpdate = true;
@@ -635,16 +629,16 @@ class _ColorPickerState extends State<ColorPicker> {
     selectedColor = widget.color;
     // Initialize other values
     initSelectedValue(findPicker: true);
+    super.initState();
   }
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
-    super.didUpdateWidget(oldWidget);
     // Initialize the values again because the underlying widget changed.
     // If the available color picker selection was changed we need to find
     // the picker again and set the findPicker option to true.
-    initSelectedValue(
-        findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
+    initSelectedValue(findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
+    super.didUpdateWidget(oldWidget);
   }
 
   void initSelectedValue({bool findPicker = false}) {
@@ -671,8 +665,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // Set useCustomPicker to false if no custom data for it was provided,
     // even if using custom picker might have been true, we have to have some
     // custom color swatches as well to be able to use them.
-    bool useCustomPicker =
-        widget.pickersEnabled[ColorPickerType.custom] ?? false;
+    bool useCustomPicker = widget.pickersEnabled[ColorPickerType.custom] ?? false;
     if (widget.customColorSwatchesAndNames == null) useCustomPicker = false;
 
     // Color picker type to boolean for each enabled case.
@@ -683,16 +676,12 @@ class _ColorPickerState extends State<ColorPicker> {
     // and keep the other values at default, a simple version of a
     // 'CopyWith' method.
     pickersEnabled = <ColorPickerType, bool>{
-      ColorPickerType.both:
-          widget.pickersEnabled[ColorPickerType.both] ?? false,
-      ColorPickerType.primary:
-          widget.pickersEnabled[ColorPickerType.primary] ?? true,
-      ColorPickerType.accent:
-          widget.pickersEnabled[ColorPickerType.accent] ?? true,
+      ColorPickerType.both: widget.pickersEnabled[ColorPickerType.both] ?? false,
+      ColorPickerType.primary: widget.pickersEnabled[ColorPickerType.primary] ?? true,
+      ColorPickerType.accent: widget.pickersEnabled[ColorPickerType.accent] ?? true,
       ColorPickerType.bw: widget.pickersEnabled[ColorPickerType.bw] ?? false,
       ColorPickerType.custom: useCustomPicker,
-      ColorPickerType.wheel:
-          widget.pickersEnabled[ColorPickerType.wheel] ?? false,
+      ColorPickerType.wheel: widget.pickersEnabled[ColorPickerType.wheel] ?? false,
     };
 
     // We use the picker selector segment control only if more than one picker
@@ -700,9 +689,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // I admit, this kind of logic is a bit tricky. Imo looping over the items
     // and counting the ones that are true and returning true if count is > 1,
     // is also imo more understandable, but this was interesting to try. :)
-    usePickerSelector =
-        pickersEnabled.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) >
-            1;
+    usePickerSelector = pickersEnabled.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) > 1;
 
     // If we have a picker selector, we will build with selected picker and
     // select the segment as active where we found the given active color.
@@ -741,8 +728,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     // Set default text style for the segmented slider control.
-    final TextStyle segmentTextStyle =
-        widget.pickerTypeTextStyle ?? Theme.of(context).textTheme.caption;
+    final TextStyle segmentTextStyle = widget.pickerTypeTextStyle ?? Theme.of(context).textTheme.caption;
 
     // Widget map for the sliding Cupertino segmented control that allows us to
     // switch between the pickers we enabled.
@@ -755,8 +741,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.both: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.both] ??
-                ColorPicker._selectBothLabel,
+            widget.pickerTypeLabels[ColorPickerType.both] ?? ColorPicker._selectBothLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -765,8 +750,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.primary: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.primary] ??
-                ColorPicker._selectPrimaryLabel,
+            widget.pickerTypeLabels[ColorPickerType.primary] ?? ColorPicker._selectPrimaryLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -775,8 +759,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.accent: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.accent] ??
-                ColorPicker._selectAccentLabel,
+            widget.pickerTypeLabels[ColorPickerType.accent] ?? ColorPicker._selectAccentLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -785,8 +768,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.bw: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.bw] ??
-                ColorPicker._selectBlackWhiteLabel,
+            widget.pickerTypeLabels[ColorPickerType.bw] ?? ColorPicker._selectBlackWhiteLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -795,8 +777,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.custom: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.custom] ??
-                ColorPicker._selectCustomLabel,
+            widget.pickerTypeLabels[ColorPickerType.custom] ?? ColorPicker._selectCustomLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -805,8 +786,7 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.wheel: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            widget.pickerTypeLabels[ColorPickerType.wheel] ??
-                ColorPicker._selectWheelAnyLabel,
+            widget.pickerTypeLabels[ColorPickerType.wheel] ?? ColorPicker._selectWheelAnyLabel,
             textAlign: TextAlign.center,
             style: segmentTextStyle,
           ),
@@ -831,8 +811,7 @@ class _ColorPickerState extends State<ColorPicker> {
       } else if (ColorTools.isBlackAndWhiteColor(selectedColor)) {
         activeSwatch = ColorTools.blackAndWhiteSwatch(selectedColor);
       } else {
-        activeSwatch = ColorTools.customSwatch(
-            selectedColor, widget.customColorSwatchesAndNames);
+        activeSwatch = ColorTools.customSwatch(selectedColor, widget.customColorSwatchesAndNames);
       }
     }
     // Did not find the selected color in the active swatch list,
@@ -845,14 +824,11 @@ class _ColorPickerState extends State<ColorPicker> {
     activeSwatch ??= activeColorSwatchList[0];
 
     // The resulting used text themes, if null was passed in we assign defaults.
-    final TextStyle effectiveMaterialNameStyle =
-        widget.materialNameTextStyle ?? Theme.of(context).textTheme.bodyText2;
-    final TextStyle effectiveGenericNameStyle =
-        widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2;
+    final TextStyle effectiveMaterialNameStyle = widget.materialNameTextStyle ?? Theme.of(context).textTheme.bodyText2;
+    final TextStyle effectiveGenericNameStyle = widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2;
 
     // Set the default integer code value text style to bodyText2 if not given.
-    final TextStyle effectiveCodeStyle =
-        widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2;
+    final TextStyle effectiveCodeStyle = widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2;
 
     return Padding(
       padding: widget.padding,
@@ -876,6 +852,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 padding: EdgeInsets.only(bottom: widget.columnSpacing),
                 child: CupertinoSlidingSegmentedControl<ColorPickerType>(
                   children: pickerTypes,
+                  thumbColor: widget.selectedPickerTypeColor,
                   onValueChanged: (ColorPickerType value) {
                     setState(() => activePicker = value);
                   },
@@ -928,18 +905,14 @@ class _ColorPickerState extends State<ColorPicker> {
             ),
           //
           // Show the sub-heading for the none wheel case.
-          if (widget.subheading != null &&
-              widget.enableShadesSelection &&
-              activePicker != ColorPickerType.wheel)
+          if (widget.subheading != null && widget.enableShadesSelection && activePicker != ColorPickerType.wheel)
             Padding(
               padding: EdgeInsets.only(bottom: widget.columnSpacing),
               child: widget.subheading,
             ),
           //
           // Show the sub-heading for the wheel case.
-          if (widget.wheelSubheading != null &&
-              widget.enableShadesSelection &&
-              activePicker == ColorPickerType.wheel)
+          if (widget.wheelSubheading != null && widget.enableShadesSelection && activePicker == ColorPickerType.wheel)
             Padding(
               padding: EdgeInsets.only(bottom: widget.columnSpacing),
               child: widget.wheelSubheading,
@@ -969,16 +942,13 @@ class _ColorPickerState extends State<ColorPicker> {
                   Padding(
                     padding: EdgeInsets.only(bottom: widget.columnSpacing),
                     child: Text(
-                      ColorTools.materialName(selectedColor,
-                          colorSwatchNameMap:
-                              widget.customColorSwatchesAndNames),
+                      ColorTools.materialName(selectedColor, colorSwatchNameMap: widget.customColorSwatchesAndNames),
                       style: effectiveMaterialNameStyle,
                     ),
                   ),
                 // If we show both material and generic name, add some
                 // hardcoded horizontal space between them.
-                if (widget.showMaterialName && widget.showColorName)
-                  const SizedBox(width: 8),
+                if (widget.showMaterialName && widget.showColorName) const SizedBox(width: 8),
                 // Show the generic color name, if enabled.
                 if (widget.showColorName)
                   Padding(
@@ -1037,8 +1007,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   ),
                 // If we show both hex code and int value, add some
                 // hardcoded horizontal space between them.
-                if (widget.showColorCode && widget.showColorValue)
-                  const SizedBox(width: 8),
+                if (widget.showColorCode && widget.showColorValue) const SizedBox(width: 8),
                 if (widget.showColorValue)
                   SelectableText(
                     selectedColor.value.toString(),
@@ -1077,8 +1046,7 @@ class _ColorPickerState extends State<ColorPicker> {
     return <Widget>[
       for (final Color color in getMaterialColorShades(color))
         ColorIndicator(
-          isSelected:
-              selectedColor == color || selectedColor?.value == color?.value,
+          isSelected: selectedColor == color || selectedColor?.value == color?.value,
           color: color,
           width: widget.width,
           height: widget.height,
@@ -1140,8 +1108,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Find and return the ColorSwatch in a List of ColorSwatches that contains
   // a given color.
-  ColorSwatch<Object> findColorSwatch(
-      Color color, List<ColorSwatch<Object>> swatches) {
+  ColorSwatch<Object> findColorSwatch(Color color, List<ColorSwatch<Object>> swatches) {
     for (final ColorSwatch<Object> mainColor in swatches) {
       if (isShadeOfMain(mainColor, color)) {
         return mainColor;
@@ -1188,27 +1155,27 @@ class _ColorCodeField extends StatefulWidget {
         assert(enableTooltips != null, 'enableTooltips may not be null'),
         super(key: key);
 
-  /// Current color value for the field
+  // Current color value for the field
   final Color color;
 
-  /// Is in read only mode, we should not be able to select either.
+  // Is in read only mode, we should not be able to select either.
   final bool readOnly;
 
-  /// Color code of the entered color string is returned back in this callback.
+  // Color code of the entered color string is returned back in this callback.
   final ValueChanged<Color> onColorChanged;
 
-  /// Text style of the color code display and edit field
-  ///
-  /// Defaults to Theme.of(context).textTheme.bodyText2;
+  // Text style of the color code display and edit field
+  //
+  // Defaults to Theme.of(context).textTheme.bodyText2;
   final TextStyle style;
 
-  /// Icon data used for the copy button of the color code.
-  ///
-  /// Defaults to Icons.copy.
+  // Icon data used for the copy button of the color code.
+  //
+  // Defaults to Icons.copy.
   final IconData icon;
 
-  /// Set to true to enable and show tooltips in this widget. Currently only
-  /// the color code copy button has a tooltip.
+  // Set to true to enable and show tooltips in this widget. Currently only
+  // the color code copy button has a tooltip.
   final bool enableTooltips;
 
   @override
@@ -1223,7 +1190,6 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void initState() {
-    super.initState();
     textController = _TextEditingControllerWithCursorPosition();
     textFocusNode = FocusNode();
     color = widget.color;
@@ -1233,6 +1199,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     // you should consider possible parsing errors too:
     // https://stackoverflow.com/questions/55905889/how-to-get-the-last-n-characters-in-a-string-in-dart
     textController.text = colorHexCode.substring(colorHexCode.length - 6);
+    super.initState();
   }
 
   @override
@@ -1244,12 +1211,12 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void didUpdateWidget(covariant _ColorCodeField oldWidget) {
-    super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
       color = widget.color;
       colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
+
     // TODO: Remove when there is a fix for Flutter issue #48099.
     // https://github.com/flutter/flutter/issues/48099
     // On Web and Windows platform the `enableInteractiveSelection:false` does
@@ -1257,18 +1224,14 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     // selected text even when both the `enableInteractiveSelection:false` and
     // `readOnly: true` are set. The hack below removes any active selection
     // when the readOnly status changes, but on Windows we can still select and
-    // even delete selected text, but at least there is no pre-selected text.
-    // This fix should should now solve it:
-    // https://github.com/flutter/flutter/pull/70972
-    // If it works and when it lands on stable channel we can remove this,
-    // not that it will do any harm even when the fix lands, but it will no
-    // longer be needed.
+    // even delete selected text, at least there is no pre selected text.
     if (oldWidget.readOnly != widget.readOnly) {
       textController.clear();
       color = widget.color;
       colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -1277,16 +1240,13 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     final MaterialLocalizations tooltips = MaterialLocalizations.of(context);
     final String copyTooltip = tooltips?.copyButtonLabel ?? 'Copy';
 
-    // Define opinionated styles for the color code display and entry field.
+    // Define some opinionated style for the color code display and entry field.
     final bool isLight = Theme.of(context).brightness == Brightness.light;
-    final Color fieldBackground =
-        isLight ? Colors.black.withAlpha(11) : Colors.white.withAlpha(33);
-    final Color fieldBorder =
-        isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
+    final Color fieldBackground = isLight ? Colors.black.withAlpha(11) : Colors.white.withAlpha(33);
+    final Color fieldBorder = isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
 
     // Set the default text style to bodyText2 if not given.
-    final TextStyle effectiveStyle =
-        widget.style ?? Theme.of(context).textTheme.bodyText2;
+    final TextStyle effectiveStyle = widget.style ?? Theme.of(context).textTheme.bodyText2;
     // Compute color code field size based on the used font size. Might not
     // always be ideal, but with normal fonts and sizes they have been tested to
     // work well enough visually and to always have room for "DDDDDD", which is
@@ -1310,9 +1270,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
         // Max lines is 1 by default, we set min lines to be 1 as well.
         minLines: 1,
         // Remove the lines that shows entered chars when maxLength is used.
-        buildCounter: (BuildContext context,
-                {int currentLength, int maxLength, bool isFocused}) =>
-            null,
+        buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
         style: effectiveStyle,
         // Only affects the type of keyboard shown on devices, does not
         // make the input uppercase.
@@ -1358,6 +1316,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
           isDense: true,
           contentPadding: EdgeInsetsDirectional.only(start: fontSize),
           prefixText: '0xFF',
+          prefixStyle: widget.colorCodePrefixStyle ?? Theme.of(context).textTheme.body2,
           filled: true,
           fillColor: fieldBackground,
           border: OutlineInputBorder(
@@ -1416,8 +1375,7 @@ class _TextEditingControllerWithCursorPosition extends TextEditingController {
 // This TextField formatter converts all input to uppercase.
 class _UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text?.toUpperCase(),
       selection: newValue.selection,
