@@ -1,12 +1,13 @@
 name: color_picker_example
 description: Simple example of how to use the FlexColorPicker package.
-version: 2.0.0-nullsafety.0
+version: 2.0.0-nullsafety.1
 
 environment:
   sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies:
-  flex_color_picker: 2.0.0-nullsafety.0
+  flex_color_picker:
+    path: ..\
 
   flutter:
     sdk: flutter
@@ -14,6 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test:
 
 flutter:
   uses-material-design: true

@@ -1,8 +1,10 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'color_indicator.dart';
+import 'color_picker_extensions.dart';
+import 'color_picker_title.dart';
 import 'color_tools.dart';
 import 'color_wheel_picker.dart';
 import 'dry_intrisinic.dart';
@@ -28,6 +30,27 @@ enum ColorPickerType {
 
   /// A HSV color wheel picker that can select any color.
   wheel,
+}
+
+/// Enum that controls the format of received string value.
+///
+/// When you paste a color string value to the color picker, it can
+/// automatically parse a string from any of these formatted strings
+enum ColorPickerCopyFormat {
+  /// In Flutter/Dart Hex format '0xAARRGGBB'.
+  dartCode,
+
+  /// Web Hex format with no alpha 'RRGGBB'.
+  hexRRGGBB,
+
+  /// Web Hex format with alpha 'AARRGGBB'.
+  hexAARRGGBB,
+
+  /// Web Hex format with leading num # sign and no alpha '#RRGGBB'.
+  numHexRRGGBB,
+
+  /// Web Hex format with leading num # sign and alpha '#AARRGGBB'.
+  numHexAARRGGBB,
 }
 
 /// A customizable Material primary color, accent color and custom colors,
@@ -65,6 +88,8 @@ class ColorPicker extends StatefulWidget {
     this.columnSpacing = 8,
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
+    this.hasOpacity = false,
+    this.hasAlpha = false,
     this.selectedColorIcon = Icons.check,
     // Picker item and wheel picker properties.
     this.width = 40.0,
@@ -73,21 +98,14 @@ class ColorPicker extends StatefulWidget {
     this.runSpacing = 4,
     this.elevation = 0,
     this.hasBorder = false,
+    this.copyFormat = ColorPickerCopyFormat.dartCode,
     this.borderRadius,
     this.borderColor,
     this.wheelDiameter = 190,
     this.wheelWidth = 16,
     this.wheelHasBorder = false,
-    // Color picker types shown and used by the color picker.
-    this.pickersEnabled = const <ColorPickerType, bool>{
-      ColorPickerType.both: false,
-      ColorPickerType.primary: true,
-      ColorPickerType.accent: true,
-      ColorPickerType.bw: false,
-      ColorPickerType.custom: false,
-      ColorPickerType.wheel: false,
-    },
-    // Headings and sub headings used by the color picker.
+    // Title, headings and sub headings used by the color picker.
+    this.title,
     this.heading,
     this.subheading,
     this.wheelSubheading,
@@ -99,9 +117,20 @@ class ColorPicker extends StatefulWidget {
     this.showColorCode = false,
     this.showColorValue = false,
     this.colorCodeTextStyle,
+    this.colorCodePrefixStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
+    // Color picker types shown and used by the color picker.
+    this.pickersEnabled = const <ColorPickerType, bool>{
+      ColorPickerType.both: false,
+      ColorPickerType.primary: true,
+      ColorPickerType.accent: true,
+      ColorPickerType.bw: false,
+      ColorPickerType.custom: false,
+      ColorPickerType.wheel: false,
+    },
     // Segmented color picker selector control properties.
+    this.selectedPickerTypeColor,
     this.pickerTypeTextStyle,
     this.pickerTypeLabels = const <ColorPickerType, String>{
       ColorPickerType.primary: _selectPrimaryLabel,
@@ -163,6 +192,47 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool includeIndex850;
+
+  /// Enable the opacity control for the color value.
+  ///
+  /// Turning it to true allows users to control the opacity value of the
+  /// selected color. Opacity goes from 0, which is totally transparent,
+  /// to 1, which if fully opaque. The control can be enabled together with
+  /// the alpha channel control. Ultimately they control the same alpha
+  /// color transparency value, they are just different formats.
+  /// Normally you would select which one you prefer and not enable both styles,
+  /// but it is possible to show both controls at the same time.
+  ///
+  /// Defaults to false.
+  final bool hasOpacity;
+
+  /// Enable alpha control for the color value.
+  ///
+  /// Turning it to true allows users to control the alpha value of the
+  /// selected color. Alpha goes from 00 (hex), which is fully transparent,
+  /// to FF (hex), which if fully opaque. The control can be enabled together
+  /// with the opacity control. Ultimately they control the same alpha
+  /// color transparency value, they are just different formats.
+  /// Normally you would select which one you prefer and not enable both styles,
+  /// but it is possible to show both controls at the same time.
+  ///
+  /// Defaults to false.
+  final bool hasAlpha;
+
+  /// Defines the format of the copied HEX RGB color string value.
+  ///
+  ///  * dartCode = The copied string is in Flutter/Dart format '0xAARRGGBB'
+  ///  * hexRRGGBB = Web Hex format with no alpha 'RRGGBB'.
+  ///  * hexAARRGGBB = Web Hex format with alpha 'AARRGGBB'.
+  ///  * numHexRRGGBB = Web Hex format with leading num # sign and
+  ///    no alpha '#RRGGBB'.
+  ///  * numHexAARRGGBB = Web Hex format with leading num # sign and
+  ///    alpha '#AARRGGBB'.
+  ///
+  /// Defaults to [ColorPickerCopyFormat.dartCode].
+  final ColorPickerCopyFormat copyFormat;
+
+  /// Web Hex format with leading num # sign and alpha '#AARRGGBB'.
 
   /// Icon data for the icon used to indicate the selected color.
   ///
@@ -234,19 +304,13 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool wheelHasBorder;
 
-  /// A [ColorPickerType] to bool map.
+  /// Title widget for the color picker.
   ///
-  /// Defines which picker types are
-  /// enabled in the color picker's sliding segmented selector and
-  /// are thus available as color pickers.
+  /// Typically a Text widget, e.g. Text('Color picker').
+  /// If not provided or null, there is no heading for the color picker.
   ///
-  /// Available options are based on the [ColorPickerType] enum that
-  /// includes both, primary, accent, bw, custom and wheel.
-  /// Any undefined or missing enum keys in a given map are treated as false.
-  ///
-  /// By default a map that that sets primary and accent pickers to true is
-  /// used if no or a null map is given.
-  final Map<ColorPickerType, bool> pickersEnabled;
+  /// This widget can be used
+  final Widget? title;
 
   /// Heading widget for the color picker.
   ///
@@ -277,7 +341,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed material color name in the picker.
   ///
-  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  /// Defaults to Theme.of(context).textTheme.bodyText2, if not defined.
   final TextStyle? materialNameTextStyle;
 
   /// Set to true to show an English color name of the selected [color].
@@ -287,7 +351,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed color name in the picker.
   ///
-  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  /// Defaults to Theme.of(context).textTheme.bodyText2, if not defined.
   final TextStyle? colorNameTextStyle;
 
   /// Set to true to show the RGB Hex color code of the selected [color].
@@ -313,8 +377,13 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed generic color name in the picker.
   ///
-  /// Defaults to Theme.of(context).textTheme.body2, if not defined.
+  /// Defaults to Theme.of(context).textTheme.bodyText2, if not defined.
   final TextStyle? colorCodeTextStyle;
+
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to [colorCodeTextStyle], if not defined.
+  final TextStyle? colorCodePrefixStyle;
 
   /// Icon data for icon used on the button that copies the Flutter style color
   /// code to the to clipboard.
@@ -328,6 +397,23 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to true.
   final bool enableTooltips;
+
+  /// A [ColorPickerType] to bool map.
+  ///
+  /// Defines which picker types are
+  /// enabled in the color picker's sliding segmented selector and
+  /// are thus available as color pickers.
+  ///
+  /// Available options are based on the [ColorPickerType] enum that
+  /// includes both, primary, accent, bw, custom and wheel.
+  /// Any undefined or missing enum keys in a given map are treated as false.
+  ///
+  /// By default a map that that sets primary and accent pickers to true is
+  /// used if no or a null map is given.
+  final Map<ColorPickerType, bool> pickersEnabled;
+
+  /// The color that shows the selected PickerType.
+  final Color? selectedPickerTypeColor;
 
   /// The TextStyle of the labels in segmented control swatch selector.
   ///
@@ -531,12 +617,12 @@ class ColorPicker extends StatefulWidget {
                 },
                 child: Text(_cancelLabel),
               ),
-              OutlinedButton(
+              TextButton(
                 onPressed: () {
                   // Select was pressed, we pop and return TRUE
                   Navigator.of(context).pop(true);
                 },
-                autofocus: true,
+                // autofocus: true,
                 child: Text(_selectLabel),
               ),
             ],
@@ -551,6 +637,8 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
+  final FocusNode _focusNode = FocusNode();
+
   // The currently active used list of color swatches we select
   // the active color from
   late List<ColorSwatch<Object>> activeColorSwatchList;
@@ -563,7 +651,6 @@ class _ColorPickerState extends State<ColorPicker> {
   ColorPickerType? activePicker;
 
   // Current selected color
-  // TODO: Can this bve null?? find out!
   late Color selectedColor;
 
   // Map of swatch names in corresponding list of color swatches,
@@ -579,13 +666,32 @@ class _ColorPickerState extends State<ColorPicker> {
   // then that picker will be used, but we will not use the selector.
   late bool usePickerSelector;
 
-  // The content alignment
-  // TODO remove
-  // late CrossAxisAlignment alignment;
-
   // Wheel picker should update? Whenever the wheel picker is updated outside
   // the wheel picker, we need to send a signal back that it should update.
   bool wheelShouldUpdate = true;
+
+  // Get the current clipboard data. Try to parse it to a color value.
+  // If successful, set the current color to the color value.
+  Future<void> _getClipboard() async {
+    final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    final Color? clipColor = data?.text.toColorMaybeNull;
+    if (clipColor != null) {
+      setState(() {
+        selectedColor = clipColor;
+        // Move the picker to the pasted color value.
+        initSelectedValue(findPicker: true);
+      });
+    }
+  }
+
+  // When there is a PASTE key event, get the clipboard data.
+  void _handleKeyEvent(RawKeyEvent event) {
+    if (event.logicalKey == LogicalKeyboardKey.paste ||
+        (event.isControlPressed &&
+            event.logicalKey == LogicalKeyboardKey.keyV)) {
+      _getClipboard();
+    }
+  }
 
   @override
   void initState() {
@@ -601,6 +707,12 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(ColorPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Initialize the values again because the underlying widget changed.
@@ -611,9 +723,6 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   void initSelectedValue({bool findPicker = false}) {
-    // Set alignment to widget value, if null, set it to center.
-    // alignment = widget.crossAxisAlignment ?? CrossAxisAlignment.center;
-
     // If no custom color map is provided (null) we use an empty map.
     final Map<ColorSwatch<Object>, String> colorsNameMap =
         widget.customColorSwatchesAndNames ?? <ColorSwatch<Object>, String>{};
@@ -677,9 +786,8 @@ class _ColorPickerState extends State<ColorPicker> {
         activePicker = pickersEnabled.keys.toList()[0];
       }
     }
-    // If we don't have segment control selector, we use the only
-    // swatch selection that is is still true without showing a
-    // segment control
+    // If we don't have segment control selector, we use the only swatch
+    // selection that is still true without showing a segment control.
     else {
       if (pickersEnabled[ColorPickerType.both]!) {
         activePicker = ColorPickerType.both;
@@ -707,6 +815,17 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle segmentTextStyle =
         (widget.pickerTypeTextStyle ?? Theme.of(context).textTheme.caption)!;
 
+    final Color _thumbColor = widget.selectedPickerTypeColor ??
+        const CupertinoDynamicColor.withBrightness(
+          color: Color(0xFFFFFFFF),
+          darkColor: Color(0xFF636366),
+        );
+
+    final Color _thumbOnColor =
+        ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+            ? Colors.black
+            : Colors.white;
+
     // Widget map for the sliding Cupertino segmented control that allows us to
     // switch between the pickers we enabled.
     // We set the labels to default values if none given. The constructor also
@@ -721,7 +840,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.both] ??
                 ColorPicker._selectBothLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.both
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.primary]!)
@@ -731,7 +852,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.primary] ??
                 ColorPicker._selectPrimaryLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.primary
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.accent]!)
@@ -741,7 +864,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.accent] ??
                 ColorPicker._selectAccentLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.accent
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.bw]!)
@@ -751,7 +876,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.bw] ??
                 ColorPicker._selectBlackWhiteLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.bw
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.custom]!)
@@ -761,7 +888,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.custom] ??
                 ColorPicker._selectCustomLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.custom
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.wheel]!)
@@ -771,7 +900,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.wheel] ??
                 ColorPicker._selectWheelAnyLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.wheel
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
     };
@@ -781,7 +912,6 @@ class _ColorPickerState extends State<ColorPicker> {
       // Pick the active color swatch list from the map based on used swatch
       activeColorSwatchList = typeToSwatchMap[activePicker]!;
       // Set which color swatch is the active one of the ones in the active list
-      // TODO:This cast is odd, check that it all works OK!
       activeSwatch = findColorSwatch(selectedColor, activeColorSwatchList)
           as ColorSwatch<Object>?;
 
@@ -820,175 +950,196 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle effectiveCodeStyle =
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2)!;
 
-    return Padding(
-      padding: widget.padding,
-      child: Column(
-        crossAxisAlignment: widget.crossAxisAlignment,
-        children: <Widget>[
-          // Show heading widget if we have one.
-          if (widget.heading != null)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: widget.heading,
-            ),
-          // Show the picker type selector, if more than one picker is enabled.
-          if (usePickerSelector)
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
+    return RawKeyboardListener(
+      focusNode: _focusNode,
+      onKey: _handleKeyEvent,
+      autofocus: true,
+      child: Padding(
+        padding: widget.padding,
+        child: Column(
+          crossAxisAlignment: widget.crossAxisAlignment,
+          children: <Widget>[
+            // Show title widget if we have one.
+            if (widget.title != null)
+              Padding(
                 padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                child: CupertinoSlidingSegmentedControl<ColorPickerType>(
-                  children: pickerTypes,
-                  onValueChanged: (ColorPickerType? value) {
-                    setState(() => activePicker = value);
-                  },
-                  groupValue: activePicker,
+                child: ColorPickerTitle(
+                  title: widget.title,
+                  onClose: () {},
                 ),
               ),
-            ),
-          // Add a tiny bit of extra hard code space after the picker type
-          // selector if there was one.
-          if (usePickerSelector) const SizedBox(height: 4),
-          // This is not the Wheel case so we draw all the main colors
-          // for the active swatch list.
-          if (activePicker != ColorPickerType.wheel)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: Wrap(
-                spacing: widget.spacing,
-                runSpacing: widget.runSpacing,
-                children: <Widget>[
-                  ...buildMainColors(activeColorSwatchList),
-                ],
+            // Show heading widget if we have one.
+            if (widget.heading != null)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.heading,
               ),
-            ),
-          // This is the wheel case, draw the custom painter color wheel.
-          if (activePicker == ColorPickerType.wheel)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: SizedBox(
-                height: widget.wheelDiameter,
-                width: widget.wheelDiameter,
-                child: ColorWheelPicker(
-                  color: selectedColor,
-                  wheelWidth: widget.wheelWidth,
-                  hasBorder: widget.wheelHasBorder,
-                  shouldUpdate: wheelShouldUpdate,
-                  onChanged: (Color color) {
-                    setState(() {
-                      // Always on a color change callback from the wheel, set
-                      // wheelShouldUpdate to false, it already knows its color,
-                      // only if it is modified externally should it update.
-                      wheelShouldUpdate = false;
-                      selectedColor = color;
-                      widget.onColorChanged(selectedColor);
-                    });
-                  },
+            // Show picker type selector, if more than one picker is enabled.
+            if (usePickerSelector)
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                  child: CupertinoSlidingSegmentedControl<ColorPickerType>(
+                    children: pickerTypes,
+                    thumbColor: widget.selectedPickerTypeColor ??
+                        const CupertinoDynamicColor.withBrightness(
+                          color: Color(0xFFFFFFFF),
+                          darkColor: Color(0xFF636366),
+                        ),
+                    onValueChanged: (ColorPickerType? value) {
+                      setState(() => activePicker = value);
+                    },
+                    groupValue: activePicker,
+                  ),
                 ),
               ),
-            ),
-          // Show the sub-heading for the none wheel case.
-          if (widget.subheading != null &&
-              widget.enableShadesSelection &&
-              activePicker != ColorPickerType.wheel)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: widget.subheading,
-            ),
-          // Show the sub-heading for the wheel case.
-          if (widget.wheelSubheading != null &&
-              widget.enableShadesSelection &&
-              activePicker == ColorPickerType.wheel)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: widget.wheelSubheading,
-            ),
-          // Draw the shade colors for the selected main color.
-          if (widget.enableShadesSelection)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.columnSpacing),
-              child: Wrap(
-                spacing: widget.spacing,
-                runSpacing: widget.runSpacing,
-                children: <Widget>[
-                  // TODO: Make a better null guard!?
-                  ...buildShadesColors(activeSwatch!),
-                ],
+            // Add a tiny bit of extra hard code space after the picker type
+            // selector if there was one.
+            if (usePickerSelector) const SizedBox(height: 4),
+            // This is not the Wheel case so we draw all the main colors
+            // for the active swatch list.
+            if (activePicker != ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: Wrap(
+                  spacing: widget.spacing,
+                  runSpacing: widget.runSpacing,
+                  children: <Widget>[
+                    ...buildMainColors(activeColorSwatchList),
+                  ],
+                ),
               ),
-            ),
-          // If we show material or generic name, we enclose them in a Wrap,
-          // they will be on same row nicely if there is room enough but also
-          // wrap to two rows when so needed when both are shown at the same
-          // and they don't fit on one row.
-          if (widget.showMaterialName || widget.showColorName)
-            Wrap(
-              children: <Widget>[
-                // Show the Material color name, if enabled.
-                if (widget.showMaterialName)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                    child: Text(
-                      ColorTools.materialName(selectedColor,
-                          colorSwatchNameMap:
-                              widget.customColorSwatchesAndNames),
-                      style: effectiveMaterialNameStyle,
-                    ),
-                  ),
-                // If we show both material and generic name, add some
-                // hardcoded horizontal space between them.
-                if (widget.showMaterialName && widget.showColorName)
-                  const SizedBox(width: 8),
-                // Show the generic color name, if enabled.
-                if (widget.showColorName)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                    child: Text(
-                      ColorTools.nameThatColor(selectedColor),
-                      style: effectiveGenericNameStyle,
-                    ),
-                  ),
-              ],
-            ),
-          // If we show color code or its int value we enclose them in a Wrap,
-          // they will be on same row nicely if there is room enough but also
-          // wrap to two rows when so needed when both are shown at the same
-          // and they don't fit on one row.
-          if (widget.showColorCode || widget.showColorValue)
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              runAlignment: WrapAlignment.center,
-              alignment: WrapAlignment.center,
-              children: <Widget>[
-                // Show the copy and edit color code field, if enabled.
-                if (widget.showColorCode)
-                  _ColorCodeField(
+            // This is the wheel case, draw the custom painter color wheel.
+            if (activePicker == ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: SizedBox(
+                  height: widget.wheelDiameter,
+                  width: widget.wheelDiameter,
+                  child: ColorWheelPicker(
                     color: selectedColor,
-                    readOnly: activePicker != ColorPickerType.wheel,
-                    style: widget.colorCodeTextStyle,
-                    icon: widget.colorCodeIcon,
-                    enableTooltips: widget.enableTooltips,
-                    onColorChanged: (Color color) {
+                    wheelWidth: widget.wheelWidth,
+                    hasBorder: widget.wheelHasBorder,
+                    shouldUpdate: wheelShouldUpdate,
+                    onChanged: (Color color) {
                       setState(() {
+                        // Always on a color change callback from the wheel, set
+                        // wheelShouldUpdate to false, it knows its color,
+                        // only if it is modified externally should it update.
+                        wheelShouldUpdate = false;
                         selectedColor = color;
-                        // Color changed outside wheel picker, the code was
-                        // edited, it should update!
-                        wheelShouldUpdate = true;
-                        widget.onColorChanged(color);
+                        widget.onColorChanged(selectedColor);
                       });
                     },
                   ),
-                // If we show both hex code and int value, add some
-                // hardcoded horizontal space between them.
-                if (widget.showColorCode && widget.showColorValue)
-                  const SizedBox(width: 8),
-                if (widget.showColorValue)
-                  SelectableText(
-                    selectedColor.value.toString(),
-                    style: effectiveCodeStyle,
-                  ),
-              ],
-            ),
-        ],
+                ),
+              ),
+            // Show the sub-heading for the none wheel case.
+            if (widget.subheading != null &&
+                widget.enableShadesSelection &&
+                activePicker != ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.subheading,
+              ),
+            // Show the sub-heading for the wheel case.
+            if (widget.wheelSubheading != null &&
+                widget.enableShadesSelection &&
+                activePicker == ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.wheelSubheading,
+              ),
+            // Draw the shade colors for the selected main color.
+            if (widget.enableShadesSelection)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: Wrap(
+                  spacing: widget.spacing,
+                  runSpacing: widget.runSpacing,
+                  children: <Widget>[
+                    // TODO: Make a better null guard!?
+                    ...buildShadesColors(activeSwatch!),
+                  ],
+                ),
+              ),
+            // If we show material or generic name, we enclose them in a Wrap,
+            // they will be on same row nicely if there is room enough but also
+            // wrap to two rows when so needed when both are shown at the same
+            // and they don't fit on one row.
+            if (widget.showMaterialName || widget.showColorName)
+              Wrap(
+                children: <Widget>[
+                  // Show the Material color name, if enabled.
+                  if (widget.showMaterialName)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                      child: Text(
+                        ColorTools.materialName(selectedColor,
+                            colorSwatchNameMap:
+                                widget.customColorSwatchesAndNames),
+                        style: effectiveMaterialNameStyle,
+                      ),
+                    ),
+                  // If we show both material and generic name, add some
+                  // hardcoded horizontal space between them.
+                  if (widget.showMaterialName && widget.showColorName)
+                    const SizedBox(width: 8),
+                  // Show the generic color name, if enabled.
+                  if (widget.showColorName)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                      child: Text(
+                        ColorTools.nameThatColor(selectedColor),
+                        style: effectiveGenericNameStyle,
+                      ),
+                    ),
+                ],
+              ),
+            // If we show color code or its int value we enclose them in a Wrap,
+            // they will be on same row nicely if there is room enough but also
+            // wrap to two rows when so needed when both are shown at the same
+            // and they don't fit on one row.
+            if (widget.showColorCode || widget.showColorValue)
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                runAlignment: WrapAlignment.center,
+                alignment: WrapAlignment.center,
+                children: <Widget>[
+                  // Show the copy and edit color code field, if enabled.
+                  if (widget.showColorCode)
+                    _ColorCodeField(
+                      color: selectedColor,
+                      readOnly: activePicker != ColorPickerType.wheel,
+                      style: widget.colorCodeTextStyle,
+                      prefixStyle: widget.colorCodePrefixStyle,
+                      icon: widget.colorCodeIcon,
+                      enableTooltips: widget.enableTooltips,
+                      onColorChanged: (Color color) {
+                        setState(() {
+                          selectedColor = color;
+                          // Color changed outside wheel picker, the code was
+                          // edited, it should update!
+                          wheelShouldUpdate = true;
+                          widget.onColorChanged(color);
+                        });
+                      },
+                      copyFormat: widget.copyFormat,
+                    ),
+                  // If we show both hex code and int value, add some
+                  // hardcoded horizontal space between them.
+                  if (widget.showColorCode && widget.showColorValue)
+                    const SizedBox(width: 8),
+                  if (widget.showColorValue)
+                    SelectableText(
+                      selectedColor.value.toString(),
+                      style: effectiveCodeStyle,
+                    ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -1122,11 +1273,13 @@ class _ColorCodeField extends StatefulWidget {
     this.readOnly = false,
     required this.onColorChanged,
     this.style,
+    this.prefixStyle,
     this.icon = Icons.copy,
     this.enableTooltips = true,
+    required this.copyFormat,
   }) : super(key: key);
 
-  /// Current color value for the field
+  /// Current color value for the field.
   final Color color;
 
   /// Is in read only mode, we should not be able to select either.
@@ -1135,10 +1288,15 @@ class _ColorCodeField extends StatefulWidget {
   /// Color code of the entered color string is returned back in this callback.
   final ValueChanged<Color> onColorChanged;
 
-  /// Text style of the color code display and edit field
+  /// TextStyle of the color code display and edit field.
   ///
   /// Defaults to Theme.of(context).textTheme.bodyText2;
   final TextStyle? style;
+
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to [style], if not defined.
+  final TextStyle? prefixStyle;
 
   /// Icon data used for the copy button of the color code.
   ///
@@ -1149,6 +1307,19 @@ class _ColorCodeField extends StatefulWidget {
   /// the color code copy button has a tooltip.
   final bool enableTooltips;
 
+  /// Defines the format of the copied HEX RGB color string value.
+  ///
+  ///  * dartCode = The copied string is in Flutter/Dart format '0xAARRGGBB'
+  ///  * hexRRGGBB = Web Hex format with no alpha 'RRGGBB'.
+  ///  * hexAARRGGBB = Web Hex format with alpha 'AARRGGBB'.
+  ///  * numHexRRGGBB = Web Hex format with leading num # sign and
+  ///    no alpha '#RRGGBB'.
+  ///  * numHexAARRGGBB = Web Hex format with leading num # sign and
+  ///    alpha '#AARRGGBB'.
+  ///
+  /// Defaults to [ColorPickerCopyFormat.dartCode].
+  final ColorPickerCopyFormat copyFormat;
+
   @override
   _ColorCodeFieldState createState() => _ColorCodeFieldState();
 }
@@ -1158,6 +1329,17 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
   late FocusNode textFocusNode;
   late String colorHexCode;
   late Color color;
+
+  // Set current selected color values as a String on the Clipboard in
+  // configured format.
+  Future<void> _setClipboard() async {
+    String colorString = color.hex;
+    if (widget.copyFormat == ColorPickerCopyFormat.dartCode) {
+      colorString = color.hexAlpha;
+    }
+    final ClipboardData data = ClipboardData(text: colorString);
+    await Clipboard.setData(data);
+  }
 
   @override
   void initState() {
@@ -1287,13 +1469,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
               splashRadius: borderRadius,
               color: effectiveStyle.color,
               constraints: const BoxConstraints(),
-              onPressed: () {
-                Clipboard.setData(
-                  ClipboardData(
-                    text: '0x${ColorTools.colorCode(color)}',
-                  ),
-                );
-              },
+              onPressed: _setClipboard,
             ),
             suffixIconConstraints: BoxConstraints(
               minHeight: borderRadius * 2,
@@ -1302,6 +1478,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
             isDense: true,
             contentPadding: EdgeInsetsDirectional.only(start: fontSize),
             prefixText: '0xFF',
+            prefixStyle: widget.prefixStyle,
             filled: true,
             fillColor: fieldBackground,
             border: OutlineInputBorder(

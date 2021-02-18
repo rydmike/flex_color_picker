@@ -2,6 +2,17 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.1] - February NN, 2021
+* New property: selectedPickerTypeColor. Sets the thumb color of the selected picker type.
+* New property: colorCodePrefixStyle. Defines the text style of the prefix for the color code.
+  If not defined it default to same style as colorCodeTextStyle.
+* New property: title. A Widget used as an app bar type of Widget above the heading. Can
+  included select and close/cancel icon buttons when used as dialog.
+* Dialog without Cancel and Select buttons, the app bar buttons must be enabled to remove them.  
+* Copy/paste improvements.
+* Maybe: Enable transparency toggle.
+* Maybe: Optional Toggle buttons picker selector instead of cupertino slider
+  
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
 * A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved.
@@ -81,8 +92,9 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - Finalize tests.
 - Improve existing copy/paste feature.
 - Add support for transparent on colors.  
-- Add GitHub actions for test, analyze, coverage, build and web demo deployment.   
-- Add more color picker types.
+- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
+- Additional controls for selecting active picker, custom slider and ToggleButtons.  
+- Add one more color picker types "advanced".
 
 ### MAYBE
 - Add a color selected with the wheel color selector to the custom colors section.

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
-import 'range_filter_switch.dart';
-
 // Just a simple way to leave a trace of what version you built a Flutter
 // Web demo with inside the app. You can also show it in the demo,
 // like in this example, so people testing it don't have to ask.
@@ -278,35 +276,35 @@ class ColorPickerPage extends StatefulWidget {
 }
 
 class _ColorPickerPageState extends State<ColorPickerPage> {
-  bool enableShadesSelection = true;
-  bool showMaterialName = true;
-  bool showColorName = true;
-  bool showColorCode = true;
-  bool showColorValue = false;
-  bool hasBorder = false;
-  bool wheelHasBorder = false;
-  CrossAxisAlignment alignment = CrossAxisAlignment.center;
-  bool showTitle = true;
-  bool showHeading = true;
-  bool showSubheading = true;
-  bool includeIndex850 = false;
+  late bool enableShadesSelection;
+  late bool showMaterialName;
+  late bool showColorName;
+  late bool showColorCode;
+  late bool showColorValue;
+  late bool hasBorder;
+  late bool wheelHasBorder;
+  late bool centerContent;
+  late bool showHeading;
+  late bool showSubheading;
+  late bool includeIndex850;
+  late double size;
+  late double elevation;
+  late double borderRadius;
+  late double spacing;
+  late double runSpacing;
+  late double padding;
+  late double columnSpacing;
+  late double wheelDiameter;
+  late double wheelWidth;
+  late Color screenPickerColor;
+  late Color dialogPickerColor;
+  late List<Widget> column1 = <Widget>[];
+  late List<Widget> column2 = <Widget>[];
+  late List<Widget> column3 = <Widget>[];
+  late List<Widget> column4 = <Widget>[];
 
   final double sizeMin = 20;
   final double sizeMax = 60;
-  double size = 40;
-
-  double elevation = 0;
-  double borderRadius = 4;
-
-  double spacing = 4;
-  double runSpacing = 4;
-  double padding = 10;
-  double columnSpacing = 8;
-  double wheelDiameter = 190;
-  double wheelWidth = 16;
-
-  late Color screenPickerColor;
-  late Color dialogPickerColor;
 
   static Map<ColorPickerType, bool> pickersEnabled = <ColorPickerType, bool>{
     ColorPickerType.both: false,
@@ -377,28 +375,19 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   };
 
   @override
-  void initState() {
-    screenPickerColor = Colors.blue;
-    dialogPickerColor = Colors.red;
-    super.initState();
+  void didUpdateWidget(covariant ColorPickerPage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
-  Widget build(BuildContext context) {
-    // We are going to make simple responsive layout ...
-    final double width = MediaQuery.of(context).size.width;
-
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
-    // That can have 1 to max 4 columns
-    int columns = width ~/ kMinColumnWidth;
-    if (columns < 1) columns = 1;
-    if (columns > 4) columns = 4;
-
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     // ********************************************************************
     // COLUMN 1 - Content
     // ********************************************************************
-    final List<Widget> column1 = <Widget>[
+
+    column1 = <Widget>[
       const Divider(),
       // Show the selected color in a dialog
       ListTile(
@@ -450,7 +439,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               color: screenPickerColor,
               onColorChanged: (Color color) =>
                   setState(() => screenPickerColor = color),
-              crossAxisAlignment: alignment,
+              crossAxisAlignment: centerContent
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
               padding: EdgeInsets.all(padding),
               enableShadesSelection: enableShadesSelection,
               includeIndex850: includeIndex850,
@@ -466,13 +457,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               wheelWidth: wheelWidth,
               wheelHasBorder: wheelHasBorder,
               pickersEnabled: pickersEnabled,
-              selectedPickerTypeColor: Theme.of(context).colorScheme.primary,
-              title: showTitle
-                  ? Text(
-                      'FlexColorPicker',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    )
-                  : null,
               heading: showHeading
                   ? Text(
                       'Select color',
@@ -497,23 +481,16 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               showColorValue: showColorValue,
               // The name map is used to give the custom colors names
               customColorSwatchesAndNames: colorsNameMap,
-              colorCodeTextStyle: Theme.of(context).textTheme.headline6,
-              colorCodePrefixStyle: Theme.of(context).textTheme.subtitle2,
             ),
           ),
         ),
-      ),
-      const ListTile(
-        title: Text('Select COPY and PASTE a color value into the picker'),
-        subtitle: SelectableText('FF7B1FA2 FFCCFF90 #014443 0xFF6E55C4 '
-            'DDFF #99FF9800'),
       ),
     ];
 
     // ********************************************************************
     // COLUMN 2 - Content
     // ********************************************************************
-    final List<Widget> column2 = <Widget>[
+    column2 = <Widget>[
       const Divider(),
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
@@ -530,17 +507,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: ToggleButtons(
-                isSelected: toggleButtonIsSelected,
-                selectedColor: colorScheme.onPrimary,
-                color: colorScheme.primary,
-                fillColor: colorScheme.primary.withOpacity(0.8),
-                hoverColor: colorScheme.primary.withOpacity(0.2),
-                focusColor: colorScheme.primary.withOpacity(0.3),
-                borderWidth: 2,
-                borderColor: colorScheme.primary,
-                selectedBorderColor: colorScheme.primary,
-                borderRadius: BorderRadius.circular(50),
-                constraints: const BoxConstraints(minWidth: 60, minHeight: 50),
+                constraints: const BoxConstraints(minWidth: 60, minHeight: 45),
+                // renderBorder: false,
                 onPressed: (int index) {
                   // Copy the currently enabled pickers map.
                   final Map<ColorPickerType, bool> pEnabled =
@@ -605,8 +573,18 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     // you want when you instantiate it and not
                     // change it, so you would not need to do this.
                     pickersEnabled = <ColorPickerType, bool>{...pEnabled};
+                    didChangeDependencies();
                   });
                 },
+                isSelected: toggleButtonIsSelected,
+                color: Theme.of(context).colorScheme.primary,
+                selectedColor: Theme.of(context).colorScheme.onPrimary,
+                fillColor: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(4),
+                borderWidth: 1.5,
+                borderColor: Theme.of(context).colorScheme.primary,
+                selectedBorderColor: Theme.of(context).colorScheme.primary,
+                hoverColor: Theme.of(context).colorScheme.secondaryVariant,
                 children: toggleButtons,
               ),
             ),
@@ -618,8 +596,10 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         subtitle: const Text('Turn OFF to only be able to select the main '
             'color in a color swatch.'),
         value: enableShadesSelection,
-        onChanged: (bool value) =>
-            setState(() => enableShadesSelection = value),
+        onChanged: (bool value) => setState(() {
+          enableShadesSelection = value;
+          // didChangeDependencies();
+        }),
       ),
       const Divider(),
       // Color picker size
@@ -649,7 +629,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               const Text(
-                'dp',
+                'px',
                 style: TextStyle(fontSize: 11),
               ),
               Text(
@@ -788,41 +768,12 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           ),
         ),
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Border around color pick items'),
-        subtitle: const Text('With the API you can also adjust the '
-            'border color.'),
-        value: hasBorder,
-        onChanged: (bool value) => setState(() => hasBorder = value),
-      ),
     ];
 
     // ********************************************************************
     // COLUMN 3 - Content
     // ********************************************************************
-    final List<Widget> column3 = <Widget>[
-      const Divider(),
-      SwitchListTile.adaptive(
-        title: const Text('Show picker bar title'),
-        subtitle: const Text('You can provide your own picker bar title, if '
-            'it is null there is no title.'),
-        value: showTitle,
-        onChanged: (bool value) => setState(() => showTitle = value),
-      ),
-      SwitchListTile.adaptive(
-        title: const Text('Show heading text'),
-        subtitle: const Text('You can provide your own heading widget, if '
-            'it is null there is no heading.'),
-        value: showHeading,
-        onChanged: (bool value) => setState(() => showHeading = value),
-      ),
-      SwitchListTile.adaptive(
-        title: const Text('Show subheading text'),
-        subtitle: const Text('You can provide your own subheading widget, if '
-            'it is null there is no sub heading.'),
-        value: showSubheading,
-        onChanged: (bool value) => setState(() => showSubheading = value),
-      ),
+    column3 = <Widget>[
       const Divider(),
       SwitchListTile.adaptive(
         title: const Text('Show Material color name'),
@@ -857,12 +808,34 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         value: showColorValue,
         onChanged: (bool value) => setState(() => showColorValue = value),
       ),
+      const Divider(),
+      SwitchListTile.adaptive(
+        title: const Text('Show heading text'),
+        subtitle: const Text('You can provide your own heading widget, if '
+            'it is null there is no heading.'),
+        value: showHeading,
+        onChanged: (bool value) => setState(() => showHeading = value),
+      ),
+      SwitchListTile.adaptive(
+        title: const Text('Show subheading text'),
+        subtitle: const Text('You can provide your own subheading widget, if '
+            'it is null there is no sub heading.'),
+        value: showSubheading,
+        onChanged: (bool value) => setState(() => showSubheading = value),
+      ),
+      SwitchListTile.adaptive(
+        title: const Text('Border around color pick items'),
+        subtitle: const Text('With the API you can also adjust the '
+            'border color.'),
+        value: hasBorder,
+        onChanged: (bool value) => setState(() => hasBorder = value),
+      ),
     ];
 
     // ********************************************************************
     // COLUMN 4 - Content
     // ********************************************************************
-    final List<Widget> column4 = <Widget>[
+    column4 = <Widget>[
       const Divider(),
       SwitchListTile.adaptive(
         title: const Text('Border around color wheel'),
@@ -894,7 +867,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               const Text(
-                'dp',
+                'px',
                 style: TextStyle(fontSize: 11),
               ),
               Text(
@@ -926,7 +899,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               const Text(
-                'dp',
+                'px',
                 style: TextStyle(fontSize: 11),
               ),
               Text(
@@ -945,14 +918,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         value: includeIndex850,
         onChanged: (bool value) => setState(() => includeIndex850 = value),
       ),
-      ListTile(
-        title: const Text('Content alignment'),
-        subtitle: const Text('Start - Center - End'),
-        trailing: AlignmentSwitch(
-          alignment: alignment,
-          onChanged: (CrossAxisAlignment value) =>
-              setState(() => alignment = value),
-        ),
+      SwitchListTile.adaptive(
+        title: const Text('Center content'),
+        subtitle: const Text('Keep OFF for left aligned.'),
+        value: centerContent,
+        onChanged: (bool value) => setState(() => centerContent = value),
       ),
       // Vertical space between items in the color picker
       ListTile(
@@ -1020,8 +990,45 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         ),
       ),
     ];
+  }
 
-    // ****************************************
+  @override
+  void initState() {
+    super.initState();
+
+    enableShadesSelection = true;
+    showMaterialName = true;
+    showColorName = true;
+    showColorCode = true;
+    showColorValue = false;
+    hasBorder = false;
+    wheelHasBorder = false;
+    centerContent = true;
+    showHeading = true;
+    showSubheading = true;
+    includeIndex850 = false;
+    size = 40;
+    elevation = 0;
+    borderRadius = 4;
+    spacing = 4;
+    runSpacing = 4;
+    padding = 10;
+    columnSpacing = 8;
+    wheelDiameter = 190;
+    wheelWidth = 16;
+    screenPickerColor = Colors.blue;
+    dialogPickerColor = Colors.red;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // We are going to make simple responsive layout ...
+    final double width = MediaQuery.of(context).size.width;
+
+    // That can have 1 to max 4 columns
+    int columns = width ~/ kMinColumnWidth;
+    if (columns < 1) columns = 1;
+    if (columns > 4) columns = 4;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -1117,7 +1124,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       color: dialogPickerColor,
       onColorChanged: (Color color) =>
           setState(() => dialogPickerColor = color),
-      crossAxisAlignment: alignment,
+      crossAxisAlignment:
+          centerContent ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       padding: EdgeInsets.all(padding),
       enableShadesSelection: enableShadesSelection,
       includeIndex850: includeIndex850,
@@ -1133,12 +1141,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       wheelWidth: wheelWidth,
       wheelHasBorder: wheelHasBorder,
       pickersEnabled: pickersEnabled,
-      title: showTitle
-          ? Text(
-              'FlexColorPicker',
-              style: Theme.of(context).textTheme.subtitle1,
-            )
-          : null,
       heading: showHeading
           ? Text(
               'Select color',
@@ -1168,5 +1170,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       constraints:
           const BoxConstraints(minHeight: 475, minWidth: 480, maxWidth: 480),
     );
+  }
+}
+
+class ColumnTwo extends StatelessWidget {
+  const ColumnTwo({
+    Key? key,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
