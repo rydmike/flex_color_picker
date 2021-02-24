@@ -635,6 +635,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void initState() {
+    super.initState();
     // Always update the wheel when ColorPicker is initialized, but not in
     // didUpdateWidget.
     wheelShouldUpdate = true;
@@ -643,17 +644,16 @@ class _ColorPickerState extends State<ColorPicker> {
     selectedColor = widget.color;
     // Initialize other values
     initSelectedValue(findPicker: true);
-    super.initState();
   }
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
     // Initialize the values again because the underlying widget changed.
     // If the available color picker selection was changed we need to find
     // the picker again and set the findPicker option to true.
     initSelectedValue(
         findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
-    super.didUpdateWidget(oldWidget);
   }
 
   void initSelectedValue({bool findPicker = false}) {
@@ -1200,27 +1200,27 @@ class _ColorCodeField extends StatefulWidget {
         assert(enableTooltips != null, 'enableTooltips may not be null'),
         super(key: key);
 
-  // Current color value for the field
+  /// Current color value for the field
   final Color color;
 
-  // Is in read only mode, we should not be able to select either.
+  /// Is in read only mode, we should not be able to select either.
   final bool readOnly;
 
-  // Color code of the entered color string is returned back in this callback.
+  /// Color code of the entered color string is returned back in this callback.
   final ValueChanged<Color> onColorChanged;
 
-  // Text style of the color code display and edit field
-  //
-  // Defaults to Theme.of(context).textTheme.bodyText2;
+  /// Text style of the color code display and edit field
+  ///
+  /// Defaults to Theme.of(context).textTheme.bodyText2;
   final TextStyle style;
 
-  // Icon data used for the copy button of the color code.
-  //
-  // Defaults to Icons.copy.
+  /// Icon data used for the copy button of the color code.
+  ///
+  /// Defaults to Icons.copy.
   final IconData icon;
 
-  // Set to true to enable and show tooltips in this widget. Currently only
-  // the color code copy button has a tooltip.
+  /// Set to true to enable and show tooltips in this widget. Currently only
+  /// the color code copy button has a tooltip.
   final bool enableTooltips;
 
   /// The TextStyle of the prefix of the color code.
@@ -1239,6 +1239,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void initState() {
+    super.initState();
     textController = _TextEditingControllerWithCursorPosition();
     textFocusNode = FocusNode();
     color = widget.color;
@@ -1248,7 +1249,6 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
     // you should consider possible parsing errors too:
     // https://stackoverflow.com/questions/55905889/how-to-get-the-last-n-characters-in-a-string-in-dart
     textController.text = colorHexCode.substring(colorHexCode.length - 6);
-    super.initState();
   }
 
   @override
@@ -1260,6 +1260,7 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
 
   @override
   void didUpdateWidget(covariant _ColorCodeField oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
       color = widget.color;
       colorHexCode = ColorTools.colorCode(widget.color);
@@ -1280,7 +1281,6 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
       colorHexCode = ColorTools.colorCode(widget.color);
       textController.text = colorHexCode.substring(colorHexCode.length - 6);
     }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
