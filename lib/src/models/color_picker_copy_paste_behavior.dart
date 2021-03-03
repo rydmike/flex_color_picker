@@ -80,7 +80,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.snackBarMessage,
       this.snackBarDuration = const Duration(milliseconds: 1800),
       this.feedbackParseError = false,
-      this.autoFocus = true,
+      // TODO: This property is no longer needed, remove it before publishing.
+      // this.autoFocus = true,
       this.editUsesParsedPaste = false});
 
   /// A CTRL-C press will copy the clipboard into the picker.
@@ -217,7 +218,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to const Duration(milliseconds: 1800).
   final Duration snackBarDuration;
 
-  /// If true then vibrate, play audible click or an alert sound on when a
+  /// If true then vibrate, play audible click or an alert sound, when a
   /// paste parse error occurs.
   ///
   /// A paste parse error occurs when something is pasted into the color picker
@@ -233,22 +234,23 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to false.
   final bool feedbackParseError;
 
-  /// The color picker key listener widget has auto focus, it will capture the
-  /// keyboard paste actions by default.
-  ///
-  /// This works well when the picker is used in a dialog. It does not work as
-  /// well if is used in a UI with many other widgets that may have the focus.
-  /// In that case, a tap on the picker background or on one of its widgets
-  /// (depending on used gesture detection `hitTestBehavior`) is needed to
-  /// give it focus and enable the keyboard paste listener that handles the
-  /// paste keyboard shortcut event.
-  ///
-  /// Normally this can be left to its default true value, but if it interferes
-  /// with other UI components that needs autofocus, you can try setting it to
-  /// false.
-  ///
-  /// Defaults to true.
-  final bool autoFocus;
+  // TODO: This property is no longer needed, remove it before publishing.
+  // /// The color picker key listener widget has auto focus, it will capture the
+  // /// keyboard paste actions by default.
+  // ///
+  // /// This works well when the picker is used in a dialog. It does not work as
+  // /// well if is used in a UI with many other widgets that may have the focus.
+  // /// In that case, a tap on the picker background or on one of its widgets
+  // /// (depending on used gesture detection `hitTestBehavior`) is needed to
+  // /// give it focus and enable the keyboard paste listener that handles the
+  // /// paste keyboard shortcut event.
+  // ///
+  // /// Normally this can be left to its default true value, but if it interferes
+  // /// with other UI components that needs autofocus, you can try setting it to
+  // /// false.
+  // ///
+  // /// Defaults to true.
+  // final bool autoFocus;
 
   /// If true, the color code entry field uses parsed paste action.
   ///
@@ -294,7 +296,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     Widget? snackBarMessage,
     Duration? snackBarDuration,
     bool? feedbackParseError,
-    bool? autoFocus,
+    // TODO: This property is no longer needed, remove it before publishing.
+    // bool? autoFocus,
     bool? editUsesParsedPaste,
   }) {
     if ((ctrlC == null || identical(ctrlC, this.ctrlC)) &&
@@ -325,7 +328,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
             identical(snackBarDuration, this.snackBarDuration)) &&
         (feedbackParseError == null ||
             identical(feedbackParseError, this.feedbackParseError)) &&
-        (autoFocus == null || identical(autoFocus, this.autoFocus)) &&
+        // TODO: This property is no longer needed, remove it before publishing.
+        // (autoFocus == null || identical(autoFocus, this.autoFocus)) &&
         (editUsesParsedPaste == null ||
             identical(editUsesParsedPaste, this.editUsesParsedPaste))) {
       return this;
@@ -351,7 +355,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       snackBarMessage: snackBarMessage ?? this.snackBarMessage,
       snackBarDuration: snackBarDuration ?? this.snackBarDuration,
       feedbackParseError: feedbackParseError ?? this.feedbackParseError,
-      autoFocus: autoFocus ?? this.autoFocus,
+      // TODO: This property is no longer needed, remove it before publishing.
+      // autoFocus: autoFocus ?? this.autoFocus,
       editUsesParsedPaste: editUsesParsedPaste ?? this.editUsesParsedPaste,
     );
   }
@@ -380,7 +385,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         snackBarMessage == other.snackBarMessage &&
         snackBarDuration == other.snackBarDuration &&
         feedbackParseError == other.feedbackParseError &&
-        autoFocus == other.autoFocus &&
+        // TODO: This property is no longer needed, remove it before publishing.
+        // autoFocus == other.autoFocus &&
         editUsesParsedPaste == other.editUsesParsedPaste;
   }
 
@@ -406,7 +412,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       snackBarMessage,
       snackBarDuration,
       feedbackParseError,
-      autoFocus,
+      // TODO: This property is no longer needed, remove it before publishing.
+      // autoFocus,
       editUsesParsedPaste,
     ];
     return hashList(values);
@@ -442,7 +449,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         DiagnosticsProperty<Duration>('snackBarDuration', snackBarDuration));
     properties.add(
         DiagnosticsProperty<bool>('feedbackParseError', feedbackParseError));
-    properties.add(DiagnosticsProperty<bool>('autoFocus', autoFocus));
+    // TODO: This property is no longer needed, remove it before publishing.
+    // properties.add(DiagnosticsProperty<bool>('autoFocus', autoFocus));
     properties.add(
         DiagnosticsProperty<bool>('editUsesParsedPaste', editUsesParsedPaste));
   }

@@ -1026,7 +1026,9 @@ class _ColorPickerState extends State<ColorPicker> {
     return RawKeyboardListener(
       focusNode: _focusNode,
       onKey: _handleKeyEvent,
-      autofocus: widget.copyPasteBehavior.autoFocus,
+      // TODO: This property is no longer needed, remove it before publishing.
+      // autofocus: widget.copyPasteBehavior.autoFocus,
+
       // If the copy paste long press menu feature is enabled we wrap the
       // entire color picker with a Copy Paste long press menu
       child: IfWrapper(
@@ -1042,8 +1044,6 @@ class _ColorPickerState extends State<ColorPicker> {
               if (value == CopyPasteCommands.paste) _getClipboard();
             },
             onOpen: () {
-              // TODO Remove debugPrint
-              // debugPrint('popupMenuOpened & dragCancel=$_wheelDragCancel');
               if (widget.onColorChangeEnd != null && _wheelDragCancel) {
                 widget.onColorChangeEnd!(_selectedColor);
                 _addToRecentColors(_selectedColor);
@@ -1064,16 +1064,11 @@ class _ColorPickerState extends State<ColorPicker> {
             FocusScope.of(context).requestFocus(_focusNode);
             setState(() {
               _wheelDragCancel = false;
-              // TODO Remove debugPrint
-              // debugPrint('onTap & dragCancel=$_wheelDragCancel');
             });
           },
           onVerticalDragCancel: () {
             setState(() {
               _wheelDragCancel = true;
-              // TODO Remove debugPrint
-              // debugPrint('onVerticalDragCancel & '
-              //     'dragCancel=$_wheelDragCancel');
             });
           },
           child: Padding(

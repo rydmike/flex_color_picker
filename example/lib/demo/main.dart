@@ -341,7 +341,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   bool showPasteButton = true;
   bool editFieldHasCopyButton = true;
   bool useLongPressMenu = true;
-  bool autoFocusKeyHandler = true;
+  // TODO: This property is no longer needed, remove it before publishing.
+  // bool autoFocusKeyHandler = true;
   bool editUsesParsedPaste = true;
   bool showSnackBarPasteError = true;
   bool useSnackBarAudiblePasteError = false;
@@ -577,7 +578,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                 copyFormat: copyFormat,
                 longPressMenu: useLongPressMenu,
                 editFieldCopyButton: editFieldHasCopyButton,
-                autoFocus: autoFocusKeyHandler,
+                // TODO: This property is no longer needed, remove it before publishing.
+                // autoFocus: autoFocusKeyHandler,
                 editUsesParsedPaste: editUsesParsedPaste,
                 snackBarParseError: showSnackBarPasteError,
                 feedbackParseError: useSnackBarAudiblePasteError,
@@ -1109,6 +1111,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         value: wheelHasBorder,
         onChanged: (bool value) => setState(() => wheelHasBorder = value),
       ),
+      const Divider(),
+      SwitchListTile.adaptive(
+        title: const Text('Enable tooltips'),
+        subtitle: const Text('Turn OFF to disable all tooltips in the picker.'),
+        // TODO: Add this text when API tooltips have been added to the demo.
+        // '\n(Also enables and disables API tooltips in this demo.)'),
+        value: enableTooltips,
+        onChanged: (bool value) => setState(() => enableTooltips = value),
+      ),
     ];
 
     // *************************************************************************
@@ -1221,12 +1232,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         value: dialogActionIcons,
         onChanged: (bool value) => setState(() => dialogActionIcons = value),
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable tooltips'),
-        subtitle: const Text('Turn OFF to disable all tooltips in the picker.'),
-        value: enableTooltips,
-        onChanged: (bool value) => setState(() => enableTooltips = value),
-      ),
 
       const Divider(),
       Padding(
@@ -1267,11 +1272,12 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         value: useLongPressMenu,
         onChanged: (bool value) => setState(() => useLongPressMenu = value),
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Auto focus on key event handler'),
-        value: autoFocusKeyHandler,
-        onChanged: (bool value) => setState(() => autoFocusKeyHandler = value),
-      ),
+      // TODO: This property is no longer needed, remove it before publishing.
+      // SwitchListTile.adaptive(
+      //   title: const Text('Auto focus on key event handler'),
+      //   value: autoFocusKeyHandler,
+      //   onChanged: (bool value) => setState(() => autoFocusKeyHandler = value),
+      // ),
       SwitchListTile.adaptive(
         title: const Text('Edit color code uses paste parser'),
         value: editUsesParsedPaste,
@@ -1284,19 +1290,19 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             setState(() => showSnackBarPasteError = value),
       ),
       SwitchListTile.adaptive(
-        title: const Text('Hit test behavior'),
-        subtitle: const Text('ON for translucent, OFF for defer to '
-            'child.'),
-        value: hitTestBehavior,
-        onChanged: (bool value) => setState(() => hitTestBehavior = value),
-      ),
-      SwitchListTile.adaptive(
-        title: const Text('Audible and feedback vibration paste error'),
+        title: const Text('Feedback vibration and audible paste error alert'),
         subtitle: const Text('This feature is EXPERIMENTAL its support '
             'is fairly limited on many platforms.'),
         value: useSnackBarAudiblePasteError,
         onChanged: (bool value) =>
             setState(() => useSnackBarAudiblePasteError = value),
+      ),
+      SwitchListTile.adaptive(
+        title: const Text('Hit test behavior'),
+        subtitle: const Text('ON for translucent, OFF for defer to '
+            'child. Usually kept OFF to use: HitTestBehavior.deferToChild'),
+        value: hitTestBehavior,
+        onChanged: (bool value) => setState(() => hitTestBehavior = value),
       ),
     ];
 
@@ -1409,7 +1415,8 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         copyFormat: copyFormat,
         longPressMenu: useLongPressMenu,
         editFieldCopyButton: editFieldHasCopyButton,
-        autoFocus: autoFocusKeyHandler,
+        // TODO: This property is no longer needed, remove it before publishing.
+        // autoFocus: autoFocusKeyHandler,
         editUsesParsedPaste: editUsesParsedPaste,
         snackBarParseError: showSnackBarPasteError,
         feedbackParseError: useSnackBarAudiblePasteError,
@@ -1441,7 +1448,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       wheelHasBorder: wheelHasBorder,
       enableTooltips: enableTooltips,
       pickersEnabled: pickersEnabled,
-      selectedPickerTypeColor: Theme.of(context).colorScheme.primary,
       title: showTitle
           ? Text(
               'FlexColorPicker',
