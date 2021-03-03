@@ -82,6 +82,12 @@ The following are minor breaking changes from version 1.x, they mostly concern v
   with the previous default example in "example/lib/main.dart". Previously this Web example was in a separate GitHub
   repository. The example was updated to make it responsive, to offer better usability on Web.
 
+
+## [1.1.5] - March 3, 2021
+* Bug fix `selectedPickerTypeColor`: When color was undefined, the thumb did not receive the same text color as the
+  default and only one before in version 1.1.3 and earlier, in dark-mode. This broke compatibility with past style
+  when using dark-mode. This fix restores the correct past style when the `selectedPickerTypeColor` is undefined.
+  
 ## [1.1.4] - March 3, 2021
 * New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
 * New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
