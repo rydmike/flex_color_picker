@@ -6,7 +6,7 @@ FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` ca
 
 >This is pre-release 2.0.0-nullsafety.1 of FlexColorPicker with null safety.
 >
-> The package documentation has not yet been updated to cover all new features that are being introduced in final 2.0.0 version together with null-safety. The changelog covers the major changes and API docs are updated as well. More new features are still coming to final 2.0.0 release.
+> The package documentation has not yet been updated to cover all new features that are being introduced in final 2.0.0 version together with null-safety. The changelog covers the major changes and API docs are up to date as well. More new features are still coming before to final 2.0.0 release.
 > 
 ### The different types of available color pickers are
 
@@ -56,7 +56,7 @@ The result is a default color picker with only the primary and accent color pick
 
 ### Live Web Example
 
-You can also try a live web example of [**FlexColorPicker here**](https://rydmike.com/democolorpicker). With the Web demo you can modify most of the color picker's API values, and use it as a tool to find a style that fits your application.
+You can also try a live web example of [**FlexColorPicker here**](https://rydmike.com/flexcolorpicker). With the Web demo you can modify most of the color picker's API values, and use it as a tool to find a style that fits your application.
 
 The source code for the Web demo, which is only a slightly more elaborate example than the default, is also bundled with the package source code in "example/lib/demo/main.dart".
 
@@ -319,8 +319,9 @@ The example also includes a light and dark theme mode toggle, so you can test th
 
 The above introduction was a walk through of the bundled example, please see the [example section](https://pub.dev/packages/flex_color_picker/example) for the complete source code.
 
-There are a few more configuration options available for the `ColorPicker`, use the [API reference guide](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for additional information.
+There are many more configuration options available for the `ColorPicker`, use the [API reference guide](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for additional information.
 
-You can also try the more complete [live Web example](https://rydmike.com/democolorpicker/). Its source code is also included in the package example folder, in "example/lib/demo/main.dart".
+You can also try the more complete [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package example folder, in "example/lib/demo/main.dart". By studying it you can see practical examples
+of how to use all the new features.
 
 Happy color picking!
