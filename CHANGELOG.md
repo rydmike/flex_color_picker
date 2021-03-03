@@ -3,7 +3,9 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.0.0-nullsafety.1] - February 3, 2021
-There are many new features included in this version 2 pre-release. The new features can be explored with [live Web example](https://rydmike.com/democolorpicker/). Its source code is also included in the package example folder, in "example/lib/demo/main.dart".
+There are many new features included in this version 2 pre-release. The new features can be explored with 
+[live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package 
+example folder, in "example/lib/demo/main.dart".
 
 * Improvements: The wheel picker now move on pointer down to point location, it no longer requires a slight movement
   for its thumbs to move to the selected start tracking point.
