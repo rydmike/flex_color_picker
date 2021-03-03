@@ -2,31 +2,6 @@ import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-// The ColorWheelPicker below is a rewrite of a similar picker in the package:
-// https://pub.dev/packages/flutter_hsvcolor_picker
-// The class WheelPicker in the above package was been re-purposed as the HSV
-// color wheel picker for ColorPicker and it has undergone major rewrites.
-// Credit and original rights belong GitHub user:
-// https://github.com/ysdy44
-// that committed the original code. No license file is provided for the
-// public Flutter package and GitHub repo:
-// https://github.com/fluttercandies/flutter_hsvcolor_picker
-// Rewrites include, but are not limited to:
-// The original version did not work on scrolling surfaces due to:
-// https://github.com/flutter/flutter/issues/50776
-// It did not work on Flutter Web since it used the sweep gradient which was an
-// un-implemented API on Flutter Web:
-// https://github.com/flutter/flutter/issues/57752
-// https://github.com/flutter/flutter/issues/41389
-// Both these Flutter issues were addressed in the rewrite by working
-// around them using alternative implementations. The issues #57752 and #41389
-// concerning the un-implemented sweep gradient have now also been resolved
-// by the Flutter team by implementing the previously used not supported
-// APIs on WEB as well. The work around implementation is still being used here
-// and is even preferred, since it results in a more accurate Hue wheel. The
-// previously used sweep gradient that did not work on Web was actually an
-// approximation of the hue values.
-
 /// A HSV color wheel based color picker for Flutter, used by FlexColorPicker.
 ///
 /// The color wheel picker uses a custom painter to draw the HSV color wheel
@@ -38,6 +13,8 @@ class ColorWheelPicker extends StatefulWidget {
     Key? key,
     required this.color,
     required this.onChanged,
+    this.onChangeStart,
+    this.onChangeEnd,
     this.wheelWidth = 16.0,
     this.hasBorder = false,
     this.borderColor,
@@ -51,7 +28,18 @@ class ColorWheelPicker extends StatefulWidget {
 
   /// Callback that returns the currently selected color in the color wheel as
   /// a [Color].
+  ///
+  /// The color value is changed continuously as the wheel thumb or the surface
+  /// thumb is operated.
   final ValueChanged<Color> onChanged;
+
+  /// Optional [ValueChanged] callback, called when user starts color selection
+  /// operation with the current color value.
+  final ValueChanged<Color>? onChangeStart;
+
+  /// Optional [ValueChanged] callback, called when user ends color selection
+  /// with the new color value.
+  final ValueChanged<Color>? onChangeEnd;
 
   /// The width of the color wheel in dp.
   final double wheelWidth;
@@ -79,11 +67,11 @@ class ColorWheelPicker extends StatefulWidget {
 
 class _ColorWheelPickerState extends State<ColorWheelPicker> {
   // A global key used to find our render object
-  final GlobalKey paletteKey = GlobalKey();
+  final GlobalKey renderBoxKey = GlobalKey();
 
-  // If true, then we are dragging on the palette box.
-  // if false, then we are are dragging on color wheel.
-  bool isPalette = false;
+  // True, when we are dragging on the square color saturation and value box.
+  // False, when we are are dragging on color wheel.
+  bool isSquare = false;
 
   // We store the HSV color components as internal state for the
   // Hue wheel, and Saturation and Value for the square.
@@ -91,12 +79,22 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   late double colorSaturation;
   late double colorValue;
 
+  // Used to set focus to the Focus() we wrap around our custom paint.
+  late FocusNode _focusNode;
+
   @override
   void initState() {
     super.initState();
     colorHue = color.hue;
     colorSaturation = color.saturation;
     colorValue = color.value;
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -131,19 +129,20 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       (radius - widget.wheelWidth / 2) / math.sqrt(2);
 
   Offset getOffset(Offset ratio) {
+    // This is bang and cast is not pretty, but SDK does it this was too.
     final RenderBox renderBox =
-        // TODO: Maybe remove the need for this case somehow later.
-        // ignore: cast_nullable_to_non_nullable
-        paletteKey.currentContext!.findRenderObject() as RenderBox;
+        renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
+
     final Offset startPosition = renderBox.localToGlobal(Offset.zero);
     return ratio - startPosition;
   }
 
+  // Called when we start dragging any of the thumbs on the wheel or square
   void onStart(Offset offset) {
+    // This is bang and cast is not pretty, but SDK does it this was too.
     final RenderBox renderBox =
-        // TODO: Maybe remove the need for this case somehow later.
-        // ignore: cast_nullable_to_non_nullable
-        paletteKey.currentContext!.findRenderObject() as RenderBox;
+        renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
+
     final Size _size = renderBox.size;
     final double _radius = wheelRadius(_size);
     final double _squareRadius = squareRadius(_radius);
@@ -151,11 +150,18 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _center = Offset(_size.width / 2, _size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
+    // Request focus, to move it away from any other field when we click
+    // on it, makes keyboard traversal more logical, it also prevents
+    // edit code field from keeping the focus and helps us avoid this
+    // Flutter issue: https://github.com/flutter/flutter/issues/63226
+    // TODO: Remove comment about Flutter bug #63226 when issue is solved.
+    _focusNode.requestFocus();
+
     // Did the onStart, start on the square Palette box?
-    isPalette =
+    isSquare =
         _vector.dx.abs() < _squareRadius && _vector.dy.abs() < _squareRadius;
     // We started on the square palette box
-    if (isPalette) {
+    if (isSquare) {
       // Calculate the color saturation
       colorSaturation =
           _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
@@ -163,6 +169,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       colorValue =
           _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
 
+      // If a start callback was given, call it with the start color.
+      if (widget.onChangeStart != null) widget.onChangeStart!(widget.color);
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
       widget.onChanged(HSVColor.fromAHSV(
@@ -174,6 +182,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
       // Else, we did the onStart on the color wheel
     } else {
+      // If a start callback given, call it with the start color.
+      if (widget.onChangeStart != null) widget.onChangeStart!(widget.color);
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
       // Convert the color to normal RGB value before returning it via callback.
@@ -186,22 +196,21 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     }
   }
 
+  // Called when we drag the thumb on the wheel or square.
   void onUpdate(Offset offset) {
+    // This is bang and cast is not pretty, but SDK does it this was too.
     final RenderBox renderBox =
-        // TODO: Maybe remove the need for this case somehow later.
-        // ignore: cast_nullable_to_non_nullable
-        paletteKey.currentContext!.findRenderObject() as RenderBox;
-    final Size size = renderBox.size;
+        renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
 
+    final Size size = renderBox.size;
     final double _radius = wheelRadius(size);
     final double _squareRadius = squareRadius(_radius);
-
     final Offset _startPosition = renderBox.localToGlobal(Offset.zero);
     final Offset _center = Offset(size.width / 2, size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
     // Are the updates are for the square palette box?
-    if (isPalette) {
+    if (isSquare) {
       // Calculate the color saturation
       colorSaturation =
           _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
@@ -213,8 +222,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       widget.onChanged(
           HSVColor.fromAHSV(color.alpha, colorHue, colorSaturation, colorValue)
               .toColor());
-
-      // No, then the updates are for the color wheel
+      // The updates are for the color wheel
     } else {
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
@@ -228,38 +236,64 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     }
   }
 
+  // Called when we end dragging the thumb on the wheel or square.
+  void onEnd() {
+    // We are ending the dragging operation, call the onChangeEnd callback
+    // with the color we ended up with.
+    if (widget.onChangeEnd != null) widget.onChangeEnd!(widget.color);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // There was an issue when using onPanDown, onPanStart and onPanUpdate
-      // event handler, so these drag events were used instead, works pretty OK
-      // as a workaround. See this issue for more info:
-      // https://github.com/flutter/flutter/issues/50776
-      // Would be nicer if onPanDown worked, because then we could get
-      // co-ordinates on finger/mouse down, now we only get it after finger or
-      // mouse is down and we have moved it slightly, so it is not as nice as I
-      // would like to have it, but since I have not seen any other resolution
-      // to the above Flutter issue yet, this is the best we can do for now.
-      onVerticalDragStart: (DragStartDetails details) =>
+      dragStartBehavior: DragStartBehavior.down,
+
+      onVerticalDragDown: (DragDownDetails details) =>
           onStart(details.globalPosition),
       onVerticalDragUpdate: (DragUpdateDetails details) =>
           onUpdate(details.globalPosition),
-      onHorizontalDragStart: (DragStartDetails details) =>
-          onStart(details.globalPosition),
       onHorizontalDragUpdate: (DragUpdateDetails details) =>
           onUpdate(details.globalPosition),
-      behavior: HitTestBehavior.opaque,
-      dragStartBehavior: DragStartBehavior.down,
-      child: Container(
-        key: paletteKey,
-        child: CustomPaint(
-          painter: _WheelPainter(
-            colorHue: colorHue,
-            colorSaturation: colorSaturation,
-            colorValue: colorValue,
-            hasBorder: widget.hasBorder,
-            borderColor: widget.borderColor ?? Theme.of(context).dividerColor,
-            wheelWidth: widget.wheelWidth,
+      onVerticalDragEnd: (DragEndDetails details) => onEnd(),
+      onHorizontalDragEnd: (DragEndDetails details) => onEnd(),
+      // If we just tap on the wheel control, we need to end as well.
+      // Grabbing just the onTapUp allows to catch a drag that was too short
+      // to start a drag event, while not interfering with the onTap event
+      // handler we need to use elsewhere in the ColorPicker.
+      onTapUp: (TapUpDetails details) => onEnd(),
+
+      // NOTE: It would have been simpler to be able to call onEnd() on events
+      // onVerticalDragCancel and onHorizontalDragCancel here as well.
+      // They get triggered when the longPress menu is activated,
+      // if we were 'dragging' but had not moved, in that case we need to
+      // issue an `onColorChangeEnd` when a cancellation happens due to that.
+      // Mostly it worked, but not entirely, for some reason the drag cancel
+      // events get triggered while dragging, for no apparent reason, since
+      // there has been no known cancellation, weird, might be a bug?!
+      //
+      // Due to this the cancel events could not be used here, since they led to
+      // random onEnd() calls which made the onEnd unreliable. The workaround
+      // was to make the long press menu issue an "onOpen" event and handle the
+      // issuing of that particular end dragging scenario in the parent
+      // (color picker). Messy, but the workaround works.
+
+      child: SizedBox(
+        key: renderBoxKey,
+        child: Focus(
+          focusNode: _focusNode,
+          child: MouseRegion(
+            cursor: MaterialStateMouseCursor.clickable,
+            child: CustomPaint(
+              painter: _WheelPainter(
+                colorHue: colorHue,
+                colorSaturation: colorSaturation,
+                colorValue: colorValue,
+                hasBorder: widget.hasBorder,
+                borderColor:
+                    widget.borderColor ?? Theme.of(context).dividerColor,
+                wheelWidth: widget.wheelWidth,
+              ),
+            ),
           ),
         ),
       ),
@@ -287,16 +321,16 @@ class _WheelPainter extends CustomPainter {
   final int ticks;
   final double wheelWidth;
 
-  double wheelRadius(Size size) =>
+  static double wheelRadius(Size size, double wheelWidth) =>
       math.min(size.width, size.height).toDouble() / 2 - wheelWidth / 2;
-  double squareRadius(double radius) =>
+  static double squareRadius(double radius, double wheelWidth) =>
       (radius - wheelWidth / 2) / math.sqrt(2);
 
   @override
   void paint(Canvas canvas, Size size) {
     final Offset _center = Offset(size.width / 2, size.height / 2);
-    final double _radius = wheelRadius(size);
-    final double _squareRadius = squareRadius(_radius);
+    final double _radius = wheelRadius(size, wheelWidth);
+    final double _squareRadius = squareRadius(_radius, wheelWidth);
 
     const double _rads = (2 * math.pi) / 360;
     const double _step = 1;

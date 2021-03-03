@@ -3,15 +3,76 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.0.0-nullsafety.1] - February NN, 2021
-* New property: selectedPickerTypeColor. Sets the thumb color of the selected picker type.
-* New property: colorCodePrefixStyle. Defines the text style of the prefix for the color code.
-  If not defined it default to same style as colorCodeTextStyle.
-* New property: title. A Widget used as an app bar type of Widget above the heading. Can
-  included select and close/cancel icon buttons when used as dialog.
-* Dialog without Cancel and Select buttons, the app bar buttons must be enabled to remove them.  
-* Copy/paste improvements.
-* Maybe: Enable transparency toggle.
-* Maybe: Optional Toggle buttons picker selector instead of cupertino slider
+* Improvements: The wheel picker now move on pointer down to point location, no longer requiring a slight movement
+  for its thumbs to move to selected start tracking point.
+* Improvements: Keyboard traversal of the colors and selecting indicator colors with the keyboard via
+  enter or space. Note: The wheel can still not be keyboard operated, only touch and mouse controlled. 
+* New property `onColorChangeStart`: Called when user starts color selection with current color before the change.
+* New property `onColorChangeEnd`: Called when user ends color selection with the new color value. 
+* New property `selectedPickerTypeColor`: The color of the thumb on the slider that shows the selected picker.
+* New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
+  If not defined it defaults to same style as `colorCodeTextStyle`.
+* New property `title`: A Widget used as an app bar type of title widget above the heading. Can
+  include copy, paste, select-close and cancel-cancel icon buttons when picker is used as a dialog.
+* **Major new feature**: An `actionButtons` property that takes an `ColorPickerActionButtons()`. Used to define 
+  what type of **Ok** and **Cancel** action buttons the color picker has when used in a dialog. 
+  It is possible to define if
+  bottom action buttons should be `TextButton`, `OutlinedButton` or `ElevatedButton` per button.
+  If not defined, the labels on the buttons come from Material localizations, not from default hard coded values. 
+  See breaking label for the 'Select' label. There are optional select/OK and cancel icon that can be used in the
+  title bar for a more compact dialog. *See API documentation for more information.*
+* **Major feature**: A `copyPasteBehavior` property that takes an `ColorPickerCopyPasteBehavior()`. 
+  Used to define the copy/paste behavior of the color picker, including: 
+    * Keyboard shortcuts: CTRL-C, CMD-C, CTRL-V, CMD-V
+    * Top toolbar copy-paste buttons.
+    * Long press copy-paste menu. 
+  
+  All copy/paste behaviours are optional and can be enabled based on what is needed.
+  
+  For the copy format, the desired resulting RGB color string format can be configured to use #RRGGBB 
+  RRGGBB #AARRGGBB AARRGGBB and 0xAARRGGBB (default) options. The selected copy format is indicated with the 
+  corresponding prefix in the color code display/edit field when it is enabled.
+
+  Paste supports parsing multiple RGB color string formats. It automatically detects what format is used and auto
+  parses to correct Flutter/Dart color value. You can e.g. paste string formatted as #RRGGBB RRGGBB #AARRGGBB
+  AARRGGBB #RGB RGB or 0xAARRGGBB, partial color string values also work. You can also activate
+  a snack bar that informs the users if they paste color strings in an unsupported RGB string format into the
+  color picker.
+
+  *See API documentation for more information.*
+
+* **Major new feature**: The picker can display recently used colors in a list of color indicators at the bottom of 
+  the picker. You can use the following properties to control it.
+    * `showRecentColors`: Set to true/false to enable/disable the usage of the recent colors feature.
+    * `recentColorsSubheading`: Subheading widget for the recently used colors. Typically, a Text widget, 
+      e.g. Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
+    * `maxRecentColors`: Number of recent colors to track, from 2 to 20 allowed.
+    * `recentColors`: a list with current recent color, defaults to empty, but you can store the last list
+      and use it to restore the previous recent colors list.
+    * `onRecentColorsChanged`: Optional value callback that returns a copy the current list of recently 
+      used colors. Use it store a copy of the recent colors in order to be able to restore it later.
+      
+      *See API documentation for more information.*
+      
+
+
+* **MAYBE / PENDING  - Major new feature**: Enable transparent colors.
+* **MAYBE / PENDING - Major new feature**: Optional Toggle buttons picker selector instead of cupertino slider
+
+### Breaking changes
+
+The following are minor breaking changes from version 1.x, they mostly concern visual nuances and label defaults.
+* The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color 
+  code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
+  `copyPasteBehavior` property. 
+* The bottom action button that selects the color now says **OK** instead of **Select**. The label for the OK 
+  button by default comes from a Material localization. You can as before change it to whatever string you want.
+* The dialog bottom action button for **OK** by default now uses just a plain `TextButton` and 
+  not an `OutlinedButton`, this change is done to conform to a less opinionated default style. You can still
+  manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was 
+  no choice.
+* The dialog bottom **OK** button is no longer auto-focused. 
+
   
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.

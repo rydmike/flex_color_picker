@@ -1,0 +1,103 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import '../models/color_picker_type.dart';
+
+// TODO: Test how it works on WEB, do we need a kIsWeb check too?
+/// Returns the control key label for the current platform.
+///
+/// Windows, Linux: CTRL
+/// Mac: CMD (Tried using the ⌘ symbol, did not show up on Web though.)
+/// Others: Empty string
+///
+/// NOTE: Web should be CTRL or CMD depending on platform.
+String platformControlKey(TargetPlatform platform, String key) {
+  switch (platform) {
+    case TargetPlatform.android:
+    case TargetPlatform.iOS:
+    case TargetPlatform.fuchsia:
+      return '';
+    case TargetPlatform.linux:
+    case TargetPlatform.windows:
+      return ' (CTRL-$key)';
+    case TargetPlatform.macOS:
+      return ' (CMD-$key)';
+  }
+}
+
+/// Locate in which available picker with its color swatches a
+/// given color can be found in and return that pickers enum type.
+/// This is used to activate the correct Cupertino segment for the provided
+/// color, so that it can be selected and shown as selected.
+ColorPickerType findColorInSelector({
+  required Color color,
+  required Map<ColorPickerType, List<ColorSwatch<Object>>> typeToSwatchMap,
+  required Map<ColorPickerType, bool> pickersEnabled,
+  required bool include850,
+}) {
+  // Search for the given color in any of the swatches that are set
+  // as available in the selector and return the swatch where we find
+  // the color.
+  for (final ColorPickerType key in typeToSwatchMap.keys) {
+    if (pickersEnabled[key]!) {
+      for (final ColorSwatch<Object> swatch in typeToSwatchMap[key]!) {
+        if (isShadeOfMain(swatch, color, include850)) return key;
+      }
+    }
+  }
+  // If we did not find the color in any of the swatches in the selector, we
+  // will just return the first swatch available in the selector.
+  for (final ColorPickerType key in typeToSwatchMap.keys) {
+    if (pickersEnabled[key]!) {
+      return key;
+    }
+  }
+
+  // And finally if no selector was set to enabled, we return material anyway.
+  return ColorPickerType.primary;
+}
+
+/// Find and return the ColorSwatch in a List of ColorSwatches that contains
+/// a given color.
+ColorSwatch<Object?>? findColorSwatch(
+    Color color, List<ColorSwatch<Object>> swatches, bool include850) {
+  for (final ColorSwatch<Object> mainColor in swatches) {
+    if (isShadeOfMain(mainColor, color, include850)) {
+      return mainColor;
+    }
+  }
+  return (color is ColorSwatch && swatches.contains(color)) ? color : null;
+}
+
+/// Check if a given color is a shade of the main color, return true if it is.
+bool isShadeOfMain(
+  ColorSwatch<Object> mainColor,
+  Color shadeColor,
+  bool include850,
+) {
+  for (final Color shade in getMaterialColorShades(mainColor, include850)) {
+    if (shade == shadeColor || shade.value == shadeColor.value) return true;
+  }
+  return false;
+}
+
+/// Return a List of colors with all the colors that exist in a given
+/// ColorSwatch. Include the 850 index for grey color that has this value,
+/// it is the only ColorSwatch that has 850. This function works both
+/// for MaterialColor and AccentColor, and for custom color swatches that
+/// uses the ColorSwatch indexes below.
+List<Color> getMaterialColorShades(ColorSwatch<Object> color, bool include850) {
+  return <Color>[
+    if (color[50] != null) color[50]!,
+    if (color[100] != null) color[100]!,
+    if (color[200] != null) color[200]!,
+    if (color[300] != null) color[300]!,
+    if (color[400] != null) color[400]!,
+    if (color[500] != null) color[500]!,
+    if (color[600] != null) color[600]!,
+    if (color[700] != null) color[700]!,
+    if (color[800] != null) color[800]!,
+    if (color[850] != null && include850) color[850]!,
+    if (color[900] != null) color[900]!,
+  ];
+}

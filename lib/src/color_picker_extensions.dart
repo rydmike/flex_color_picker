@@ -13,7 +13,7 @@ extension FlexPickerNoNullColorExtensions on Color {
     return value.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
-  /// Return color's uppercase RGB hex string, including alpha channel.
+  /// Return color's uppercase RGB hex string, excluding alpha channel.
   String get hex {
     return value.toRadixString(16).toUpperCase().padLeft(8, '0').substring(2);
   }
@@ -45,15 +45,37 @@ extension FlexPickerNoNullStringExtensions on String {
   /// You can then decide what to do with the error instead of just receiving
   /// fully transparent black color.
   Color get toColor {
+    // If String was zero length, then we return transparent, cannot parse.
     if (this == '') return const Color(0x00000000);
+    // If String length is > 200 we as a safety precaution will not try to
+    // parse it to a color, for shorter lengths the last 8 chars will be used.
+    if (this.length > 200) return const Color(0x00000000);
+    // Remove all num signs, we allow them, but disregard them all.
     String hexColor = replaceAll('#', '');
     if (hexColor == '') return const Color(0x00000000);
+    // Remove all spaces, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll(' ', '');
     if (hexColor == '') return const Color(0x00000000);
+    // Remove all '0x' Hex code marks, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll('0x', '');
     if (hexColor == '') return const Color(0x00000000);
+    // If the input is exactly 3 chars long, we may have a short Web hex code,
+    // let's make the potential 'RGB' code to a 'RRGGBB' code.
+    if (hexColor.length == 3) {
+      hexColor = hexColor[0] +
+          hexColor[0] +
+          hexColor[1] +
+          hexColor[1] +
+          hexColor[2] +
+          hexColor[2];
+    }
+    // Pad anything shorter than 7 with left 0 -> fill non spec channels with 0.
     hexColor = hexColor.padLeft(6, '0');
+    // Pad anything shorter than 9 with left F -> fill with opaque alpha.
     hexColor = hexColor.padLeft(8, 'F');
+
+    // We only try to parse the last 8 chars in the remaining string, rest can
+    // still be whatever.
     final int length = hexColor.length;
     return Color(int.tryParse('0x${hexColor.substring(length - 8, length)}') ??
         0x00000000);
@@ -93,15 +115,37 @@ extension FlexPickerNullableStringExtensions on String? {
   /// IF the resulting string cannot be parsed to a Color, is empty or null
   /// THEN NULL is returned ELSE the Color is returned.
   Color? get toColorMaybeNull {
+    // If String was null or zero length, then we return null, cannot parse.
     if (this == null || this == '') return null;
+    // If String length is > 200 we as a safety precaution will not try to
+    // parse it to a color, for shorter lengths the last 8 chars will be used.
+    if ((this?.length ?? 200) > 200) return null;
+    // Remove all num signs, we allow them, but disregard them all.
     String hexColor = this?.replaceAll('#', '') ?? '';
     if (hexColor == '') return null;
+    // Remove all spaces, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll(' ', '');
     if (hexColor == '') return null;
+    // Remove all '0x' Hex code marks, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll('0x', '');
     if (hexColor == '') return null;
+    // If the input is exactly 3 chars long, we may have a short Web hex code,
+    // let's make the potential 'RGB' code to a 'RRGGBB' code.
+    if (hexColor.length == 3) {
+      hexColor = hexColor[0] +
+          hexColor[0] +
+          hexColor[1] +
+          hexColor[1] +
+          hexColor[2] +
+          hexColor[2];
+    }
+    // Pad anything shorter than 7 with left 0 -> fill non spec channels with 0.
     hexColor = hexColor.padLeft(6, '0');
+    // Pad anything shorter than 9 with left F -> fill with opaque alpha.
     hexColor = hexColor.padLeft(8, 'F');
+
+    // We only try to parse the last 8 chars in the remaining string, rest can
+    // still be whatever.
     final int length = hexColor.length;
     final int? intColor =
         int.tryParse('0x${hexColor.substring(length - 8, length)}');

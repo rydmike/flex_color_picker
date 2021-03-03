@@ -210,6 +210,16 @@ void main() {
                 '${ColorTools.primaryColorNames[swatch]} [$i] '
                 '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
           });
+          test(
+              'ColorTools.materialNameAndARGBCode '
+              '${ColorTools.primaryColorNames[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              '${ColorTools.materialNameAndARGBCode(swatch[i]!)}', () {
+            expect(
+                ColorTools.materialNameAndARGBCode(swatch[i]!),
+                '${ColorTools.primaryColorNames[swatch]} [$i] '
+                '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+          });
         }
       }
     }
@@ -488,6 +498,16 @@ void main() {
               '${ColorTools.accentColorsNames[swatch]} [$i] '
               '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
         });
+        test(
+            'ColorTools.materialNameAndARGBCode '
+            '${ColorTools.accentColorsNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.materialNameAndARGBCode(swatch[i]!)}', () {
+          expect(
+              ColorTools.materialNameAndARGBCode(swatch[i]!),
+              '${ColorTools.accentColorsNames[swatch]} [$i] '
+              '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+        });
       }
     }
   });
@@ -696,6 +716,16 @@ void main() {
               '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
               '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
         });
+        test(
+            'ColorTools.materialNameAndARGBCode '
+            '${ColorTools.blackAndWhiteNames[swatch]} '
+            '[$i] (${swatch[i]}) returns '
+            '${ColorTools.materialNameAndARGBCode(swatch[i]!)}', () {
+          expect(
+              ColorTools.materialNameAndARGBCode(swatch[i]!),
+              '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
+              '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+        });
       }
     }
   });
@@ -901,6 +931,19 @@ void main() {
                     colorSwatchNameMap: refCustomColors),
                 '${refCustomColors[swatch]} [$i] '
                 '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+          });
+          test(
+              'ColorTools.materialNameAndARGBCode '
+              '${refCustomColors[swatch]} '
+              '[$i] (${swatch[i]}) returns '
+              // ignore: lines_longer_than_80_chars
+              '${ColorTools.materialNameAndARGBCode(swatch[i]!, colorSwatchNameMap: refCustomColors)}',
+              () {
+            expect(
+                ColorTools.materialNameAndARGBCode(swatch[i]!,
+                    colorSwatchNameMap: refCustomColors),
+                '${refCustomColors[swatch]} [$i] '
+                '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
           });
         }
       }

@@ -24,8 +24,8 @@ class AlignmentSwitch extends StatelessWidget {
     return ToggleButtons(
       isSelected: _isSelected,
       selectedColor: colorScheme.onPrimary,
-      color: colorScheme.primary,
-      fillColor: colorScheme.primary.withOpacity(0.8),
+      color: colorScheme.onSurface,
+      fillColor: colorScheme.primary,
       hoverColor: colorScheme.primary.withOpacity(0.2),
       focusColor: colorScheme.primary.withOpacity(0.3),
       borderWidth: 2,

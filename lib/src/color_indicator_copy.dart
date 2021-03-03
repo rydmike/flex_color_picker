@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 /// in a ListTile widget. It has adjustable, height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
 @immutable
-class ColorIndicator extends StatefulWidget {
+class ColorIndicator extends StatelessWidget {
   /// Default const constructor for the color indicator.
   const ColorIndicator({
     Key? key,
@@ -84,85 +84,57 @@ class ColorIndicator extends StatefulWidget {
   final Color? borderColor;
 
   @override
-  _ColorIndicatorState createState() => _ColorIndicatorState();
-}
-
-class _ColorIndicatorState extends State<ColorIndicator> {
-  late FocusNode _focusNode;
-
-  @override
-  void initState() {
-    _focusNode = FocusNode();
-    if (widget.isSelected) _focusNode.requestFocus();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // The indicator color is light.
     final bool isLight =
-        ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
+        ThemeData.estimateBrightnessForColor(color) == Brightness.light;
     // Set icon color to black on light color and to white on dark color.
     final Color iconColor = isLight ? Colors.black : Colors.white;
 
     // If no border color is given, we use the theme divider color as
     // border color, it is typically a suitable grey color
-    final Color _borderColor =
-        widget.borderColor ?? Theme.of(context).dividerColor;
+    final Color _borderColor = borderColor ?? Theme.of(context).dividerColor;
 
     return Material(
       type: MaterialType.card,
-      color: widget.color,
-      elevation: widget.elevation,
+      elevation: elevation,
+      borderRadius: BorderRadius.circular(borderRadius),
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          side: widget.hasBorder
-              ? BorderSide(color: _borderColor)
-              : BorderSide.none),
-      child: SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: InkWell(
-          // We need a key, otherwise Flutter looses track of which
-          // Widget should have what focus/highlight colors when we
-          // use a lot of these ColorIndicators with Inkwells.
-          key: UniqueKey(),
-          focusNode: _focusNode,
-          // Only use focus color when in focus, but not selected.
-          focusColor: widget.isSelected
-              ? Colors.transparent
-              : Theme.of(context).focusColor,
-          // Only use highlightColor color when in focus, but not selected.
-          highlightColor: widget.isSelected
-              ? Colors.transparent
-              : Theme.of(context).highlightColor,
-          hoverColor: isLight ? Colors.black12 : Colors.white24,
-          onTap: widget.onSelect == null
-              ? null
-              : () {
-                  widget.onSelect!();
-                  _focusNode.requestFocus();
-                },
-          child: widget.isSelected
-              ? Icon(
-                  widget.selectedIcon,
-                  color: iconColor,
-                  // Size the select icon so it always fits nicely
-                  // and looks nice proportionally in the color indicator.
-                  // The 0.6 value is just based on what looked good enough.
-                  size: widget.width < widget.height
-                      ? widget.width * 0.6
-                      : widget.height * 0.6,
-                )
-              : null,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: hasBorder ? Border.all(color: _borderColor) : null,
+        ),
+        // Using an extra transparent Material wrapper on an InkWell is a
+        // pattern used to get Ink and Hover effects on colored or
+        // gradient background widgets.
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            // The onTap does not do anything, just gives us inc effect.
+            // If the onTap is null, onTapDown does not work, and if we
+            // call onSelect on both, we get two callbacks, don't want that.
+            // If onSelect was null, we want null to disable Ink, not the
+            // empty callback.
+            onTap: onSelect == null ? null : () {},
+            // The tapDown gives the call back, and will let parent react to
+            // onLongPress, which is used by the copy/paste menu.
+            onTapDown: onSelect == null ? null : (_) => onSelect!(),
+            hoverColor: isLight ? Colors.black12 : Colors.white24,
+            child: isSelected
+                ? Icon(
+                    selectedIcon,
+                    color: iconColor,
+                    // Size the select icon so it always fits nicely
+                    // and looks nice proportionally in the color indicator.
+                    // The 0.6 value is just based on what looked good enough.
+                    size: width < height ? width * 0.6 : height * 0.6,
+                  )
+                : null,
+          ),
         ),
       ),
     );

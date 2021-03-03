@@ -665,10 +665,6 @@ class ColorTools {
   ///
   /// If it is not a Material color or one of the Accents colors, only the
   /// Flutter style Hex code is returned.
-  /// This function is used by the ColorPicker class to show selected color
-  /// names and their shade index. The function also accepts an optional
-  /// color swatch to name map that can be used to look-up name of custom
-  /// material like color swatches.
   static String materialNameAndCode(Color color,
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String _name =
@@ -679,6 +675,24 @@ class ColorTools {
       return '(0x${colorCode(color)})';
     } else {
       return '$_name (0x${colorCode(color)})';
+    }
+  }
+
+  /// Returns the official Material color name for the color passed to it,
+  /// including the shade index and ARGB style HexCode.
+  ///
+  /// If it is not a Material color or one of the Accents colors, only the
+  /// ARGB style Hex code is returned.
+  static String materialNameAndARGBCode(Color color,
+      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
+    final String _name =
+        materialName(color, colorSwatchNameMap: colorSwatchNameMap);
+
+    if (_name == '') {
+      // This is not a material color, we just return it's Flutter like HEX code
+      return '(${colorCode(color)})';
+    } else {
+      return '$_name (${colorCode(color)})';
     }
   }
 
