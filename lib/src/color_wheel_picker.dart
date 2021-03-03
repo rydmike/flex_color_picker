@@ -241,6 +241,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // We are ending the dragging operation, call the onChangeEnd callback
     // with the color we ended up with.
     if (widget.onChangeEnd != null) widget.onChangeEnd!(widget.color);
+    // We have to call onChanged once more with final value as well.
+    widget.onChanged(widget.color);
   }
 
   @override

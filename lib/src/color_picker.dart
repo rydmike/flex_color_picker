@@ -20,6 +20,9 @@ import 'private_widgets/recent_colors.dart';
 import 'private_widgets/shade_colors.dart';
 import 'universal_widgets/if_wrapper.dart';
 
+const int _minRecentColors = 2;
+const int _maxRecentColors = 20;
+
 /// A customizable Material primary color, accent color and custom colors,
 /// color picker widget.
 ///
@@ -132,8 +135,11 @@ class ColorPicker extends StatefulWidget {
             'The wheel diameter must be >= 100 and <= 500.'),
         assert(wheelWidth >= 4 && wheelWidth <= 50,
             'The color wheel width must be >= 4 and <= 50 dp.'),
-        assert(maxRecentColors >= 2 && maxRecentColors <= 20,
-            'The maxRecentColors must be >= 2 and <= 20'),
+        assert(
+            maxRecentColors >= _minRecentColors &&
+                maxRecentColors <= _maxRecentColors,
+            'The maxRecentColors must be $_minRecentColors 2 '
+            'and <= $_maxRecentColors'),
         assert(hitTestBehavior != HitTestBehavior.opaque,
             'HitTestBehavior.opaque is not supported by ColorPicker.'),
         super(key: key);
@@ -877,8 +883,9 @@ class _ColorPickerState extends State<ColorPicker> {
           darkColor: Color(0xFF636366),
         );
 
-    final Color _thumbOnColor =
-        ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+    final Color? _thumbOnColor = widget.selectedPickerTypeColor == null
+        ? null
+        : ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
             ? Colors.black
             : Colors.white;
 
@@ -1499,13 +1506,16 @@ class _ColorPickerState extends State<ColorPicker> {
     // We are not showing recent colors, do nothing.
     if (!widget.showRecentColors) return;
 
-    // If recent colors contains the color, do nothing.
+    // If recent colors already contains the color, do nothing.
     if (_recentColors.contains(color)) return;
 
+    // Clamp the max recent colors to the allowed range.
+    final int clampedRecentColors =
+        widget.maxRecentColors.clamp(_minRecentColors, _maxRecentColors);
+
     // Max recent colors reached, remove first one added.
-    if (_recentColors.length >= widget.maxRecentColors) {
-      _recentColors.removeRange(
-          widget.maxRecentColors - 1, _recentColors.length);
+    if (_recentColors.length >= clampedRecentColors) {
+      _recentColors.removeRange(clampedRecentColors - 1, _recentColors.length);
     }
     setState(() {
       _recentColors = <Color>[color, ..._recentColors];

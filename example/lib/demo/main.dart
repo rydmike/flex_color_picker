@@ -644,15 +644,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           ),
         ),
       ),
-      const ListTile(
-        title: Text('Select and COPY a color value, PASTE it into the picker. '
-            'Try these:'),
-        subtitle: SelectableText('Primary FF7B1FA2  Accent FFCCFF90  '
-            'BW FFF9F9F9\n'
-            'Custom #014443  Wheel 0xFF6E55C4  ShortWeb 5EC\n'
-            'Partial #DDFF  Opacity #99FF9800  Fail 94G02\n'
-            'Paste supports all above formats, copy in selected format.'),
-      ),
       const SizedBox(height: 8),
       ListTile(
         title: const Text('Copy format'),
@@ -661,6 +652,17 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           onChanged: (ColorPickerCopyFormat value) =>
               setState(() => copyFormat = value),
         ),
+      ),
+      const SizedBox(height: 8),
+      const ListTile(
+        title: Text('Select and COPY a color value, PASTE it into the picker '
+            'with toolbar buttons, long press menu or keyboard shortcuts. '
+            'Try these:'),
+        subtitle: SelectableText('Primary FF7B1FA2  Accent FFCCFF90  '
+            'BW FFF9F9F9\n'
+            'Custom #014443  Wheel 0xFF6E55C4  ShortWeb 5EC\n'
+            'Partial #DDFF  Fail 94G02\n'
+            'PASTE supports all above formats. COPY in selected format.'),
       ),
     ];
 
@@ -840,7 +842,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         onChanged: (bool value) => setState(() => showColorValue = value),
       ),
       SwitchListTile.adaptive(
-        title: const Text('Show recently selected color'),
+        title: const Text('Show recently used colors'),
         value: showRecentColors,
         onChanged: (bool value) => setState(() => showRecentColors = value),
       ),

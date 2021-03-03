@@ -3,15 +3,19 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.0.0-nullsafety.1] - February 3, 2021
-* Improvements: The wheel picker now move on pointer down to point location, no longer requiring a slight movement
-  for its thumbs to move to selected start tracking point.
+There are many new features included in this version 2 pre-release. The new features can be explored with [live Web example](https://rydmike.com/democolorpicker/). Its source code is also included in the package example folder, in "example/lib/demo/main.dart".
+
+* Improvements: The wheel picker now move on pointer down to point location, it no longer requires a slight movement
+  for its thumbs to move to the selected start tracking point.
 * Improvements: Keyboard traversal of the colors and selecting indicator colors with the keyboard via
-  enter or space. Note: The wheel can still not be operated with a keyboard, only touch and mouse controlled. 
+  enter or space. The wheel can however still not be operated with a keyboard, only touch and mouse controlled. 
 * New property `onColorChangeStart`: Called when user starts color selection with current color before the change.
 * New property `onColorChangeEnd`: Called when user ends color selection with the new color value. 
 * New property `selectedPickerTypeColor`: The color of the thumb on the slider that shows the selected picker.
+  Ported from none null-safe version 1.1.4, does not exist in version 2.0.0-nullsafety.0.
 * New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
   If not defined it defaults to same style as `colorCodeTextStyle`.
+  Ported from none null-safe version 1.1.4, does not exist in version 2.0.0-nullsafety.0.
 * New property `title`: A Widget used as an app bar type of title widget above the heading. Can
   include copy, paste, select-close and cancel-cancel icon buttons when picker is used as a dialog.
 * **Major new feature**: An `actionButtons` property that takes an `ColorPickerActionButtons()`. Used to define 
@@ -19,8 +23,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   It is possible to define if
   bottom action buttons should be `TextButton`, `OutlinedButton` or `ElevatedButton` per button.
   If not defined, the labels on the buttons come from Material localizations, not from default hard coded values. 
-  See breaking label for the 'Select' label. There are optional select/OK and cancel icon that can be used in the
-  title bar for a more compact dialog. *See API documentation for more information.*
+  See breaking label for the 'Select' label. There are optional select/OK and cancel icon buttons that can be used 
+  in the title bar for a more compact dialog. *See API documentation for more information.*
 * **Major feature**: A `copyPasteBehavior` property that takes an `ColorPickerCopyPasteBehavior()`. 
   Used to define the copy/paste behavior of the color picker, including: 
     * Keyboard shortcuts: CTRL-C, CMD-C, CTRL-V, CMD-V
@@ -47,7 +51,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
     * `recentColorsSubheading`: Subheading widget for the recently used colors. Typically, a Text widget, 
       e.g. Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
     * `maxRecentColors`: Number of recent colors to track, from 2 to 20 allowed.
-    * `recentColors`: a list with current recent color, defaults to empty, but you can store the last list
+    * `recentColors`: a list with current recent color, defaults to empty. You can store the last list
       and use it to restore the previous recent colors list.
     * `onRecentColorsChanged`: Optional value callback that returns a copy the current list of recently 
       used colors. Use it store a copy of the recent colors in order to be able to restore it later.
@@ -59,7 +63,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 The following are minor breaking changes from version 1.x, they mostly concern visual nuances and label defaults.
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color 
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
-  `copyPasteBehavior` property. 
+  `copyPasteBehavior` property, it defaults to same icon as in version 1.x. 
 * The bottom action button that selects the color now says **OK** instead of **Select**. The label for the OK 
   button by default comes from a Material localization. You can as before change it to whatever string you want.
 * The dialog bottom action button for **OK** by default now uses just a plain `TextButton` and 
