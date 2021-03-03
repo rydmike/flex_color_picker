@@ -77,16 +77,6 @@ class ColorPicker extends StatefulWidget {
     this.wheelDiameter = 190,
     this.wheelWidth = 16,
     this.wheelHasBorder = false,
-    this.selectedPickerTypeColor,
-    // Color picker types shown and used by the color picker.
-    this.pickersEnabled = const <ColorPickerType, bool>{
-      ColorPickerType.both: false,
-      ColorPickerType.primary: true,
-      ColorPickerType.accent: true,
-      ColorPickerType.bw: false,
-      ColorPickerType.custom: false,
-      ColorPickerType.wheel: false,
-    },
     // Headings and sub headings used by the color picker.
     this.heading,
     this.subheading,
@@ -99,10 +89,20 @@ class ColorPicker extends StatefulWidget {
     this.showColorCode = false,
     this.showColorValue = false,
     this.colorCodeTextStyle,
+    this.colorCodePrefixStyle,
     this.colorCodeIcon = Icons.copy,
     this.enableTooltips = true,
-    this.colorCodePrefixStyle,
+    // Color picker types shown and used by the color picker.
+    this.pickersEnabled = const <ColorPickerType, bool>{
+      ColorPickerType.both: false,
+      ColorPickerType.primary: true,
+      ColorPickerType.accent: true,
+      ColorPickerType.bw: false,
+      ColorPickerType.custom: false,
+      ColorPickerType.wheel: false,
+    },
     // Segmented color picker selector control properties.
+    this.selectedPickerTypeColor,
     this.pickerTypeTextStyle,
     this.pickerTypeLabels = const <ColorPickerType, String>{
       ColorPickerType.primary: _selectPrimaryLabel,
@@ -272,20 +272,6 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool wheelHasBorder;
 
-  /// A [ColorPickerType] to bool map.
-  ///
-  /// Defines which picker types are
-  /// enabled in the color picker's sliding segmented selector and
-  /// are thus available as color pickers.
-  ///
-  /// Available options are based on the [ColorPickerType] enum that
-  /// includes both, primary, accent, bw, custom and wheel.
-  /// Any undefined or missing enum keys in a given map are treated as false.
-  ///
-  /// By default a map that that sets primary and accent pickers to true is
-  /// used if no or a null map is given.
-  final Map<ColorPickerType, bool> pickersEnabled;
-
   /// Heading widget for the color picker.
   ///
   /// Typically a Text widget, e.g. Text('Select color').
@@ -354,6 +340,11 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to Theme.of(context).textTheme.bodyText2, if not defined.
   final TextStyle colorCodeTextStyle;
 
+  /// The TextStyle of the prefix of the color code.
+  ///
+  /// Defaults to [colorCodeTextStyle], if not defined.
+  final TextStyle colorCodePrefixStyle;
+
   /// Icon data for icon used on the button that copies the Flutter style color
   /// code to the to clipboard.
   ///
@@ -366,6 +357,27 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to true.
   final bool enableTooltips;
+
+  /// A [ColorPickerType] to bool map.
+  ///
+  /// Defines which picker types are
+  /// enabled in the color picker's sliding segmented selector and
+  /// are thus available as color pickers.
+  ///
+  /// Available options are based on the [ColorPickerType] enum that
+  /// includes both, primary, accent, bw, custom and wheel.
+  /// Any undefined or missing enum keys in a given map are treated as false.
+  ///
+  /// By default a map that that sets primary and accent pickers to true is
+  /// used if no or a null map is given.
+  final Map<ColorPickerType, bool> pickersEnabled;
+
+  /// The color of the thumb on the slider that shows the selected picker.
+  ///
+  /// If not defined, defaults to Color(0xFFFFFFFF) (white) in light theme and
+  /// to Color(0xFF636366) in dark theme, which are defaults for the used
+  /// CupertinoSlidingSegmentedControl.
+  final Color selectedPickerTypeColor;
 
   /// The TextStyle of the labels in segmented control swatch selector.
   ///
@@ -406,13 +418,6 @@ class ColorPicker extends StatefulWidget {
   /// English default label for the HSV wheel picker that can select any color.
   static const String _selectWheelAnyLabel = 'Wheel';
 
-  /// The color that shows the selected PickerType.
-  final Color selectedPickerTypeColor;
-
-  /// The TextStyle of the prefix of the color code.
-  ///
-  /// Defaults to Theme.of(context).textTheme.bodyText2, if not defined.
-  final TextStyle colorCodePrefixStyle;
   @override
   _ColorPickerState createState() => _ColorPickerState();
 
@@ -753,6 +758,18 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle segmentTextStyle =
         widget.pickerTypeTextStyle ?? Theme.of(context).textTheme.caption;
 
+    // Define thumb color based on null fallback Cupertino defaults.
+    final Color _thumbColor = widget.selectedPickerTypeColor ??
+        const CupertinoDynamicColor.withBrightness(
+          color: Color(0xFFFFFFFF),
+          darkColor: Color(0xFF636366),
+        );
+    // Define thumb onColor based on thumb color brightness.
+    final Color _thumbOnColor =
+        ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+            ? Colors.black
+            : Colors.white;
+
     // Widget map for the sliding Cupertino segmented control that allows us to
     // switch between the pickers we enabled.
     // We set the labels to default values if none given. The constructor also
@@ -767,7 +784,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.both] ??
                 ColorPicker._selectBothLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.both
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.primary])
@@ -777,7 +796,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.primary] ??
                 ColorPicker._selectPrimaryLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.primary
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.accent])
@@ -787,7 +808,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.accent] ??
                 ColorPicker._selectAccentLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.accent
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.bw])
@@ -797,7 +820,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.bw] ??
                 ColorPicker._selectBlackWhiteLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.bw
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.custom])
@@ -807,7 +832,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.custom] ??
                 ColorPicker._selectCustomLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.custom
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
       if (pickersEnabled[ColorPickerType.wheel])
@@ -817,7 +844,9 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.pickerTypeLabels[ColorPickerType.wheel] ??
                 ColorPicker._selectWheelAnyLabel,
             textAlign: TextAlign.center,
-            style: segmentTextStyle,
+            style: activePicker == ColorPickerType.wheel
+                ? segmentTextStyle.copyWith(color: _thumbOnColor)
+                : segmentTextStyle,
           ),
         ),
     };
@@ -885,7 +914,11 @@ class _ColorPickerState extends State<ColorPicker> {
                 padding: EdgeInsets.only(bottom: widget.columnSpacing),
                 child: CupertinoSlidingSegmentedControl<ColorPickerType>(
                   children: pickerTypes,
-                  thumbColor: widget.selectedPickerTypeColor,
+                  thumbColor: widget.selectedPickerTypeColor ??
+                      const CupertinoDynamicColor.withBrightness(
+                        color: Color(0xFFFFFFFF),
+                        darkColor: Color(0xFF636366),
+                      ),
                   onValueChanged: (ColorPickerType value) {
                     setState(() => activePicker = value);
                   },
@@ -1370,8 +1403,8 @@ class _ColorCodeFieldState extends State<_ColorCodeField> {
           isDense: true,
           contentPadding: EdgeInsetsDirectional.only(start: fontSize),
           prefixText: '0xFF',
-          prefixStyle: widget.colorCodePrefixStyle ??
-              Theme.of(context).textTheme.bodyText2,
+          // If null, defaults via SDK to `style` of TextField.
+          prefixStyle: widget.colorCodePrefixStyle,
           filled: true,
           fillColor: fieldBackground,
           border: OutlineInputBorder(

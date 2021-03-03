@@ -2,6 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [1.1.4] - March 3, 2021
+* New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
+* New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
+  If not defined it defaults to same style as `colorCodeTextStyle`.
+
 ## [1.1.3] - December 22, 2020
 * Fixed the faulty documentation and comment for showPickerDialog parameter insetPadding.
 * Fixed the faulty default value for showPickerDialog parameter insetPadding, the new default
@@ -11,11 +16,11 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
 ## [1.1.2] - December 5, 2020
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
-When the issue is resolved, the implementation will be reverted back to a Wrap. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
+When the issue is resolved, the implementation will be reverted to a Wrap. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
 ## [1.1.1] - November 11, 2020
-* Updated the example app and documentation. The update includes updated screen shots and updated animated gifs.
+* Updated the example app and documentation. The update includes updated screenshots and updated animated gifs.
 * Unit tests for ColorTools added, widget tests still pending for later updates.
 
 ## [1.1.0] - November 6, 2020

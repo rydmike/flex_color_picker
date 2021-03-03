@@ -208,7 +208,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       showColorCode: true,
       materialNameTextStyle: Theme.of(context).textTheme.caption,
       colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+      // Showing color code prefix and text styled differently in the dialog.
+      colorCodeTextStyle: Theme.of(context).textTheme.bodyText2,
+      colorCodePrefixStyle: Theme.of(context).textTheme.caption,
+      // Showing the new thumb color property option in dialog version
+      selectedPickerTypeColor: Theme.of(context).colorScheme.primary,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
