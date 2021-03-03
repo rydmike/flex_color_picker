@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import '../color_picker_extensions.dart';
 import '../color_tools.dart';
 import '../functions/picker_functions.dart';
-import '../models/color_picker_copy_paste_behavior.dart';
 import '../models/color_picker_action_buttons.dart';
+import '../models/color_picker_copy_paste_behavior.dart';
 import '../universal_widgets/dry_intrisinic.dart';
 
 /// Color code entry and display field used by the color picker.

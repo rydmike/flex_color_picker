@@ -2,11 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.0-nullsafety.1] - February NN, 2021
+## [2.0.0-nullsafety.1] - February 3, 2021
 * Improvements: The wheel picker now move on pointer down to point location, no longer requiring a slight movement
   for its thumbs to move to selected start tracking point.
 * Improvements: Keyboard traversal of the colors and selecting indicator colors with the keyboard via
-  enter or space. Note: The wheel can still not be keyboard operated, only touch and mouse controlled. 
+  enter or space. Note: The wheel can still not be operated with a keyboard, only touch and mouse controlled. 
 * New property `onColorChangeStart`: Called when user starts color selection with current color before the change.
 * New property `onColorChangeEnd`: Called when user ends color selection with the new color value. 
 * New property `selectedPickerTypeColor`: The color of the thumb on the slider that shows the selected picker.
@@ -53,11 +53,6 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
       used colors. Use it store a copy of the recent colors in order to be able to restore it later.
       
       *See API documentation for more information.*
-      
-
-
-* **MAYBE / PENDING  - Major new feature**: Enable transparent colors.
-* **MAYBE / PENDING - Major new feature**: Optional Toggle buttons picker selector instead of cupertino slider
 
 ### Breaking changes
 
@@ -83,6 +78,11 @@ The following are minor breaking changes from version 1.x, they mostly concern v
   with the previous default example in "example/lib/main.dart". Previously this Web example was in a separate GitHub
   repository. The example was updated to make it responsive, to offer better usability on Web.
 
+## [1.1.4] - March 3, 2021
+* New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
+* New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
+  If not defined it defaults to same style as `colorCodeTextStyle`.
+  
 ## [1.1.3] - December 22, 2020
 * Fixed the faulty documentation and comment for showPickerDialog parameter insetPadding.
 * Fixed the faulty default value for showPickerDialog parameter insetPadding, the new default
@@ -151,7 +151,6 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 
 - Add more tests.
 - Finalize tests.
-- Improve existing copy/paste feature.
 - Add support for transparent on colors.  
 - Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Additional controls for selecting active picker, custom slider and ToggleButtons.  
@@ -172,4 +171,5 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - Publish version 1.0.0 on pub.dev.
 - Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
 - Version 2.0.0-nullsafety.0: Add null safe version.
+- Improve existing copy/paste feature.
 

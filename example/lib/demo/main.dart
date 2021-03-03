@@ -8,7 +8,7 @@ import 'copy_format_switch.dart';
 // Just a simple way to leave a trace of what version you built a Flutter
 // Web demo with inside the app. You can also show it in the demo,
 // like in this example, so people testing it don't have to ask.
-const String kFlutterVersion = 'dev 1.27.0-1.0.pre SKIA';
+const String kFlutterVersion = 'Channel dev 1.27.0-8.0.pre SKIA';
 const String kColorPickerVersion = '2.0.0-nullsafety.1';
 
 // Max width of the body content when used on a wide screen.
@@ -135,6 +135,11 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             'FlexColorPicker',
             style: Theme.of(context).textTheme.headline3,
+          ),
+
+          Text(
+            'Web demo for version 2 (pre-release)',
+            style: Theme.of(context).textTheme.subtitle1,
           ),
           const SizedBox(height: 30),
           Row(
@@ -779,9 +784,10 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       ),
       const Divider(),
       SwitchListTile.adaptive(
-        title: const Text('Show picker bar title'),
-        subtitle: const Text('You can provide your own picker bar title, if '
-            'it is null there is no title.'),
+        title: const Text('Show picker toolbar title'),
+        subtitle:
+            const Text('You can provide your own picker toolbar title, if '
+                'it is null there is no title.'),
         value: showTitle,
         onChanged: (bool value) => setState(() => showTitle = value),
       ),

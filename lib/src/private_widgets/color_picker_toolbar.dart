@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../functions/picker_functions.dart';
-import '../models/color_picker_copy_paste_behavior.dart';
 import '../models/color_picker_action_buttons.dart';
+import '../models/color_picker_copy_paste_behavior.dart';
 
 /// A top toolbar with title and action buttons for the color picker.
 class ColorPickerToolbar extends StatelessWidget {

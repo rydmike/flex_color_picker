@@ -57,8 +57,8 @@ class ColorPicker extends StatefulWidget {
     this.columnSpacing = 8,
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
-    this.hasOpacity = false,
-    this.hasAlpha = false,
+    // this.hasOpacity = false,
+    // this.hasAlpha = false,
     this.actionButtons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.selectedColorIcon = Icons.check,
@@ -198,32 +198,32 @@ class ColorPicker extends StatefulWidget {
   final bool includeIndex850;
 
   // TODO: Implement opacity control.
-  /// Enable the opacity control for the color value.
-  ///
-  /// Turning it to true allows users to control the opacity value of the
-  /// selected color. Opacity goes from 0, which is totally transparent,
-  /// to 1, which if fully opaque. The control can be enabled together with
-  /// the alpha channel control. Ultimately they control the same alpha
-  /// color transparency value, they are just different formats.
-  /// Normally you would select which one you prefer and not enable both styles,
-  /// but it is possible to show both controls at the same time.
-  ///
-  /// Defaults to false.
-  final bool hasOpacity;
+  // Enable the opacity control for the color value.
+  //
+  // Turning it to true allows users to control the opacity value of the
+  // selected color. Opacity goes from 0, which is totally transparent,
+  // to 1, which if fully opaque. The control can be enabled together with
+  // the alpha channel control. Ultimately they control the same alpha
+  // color transparency value, they are just different formats.
+  // Normally you would select which one you prefer and not enable both styles,
+  // but it is possible to show both controls at the same time.
+  //
+  // Defaults to false.
+  // final bool hasOpacity;
 
   // TODO: Implement alpha control.
-  /// Enable alpha control for the color value.
-  ///
-  /// Turning it to true allows users to control the alpha value of the
-  /// selected color. Alpha goes from 00 (hex), which is fully transparent,
-  /// to FF (hex), which if fully opaque. The control can be enabled together
-  /// with the opacity control. Ultimately they control the same alpha
-  /// color transparency value, they are just different formats.
-  /// Normally you would select which one you prefer and not enable both styles,
-  /// but it is possible to show both controls at the same time.
-  ///
-  /// Defaults to false.
-  final bool hasAlpha;
+  // Enable alpha control for the color value.
+  //
+  // Turning it to true allows users to control the alpha value of the
+  // selected color. Alpha goes from 00 (hex), which is fully transparent,
+  // to FF (hex), which if fully opaque. The control can be enabled together
+  // with the opacity control. Ultimately they control the same alpha
+  // color transparency value, they are just different formats.
+  // Normally you would select which one you prefer and not enable both styles,
+  // but it is possible to show both controls at the same time.
+  //
+  // Defaults to false.
+  //final bool hasAlpha;
 
   /// Defines icons for the color picker title bar and its actions.
   ///
@@ -1036,7 +1036,7 @@ class _ColorPickerState extends State<ColorPicker> {
             },
             onOpen: () {
               // TODO Remove debugPrint
-              debugPrint('popupMenuOpened & dragCancel=$_wheelDragCancel');
+              // debugPrint('popupMenuOpened & dragCancel=$_wheelDragCancel');
               if (widget.onColorChangeEnd != null && _wheelDragCancel) {
                 widget.onColorChangeEnd!(_selectedColor);
                 _addToRecentColors(_selectedColor);
@@ -1058,14 +1058,15 @@ class _ColorPickerState extends State<ColorPicker> {
             setState(() {
               _wheelDragCancel = false;
               // TODO Remove debugPrint
-              debugPrint('onTap & dragCancel=$_wheelDragCancel');
+              // debugPrint('onTap & dragCancel=$_wheelDragCancel');
             });
           },
           onVerticalDragCancel: () {
             setState(() {
               _wheelDragCancel = true;
               // TODO Remove debugPrint
-              debugPrint('onVerticalDragCancel & dragCancel=$_wheelDragCancel');
+              // debugPrint('onVerticalDragCancel & '
+              //     'dragCancel=$_wheelDragCancel');
             });
           },
           child: Padding(
