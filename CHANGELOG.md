@@ -2,6 +2,9 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.2] - March 3, 2021
+Documentation and live Web demo link fixes.
+
 ## [2.0.0-nullsafety.1] - March 3, 2021
 There are many new features included in this version 2 pre-release. The new features can be explored with 
 [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package 
