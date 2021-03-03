@@ -2,6 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [1.1.5] - March 3, 2021
+* Bug fix `selectedPickerTypeColor`: When color was undefined, the thumb did not receive the same text color as the
+  default and only one before in version 1.1.3 and earlier, in dark-mode. This broke compatibility with past style 
+  when using dark-mode. This fix restores the correct past style when the `selectedPickerTypeColor` is undefined.
+    
 ## [1.1.4] - March 3, 2021
 * New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
 * New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.

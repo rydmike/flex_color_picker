@@ -764,9 +764,11 @@ class _ColorPickerState extends State<ColorPicker> {
           color: Color(0xFFFFFFFF),
           darkColor: Color(0xFF636366),
         );
+
     // Define thumb onColor based on thumb color brightness.
-    final Color _thumbOnColor =
-        ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+    final Color _thumbOnColor = widget.selectedPickerTypeColor == null
+        ? null
+        : ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
             ? Colors.black
             : Colors.white;
 
