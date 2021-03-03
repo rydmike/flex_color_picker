@@ -2,7 +2,7 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.0-nullsafety.1] - February 3, 2021
+## [2.0.0-nullsafety.1] - March 3, 2021
 There are many new features included in this version 2 pre-release. The new features can be explored with 
 [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package 
 example folder, in "example/lib/demo/main.dart".
@@ -33,7 +33,7 @@ example folder, in "example/lib/demo/main.dart".
     * Top toolbar copy-paste buttons.
     * Long press copy-paste menu. 
   
-  All copy/paste behaviours are optional and can be enabled based on what is needed.
+  All copy/paste behaviors are optional and can be enabled based on what is needed.
   
   For the copy format, the desired resulting RGB color string format can be configured to use #RRGGBB 
   RRGGBB #AARRGGBB AARRGGBB and 0xAARRGGBB (default) options. The selected copy format is indicated with the 
