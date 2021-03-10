@@ -2,8 +2,31 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.3] - March 10, 2021
+* Bugfix: Color code field no longer receives focus when switching to it on wheel page, even
+  in edit mode. Focus is set to color wheel, or the selected color shade, if the
+  shade colors are present. The focus handling has also been further improved for desktop usage.
+* Bugfix: The property `editUsesParsedPaste` now works as intended, if true, keyboard paste commands while editing a 
+  color value are intercepted, and the hole pasted value gets parsed, it does not get pasted into the field. For normal
+  field paste functionality keep `editUsesParsedPaste` false. See API docs for more info.
+* The color code edit and entry field now works more like a normal text entry field. It still only accepts
+  valid hex input and converts all input to uppercase.
+* New property `colorCodeReadOnly`: Make color code always read only. Normally color code can 
+  be edited on the wheel picker, set this to true to make it read only there as well. Copy/paste operations still work,
+  if they are enabled, even if the color code field entry is in read only mode.
+* **New feature:** The `copyPasteBehavior` property received two new features. The copy/paste context 
+  menu can now also optionally use secondary (typically right) click by setting `secondaryMenu` to true. 
+  It also has a mode where long press will be used on iOS/Android, but secondary mouse click will be 
+  used on desktop/web, by setting `secondaryOnDesktopLongOnDevice` to true.
+* Minor breaking change: The extension `FlexPickerNoNullStringExtensions` on none nullable 
+  `String` named `toColor` no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
+  to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent 
+  black `Color(0x00000000)` if it is full opaque black, it works better as fallback safety color. 
+  The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
+  null when the `String?` cannot be parsed to a `Color`. 
+
 ## [2.0.0-nullsafety.2] - March 3, 2021
-Documentation and live Web demo link fixes.
+* Documentation and live Web demo link fixes.
 
 ## [2.0.0-nullsafety.1] - March 3, 2021
 There are many new features included in this version 2 pre-release. The new features can be explored with 

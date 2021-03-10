@@ -223,8 +223,8 @@ void main() {
     const String str8 = '#FF6200EE'; // -> Color(0xFF6200EE)
     const String str9 = '#0F620#0#EE'; // -> Color(0x0F6200EE)
     const String str10 = 'EE'; // -> Color(0xFF0000EE)
-    const String str11 = '12Z456'; // -> Color(0x00000000)
-    const String str12 = '12Z45678'; // -> Color(0x00000000)
+    const String str11 = '12Z456'; // -> Color(0xFF000000)
+    const String str12 = '12Z45678'; // -> Color(0xFF000000)
     const String str13 = 'E'; // -> Color(0xFF00000E)
     const String str14 = 'A2C'; // -> Color(0xFFAA22CC)
     const String str15 = 'A2EE'; // -> Color(0xFF00A2EE)
@@ -233,10 +233,10 @@ void main() {
     const String str18 = '0x1BCEE'; // -> Color(0xFF01BCEE)
     const String str19 = '0x841B0xCE0xE#'; // -> Color(0xF841BCEE)
     const String str20 = '00000000'; // -> Color(0x00000000)
-    const String emptyStr = ''; // -> Color(0x00000000)
-    const String blankStr = '  '; // -> Color(0x00000000)
-    final String tooLongStr = '123'.padLeft(201, '5'); // -> Color(0x00000000)
-    const String zeroX = '0x0x'; // -> Color(0x00000000)
+    const String emptyStr = ''; // -> Color(0xFF000000)
+    const String blankStr = '  '; // -> Color(0xFF000000)
+    final String tooLongStr = '123'.padLeft(201, '5'); // -> Color(0xFF000000)
+    const String zeroX = '0x0x'; // -> Color(0xFF000000)
 
     test('FSE3.01: GIVEN "$str1".toColor EXPECT "Color(0xFF6200EE)".', () {
       expect(str1.toColor, const Color(0xFF6200EE));
@@ -268,11 +268,11 @@ void main() {
     test('FSE3.10: GIVEN "$str10".toColor EXPECT "Color(0xFF0000EE)".', () {
       expect(str10.toColor, const Color(0xFF0000EE));
     });
-    test('FSE3.11: GIVEN "$str11".toColor EXPECT "Color(0x00000000)".', () {
-      expect(str11.toColor, const Color(0x00000000));
+    test('FSE3.11: GIVEN "$str11".toColor EXPECT "Color(0xFF000000)".', () {
+      expect(str11.toColor, const Color(0xFF000000));
     });
-    test('FSE3.12: GIVEN "$str12".toColor EXPECT "Color(0x00000000)".', () {
-      expect(str12.toColor, const Color(0x00000000));
+    test('FSE3.12: GIVEN "$str12".toColor EXPECT "Color(0xFF000000)".', () {
+      expect(str12.toColor, const Color(0xFF000000));
     });
     test('FSE3.13: GIVEN "$str13".toColor EXPECT "Color(0xFF00000E)".', () {
       expect(str13.toColor, const Color(0xFF00000E));
@@ -298,19 +298,19 @@ void main() {
     test('FSE3.20: GIVEN "$str20".toColor EXPECT "Color(0x00000000)".', () {
       expect(str20.toColor, const Color(0x00000000));
     });
-    test('FSE3.21: GIVEN "$emptyStr".toColor EXPECT "Color(0x00000000)".', () {
-      expect(emptyStr.toColor, const Color(0x00000000));
+    test('FSE3.21: GIVEN "$emptyStr".toColor EXPECT "Color(0xFF000000)".', () {
+      expect(emptyStr.toColor, const Color(0xFF000000));
     });
-    test('FSE3.22: GIVEN "$blankStr".toColor EXPECT "Color(0x00000000)".', () {
-      expect(blankStr.toColor, const Color(0x00000000));
+    test('FSE3.22: GIVEN "$blankStr".toColor EXPECT "Color(0xFF000000)".', () {
+      expect(blankStr.toColor, const Color(0xFF000000));
     });
     test(
-        'FSE3n.24: GIVEN "${tooLongStr.length}" chars, too '
+        'FSE3.24: GIVEN "${tooLongStr.length}" chars, too '
         'long input EXPECT "Color(0x00000000)".', () {
-      expect(tooLongStr.toColor, const Color(0x00000000));
+      expect(tooLongStr.toColor, const Color(0xFF000000));
     });
-    test('FSE3.23: GIVEN "$zeroX".toColor EXPECT "Color(0x00000000)".', () {
-      expect(zeroX.toColor, const Color(0x00000000));
+    test('FSE3.23: GIVEN "$zeroX".toColor EXPECT "Color(0xFF000000)".', () {
+      expect(zeroX.toColor, const Color(0xFF000000));
     });
   });
 

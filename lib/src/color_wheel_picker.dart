@@ -19,6 +19,7 @@ class ColorWheelPicker extends StatefulWidget {
     this.hasBorder = false,
     this.borderColor,
     this.shouldUpdate = false,
+    this.shouldRequestsFocus = false,
   })  : assert(wheelWidth >= 4 && wheelWidth <= 50,
             'The Wheel must be between 4 and 50dp'),
         super(key: key);
@@ -61,6 +62,11 @@ class ColorWheelPicker extends StatefulWidget {
   /// Defaults to false.
   final bool shouldUpdate;
 
+  /// Set to true when the ColorWheelPicker should request focus.
+  ///
+  /// Defaults to false.
+  final bool shouldRequestsFocus;
+
   @override
   _ColorWheelPickerState createState() => _ColorWheelPickerState();
 }
@@ -100,6 +106,12 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   @override
   void didUpdateWidget(ColorWheelPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
+    // Request focus to wheel.
+    if (widget.shouldRequestsFocus &&
+        (widget.shouldRequestsFocus != oldWidget.shouldRequestsFocus)) {
+      _focusNode.requestFocus();
+      debugPrint('didUpdateWidget Wheel requested focus');
+    }
     // Only if widget.shouldUpdate is true will we change color. It is set to
     // true by parent when it has updated the widget.color value and it needs
     // to update the custom painted color wheel.
@@ -149,13 +161,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _startPosition = renderBox.localToGlobal(Offset.zero);
     final Offset _center = Offset(_size.width / 2, _size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
-
-    // Request focus, to move it away from any other field when we click
-    // on it, makes keyboard traversal more logical, it also prevents
-    // edit code field from keeping the focus and helps us avoid this
-    // Flutter issue: https://github.com/flutter/flutter/issues/63226
-    // TODO: Remove comment about Flutter bug #63226 when issue is solved.
-    _focusNode.requestFocus();
 
     // Did the onStart, start on the square Palette box?
     isSquare =
@@ -271,7 +276,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // issue an `onColorChangeEnd` when a cancellation happens due to that.
       // Mostly it worked, but not entirely, for some reason the drag cancel
       // events get triggered while dragging, for no apparent reason, since
-      // there has been no known cancellation, weird, might be a bug?!
+      // there has been no known cancellation, weird, might be a Flutter bug?!
       //
       // Due to this the cancel events could not be used here, since they led to
       // random onEnd() calls which made the onEnd unreliable. The workaround

@@ -12,10 +12,13 @@ enum CopyPasteCommands {
 
 /// A cut, copy paste long press menu.
 @immutable
-class LongPressCopyPasteMenu extends StatelessWidget {
+class ContextCopyPasteMenu extends StatelessWidget {
   /// Default const constructor.
-  const LongPressCopyPasteMenu({
+  const ContextCopyPasteMenu({
     Key? key,
+    this.useLongPress = false,
+    this.useSecondaryTapDown = false,
+    this.useSecondaryOnDesktopLongOnDevice = true,
     this.menuWidth = 80,
     this.menuItemHeight = 30,
     this.copyLabel,
@@ -28,6 +31,29 @@ class LongPressCopyPasteMenu extends StatelessWidget {
     this.onOpen,
     required this.child,
   }) : super(key: key);
+
+  /// Use long press to show context menu.
+  ///
+  /// Defaults to false.
+  final bool useLongPress;
+
+  /// Use secondary button tap down to show context menu.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  /// Defaults to false.
+  final bool useSecondaryTapDown;
+
+  /// Use secondary tap down on desktop and web, but long press on
+  /// iOS/Android device.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  ///
+  /// Defaults to true.
+  final bool useSecondaryOnDesktopLongOnDevice;
 
   /// The width of the menu.
   ///
@@ -84,7 +110,7 @@ class LongPressCopyPasteMenu extends StatelessWidget {
   ///            side: BorderSide(
   ///            color: theme.dividerColor))
   ///   elevation: 3
-  ///   textStyle: theme.textTheme.bodyText2!
+  ///   textStyle: theme.textTheme.bodyText2
   ///   enableFeedback: true
   final PopupMenuThemeData? menuThemeData;
 
@@ -119,7 +145,8 @@ class LongPressCopyPasteMenu extends StatelessWidget {
           menuThemeData?.elevation ?? _theme.popupMenuTheme.elevation ?? 3,
       textStyle: menuThemeData?.textStyle ??
           _theme.popupMenuTheme.textStyle ??
-          _theme.textTheme.bodyText2!,
+          _theme.textTheme.bodyText2 ??
+          const TextStyle(fontSize: 14),
       enableFeedback: menuThemeData?.enableFeedback ??
           _theme.popupMenuTheme.enableFeedback ??
           true,
@@ -140,6 +167,9 @@ class LongPressCopyPasteMenu extends StatelessWidget {
       data: _theme.copyWith(
           popupMenuTheme: _effectiveMenuTheme, iconTheme: _effectiveIconTheme),
       child: ContextPopupMenu<CopyPasteCommands>(
+        useLongPress: useLongPress,
+        useSecondaryTapDown: useSecondaryTapDown,
+        useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
         items: <PopupMenuEntry<CopyPasteCommands>>[
           PopupMenuItem<CopyPasteCommands>(
             value: CopyPasteCommands.copy,

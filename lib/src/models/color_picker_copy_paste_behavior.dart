@@ -71,6 +71,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.pasteTooltip,
       this.copyFormat = ColorPickerCopyFormat.dartCode,
       this.longPressMenu = false,
+      this.secondaryMenu = false,
+      this.secondaryOnDesktopLongOnDevice = false,
       this.editFieldCopyButton = true,
       this.menuIconThemeData,
       this.menuThemeData,
@@ -145,10 +147,21 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to [ColorPickerCopyFormat.dartCode].
   final ColorPickerCopyFormat copyFormat;
 
-  /// Long press on picker background to get a copy and paste menu action.
+  /// Use long press on picker background to get a copy and paste menu action.
   ///
   /// Defaults to false.
   final bool longPressMenu;
+
+  /// Use secondary button click on picker to get a copy and paste menu action.
+  ///
+  /// Defaults to false.
+  final bool secondaryMenu;
+
+  /// Use secondary button click on a device and long press on iOs/Android
+  /// device on the picker to get a copy and paste menu action.
+  ///
+  /// Defaults to false.
+  final bool secondaryOnDesktopLongOnDevice;
 
   /// Show a copy button in the color code edit and display field.
   ///
@@ -287,6 +300,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     String? pasteTooltip,
     ColorPickerCopyFormat? copyFormat,
     bool? longPressMenu,
+    bool? secondaryMenu,
+    bool? secondaryOnDesktopLongOnDevice,
     bool? editFieldCopyButton,
     IconThemeData? menuIconThemeData,
     PopupMenuThemeData? menuThemeData,
@@ -311,6 +326,11 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         (copyFormat == null || identical(copyFormat, this.copyFormat)) &&
         (longPressMenu == null ||
             identical(longPressMenu, this.longPressMenu)) &&
+        (secondaryMenu == null ||
+            identical(secondaryMenu, this.secondaryMenu)) &&
+        (secondaryOnDesktopLongOnDevice == null ||
+            identical(secondaryOnDesktopLongOnDevice,
+                this.secondaryOnDesktopLongOnDevice)) &&
         (editFieldCopyButton == null ||
             identical(editFieldCopyButton, this.editFieldCopyButton)) &&
         (menuIconThemeData == null ||
@@ -346,6 +366,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       pasteTooltip: pasteTooltip ?? this.pasteTooltip,
       copyFormat: copyFormat ?? this.copyFormat,
       longPressMenu: longPressMenu ?? this.longPressMenu,
+      secondaryMenu: secondaryMenu ?? this.secondaryMenu,
+      secondaryOnDesktopLongOnDevice:
+          secondaryOnDesktopLongOnDevice ?? this.secondaryOnDesktopLongOnDevice,
       editFieldCopyButton: editFieldCopyButton ?? this.editFieldCopyButton,
       menuIconThemeData: menuIconThemeData ?? this.menuIconThemeData,
       menuThemeData: menuThemeData ?? this.menuThemeData,
@@ -376,6 +399,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         pasteTooltip == other.pasteTooltip &&
         copyFormat == other.copyFormat &&
         longPressMenu == other.longPressMenu &&
+        secondaryMenu == other.secondaryMenu &&
+        secondaryOnDesktopLongOnDevice ==
+            other.secondaryOnDesktopLongOnDevice &&
         editFieldCopyButton == other.editFieldCopyButton &&
         menuIconThemeData == other.menuIconThemeData &&
         menuThemeData == other.menuThemeData &&
@@ -403,6 +429,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       pasteTooltip,
       copyFormat,
       longPressMenu,
+      secondaryMenu,
+      secondaryOnDesktopLongOnDevice,
       editFieldCopyButton,
       menuIconThemeData,
       menuThemeData,
@@ -433,6 +461,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     properties
         .add(EnumProperty<ColorPickerCopyFormat>('copyFormat', copyFormat));
     properties.add(DiagnosticsProperty<bool>('longPressMenu', longPressMenu));
+    properties.add(DiagnosticsProperty<bool>('secondaryMenu', secondaryMenu));
+    properties.add(DiagnosticsProperty<bool>(
+        'secondaryOnDesktopLongOnDevice', secondaryOnDesktopLongOnDevice));
     properties.add(
         DiagnosticsProperty<bool>('editFieldCopyButton', editFieldCopyButton));
     properties.add(DiagnosticsProperty<IconThemeData?>(

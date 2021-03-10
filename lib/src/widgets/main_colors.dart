@@ -24,6 +24,7 @@ class MainColors extends StatelessWidget {
     this.borderColor,
     required this.elevation,
     required this.selectedColorIcon,
+    this.selectedRequestsFocus = false,
   }) : super(key: key);
 
   /// The spacing between the color pick items.
@@ -68,6 +69,16 @@ class MainColors extends StatelessWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
+  /// Set to true, if a an indicator should request focus if it is selected.
+  ///
+  /// The indicator will always request focus when it clicked and selected,
+  /// setting this value to true is to make it request focus when it is drawn.
+  /// This is used to set focus to the selected color, but only when
+  /// the piker is redrawn.
+  ///
+  /// Defaults to false.
+  final bool selectedRequestsFocus;
+
   @override
   Widget build(BuildContext context) {
     final double _borderRadius = borderRadius ?? width / 4.0;
@@ -93,8 +104,10 @@ class MainColors extends StatelessWidget {
               elevation: elevation,
               selectedIcon: selectedColorIcon,
               onSelect: () {
-                onSelectColor(colorSwatch[500] ?? colorSwatch[200]!);
+                onSelectColor(
+                    colorSwatch[500] ?? colorSwatch[200] ?? Colors.black);
               },
+              selectedRequestsFocus: selectedRequestsFocus,
             ),
         ],
       ),

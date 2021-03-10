@@ -36,29 +36,28 @@ extension FlexPickerNoNullStringExtensions on String {
   ///   be RIGHT truncated to max 8 chars before parsing.
   ///
   /// IF the resulting string cannot be parsed to a Color, is empty or null
-  /// THEN fully transparent black color is returned ELSE the Color is returned.
+  /// THEN fully opaque black color is returned ELSE the Color is returned.
   ///
-  /// To give caller a chance to handle parsing errors and use the same
+  /// To give caller a chance to handle parsing errors, use the same
   /// extension on nullable Color [toColorMaybeNull]. It returns null when
-  /// there is a string that cannot be parsed to color value even by this
-  /// flexible format parser.
+  /// there is a string that cannot be parsed to color value.
   /// You can then decide what to do with the error instead of just receiving
-  /// fully transparent black color.
+  /// fully opaque black color.
   Color get toColor {
     // If String was zero length, then we return transparent, cannot parse.
-    if (this == '') return const Color(0x00000000);
+    if (this == '') return const Color(0xFF000000);
     // If String length is > 200 we as a safety precaution will not try to
     // parse it to a color, for shorter lengths the last 8 chars will be used.
-    if (this.length > 200) return const Color(0x00000000);
+    if (this.length > 200) return const Color(0xFF000000);
     // Remove all num signs, we allow them, but disregard them all.
     String hexColor = replaceAll('#', '');
-    if (hexColor == '') return const Color(0x00000000);
+    if (hexColor == '') return const Color(0xFF000000);
     // Remove all spaces, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll(' ', '');
-    if (hexColor == '') return const Color(0x00000000);
+    if (hexColor == '') return const Color(0xFF000000);
     // Remove all '0x' Hex code marks, we allow them, but disregard them all.
     hexColor = hexColor.replaceAll('0x', '');
-    if (hexColor == '') return const Color(0x00000000);
+    if (hexColor == '') return const Color(0xFF000000);
     // If the input is exactly 3 chars long, we may have a short Web hex code,
     // let's make the potential 'RGB' code to a 'RRGGBB' code.
     if (hexColor.length == 3) {
@@ -78,7 +77,7 @@ extension FlexPickerNoNullStringExtensions on String {
     // still be whatever.
     final int length = hexColor.length;
     return Color(int.tryParse('0x${hexColor.substring(length - 8, length)}') ??
-        0x00000000);
+        0xFF000000);
   }
 
   /// Capitalize the first letter in a string.

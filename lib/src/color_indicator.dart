@@ -13,6 +13,7 @@ class ColorIndicator extends StatefulWidget {
     Key? key,
     this.onSelect,
     this.isSelected = false,
+    this.selectedRequestsFocus = false,
     this.elevation = 0,
     this.selectedIcon = Icons.check,
     this.color = Colors.blue,
@@ -37,6 +38,15 @@ class ColorIndicator extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool isSelected;
+
+  /// Set to true, if a an indicator should request focus if it is selected.
+  ///
+  /// The indicator will always request focus when it clicked and selected,
+  /// setting this value to true is to make it request focus when it is drawn,
+  /// but only if it's value has changed and if this flag is true.
+  ///
+  /// Defaults to false.
+  final bool selectedRequestsFocus;
 
   /// Material elevation of the color indicator.
   ///
@@ -94,8 +104,18 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   void initState() {
     _focusNode = FocusNode();
     if (widget.isSelected) _focusNode.requestFocus();
-
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant ColorIndicator oldWidget) {
+    // The widget requests focus only when its value was updated, is selected
+    // and the flag 'selectedRequestsFocus' is true.
+    if (widget.isSelected && widget.selectedRequestsFocus) {
+      debugPrint('ColorIndicator didUpdateWidget requested focus');
+      _focusNode.requestFocus();
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -111,9 +131,8 @@ class _ColorIndicatorState extends State<ColorIndicator> {
         ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
     // Set icon color to black on light color and to white on dark color.
     final Color iconColor = isLight ? Colors.black : Colors.white;
-
     // If no border color is given, we use the theme divider color as
-    // border color, it is typically a suitable grey color
+    // border color, it is typically a suitable grey color.
     final Color _borderColor =
         widget.borderColor ?? Theme.of(context).dividerColor;
 
@@ -139,24 +158,26 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           // Only use focus color when in focus, but not selected.
           focusColor: widget.isSelected
               ? Colors.transparent
-              : Theme.of(context).focusColor,
+              : isLight
+                  ? Colors.black26
+                  : Colors.white30,
           // Only use highlightColor color when in focus, but not selected.
           highlightColor: widget.isSelected
               ? Colors.transparent
               : Theme.of(context).highlightColor,
-          hoverColor: isLight ? Colors.black12 : Colors.white24,
-          onTap: widget.onSelect == null
-              ? null
-              : () {
+          hoverColor: isLight ? Colors.black26 : Colors.white30,
+          onTap: widget.onSelect != null
+              ? () {
                   widget.onSelect!();
+                  debugPrint('ColorIndicator onTapDown');
                   _focusNode.requestFocus();
-                },
+                }
+              : null,
           child: widget.isSelected
               ? Icon(
                   widget.selectedIcon,
                   color: iconColor,
-                  // Size the select icon so it always fits nicely
-                  // and looks nice proportionally in the color indicator.
+                  // Size the select icon so it always fits nicely.
                   // The 0.6 value is just based on what looked good enough.
                   size: widget.width < widget.height
                       ? widget.width * 0.6

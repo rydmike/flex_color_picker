@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 // These too classes are a workaround to issue:
 // https://github.com/flutter/flutter/issues/71687
 // This workaround for the issue was made by:
-// @slightfoot and @matthew-caroll (GitHub accounts)
+// @slightfoot and @matthew-carroll (GitHub accounts)
 
 /// Same as `IntrinsicWidth` except that when this widget is instructed
 /// to `computeDryLayout()`, it doesn't invoke that on its child, instead

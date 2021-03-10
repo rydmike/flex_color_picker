@@ -38,7 +38,7 @@ class ColorPickerActionButtons with Diagnosticable {
     this.padding = const EdgeInsets.all(0),
     this.alignment = Alignment.center,
     this.splashRadius = 24,
-    this.constraints = const BoxConstraints(),
+    this.constraints = const BoxConstraints(minHeight: 42, minWidth: 42),
     this.dialogActionButtons = true,
     this.dialogActionIcons = false,
     this.dialogCancelButtonLabel,
@@ -133,7 +133,7 @@ class ColorPickerActionButtons with Diagnosticable {
   /// passed value is null, or any property in it is null, then the following
   /// fallback defaults are used:
   ///   color: remains null, so default [IconThemeData] color behavior is kept.
-  ///   size: 21
+  ///   size: 22
   ///   opacity: 0.90
   ///
   /// NOTE: This theme on purpose does not merge any ambient theme.
@@ -165,7 +165,7 @@ class ColorPickerActionButtons with Diagnosticable {
 
   /// Optional size constraints for the icon button.
   ///
-  /// Defaults to: const BoxConstraints()
+  /// Defaults to: const BoxConstraints(minHeight: 34, minWidth: 34),
   final BoxConstraints constraints;
 
   /// If set to false the dialog action buttons are removed when possible.

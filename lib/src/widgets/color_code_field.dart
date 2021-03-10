@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../color_picker_extensions.dart';
-import '../color_tools.dart';
 import '../functions/picker_functions.dart';
 import '../models/color_picker_action_buttons.dart';
 import '../models/color_picker_copy_paste_behavior.dart';
@@ -22,6 +21,7 @@ class ColorCodeField extends StatefulWidget {
     this.toolIcons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.enableTooltips = true,
+    this.shouldUpdate = false,
   }) : super(key: key);
 
   /// Current color value for the field.
@@ -60,6 +60,16 @@ class ColorCodeField extends StatefulWidget {
   ///
   /// Defaults to true.
   final bool enableTooltips;
+
+  /// Should a change on the color value update the field?
+  ///
+  /// If we are just editing text in the control it should not, we just send
+  /// the data out to update any widget using the [color].
+  /// However, when we get a new color due to external action is should update.
+  /// This is similar to the same property on the wheel.
+  ///
+  /// Defaults to false.
+  final bool shouldUpdate;
 
   @override
   _ColorCodeFieldState createState() => _ColorCodeFieldState();
@@ -117,14 +127,10 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
   @override
   void initState() {
     super.initState();
-    textController = _TextEditingControllerWithCursorPosition();
+    textController = TextEditingController();
     textFocusNode = FocusNode();
-    textFocusNode.requestFocus();
     color = widget.color;
-    colorHexCode = ColorTools.colorCode(widget.color);
-    // The colorHexCode is always a Flutter/Dart style '0xFFRRGGBB' style
-    // String of the passed in color value, so this is safe.
-    textController.text = colorHexCode.substring(colorHexCode.length - 6);
+    textController.text = color.hex;
   }
 
   @override
@@ -137,12 +143,9 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
   @override
   void didUpdateWidget(covariant ColorCodeField oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    if (oldWidget.color != widget.color) {
+    if (oldWidget.color != widget.color && widget.shouldUpdate) {
       color = widget.color;
-      colorHexCode = ColorTools.colorCode(widget.color);
-      textController.text = colorHexCode.substring(colorHexCode.length - 6);
-      // textFocusNode.requestFocus();
+      textController.text = color.hex;
     }
   }
 
@@ -175,8 +178,9 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
         isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
 
     // Set the default text style to bodyText2 if not given.
-    final TextStyle effectiveStyle =
-        (widget.textStyle ?? Theme.of(context).textTheme.bodyText2)!;
+    final TextStyle effectiveStyle = widget.textStyle ??
+        Theme.of(context).textTheme.bodyText2 ??
+        const TextStyle(fontSize: 14);
 
     final TextStyle effectivePrefixStyle = widget.prefixStyle ?? effectiveStyle;
 
@@ -191,15 +195,14 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
 
     return SizedBox(
       width: fieldWidth,
-      // A custom width layout widget used due to issue:
+      // The custom DryIntrinsicWidth layout widget is used due to issue:
       // https://github.com/flutter/flutter/issues/71687
       child: DryIntrinsicWidth(
         child: Focus(
-          // Tell the parent when the text edit field has focus, but if it
-          // is in read only mode, we are going to say it does not have
-          // focus so we can copy the value with Ctrl-C
+          // Tell the parent when the text edit field has focus.
           onFocusChange: (bool focus) {
-            widget.onEditFocused(focus && !widget.readOnly);
+            widget.onEditFocused(focus);
+            debugPrint('ColorCodeField onFocusChange: $focus');
           },
           child: TextField(
             enabled: true,
@@ -207,12 +210,8 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
             enableInteractiveSelection: !widget.readOnly,
             controller: textController,
             focusNode: textFocusNode,
-            // autofocus: false,
-            // We can enter 7 chars for the Hex color code, but the 7th one
-            // will actually always be removed by the onChanged callback.
-            maxLength: 7,
-            // Max lines is 1 by default, we set min lines to be 1 as well.
-            minLines: 1,
+            maxLength: 6,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
             // Remove line that shows entered chars when maxLength is used.
             buildCounter: (BuildContext context,
                     {required int currentLength,
@@ -224,8 +223,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
             // make the input uppercase.
             textCapitalization: TextCapitalization.characters,
             // These input formatters limits the input to only valid chars for
-            // a hex color code, and we also automatically convert them to
-            // uppercase.
+            // a hex color code, and we also convert them to uppercase.
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp('[a-fA-F0-9]')),
               _UpperCaseTextFormatter(),
@@ -276,50 +274,27 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               ),
             ),
             //
-            onChanged: (String value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  // If longer than 6 chars, remove the last char
-                  if (value.length >= 7) value = value.substring(0, 6);
-                  textController.text = value;
-                  colorHexCode = '0xFF${value.padRight(6, '0')}';
-                  color = Color(int.parse(colorHexCode));
-                });
-                widget.onColorChanged(color);
-              }
+            onChanged: (String textColor) {
+              setState(() {
+                // The toColor extension handles parsing issues too,
+                // the  field also only accept valid inputs, but it
+                // could be empty, in that case we get opaque black.
+                color = textColor.toColor;
+              });
+              widget.onColorChanged(color);
             },
-            onSubmitted: (String value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  textController.text = value.padRight(6, '0');
-                  colorHexCode = '0xFF${value.padRight(6, '0')}';
-                  color = Color(int.parse(colorHexCode));
-                });
-                widget.onColorChanged(color);
-              }
-            },
-            // TODO: Keep or loos this?
             onEditingComplete: () {
-              // Move to the copy button
-              textFocusNode.nextFocus();
+              setState(() {
+                color = textController.text.toColor;
+              });
+              textController.text = color.hex;
+              widget.onColorChanged(color);
+              textFocusNode.unfocus();
+              debugPrint('ColorCodeField onEditingComplete');
             },
           ),
         ),
       ),
-    );
-  }
-}
-
-// Keeps the cursor in same place when modifying the content of the TextField
-// with a TextEditingController.
-class _TextEditingControllerWithCursorPosition extends TextEditingController {
-  _TextEditingControllerWithCursorPosition({String? text}) : super(text: text);
-  @override
-  set text(String newText) {
-    value = value.copyWith(
-      text: newText,
-      selection: value.selection,
-      composing: TextRange.empty,
     );
   }
 }

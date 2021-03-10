@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../flex_color_picker.dart';
+import '../functions/picker_functions.dart';
 
-/// Draws recently used colors.
+/// ShadeColors widget.
 ///
 /// Not library exposed, private to the library.
-class RecentColors extends StatelessWidget {
+class ShadeColors extends StatelessWidget {
   /// Default const constructor.
-  const RecentColors({
+  const ShadeColors({
     Key? key,
     required this.spacing,
     required this.runSpacing,
     required this.columnSpacing,
-    required this.recentColors,
+    required this.activeSwatch,
     required this.selectedColor,
     required this.onSelectColor,
     required this.includeIndex850,
@@ -23,6 +24,7 @@ class RecentColors extends StatelessWidget {
     this.borderColor,
     required this.elevation,
     required this.selectedColorIcon,
+    this.selectedRequestsFocus = false,
   }) : super(key: key);
 
   /// The spacing between the color pick items.
@@ -37,8 +39,8 @@ class RecentColors extends StatelessWidget {
   // /// The currently active used list of color swatches we select color from.
   // final List<ColorSwatch<Object>> activeColorSwatchList;
 
-  /// List of recently selected colors.
-  final List<Color> recentColors;
+  /// The active Swatch in the active Color swatch List.
+  final ColorSwatch<Object> activeSwatch;
 
   /// The selected color.
   final Color selectedColor;
@@ -70,6 +72,16 @@ class RecentColors extends StatelessWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
+  /// Set to true, if a an indicator should request focus if it is selected.
+  ///
+  /// The indicator will always request focus when it clicked and selected,
+  /// setting this value to true is to make it request focus when it is drawn.
+  /// This is used to set focus to the selected color, but only when
+  /// the piker is redrawn.
+  ///
+  /// Defaults to false.
+  final bool selectedRequestsFocus;
+
   @override
   Widget build(BuildContext context) {
     final double _borderRadius = borderRadius ?? width / 4.0;
@@ -79,7 +91,8 @@ class RecentColors extends StatelessWidget {
         spacing: spacing,
         runSpacing: runSpacing,
         children: <Widget>[
-          for (final Color color in recentColors)
+          for (final Color color
+              in getMaterialColorShades(activeSwatch, includeIndex850))
             ColorIndicator(
               isSelected:
                   selectedColor == color || selectedColor.value == color.value,
@@ -94,6 +107,7 @@ class RecentColors extends StatelessWidget {
               onSelect: () {
                 onSelectColor(color);
               },
+              selectedRequestsFocus: selectedRequestsFocus,
             ),
         ],
       ),

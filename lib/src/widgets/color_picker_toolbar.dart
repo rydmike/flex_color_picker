@@ -90,7 +90,7 @@ class ColorPickerToolbar extends StatelessWidget {
     // fallback to default values, color has no default, remains as null.
     final IconThemeData _effectiveIconTheme = _theme.iconTheme.copyWith(
       color: _iconTheme?.color,
-      size: _iconTheme?.size ?? 21,
+      size: _iconTheme?.size ?? 22,
       opacity: _iconTheme?.opacity ?? 0.90,
     );
     return Theme(
@@ -114,6 +114,7 @@ class ColorPickerToolbar extends StatelessWidget {
               alignment: toolIcons.alignment,
               splashRadius: toolIcons.splashRadius,
               tooltip: copyTooltip,
+              constraints: toolIcons.constraints,
             ),
           if (onPaste != null)
             IconButton(
@@ -125,6 +126,7 @@ class ColorPickerToolbar extends StatelessWidget {
               alignment: toolIcons.alignment,
               splashRadius: toolIcons.splashRadius,
               tooltip: pasteTooltip,
+              constraints: toolIcons.constraints,
             ),
           if (onClose != null && !toolIcons.closeIsLast)
             IconButton(
@@ -136,6 +138,7 @@ class ColorPickerToolbar extends StatelessWidget {
               alignment: toolIcons.alignment,
               splashRadius: toolIcons.splashRadius,
               tooltip: closeTooltip,
+              constraints: toolIcons.constraints,
             ),
           if (onOk != null)
             IconButton(
@@ -147,6 +150,7 @@ class ColorPickerToolbar extends StatelessWidget {
               alignment: toolIcons.alignment,
               splashRadius: toolIcons.splashRadius,
               tooltip: okTooltip,
+              constraints: toolIcons.constraints,
             ),
           if (onClose != null && toolIcons.closeIsLast)
             IconButton(
@@ -158,6 +162,7 @@ class ColorPickerToolbar extends StatelessWidget {
               alignment: toolIcons.alignment,
               splashRadius: toolIcons.splashRadius,
               tooltip: closeTooltip,
+              constraints: toolIcons.constraints,
             ),
         ],
       ),

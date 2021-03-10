@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../functions/picker_functions.dart';
+
 /// A long press popup context menu.
 ///
 /// Wrap a child with [ContextPopupMenu] and provide it a list of
@@ -33,6 +35,9 @@ class ContextPopupMenu<T> extends StatefulWidget {
     required this.onSelected,
     this.onOpen,
     required this.child,
+    this.useLongPress = false,
+    this.useSecondaryTapDown = false,
+    this.useSecondaryOnDesktopLongOnDevice = true,
   }) : super(key: key);
 
   /// The popup menu entries for the long press menu.
@@ -49,6 +54,29 @@ class ContextPopupMenu<T> extends StatefulWidget {
   /// The child that can be long pressed to activate the long press menu.
   final Widget child;
 
+  /// Use long press to show context menu.
+  ///
+  /// Defaults to false.
+  final bool useLongPress;
+
+  /// Use secondary button tap down to show context menu.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  /// Defaults to false.
+  final bool useSecondaryTapDown;
+
+  /// Use secondary tap down on desktop and web, but long press on
+  /// iOS/Android device.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  ///
+  /// Defaults to true.
+  final bool useSecondaryOnDesktopLongOnDevice;
+
   @override
   State<StatefulWidget> createState() => _ContextPopupMenuState<T>();
 }
@@ -58,28 +86,48 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final TargetPlatform _platform = Theme.of(context).platform;
+    final bool _useLongPress = widget.useLongPress ||
+        (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(_platform));
+    final bool _useSecondaryClick = widget.useSecondaryTapDown ||
+        (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(_platform));
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onLongPressStart: (LongPressStartDetails details) async {
-        if (widget.onOpen != null) widget.onOpen!();
-        _downPosition = details.globalPosition;
-        final RenderBox? overlay =
-            Overlay.of(context)?.context.findRenderObject() as RenderBox?;
-        if (overlay != null) {
-          final T? value = await showMenu<T>(
-            context: context,
-            items: widget.items,
-            position: RelativeRect.fromLTRB(
-              _downPosition.dx,
-              _downPosition.dy,
-              overlay.size.width - _downPosition.dx,
-              overlay.size.height - _downPosition.dy,
-            ),
-          );
-          widget.onSelected(value);
-        }
-      },
+      onLongPressStart: _useLongPress
+          ? (LongPressStartDetails details) async {
+              if (widget.onOpen != null) widget.onOpen!();
+              _downPosition = details.globalPosition;
+              await _showMenu(_downPosition);
+            }
+          : null,
+      onSecondaryTapDown: _useSecondaryClick
+          ? (TapDownDetails details) async {
+              if (widget.onOpen != null) widget.onOpen!();
+              _downPosition = details.globalPosition;
+              await _showMenu(_downPosition);
+            }
+          : null,
       child: widget.child,
     );
+  }
+
+  Future<void> _showMenu(Offset position) async {
+    if (widget.onOpen != null) widget.onOpen!();
+    final RenderBox? overlay =
+        Overlay.of(context)?.context.findRenderObject() as RenderBox?;
+    if (overlay != null) {
+      final T? value = await showMenu<T>(
+        context: context,
+        items: widget.items,
+        position: RelativeRect.fromLTRB(
+          position.dx,
+          position.dy,
+          overlay.size.width - position.dx,
+          overlay.size.height - position.dy,
+        ),
+      );
+      widget.onSelected(value);
+    }
   }
 }

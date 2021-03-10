@@ -25,6 +25,20 @@ String platformControlKey(TargetPlatform platform, String key) {
   }
 }
 
+/// Returns true if the platform is a desktop.
+bool isDesktop(TargetPlatform platform) {
+  switch (platform) {
+    case TargetPlatform.android:
+    case TargetPlatform.iOS:
+    case TargetPlatform.fuchsia:
+      return false;
+    case TargetPlatform.linux:
+    case TargetPlatform.windows:
+    case TargetPlatform.macOS:
+      return true;
+  }
+}
+
 /// Locate in which available picker with its color swatches a
 /// given color can be found in and return that pickers enum type.
 /// This is used to activate the correct Cupertino segment for the provided
@@ -33,6 +47,7 @@ ColorPickerType findColorInSelector({
   required Color color,
   required Map<ColorPickerType, List<ColorSwatch<Object>>> typeToSwatchMap,
   required Map<ColorPickerType, bool> pickersEnabled,
+  required bool lookInShades,
   required bool include850,
 }) {
   // Search for the given color in any of the swatches that are set
@@ -41,7 +56,12 @@ ColorPickerType findColorInSelector({
   for (final ColorPickerType key in typeToSwatchMap.keys) {
     if (pickersEnabled[key]!) {
       for (final ColorSwatch<Object> swatch in typeToSwatchMap[key]!) {
-        if (isShadeOfMain(swatch, color, include850)) return key;
+        if (lookInShades) {
+          if (isShadeOfMain(swatch, color, include850)) return key;
+        } else {
+          if (swatch[500] == color) return key;
+          if (swatch[200] == color) return key;
+        }
       }
     }
   }
