@@ -4,13 +4,18 @@ FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` ca
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
 
->
-> This is a **FlexColorPicker 2.0.0 pre-release** with sound null safety.
+>**NOTE:**   
+> This is a **FlexColorPicker 2.0.0 dev and pre-release** with sound null safety. It contains
+> many new features compared to the previous 1.x version.
 >
 > The package documentation has not yet been updated to cover all new features that are
 > being introduced in final 2.0.0 version together with null-safety. The changelog covers
-> the major changes and API docs are up to date as well. More new features are still
-> coming before to final 2.0.0 release.
+> the major changes. API docs are up to date as well. The bundled and live 
+> [**web demo app**](https://rydmike.com/flexcolorpicker) shows the new features, and you
+> can change most API settings. It also shows each API name and current value in a tooltip for
+> each control.
+> 
+> More new features may still come before first 2.0.0 stable release.
 > 
 
 ### The different types of available color pickers are

@@ -315,6 +315,28 @@ void main() {
   });
 
   //****************************************************************************
+  // FlexPickerNoNullStringExtensions unit tests.
+  //
+  // Color.toColorShort(bool) function tests.
+  //****************************************************************************
+  group(
+      'FSE3maybe: WITH non nullable String extension '
+      'String.toColorShort', () {
+    const String str1 = 'A2C';
+
+    test(
+        'FSE3maybe.1: GIVEN "$str1".toColorShort(true) '
+        'EXPECT "Color(0xFFAA22CC)".', () {
+      expect(str1.toColorShort(true), const Color(0xFFAA22CC));
+    });
+    test(
+        'FSE3maybe.2: GIVEN "$str1".toColorShort(false) '
+        'EXPECT "Color(0xFF000A2C)".', () {
+      expect(str1.toColorShort(false), const Color(0xFF000A2C));
+    });
+  });
+
+  //****************************************************************************
   // FlexPickerNullableStringExtensions unit tests.
   //
   // Color.toColorMaybeNull function, reference value and edge cases tests.
@@ -423,6 +445,28 @@ void main() {
     });
     test('FSE3n.25: GIVEN "$nullStr".toColor EXPECT "null".', () {
       expect(nullStr.toColorMaybeNull, isNull);
+    });
+  });
+
+  //****************************************************************************
+  // FlexPickerNoNullStringExtensions unit tests.
+  //
+  // Color.toColorShortMaybeNull(bool) function tests.
+  //****************************************************************************
+  group(
+      'FSE3n-maybe: WITH non nullable String extension '
+      'String.toColorShortMaybeNull', () {
+    const String str1 = 'A2C';
+
+    test(
+        'FSEn-3maybe.1: GIVEN "$str1".toColorShortMaybeNull(true) '
+        'EXPECT "Color(0xFFAA22CC)".', () {
+      expect(str1.toColorShortMaybeNull(true), const Color(0xFFAA22CC));
+    });
+    test(
+        'FSE3n-maybe.2: GIVEN "$str1".toColorShortMaybeNull(false) '
+        'EXPECT "Color(0xFF000A2C)".', () {
+      expect(str1.toColorShortMaybeNull(false), const Color(0xFF000A2C));
     });
   });
 }

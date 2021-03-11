@@ -12,6 +12,7 @@ class ColorIndicator extends StatefulWidget {
   const ColorIndicator({
     Key? key,
     this.onSelect,
+    this.onSelectFocus = true,
     this.isSelected = false,
     this.selectedRequestsFocus = false,
     this.elevation = 0,
@@ -33,6 +34,17 @@ class ColorIndicator extends StatefulWidget {
   ///
   /// To disable selection and ink effect, omit or assign a null callback.
   final VoidCallback? onSelect;
+
+  /// Set to false if the indicator should not get focus after user clicked
+  /// on it.
+  ///
+  /// Bu default the indicator gets focus when it is clicked, by setting this
+  /// to false it remains un focused. This is useful eg when it is used as
+  /// a tap area that should always show the correct color. If it is focused
+  /// the correct color get obscured by the focus color.
+  ///
+  /// Defaults to true.
+  final bool onSelectFocus;
 
   /// The color indicator is selected and the [selectedIcon] will be shown.
   ///
@@ -103,7 +115,6 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   @override
   void initState() {
     _focusNode = FocusNode();
-    if (widget.isSelected) _focusNode.requestFocus();
     super.initState();
   }
 
@@ -111,8 +122,9 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   void didUpdateWidget(covariant ColorIndicator oldWidget) {
     // The widget requests focus only when its value was updated, is selected
     // and the flag 'selectedRequestsFocus' is true.
-    if (widget.isSelected && widget.selectedRequestsFocus) {
-      debugPrint('ColorIndicator didUpdateWidget requested focus');
+    if (widget.isSelected &&
+        widget.selectedRequestsFocus &&
+        widget.isSelected != oldWidget.isSelected) {
       _focusNode.requestFocus();
     }
     super.didUpdateWidget(oldWidget);
@@ -169,8 +181,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           onTap: widget.onSelect != null
               ? () {
                   widget.onSelect!();
-                  debugPrint('ColorIndicator onTapDown');
-                  _focusNode.requestFocus();
+                  if (widget.onSelectFocus) _focusNode.requestFocus();
                 }
               : null,
           child: widget.isSelected

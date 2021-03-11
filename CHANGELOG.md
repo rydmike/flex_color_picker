@@ -2,28 +2,39 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.0-nullsafety.3] - March 10, 2021
-* Bugfix: Color code field no longer receives focus when switching to it on wheel page, even
-  in edit mode. Focus is set to color wheel, or the selected color shade, if the
-  shade colors are present. The focus handling has also been further improved for desktop usage.
-* Bugfix: The property `editUsesParsedPaste` now works as intended, if true, keyboard paste commands while editing a 
-  color value are intercepted, and the hole pasted value gets parsed, it does not get pasted into the field. For normal
-  field paste functionality keep `editUsesParsedPaste` false. See API docs for more info.
+## [2.0.0-nullsafety.3] - March 11, 2021
+* **Bugfix:** Color code field no longer receives focus when switching to it on wheel page.
+  Focus is set to color wheel, or the selected color shade, if the
+  shade colors are present. The focus handling has also been improved for desktop usage.
+* **Bugfix:** The property `editUsesParsedPaste` now works as intended, if true, desktop keyboard paste commands, 
+  while editing a color value are intercepted, and the hole pasted buffer value gets parsed, it does not get 
+  pasted into the field. For normal field paste functionality keep `editUsesParsedPaste` false (default). 
 * The color code edit and entry field now works more like a normal text entry field. It still only accepts
   valid hex input and converts all input to uppercase.
-* New property `colorCodeReadOnly`: Make color code always read only. Normally color code can 
-  be edited on the wheel picker, set this to true to make it read only there as well. Copy/paste operations still work,
-  if they are enabled, even if the color code field entry is in read only mode.
-* **New feature:** The `copyPasteBehavior` property received two new features. The copy/paste context 
-  menu can now also optionally use secondary (typically right) click by setting `secondaryMenu` to true. 
-  It also has a mode where long press will be used on iOS/Android, but secondary mouse click will be 
-  used on desktop/web, by setting `secondaryOnDesktopLongOnDevice` to true.
-* Minor breaking change: The extension `FlexPickerNoNullStringExtensions` on none nullable 
+* **New property:** If `colorCodeHasColor` is true, then the background of the color code entry field uses the current
+  selected color.  
+* **New property** If `colorCodeReadOnly` the color code entry field is always read only. Normally color code can 
+  be edited on the wheel picker, set this to true to make it read only there as well. Copy/paste operations still work
+  if they are enabled even if the color code field entry is in read only mode.
+* **New feature:** The `copyPasteBehavior` property received three new features and properties: 
+   * The copy/paste context menu can now also optionally use secondary, typically mouse right, click by setting
+     `secondaryMenu` to true. 
+   *  It also has a mode where long press will be used on iOS/Android, but secondary mouse click will be
+      used on desktop/web, by setting `secondaryOnDesktopLongOnDevice` to true.
+   *  When `parseShortHexCode` is true the hex color code paste action and field entry parser,
+      interpret short three character web hex color codes like in CSS.     
+* **New extension:** The extension `FlexPickerNoNullStringExtensions` on `String` got a new 
+  extension function `Color toColorShort(bool enableShortRGB)`.     
+* **New extension:** The extension `FlexPickerNullableStringExtensions` on `String?` got a new
+  extension function `Color? toColorShortMaybeNull(bool enableShortRGB)`.
+* **Minor breaking:** The extension `FlexPickerNoNullStringExtensions` on none nullable 
   `String` named `toColor` no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent 
-  black `Color(0x00000000)` if it is full opaque black, it works better as fallback safety color. 
+  black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color. 
   The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
   null when the `String?` cannot be parsed to a `Color`. 
+
+*See API documentation for more information.*
 
 ## [2.0.0-nullsafety.2] - March 3, 2021
 * Documentation and live Web demo link fixes.
@@ -33,28 +44,27 @@ There are many new features included in this version 2 pre-release. The new feat
 [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package 
 example folder, in "example/lib/demo/main.dart".
 
-* Improvements: The wheel picker now move on pointer down to point location, it no longer requires a slight movement
+* **Improvement:** The wheel picker now move on pointer down to point location, it no longer requires a slight movement
   for its thumbs to move to the selected start tracking point.
-* Improvements: Keyboard traversal of the colors and selecting indicator colors with the keyboard via
+* **Improvements:** Keyboard traversal of the colors and selecting indicator colors with the keyboard via
   enter or space. The wheel can however still not be operated with a keyboard, only touch and mouse controlled. 
-* New property `onColorChangeStart`: Called when user starts color selection with current color before the change.
-* New property `onColorChangeEnd`: Called when user ends color selection with the new color value. 
-* New property `selectedPickerTypeColor`: The color of the thumb on the slider that shows the selected picker.
+* **New property:** `onColorChangeStart` called when user starts color selection with current color before the change.
+* **New property:** `onColorChangeEnd` called when user ends color selection with the new color value. 
+* **New property:** `selectedPickerTypeColor` the color of the thumb on the slider that shows the selected picker.
   Ported from none null-safe version 1.1.4, does not exist in version 2.0.0-nullsafety.0.
-* New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
+* **New property:** `colorCodePrefixStyle` defines the text style of the prefix for the color code.
   If not defined it defaults to same style as `colorCodeTextStyle`.
   Ported from none null-safe version 1.1.4, does not exist in version 2.0.0-nullsafety.0.
-* New property `title`: A Widget used as an app bar type of title widget above the heading. Can
+* **New property:** `title` is a Widget used as an app bar type of title widget above the heading. Can also
   include copy, paste, select-close and cancel-cancel icon buttons when picker is used as a dialog.
-* **Major new feature**: An `actionButtons` property that takes an `ColorPickerActionButtons()`. Used to define 
-  what type of **Ok** and **Cancel** action buttons the color picker has when used in a dialog. 
-  It is possible to define if
-  bottom action buttons should be `TextButton`, `OutlinedButton` or `ElevatedButton` per button.
-  If not defined, the labels on the buttons come from Material localizations, not from default hard coded values. 
-  See breaking label for the 'Select' label. There are optional select/OK and cancel icon buttons that can be used 
-  in the title bar for a more compact dialog. *See API documentation for more information.*
-* **Major feature**: A `copyPasteBehavior` property that takes an `ColorPickerCopyPasteBehavior()`. 
-  Used to define the copy/paste behavior of the color picker, including: 
+* **New feature:** There is an `actionButtons` property that takes an `ColorPickerActionButtons()`. It is used to
+  define what type of **Ok** and **Cancel** action buttons the color picker has when used in a dialog. 
+  It is possible to define if bottom action buttons should be `TextButton`, `OutlinedButton` or `ElevatedButton` 
+  per button. If not defined, the labels on the buttons come from Material localizations, not from default hard 
+  coded values. See breaking label for the 'Select' label. There are optional select/OK and cancel icon buttons 
+  that can be used in the title bar for a more compact dialog. 
+* **New feature**: There is a `copyPasteBehavior` property that takes an `ColorPickerCopyPasteBehavior()`. 
+  It is used to define the copy/paste behavior of the color picker, including: 
     * Keyboard shortcuts: CTRL-C, CMD-C, CTRL-V, CMD-V
     * Top toolbar copy-paste buttons.
     * Long press copy-paste menu. 
@@ -73,43 +83,42 @@ example folder, in "example/lib/demo/main.dart".
 
   *See API documentation for more information.*
 
-* **Major new feature**: The picker can display recently used colors in a list of color indicators at the bottom of 
+* **New feature**: The picker can display recently used colors in a list of color indicators at the bottom of 
   the picker. You can use the following properties to control it.
     * `showRecentColors`: Set to true/false to enable/disable the usage of the recent colors feature.
     * `recentColorsSubheading`: Subheading widget for the recently used colors. Typically, a Text widget, 
       e.g. Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
     * `maxRecentColors`: Number of recent colors to track, from 2 to 20 allowed.
     * `recentColors`: a list with current recent color, defaults to empty. You can store the last list
-      and use it to restore the previous recent colors list.
+      and use this list to restore the previous recent colors list.
     * `onRecentColorsChanged`: Optional value callback that returns a copy the current list of recently 
       used colors. Use it store a copy of the recent colors in order to be able to restore it later.
       
-      *See API documentation for more information.*
+ *See API documentation for more information.*
 
 ### Breaking changes
 
-The following are minor breaking changes from version 1.x, they mostly concern visual nuances and label defaults.
+The following are **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color 
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
   `copyPasteBehavior` property, it defaults to same icon as in version 1.x. 
-* The bottom action button that selects the color now says **OK** instead of **Select**. The label for the OK 
+* The bottom dialog action button that selects the color now says **OK** instead of **Select**. The label for the OK 
   button by default comes from a Material localization. You can as before change it to whatever string you want.
 * The dialog bottom action button for **OK** by default now uses just a plain `TextButton` and 
   not an `OutlinedButton`, this change is done to conform to a less opinionated default style. You can still
   manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was 
   no choice.
 * The dialog bottom **OK** button is no longer auto-focused. 
-
   
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
 * A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved.
   However, the workaround allows for the Wrap implementation that was changed to a Row in version 1.1.2, to be used
   again.
-* The almost full API configurable Web example and demo, was included in the package in "example/lib/demo/mina.dart" together
-  with the previous default example in "example/lib/main.dart". Previously this Web example was in a separate GitHub
-  repository. The example was updated to make it responsive, to offer better usability on Web.
-
+* The almost full API configurable Web example and demo, was included in the package in 
+  "example/lib/demo/mina.dart" together with the previous default example in "example/lib/main.dart". 
+  Previously this Web example was in a separate GitHub repository. The example was updated to make it 
+  responsive, to offer better usability on Web.
 
 ## [1.1.5] - March 3, 2021
 * Bug fix `selectedPickerTypeColor`: When color was undefined, the thumb did not receive the same text color as the
@@ -187,9 +196,10 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 
 ### TODO
 
+- Release none pre-release version 2.
 - Add more tests.
 - Finalize tests.
-- Add support for transparent on colors.  
+- Add support for colors with opacity or alpha.  
 - Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Additional controls for selecting active picker, custom slider and ToggleButtons.  
 - Add one more color picker types "advanced".
@@ -207,7 +217,8 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - Add "name that color" function that can give a name to "any" color in English.
 - Release version 1.0.0.
 - Publish version 1.0.0 on pub.dev.
-- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
+- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, 
+  more tests will be added later. ColorTools has 4694 tests.
 - Version 2.0.0-nullsafety.0: Add null safe version.
 - Improve existing copy/paste feature.
 

@@ -6,8 +6,8 @@ import 'color_picker_screen.dart';
 // Just a simple way to leave a trace of what version you built a Flutter
 // Web demo with inside the app. You can also show it in the demo,
 // like in this example, so people testing it don't have to ask.
-const String kFlutterVersion = 'Channel dev 1.27.0-8.0.pre SKIA';
-const String kColorPickerVersion = '2.0.0-nullsafety.1';
+const String kFlutterVersion = 'Channel dev 2.1.0-10.0.pre SKIA';
+const String kColorPickerVersion = '2.0.0-nullsafety.3';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.themeMode}) : super(key: key);
@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const Spacer(),
           Text(
             'FlexColorPicker',
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.headline4,
           ),
 
           Text(
-            'Web demo for version 2 (pre-release)',
-            style: Theme.of(context).textTheme.subtitle1,
+            'Full feature demo for v2',
+            style: Theme.of(context).textTheme.headline6,
           ),
           const SizedBox(height: 30),
           Row(
@@ -132,6 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          const Text(
+            'Now includes API tooltips, as\n'
+            'an interactive API quick guide.',
+          ),
           const SizedBox(height: 40),
           OutlinedButton(
             onPressed: () {
@@ -143,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 'Try the color picker',
                 style: Theme.of(context).textTheme.headline6,

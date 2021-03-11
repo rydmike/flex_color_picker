@@ -25,6 +25,7 @@ extension FlexPickerNoNullColorExtensions on Color {
 /// To [capitalize] the first letter in a String and [dotTail] to get
 /// remaining string after first dot "." in a String.
 extension FlexPickerNoNullStringExtensions on String {
+  //
   /// Convert a HEX value encoded (A)RGB string to a Dart Color.
   ///
   /// * The string may include the '#' char, but does not have to.
@@ -34,6 +35,8 @@ extension FlexPickerNoNullStringExtensions on String {
   ///   if alpha value is missing "FF" is used for alpha.
   /// * String may be longer than 8 chars, after trimming out # and 0x, it will
   ///   be RIGHT truncated to max 8 chars before parsing.
+  /// * If [enableShortRGB] is true a CSS style 3 char RGB value is interpreted
+  ///   as RRGGBB, if false it used it as a partial color value.
   ///
   /// IF the resulting string cannot be parsed to a Color, is empty or null
   /// THEN fully opaque black color is returned ELSE the Color is returned.
@@ -43,7 +46,7 @@ extension FlexPickerNoNullStringExtensions on String {
   /// there is a string that cannot be parsed to color value.
   /// You can then decide what to do with the error instead of just receiving
   /// fully opaque black color.
-  Color get toColor {
+  Color toColorShort(bool enableShortRGB) {
     // If String was zero length, then we return transparent, cannot parse.
     if (this == '') return const Color(0xFF000000);
     // If String length is > 200 we as a safety precaution will not try to
@@ -60,7 +63,7 @@ extension FlexPickerNoNullStringExtensions on String {
     if (hexColor == '') return const Color(0xFF000000);
     // If the input is exactly 3 chars long, we may have a short Web hex code,
     // let's make the potential 'RGB' code to a 'RRGGBB' code.
-    if (hexColor.length == 3) {
+    if (hexColor.length == 3 && enableShortRGB) {
       hexColor = hexColor[0] +
           hexColor[0] +
           hexColor[1] +
@@ -79,6 +82,11 @@ extension FlexPickerNoNullStringExtensions on String {
     return Color(int.tryParse('0x${hexColor.substring(length - 8, length)}') ??
         0xFF000000);
   }
+
+  /// Returns [toColorShort] with `enableShortRGB` set to true.
+  ///
+  /// Available for backwards compatibility with previous API.
+  Color get toColor => toColorShort(true);
 
   /// Capitalize the first letter in a string.
   String get capitalize {
@@ -101,6 +109,7 @@ extension FlexPickerNoNullStringExtensions on String {
 /// To [capitalizeMaybeNull] the first letter in a String and
 /// [dotTailMaybeNull] to get remaining string after first dot "." in a String.
 extension FlexPickerNullableStringExtensions on String? {
+  //
   /// Convert a HEX value encoded (A)RGB string to a Dart Color.
   ///
   /// * The string may include the '#' char, but does not have to.
@@ -110,10 +119,12 @@ extension FlexPickerNullableStringExtensions on String? {
   ///   if alpha value is missing "FF" is used for alpha.
   /// * String may be longer than 8 chars, after trimming out # and 0x, it will
   ///   be RIGHT truncated to max 8 chars before parsing.
+  /// * If [enableShortRGB] is true a CSS style 3 char RGB value is interpreted
+  ///   as RRGGBB, if false it used it as a partial color value.
   ///
   /// IF the resulting string cannot be parsed to a Color, is empty or null
   /// THEN NULL is returned ELSE the Color is returned.
-  Color? get toColorMaybeNull {
+  Color? toColorShortMaybeNull(bool enableShortRGB) {
     // If String was null or zero length, then we return null, cannot parse.
     if (this == null || this == '') return null;
     // If String length is > 200 we as a safety precaution will not try to
@@ -130,7 +141,7 @@ extension FlexPickerNullableStringExtensions on String? {
     if (hexColor == '') return null;
     // If the input is exactly 3 chars long, we may have a short Web hex code,
     // let's make the potential 'RGB' code to a 'RRGGBB' code.
-    if (hexColor.length == 3) {
+    if (hexColor.length == 3 && enableShortRGB) {
       hexColor = hexColor[0] +
           hexColor[0] +
           hexColor[1] +
@@ -150,6 +161,11 @@ extension FlexPickerNullableStringExtensions on String? {
         int.tryParse('0x${hexColor.substring(length - 8, length)}');
     return intColor != null ? Color(intColor) : null;
   }
+
+  /// Returns [toColorShortMaybeNull] with `enableShortRGB` set to true.
+  ///
+  /// Available for backwards compatibility with previous API.
+  Color? get toColorMaybeNull => toColorShortMaybeNull(true);
 
   /// Capitalize the first letter in a string. If string is null, we get null
   /// back.

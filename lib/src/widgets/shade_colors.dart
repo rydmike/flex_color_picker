@@ -24,7 +24,7 @@ class ShadeColors extends StatelessWidget {
     this.borderColor,
     required this.elevation,
     required this.selectedColorIcon,
-    this.selectedRequestsFocus = false,
+    required this.selectedRequestsFocus,
   }) : super(key: key);
 
   /// The spacing between the color pick items.

@@ -110,7 +110,6 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     if (widget.shouldRequestsFocus &&
         (widget.shouldRequestsFocus != oldWidget.shouldRequestsFocus)) {
       _focusNode.requestFocus();
-      debugPrint('didUpdateWidget Wheel requested focus');
     }
     // Only if widget.shouldUpdate is true will we change color. It is set to
     // true by parent when it has updated the widget.color value and it needs

@@ -31,7 +31,8 @@ class AlignmentSwitch extends StatelessWidget {
       borderWidth: 2,
       borderColor: colorScheme.primary,
       selectedBorderColor: colorScheme.primary,
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(44),
+      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
       onPressed: (int newIndex) {
         for (int index = 0; index < _isSelected.length; index++) {
           if (index == newIndex) {

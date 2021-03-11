@@ -18,6 +18,7 @@ class ColorCodeField extends StatefulWidget {
     required this.onEditFocused,
     this.textStyle,
     this.prefixStyle,
+    this.colorCodeHasColor = false,
     this.toolIcons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.enableTooltips = true,
@@ -45,6 +46,19 @@ class ColorCodeField extends StatefulWidget {
   ///
   /// Defaults to [textStyle], if not defined.
   final TextStyle? prefixStyle;
+
+  /// If true then the background of the color code entry field uses the current
+  /// selected color.
+  ///
+  /// This makes the color code entry field a larger current color indicator
+  /// area that changes color as the color value is changed.
+  /// The text color of the filed will adjust to for best contrast as will
+  /// the opacity indicator text. Enabling this feature will override any
+  /// color specified in [textStyle] and [prefixStyle] but
+  /// their styles will otherwise be kept as specified.
+  ///
+  /// Defaults to false.
+  final bool colorCodeHasColor;
 
   /// Defines icons for the color picker title bar and its actions.
   ///
@@ -81,48 +95,6 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
   late FocusNode textFocusNode;
   late String colorHexCode;
   late Color color;
-
-  // Set current selected color values as a String on the Clipboard in the
-  // currently configured format.
-  Future<void> _setClipboard() async {
-    String colorString = '00000000';
-    switch (widget.copyPasteBehavior.copyFormat) {
-      case ColorPickerCopyFormat.dartCode:
-        colorString = '0x${color.hexAlpha}';
-        break;
-      case ColorPickerCopyFormat.hexRRGGBB:
-        colorString = color.hex;
-        break;
-      case ColorPickerCopyFormat.hexAARRGGBB:
-        colorString = color.hexAlpha;
-        break;
-      case ColorPickerCopyFormat.numHexRRGGBB:
-        colorString = '#${color.hex}';
-        break;
-      case ColorPickerCopyFormat.numHexAARRGGBB:
-        colorString = '#${color.hexAlpha}';
-        break;
-    }
-    final ClipboardData data = ClipboardData(text: colorString);
-    await Clipboard.setData(data);
-  }
-
-  // Get the current selected color prefix format for the input field.
-  // The prefix in the input field matches the set copy format.
-  String get _editColorPrefix {
-    switch (widget.copyPasteBehavior.copyFormat) {
-      case ColorPickerCopyFormat.dartCode:
-        return '0xFF';
-      case ColorPickerCopyFormat.hexRRGGBB:
-        return '    ';
-      case ColorPickerCopyFormat.hexAARRGGBB:
-        return '  FF';
-      case ColorPickerCopyFormat.numHexRRGGBB:
-        return '   #';
-      case ColorPickerCopyFormat.numHexAARRGGBB:
-        return ' #FF';
-    }
-  }
 
   @override
   void initState() {
@@ -172,17 +144,32 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
 
     // Define opinionated styles for the color code display and entry field.
     final bool isLight = Theme.of(context).brightness == Brightness.light;
-    final Color fieldBackground =
-        isLight ? Colors.black.withAlpha(11) : Colors.white.withAlpha(33);
+    final Color fieldBackground = widget.colorCodeHasColor
+        ? color
+        : isLight
+            ? Colors.black.withAlpha(11)
+            : Colors.white.withAlpha(33);
+
+    final Color textColor =
+        ThemeData.estimateBrightnessForColor(fieldBackground) ==
+                Brightness.light
+            ? Colors.black
+            : Colors.white;
+
     final Color fieldBorder =
         isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
 
     // Set the default text style to bodyText2 if not given.
-    final TextStyle effectiveStyle = widget.textStyle ??
+    TextStyle effectiveStyle = widget.textStyle ??
         Theme.of(context).textTheme.bodyText2 ??
         const TextStyle(fontSize: 14);
 
-    final TextStyle effectivePrefixStyle = widget.prefixStyle ?? effectiveStyle;
+    TextStyle effectivePrefixStyle = widget.prefixStyle ?? effectiveStyle;
+
+    if (widget.colorCodeHasColor) {
+      effectiveStyle = effectiveStyle.copyWith(color: textColor);
+      effectivePrefixStyle = effectivePrefixStyle.copyWith(color: textColor);
+    }
 
     // Compute color code field size based on the used font size. Might not
     // always be ideal, but with normal fonts and sizes they have been tested to
@@ -200,10 +187,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
       child: DryIntrinsicWidth(
         child: Focus(
           // Tell the parent when the text edit field has focus.
-          onFocusChange: (bool focus) {
-            widget.onEditFocused(focus);
-            debugPrint('ColorCodeField onFocusChange: $focus');
-          },
+          onFocusChange: widget.onEditFocused,
           child: TextField(
             enabled: true,
             readOnly: widget.readOnly,
@@ -276,26 +260,67 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
             //
             onChanged: (String textColor) {
               setState(() {
-                // The toColor extension handles parsing issues too,
-                // the  field also only accept valid inputs, but it
-                // could be empty, in that case we get opaque black.
-                color = textColor.toColor;
+                color = textColor
+                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode);
               });
               widget.onColorChanged(color);
             },
             onEditingComplete: () {
               setState(() {
-                color = textController.text.toColor;
+                color = textController.text
+                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode);
               });
               textController.text = color.hex;
               widget.onColorChanged(color);
               textFocusNode.unfocus();
-              debugPrint('ColorCodeField onEditingComplete');
             },
           ),
         ),
       ),
     );
+  }
+
+  // Set current selected color values as a String on the Clipboard in the
+  // currently configured format.
+  Future<void> _setClipboard() async {
+    String colorString = '00000000';
+    switch (widget.copyPasteBehavior.copyFormat) {
+      case ColorPickerCopyFormat.dartCode:
+        colorString = '0x${color.hexAlpha}';
+        break;
+      case ColorPickerCopyFormat.hexRRGGBB:
+        colorString = color.hex;
+        break;
+      case ColorPickerCopyFormat.hexAARRGGBB:
+        colorString = color.hexAlpha;
+        break;
+      case ColorPickerCopyFormat.numHexRRGGBB:
+        colorString = '#${color.hex}';
+        break;
+      case ColorPickerCopyFormat.numHexAARRGGBB:
+        colorString = '#${color.hexAlpha}';
+        break;
+    }
+    final ClipboardData data = ClipboardData(text: colorString);
+    await Clipboard.setData(data);
+  }
+
+  // Get the current selected color prefix format for the input field.
+  // The prefix in the input field matches the set copy format.
+  String get _editColorPrefix {
+    final String alphaValue = color.hexAlpha.substring(0, 2);
+    switch (widget.copyPasteBehavior.copyFormat) {
+      case ColorPickerCopyFormat.dartCode:
+        return '0x$alphaValue';
+      case ColorPickerCopyFormat.hexRRGGBB:
+        return '    ';
+      case ColorPickerCopyFormat.hexAARRGGBB:
+        return '  $alphaValue';
+      case ColorPickerCopyFormat.numHexRRGGBB:
+        return '   #';
+      case ColorPickerCopyFormat.numHexAARRGGBB:
+        return ' #$alphaValue';
+    }
   }
 }
 

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import '../models/color_picker_type.dart';
 
 // TODO: Test how it works on WEB, do we need a kIsWeb check too?
+// NOTE: Web should be CTRL or CMD depending on platform.
+
 /// Returns the control key label for the current platform.
 ///
 /// Windows, Linux: CTRL
 /// Mac: CMD (Tried using the ⌘ symbol, did not show up on Web though.)
 /// Others: Empty string
-///
-/// NOTE: Web should be CTRL or CMD depending on platform.
 String platformControlKey(TargetPlatform platform, String key) {
   switch (platform) {
     case TargetPlatform.android:
@@ -90,6 +90,10 @@ ColorSwatch<Object?>? findColorSwatch(
 }
 
 /// Check if a given color is a shade of the main color, return true if it is.
+///
+/// Used by wheel picker to check if a given color is a member of
+/// a standard Material color swatch, including custom made swatches.
+/// If it is not, only then will it compute a custom swatch.
 bool isShadeOfMain(
   ColorSwatch<Object> mainColor,
   Color shadeColor,

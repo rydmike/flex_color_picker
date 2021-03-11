@@ -89,11 +89,12 @@ class ColorPicker extends StatefulWidget {
     this.showColorName = false,
     this.colorNameTextStyle,
     this.showColorCode = false,
-    this.showColorValue = false,
+    this.colorCodeHasColor = false,
     this.colorCodeTextStyle,
     this.colorCodeIcon,
     this.colorCodePrefixStyle,
     this.colorCodeReadOnly = false,
+    this.showColorValue = false,
     // Toggles showing the recent colors selection.
     this.showRecentColors = false,
     this.maxRecentColors = 5,
@@ -123,9 +124,6 @@ class ColorPicker extends StatefulWidget {
     },
     // Custom color swatches and name map for the custom color swatches.
     this.customColorSwatchesAndNames,
-    // TODO: Remove? Not including it in published pre-release version for now.
-    // The default hit test mode for the color picker.
-    // this.hitTestBehavior = HitTestBehavior.deferToChild,
     //
   })  : assert(columnSpacing >= 0 && columnSpacing <= 300,
             'The picker item column spacing must be >= 0 and <= 300 dp.'),
@@ -142,9 +140,6 @@ class ColorPicker extends StatefulWidget {
                 maxRecentColors <= _maxRecentColors,
             'The maxRecentColors must be $_minRecentColors 2 '
             'and <= $_maxRecentColors'),
-        // TODO: Remove? Not including it in published pre-release version.
-        //       assert(hitTestBehavior != HitTestBehavior.opaque,
-        //           'HitTestBehavior.opaque is not supported by ColorPicker.'),
         super(key: key);
 
   /// The active color selection when the color picker is created.
@@ -383,17 +378,18 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool showColorCode;
 
-  /// Set to true to show the int [Color.value] of the selected [color].
+  /// If true then the background of the color code entry field uses the current
+  /// selected color.
   ///
-  /// This is a developer feature, showing the int color value can be
-  /// useful during software development. If enabled the value is shown after
-  /// the color code, if it is enabled too. For text style it uses the same
-  /// property as the hex code [colorCodeTextStyle]. There is no copy button
-  /// for the shown int value, but the value is using [SelectableText] widget so
-  /// it can be select painted and copied if so required.
+  /// This makes the color code entry field a larger current color indicator
+  /// area that changes color as the color value is changed.
+  /// The text color of the filed will adjust to for best contrast as will
+  /// the opacity indicator text. Enabling this feature will override any
+  /// color specified in [colorCodeTextStyle] and [colorCodePrefixStyle] but
+  /// their styles will otherwise be kept as specified.
   ///
   /// Defaults to false.
-  final bool showColorValue;
+  final bool colorCodeHasColor;
 
   /// Text style for the displayed generic color name in the picker.
   ///
@@ -431,6 +427,18 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool colorCodeReadOnly;
+
+  /// Set to true to show the int [Color.value] of the selected [color].
+  ///
+  /// This is a developer feature, showing the int color value can be
+  /// useful during software development. If enabled the value is shown after
+  /// the color code, if it is enabled too. For text style it uses the same
+  /// property as the hex code [colorCodeTextStyle]. There is no copy button
+  /// for the shown int value, but the value is using [SelectableText] widget so
+  /// it can be select painted and copied if so required.
+  ///
+  /// Defaults to false.
+  final bool showColorValue;
 
   /// Toggles showing the recent colors selection.
   ///
@@ -497,50 +505,6 @@ class ColorPicker extends StatefulWidget {
   /// Has no default values and if omitted or null, the custom color picker will
   /// not be shown even if is enabled in [pickersEnabled].
   final Map<ColorSwatch<Object>, String>? customColorSwatchesAndNames;
-
-  // TODO: Remove? Not including it in published pre-release version for now.
-  // /// Determines how the gesture detector for the picker behaves
-  // /// during hit testing.
-  // ///
-  // /// Typically there is no need to change the default for this property, but
-  // /// if you thing you might need to, do read on.
-  // ///
-  // /// By default the picker defers hit testing to its child
-  // /// [HitTestBehavior.deferToChild] and only children
-  // /// in it receive events within their bounds if a child in the picker
-  // /// is hit by the hit test.
-  // ///
-  // /// With the default setting you cannot click on the
-  // /// background to set focus to the raw keyboard listener that captures
-  // /// keyboard copy/paste events if you used them. You have to click on a sub
-  // /// widget like the color items, code field, wheel etc. With the default
-  // /// you can always scroll the widget by dragging from the background
-  // /// of the picker. Thus if you use the picker on a scrolling surface you
-  // /// should use the default setting. The default settings also equals the
-  // /// behavior in version 1.x that did not offer keyboard copy/paste
-  // /// shortcuts when the edit field was not in focus.
-  // ///
-  // /// The [HitTestBehavior.translucent] allows you to click on the background
-  // /// of the picker to set focus to the picker and thus bringing the
-  // /// raw keyboard listener into focus so it can capture copy/paste keyboard
-  // /// shortcuts. The translucent mode does however also prevent drag scroll
-  // /// event from reaching the surface scroll controller, so you will not
-  // /// be able to scroll the surface from the background of the color picker.
-  // /// If the picker is on a surface that will never scroll, this is a good
-  // /// setting. It can also work whe used on a very large surface where
-  // /// there are plenty of other touch points you can scroll from.
-  // ///
-  // /// The [ColorPicker] tries its best to keep some of its child Widget in
-  // /// focus, thus when you operate it or when it is in a dialog you will not
-  // /// find too much need for using the [HitTestBehavior.translucent] setting.
-  // /// If you don't enable keyboard copy/paste shortcut commands at all, there
-  // /// is not really any scenario that needs to use the none default setting.
-  // ///
-  // /// The [HitTestBehavior.opaque] is not allowed and will result in an
-  // /// assertion error.
-  // ///
-  // /// Defaults to [HitTestBehavior.deferToChild]
-  // final HitTestBehavior hitTestBehavior;
 
   /// English default label for picker with both primary and accent colors.
   static const String _selectBothLabel = 'Primary & Accent';
@@ -904,7 +868,6 @@ class _ColorPickerState extends State<ColorPicker> {
   void _initSelectedValue({bool findPicker = false}) {
     // The selected color(s) should request focus on init.
     if (findPicker) _selectedShouldFocus = true;
-    // _selectedShouldFocus = true;
 
     // If no custom color map is provided (null) we use an empty map.
     final Map<ColorSwatch<Object>, String> colorsNameMap =
@@ -918,8 +881,9 @@ class _ColorPickerState extends State<ColorPicker> {
       ColorPickerType.bw: ColorTools.blackAndWhite,
       ColorPickerType.custom: colorsNameMap.keys.toList(),
       ColorPickerType.wheel: <ColorSwatch<Object>>[
+        // TODO: Redesign when enable opacity/alpha.
         // Make a swatch of the selected color in the wheel.
-        ColorTools.primarySwatch(_selectedColor)
+        ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
       ],
     };
 
@@ -964,7 +928,10 @@ class _ColorPickerState extends State<ColorPicker> {
     if (_usePickerSelector) {
       if (findPicker) {
         _activePicker = findColorInSelector(
-          color: _selectedColor,
+          // TODO: Redesign when alpha support is implemented.
+          // Disregard any opacity/alpha on current color value to find it
+          // in a color picker.
+          color: _selectedColor.withAlpha(0xFF),
           typeToSwatchMap: _typeToSwatchMap,
           pickersEnabled: _pickers,
           lookInShades: widget.enableShadesSelection,
@@ -1134,7 +1101,8 @@ class _ColorPickerState extends State<ColorPicker> {
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
       // Set which color swatch is the active one of the ones in the active list
       _activeSwatch = findColorSwatch(
-        _selectedColor,
+        // TODO: Redesign this when alpha support is implemented.
+        _selectedColor.withAlpha(0xFF),
         _activeColorSwatchList,
         widget.includeIndex850,
       ) as ColorSwatch<Object>?;
@@ -1143,15 +1111,18 @@ class _ColorPickerState extends State<ColorPicker> {
       // color is part of a swatch and if it is, return that as the active
       // swatch, and only if we do not find one, is a computed swatch created.
     } else {
-      if (ColorTools.isAccentColor(_selectedColor)) {
-        _activeSwatch = ColorTools.accentSwatch(_selectedColor);
-      } else if (ColorTools.isPrimaryColor(_selectedColor)) {
-        _activeSwatch = ColorTools.primarySwatch(_selectedColor);
-      } else if (ColorTools.isBlackAndWhiteColor(_selectedColor)) {
-        _activeSwatch = ColorTools.blackAndWhiteSwatch(_selectedColor);
+      if (ColorTools.isAccentColor(_selectedColor.withAlpha(0xFF))) {
+        _activeSwatch = ColorTools.accentSwatch(_selectedColor.withAlpha(0xFF));
+      } else if (ColorTools.isPrimaryColor(_selectedColor.withAlpha(0xFF))) {
+        _activeSwatch =
+            ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF));
+      } else if (ColorTools.isBlackAndWhiteColor(
+          _selectedColor.withAlpha(0xFF))) {
+        _activeSwatch =
+            ColorTools.blackAndWhiteSwatch(_selectedColor.withAlpha(0xFF));
       } else {
         _activeSwatch = ColorTools.customSwatch(
-            _selectedColor, widget.customColorSwatchesAndNames);
+            _selectedColor.withAlpha(0xFF), widget.customColorSwatchesAndNames);
       }
     }
     // Did not find the selected color in the active swatch list,
@@ -1310,6 +1281,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     child: PickerSelector(
                       pickerTypes: pickerTypes,
                       onValueChanged: (ColorPickerType value) {
+                        _pickerFocusNode.requestFocus();
                         setState(() {
                           _activePicker = value;
                           _selectedShouldFocus = true;
@@ -1318,7 +1290,6 @@ class _ColorPickerState extends State<ColorPicker> {
                             _wheelShouldFocus = true;
                           }
                         });
-                        _pickerFocusNode.requestFocus();
                       },
                       value: _activePicker,
                       thumbColor: widget.selectedPickerTypeColor,
@@ -1336,7 +1307,8 @@ class _ColorPickerState extends State<ColorPicker> {
                     runSpacing: widget.runSpacing,
                     columnSpacing: widget.columnSpacing,
                     activeColorSwatchList: _activeColorSwatchList,
-                    selectedColor: _selectedColor,
+                    // TODO Redesign when enable alpha
+                    selectedColor: _selectedColor.withAlpha(0xFF),
                     onSelectColor: _onSelectColor,
                     includeIndex850: widget.includeIndex850,
                     width: widget.width,
@@ -1356,11 +1328,18 @@ class _ColorPickerState extends State<ColorPicker> {
                       height: widget.wheelDiameter,
                       width: widget.wheelDiameter,
                       child: ColorWheelPicker(
-                        color: _selectedColor,
+                        // TODO Redesign when enable alpha
+                        color: _selectedColor.withAlpha(0xFF),
                         wheelWidth: widget.wheelWidth,
                         hasBorder: widget.wheelHasBorder,
                         shouldUpdate: _wheelShouldUpdate,
                         shouldRequestsFocus: _wheelShouldFocus,
+                        onChangeStart: (Color color) {
+                          if (widget.onColorChangeStart != null) {
+                            widget.onColorChangeStart!(color);
+                          }
+                          _addToRecentColors(color);
+                        },
                         onChanged: (Color color) {
                           setState(() {
                             _selectedColor = color;
@@ -1370,12 +1349,6 @@ class _ColorPickerState extends State<ColorPicker> {
                             _wheelShouldFocus = false;
                           });
                           widget.onColorChanged(_selectedColor);
-                        },
-                        onChangeStart: (Color color) {
-                          if (widget.onColorChangeStart != null) {
-                            widget.onColorChangeStart!(color);
-                          }
-                          _addToRecentColors(color);
                         },
                         onChangeEnd: (Color color) {
                           if (widget.onColorChangeEnd != null) {
@@ -1408,7 +1381,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     runSpacing: widget.runSpacing,
                     columnSpacing: widget.columnSpacing,
                     activeSwatch: _activeSwatch!,
-                    selectedColor: _selectedColor,
+                    selectedColor: _selectedColor.withAlpha(0xFF),
                     onSelectColor: (Color color) {
                       _onSelectColor(color);
                       if (_activePicker == ColorPickerType.wheel) {
@@ -1441,7 +1414,7 @@ class _ColorPickerState extends State<ColorPicker> {
                               EdgeInsets.only(bottom: widget.columnSpacing),
                           child: Text(
                             ColorTools.materialName(
-                              _selectedColor,
+                              _selectedColor.withAlpha(0xFF),
                               colorSwatchNameMap:
                                   widget.customColorSwatchesAndNames,
                             ),
@@ -1484,6 +1457,7 @@ class _ColorPickerState extends State<ColorPicker> {
                                 widget.colorCodeReadOnly,
                             textStyle: widget.colorCodeTextStyle,
                             prefixStyle: widget.colorCodePrefixStyle,
+                            colorCodeHasColor: widget.colorCodeHasColor,
                             enableTooltips: widget.enableTooltips,
                             shouldUpdate: _editShouldUpdate,
                             onColorChanged: (Color color) {
@@ -1501,11 +1475,15 @@ class _ColorPickerState extends State<ColorPicker> {
                               if (widget.onColorChangeEnd != null) {
                                 widget.onColorChangeEnd!(_selectedColor);
                               }
+                              _addToRecentColors(color);
                             },
                             onEditFocused: (bool editInFocus) {
                               setState(() {
                                 _editCodeFocused = editInFocus;
-                                _selectedShouldFocus = false;
+                                if (_editCodeFocused) {
+                                  _selectedShouldFocus = false;
+                                  _wheelShouldFocus = false;
+                                }
                               });
                             },
                             toolIcons: widget.actionButtons,
@@ -1656,10 +1634,9 @@ class _ColorPickerState extends State<ColorPicker> {
     final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     // Clipboard data was null, exit.
     if (data == null) return;
-    final Color? clipColor = data.text.toColorMaybeNull;
+    final Color? clipColor = data.text
+        .toColorShortMaybeNull(widget.copyPasteBehavior.parseShortHexCode);
     if (clipColor != null) {
-      debugPrint('_getClipboard: ${data.text}');
-
       if (widget.onColorChangeStart != null) {
         widget.onColorChangeStart!(_selectedColor);
       }

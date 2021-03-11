@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'alignment_switch.dart';
 import 'copy_format_switch.dart';
+import 'maybe_tooltip.dart';
+import 'switch_tile_tooltip.dart';
 
 // Max width of the body content when used on a wide screen.
 const double kMaxBodyWidth = 2100;
@@ -23,7 +25,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     ColorPickerType.both: false,
     ColorPickerType.primary: true,
     ColorPickerType.accent: true,
-    ColorPickerType.bw: true,
+    ColorPickerType.bw: false,
     ColorPickerType.custom: true,
     ColorPickerType.wheel: true,
   };
@@ -33,11 +35,13 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool showTitle = true;
   bool showHeading = true;
   bool showSubheading = true;
+  bool showRecentSubheading = true;
 
   bool showMaterialName = true;
   bool showColorName = true;
   bool showColorCode = true;
   bool showColorValue = false;
+  bool colorCodeHasColor = false;
   bool colorCodeReadOnly = false;
   bool showRecentColors = true;
 
@@ -57,49 +61,46 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   CrossAxisAlignment alignment = CrossAxisAlignment.center;
   double padding = 10;
   double columnSpacing = 8;
-  bool hasOkButton = true;
-  bool hasCloseButton = true;
-  bool dialogActions = true;
+  bool okButton = true;
+  bool closeButton = true;
+  bool dialogActionButtons = true;
   bool dialogActionIcons = true;
   bool enableTooltips = true;
-  // TODO: Commented from published pre-version, delete later.
-  // bool hitTestBehavior = false;
 
   // Copy paste actions
-  bool useCtrlC = true;
-  bool useCtrlV = true;
-  bool showCopyButton = true;
-  bool showPasteButton = true;
-  bool editFieldHasCopyButton = true;
+  bool ctrlC = true;
+  bool ctrlV = true;
+  bool copyButton = true;
+  bool pasteButton = true;
+  bool editFieldCopyButton = true;
   bool longPressMenu = true;
   bool secondaryMenu = true;
   bool secondaryOnDesktopLongOnDevice = true;
-  // TODO: This property is no longer needed, remove it before publishing.
-  // bool autoFocusKeyHandler = true;
+  bool parseShortHexCode = true;
   bool editUsesParsedPaste = true;
-  bool showSnackBarPasteError = true;
-  bool useSnackBarAudiblePasteError = false;
+  bool snackBarParseError = true;
+  bool feedbackParseError = false;
 
   // Selected colors as local state, set via initState.
   late Color screenPickerColor;
   late Color dialogPickerColor;
-  late Color startChangeColor;
-  late Color duringChangeColor;
-  late Color endChangeColor;
+  late Color onColorChangeStart;
+  late Color onColorChanged;
+  late Color onColorChangeEnd;
 
   List<Color> screenRecentColors = <Color>[];
   List<Color> dialogRecentColors = <Color>[];
 
   static const double _pickItemMinSize = 20;
   static const double _pickItemMaxSize = 60;
-  static const double _kToggleFontSize = 10;
+  static const double _kToggleFontSize = 11;
   static const List<Widget> _toggleButtons = <Widget>[
-    Text('Primary &\nAccent',
+    Text('Primary\nAccent',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: _kToggleFontSize)),
     Text('Primary', style: TextStyle(fontSize: _kToggleFontSize)),
     Text('Accent', style: TextStyle(fontSize: _kToggleFontSize)),
-    Text('Black &\nWhite',
+    Text('Black\nWhite',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: _kToggleFontSize)),
     Text('Custom ', style: TextStyle(fontSize: _kToggleFontSize)),
@@ -155,7 +156,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   void initState() {
     screenPickerColor = Colors.blue;
     dialogPickerColor = Colors.red;
-    startChangeColor = duringChangeColor = endChangeColor = screenPickerColor;
+    onColorChangeStart = onColorChanged = onColorChangeEnd = screenPickerColor;
     super.initState();
   }
 
@@ -172,20 +173,20 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     // The theme colorscheme is referenced many times, so we use a ref to it.
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    final Color startChangeOnColor =
-        ThemeData.estimateBrightnessForColor(startChangeColor) ==
+    final Color onColorChangeStartOnColor =
+        ThemeData.estimateBrightnessForColor(onColorChangeStart) ==
                 Brightness.light
             ? Colors.black
             : Colors.white;
 
-    final Color duringChangeOnColor =
-        ThemeData.estimateBrightnessForColor(duringChangeColor) ==
-                Brightness.light
+    final Color onColorChangedOnColor =
+        ThemeData.estimateBrightnessForColor(onColorChanged) == Brightness.light
             ? Colors.black
             : Colors.white;
 
     final Color endChangeOnColor =
-        ThemeData.estimateBrightnessForColor(endChangeColor) == Brightness.light
+        ThemeData.estimateBrightnessForColor(onColorChangeEnd) ==
+                Brightness.light
             ? Colors.black
             : Colors.white;
 
@@ -215,6 +216,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
           elevation: elevation,
           color: dialogPickerColor,
           hasBorder: hasBorder,
+          onSelectFocus: false,
           onSelect: () async {
             final Color colorBeforeDialog = dialogPickerColor;
             if (!(await colorPickerDialog())) {
@@ -240,64 +242,26 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
           hasBorder: hasBorder,
         ),
       ),
-      //
-      ListTile(
-        title: const Padding(
-          padding: EdgeInsets.only(bottom: 4),
-          child: Text('Color change trackers'),
-        ),
-        subtitle: Wrap(children: <Widget>[
-          Chip(
-            label: Text(
-              'Start ${startChangeColor.hex}',
-              style: TextStyle(color: startChangeOnColor),
-            ),
-            backgroundColor: startChangeColor,
-          ),
-          const SizedBox(width: 8),
-          Chip(
-            label: Text(
-              'Change ${duringChangeColor.hex}',
-              style: TextStyle(color: duringChangeOnColor),
-            ),
-            backgroundColor: duringChangeColor,
-          ),
-          const SizedBox(width: 8),
-          Chip(
-            label: Text(
-              'End ${endChangeColor.hex}',
-              style: TextStyle(color: endChangeOnColor),
-            ),
-            backgroundColor: endChangeColor,
-          ),
-        ]),
-      ),
       // Color picker demo in a raised card
       SizedBox(
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(6),
           child: Card(
-            elevation: 4,
+            elevation: 2,
             child: ColorPicker(
               color: screenPickerColor,
               onColorChangeStart: (Color color) {
-                setState(() => startChangeColor = color);
-                // TODO Remove me
-                debugPrint('onColorChangeStart called');
+                setState(() => onColorChangeStart = color);
               },
               onColorChanged: (Color color) {
                 setState(() {
                   screenPickerColor = color;
-                  duringChangeColor = screenPickerColor;
+                  onColorChanged = screenPickerColor;
                 });
-                // TODO Remove me
-                debugPrint('onColorChanged called');
               },
               onColorChangeEnd: (Color color) {
-                setState(() => endChangeColor = color);
-                // TODO Remove me
-                debugPrint('onColorChangeEnd called');
+                setState(() => onColorChangeEnd = color);
               },
               onRecentColorsChanged: (List<Color> colors) {
                 setState(() => screenRecentColors = colors);
@@ -307,20 +271,19 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               enableShadesSelection: enableShadesSelection,
               includeIndex850: includeIndex850,
               copyPasteBehavior: ColorPickerCopyPasteBehavior(
-                ctrlC: useCtrlC,
-                ctrlV: useCtrlV,
-                copyButton: showCopyButton,
-                pasteButton: showPasteButton,
+                ctrlC: ctrlC,
+                ctrlV: ctrlV,
+                copyButton: copyButton,
+                pasteButton: pasteButton,
                 copyFormat: copyFormat,
                 longPressMenu: longPressMenu,
                 secondaryMenu: secondaryMenu,
                 secondaryOnDesktopLongOnDevice: secondaryOnDesktopLongOnDevice,
-                editFieldCopyButton: editFieldHasCopyButton,
-                // TODO: This property is no longer needed, remove it before publishing.
-                // autoFocus: autoFocusKeyHandler,
+                editFieldCopyButton: editFieldCopyButton,
+                parseShortHexCode: parseShortHexCode,
                 editUsesParsedPaste: editUsesParsedPaste,
-                snackBarParseError: showSnackBarPasteError,
-                feedbackParseError: useSnackBarAudiblePasteError,
+                snackBarParseError: snackBarParseError,
+                feedbackParseError: feedbackParseError,
               ),
               width: size,
               height: size,
@@ -360,7 +323,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                       style: Theme.of(context).textTheme.subtitle1,
                     )
                   : null,
-              recentColorsSubheading: showRecentColors
+              recentColorsSubheading: showRecentSubheading
                   ? Text(
                       'Recent colors',
                       style: Theme.of(context).textTheme.subtitle1,
@@ -369,30 +332,82 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               showMaterialName: showMaterialName,
               showColorName: showColorName,
               showColorCode: showColorCode,
-              showColorValue: showColorValue,
+              colorCodeHasColor: colorCodeHasColor,
               colorCodeReadOnly: colorCodeReadOnly,
+              showColorValue: showColorValue,
               showRecentColors: showRecentColors,
               recentColors: screenRecentColors,
-              maxRecentColors: 10,
-              // The name map is used to give the custom colors names
+              maxRecentColors: 6,
+              // The name map is used to give the custom colors their names.
               customColorSwatchesAndNames: colorsNameMap,
               colorCodeTextStyle: Theme.of(context).textTheme.subtitle1,
               colorCodePrefixStyle: Theme.of(context).textTheme.caption,
-              // TODO: Commented from published pre-version, delete later.
-              // hitTestBehavior: hitTestBehavior
-              //     ? HitTestBehavior.translucent
-              //     : HitTestBehavior.deferToChild,
             ),
           ),
         ),
       ),
-      const SizedBox(height: 8),
+      //
+      const ListTile(
+        title: Text('Color change event callbacks'),
+        subtitle: Text('There are callbacks for when a color change '
+            'starts, is happening and ends. They include color before start, '
+            'during change and when change ended.'),
+      ),
       ListTile(
-        title: const Text('Copy format'),
-        trailing: CopyFormatSwitch(
-          format: copyFormat,
-          onChanged: (ColorPickerCopyFormat value) =>
-              setState(() => copyFormat = value),
+        subtitle: Wrap(children: <Widget>[
+          MaybeTooltip(
+            condition: enableTooltips,
+            tooltip: 'ColorPicker(onColorChangeStart: '
+                '(Color ${onColorChangeStart.hexAlpha}) { ... } );',
+            child: Chip(
+              label: Text(
+                'Start ${onColorChangeStart.hexAlpha}',
+                style: TextStyle(color: onColorChangeStartOnColor),
+              ),
+              backgroundColor: onColorChangeStart,
+            ),
+          ),
+          const SizedBox(width: 8),
+          MaybeTooltip(
+            condition: enableTooltips,
+            tooltip: 'ColorPicker(onColorChanged: '
+                '(Color ${onColorChanged.hexAlpha}) { ... } );',
+            child: Chip(
+              label: Text(
+                'Change ${onColorChanged.hexAlpha}',
+                style: TextStyle(color: onColorChangedOnColor),
+              ),
+              backgroundColor: onColorChanged,
+            ),
+          ),
+          const SizedBox(width: 8),
+          MaybeTooltip(
+            condition: enableTooltips,
+            tooltip: 'ColorPicker(onColorChangeEnd: '
+                '(Color ${onColorChangeEnd.hexAlpha}) { ... } );',
+            child: Chip(
+              label: Text(
+                'End ${onColorChangeEnd.hexAlpha}',
+                style: TextStyle(color: endChangeOnColor),
+              ),
+              backgroundColor: onColorChangeEnd,
+            ),
+          ),
+        ]),
+      ),
+      const Divider(),
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(copyFormat:\n'
+            '    $copyFormat));',
+        child: ListTile(
+          title: const Text('Copy format'),
+          trailing: CopyFormatSwitch(
+            format: copyFormat,
+            onChanged: (ColorPickerCopyFormat value) =>
+                setState(() => copyFormat = value),
+          ),
         ),
       ),
       const SizedBox(height: 8),
@@ -403,8 +418,19 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         subtitle: SelectableText('Primary FF7B1FA2  Accent FFCCFF90  '
             'BW FFF9F9F9\n'
             'Custom #014443  Wheel 0xFF6E55C4  ShortWeb 5EC\n'
-            'Partial #DDFF  Fail 94G02\n'
+            'Partial #DDFF  Opacity #99FF9800  Fail 94G02\n'
             'PASTE supports all above formats. COPY in selected format.'),
+      ),
+      SwitchTileTooltip(
+        title: const Text('Enable support for CSS WEB 3 char hex RGB format'),
+        subtitle: const Text('Applies to both paste action and color '
+            'code entry.'),
+        value: parseShortHexCode,
+        onChanged: (bool value) => setState(() => parseShortHexCode = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(parseShortHexCode: '
+            '$parseShortHexCode));',
       ),
     ];
 
@@ -420,153 +446,190 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      ListTile(
-        title: const Text('Show pickers'),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: ToggleButtons(
-                isSelected: toggleButtonIsSelected,
-                selectedColor: colorScheme.onPrimary,
-                color: colorScheme.onSurface,
-                fillColor: colorScheme.primary,
-                hoverColor: colorScheme.primary.withOpacity(0.2),
-                focusColor: colorScheme.primary.withOpacity(0.3),
-                borderWidth: 2,
-                borderColor: colorScheme.primary,
-                selectedBorderColor: colorScheme.primary,
-                borderRadius: BorderRadius.circular(50),
-                constraints: const BoxConstraints(minWidth: 53, minHeight: 50),
-                onPressed: (int index) {
-                  // Copy the currently enabled pickers map.
-                  final Map<ColorPickerType, bool> pEnabled =
-                      <ColorPickerType, bool>{...pickersEnabled};
-                  // Set enabled pickers based on toggle buttons
-                  // custom logic by mutating the copy of enabled
-                  // pickers.
-                  toggleButtonIsSelected[index] =
-                      !toggleButtonIsSelected[index];
-                  if (index == 0) {
-                    pEnabled[ColorPickerType.both] =
-                        toggleButtonIsSelected[index];
-                    // If 'Both' on then primary & Accent are off
-                    if (pEnabled[ColorPickerType.both]!) {
-                      toggleButtonIsSelected[1] = false;
-                      pEnabled[ColorPickerType.primary] = false;
-                      toggleButtonIsSelected[2] = false;
-                      pEnabled[ColorPickerType.accent] = false;
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(pickersEnabled:\n'
+            '  $pickersEnabled);',
+        child: ListTile(
+          title: const Text('Show pickers'),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: ToggleButtons(
+                  isSelected: toggleButtonIsSelected,
+                  selectedColor: colorScheme.onPrimary,
+                  color: colorScheme.onSurface,
+                  fillColor: colorScheme.primary,
+                  hoverColor: colorScheme.primary.withOpacity(0.2),
+                  focusColor: colorScheme.primary.withOpacity(0.3),
+                  borderWidth: 2,
+                  borderColor: colorScheme.primary,
+                  selectedBorderColor: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(44),
+                  constraints:
+                      const BoxConstraints(minWidth: 50, minHeight: 44),
+                  onPressed: (int index) {
+                    // Copy the currently enabled pickers map.
+                    final Map<ColorPickerType, bool> pEnabled =
+                        <ColorPickerType, bool>{...pickersEnabled};
+                    // Set enabled pickers based on toggle buttons
+                    // custom logic by mutating the copy of enabled
+                    // pickers.
+                    toggleButtonIsSelected[index] =
+                        !toggleButtonIsSelected[index];
+                    if (index == 0) {
+                      pEnabled[ColorPickerType.both] =
+                          toggleButtonIsSelected[index];
+                      // If 'Both' on then primary & Accent are off
+                      if (pEnabled[ColorPickerType.both]!) {
+                        toggleButtonIsSelected[1] = false;
+                        pEnabled[ColorPickerType.primary] = false;
+                        toggleButtonIsSelected[2] = false;
+                        pEnabled[ColorPickerType.accent] = false;
+                      }
                     }
-                  }
-                  if (index == 1) {
-                    pEnabled[ColorPickerType.primary] =
-                        toggleButtonIsSelected[index];
-                    // If we turned on 'primary', we turn of 'Both'
-                    if (pEnabled[ColorPickerType.primary]!) {
-                      toggleButtonIsSelected[0] = false;
-                      pEnabled[ColorPickerType.both] = false;
+                    if (index == 1) {
+                      pEnabled[ColorPickerType.primary] =
+                          toggleButtonIsSelected[index];
+                      // If we turned on 'primary', we turn of 'Both'
+                      if (pEnabled[ColorPickerType.primary]!) {
+                        toggleButtonIsSelected[0] = false;
+                        pEnabled[ColorPickerType.both] = false;
+                      }
                     }
-                  }
-                  if (index == 2) {
-                    pEnabled[ColorPickerType.accent] =
-                        toggleButtonIsSelected[index];
-                    // If we turned on 'accent', we turn of 'Both'
-                    if (pEnabled[ColorPickerType.accent]!) {
-                      toggleButtonIsSelected[0] = false;
-                      pEnabled[ColorPickerType.both] = false;
+                    if (index == 2) {
+                      pEnabled[ColorPickerType.accent] =
+                          toggleButtonIsSelected[index];
+                      // If we turned on 'accent', we turn of 'Both'
+                      if (pEnabled[ColorPickerType.accent]!) {
+                        toggleButtonIsSelected[0] = false;
+                        pEnabled[ColorPickerType.both] = false;
+                      }
                     }
-                  }
-                  if (index == 3) {
-                    pEnabled[ColorPickerType.bw] =
-                        toggleButtonIsSelected[index];
-                  }
-                  if (index == 4) {
-                    pEnabled[ColorPickerType.custom] =
-                        toggleButtonIsSelected[index];
-                  }
-                  if (index == 5) {
-                    pEnabled[ColorPickerType.wheel] =
-                        toggleButtonIsSelected[index];
-                  }
-                  setState(() {
-                    // Copy the enabled pickers from the mutated
-                    // copy. If we mutate the pickersEnabled map
-                    // directly the didUpdateWidget will be called,
-                    // but the old and new values will be same
-                    // since we mutated the widget input. Doing it
-                    // this way, the didUpdateWidget function of the
-                    // StatefulWidget sees the changed values of
-                    // pickersEnabled. We need that for dynamically
-                    // changing the enabled pickers correctly.
-                    // Normally you would just define the pickers
-                    // you want when you instantiate it and not
-                    // change it, so you would not need to do this.
-                    pickersEnabled = <ColorPickerType, bool>{...pEnabled};
-                  });
-                },
-                children: _toggleButtons,
+                    if (index == 3) {
+                      pEnabled[ColorPickerType.bw] =
+                          toggleButtonIsSelected[index];
+                    }
+                    if (index == 4) {
+                      pEnabled[ColorPickerType.custom] =
+                          toggleButtonIsSelected[index];
+                    }
+                    if (index == 5) {
+                      pEnabled[ColorPickerType.wheel] =
+                          toggleButtonIsSelected[index];
+                    }
+                    setState(() {
+                      // Copy the enabled pickers from the mutated
+                      // copy. If we mutate the pickersEnabled map
+                      // directly the didUpdateWidget will be called,
+                      // but the old and new values will be same
+                      // since we mutated the widget input. Doing it
+                      // this way, the didUpdateWidget function of the
+                      // StatefulWidget sees the changed values of
+                      // pickersEnabled. We need that for dynamically
+                      // changing the enabled pickers correctly.
+                      // Normally you would just define the pickers
+                      // you want when you instantiate it and not
+                      // change it, so you would not need to do this.
+                      pickersEnabled = <ColorPickerType, bool>{...pEnabled};
+                    });
+                  },
+                  children: _toggleButtons,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show color shades'),
         subtitle: const Text('Turn OFF to only be able to select the main '
             'color in a color swatch.'),
         value: enableShadesSelection,
         onChanged: (bool value) =>
             setState(() => enableShadesSelection = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(enableShadesSelection: $enableShadesSelection);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show grey color index 850'),
         subtitle: const Text('To include the not so well known 850 color in '
             'the Grey swatch, turn this ON.'),
         value: includeIndex850,
         onChanged: (bool value) => setState(() => includeIndex850 = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(includeIndex850: $includeIndex850);',
       ),
       const Divider(),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show picker toolbar title'),
         subtitle:
             const Text('You can provide your own picker toolbar title, if '
                 'it is null there is no title.'),
         value: showTitle,
         onChanged: (bool value) => setState(() => showTitle = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: showTitle
+            ? "ColorPicker(title: Text('Color Picker'));"
+            : 'ColorPicker(title: null);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show heading text'),
         subtitle: const Text('You can provide your own heading widget, if '
             'it is null there is no heading.'),
         value: showHeading,
         onChanged: (bool value) => setState(() => showHeading = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: showHeading
+            ? "ColorPicker(heading: Text('Select color'));"
+            : 'ColorPicker(heading: null);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show subheading text'),
         subtitle: const Text('You can provide your own subheading widget, if '
             'it is null there is no sub heading.'),
         value: showSubheading,
         onChanged: (bool value) => setState(() => showSubheading = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: showSubheading
+            ? "ColorPicker(subheading: Text('Select color shade'));"
+            : 'ColorPicker(subheading: null);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Show subheading text for recent colors'),
+        subtitle: const Text('You can provide your own subheading widget, if '
+            'it is null there is no sub heading.'),
+        value: showRecentSubheading,
+        onChanged: (bool value) => setState(() => showRecentSubheading = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: showRecentSubheading
+            ? "ColorPicker(recentColorsSubheading: Text('Recent colors'));"
+            : 'ColorPicker(recentColorsSubheading: null);',
       ),
       const Divider(),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show Material color name'),
         subtitle:
             const Text('If the color has a Material name, it is shown along '
                 'with its shade index.'),
         value: showMaterialName,
         onChanged: (bool value) => setState(() => showMaterialName = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showMaterialName: $showMaterialName);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show color name'),
         subtitle:
             const Text('Shows a general English color name for any selected '
                 'color.'),
         value: showColorName,
         onChanged: (bool value) => setState(() => showColorName = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorName: $showColorName);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show selected color code'),
         subtitle:
             const Text('Show the Flutter style HEX RGB value of the selected '
@@ -574,26 +637,43 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                 'RGB value.'),
         value: showColorCode,
         onChanged: (bool value) => setState(() => showColorCode = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorCode: $showColorCode);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
+        title: const Text('Current color used as color code background'),
+        value: colorCodeHasColor,
+        onChanged: (bool value) => setState(() => colorCodeHasColor = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(colorCodeHasColor: $colorCodeHasColor);',
+      ),
+      SwitchTileTooltip(
         title: const Text('Color code always read only'),
         subtitle: const Text('Normally color code can be edited on '
             'wheel picker, set this ON to make it read only.'),
         value: colorCodeReadOnly,
         onChanged: (bool value) => setState(() => colorCodeReadOnly = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(colorCodeReadOnly: $colorCodeReadOnly);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show integer color value'),
         subtitle: const Text(
             'Show the integer value of the selected color. The value '
             'can be selected and copied. Typically used as a dev feature.'),
         value: showColorValue,
         onChanged: (bool value) => setState(() => showColorValue = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorValue: $showColorValue);',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Show recently used colors'),
+        subtitle: const Text('With the API you can also control how many '
+            'recent colors are shown and the sub heading for it.'),
         value: showRecentColors,
         onChanged: (bool value) => setState(() => showRecentColors = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showRecentColors: $showRecentColors);',
       ),
     ];
 
@@ -610,262 +690,300 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         ),
       ),
       // Color picker size
-      ListTile(
-        title: const Text('Color picker item size'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              min: _pickItemMinSize,
-              max: _pickItemMaxSize,
-              divisions: (_pickItemMaxSize - _pickItemMinSize).floor(),
-              label: size.floor().toString(),
-              value: size,
-              onChanged: (double value) {
-                if (value / 2 < borderRadius) {
-                  borderRadius = value / 2;
-                }
-                setState(() => size = value);
-              },
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(\n'
+            '  width: ${size.floor().toString()},\n'
+            '  height: ${size.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker item size'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                size.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                min: _pickItemMinSize,
+                max: _pickItemMaxSize,
+                divisions: (_pickItemMaxSize - _pickItemMinSize).floor(),
+                label: size.floor().toString(),
+                value: size,
+                onChanged: (double value) {
+                  if (value / 2 < borderRadius) {
+                    borderRadius = value / 2;
+                  }
+                  setState(() => size = value);
+                },
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  size.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Border radius
-      ListTile(
-        title: const Text('Color picker item border radius'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: size / 2,
-              divisions: (size / 2).floor(),
-              label: borderRadius.floor().toString(),
-              value: borderRadius,
-              onChanged: (double value) => setState(() => borderRadius = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(borderRadius: ${borderRadius.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker item border radius'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                borderRadius.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: size / 2,
+                divisions: (size / 2).floor(),
+                label: borderRadius.floor().toString(),
+                value: borderRadius,
+                onChanged: (double value) =>
+                    setState(() => borderRadius = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  borderRadius.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Elevation of color pick item
-      ListTile(
-        title: const Text('Color picker item elevation'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: 16,
-              divisions: 16,
-              label: elevation.floor().toString(),
-              value: elevation,
-              onChanged: (double value) => setState(() => elevation = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(elevation: ${elevation.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker item elevation'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                elevation.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: 16,
+                divisions: 16,
+                label: elevation.floor().toString(),
+                value: elevation,
+                onChanged: (double value) => setState(() => elevation = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  elevation.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Spacing of color pick items
-      ListTile(
-        title: const Text('Color picker item spacing'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: 25,
-              divisions: 25,
-              label: spacing.floor().toString(),
-              value: spacing,
-              onChanged: (double value) => setState(() => spacing = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(spacing: ${spacing.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker item spacing'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                spacing.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: 25,
+                divisions: 25,
+                label: spacing.floor().toString(),
+                value: spacing,
+                onChanged: (double value) => setState(() => spacing = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  spacing.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Run spacing of color pick items
-      ListTile(
-        title: const Text('Color picker item run spacing'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: 25,
-              divisions: 25,
-              label: runSpacing.floor().toString(),
-              value: runSpacing,
-              onChanged: (double value) => setState(() => runSpacing = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(runSpacing: ${runSpacing.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker item run spacing'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                runSpacing.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: 25,
+                divisions: 25,
+                label: runSpacing.floor().toString(),
+                value: runSpacing,
+                onChanged: (double value) => setState(() => runSpacing = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  runSpacing.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Border around pick items.
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Border around color pick items'),
         subtitle: const Text('With the API you can also adjust the '
             'border color.'),
         value: hasBorder,
         onChanged: (bool value) => setState(() => hasBorder = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(hasBorder: $hasBorder);',
       ),
       const Divider(),
       // Wheel size selector
-      ListTile(
-        title: const Text('Color wheel size'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              min: 150,
-              max: 500,
-              divisions: 40,
-              label: wheelDiameter.floor().toString(),
-              value: wheelDiameter,
-              onChanged: (double value) =>
-                  setState(() => wheelDiameter = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(wheelDiameter: ${wheelDiameter.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color wheel size'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                wheelDiameter.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                min: 150,
+                max: 500,
+                divisions: 40,
+                label: wheelDiameter.floor().toString(),
+                value: wheelDiameter,
+                onChanged: (double value) =>
+                    setState(() => wheelDiameter = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  wheelDiameter.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Wheel width selector
-      ListTile(
-        title: const Text('Color wheel width'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              min: 4,
-              max: 50,
-              divisions: 50 - 4,
-              label: wheelWidth.floor().toString(),
-              value: wheelWidth,
-              onChanged: (double value) => setState(() => wheelWidth = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(wheelWidth: ${wheelWidth.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color wheel width'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                wheelWidth.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                min: 4,
+                max: 50,
+                divisions: 50 - 4,
+                label: wheelWidth.floor().toString(),
+                value: wheelWidth,
+                onChanged: (double value) => setState(() => wheelWidth = value),
               ),
             ],
           ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  wheelWidth.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Border around color wheel'),
         subtitle: const Text('With the API you can also adjust the '
             'border color'),
         value: wheelHasBorder,
         onChanged: (bool value) => setState(() => wheelHasBorder = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(wheelHasBorder: $wheelHasBorder);',
       ),
       const Divider(),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Enable tooltips'),
-        subtitle: const Text('Turn OFF to disable all tooltips in the picker.'),
-        // TODO: Add this text when API tooltips have been added to the demo.
-        // '\n(Also enables and disables API tooltips in this demo.)'),
+        subtitle: const Text('Turn OFF to disable all tooltips in the picker.'
+            '\n(Also enables and disables API tooltips in this demo)'),
         value: enableTooltips,
         onChanged: (bool value) => setState(() => enableTooltips = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(enableTooltips: $enableTooltips);',
       ),
     ];
 
@@ -881,103 +999,132 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      ListTile(
-        title: const Text('Content alignment'),
-        subtitle: const Text('Start - Center - End'),
-        trailing: AlignmentSwitch(
-          alignment: alignment,
-          onChanged: (CrossAxisAlignment value) =>
-              setState(() => alignment = value),
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(crossAxisAlignment:\n'
+            '  $alignment});',
+        child: ListTile(
+          title: const Text('Content alignment'),
+          subtitle: const Text('Start - Center - End'),
+          trailing: AlignmentSwitch(
+            alignment: alignment,
+            onChanged: (CrossAxisAlignment value) =>
+                setState(() => alignment = value),
+          ),
         ),
       ),
       // Vertical space between items in the color picker
-      ListTile(
-        title: const Text('Color picker row space'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: 40,
-              divisions: 40,
-              label: columnSpacing.floor().toString(),
-              value: columnSpacing,
-              onChanged: (double value) =>
-                  setState(() => columnSpacing = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(columnSpacing: ${columnSpacing.floor().toString()});',
+        child: ListTile(
+          title: const Text('Color picker row space'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                columnSpacing.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: 40,
+                divisions: 40,
+                label: columnSpacing.floor().toString(),
+                value: columnSpacing,
+                onChanged: (double value) =>
+                    setState(() => columnSpacing = value),
               ),
             ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  columnSpacing.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       // Padding around all the content in the picker
-      ListTile(
-        title: const Text('Color picker content padding'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Slider.adaptive(
-              max: 40,
-              divisions: 40,
-              label: padding.floor().toString(),
-              value: padding,
-              onChanged: (double value) => setState(() => padding = value),
-            ),
-          ],
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip: 'ColorPicker(padding:\n'
+            '  EdgeInsets.all(${padding.floor().toString()}));',
+        child: ListTile(
+          title: const Text('Color picker content padding'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'dp',
-                style: TextStyle(fontSize: 11),
-              ),
-              Text(
-                padding.floor().toString(),
-                style: const TextStyle(fontSize: 15),
+              Slider.adaptive(
+                max: 40,
+                divisions: 40,
+                label: padding.floor().toString(),
+                value: padding,
+                onChanged: (double value) => setState(() => padding = value),
               ),
             ],
           ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  padding.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Dialog top toolbar has CLOSE button'),
-        value: hasCloseButton,
-        onChanged: (bool value) => setState(() => hasCloseButton = value),
+      SwitchTileTooltip(
+        title: const Text('Dialog toolbar has CLOSE button'),
+        subtitle: const Text('Use API to change icon and theme the button.'),
+        value: closeButton,
+        onChanged: (bool value) => setState(() => closeButton = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(actionButtons:\n'
+            '  ColorPickerActionButtons(closeButton: $closeButton));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Dialog top toolbar has OK button'),
-        value: hasOkButton,
-        onChanged: (bool value) => setState(() => hasOkButton = value),
+      SwitchTileTooltip(
+        title: const Text('Dialog toolbar has OK button'),
+        subtitle: const Text('Use API to change icon and theme the button.'),
+        value: okButton,
+        onChanged: (bool value) => setState(() => okButton = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(actionButtons:\n'
+            '  ColorPickerActionButtons(okButton: $okButton));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Dialog bottom has CANCEL and OK actions'),
-        subtitle: const Text('Bottom action remains if toolbar action is '
-            'not turned ON.'),
-        value: dialogActions,
-        onChanged: (bool value) => setState(() => dialogActions = value),
+      SwitchTileTooltip(
+        title: const Text('Dialog has CANCEL and OK buttons'),
+        subtitle: const Text('Bottom action button will remain present if its '
+            'toolbar button is not turned ON.'),
+        value: dialogActionButtons,
+        onChanged: (bool value) => setState(() => dialogActionButtons = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(actionButtons:\n'
+            '  ColorPickerActionButtons(dialogActionButtons: '
+            '$dialogActionButtons));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Dialog bottom actions have icons'),
-        subtitle: const Text('You can also customize the icons and type of '
-            'button for the actions.'),
+      SwitchTileTooltip(
+        title: const Text('Dialog action buttons have icons'),
+        subtitle: const Text('Use API to also customize button and icon.'),
         value: dialogActionIcons,
         onChanged: (bool value) => setState(() => dialogActionIcons = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(actionButtons:\n'
+            '  ColorPickerActionButtons(dialogActionIcons: $dialogActionIcons));',
       ),
 
       const Divider(),
@@ -988,82 +1135,107 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable CTRL+C to copy'),
-        value: useCtrlC,
-        onChanged: (bool value) => setState(() => useCtrlC = value),
+      SwitchTileTooltip(
+        title: const Text('Enable CTRL-C CMD-C to copy'),
+        value: ctrlC,
+        onChanged: (bool value) => setState(() => ctrlC = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(ctrlC: $ctrlC));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable CTRL+V to paste'),
-        value: useCtrlV,
-        onChanged: (bool value) => setState(() => useCtrlV = value),
+      SwitchTileTooltip(
+        title: const Text('Enable CTRL-V CMD-V to paste'),
+        value: ctrlV,
+        onChanged: (bool value) => setState(() => ctrlV = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(ctrlV: $ctrlV));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable top toolbar Copy action button'),
-        value: showCopyButton,
-        onChanged: (bool value) => setState(() => showCopyButton = value),
+      SwitchTileTooltip(
+        title: const Text('Enable toolbar COPY action button'),
+        value: copyButton,
+        onChanged: (bool value) => setState(() => copyButton = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(copyButton: $copyButton));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable top toolbar Paste action button'),
-        value: showPasteButton,
-        onChanged: (bool value) => setState(() => showPasteButton = value),
+      SwitchTileTooltip(
+        title: const Text('Enable toolbar PASTE action button'),
+        value: pasteButton,
+        onChanged: (bool value) => setState(() => pasteButton = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(pasteButton: $pasteButton));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Enable color code edit field copy button'),
-        value: editFieldHasCopyButton,
-        onChanged: (bool value) =>
-            setState(() => editFieldHasCopyButton = value),
+      SwitchTileTooltip(
+        title: const Text('Enable color code edit field COPY button'),
+        value: editFieldCopyButton,
+        onChanged: (bool value) => setState(() => editFieldCopyButton = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(editFieldCopyButton: '
+            '$editFieldCopyButton));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Secondary (right) click copy and paste menu'),
+      SwitchTileTooltip(
+        title: const Text('Secondary click COPY-PASTE menu'),
+        subtitle: const Text('Typically mouse right click.'),
         value: secondaryMenu,
         onChanged: (bool value) => setState(() => secondaryMenu = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(secondaryMenu: $secondaryMenu));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Long press copy and paste menu'),
+      SwitchTileTooltip(
+        title: const Text('Long press COPY-PASTE menu'),
         value: longPressMenu,
         onChanged: (bool value) => setState(() => longPressMenu = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(longPressMenu: $longPressMenu));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Long press on device, right click on desktop'),
+      SwitchTileTooltip(
+        title: const Text('Long press COPY-PASTE menu on Android/iOS, but '
+            'right click on desktops'),
         value: secondaryOnDesktopLongOnDevice,
         onChanged: (bool value) =>
             setState(() => secondaryOnDesktopLongOnDevice = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(\n'
+            '    secondaryOnDesktopLongOnDevice: '
+            '$secondaryOnDesktopLongOnDevice));',
       ),
-      // TODO: This property is no longer needed, remove it before publishing.
-      // SwitchListTile.adaptive(
-      //   title: const Text('Auto focus on key event handler'),
-      //   value: autoFocusKeyHandler,
-      //   onChanged: (bool value) => setState(() =>
-      //   autoFocusKeyHandler = value),
-      // ),
-      SwitchListTile.adaptive(
-        title: const Text('Edit color code uses paste parser'),
+      SwitchTileTooltip(
+        title: const Text('Color code entry field uses paste parser'),
+        subtitle: const Text('Turn OFF to use normal text field paste. '
+            'This feature only applies to desktop keyboard shortcuts.'),
         value: editUsesParsedPaste,
         onChanged: (bool value) => setState(() => editUsesParsedPaste = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(editUsesParsedPaste: '
+            '$editUsesParsedPaste));',
       ),
-      SwitchListTile.adaptive(
-        title: const Text('Show a snack bar paste error message'),
-        value: showSnackBarPasteError,
-        onChanged: (bool value) =>
-            setState(() => showSnackBarPasteError = value),
+      SwitchTileTooltip(
+        title: const Text('Snackbar paste format error message'),
+        value: snackBarParseError,
+        onChanged: (bool value) => setState(() => snackBarParseError = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(snackBarParseError: '
+            '$snackBarParseError));',
       ),
-      SwitchListTile.adaptive(
+      SwitchTileTooltip(
         title: const Text('Feedback vibration and audible paste error alert'),
-        subtitle: const Text('This feature is EXPERIMENTAL its support '
-            'is fairly limited on many platforms.'),
-        value: useSnackBarAudiblePasteError,
-        onChanged: (bool value) =>
-            setState(() => useSnackBarAudiblePasteError = value),
+        subtitle: const Text('This feature is experimental. Its support '
+            'is limited on most platforms in current Flutter SDK.'),
+        value: feedbackParseError,
+        onChanged: (bool value) => setState(() => feedbackParseError = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(copyPasteBehavior:\n'
+            '  ColorPickerCopyPasteBehavior(\n'
+            '    feedbackParseError: $feedbackParseError));',
       ),
-      // TODO: Commented from published pre-version, delete later.
-      // SwitchListTile.adaptive(
-      //   title: const Text('Hit test behavior'),
-      //   subtitle: const Text('ON for translucent, OFF for defer to '
-      //       'child. Usually kept OFF to use: HitTestBehavior.deferToChild'),
-      //   value: hitTestBehavior,
-      //   onChanged: (bool value) => setState(() => hitTestBehavior = value),
-      // ),
     ];
 
     // *************************************************************************
@@ -1155,44 +1327,44 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     return ColorPicker(
       color: dialogPickerColor,
       onColorChangeStart: (Color color) =>
-          setState(() => startChangeColor = color),
+          setState(() => onColorChangeStart = color),
       onColorChanged: (Color color) {
         setState(() {
           dialogPickerColor = color;
-          duringChangeColor = dialogPickerColor;
+          onColorChanged = dialogPickerColor;
         });
       },
-      onColorChangeEnd: (Color color) => setState(() => endChangeColor = color),
+      onColorChangeEnd: (Color color) =>
+          setState(() => onColorChangeEnd = color),
       crossAxisAlignment: alignment,
       padding: EdgeInsets.all(padding),
       enableShadesSelection: enableShadesSelection,
       includeIndex850: includeIndex850,
       copyPasteBehavior: ColorPickerCopyPasteBehavior(
-        ctrlC: useCtrlC,
-        ctrlV: useCtrlV,
-        copyButton: showCopyButton,
-        pasteButton: showPasteButton,
+        ctrlC: ctrlC,
+        ctrlV: ctrlV,
+        copyButton: copyButton,
+        pasteButton: pasteButton,
         copyFormat: copyFormat,
         longPressMenu: longPressMenu,
         secondaryMenu: secondaryMenu,
         secondaryOnDesktopLongOnDevice: secondaryOnDesktopLongOnDevice,
-        editFieldCopyButton: editFieldHasCopyButton,
-        // TODO: This property is no longer needed, remove it before publishing.
-        // autoFocus: autoFocusKeyHandler,
+        editFieldCopyButton: editFieldCopyButton,
+        parseShortHexCode: parseShortHexCode,
         editUsesParsedPaste: editUsesParsedPaste,
-        snackBarParseError: showSnackBarPasteError,
-        feedbackParseError: useSnackBarAudiblePasteError,
+        snackBarParseError: snackBarParseError,
+        feedbackParseError: feedbackParseError,
       ),
       actionButtons: ColorPickerActionButtons(
         // Make sure that you only enable the OK and Cancel button in the
         // toolbar when the picker is used in a dialog.
-        okButton: hasOkButton,
-        closeButton: hasCloseButton,
+        okButton: okButton,
+        closeButton: closeButton,
         // This will remove the default dialog action buttons if it is false.
         // However, the OK button is only removed if `actionButtons.okButton` is
         // also true, and the CANCEL button only if `actionButtons.closeButton`
         // is also true.
-        dialogActionButtons: dialogActions,
+        dialogActionButtons: dialogActionButtons,
         dialogActionIcons: dialogActionIcons,
         dialogOkButtonType: ColorPickerActionButtonType.outlined,
         dialogCancelButtonType: ColorPickerActionButtonType.text,
@@ -1234,7 +1406,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               style: Theme.of(context).textTheme.subtitle1,
             )
           : null,
-      recentColorsSubheading: showRecentColors
+      recentColorsSubheading: showRecentSubheading
           ? Text(
               'Recent colors',
               style: Theme.of(context).textTheme.subtitle1,
@@ -1243,20 +1415,17 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       showMaterialName: showMaterialName,
       showColorName: showColorName,
       showColorCode: showColorCode,
-      showColorValue: showColorValue,
+      colorCodeHasColor: colorCodeHasColor,
       colorCodeReadOnly: colorCodeReadOnly,
+      showColorValue: showColorValue,
       showRecentColors: showRecentColors,
       recentColors: dialogRecentColors,
-      maxRecentColors: 6,
+      maxRecentColors: 5,
       onRecentColorsChanged: (List<Color> colors) {
         setState(() => dialogRecentColors = colors);
       },
-      // The name map is used to give the custom colors names
+      // The name map is used to give the custom colors their names.
       customColorSwatchesAndNames: colorsNameMap,
-      // TODO: Commented from published pre-version, delete later.
-      // hitTestBehavior: hitTestBehavior
-      //     ? HitTestBehavior.translucent
-      //     : HitTestBehavior.deferToChild,
     ).showPickerDialog(
       context,
       // Let's make an even more transparent barrier color than black12
