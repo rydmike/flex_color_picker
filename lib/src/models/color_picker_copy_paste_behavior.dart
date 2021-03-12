@@ -87,10 +87,20 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
 
   /// A CTRL-C press will copy the clipboard into the picker.
   ///
+  /// When enabled, this keyboard copy color shortcut works when the
+  /// ColorPicker and one of its focusable widgets have focus. Those include
+  /// color indicator, color field, buttons, and the picker selector as
+  /// well as the color wheel.
+  ///
   /// Defaults to true.
   final bool ctrlC;
 
   /// A CTRL-V press will paste the clipboard into the picker.
+  ///
+  /// When enabled, this keyboard paste color shortcut works when the
+  /// ColorPicker and one of its focusable widgets have focus. Those include
+  /// color indicator, color field, buttons, and the picker selector as well
+  /// as the color wheel.
   ///
   /// Defaults to true.
   final bool ctrlV;
