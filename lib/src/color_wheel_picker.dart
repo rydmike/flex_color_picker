@@ -15,6 +15,7 @@ class ColorWheelPicker extends StatefulWidget {
     required this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
+    required this.onWheel,
     this.wheelWidth = 16.0,
     this.hasBorder = false,
     this.borderColor,
@@ -41,6 +42,10 @@ class ColorWheelPicker extends StatefulWidget {
   /// Optional [ValueChanged] callback, called when user ends color selection
   /// with the new color value.
   final ValueChanged<Color>? onChangeEnd;
+
+  /// Required [ValueChanged] callback, called with true when the wheel is
+  /// operated and false otherwise.
+  final ValueChanged<bool> onWheel;
 
   /// The width of the color wheel in dp.
   final double wheelWidth;
@@ -161,6 +166,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _center = Offset(_size.width / 2, _size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
+    // We are operating the wheel, so onWheel is true.
+    widget.onWheel(true);
+
     // Did the onStart, start on the square Palette box?
     isSquare =
         _vector.dx.abs() < _squareRadius && _vector.dy.abs() < _squareRadius;
@@ -213,6 +221,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset _center = Offset(size.width / 2, size.height / 2);
     final Offset _vector = offset - _startPosition - _center;
 
+    // We are operating the wheel, so onWheel is true.
+    widget.onWheel(true);
+
     // Are the updates are for the square palette box?
     if (isSquare) {
       // Calculate the color saturation
@@ -242,6 +253,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   // Called when we end dragging the thumb on the wheel or square.
   void onEnd() {
+    // We stopped operating the wheel, so onWheel is false.
+    // We can use this signal to know how to handle the drag cancel event
+    // when we were operating the wheel.
+    widget.onWheel(false);
+
     // We are ending the dragging operation, call the onChangeEnd callback
     // with the color we ended up with.
     if (widget.onChangeEnd != null) widget.onChangeEnd!(widget.color);

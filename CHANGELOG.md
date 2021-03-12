@@ -2,7 +2,7 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.0-nullsafety.3] - March 11, 2021
+## [2.0.0-nullsafety.3] - March 12, 2021
 * **Bugfix:** Color code field no longer receives focus when switching to it on wheel page.
   Focus is set to color wheel, or the selected color shade, if the
   shade colors are present. The focus handling has also been improved for desktop usage.
@@ -33,6 +33,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color. 
   The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
   null when the `String?` cannot be parsed to a `Color`. 
+* **Tests:** Added unit tests for `ColorPickerActionButtonType` and `ColorPickerCopyPasteBehavior`.  
 
 *See API documentation for more information.*
 
@@ -97,7 +98,6 @@ example folder, in "example/lib/demo/main.dart".
  *See API documentation for more information.*
 
 ### Breaking changes
-
 The following are **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color 
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
@@ -165,7 +165,6 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * Renamed: API `colorHexCode` -> `colorCode`
 
 ## [1.0.0-dev.5] - November 5, 2020
-
 * Added a feature on the wheel color picker that enables entry of a hex RGB value to select a color.
 * API changes to support separate display of Material color name `showMaterialName` and selected color code `showColorCode`, plus defining their text styles `materialNameTextStyle` and `colorCodeTextStyle`.
 * New API `showColorName` to display an English color name for any selected color, not just the Material color names or custom named color swatches. It has text style that can be defined as well `colorNameTextStyle`.
@@ -175,50 +174,43 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * Example and documentation updated.
 
 ## [1.0.0-dev.4] - November 2, 2020
-
 * Update to try to get the images to show up on pub.dev.
 * Minor documentation corrections.
 
 ## [1.0.0-dev.3] - November 2, 2020
-
 * Significant API name changes and cleanup. Decided to implement previously planned changes before the official release, even if it will also impact our own usage of the package when we move to using the published version.
 
 ## [1.0.0-dev.2] - October 30, 2020
-
 * First development pre-release on pub.dev.
 
 ---
 
 # Planned Updates and New Features
-
 These are the topics I currently have on the TODO list for this package. Have a new suggestion and idea?
 Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
 
 ### TODO
-
 - Release none pre-release version 2.
 - Add more tests.
 - Finalize tests.
 - Add support for colors with opacity or alpha.  
 - Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Additional controls for selecting active picker, custom slider and ToggleButtons.  
-- Add one more color picker types "advanced".
+- Add one more color picker type "advanced".
 
 ### MAYBE
-- Add a color selected with the wheel color selector to the custom colors section.
+- Add selected colors to the custom colors section.
 - Store colors added to the custom colors section.
 
 ### COMPLETED
-
-- Review and update the API.
-- Review and correct documentation mistakes and typos, first pass anyway.
-- Fix doc images that show up OK in Github readme.md, but not on pub.dev.
-- For the color wheel picker, add text input to get a given color based on entered HEX code.
-- Add "name that color" function that can give a name to "any" color in English.
-- Release version 1.0.0.
-- Publish version 1.0.0 on pub.dev.
-- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, 
+- Improve copy/paste feature.
+- Version 2.0.0-nullsafety.0: Add null safe version.  
+- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools,
   more tests will be added later. ColorTools has 4694 tests.
-- Version 2.0.0-nullsafety.0: Add null safe version.
-- Improve existing copy/paste feature.
-
+- Publish version 1.0.0 on pub.dev.
+- Release version 1.0.0.
+- Add "name that color" function that can give a name to "any" color in English.
+- For the color wheel picker, add text input to get a given color based on entered HEX code.
+- Fix doc images that show up OK in Github readme.md, but not on pub.dev.
+- Review and correct documentation mistakes and typos, first pass anyway.
+- Review and update the API.
