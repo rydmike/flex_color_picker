@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../universal_widgets/context_popup_menu.dart';
 
 /// Enum to handle copy and paste commands.
+///
+/// Not library exposed, private to the library.
 enum CopyPasteCommands {
   /// Copy command
   copy,
@@ -11,6 +13,8 @@ enum CopyPasteCommands {
 }
 
 /// A cut, copy paste long press menu.
+///
+/// Not library exposed, private to the library.
 @immutable
 class ContextCopyPasteMenu extends StatelessWidget {
   /// Default const constructor.

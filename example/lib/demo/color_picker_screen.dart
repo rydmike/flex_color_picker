@@ -8,7 +8,7 @@ import 'switch_tile_tooltip.dart';
 
 // Max width of the body content when used on a wide screen.
 const double kMaxBodyWidth = 2100;
-const double kMinColumnWidth = 440;
+const double kMinColumnWidth = 420;
 
 class ColorPickerScreen extends StatefulWidget {
   const ColorPickerScreen({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   double elevation = 0;
   double spacing = 4;
   double runSpacing = 4;
-  bool hasBorder = true;
+  bool hasBorder = false;
 
   double wheelDiameter = 190;
   double wheelWidth = 16;
@@ -301,7 +301,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               selectedPickerTypeColor: colorScheme.primary,
               title: showTitle
                   ? Text(
-                      'Color Picker',
+                      'ColorPicker',
                       style: Theme.of(context).textTheme.headline6,
                     )
                   : null,
@@ -354,7 +354,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             'during change and when change ended.'),
       ),
       ListTile(
-        subtitle: Wrap(children: <Widget>[
+        subtitle: Wrap(runSpacing: 8, children: <Widget>[
           MaybeTooltip(
             condition: enableTooltips,
             tooltip: 'ColorPicker(onColorChangeStart: '
@@ -362,7 +362,8 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             child: Chip(
               label: Text(
                 'Start ${onColorChangeStart.hexAlpha}',
-                style: TextStyle(color: onColorChangeStartOnColor),
+                style:
+                    TextStyle(color: onColorChangeStartOnColor, fontSize: 14),
               ),
               backgroundColor: onColorChangeStart,
             ),
@@ -375,7 +376,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             child: Chip(
               label: Text(
                 'Change ${onColorChanged.hexAlpha}',
-                style: TextStyle(color: onColorChangedOnColor),
+                style: TextStyle(color: onColorChangedOnColor, fontSize: 14),
               ),
               backgroundColor: onColorChanged,
             ),
@@ -388,7 +389,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             child: Chip(
               label: Text(
                 'End ${onColorChangeEnd.hexAlpha}',
-                style: TextStyle(color: endChangeOnColor),
+                style: TextStyle(color: endChangeOnColor, fontSize: 14),
               ),
               backgroundColor: onColorChangeEnd,
             ),
@@ -1384,7 +1385,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       pickersEnabled: pickersEnabled,
       title: showTitle
           ? Text(
-              'Color Picker',
+              'ColorPicker',
               style: Theme.of(context).textTheme.headline6,
             )
           : null,

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/color_picker_type.dart';
 
-// TODO: Test how it works on WEB, do we need a kIsWeb check too?
-// NOTE: Web should be CTRL or CMD depending on platform.
+/// These functions are not library exposed, they are private to the library.
 
 /// Returns the control key label for the current platform.
 ///

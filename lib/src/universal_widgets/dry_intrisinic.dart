@@ -12,8 +12,10 @@ import 'package:flutter/rendering.dart';
 ///
 /// This widget is useful in situations where the `child` does not
 /// support dry layout, e.g., `TextField` as of 01/02/2021.
+///
+/// Not library exposed, private to the library.
 class DryIntrinsicWidth extends SingleChildRenderObjectWidget {
-  /// Default constructor.
+  /// Default const constructor.
   const DryIntrinsicWidth({
     Key? key,
     required Widget child,
@@ -44,8 +46,10 @@ class _RenderDryIntrinsicWidth extends RenderIntrinsicWidth {
 ///
 /// This widget is useful in situations where the `child` does not
 /// support dry layout, e.g., `TextField` as of 01/02/2021.
+///
+/// Not library exposed, private to the library.
 class DryIntrinsicHeight extends SingleChildRenderObjectWidget {
-  /// Default constructor.
+  /// Default const constructor.
   const DryIntrinsicHeight({
     Key? key,
     required Widget child,

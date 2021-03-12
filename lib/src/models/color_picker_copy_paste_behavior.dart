@@ -21,19 +21,19 @@ import 'package:flutter/material.dart';
 /// format, it will also be correctly parsed to its [Color] value.
 ///
 enum ColorPickerCopyFormat {
-  /// In Flutter/Dart Hex format '0xAARRGGBB'.
+  /// In Flutter/Dart Hex RGB format '0xAARRGGBB'.
   dartCode,
 
-  /// Web Hex format with no alpha 'RRGGBB'.
+  /// Hex RGB format with no alpha 'RRGGBB'.
   hexRRGGBB,
 
-  /// Web Hex format with alpha 'AARRGGBB'.
+  /// Hex RGB format with alpha 'AARRGGBB'.
   hexAARRGGBB,
 
-  /// Web Hex format with leading num # sign and no alpha '#RRGGBB'.
+  /// Web Hex RGB format with leading num # sign and no alpha '#RRGGBB'.
   numHexRRGGBB,
 
-  /// Web Hex format with leading num # sign and alpha '#AARRGGBB'.
+  /// Web Hex RGB format with leading num # sign and alpha '#AARRGGBB'.
   numHexAARRGGBB,
 }
 
@@ -215,15 +215,18 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to false.
   final bool snackBarParseError;
 
-  /// The message widget shown in the paste parse error snack bar.
+  /// The message shown in the paste parse error snack bar.
   ///
-  /// The widget is typically a [Text]. It is shown in the snack bar when there
+  /// The String is shown in the snack bar when there
   /// is a paste parse error and [snackBarParseError] is true.
   ///
   /// If null, it defaults to the combination of the two Material localization
   /// labels `pasteButtonLabel`: `invalidDateFormatLabel` in a [Text] widget.
   /// In English it says "Paste: Invalid format.".
-  final Widget? snackBarMessage;
+  ///
+  /// The snackbar uses the closest theme with SnackBarThemeData for its
+  /// theming.
+  final String? snackBarMessage;
 
   /// The duration the paste parse error snack bar message is shown.
   ///
@@ -306,7 +309,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     double? menuWidth,
     double? menuItemHeight,
     bool? snackBarParseError,
-    Widget? snackBarMessage,
+    String? snackBarMessage,
     Duration? snackBarDuration,
     bool? feedbackParseError,
     bool? parseShortHexCode,
@@ -468,8 +471,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     properties.add(DoubleProperty('menuItemHeight', menuItemHeight));
     properties.add(
         DiagnosticsProperty<bool>('snackBarParseError', snackBarParseError));
-    properties
-        .add(DiagnosticsProperty<Widget?>('snackBarMessage', snackBarMessage));
+    properties.add(StringProperty('snackBarMessage', snackBarMessage));
     properties.add(
         DiagnosticsProperty<Duration>('snackBarDuration', snackBarDuration));
     properties.add(

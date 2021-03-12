@@ -8,6 +8,8 @@ import '../models/color_picker_copy_paste_behavior.dart';
 import '../universal_widgets/dry_intrisinic.dart';
 
 /// Color code entry and display field used by the color picker.
+///
+/// Not library exposed, private to the library.
 class ColorCodeField extends StatefulWidget {
   /// Default const constructor.
   const ColorCodeField({

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 /// The themes for this app.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
@@ -16,6 +18,7 @@ class AppTheme {
         secondary: const Color(0xFF55ACEE),
         secondaryVariant: const Color(0xFFA2D1F6),
       ),
+      textTheme: textTheme,
     ).copyWith(
       scaffoldBackgroundColor: const Color(0xFFFDFDFD),
       toggleableActiveColor: const Color(0xFF55ACEE),
@@ -48,6 +51,7 @@ class AppTheme {
         secondaryVariant: const Color(0xFF607D93),
         onPrimary: Colors.white,
       ),
+      textTheme: textTheme,
     ).copyWith(
       toggleableActiveColor: const Color(0xFFA0D1F5),
       appBarTheme: AppBarTheme(
@@ -68,6 +72,44 @@ class AppTheme {
       visualDensity: comfortablePlatformDensity,
     );
   }
+
+  // TODO: Investigate GoogleFonts font issue on Windows platform.
+  // Making a custom text theme here, via on-line GoogleFonts load. Intended to
+  // use something else than "Roboto", but they were all a little bit
+  // broken on Windows platform, not sure why. Need to download and try as
+  // assets and compare to that method and also compare to Web builds.
+  // Tested like this with: 'sourceSansPro', 'lato' and 'notoSans' all in
+  // theory nice fonts, but all were a tiny bit broken with clearly faulty
+  // pixels in some letters on Windows builds. Did not test Web builds with
+  // them yet used via GoogleFonts. Anyway sticking to plain old "roboto" for
+  // now. At least we with this setup will get the "Roboto" font on all
+  // platforms. If no font is specified, we will get
+  static TextTheme textTheme = TextTheme(
+    headline1: GoogleFonts.roboto(
+        fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+    headline2: GoogleFonts.roboto(
+        fontSize: 48, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+    headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
+    headline4: GoogleFonts.roboto(
+        fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.w400),
+    headline6: GoogleFonts.roboto(
+        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+    bodyText1: GoogleFonts.roboto(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
+    bodyText2: GoogleFonts.roboto(
+        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    subtitle1: GoogleFonts.roboto(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
+    subtitle2: GoogleFonts.roboto(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+    button: GoogleFonts.roboto(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+    caption: GoogleFonts.roboto(
+        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+    overline: GoogleFonts.roboto(
+        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  );
 
   /// Theme definitions give ElevatedButton a Stadium rounded design.
   static ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
@@ -147,7 +189,8 @@ class AppTheme {
   /// well on desktop, windows native for example uses light tooltips on light
   /// themes. This default theme for tooltips uses that design choice and also
   /// makes desktop and hence Web tooltips a bit larger as well, by using
-  /// 12dp font size instead of the too small 10 dp.
+  /// 13dp font size instead of the too small 10 dp. Normally I use 12dp on
+  /// desktop, but reading the API tooltips at 13dp felt a bit easier.
   static double get tooltipFontSize {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:

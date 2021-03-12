@@ -5,8 +5,10 @@ import '../models/color_picker_action_buttons.dart';
 import '../models/color_picker_copy_paste_behavior.dart';
 
 /// A top toolbar with title and action buttons for the color picker.
+///
+/// Not library exposed, private to the library.
 class ColorPickerToolbar extends StatelessWidget {
-  /// Widget constructor.
+  /// Default const constructor.
   const ColorPickerToolbar({
     Key? key,
     this.title,

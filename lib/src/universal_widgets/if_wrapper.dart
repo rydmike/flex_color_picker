@@ -22,8 +22,10 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 ///     return WidgetY(child: child); },
 ///   child: child
 /// );
+///
+/// Not library exposed, private to the library.
 class IfWrapper extends StatelessWidget {
-  /// Default cons constructor.
+  /// Default const constructor.
   const IfWrapper({
     Key? key,
     required this.condition,

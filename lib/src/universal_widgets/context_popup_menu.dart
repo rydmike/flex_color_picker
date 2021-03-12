@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../functions/picker_functions.dart';
 
-/// A long press popup context menu.
+/// A context popup menu.
 ///
 /// Wrap a child with [ContextPopupMenu] and provide it a list of
 /// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item have a
@@ -26,9 +26,11 @@ import '../functions/picker_functions.dart';
 /// popup menus in it, or you can wrap just your custom popup widget that
 /// composes its content using [ContextPopupMenu] with a [Theme] that defines
 /// the [PopupMenuThemeData] just for that popup menu widget.
+///
+/// Not library exposed, private to the library.
 @immutable
 class ContextPopupMenu<T> extends StatefulWidget {
-  /// Default constructor
+  /// Default const constructor.
   const ContextPopupMenu({
     Key? key,
     required this.items,

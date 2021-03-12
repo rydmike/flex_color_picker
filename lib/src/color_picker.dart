@@ -1682,17 +1682,20 @@ class _ColorPickerState extends State<ColorPicker> {
       }
       // Show a snack bar paste format error message.
       if (widget.copyPasteBehavior.snackBarParseError) {
-        // Get the Material localizations.
-        final MaterialLocalizations translate =
-            MaterialLocalizations.of(context);
-        final String message = '${translate.pasteButtonLabel}: '
-            '${translate.invalidDateFormatLabel}';
-        // Wait 400ms, if we show it at once, it feel to fast.
-        await Future<void>.delayed(const Duration(milliseconds: 400));
+        String? snackBarMessage = widget.copyPasteBehavior.snackBarMessage;
+        if (snackBarMessage == null) {
+          // Get the Material localizations.
+          final MaterialLocalizations translate =
+              MaterialLocalizations.of(context);
+          snackBarMessage = '${translate.pasteButtonLabel}: '
+              '${translate.invalidDateFormatLabel}';
+        }
+        // Wait 300ms, if we show it at once, it feel to fast.
+        await Future<void>.delayed(const Duration(milliseconds: 300));
         // Show a snack bar with the paste error message.
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: widget.copyPasteBehavior.snackBarMessage ?? Text(message),
+            content: Text(snackBarMessage),
             duration: widget.copyPasteBehavior.snackBarDuration,
           ),
         );
