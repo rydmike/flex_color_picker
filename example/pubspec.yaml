@@ -6,8 +6,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  flex_color_picker:
-    path: ../
+  flex_color_picker: 2.0.0-nullsafety.3
 
   flutter:
     sdk: flutter

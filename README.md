@@ -15,7 +15,8 @@ FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` ca
 > can change most API settings. It also shows each API name and current value in a tooltip for
 > each control.
 > 
-> More new features may still come before first 2.0.0 stable release.
+> More new features may still come before first 2.0.0 stable release. A minimum requirement for releasing stable
+> version 2 is an update of this documentation.
 > 
 
 ### The different types of available color pickers are
