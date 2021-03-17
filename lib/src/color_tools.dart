@@ -834,7 +834,8 @@ class _ColorName {
   // Error handling show problematic color codes by returning white color
   // and RGB color code aof problematic color.
   factory _ColorName.fromColor(Color color) {
-    final String colorName = color.value.toRadixString(16).substring(2);
+    final String colorName =
+        color.value.toRadixString(16).padLeft(8, '0').substring(2);
     try {
       return _ColorName.fromHexRGB(colorName);
     } catch (rangeException) {

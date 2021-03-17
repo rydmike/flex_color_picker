@@ -35,12 +35,15 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool showTitle = true;
   bool showHeading = true;
   bool showSubheading = true;
+  bool showOpacitySubheading = true;
   bool showRecentSubheading = true;
 
   bool showMaterialName = true;
   bool showColorName = true;
+  bool enableOpacity = true;
   bool showColorCode = true;
   bool showColorValue = false;
+
   bool colorCodeHasColor = false;
   bool colorCodeReadOnly = false;
   bool showRecentColors = true;
@@ -270,6 +273,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               padding: EdgeInsets.all(padding),
               enableShadesSelection: enableShadesSelection,
               includeIndex850: includeIndex850,
+              enableOpacity: enableOpacity,
               copyPasteBehavior: ColorPickerCopyPasteBehavior(
                 ctrlC: ctrlC,
                 ctrlV: ctrlV,
@@ -323,12 +327,19 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                       style: Theme.of(context).textTheme.subtitle1,
                     )
                   : null,
+              opacitySubheading: showOpacitySubheading
+                  ? Text(
+                      'Opacity',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )
+                  : null,
               recentColorsSubheading: showRecentSubheading
                   ? Text(
                       'Recent colors',
                       style: Theme.of(context).textTheme.subtitle1,
                     )
                   : null,
+
               showMaterialName: showMaterialName,
               showColorName: showColorName,
               showColorCode: showColorCode,
@@ -577,7 +588,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(title: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show heading text'),
+        title: const Text('Show heading'),
         subtitle: const Text('You can provide your own heading widget, if '
             'it is null there is no heading.'),
         value: showHeading,
@@ -588,7 +599,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(heading: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show subheading text'),
+        title: const Text('Show color shades subheading'),
         subtitle: const Text('You can provide your own subheading widget, if '
             'it is null there is no sub heading.'),
         value: showSubheading,
@@ -597,6 +608,19 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         tooltip: showSubheading
             ? "ColorPicker(subheading: Text('Select color shade'));"
             : 'ColorPicker(subheading: null);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Show opacity subheading'),
+        subtitle: const Text('You can provide your own subheading widget, if '
+            'it is null there is no sub heading.'),
+        value: showOpacitySubheading,
+        onChanged: (bool value) =>
+            setState(() => showOpacitySubheading = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: showOpacitySubheading
+            ? '"ColorPicker(opacitySubheading: '
+                "Text('Select opacity subheading shade'));"
+            : 'ColorPicker(opacitySubheading: null);',
       ),
       SwitchTileTooltip(
         title: const Text('Show subheading text for recent colors'),
@@ -629,6 +653,14 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         onChanged: (bool value) => setState(() => showColorName = value),
         tooltipEnabled: enableTooltips,
         tooltip: 'ColorPicker(showColorName: $showColorName);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Show and use opacity slider'),
+        subtitle: const Text('Enable opacity control of selected colors.'),
+        value: enableOpacity,
+        onChanged: (bool value) => setState(() => enableOpacity = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(enableOpacity: $enableOpacity);',
       ),
       SwitchTileTooltip(
         title: const Text('Show selected color code'),
@@ -1341,6 +1373,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       padding: EdgeInsets.all(padding),
       enableShadesSelection: enableShadesSelection,
       includeIndex850: includeIndex850,
+      enableOpacity: enableOpacity,
       copyPasteBehavior: ColorPickerCopyPasteBehavior(
         ctrlC: ctrlC,
         ctrlV: ctrlV,
@@ -1404,6 +1437,12 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       wheelSubheading: showSubheading
           ? Text(
               'Selected color and its color swatch',
+              style: Theme.of(context).textTheme.subtitle1,
+            )
+          : null,
+      opacitySubheading: showOpacitySubheading
+          ? Text(
+              'Opacity',
               style: Theme.of(context).textTheme.subtitle1,
             )
           : null,

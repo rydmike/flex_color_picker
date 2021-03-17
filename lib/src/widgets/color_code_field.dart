@@ -152,11 +152,16 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
             ? Colors.black.withAlpha(11)
             : Colors.white.withAlpha(33);
 
-    final Color textColor =
+    final bool isLightBackground =
         ThemeData.estimateBrightnessForColor(fieldBackground) ==
-                Brightness.light
+            Brightness.light;
+    final Color textColor = isLight
+        ? (isLightBackground || fieldBackground.opacity < 0.5)
             ? Colors.black
-            : Colors.white;
+            : Colors.white
+        : (!isLightBackground || fieldBackground.opacity < 0.5)
+            ? Colors.white
+            : Colors.black;
 
     final Color fieldBorder =
         isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
@@ -263,14 +268,16 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
             onChanged: (String textColor) {
               setState(() {
                 color = textColor
-                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode);
+                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode)
+                    .withOpacity(color.opacity);
               });
               widget.onColorChanged(color);
             },
             onEditingComplete: () {
               setState(() {
                 color = textController.text
-                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode);
+                    .toColorShort(widget.copyPasteBehavior.parseShortHexCode)
+                    .withOpacity(color.opacity);
               });
               textController.text = color.hex;
               widget.onColorChanged(color);

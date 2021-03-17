@@ -16,6 +16,7 @@ import 'widgets/color_code_field.dart';
 import 'widgets/color_picker_toolbar.dart';
 import 'widgets/context_copy_paste_menu.dart';
 import 'widgets/main_colors.dart';
+import 'widgets/opacity/opacity_slider.dart';
 import 'widgets/picker_selector.dart';
 import 'widgets/recent_colors.dart';
 import 'widgets/shade_colors.dart';
@@ -60,9 +61,7 @@ class ColorPicker extends StatefulWidget {
     this.columnSpacing = 8,
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
-    // TODO: Action place for alpha/opacity support.
-    // this.hasOpacity = false,
-    // this.hasAlpha = false,
+    this.enableOpacity = false,
     this.actionButtons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.selectedColorIcon = Icons.check,
@@ -84,6 +83,7 @@ class ColorPicker extends StatefulWidget {
     this.subheading,
     this.wheelSubheading,
     this.recentColorsSubheading,
+    this.opacitySubheading,
     // Toggles to show color names and codes and their text styles.
     this.showMaterialName = false,
     this.materialNameTextStyle,
@@ -202,33 +202,18 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool includeIndex850;
 
-  // TODO: Action place for alpha/opacity support.
-  // Enable the opacity control for the color value.
-  //
-  // Turning it to true allows users to control the opacity value of the
-  // selected color. Opacity goes from 0, which is totally transparent,
-  // to 1, which if fully opaque. The control can be enabled together with
-  // the alpha channel control. Ultimately they control the same alpha
-  // color transparency value, they are just different formats.
-  // Normally you would select which one you prefer and not enable both styles,
-  // but it is possible to show both controls at the same time.
-  //
-  // Defaults to false.
-  // final bool hasOpacity;
-
-  // TODO: Action place for alpha/opacity support.
-  // Enable alpha control for the color value.
-  //
-  // Turning it to true allows users to control the alpha value of the
-  // selected color. Alpha goes from 00 (hex), which is fully transparent,
-  // to FF (hex), which if fully opaque. The control can be enabled together
-  // with the opacity control. Ultimately they control the same alpha
-  // color transparency value, they are just different formats.
-  // Normally you would select which one you prefer and not enable both styles,
-  // but it is possible to show both controls at the same time.
-  //
-  // Defaults to false.
-  //final bool hasAlpha;
+  /// Enable the opacity control for the color value.
+  ///
+  /// Set to true to allow users to control the opacity value of the
+  /// selected color. The displayed Opacity value on the slider goes from 0%,
+  /// which is totally transparent, to 100%, which if fully opaque.
+  ///
+  /// When enabled, the opacity value is not returned as a separate value,
+  /// it is returned in the alpha channel of the returned ARGB color value, in
+  /// the onColor callbacks.
+  ///
+  /// Defaults to false.
+  final bool enableOpacity;
 
   /// Defines icons for the color picker title bar and its actions.
   ///
@@ -348,7 +333,17 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Typically a Text widget, e.g. Text('Recent colors').
   /// If not provided or null, there is no subheading for the recent color.
+  /// The recently used colors subheading is not shown even if provided, when
+  /// [showRecentColors] is false.
   final Widget? recentColorsSubheading;
+
+  /// Subheading widget for the opacity slider.
+  ///
+  /// Typically a Text widget, e.g. Text('Opacity').
+  /// If not provided or null, there is no subheading for the opacity slider.
+  /// The opacity subheading is not shown even if provided, when
+  /// [enableOpacity] is false.
+  final Widget? opacitySubheading;
 
   /// Set to true to show the Material name of the selected [color].
   ///
@@ -790,6 +785,9 @@ class _ColorPickerState extends State<ColorPicker> {
   // Current selected color
   late Color _selectedColor;
 
+  // Current color opacity value
+  late double _opacity;
+
   // Color picker indicator selected item should request focus.
   bool _selectedShouldFocus = true;
 
@@ -852,6 +850,9 @@ class _ColorPickerState extends State<ColorPicker> {
     // Set the selected color to the widget constructor provided start color
     _selectedColor = widget.color;
 
+    // Get current opacity of passed in color.
+    _opacity = widget.color.opacity;
+
     // Update the list of the recent color to their initial value.
     _recentColors = <Color>[...widget.recentColors];
 
@@ -882,7 +883,6 @@ class _ColorPickerState extends State<ColorPicker> {
       ColorPickerType.bw: ColorTools.blackAndWhite,
       ColorPickerType.custom: colorsNameMap.keys.toList(),
       ColorPickerType.wheel: <ColorSwatch<Object>>[
-        // TODO: Action place for alpha/opacity support.
         // Make a swatch of the selected color in the wheel.
         ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
       ],
@@ -929,9 +929,7 @@ class _ColorPickerState extends State<ColorPicker> {
     if (_usePickerSelector) {
       if (findPicker) {
         _activePicker = findColorInSelector(
-          // TODO: Action place for alpha/opacity support.
-          // Disregard any opacity/alpha on current color value to find it
-          // in a color picker.
+          // Disregard alpha on selected color to find it in a color picker.
           color: _selectedColor.withAlpha(0xFF),
           typeToSwatchMap: _typeToSwatchMap,
           pickersEnabled: _pickers,
@@ -1102,7 +1100,6 @@ class _ColorPickerState extends State<ColorPicker> {
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
       // Set which color swatch is the active one of the ones in the active list
       _activeSwatch = findColorSwatch(
-        // TODO: Action place for alpha/opacity support.
         _selectedColor.withAlpha(0xFF),
         _activeColorSwatchList,
         widget.includeIndex850,
@@ -1299,7 +1296,6 @@ class _ColorPickerState extends State<ColorPicker> {
                   runSpacing: widget.runSpacing,
                   columnSpacing: widget.columnSpacing,
                   activeColorSwatchList: _activeColorSwatchList,
-                  // TODO: Action place for alpha/opacity support.
                   selectedColor: _selectedColor.withAlpha(0xFF),
                   onSelectColor: _onSelectColor,
                   includeIndex850: widget.includeIndex850,
@@ -1320,7 +1316,6 @@ class _ColorPickerState extends State<ColorPicker> {
                     height: widget.wheelDiameter,
                     width: widget.wheelDiameter,
                     child: ColorWheelPicker(
-                      // TODO: Action place for alpha/opacity support.
                       color: _selectedColor.withAlpha(0xFF),
                       wheelWidth: widget.wheelWidth,
                       hasBorder: widget.wheelHasBorder,
@@ -1328,13 +1323,14 @@ class _ColorPickerState extends State<ColorPicker> {
                       shouldRequestsFocus: _wheelShouldFocus,
                       onChangeStart: (Color color) {
                         if (widget.onColorChangeStart != null) {
-                          widget.onColorChangeStart!(color);
+                          widget
+                              .onColorChangeStart!(color.withOpacity(_opacity));
                         }
-                        _addToRecentColors(color);
+                        _addToRecentColors(color.withOpacity(_opacity));
                       },
                       onChanged: (Color color) {
                         setState(() {
-                          _selectedColor = color;
+                          _selectedColor = color.withOpacity(_opacity);
                           _wheelShouldUpdate = false;
                           _editShouldUpdate = true;
                           _selectedShouldFocus = true;
@@ -1344,7 +1340,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       },
                       onChangeEnd: (Color color) {
                         if (widget.onColorChangeEnd != null) {
-                          widget.onColorChangeEnd!(color);
+                          widget.onColorChangeEnd!(color.withOpacity(_opacity));
                         }
                       },
                       onWheel: (bool value) {
@@ -1397,6 +1393,57 @@ class _ColorPickerState extends State<ColorPicker> {
                   selectedColorIcon: widget.selectedColorIcon,
                   selectedRequestsFocus: _selectedShouldFocus,
                 ),
+
+              // Show the sub-heading for the opacity control.
+              if (widget.opacitySubheading != null && widget.enableOpacity)
+                Padding(
+                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                  child: widget.opacitySubheading,
+                ),
+              // Draw the opacity slider if enabled
+              if (widget.enableOpacity)
+                Padding(
+                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                  child: RepaintBoundary(
+                    child: OpacitySlider(
+                      selectedColor: _selectedColor.withAlpha(0xFF),
+                      opacity: _opacity,
+                      onChangeStart: (double value) {
+                        if (widget.onColorChangeStart != null) {
+                          setState(() {
+                            _opacity = value;
+                            _selectedColor =
+                                _selectedColor.withOpacity(_opacity);
+                          });
+                          widget.onColorChangeStart!(_selectedColor);
+                        }
+                        _addToRecentColors(_selectedColor);
+                      },
+                      onChanged: (double value) {
+                        setState(() {
+                          _opacity = value;
+                          _selectedColor = _selectedColor.withOpacity(_opacity);
+                          _wheelShouldUpdate = false;
+                          _editShouldUpdate = true;
+                          _selectedShouldFocus = true;
+                          _wheelShouldFocus = false;
+                        });
+                        widget.onColorChanged(_selectedColor);
+                      },
+                      onChangeEnd: (double value) {
+                        if (widget.onColorChangeEnd != null) {
+                          setState(() {
+                            _opacity = value;
+                            _selectedColor =
+                                _selectedColor.withOpacity(_opacity);
+                          });
+                          widget.onColorChangeEnd!(_selectedColor);
+                        }
+                      },
+                    ),
+                  ),
+                ),
+
               // If we show material or generic name, we enclose them in a
               // Wrap, they will be on same row nicely if there is room
               // enough, but also wrap to two rows when so needed when both
@@ -1432,6 +1479,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       ),
                   ],
                 ),
+
               // If we show color code or its int value, we enclose them in a
               // Wrap, they will be on same row nicely if there is room enough
               // but also wrap to two rows when so needed when both are
@@ -1460,7 +1508,7 @@ class _ColorPickerState extends State<ColorPicker> {
                               widget.onColorChangeStart!(_selectedColor);
                             }
                             setState(() {
-                              _selectedColor = color;
+                              _selectedColor = color.withOpacity(_opacity);
                               // Color changed outside wheel picker, the
                               // code was edited, it should update!
                               _wheelShouldUpdate = true;
@@ -1511,7 +1559,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   recentColors: _recentColors,
                   selectedColor: _selectedColor,
                   onSelectColor: (Color color) {
-                    _onSelectColor(color);
+                    _onSelectColor(color, keepOpacity: true);
                     // Move the picker to the selected color value.
                     _initSelectedValue(findPicker: true);
                   },
@@ -1533,7 +1581,7 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   // A color was selected, update state and notify parent via callbacks.
-  void _onSelectColor(Color color) {
+  void _onSelectColor(Color color, {bool keepOpacity = false}) {
     // Have start callback, call it with current selectedColor before change.
     if (widget.onColorChangeStart != null) {
       widget.onColorChangeStart!(_selectedColor);
@@ -1544,7 +1592,8 @@ class _ColorPickerState extends State<ColorPicker> {
     // update the state of the selectedColor to the new selected color.
     setState(() {
       // Set selected color to the new value.
-      _selectedColor = color;
+      _selectedColor = keepOpacity ? color : color.withOpacity(_opacity);
+      if (keepOpacity) _opacity = _selectedColor.opacity;
       // When the a color was clicked and selected, the right item is already
       // focused an other selected color indicators and wheel should not focus.
       _selectedShouldFocus = false;
@@ -1647,6 +1696,7 @@ class _ColorPickerState extends State<ColorPicker> {
       await Future<void>.delayed(const Duration(milliseconds: 100));
       setState(() {
         _selectedColor = clipColor;
+        _opacity = _selectedColor.opacity;
         // Color changed outside wheel and edit field, a new shade or color was
         // selected outside the wheel and edit, they should update!
         _wheelShouldUpdate = true;
