@@ -6,7 +6,7 @@ import 'color_picker_screen.dart';
 // Just a simple way to leave a trace of what version you built a Flutter
 // Web demo with inside the app. You can also show it in the demo,
 // like in this example, so people testing it don't have to ask.
-const String kFlutterVersion = 'Channel dev 2.1.0-10.0.pre SKIA';
+const String kFlutterVersion = 'Channel dev 2.1.0-12.1.pre SKIA';
 const String kColorPickerVersion = '2.0.0-nullsafety.4';
 
 class HomeScreen extends StatefulWidget {

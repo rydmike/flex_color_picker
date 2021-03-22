@@ -82,17 +82,17 @@ class ColorPickerActionButtons with Diagnosticable {
   ///
   /// Set to false to swap the order of the OK and Close toolbar icons.
   ///
-  /// Defaults to true, which results in the close 'x' icon being in  upper
+  /// Defaults to true, which results in the close 'x' icon being in upper
   /// end corner of the picker dialog.
   ///
   /// Based on Material guide bottom action buttons in a dialog are always
-  /// in the Cancel OK, order, if the top toolbar buttons are used at the
+  /// in the Cancel-OK order. If the top toolbar buttons are used at the
   /// same time, this value can be set to false to show the toolbar buttons
   /// in the same order as the bottom dialog action buttons.
   ///
   /// The recommendation is to not use the top and bottom action buttons at the
-  /// same time, but rather select on of the the desired design. The API does
-  /// however allow using both or mix and match. It is possible to e.g. show
+  /// same time, but rather select one of the two options. The API does
+  /// however allow using both or even a mix and match. It is possible to show
   /// **Cancel** and **OK** actions at the bottom of dialog, and also add
   /// an 'x' icon in te upper end corner of the dialog that also cancel-closes
   /// the dialog as expected.
@@ -168,14 +168,9 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to: const BoxConstraints(minHeight: 34, minWidth: 34),
   final BoxConstraints constraints;
 
-  /// If set to false the dialog action buttons are removed when possible.
+  /// If set to false the dialog action buttons are removed.
   ///
   /// Defaults to true.
-  ///
-  /// In order to be able to remove the action buttons, the toolbar
-  /// [ColorPickerActionButtons.okButton] and
-  /// [ColorPickerActionButtons.closeButton] have to be true, if not, the
-  /// button that is false will remain present.
   final bool dialogActionButtons;
 
   /// If set to true, the dialog bottom action buttons will be prefixed with the

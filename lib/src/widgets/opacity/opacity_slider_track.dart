@@ -1,29 +1,78 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-/// A custom track for the opacity slider
-// ignore: prefer_mixin
-class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
-  /// Currently selected color.
-  final Color selectedColor;
-
-  /// The image used a background image in the slider.
-  final ui.Image image;
-
-  /// Paint used to draw the slider track.
-  final Paint gridPaint;
-
+/// A custom slider track for the opacity slider.
+///
+/// Has rounded edges and a background image that repeats to show the common
+/// image pattern used as background on images that has transparency. It
+/// results in a nice effect where we can better judge visually how transparent
+/// the current opacity value is directly on the slider.
+class OpacitySliderTrack extends SliderTrackShape {
   /// Constructor for the opacity slider track.
-  OpacitySliderTrack(
-    this.selectedColor, {
+  OpacitySliderTrack({
+    required this.color,
+    this.thumbRadius = 14,
     required this.image,
-  }) : gridPaint = Paint()
+  }) : bgImagePaint = Paint()
           ..shader = ImageShader(
             image,
             TileMode.repeated,
             TileMode.repeated,
             Matrix4.identity().storage,
           );
+
+  /// Currently selected color.
+  final Color color;
+
+  /// The radius of the adjustment thumb on the opacity slider track.
+  ///
+  /// Defaults to 14.
+  final double thumbRadius;
+
+  /// The image used a background image in the slider track.
+  final ui.Image image;
+
+  /// Paint used to draw the background image on the slider track.
+  final Paint bgImagePaint;
+
+  /// Returns a rect that represents the track bounds that fits within the
+  /// [Slider].
+  ///
+  /// The width is the width of the [Slider] or [RangeSlider], but padded by
+  /// the max  of the overlay and thumb radius. The height is defined by the
+  /// [SliderThemeData.trackHeight].
+  ///
+  /// The [Rect] is centered both horizontally and vertically within the slider
+  /// bounds.
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double thumbWidth =
+        sliderTheme.thumbShape!.getPreferredSize(isEnabled, isDiscrete).width;
+    final double overlayWidth =
+        sliderTheme.overlayShape!.getPreferredSize(isEnabled, isDiscrete).width;
+    final double trackHeight = sliderTheme.trackHeight!;
+    assert(overlayWidth >= 0, 'overlayWidth must be >= 0');
+    assert(trackHeight >= 0, 'trackHeight must be >= 0');
+
+    final double trackLeft =
+        offset.dx + math.max(overlayWidth / 2, thumbWidth / 2);
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackRight =
+        trackLeft + parentBox.size.width - math.max(thumbWidth, overlayWidth);
+    final double trackBottom = trackTop + trackHeight;
+    // If the parentBox size less than slider's size the trackRight will
+    // be less than trackLeft, so switch them.
+    return Rect.fromLTRB(math.min(trackLeft, trackRight), trackTop,
+        math.max(trackLeft, trackRight), trackBottom);
+  }
 
   @override
   void paint(
@@ -48,9 +97,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         'inactiveTrackColor cannot be null.');
     assert(sliderTheme.thumbShape != null, 'thumbShape cannot be null.');
 
-    // If the slider [SliderThemeData.trackHeight] is less than or equal to 0,
-    // then it makes no difference whether the track is painted or not,
-    // therefore the painting  can be a no-op.
+    // If we have no track height, no point in doing anything, no-op exit.
     if ((sliderTheme.trackHeight ?? 0) <= 0) {
       return;
     }
@@ -66,12 +113,11 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
     final Radius activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
 
     final Paint activePaint = Paint()..color = Colors.transparent;
-
     final Paint inactivePaint = Paint()
       ..shader = ui.Gradient.linear(
           Offset.zero,
           Offset(trackRect.width, 0),
-          <Color>[selectedColor.withOpacity(0), selectedColor.withOpacity(1)],
+          <Color>[color.withOpacity(0), color.withOpacity(1)],
           <double>[0.05, 0.95]);
 
     Paint leftTrackPaint;
@@ -86,8 +132,6 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         rightTrackPaint = activePaint;
         break;
     }
-
-    const int thumbRadius = 14;
 
     final RRect shapeRect = ui.RRect.fromLTRBAndCorners(
       trackRect.left - thumbRadius,
@@ -113,7 +157,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
     );
 
     context.canvas.drawRRect(shapeRect, leftTrackPaint);
-    context.canvas.drawRRect(shapeRect, gridPaint);
+    context.canvas.drawRRect(shapeRect, bgImagePaint);
     context.canvas.drawRRect(shapeRect, rightTrackPaint);
   }
 }

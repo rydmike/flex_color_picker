@@ -61,7 +61,12 @@ class ColorPicker extends StatefulWidget {
     this.columnSpacing = 8,
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
+    // Opacity slider
     this.enableOpacity = false,
+    this.opacityTrackHeight = 36,
+    this.opacityTrackWidth,
+    this.opacityThumbRadius = 16,
+    // Picker action buttons and copy paste behavior.
     this.actionButtons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.selectedColorIcon = Icons.check,
@@ -132,6 +137,8 @@ class ColorPicker extends StatefulWidget {
             'The pick item width must be > 15 and <= 150 dp.'),
         assert(height > 15 && height <= 150,
             'The pick item height must be > 15 and <= 150 dp.'),
+        assert(opacityTrackWidth == null || opacityTrackWidth >= 150,
+            'The opacity slider track width must be null or >= 150.'),
         assert(wheelDiameter >= 100 && wheelDiameter <= 500,
             'The wheel diameter must be >= 100 and <= 500.'),
         assert(wheelWidth >= 4 && wheelWidth <= 50,
@@ -214,6 +221,22 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool enableOpacity;
+
+  /// The height of the opacity slider track.
+  ///
+  /// Defaults to 36.
+  final double opacityTrackHeight;
+
+  /// The width of the opacity slider track.
+  ///
+  /// If null, the slider fills to expand available width of the picker.
+  /// If not null, must be >= 150 dp.
+  final double? opacityTrackWidth;
+
+  /// The radius of the thumb on the opacity slider.
+  ///
+  /// Defaults to 16.
+  final double opacityThumbRadius;
 
   /// Defines icons for the color picker title bar and its actions.
   ///
@@ -743,18 +766,12 @@ class ColorPicker extends StatefulWidget {
                     child: this,
                   ),
             scrollable: true,
-            actions: actionButtons.closeButton &&
-                    actionButtons.okButton &&
-                    !actionButtons.dialogActionButtons
-                ? null
-                : <Widget>[
-                    if (actionButtons.dialogActionButtons ||
-                        !actionButtons.closeButton)
-                      _cancelButton,
-                    if (actionButtons.dialogActionButtons ||
-                        !actionButtons.okButton)
-                      _okButton,
-                  ],
+            actions: actionButtons.dialogActionButtons
+                ? <Widget>[
+                    _cancelButton,
+                    _okButton,
+                  ]
+                : null,
           );
         }).then((bool? value) {
       // If the dialog return value was null, then we got here by a
@@ -827,6 +844,14 @@ class _ColorPickerState extends State<ColorPicker> {
   // The current state of list with recent color selections.
   late List<Color> _recentColors;
 
+  // Widget map for the sliding Cupertino segmented control that allows us to
+  // switch between the pickers we enabled.
+  // We set the labels to default values if none given. The constructor also
+  // holds defaults, but that does not prevent them for being overridden
+  // with explicit null values, in this case we do not want that, so we still
+  // check for nulls here as well and use default labels if null is given.
+  late Map<ColorPickerType, Widget> _pickerTypes;
+
   // Map of swatch names in corresponding list of color swatches,
   // gets initialized in the initSelectedValue() function.
   late Map<ColorPickerType, List<ColorSwatch<Object>>> _typeToSwatchMap;
@@ -848,10 +873,11 @@ class _ColorPickerState extends State<ColorPicker> {
     _wheelShouldFocus = !widget.enableShadesSelection;
 
     // Set the selected color to the widget constructor provided start color
-    _selectedColor = widget.color;
+    _selectedColor =
+        widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
 
     // Get current opacity of passed in color.
-    _opacity = widget.color.opacity;
+    _opacity = widget.enableOpacity ? widget.color.opacity : 1;
 
     // Update the list of the recent color to their initial value.
     _recentColors = <Color>[...widget.recentColors];
@@ -859,6 +885,24 @@ class _ColorPickerState extends State<ColorPicker> {
     // Initialize other values and find the best color picker to show
     // the current selectedColor value.
     _initSelectedValue(findPicker: true);
+  }
+
+  @override
+  void didUpdateWidget(ColorPicker oldWidget) {
+    //
+    // Opacity enable/disable changed.
+    if (widget.enableOpacity != oldWidget.enableOpacity) {
+      _selectedColor =
+          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
+      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+    }
+    // Initialize the values again because the underlying widget changed.
+    // If the available color picker selection was changed we need to find
+    // the picker again and set the findPicker option to true.
+    _initSelectedValue(
+        findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
+
+    super.didUpdateWidget(oldWidget);
   }
 
   // A helper to initialize local state, called by:
@@ -984,20 +1028,9 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   @override
-  void didUpdateWidget(ColorPicker oldWidget) {
-    // Initialize the values again because the underlying widget changed.
-    // If the available color picker selection was changed we need to find
-    // the picker again and set the findPicker option to true.
-    _initSelectedValue(
-        findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
-
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     // Set default text style for the segmented slider control.
-    final TextStyle segmentTextStyle = widget.pickerTypeTextStyle ??
+    final TextStyle _segmentTextStyle = widget.pickerTypeTextStyle ??
         Theme.of(context).textTheme.caption ??
         const TextStyle(fontSize: 12);
 
@@ -1019,7 +1052,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // holds defaults, but that does not prevent them for being overridden
     // with explicit null values, in this case we do not want that, so we still
     // check for nulls here as well and use default labels if null is given.
-    final Map<ColorPickerType, Widget> pickerTypes = <ColorPickerType, Widget>{
+    _pickerTypes = <ColorPickerType, Widget>{
       if (_pickers[ColorPickerType.both]!)
         ColorPickerType.both: Padding(
           padding: const EdgeInsets.all(5),
@@ -1028,8 +1061,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectBothLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.both
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
       if (_pickers[ColorPickerType.primary]!)
@@ -1040,8 +1073,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectPrimaryLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.primary
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
       if (_pickers[ColorPickerType.accent]!)
@@ -1052,8 +1085,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectAccentLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.accent
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
       if (_pickers[ColorPickerType.bw]!)
@@ -1064,8 +1097,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectBlackWhiteLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.bw
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
       if (_pickers[ColorPickerType.custom]!)
@@ -1076,8 +1109,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectCustomLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.custom
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
       if (_pickers[ColorPickerType.wheel]!)
@@ -1088,8 +1121,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 ColorPicker._selectWheelAnyLabel,
             textAlign: TextAlign.center,
             style: _activePicker == ColorPickerType.wheel
-                ? segmentTextStyle.copyWith(color: _thumbOnColor)
-                : segmentTextStyle,
+                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                : _segmentTextStyle,
           ),
         ),
     };
@@ -1260,7 +1293,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     return KeyEventResult.ignored;
                   },
                   child: PickerSelector(
-                    pickerTypes: pickerTypes,
+                    pickerTypes: _pickerTypes,
                     onValueChanged: (ColorPickerType value) {
                       // If there is no color in the picker that will grab
                       // focus when we move to the picker, then the picker
@@ -1404,42 +1437,56 @@ class _ColorPickerState extends State<ColorPicker> {
               if (widget.enableOpacity)
                 Padding(
                   padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: RepaintBoundary(
-                    child: OpacitySlider(
-                      selectedColor: _selectedColor.withAlpha(0xFF),
-                      opacity: _opacity,
-                      onChangeStart: (double value) {
-                        if (widget.onColorChangeStart != null) {
+                  // If the opacity slider is to be h-sized we wrap it in a
+                  // SizedBox, otherwise not.
+                  child: IfWrapper(
+                    condition: (widget.opacityTrackWidth ?? 0) >= 150,
+                    builder: (BuildContext context, Widget child) {
+                      return SizedBox(
+                        width: widget.opacityTrackWidth,
+                        child: child,
+                      );
+                    },
+                    child: RepaintBoundary(
+                      child: OpacitySlider(
+                        color: _selectedColor.withAlpha(0xFF),
+                        opacity: _opacity,
+                        trackHeight: widget.opacityTrackHeight,
+                        thumbRadius: widget.opacityThumbRadius,
+                        onChangeStart: (double value) {
+                          if (widget.onColorChangeStart != null) {
+                            setState(() {
+                              _opacity = value;
+                              _selectedColor =
+                                  _selectedColor.withOpacity(_opacity);
+                            });
+                            widget.onColorChangeStart!(_selectedColor);
+                          }
+                          _addToRecentColors(_selectedColor);
+                        },
+                        onChanged: (double value) {
                           setState(() {
                             _opacity = value;
                             _selectedColor =
                                 _selectedColor.withOpacity(_opacity);
+                            _wheelShouldUpdate = false;
+                            _editShouldUpdate = true;
+                            _selectedShouldFocus = true;
+                            _wheelShouldFocus = false;
                           });
-                          widget.onColorChangeStart!(_selectedColor);
-                        }
-                        _addToRecentColors(_selectedColor);
-                      },
-                      onChanged: (double value) {
-                        setState(() {
-                          _opacity = value;
-                          _selectedColor = _selectedColor.withOpacity(_opacity);
-                          _wheelShouldUpdate = false;
-                          _editShouldUpdate = true;
-                          _selectedShouldFocus = true;
-                          _wheelShouldFocus = false;
-                        });
-                        widget.onColorChanged(_selectedColor);
-                      },
-                      onChangeEnd: (double value) {
-                        if (widget.onColorChangeEnd != null) {
-                          setState(() {
-                            _opacity = value;
-                            _selectedColor =
-                                _selectedColor.withOpacity(_opacity);
-                          });
-                          widget.onColorChangeEnd!(_selectedColor);
-                        }
-                      },
+                          widget.onColorChanged(_selectedColor);
+                        },
+                        onChangeEnd: (double value) {
+                          if (widget.onColorChangeEnd != null) {
+                            setState(() {
+                              _opacity = value;
+                              _selectedColor =
+                                  _selectedColor.withOpacity(_opacity);
+                            });
+                            widget.onColorChangeEnd!(_selectedColor);
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -1473,7 +1520,8 @@ class _ColorPickerState extends State<ColorPicker> {
                       Padding(
                         padding: EdgeInsets.only(bottom: widget.columnSpacing),
                         child: Text(
-                          ColorTools.nameThatColor(_selectedColor),
+                          ColorTools.nameThatColor(
+                              _selectedColor.withAlpha(0xFF)),
                           style: effectiveGenericNameStyle,
                         ),
                       ),
@@ -1593,7 +1641,9 @@ class _ColorPickerState extends State<ColorPicker> {
     setState(() {
       // Set selected color to the new value.
       _selectedColor = keepOpacity ? color : color.withOpacity(_opacity);
-      if (keepOpacity) _opacity = _selectedColor.opacity;
+      if (keepOpacity && widget.enableOpacity) {
+        _opacity = _selectedColor.opacity;
+      }
       // When the a color was clicked and selected, the right item is already
       // focused an other selected color indicators and wheel should not focus.
       _selectedShouldFocus = false;
@@ -1695,8 +1745,10 @@ class _ColorPickerState extends State<ColorPicker> {
       // field is not active.
       await Future<void>.delayed(const Duration(milliseconds: 100));
       setState(() {
-        _selectedColor = clipColor;
-        _opacity = _selectedColor.opacity;
+        // If opacity is not enabled we remove it from pasted colors.
+        _selectedColor =
+            widget.enableOpacity ? clipColor : clipColor.withAlpha(0xFF);
+        _opacity = widget.enableOpacity ? _selectedColor.opacity : 1;
         // Color changed outside wheel and edit field, a new shade or color was
         // selected outside the wheel and edit, they should update!
         _wheelShouldUpdate = true;

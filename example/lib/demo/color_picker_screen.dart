@@ -33,10 +33,10 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool includeIndex850 = false;
 
   bool showTitle = true;
-  bool showHeading = true;
+  bool showHeading = false;
   bool showSubheading = true;
-  bool showOpacitySubheading = true;
-  bool showRecentSubheading = true;
+  bool showOpacitySubheading = false;
+  bool showRecentSubheading = false;
 
   bool showMaterialName = true;
   bool showColorName = true;
@@ -44,7 +44,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool showColorCode = true;
   bool showColorValue = false;
 
-  bool colorCodeHasColor = false;
+  bool colorCodeHasColor = true;
   bool colorCodeReadOnly = false;
   bool showRecentColors = true;
 
@@ -60,13 +60,18 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   double wheelWidth = 16;
   bool wheelHasBorder = false;
 
+  double opacityThumbRadius = 16;
+  double opacityTrackHeight = 22;
+  double opacityTrackWidth = 700;
+  double? usedOpacityTrackWidth;
+
   // Picker layout
   CrossAxisAlignment alignment = CrossAxisAlignment.center;
   double padding = 10;
   double columnSpacing = 8;
   bool okButton = true;
   bool closeButton = true;
-  bool dialogActionButtons = true;
+  bool dialogActionButtons = false;
   bool dialogActionIcons = true;
   bool enableTooltips = true;
 
@@ -76,10 +81,10 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool copyButton = true;
   bool pasteButton = true;
   bool editFieldCopyButton = true;
-  bool longPressMenu = true;
-  bool secondaryMenu = true;
+  bool longPressMenu = false;
+  bool secondaryMenu = false;
   bool secondaryOnDesktopLongOnDevice = true;
-  bool parseShortHexCode = true;
+  bool parseShortHexCode = false;
   bool editUsesParsedPaste = true;
   bool snackBarParseError = true;
   bool feedbackParseError = false;
@@ -160,7 +165,23 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     screenPickerColor = Colors.blue;
     dialogPickerColor = Colors.red;
     onColorChangeStart = onColorChanged = onColorChangeEnd = screenPickerColor;
+    usedOpacityTrackWidth = opacityTrackWidth < 150 || opacityTrackWidth >= 700
+        ? null
+        : opacityTrackWidth;
     super.initState();
+  }
+
+  // Get the text color for th 'OnEvent' chips
+  Color getChipTextColor(Color background, bool isLight) {
+    final bool isLightBackground =
+        ThemeData.estimateBrightnessForColor(background) == Brightness.light;
+    return isLight
+        ? (isLightBackground || background.opacity < 0.5)
+            ? Colors.black
+            : Colors.white
+        : (!isLightBackground || background.opacity < 0.5)
+            ? Colors.white
+            : Colors.black;
   }
 
   @override
@@ -173,25 +194,14 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     if (columns < 1) columns = 1;
     if (columns > 4) columns = 4;
 
-    // The theme colorscheme is referenced many times, so we use a ref to it.
+    final bool isLight = Theme.of(context).brightness == Brightness.light;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     final Color onColorChangeStartOnColor =
-        ThemeData.estimateBrightnessForColor(onColorChangeStart) ==
-                Brightness.light
-            ? Colors.black
-            : Colors.white;
-
+        getChipTextColor(onColorChangeStart, isLight);
     final Color onColorChangedOnColor =
-        ThemeData.estimateBrightnessForColor(onColorChanged) == Brightness.light
-            ? Colors.black
-            : Colors.white;
-
-    final Color endChangeOnColor =
-        ThemeData.estimateBrightnessForColor(onColorChangeEnd) ==
-                Brightness.light
-            ? Colors.black
-            : Colors.white;
+        getChipTextColor(onColorChanged, isLight);
+    final Color endChangeOnColor = getChipTextColor(onColorChangeEnd, isLight);
 
     // ********************************************************************
     // COLUMN 1 - Content
@@ -251,20 +261,23 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         child: Padding(
           padding: const EdgeInsets.all(6),
           child: Card(
-            elevation: 2,
+            elevation: 3,
             child: ColorPicker(
               color: screenPickerColor,
               onColorChangeStart: (Color color) {
                 setState(() => onColorChangeStart = color);
+                // debugPrint('onColorChangeStart called');
               },
               onColorChanged: (Color color) {
                 setState(() {
                   screenPickerColor = color;
                   onColorChanged = screenPickerColor;
                 });
+                // debugPrint('onColorChanged called');
               },
               onColorChangeEnd: (Color color) {
                 setState(() => onColorChangeEnd = color);
+                // debugPrint('onColorChangeEnd called');
               },
               onRecentColorsChanged: (List<Color> colors) {
                 setState(() => screenRecentColors = colors);
@@ -274,6 +287,9 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               enableShadesSelection: enableShadesSelection,
               includeIndex850: includeIndex850,
               enableOpacity: enableOpacity,
+              opacityTrackHeight: opacityTrackHeight,
+              opacityTrackWidth: usedOpacityTrackWidth,
+              opacityThumbRadius: opacityThumbRadius,
               copyPasteBehavior: ColorPickerCopyPasteBehavior(
                 ctrlC: ctrlC,
                 ctrlV: ctrlV,
@@ -339,7 +355,6 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                       style: Theme.of(context).textTheme.subtitle1,
                     )
                   : null,
-
               showMaterialName: showMaterialName,
               showColorName: showColorName,
               showColorCode: showColorCode,
@@ -349,7 +364,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               showRecentColors: showRecentColors,
               recentColors: screenRecentColors,
               maxRecentColors: 6,
-              // The name map is used to give the custom colors their names.
+              // This is to provide the custom swatch colors and their names.
               customColorSwatchesAndNames: colorsNameMap,
               colorCodeTextStyle: Theme.of(context).textTheme.subtitle1,
               colorCodePrefixStyle: Theme.of(context).textTheme.caption,
@@ -359,9 +374,9 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       ),
       //
       const ListTile(
-        title: Text('Color change event callbacks'),
-        subtitle: Text('There are callbacks for when a color change '
-            'starts, is happening and ends. They include color before start, '
+        title: Text('Color change callbacks'),
+        subtitle: Text('Callbacks for color change start, is happening and '
+            'ended. They include color before start, '
             'during change and when change ended.'),
       ),
       ListTile(
@@ -424,8 +439,8 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       ),
       const SizedBox(height: 8),
       const ListTile(
-        title: Text('Select and COPY a color value, PASTE it into the picker '
-            'with toolbar buttons, long press menu or keyboard shortcuts. '
+        title: Text('Select and COPY a color value. PASTE it into the picker '
+            'with toolbar buttons, context menu or keyboard shortcuts.\n'
             'Try these:'),
         subtitle: SelectableText('Primary FF7B1FA2  Accent FFCCFF90  '
             'BW FFF9F9F9\n'
@@ -434,7 +449,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             'PASTE supports all above formats. COPY in selected format.'),
       ),
       SwitchTileTooltip(
-        title: const Text('Enable support for CSS WEB 3 char hex RGB format'),
+        title: const Text('Parse 3-char code as WEB 3-char hex RGB format'),
         subtitle: const Text('Applies to both paste action and color '
             'code entry.'),
         value: parseShortHexCode,
@@ -463,7 +478,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         tooltip: 'ColorPicker(pickersEnabled:\n'
             '  $pickersEnabled);',
         child: ListTile(
-          title: const Text('Show pickers'),
+          title: const Text('Enabled pickers'),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -556,9 +571,9 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         ),
       ),
       SwitchTileTooltip(
-        title: const Text('Show color shades'),
-        subtitle: const Text('Turn OFF to only be able to select the main '
-            'color in a color swatch.'),
+        title: const Text('Enable color shades'),
+        subtitle: const Text('Turn OFF to only use the main '
+            'color in a Material color swatch. Typically left ON.'),
         value: enableShadesSelection,
         onChanged: (bool value) =>
             setState(() => enableShadesSelection = value),
@@ -566,17 +581,90 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         tooltip: 'ColorPicker(enableShadesSelection: $enableShadesSelection);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show grey color index 850'),
+        title: const Text('Include grey color index 850'),
         subtitle: const Text('To include the not so well known 850 color in '
-            'the Grey swatch, turn this ON.'),
+            'the Grey swatch, turn this ON. Typically kept OFF.'),
         value: includeIndex850,
         onChanged: (bool value) => setState(() => includeIndex850 = value),
         tooltipEnabled: enableTooltips,
         tooltip: 'ColorPicker(includeIndex850: $includeIndex850);',
       ),
+      SwitchTileTooltip(
+        title: const Text('Enable opacity'),
+        subtitle: const Text('Use a slider to adjust color opacity.'),
+        value: enableOpacity,
+        onChanged: (bool value) => setState(() => enableOpacity = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(enableOpacity: $enableOpacity);',
+      ),
       const Divider(),
       SwitchTileTooltip(
-        title: const Text('Show picker toolbar title'),
+        title: const Text('Material color name'),
+        subtitle: const Text('If selected color is a standard Material color, '
+            'its name is shown together with its shade index.'),
+        value: showMaterialName,
+        onChanged: (bool value) => setState(() => showMaterialName = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showMaterialName: $showMaterialName);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Name that color'),
+        subtitle: const Text('Give selected color a name based on closest '
+            'matching color in a lookup with 1566 color names.'),
+        value: showColorName,
+        onChanged: (bool value) => setState(() => showColorName = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorName: $showColorName);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Color value display and entry'),
+        subtitle: const Text('Show hex RGB value of the selected color. On the '
+            'wheel picker you can also enter a HEX RGB value.'),
+        value: showColorCode,
+        onChanged: (bool value) => setState(() => showColorCode = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorCode: $showColorCode);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Code value display and entry is colored'),
+        subtitle: const Text('Turn ON to use selected color as field '
+            'background color.'),
+        value: colorCodeHasColor,
+        onChanged: (bool value) => setState(() => colorCodeHasColor = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(colorCodeHasColor: $colorCodeHasColor);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Code value display and entry is read only'),
+        subtitle: const Text('Normally color code field can be edited on '
+            'Wheel picker. Set to ON to make it read only.'),
+        value: colorCodeReadOnly,
+        onChanged: (bool value) => setState(() => colorCodeReadOnly = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(colorCodeReadOnly: $colorCodeReadOnly);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Integer color value'),
+        subtitle:
+            const Text('Show color integer value. The value can be painted and '
+                'copied. Typically OFF, use it as a dev feature.'),
+        value: showColorValue,
+        onChanged: (bool value) => setState(() => showColorValue = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showColorValue: $showColorValue);',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Recent colors'),
+        subtitle: const Text('Show a list of recently selected colors. You '
+            'can control how many colors are kept.'),
+        value: showRecentColors,
+        onChanged: (bool value) => setState(() => showRecentColors = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(showRecentColors: $showRecentColors);',
+      ),
+      const Divider(),
+      SwitchTileTooltip(
+        title: const Text('Toolbar title'),
         subtitle:
             const Text('You can provide your own picker toolbar title, if '
                 'it is null there is no title.'),
@@ -588,7 +676,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(title: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show heading'),
+        title: const Text('Heading'),
         subtitle: const Text('You can provide your own heading widget, if '
             'it is null there is no heading.'),
         value: showHeading,
@@ -599,7 +687,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(heading: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show color shades subheading'),
+        title: const Text('Shades subheading'),
         subtitle: const Text('You can provide your own subheading widget, if '
             'it is null there is no sub heading.'),
         value: showSubheading,
@@ -610,7 +698,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(subheading: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show opacity subheading'),
+        title: const Text('Opacity slider subheading'),
         subtitle: const Text('You can provide your own subheading widget, if '
             'it is null there is no sub heading.'),
         value: showOpacitySubheading,
@@ -623,7 +711,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(opacitySubheading: null);',
       ),
       SwitchTileTooltip(
-        title: const Text('Show subheading text for recent colors'),
+        title: const Text('Recent colors subheading'),
         subtitle: const Text('You can provide your own subheading widget, if '
             'it is null there is no sub heading.'),
         value: showRecentSubheading,
@@ -634,80 +722,6 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             : 'ColorPicker(recentColorsSubheading: null);',
       ),
       const Divider(),
-      SwitchTileTooltip(
-        title: const Text('Show Material color name'),
-        subtitle:
-            const Text('If the color has a Material name, it is shown along '
-                'with its shade index.'),
-        value: showMaterialName,
-        onChanged: (bool value) => setState(() => showMaterialName = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(showMaterialName: $showMaterialName);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Show color name'),
-        subtitle:
-            const Text('Shows a general English color name for any selected '
-                'color.'),
-        value: showColorName,
-        onChanged: (bool value) => setState(() => showColorName = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(showColorName: $showColorName);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Show and use opacity slider'),
-        subtitle: const Text('Enable opacity control of selected colors.'),
-        value: enableOpacity,
-        onChanged: (bool value) => setState(() => enableOpacity = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(enableOpacity: $enableOpacity);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Show selected color code'),
-        subtitle:
-            const Text('Show the Flutter style HEX RGB value of the selected '
-                'color. On the wheel picker you can also enter a HEX '
-                'RGB value.'),
-        value: showColorCode,
-        onChanged: (bool value) => setState(() => showColorCode = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(showColorCode: $showColorCode);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Current color used as color code background'),
-        value: colorCodeHasColor,
-        onChanged: (bool value) => setState(() => colorCodeHasColor = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(colorCodeHasColor: $colorCodeHasColor);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Color code always read only'),
-        subtitle: const Text('Normally color code can be edited on '
-            'wheel picker, set this ON to make it read only.'),
-        value: colorCodeReadOnly,
-        onChanged: (bool value) => setState(() => colorCodeReadOnly = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(colorCodeReadOnly: $colorCodeReadOnly);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Show integer color value'),
-        subtitle: const Text(
-            'Show the integer value of the selected color. The value '
-            'can be selected and copied. Typically used as a dev feature.'),
-        value: showColorValue,
-        onChanged: (bool value) => setState(() => showColorValue = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(showColorValue: $showColorValue);',
-      ),
-      SwitchTileTooltip(
-        title: const Text('Show recently used colors'),
-        subtitle: const Text('With the API you can also control how many '
-            'recent colors are shown and the sub heading for it.'),
-        value: showRecentColors,
-        onChanged: (bool value) => setState(() => showRecentColors = value),
-        tooltipEnabled: enableTooltips,
-        tooltip: 'ColorPicker(showRecentColors: $showRecentColors);',
-      ),
     ];
 
     // *************************************************************************
@@ -1009,6 +1023,134 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         tooltip: 'ColorPicker(wheelHasBorder: $wheelHasBorder);',
       ),
       const Divider(),
+      // Opacity track height
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(opacityTrackHeight: ${opacityTrackHeight.floor().toString()});',
+        child: ListTile(
+          title: const Text('Opacity slider height'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slider.adaptive(
+                min: 10,
+                max: 50,
+                divisions: 50 - 10,
+                label: opacityTrackHeight.floor().toString(),
+                value: opacityTrackHeight,
+                onChanged: (double value) =>
+                    setState(() => opacityTrackHeight = value),
+              ),
+            ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  opacityTrackHeight.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      // Opacity track width
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(opacityTrackWidth: ${usedOpacityTrackWidth == null ? null : usedOpacityTrackWidth!.floor().toString()});',
+        child: ListTile(
+          title: const Text('Opacity slider width'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slider.adaptive(
+                min: 150,
+                max: 700,
+                divisions: 700 - 149,
+                label: opacityTrackWidth.floor().toString(),
+                value: opacityTrackWidth,
+                onChanged: (double value) {
+                  setState(() {
+                    opacityTrackWidth = value;
+                    if (opacityTrackWidth >= 150 && opacityTrackWidth < 700) {
+                      usedOpacityTrackWidth = opacityTrackWidth;
+                    }
+                    if (opacityTrackWidth < 150) usedOpacityTrackWidth = null;
+                    if (opacityTrackWidth >= 700) usedOpacityTrackWidth = null;
+                  });
+                },
+              ),
+            ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  usedOpacityTrackWidth == null
+                      ? 'full'
+                      : usedOpacityTrackWidth!.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      // Opacity thumb radius.
+      MaybeTooltip(
+        condition: enableTooltips,
+        tooltip:
+            'ColorPicker(opacityThumbRadius: ${opacityThumbRadius.floor().toString()});',
+        child: ListTile(
+          title: const Text('Opacity slider thumb radius'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slider.adaptive(
+                min: 12,
+                max: 30,
+                divisions: 30 - 12,
+                label: opacityThumbRadius.floor().toString(),
+                value: opacityThumbRadius,
+                onChanged: (double value) =>
+                    setState(() => opacityThumbRadius = value),
+              ),
+            ],
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const Text(
+                  'dp',
+                  style: TextStyle(fontSize: 11),
+                ),
+                Text(
+                  opacityThumbRadius.floor().toString(),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      const Divider(),
       SwitchTileTooltip(
         title: const Text('Enable tooltips'),
         subtitle: const Text('Turn OFF to disable all tooltips in the picker.'
@@ -1141,8 +1283,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       ),
       SwitchTileTooltip(
         title: const Text('Dialog has CANCEL and OK buttons'),
-        subtitle: const Text('Bottom action button will remain present if its '
-            'toolbar button is not turned ON.'),
+        subtitle: const Text('Turn OFF to remove bottom action buttons.'),
         value: dialogActionButtons,
         onChanged: (bool value) => setState(() => dialogActionButtons = value),
         tooltipEnabled: enableTooltips,
@@ -1169,7 +1310,8 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         ),
       ),
       SwitchTileTooltip(
-        title: const Text('Enable CTRL-C CMD-C to copy'),
+        title: const Text('Enable keyboard COPY shortcut'),
+        subtitle: const Text('CMD-C on Apple, CTRL-C on other'),
         value: ctrlC,
         onChanged: (bool value) => setState(() => ctrlC = value),
         tooltipEnabled: enableTooltips,
@@ -1177,7 +1319,8 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             '  ColorPickerCopyPasteBehavior(ctrlC: $ctrlC));',
       ),
       SwitchTileTooltip(
-        title: const Text('Enable CTRL-V CMD-V to paste'),
+        title: const Text('Enable keyboard PASTE shortcut'),
+        subtitle: const Text('CMD-V on Apple, CTRL-V on other'),
         value: ctrlV,
         onChanged: (bool value) => setState(() => ctrlV = value),
         tooltipEnabled: enableTooltips,
@@ -1201,7 +1344,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             '  ColorPickerCopyPasteBehavior(pasteButton: $pasteButton));',
       ),
       SwitchTileTooltip(
-        title: const Text('Enable color code edit field COPY button'),
+        title: const Text('Enable color code field COPY button'),
         value: editFieldCopyButton,
         onChanged: (bool value) => setState(() => editFieldCopyButton = value),
         tooltipEnabled: enableTooltips,
@@ -1227,7 +1370,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             '  ColorPickerCopyPasteBehavior(longPressMenu: $longPressMenu));',
       ),
       SwitchTileTooltip(
-        title: const Text('Long press COPY-PASTE menu on Android/iOS, but '
+        title: const Text('Long press COPY-PASTE menu on Android/iOS, '
             'right click on desktops'),
         value: secondaryOnDesktopLongOnDevice,
         onChanged: (bool value) =>
@@ -1276,7 +1419,6 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     // *************************************************************************
     return Scaffold(
       extendBodyBehindAppBar: true,
-      extendBody: true,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('FlexColorPicker Demo'),
@@ -1374,6 +1516,9 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       enableShadesSelection: enableShadesSelection,
       includeIndex850: includeIndex850,
       enableOpacity: enableOpacity,
+      opacityTrackHeight: opacityTrackHeight,
+      opacityTrackWidth: usedOpacityTrackWidth,
+      opacityThumbRadius: opacityThumbRadius,
       copyPasteBehavior: ColorPickerCopyPasteBehavior(
         ctrlC: ctrlC,
         ctrlV: ctrlV,
@@ -1394,10 +1539,6 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         // toolbar when the picker is used in a dialog.
         okButton: okButton,
         closeButton: closeButton,
-        // This will remove the default dialog action buttons if it is false.
-        // However, the OK button is only removed if `actionButtons.okButton` is
-        // also true, and the CANCEL button only if `actionButtons.closeButton`
-        // is also true.
         dialogActionButtons: dialogActionButtons,
         dialogActionIcons: dialogActionIcons,
         dialogOkButtonType: ColorPickerActionButtonType.outlined,

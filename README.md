@@ -5,18 +5,20 @@ FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` ca
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
 
 >**NOTE:**   
-> This is a **FlexColorPicker 2.0.0 dev and pre-release** with sound null safety. It contains
-> many new features compared to the previous 1.x version.
+> This is **FlexColorPicker 2.0.0 dev and pre-release** with sound null safety. It contains
+> many new features compared to previous stable 1.1.5 none null safe version.
 >
-> The package documentation has not yet been updated to cover all new features that are
+> The package documentation has not yet been updated to cover the new features that are
 > being introduced in final 2.0.0 version together with null-safety. The changelog covers
-> the major changes. API docs are up to date as well. The bundled and live 
-> [**web demo app**](https://rydmike.com/flexcolorpicker) shows the new features, and you
-> can change most API settings. It also shows each API name and current value in a tooltip for
-> each control.
+> the major changes. The API-documentation is up to date as well. The bundled and live 
+> [**web demo app**](https://rydmike.com/flexcolorpicker) demonstrates all the new features, and you
+> can change most API settings. The demo also shows each API name and current value in a tooltip for
+> each control that modifies API values in the demo.
 > 
-> More new features may still come before first 2.0.0 stable release. A minimum requirement for releasing stable
-> version 2 is an update of this documentation.
+> No more new features will be added to 2.0.0 before the pending stable release. This release is 
+> a stabilization and fine-tuning phase. The remaining minimum requirements for releasing stable version 2 
+> is an update of this package documentation to cover all new features. 
+> Later releases will provide additional refinements, further testing and CI/CD pipe.
 > 
 
 ### The different types of available color pickers are
@@ -43,7 +45,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  flex_color_picker: ^2.0.0-nullsafety.0
+  flex_color_picker: ^2.0.0-nullsafety.4
 ```
 
 In your library file add the following import:

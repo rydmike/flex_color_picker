@@ -1,7 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-/// The default shape of a [Slider]'s thumb.
+/// The [OpacitySliderThumb] is a custom version of [RoundSliderThumbShape]
+/// that draws a circle as thumb, with [color] as color inside the thumb.
+/// It also display's slider value inside the thumb.
+///
+/// The slider thumb theme color is used for the circle outline and text color
+/// for the displayed value.
 ///
 /// There is a shadow for the resting, pressed, hovered, and focused state.
 ///
@@ -10,14 +15,15 @@ import 'package:flutter/material.dart';
 ///  * [Slider], which includes a thumb defined by this shape.
 ///  * [SliderTheme], which can be used to configure the thumb shape of all
 ///    sliders in a widget subtree.
-class OpacitySliderThumbShape extends RoundSliderThumbShape {
-  /// Create a slider thumb that draws a white circle filled with [fillColor].
-  const OpacitySliderThumbShape(
-    this.fillColor, {
-    double enabledThumbRadius = 17.0,
+class OpacitySliderThumb extends RoundSliderThumbShape {
+  /// Create a slider thumb that draws a circle filled with [color]
+  /// and shows the slider `value` * 100 in the thumb.
+  const OpacitySliderThumb({
+    required this.color,
+    double enabledThumbRadius = 16.0,
     double? disabledThumbRadius,
     double elevation = 1.0,
-    double pressedElevation = 2.0,
+    double pressedElevation = 4.0,
   }) : super(
           enabledThumbRadius: enabledThumbRadius,
           disabledThumbRadius: disabledThumbRadius,
@@ -26,7 +32,7 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
         );
 
   /// Color used to fill the inside of the thumb.
-  final Color fillColor;
+  final Color color;
 
   double get _disabledThumbRadius => disabledThumbRadius ?? enabledThumbRadius;
 
@@ -49,7 +55,8 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
         'disabledThumbColor cannot be null');
     assert(sliderTheme.thumbColor != null, 'thumbColor cannot be null');
 
-    final Canvas canvas = context.canvas;
+    final Canvas _canvas = context.canvas;
+
     final Tween<double> radiusTween = Tween<double>(
       begin: _disabledThumbRadius,
       end: enabledThumbRadius,
@@ -59,36 +66,44 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
       end: sliderTheme.thumbColor,
     );
 
-    final Color color = colorTween.evaluate(enableAnimation)!;
-    final double radius = radiusTween.evaluate(enableAnimation);
+    final Color _color = colorTween.evaluate(enableAnimation)!;
+    final double _radius = radiusTween.evaluate(enableAnimation);
 
-    final Path path = Path()
+    final Path _path = Path()
       ..addArc(
-        Rect.fromCenter(center: center, width: 2 * radius, height: 2 * radius),
+        Rect.fromCenter(
+          center: center,
+          width: 2 * _radius,
+          height: 2 * _radius,
+        ),
         0,
         pi * 2,
       );
-    canvas.drawShadow(path, Colors.black, 1, true);
-    canvas.drawCircle(center, radius, Paint()..color = color);
-    canvas.drawCircle(center, radius - 2, Paint()..color = fillColor);
 
-    final TextSpan span = TextSpan(
+    _canvas.drawShadow(_path, Colors.black, 1, true);
+    _canvas.drawCircle(center, _radius, Paint()..color = _color);
+    _canvas.drawCircle(center, _radius - 2, Paint()..color = color);
+
+    final TextSpan _span = TextSpan(
       style: TextStyle(
         fontSize: enabledThumbRadius * 0.78,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
         color: sliderTheme.thumbColor, //Text Color of Value on Thumb
       ),
       text: (value * 100).toStringAsFixed(0),
     );
 
-    final TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr);
-    tp.layout();
+    final TextPainter _textPainter = TextPainter(
+      text: _span,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    _textPainter.layout();
 
-    final Offset textCenter =
-        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
-    tp.paint(canvas, textCenter);
+    final Offset _textCenter = Offset(
+      center.dx - (_textPainter.width / 2),
+      center.dy - (_textPainter.height / 2),
+    );
+    _textPainter.paint(_canvas, _textCenter);
   }
 }

@@ -138,11 +138,11 @@ class _ColorIndicatorState extends State<ColorIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    // The indicator color is light.
-    final bool isLight =
+    // The indicator color is a "light" color.
+    final bool _isLight =
         ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
     // Set icon color to black on light color and to white on dark color.
-    final Color iconColor = isLight ? Colors.black : Colors.white;
+    final Color _iconColor = _isLight ? Colors.black : Colors.white;
     // If no border color is given, we use the theme divider color as
     // border color, it is typically a suitable grey color.
     final Color _borderColor =
@@ -164,20 +164,28 @@ class _ColorIndicatorState extends State<ColorIndicator> {
         child: InkWell(
           // We need a key, otherwise Flutter looses track of which
           // Widget should have what focus/highlight colors when we
-          // use a lot of these ColorIndicators with Inkwells.
+          // use a lot of these ColorIndicators with InkWells.
+          // For the un-focus to work as desired it also needs to be a
+          // UniqueKey, this will cause a performance hit and extra rebuilds,
+          // but it did not work as desired with eg. just a
+          // ValueKey<Color>(widget.color). But using UniqueKey() results in
+          // desired un-focus function working. I also tried this approach
+          // ValueKey<int>(hashValues(hashCode, widget.color)) to try cut
+          // down on rebuilds while still retaining the desired feature, but
+          // it did not work either, keeping the UniqueKey for now.
           key: UniqueKey(),
           focusNode: _focusNode,
           // Only use focus color when in focus, but not selected.
           focusColor: widget.isSelected
               ? Colors.transparent
-              : isLight
+              : _isLight
                   ? Colors.black26
                   : Colors.white30,
           // Only use highlightColor color when in focus, but not selected.
           highlightColor: widget.isSelected
               ? Colors.transparent
               : Theme.of(context).highlightColor,
-          hoverColor: isLight ? Colors.black26 : Colors.white30,
+          hoverColor: _isLight ? Colors.black26 : Colors.white30,
           onTap: widget.onSelect != null
               ? () {
                   widget.onSelect!();
@@ -187,7 +195,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           child: widget.isSelected
               ? Icon(
                   widget.selectedIcon,
-                  color: iconColor,
+                  color: _iconColor,
                   // Size the select icon so it always fits nicely.
                   // The 0.6 value is just based on what looked good enough.
                   size: widget.width < widget.height

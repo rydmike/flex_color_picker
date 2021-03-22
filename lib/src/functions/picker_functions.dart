@@ -71,7 +71,6 @@ ColorPickerType findColorInSelector({
       return key;
     }
   }
-
   // And finally if no selector was set to enabled, we return material anyway.
   return ColorPickerType.primary;
 }

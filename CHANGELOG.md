@@ -2,11 +2,18 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.4] - March 22, 2021
+* **New Feature:** A bool `enableOpacity` property was added that enables an opacity 
+  slider that can be used to control the alpha channel in the selected ARGB color value. The slider 
+  height can be controlled with `opacityTrackHeight`, the width with `opacityTrackWidth` and the 
+  slider thumb size with `opacityThumbRadius`. There is also a `opacitySubheading` Widget that can 
+  be used to provide a Widget heading for the opacity slider. 
+  
 ## [2.0.0-nullsafety.3] - March 12, 2021
-* **Bugfix:** Color code field no longer receives focus when switching to it on wheel page.
+* **Fix:** Color code field no longer receives focus when switching to it on wheel page.
   Focus is set to color wheel, or the selected color shade, if the
   shade colors are present. The focus handling has also been improved for desktop usage.
-* **Bugfix:** The property `editUsesParsedPaste` now works as intended, if true, desktop keyboard paste commands, 
+* **Fix:** The property `editUsesParsedPaste` now works as intended, if true, desktop keyboard paste commands, 
   while editing a color value are intercepted, and the hole pasted buffer value gets parsed, it does not get 
   pasted into the field. For normal field paste functionality keep `editUsesParsedPaste` false (default). 
 * The color code edit and entry field now works more like a normal text entry field. It still only accepts
@@ -116,26 +123,26 @@ The following are **minor breaking changes** from version 1.x, they mostly conce
   However, the workaround allows for the Wrap implementation that was changed to a Row in version 1.1.2, to be used
   again.
 * The almost full API configurable Web example and demo, was included in the package in 
-  "example/lib/demo/mina.dart" together with the previous default example in "example/lib/main.dart". 
+  "example/lib/demo/main.dart" together with the previous default example in "example/lib/main.dart". 
   Previously this Web example was in a separate GitHub repository. The example was updated to make it 
   responsive, to offer better usability on Web.
 
 ## [1.1.5] - March 3, 2021
-* Bug fix `selectedPickerTypeColor`: When color was undefined, the thumb did not receive the same text color as the
+* **Fix:** When `selectedPickerTypeColor` color was undefined, the thumb did not receive the same text color as the
   default and only one before in version 1.1.3 and earlier, in dark-mode. This broke compatibility with past style
   when using dark-mode. This fix restores the correct past style when the `selectedPickerTypeColor` is undefined.
   
 ## [1.1.4] - March 3, 2021
-* New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
-* New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
+* **Feature:** New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
+* **Feature:** New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
   If not defined it defaults to same style as `colorCodeTextStyle`.
   
 ## [1.1.3] - December 22, 2020
-* Fixed the faulty documentation and comment for showPickerDialog parameter insetPadding.
-* Fixed the faulty default value for showPickerDialog parameter insetPadding, the new default
+* **Fix:** Faulty documentation and comment for showPickerDialog parameter insetPadding.
+* **Fix:** Faulty default value for showPickerDialog parameter insetPadding, the new default
   value is the same as Flutter and Material default
   `EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0)`, as it should have been.
-* Minor documentation style correction.
+* **Documentation:** Minor documentation style correction.
 
 ## [1.1.2] - December 5, 2020
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
