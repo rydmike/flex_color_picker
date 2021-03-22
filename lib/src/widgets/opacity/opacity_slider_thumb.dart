@@ -61,14 +61,8 @@ class OpacitySliderThumb extends RoundSliderThumbShape {
       begin: _disabledThumbRadius,
       end: enabledThumbRadius,
     );
-    final ColorTween colorTween = ColorTween(
-      begin: sliderTheme.disabledThumbColor,
-      end: sliderTheme.thumbColor,
-    );
 
-    final Color _color = colorTween.evaluate(enableAnimation)!;
     final double _radius = radiusTween.evaluate(enableAnimation);
-
     final Path _path = Path()
       ..addArc(
         Rect.fromCenter(
@@ -80,15 +74,15 @@ class OpacitySliderThumb extends RoundSliderThumbShape {
         pi * 2,
       );
 
-    _canvas.drawShadow(_path, Colors.black, 1, true);
-    _canvas.drawCircle(center, _radius, Paint()..color = _color);
-    _canvas.drawCircle(center, _radius - 2, Paint()..color = color);
+    _canvas.drawShadow(_path, Colors.black, 1.5, true);
+    _canvas.drawCircle(center, _radius, Paint()..color = Colors.white);
+    _canvas.drawCircle(center, _radius - 1.8, Paint()..color = color);
 
     final TextSpan _span = TextSpan(
       style: TextStyle(
         fontSize: enabledThumbRadius * 0.78,
         fontWeight: FontWeight.w600,
-        color: sliderTheme.thumbColor, //Text Color of Value on Thumb
+        color: sliderTheme.thumbColor,
       ),
       text: (value * 100).toStringAsFixed(0),
     );

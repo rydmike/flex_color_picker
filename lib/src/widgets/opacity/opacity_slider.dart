@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -130,7 +129,7 @@ ThemeData _opacitySliderTheme(
   // written on top of the thumb fill [color].
   final Color _thumbTextColor =
       ThemeData.estimateBrightnessForColor(color) == Brightness.light
-          ? Colors.black45
+          ? const Color(0xFF333333)
           : Colors.white;
   return ThemeData.light().copyWith(
     sliderTheme: SliderThemeData(
@@ -147,8 +146,6 @@ ThemeData _opacitySliderTheme(
         color: color,
         enabledThumbRadius: thumbRadius,
       ),
-      // overlayShape: RoundSliderOverlayShape(
-      //     overlayRadius: math.max(thumbRadius, trackHeight / 2)),
     ),
   );
 }
