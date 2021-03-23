@@ -71,6 +71,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   double columnSpacing = 8;
   bool okButton = true;
   bool closeButton = true;
+  bool closeIsLast = true;
   bool dialogActionButtons = false;
   bool dialogActionIcons = true;
   bool enableTooltips = true;
@@ -319,9 +320,11 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               enableTooltips: enableTooltips,
               pickersEnabled: pickersEnabled,
               // Label override with custom or e.g. translated label.
-              pickerTypeLabels: const <ColorPickerType, String>{
-                ColorPickerType.bw: 'Near B&W',
-              },
+              // pickerTypeLabels: const <ColorPickerType, String>{
+              //   ColorPickerType.accent: 'Secondary',
+              //   ColorPickerType.bw: 'Near B&W',
+              //   ColorPickerType.wheel: 'Any',
+              // },
               selectedPickerTypeColor: colorScheme.primary,
               title: showTitle
                   ? Text(
@@ -421,7 +424,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       ),
       const ListTile(
         title: Text('Color change callbacks'),
-        subtitle: Text('Above callbacks include include color before start, '
+        subtitle: Text('Above callbacks are color before change started, '
             'during change and when change ended.'),
       ),
 
@@ -1285,7 +1288,17 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             '  ColorPickerActionButtons(okButton: $okButton));',
       ),
       SwitchTileTooltip(
-        title: const Text('Dialog has CANCEL and OK buttons'),
+        title: const Text('Dialog toolbar CLOSE is last button'),
+        subtitle: const Text('The CLOSE button is last, turn OFF to make OK '
+            'button the last one in the toolbar.'),
+        value: closeIsLast,
+        onChanged: (bool value) => setState(() => closeIsLast = value),
+        tooltipEnabled: enableTooltips,
+        tooltip: 'ColorPicker(actionButtons:\n'
+            '  ColorPickerActionButtons(closeIsLast: $closeIsLast));',
+      ),
+      SwitchTileTooltip(
+        title: const Text('Dialog has bottom CANCEL OK buttons'),
         subtitle: const Text('Turn OFF to remove bottom action buttons.'),
         value: dialogActionButtons,
         onChanged: (bool value) => setState(() => dialogActionButtons = value),
@@ -1542,6 +1555,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         // toolbar when the picker is used in a dialog.
         okButton: okButton,
         closeButton: closeButton,
+        closeIsLast: closeIsLast,
         dialogActionButtons: dialogActionButtons,
         dialogActionIcons: dialogActionIcons,
         dialogOkButtonType: ColorPickerActionButtonType.outlined,
