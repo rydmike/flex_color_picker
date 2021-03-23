@@ -701,7 +701,7 @@ class ColorTools {
   ///
   /// The name will include the color index if the flag [withIndex] is true.
   /// If the given color is not a material color or one of the accents colors,
-  /// an empty string is returned. THe function can also take as input an
+  /// an empty string is returned. The function can also take as input an
   /// optional custom color swatch to name map and return a custom name for any
   /// color found in any of the custom color swatches in the map.
   static String materialName(Color color,

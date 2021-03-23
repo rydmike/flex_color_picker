@@ -8,7 +8,7 @@ import 'switch_tile_tooltip.dart';
 
 // Max width of the body content when used on a wide screen.
 const double kMaxBodyWidth = 2100;
-const double kMinColumnWidth = 420;
+const double kMinColumnWidth = 390;
 
 class ColorPickerScreen extends StatefulWidget {
   const ColorPickerScreen({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool showHeading = false;
   bool showSubheading = true;
   bool showOpacitySubheading = false;
-  bool showRecentSubheading = false;
+  bool showRecentSubheading = true;
 
   bool showMaterialName = true;
   bool showColorName = true;
@@ -81,9 +81,9 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   bool copyButton = true;
   bool pasteButton = true;
   bool editFieldCopyButton = true;
-  bool longPressMenu = false;
+  bool longPressMenu = true;
   bool secondaryMenu = false;
-  bool secondaryOnDesktopLongOnDevice = true;
+  bool secondaryOnDesktopLongOnDevice = false;
   bool parseShortHexCode = false;
   bool editUsesParsedPaste = true;
   bool snackBarParseError = true;
@@ -318,6 +318,10 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               wheelHasBorder: wheelHasBorder,
               enableTooltips: enableTooltips,
               pickersEnabled: pickersEnabled,
+              // Label override with custom or e.g. translated label.
+              pickerTypeLabels: const <ColorPickerType, String>{
+                ColorPickerType.bw: 'Near B&W',
+              },
               selectedPickerTypeColor: colorScheme.primary,
               title: showTitle
                   ? Text(
@@ -363,8 +367,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               showColorValue: showColorValue,
               showRecentColors: showRecentColors,
               recentColors: screenRecentColors,
-              maxRecentColors: 6,
-              // This is to provide the custom swatch colors and their names.
+              maxRecentColors: 8,
               customColorSwatchesAndNames: colorsNameMap,
               colorCodeTextStyle: Theme.of(context).textTheme.subtitle1,
               colorCodePrefixStyle: Theme.of(context).textTheme.caption,
@@ -373,12 +376,6 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         ),
       ),
       //
-      const ListTile(
-        title: Text('Color change callbacks'),
-        subtitle: Text('Callbacks for color change start, is happening and '
-            'ended. They include color before start, '
-            'during change and when change ended.'),
-      ),
       ListTile(
         subtitle: Wrap(runSpacing: 8, children: <Widget>[
           MaybeTooltip(
@@ -389,7 +386,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               label: Text(
                 'Start ${onColorChangeStart.hexAlpha}',
                 style:
-                    TextStyle(color: onColorChangeStartOnColor, fontSize: 14),
+                    TextStyle(color: onColorChangeStartOnColor, fontSize: 12),
               ),
               backgroundColor: onColorChangeStart,
             ),
@@ -402,7 +399,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             child: Chip(
               label: Text(
                 'Change ${onColorChanged.hexAlpha}',
-                style: TextStyle(color: onColorChangedOnColor, fontSize: 14),
+                style: TextStyle(color: onColorChangedOnColor, fontSize: 12),
               ),
               backgroundColor: onColorChanged,
             ),
@@ -415,13 +412,19 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             child: Chip(
               label: Text(
                 'End ${onColorChangeEnd.hexAlpha}',
-                style: TextStyle(color: endChangeOnColor, fontSize: 14),
+                style: TextStyle(color: endChangeOnColor, fontSize: 12),
               ),
               backgroundColor: onColorChangeEnd,
             ),
           ),
         ]),
       ),
+      const ListTile(
+        title: Text('Color change callbacks'),
+        subtitle: Text('Above callbacks include include color before start, '
+            'during change and when change ended.'),
+      ),
+
       const Divider(),
       MaybeTooltip(
         condition: enableTooltips,

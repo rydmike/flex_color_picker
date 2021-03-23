@@ -129,7 +129,7 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.wheel: _selectWheelAnyLabel,
     },
     // Custom color swatches and name map for the custom color swatches.
-    this.customColorSwatchesAndNames,
+    this.customColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
     //
   })  : assert(columnSpacing >= 0 && columnSpacing <= 300,
             'The picker item column spacing must be >= 0 and <= 300 dp.'),
@@ -521,9 +521,9 @@ class ColorPicker extends StatefulWidget {
   /// and used when the picker type [ColorPickerType.custom] option is enabled
   /// in the color picker.
   ///
-  /// Has no default values and if omitted or null, the custom color picker will
-  /// not be shown even if is enabled in [pickersEnabled].
-  final Map<ColorSwatch<Object>, String>? customColorSwatchesAndNames;
+  /// Default to an empty map, if the map is empty, it will not be shown
+  /// even if it is enabled in [pickersEnabled].
+  final Map<ColorSwatch<Object>, String> customColorSwatchesAndNames;
 
   /// English default label for picker with both primary and accent colors.
   static const String _selectBothLabel = 'Primary & Accent';
@@ -787,6 +787,8 @@ class _ColorPickerState extends State<ColorPicker> {
   late FocusNode _focusNode;
   // Focus node of the picker selector.
   late FocusNode _pickerFocusNode;
+  // Focus node of the opacity slider.
+  late FocusNode _opacityFocusNode;
 
   // The currently active used list of color swatches we select
   // the active color from
@@ -841,111 +843,54 @@ class _ColorPickerState extends State<ColorPicker> {
   // gets initialized in the initSelectedValue() function.
   late Map<ColorPickerType, bool> _pickers;
 
-  // The current state of list with recent color selections.
+  // The current state of the list with the recent color selections.
   late List<Color> _recentColors;
 
-  // Widget map for the sliding Cupertino segmented control that allows us to
-  // switch between the pickers we enabled.
-  // We set the labels to default values if none given. The constructor also
-  // holds defaults, but that does not prevent them for being overridden
-  // with explicit null values, in this case we do not want that, so we still
-  // check for nulls here as well and use default labels if null is given.
-  late Map<ColorPickerType, Widget> _pickerTypes;
-
-  // Map of swatch names in corresponding list of color swatches,
-  // gets initialized in the initSelectedValue() function.
+  // Map of swatch names in corresponding list of color swatches.
   late Map<ColorPickerType, List<ColorSwatch<Object>>> _typeToSwatchMap;
+
+  // A ColorPickerType to String map that contains labels for picker types,
+  // with the default label strings in English applied as fallback.
+  late Map<ColorPickerType, String> _pickerLabels;
 
   @override
   void initState() {
     super.initState();
-
-    _focusNode = FocusNode();
-    _pickerFocusNode = FocusNode();
-
-    // Always update the wheel and edit when ColorPicker is initialized, but
-    // not in didUpdateWidget.
-    _wheelShouldUpdate = true;
-    _editShouldUpdate = true;
-
-    // If there are no shade color widgets display, the wheel must focus
-    // on init.
-    _wheelShouldFocus = !widget.enableShadesSelection;
-
-    // Set the selected color to the widget constructor provided start color
+    // Set selected color to the widget constructor provided start color,
+    // if opacity is not enabled, override alpha to fully opaque.
     _selectedColor =
         widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
-
-    // Get current opacity of passed in color.
+    // Get current opacity of passed in color, if opacity is enabled.
     _opacity = widget.enableOpacity ? widget.color.opacity : 1;
-
-    // Update the list of the recent color to their initial value.
-    _recentColors = <Color>[...widget.recentColors];
-
-    // Initialize other values and find the best color picker to show
-    // the current selectedColor value.
-    _initSelectedValue(findPicker: true);
-  }
-
-  @override
-  void didUpdateWidget(ColorPicker oldWidget) {
-    //
-    // Opacity enable/disable changed.
-    if (widget.enableOpacity != oldWidget.enableOpacity) {
-      _selectedColor =
-          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
-      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
-    }
-    // Initialize the values again because the underlying widget changed.
-    // If the available color picker selection was changed we need to find
-    // the picker again and set the findPicker option to true.
-    _initSelectedValue(
-        findPicker: widget.pickersEnabled != oldWidget.pickersEnabled);
-
-    super.didUpdateWidget(oldWidget);
-  }
-
-  // A helper to initialize local state, called by:
-  // * initState()
-  // * didUpdateWidget()
-  // * _getClipboard()
-  // Called to initialize all the values and conditionally to again find the
-  // first picker where the current color is located.
-  void _initSelectedValue({bool findPicker = false}) {
-    // The selected color(s) should request focus on init.
-    if (findPicker) _selectedShouldFocus = true;
-
-    // If no custom color map is provided (null) we use an empty map.
-    final Map<ColorSwatch<Object>, String> colorsNameMap =
-        widget.customColorSwatchesAndNames ?? <ColorSwatch<Object>, String>{};
-
-    // A map with the picker type enum as key to color swatch lists.
+    // Picker labels, use english fallbacks if none provided.
+    _pickerLabels = <ColorPickerType, String>{
+      ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
+          ColorPicker._selectBothLabel,
+      ColorPickerType.primary:
+          widget.pickerTypeLabels[ColorPickerType.primary] ??
+              ColorPicker._selectPrimaryLabel,
+      ColorPickerType.accent: widget.pickerTypeLabels[ColorPickerType.accent] ??
+          ColorPicker._selectAccentLabel,
+      ColorPickerType.bw: widget.pickerTypeLabels[ColorPickerType.bw] ??
+          ColorPicker._selectBlackWhiteLabel,
+      ColorPickerType.custom: widget.pickerTypeLabels[ColorPickerType.custom] ??
+          ColorPicker._selectCustomLabel,
+      ColorPickerType.wheel: widget.pickerTypeLabels[ColorPickerType.wheel] ??
+          ColorPicker._selectWheelAnyLabel,
+    };
+    // A map with the picker type enum as key to a color swatch list.
     _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
       ColorPickerType.both: ColorTools.primaryAndAccentColors,
       ColorPickerType.primary: ColorTools.primaryColors,
       ColorPickerType.accent: ColorTools.accentColors,
       ColorPickerType.bw: ColorTools.blackAndWhite,
-      ColorPickerType.custom: colorsNameMap.keys.toList(),
+      ColorPickerType.custom: widget.customColorSwatchesAndNames.keys.toList(),
       ColorPickerType.wheel: <ColorSwatch<Object>>[
         // Make a swatch of the selected color in the wheel.
         ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
       ],
     };
-
-    // Set useCustomPicker to false if no custom data for it was provided,
-    // even if using custom picker might have been true, we have to have some
-    // custom color swatches as well to be able to use them.
-    bool useCustomPicker =
-        widget.pickersEnabled[ColorPickerType.custom] ?? false;
-    if (widget.customColorSwatchesAndNames == null) useCustomPicker = false;
-
-    // Color picker type to boolean for each enabled case.
-    // This local map of the widget provided version always contains defaults
-    // or 'false' if no value was provided in via the widget constructor.
-    // This makes it possible and convenient in the constructor to only
-    // provide values for any values that we want to deviate from the default
-    // and keep the other values at default, a simple version of a
-    // 'CopyWith' method.
+    // Enabled color pickers, with defaults if not specified.
     _pickers = <ColorPickerType, bool>{
       ColorPickerType.both:
           widget.pickersEnabled[ColorPickerType.both] ?? false,
@@ -954,41 +899,129 @@ class _ColorPickerState extends State<ColorPicker> {
       ColorPickerType.accent:
           widget.pickersEnabled[ColorPickerType.accent] ?? true,
       ColorPickerType.bw: widget.pickersEnabled[ColorPickerType.bw] ?? false,
-      ColorPickerType.custom: useCustomPicker,
+      ColorPickerType.custom:
+          // Custom picker is always disabled if no custom swatches are given.
+          (widget.pickersEnabled[ColorPickerType.custom] ?? false) &&
+              widget.customColorSwatchesAndNames.isNotEmpty,
       ColorPickerType.wheel:
           widget.pickersEnabled[ColorPickerType.wheel] ?? false,
     };
+    // Define used focus nodes.
+    _focusNode = FocusNode();
+    _pickerFocusNode = FocusNode();
+    _opacityFocusNode = FocusNode();
+    // Always update the wheel and edit field when ColorPicker is initialized.
+    _wheelShouldUpdate = true;
+    _editShouldUpdate = true;
+    // If there are no shade colors displayed, the wheel must focus on init.
+    _wheelShouldFocus = !widget.enableShadesSelection;
+    // Init the list of the recently used colors to their initial value.
+    _recentColors = <Color>[...widget.recentColors];
+    // Find the best color picker to show the current selectedColor value.
+    _findPicker();
+    // And update to the active swatch related to the selected color.
+    _updateActiveSwatch();
+  }
 
+  @override
+  void didUpdateWidget(ColorPicker oldWidget) {
+    // Opacity enable/disable changed, update selected color and opacity.
+    if (widget.enableOpacity != oldWidget.enableOpacity) {
+      _selectedColor =
+          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
+      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+    }
+    // Picker labels map changed, update used one, with its default fallbacks.
+    if (widget.pickerTypeLabels != oldWidget.pickerTypeLabels) {
+      _pickerLabels = <ColorPickerType, String>{
+        ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
+            ColorPicker._selectBothLabel,
+        ColorPickerType.primary:
+            widget.pickerTypeLabels[ColorPickerType.primary] ??
+                ColorPicker._selectPrimaryLabel,
+        ColorPickerType.accent:
+            widget.pickerTypeLabels[ColorPickerType.accent] ??
+                ColorPicker._selectAccentLabel,
+        ColorPickerType.bw: widget.pickerTypeLabels[ColorPickerType.bw] ??
+            ColorPicker._selectBlackWhiteLabel,
+        ColorPickerType.custom:
+            widget.pickerTypeLabels[ColorPickerType.custom] ??
+                ColorPicker._selectCustomLabel,
+        ColorPickerType.wheel: widget.pickerTypeLabels[ColorPickerType.wheel] ??
+            ColorPicker._selectWheelAnyLabel,
+      };
+    }
+    // Pickers customColorSwatchesAndNames map changed, or pickersEnabled map
+    // changed, they depend on each other, so we always update state of both.
+    if (widget.customColorSwatchesAndNames !=
+            oldWidget.customColorSwatchesAndNames ||
+        widget.pickersEnabled != oldWidget.pickersEnabled) {
+      // Update _typeToSwatchMap, because custom color swatches were updated.
+      _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
+        ColorPickerType.both: ColorTools.primaryAndAccentColors,
+        ColorPickerType.primary: ColorTools.primaryColors,
+        ColorPickerType.accent: ColorTools.accentColors,
+        ColorPickerType.bw: ColorTools.blackAndWhite,
+        ColorPickerType.custom: widget.customColorSwatchesAndNames.keys
+            .toList(), // Use empty map if no custom swatch given.
+        ColorPickerType.wheel: <ColorSwatch<Object>>[
+          // Make a swatch of the selected color in the wheel.
+          ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+        ],
+      };
+      // Updated enabled color pickers, with defaults if none given, depends
+      // on customColorSwatchesAndNames, so we need to update this also when
+      // it changes, not just the enabled pickers.
+      _pickers = <ColorPickerType, bool>{
+        ColorPickerType.both:
+            widget.pickersEnabled[ColorPickerType.both] ?? false,
+        ColorPickerType.primary:
+            widget.pickersEnabled[ColorPickerType.primary] ?? true,
+        ColorPickerType.accent:
+            widget.pickersEnabled[ColorPickerType.accent] ?? true,
+        ColorPickerType.bw: widget.pickersEnabled[ColorPickerType.bw] ?? false,
+        ColorPickerType.custom:
+            // Custom picker is always disabled if no custom swatches are given.
+            (widget.pickersEnabled[ColorPickerType.custom] ?? false) &&
+                widget.customColorSwatchesAndNames.isNotEmpty,
+        ColorPickerType.wheel:
+            widget.pickersEnabled[ColorPickerType.wheel] ?? false,
+      };
+      // When the above happens, we need to find the right picker again.
+      _findPicker();
+      // And update the active swatch as well.
+      _updateActiveSwatch();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  // Find the best matching picker of available ones to show current color.
+  void _findPicker() {
+    // The selected color indicator in the picker should request focus.
+    _selectedShouldFocus = true;
     // We use the picker selector segment control only if more than one picker
-    // is enabled in the color picker. If anybody ever reads this comment
+    // is enabled in the color picker. If anybody ever reads this comment,
     // I admit, this kind of logic is a bit tricky. Imo looping over the items
     // and counting the ones that are true and returning true if count is > 1,
-    // is imo more understandable, but this was interesting to try.
-    // Trust me it does the same thing! :)
+    // is imo more understandable, but this was interesting to try, and it does
+    // the same thing! :)
     _usePickerSelector =
         _pickers.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) > 1;
 
-    // If we have a picker selector, we will build with selected picker and
-    // select the segment as active where we found the given active color.
+    // If we have a picker selector, we get the best one, of the enabled ones,
+    // to show the current _selectedColor.
     if (_usePickerSelector) {
-      if (findPicker) {
-        _activePicker = findColorInSelector(
-          // Disregard alpha on selected color to find it in a color picker.
-          color: _selectedColor.withAlpha(0xFF),
-          typeToSwatchMap: _typeToSwatchMap,
-          pickersEnabled: _pickers,
-          lookInShades: widget.enableShadesSelection,
-          include850: widget.includeIndex850,
-        );
-      }
-      // If in a rebuild and the swatch was removed, we use the first one
-      // that is still left in the segment control.
-      if (!_pickers.containsKey(_activePicker)) {
-        _activePicker = _pickers.keys.toList()[0];
-      }
+      _activePicker = findColorInSelector(
+        // Disregard any alpha on selected color to find its color value only.
+        color: _selectedColor.withAlpha(0xFF),
+        typeToSwatchMap: _typeToSwatchMap,
+        pickersEnabled: _pickers,
+        lookInShades: widget.enableShadesSelection,
+        include850: widget.includeIndex850,
+      );
     }
     // If we don't have segment control selector, we use the only swatch
-    // selection that is still true without showing a segment control.
+    // selection that is still true and will not show a picker selector at all.
     else {
       if (_pickers[ColorPickerType.both]!) {
         _activePicker = ColorPickerType.both;
@@ -1003,144 +1036,40 @@ class _ColorPickerState extends State<ColorPicker> {
       } else if (_pickers[ColorPickerType.wheel]!) {
         _activePicker = ColorPickerType.wheel;
       }
-      // If they were all false we show the Material primary swatches picker.
+      // If they were all false, we show the Material primary swatches picker.
       else {
         _activePicker = ColorPickerType.primary;
       }
     }
-    // We need to set focus on the wheel, because it is the selected picker
-    // and the shades are not shown that would take the focus otherwise in
-    // order for it to not be on the Edit input field. If it is focused by
-    // default the virtual keyboard will appear when it displayed. We do not
-    // want that to happen until the user clicks on the edit field
-    // intentionally.
+    // We need to set focus on the wheel, when it is the selected picker
+    // and the shades that would normally grab focus are not shown. If we do
+    // no do this, focus may be on Edit input field, and if it is focused
+    // the virtual keyboard will appear when wheel is displayed. We do not
+    // want that to happen until the user clicks on the edit field.
     if (_activePicker == ColorPickerType.wheel &&
         !widget.enableShadesSelection) {
       _wheelShouldFocus = true;
     }
   }
 
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    _pickerFocusNode.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Set default text style for the segmented slider control.
-    final TextStyle _segmentTextStyle = widget.pickerTypeTextStyle ??
-        Theme.of(context).textTheme.caption ??
-        const TextStyle(fontSize: 12);
-
-    final Color _thumbColor = widget.selectedPickerTypeColor ??
-        const CupertinoDynamicColor.withBrightness(
-          color: Color(0xFFFFFFFF),
-          darkColor: Color(0xFF636366),
-        );
-
-    final Color? _thumbOnColor = widget.selectedPickerTypeColor == null
-        ? null
-        : ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
-            ? Colors.black
-            : Colors.white;
-
-    // Widget map for the sliding Cupertino segmented control that allows us to
-    // switch between the pickers we enabled.
-    // We set the labels to default values if none given. The constructor also
-    // holds defaults, but that does not prevent them for being overridden
-    // with explicit null values, in this case we do not want that, so we still
-    // check for nulls here as well and use default labels if null is given.
-    _pickerTypes = <ColorPickerType, Widget>{
-      if (_pickers[ColorPickerType.both]!)
-        ColorPickerType.both: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.both] ??
-                ColorPicker._selectBothLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.both
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-      if (_pickers[ColorPickerType.primary]!)
-        ColorPickerType.primary: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.primary] ??
-                ColorPicker._selectPrimaryLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.primary
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-      if (_pickers[ColorPickerType.accent]!)
-        ColorPickerType.accent: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.accent] ??
-                ColorPicker._selectAccentLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.accent
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-      if (_pickers[ColorPickerType.bw]!)
-        ColorPickerType.bw: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.bw] ??
-                ColorPicker._selectBlackWhiteLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.bw
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-      if (_pickers[ColorPickerType.custom]!)
-        ColorPickerType.custom: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.custom] ??
-                ColorPicker._selectCustomLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.custom
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-      if (_pickers[ColorPickerType.wheel]!)
-        ColorPickerType.wheel: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.pickerTypeLabels[ColorPickerType.wheel] ??
-                ColorPicker._selectWheelAnyLabel,
-            textAlign: TextAlign.center,
-            style: _activePicker == ColorPickerType.wheel
-                ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                : _segmentTextStyle,
-          ),
-        ),
-    };
-
-    // The normal case is that we have a swatch that we need to find
+  // Update shades swatch to the correct swatch for the selected color.
+  void _updateActiveSwatch() {
+    // The normal case is that we have a standard swatch where we need to
+    // find the swatch that contains the color.
     if (_activePicker != ColorPickerType.wheel) {
-      // Pick the active color swatch list from the map based on used swatch
+      // Get list of color swatches from the map for the active picker.
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
-      // Set which color swatch is the active one of the ones in the active list
+      // Find the swatch that selected color belongs to from the swatches in
+      // the active picker and set this swatch as _activeSwatch.
       _activeSwatch = findColorSwatch(
         _selectedColor.withAlpha(0xFF),
         _activeColorSwatchList,
         widget.includeIndex850,
       ) as ColorSwatch<Object>?;
-
-      // For the 'wheel' color, we need to check if the selected
-      // color is part of a swatch and if it is, return that as the active
-      // swatch, and only if we do not find one, is a computed swatch created.
+      // For the wheel picker we need to check if the selected color belongs to
+      // a pre-defined swatch and if it does, return that as the active swatch.
+      // If the selected color does not belong to any pre-defined color swath
+      // then we compute a color swatch for it.
     } else {
       if (ColorTools.isAccentColor(_selectedColor.withAlpha(0xFF))) {
         _activeSwatch = ColorTools.accentSwatch(_selectedColor.withAlpha(0xFF));
@@ -1156,16 +1085,27 @@ class _ColorPickerState extends State<ColorPicker> {
             _selectedColor.withAlpha(0xFF), widget.customColorSwatchesAndNames);
       }
     }
-    // Did not find the selected color in the active swatch list,
-    // set active swatch to the first swatch in active list, just
-    // to get a selection, this is a fall back from an error situation
-    // where a selected color was passed to the color picker that was
-    // not found in any of the provided swatches in active pickers. Note that
-    // if the wheel picker is enabled, the color will always be found
+    // We did not find the selected color in any active swatch list, in that
+    // case we set active swatch to the first swatch in active list, just
+    // to get an active swatch selection. This is a fall back from an error
+    // situation where a selected color was passed to the color picker that was
+    // not found in any of the provided swatches in the active pickers.
+    // If the wheel picker is enabled, then the color will always be found
     // in it as a last resort.
     _activeSwatch ??= _activeColorSwatchList[0];
+  }
 
-    // The resulting used text themes, if null was passed in we assign defaults.
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _pickerFocusNode.dispose();
+    _opacityFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // The effective used text themes, if null was passed in we assign defaults.
     final TextStyle effectiveMaterialNameStyle =
         (widget.materialNameTextStyle ??
             Theme.of(context).textTheme.bodyText2)!;
@@ -1176,7 +1116,7 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle effectiveCodeStyle =
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2)!;
 
-    // Used to determine if we should have a context menu at all.
+    // The logic below is used to determine if we will have a context menu.
     final TargetPlatform _platform = Theme.of(context).platform;
     final bool _useLongPress = widget.copyPasteBehavior.longPressMenu ||
         (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
@@ -1186,17 +1126,16 @@ class _ColorPickerState extends State<ColorPicker> {
             isDesktop(_platform));
     final bool _useContextMenu = _useLongPress || _useSecondaryClick;
 
-    // Build and return the layout
-    //
+    // Build and return the layout.
     // We start with a RawKeyboardListener that is used to handle keyboard
     // copy and paste events.
     return RawKeyboardListener(
       focusNode: _focusNode,
       onKey: _handleKeyEvent,
       autofocus: true,
-
-      // If the copy paste long press menu feature is enabled we wrap the
-      // entire color picker with a Copy-Paste context menu.
+      // If the Copy-Paste context menu feature is enabled we wrap the
+      // entire color picker with a Copy-Paste context menu, if it is not
+      // enabled, it is not a part of the widget tree at all.
       child: IfWrapper(
         condition: _useContextMenu,
         builder: (BuildContext context, Widget child) {
@@ -1211,8 +1150,8 @@ class _ColorPickerState extends State<ColorPicker> {
             },
             onOpen: () {
               // If we were on the wheel when the menu got opened, it's
-              // operation got cancelled and we need to call the on change end
-              // event with the selected color
+              // operation got cancelled by the context menu and we need to
+              // call onColorChangeEnd event with the selected color.
               if (_onWheel) {
                 // But only if there is call back for it.
                 if (widget.onColorChangeEnd != null) {
@@ -1230,8 +1169,8 @@ class _ColorPickerState extends State<ColorPicker> {
         },
         child: Padding(
           padding: widget.padding,
-          // The layout is a column, it is up to the parent to ensure
-          // that it it fits or uses a scrolling parent if it does not.
+          // The ColorPicker layout is a column. It is up to the user to ensure
+          // that it it fits, or use a scrolling parent if it does not.
           child: Column(
             crossAxisAlignment: widget.crossAxisAlignment,
             children: <Widget>[
@@ -1292,9 +1231,11 @@ class _ColorPickerState extends State<ColorPicker> {
                     _handleKeyEvent(event);
                     return KeyEventResult.ignored;
                   },
-                  child: PickerSelector(
-                    pickerTypes: _pickerTypes,
-                    onValueChanged: (ColorPickerType value) {
+                  child: SelectPicker(
+                    pickers: _pickers,
+                    pickerLabels: _pickerLabels,
+                    picker: _activePicker,
+                    onPickerChanged: (ColorPickerType value) {
                       // If there is no color in the picker that will grab
                       // focus when we move to the picker, then the picker
                       // selector itself will keep focus, and kick the key
@@ -1311,10 +1252,11 @@ class _ColorPickerState extends State<ColorPicker> {
                             !widget.enableShadesSelection) {
                           _wheelShouldFocus = true;
                         }
+                        _updateActiveSwatch();
                       });
                     },
-                    value: _activePicker,
                     thumbColor: widget.selectedPickerTypeColor,
+                    textStyle: widget.pickerTypeTextStyle,
                     columnSpacing: widget.columnSpacing,
                   ),
                 ),
@@ -1341,7 +1283,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   selectedColorIcon: widget.selectedColorIcon,
                   selectedRequestsFocus: _selectedShouldFocus,
                 ),
-              // This is the wheel case, draw the custom painter color wheel.
+              // This is the wheel case, draw the custom ColorWheelPicker.
               if (_activePicker == ColorPickerType.wheel)
                 Padding(
                   padding: EdgeInsets.only(bottom: widget.columnSpacing),
@@ -1368,6 +1310,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           _editShouldUpdate = true;
                           _selectedShouldFocus = true;
                           _wheelShouldFocus = false;
+                          _updateActiveSwatch();
                         });
                         widget.onColorChanged(_selectedColor);
                       },
@@ -1426,35 +1369,31 @@ class _ColorPickerState extends State<ColorPicker> {
                   selectedColorIcon: widget.selectedColorIcon,
                   selectedRequestsFocus: _selectedShouldFocus,
                 ),
-
               // Show the sub-heading for the opacity control.
               if (widget.opacitySubheading != null && widget.enableOpacity)
                 Padding(
                   padding: EdgeInsets.only(bottom: widget.columnSpacing),
                   child: widget.opacitySubheading,
                 ),
-              // Draw the opacity slider if enabled
+              // Draw the opacity slider if enabled.
               if (widget.enableOpacity)
                 Padding(
                   padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  // If the opacity slider is to be h-sized we wrap it in a
-                  // SizedBox, otherwise not.
-                  child: IfWrapper(
-                    condition: (widget.opacityTrackWidth ?? 0) >= 150,
-                    builder: (BuildContext context, Widget child) {
-                      return SizedBox(
-                        width: widget.opacityTrackWidth,
-                        child: child,
-                      );
-                    },
+                  child: SizedBox(
+                    width: (widget.opacityTrackWidth ?? 0) < 150
+                        ? double.infinity
+                        : widget.opacityTrackWidth,
                     child: RepaintBoundary(
                       child: OpacitySlider(
                         color: _selectedColor.withAlpha(0xFF),
                         opacity: _opacity,
                         trackHeight: widget.opacityTrackHeight,
                         thumbRadius: widget.opacityThumbRadius,
+                        focusNode: _opacityFocusNode,
                         onChangeStart: (double value) {
                           if (widget.onColorChangeStart != null) {
+                            // Request focus when change starts.
+                            _opacityFocusNode.requestFocus();
                             setState(() {
                               _opacity = value;
                               _selectedColor =
@@ -1490,7 +1429,6 @@ class _ColorPickerState extends State<ColorPicker> {
                     ),
                   ),
                 ),
-
               // If we show material or generic name, we enclose them in a
               // Wrap, they will be on same row nicely if there is room
               // enough, but also wrap to two rows when so needed when both
@@ -1527,7 +1465,6 @@ class _ColorPickerState extends State<ColorPicker> {
                       ),
                   ],
                 ),
-
               // If we show color code or its int value, we enclose them in a
               // Wrap, they will be on same row nicely if there is room enough
               // but also wrap to two rows when so needed when both are
@@ -1540,7 +1477,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     runAlignment: WrapAlignment.center,
                     alignment: WrapAlignment.center,
                     children: <Widget>[
-                      // Show the copy and edit color code field, if enabled.
+                      // Show the color code view and edit field, if enabled.
                       if (widget.showColorCode)
                         ColorCodeField(
                           color: _selectedColor,
@@ -1557,8 +1494,8 @@ class _ColorPickerState extends State<ColorPicker> {
                             }
                             setState(() {
                               _selectedColor = color.withOpacity(_opacity);
-                              // Color changed outside wheel picker, the
-                              // code was edited, it should update!
+                              // Color changed outside wheel picker, when the
+                              // code was edited, the wheel should update.
                               _wheelShouldUpdate = true;
                               _editShouldUpdate = false;
                             });
@@ -1592,13 +1529,14 @@ class _ColorPickerState extends State<ColorPicker> {
                     ],
                   ),
                 ),
-              // Show the sub-heading recent colors.
+              // Show the sub-heading for recent colors.
               if (widget.recentColorsSubheading != null &&
                   widget.showRecentColors)
                 Padding(
                   padding: EdgeInsets.only(bottom: widget.columnSpacing),
                   child: widget.recentColorsSubheading,
                 ),
+              // Show the color indicators for the recently used colors.
               if (widget.showRecentColors)
                 RecentColors(
                   spacing: widget.spacing,
@@ -1607,9 +1545,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   recentColors: _recentColors,
                   selectedColor: _selectedColor,
                   onSelectColor: (Color color) {
-                    _onSelectColor(color, keepOpacity: true);
-                    // Move the picker to the selected color value.
-                    _initSelectedValue(findPicker: true);
+                    _onSelectColor(color, keepOpacity: true, findPicker: true);
                   },
                   includeIndex850: widget.includeIndex850,
                   width: widget.width,
@@ -1628,15 +1564,23 @@ class _ColorPickerState extends State<ColorPicker> {
     );
   }
 
-  // A color was selected, update state and notify parent via callbacks.
-  void _onSelectColor(Color color, {bool keepOpacity = false}) {
-    // Have start callback, call it with current selectedColor before change.
+  // A color was selected by tapping it, update state and notify via callbacks.
+  void _onSelectColor(
+    Color color, {
+    // Set to true to use opacity in `color` and let it replace _opacity.
+    // Done when selecting colors in recently used colors, otherwise not.
+    bool keepOpacity = false,
+    // Normally when colors are selected, we do not need find the picker as they
+    // are in the same picker. However, recently used colors sets this to true
+    // as its colors can be in any picker, so it must be found.
+    bool findPicker = false,
+  }) {
+    // Call start callback with current selectedColor before change.
     if (widget.onColorChangeStart != null) {
       widget.onColorChangeStart!(_selectedColor);
     }
     // Add the previously selected color to recent colors.
     _addToRecentColors(_selectedColor);
-
     // update the state of the selectedColor to the new selected color.
     setState(() {
       // Set selected color to the new value.
@@ -1652,8 +1596,18 @@ class _ColorPickerState extends State<ColorPicker> {
       // selected outside the wheel and edit field, they should update!
       _wheelShouldUpdate = true;
       _editShouldUpdate = true;
-    });
 
+      // Find best matching picker of the enabled ones for _selectedColor.
+      if (findPicker) {
+        // Make a swatch of the selected color in the wheel.
+        _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
+          ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+        ];
+        _findPicker();
+      }
+      // Update the active swatch to match the selected color.
+      _updateActiveSwatch();
+    });
     // Call the change call back with the new color.
     widget.onColorChanged(_selectedColor);
     // We have and end callback, call it with the new color.
@@ -1665,14 +1619,11 @@ class _ColorPickerState extends State<ColorPicker> {
   void _addToRecentColors(Color color) {
     // We are not showing recent colors, do nothing.
     if (!widget.showRecentColors) return;
-
     // If recent colors already contains the color, do nothing.
     if (_recentColors.contains(color)) return;
-
     // Clamp the max recent colors to the allowed range.
     final int clampedRecentColors =
         widget.maxRecentColors.clamp(_minRecentColors, _maxRecentColors);
-
     // Max recent colors reached, remove first one added.
     if (_recentColors.length >= clampedRecentColors) {
       _recentColors.removeRange(clampedRecentColors - 1, _recentColors.length);
@@ -1680,7 +1631,6 @@ class _ColorPickerState extends State<ColorPicker> {
     setState(() {
       _recentColors = <Color>[color, ..._recentColors];
     });
-
     // Call callback for the handling recent colors, if there is one.
     if (widget.onRecentColorsChanged != null) {
       widget.onRecentColorsChanged!(_recentColors);
@@ -1689,18 +1639,20 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Handle the keyboard events from the RawKeyboardListener.
   void _handleKeyEvent(RawKeyEvent event) {
-    // If edit color code is focused and we do not use parsed paste, we
-    // exit out of here. The TextField's normal paste action will then handle
-    // the paste as before.
+    // If edit color code is focused and we do not use the parsed paste feature,
+    // we exit out of here. The TextField's normal paste action will then handle
+    // the paste as before in v1.x and normally in a TextField.
     if (_editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste) {
       return;
     }
-    // Make Desktop OS independent copy/paste modifier key.
+    // Make a Desktop OS independent copy/paste modifier key.
     final bool isMacOS = event.data is RawKeyEventDataMacOs;
+    // This isCtrlPressed will be true when command key is pressed on macOS or
+    // when CTRL key is pressed on Windows and Linux desktops.
     final bool isCtrlPressed =
         isMacOS ? event.isMetaPressed : event.isControlPressed;
     // The raw keyboard listener reacts to both up and down events, we only
-    // use down so we execute the copy and paste command only once
+    // use down of them, so we only execute the copy and paste command once
     // when the key are presses down, we do not want to do it 2nd time when
     // the key goes up.
     if (event.runtimeType == RawKeyDownEvent) {
@@ -1727,8 +1679,10 @@ class _ColorPickerState extends State<ColorPicker> {
     final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     // Clipboard data was null, exit.
     if (data == null) return;
+    // Try to parse the clipboard data for a valid color value
     final Color? clipColor = data.text
         .toColorShortMaybeNull(widget.copyPasteBehavior.parseShortHexCode);
+    // If result is not null, we got a valid color.
     if (clipColor != null) {
       if (widget.onColorChangeStart != null) {
         widget.onColorChangeStart!(_selectedColor);
@@ -1736,13 +1690,13 @@ class _ColorPickerState extends State<ColorPicker> {
       // Add the previous selected color to recent colors
       _addToRecentColors(_selectedColor);
       // This wait for 100ms feels a bit like a hack, but if not done, the
-      // paste when using paste parser in the color code edit field does not
-      // work correctly. This delay allows the edit field to first process
-      // it variant of the paste, that we will disregard when the paste parser
+      // paste when using paste parser in the color code edit field DOES NOT
+      // WORK correctly. This delay allows the edit field to first process
+      // its variant of the paste, that we will disregard when the paste parser
       // is active for the edit field, and it will be caught here also
       // and we get the complete value as evaluated by the parser instead.
-      // The extra wait here has no impact on other pasting when the edit
-      // field is not active.
+      // The extra wait here has no visible impact on other pasting when the
+      // edit field is not active.
       await Future<void>.delayed(const Duration(milliseconds: 100));
       setState(() {
         // If opacity is not enabled we remove it from pasted colors.
@@ -1759,8 +1713,13 @@ class _ColorPickerState extends State<ColorPicker> {
       if (widget.onColorChangeEnd != null) {
         widget.onColorChangeEnd!(_selectedColor);
       }
+      // Make a swatch of the new via paste _selectedColor for the wheel.
+      _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
+        ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+      ];
       // Move the picker to the pasted color value.
-      _initSelectedValue(findPicker: true);
+      _findPicker();
+      _updateActiveSwatch();
     } else {
       // TODO: Improve feedback/sound when it can be done with SDK features.
       // This is a nice idea, but it does not do much on most platforms.

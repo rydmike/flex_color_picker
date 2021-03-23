@@ -7,7 +7,7 @@ import 'color_picker_screen.dart';
 // Web demo with inside the app. You can also show it in the demo,
 // like in this example, so people testing it don't have to ask.
 const String kFlutterVersion = 'Channel dev 2.1.0-12.1.pre SKIA';
-const String kColorPickerVersion = '2.0.0-nullsafety.4';
+const String kColorPickerVersion = '2.0.0-nullsafety.5';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.themeMode}) : super(key: key);
