@@ -146,8 +146,8 @@ class ColorPicker extends StatefulWidget {
         assert(
             maxRecentColors >= _minRecentColors &&
                 maxRecentColors <= _maxRecentColors,
-            'The maxRecentColors must be $_minRecentColors 2 '
-            'and <= $_maxRecentColors'),
+            'The maxRecentColors must be >= $_minRecentColors '
+            'and <= $_maxRecentColors.'),
         super(key: key);
 
   /// The active color selection when the color picker is created.
@@ -420,7 +420,7 @@ class ColorPicker extends StatefulWidget {
   @Deprecated('This property is deprecated and no longer has any function. '
       'It was removed in v2.x.x. To modify the copy icon on the color code '
       'entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)`'
-      ' and provide it to the `copyPasteBehavior` property.')
+      ' and provide it via the `copyPasteBehavior` property.')
   final IconData? colorCodeIcon;
 
   /// The TextStyle of the prefix of the color code.

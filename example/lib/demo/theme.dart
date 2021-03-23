@@ -73,7 +73,7 @@ class AppTheme {
     );
   }
 
-  // TODO: Investigate GoogleFonts font issue on Windows platform.
+  // TODO: Investigate potential GoogleFonts font issue on Windows platform.
   // Making a custom text theme here, via on-line GoogleFonts load. Intended to
   // use something else than "Roboto", but they were all a little bit
   // broken on Windows platform, not sure why. Need to download and try as
@@ -82,8 +82,9 @@ class AppTheme {
   // theory nice fonts, but all were a tiny bit broken with clearly faulty
   // pixels in some letters on Windows builds. Did not test Web builds with
   // them yet used via GoogleFonts. Anyway sticking to plain old "roboto" for
-  // now. At least we with this setup will get the "Roboto" font on all
-  // platforms. If no font is specified, we will get
+  // now. At least with this setup will get the "Roboto" font on all platforms.
+  // If no font is specified, we will get platform dependent default font,
+  // just wanted the same font here to ensure a consistent result in this demo.
   static TextTheme textTheme = TextTheme(
     headline1: GoogleFonts.roboto(
         fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -1.5),

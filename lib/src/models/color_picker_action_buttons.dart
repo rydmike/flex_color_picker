@@ -85,16 +85,16 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to true, which results in the close 'x' icon being in upper
   /// end corner of the picker dialog.
   ///
-  /// Based on Material guide bottom action buttons in a dialog are always
+  /// Based on Material guide, the bottom action buttons in a dialog are always
   /// in the Cancel-OK order. If the top toolbar buttons are used at the
   /// same time, this value can be set to false to show the toolbar buttons
-  /// in the same order as the bottom dialog action buttons.
+  /// in the same order as the Material bottom dialog action buttons.
   ///
   /// The recommendation is to not use the top and bottom action buttons at the
   /// same time, but rather select one of the two options. The API does
   /// however allow using both or even a mix and match. It is possible to show
-  /// **Cancel** and **OK** actions at the bottom of dialog, and also add
-  /// an 'x' icon in te upper end corner of the dialog that also cancel-closes
+  /// **Cancel** and **OK** actions at the bottom of dialog, and also add just
+  /// an 'x' icon in the upper end corner of the dialog that also cancel-closes
   /// the dialog as expected.
   final bool closeIsLast;
 
