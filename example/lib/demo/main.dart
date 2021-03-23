@@ -1,3 +1,4 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,6 +8,7 @@ import 'theme.dart';
 // More extensive demo of the ColorPicker, also published as a live web demo
 // here: https://rydmike.com/flexcolorpicker
 void main() {
+  translateMaterialColorPickerColors();
   runApp(const FlexColorPickerDemoApp());
 }
 
@@ -63,4 +65,14 @@ class _FlexColorPickerDemoAppState extends State<FlexColorPickerDemoApp> {
       ),
     );
   }
+}
+
+// TODO For doc only, remove before publish.
+void translateMaterialColorPickerColors() {
+  ColorTools.redName = 'Röd';
+  ColorTools.redAccentName = 'Röd accent';
+  ColorTools.blueName = 'Blå';
+  ColorTools.blueName = 'Blå accent';
+  ColorTools.greenName = 'Grön';
+  ColorTools.greenAccentName = 'Grön accent';
 }

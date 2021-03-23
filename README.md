@@ -7,24 +7,20 @@ copy-paste of color from/to the picker, including desktop keyboard copy/paste sh
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
 
->**NOTE:**   
-> This is **FlexColorPicker 2.0.0 dev and pre-release** with sound null safety. It contains
-> many new features compared to previous stable 1.1.5 none null safe version.
->
-> The package documentation has not yet been updated to cover the new features that are
-> being introduced in final 2.0.0 version together with null-safety. The changelog covers
-> the major changes. The API-documentation is up to date as well. The bundled and live 
-> [**web demo app**](https://rydmike.com/flexcolorpicker) demonstrates all the new features, and you
-> can change most API settings. The demo also shows each API name and current value in a tooltip for
-> each control that modifies API values in the demo.
-> 
-> No more new features will be added to 2.0.0 before the pending stable release. This release is 
-> a stabilization and fine-tuning phase. The remaining minimum requirements for releasing stable version 2 
-> is an update of this package documentation to cover all new features. 
-> Later releases will provide additional refinements, further testing and CI/CD pipe.
->
+## Contents
+- [FlexColorPicker](#flexcolorpicker)
+    - [Contents](#contents)
+    - [Picker Types](#picker-types)  
+    - [Getting Started](#getting-started)
+        - [Default Example Application](#default-example-application)
+        - [Live Web Demo](#live-web-demo)
+    - [Simple Example](#simple-example)
+    - [Dialog Example](#dialog-example)
+---
 
-#### The different types of available color pickers are:
+## Picker Types
+
+The different types of available color pickers are:
 
 1. Material primary colors and its shades. `ColorPickerType.primary`
 2. Material accent colors and its shades. `ColorPickerType.accent`
@@ -49,16 +45,7 @@ picker widget in your own custom dialog.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-lower.png?raw=true" alt="ColorPicker variations lower"/>
 
----
-## Contents
-- [FlexColorPicker](#flexcolorpicker)
-    - [Contents](#contents)
-    - [Getting Started](#getting-started)
-        - [Default Example Application](#default-example-application)
-        - [Live Web Demo](#live-web-demo)
-    - [Simple Example](#simple-example)
-    - [Dialog Example](#dialog-example)
----
+
 
 ## Getting Started
 
@@ -96,13 +83,19 @@ You can also try a live web demo of the [**FlexColorPicker here**](https://rydmi
 demo you can modify most of the color picker's settings, and use it as a tool to find a style that fits your 
 application.
 
-The source code for the Web demo, which is a slightly more elaborate example than the default, is also bundled with 
+The source code for the Web demo, which is a bit more elaborate example than the default example, is also bundled with 
 the package source code in "example/lib/demo/main.dart".
 
-The WEB demo has a simple responsive view. On a normal 1080p desktop screen you can see most of the settings, and test 
-their impact on the picker on the same screen. The WEB demo has tooltips on each control that show the name of the
-API it uses and its current value. With this feature you can use the web demo as a tool configure the color picker to
-desired style, and find the APIs and values that you used.
+The WEB demo has a responsive view, the expands into maximum four separately scrollable columns. The columns contain
+a massive amount of controls that you can use to adjust the picker's settings. On a normal 1080p desktop screen, you 
+can see most of the settings at the same time as the adjusted picker, so you test and see their impact on the picker 
+as you adjust them. 
+
+The WEB demo also has tooltips on each control that show the name of the API it uses and its current value. 
+With this feature you can use the web demo as a tool configure the color picker to desired style, and find the APIs 
+and values that you used. The same toggle that is used to demo turning OFF the tooltips in the picker, also turns OFF
+the API tooltips in the demo, in case they get in the way, by default they are ON, to show the used API and 
+its value.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
 
@@ -161,7 +154,7 @@ We begin by adding this ListTile to a ListView in the Scaffold body.
             color: screenPickerColor,
           ),
         ),
-   :
+   ...
 ```
 
 Next we add the `ColorPicker` to the `ListView`. We give it the defined starting color, in this case 
@@ -181,23 +174,23 @@ this example we have also wrapped the color picker in a `Card`.
         elevation: 2,
         child: ColorPicker(
           color: screenPickerColor,
-            onColorChanged: (Color color) =>
-              setState(() => screenPickerColor = color),
-            width: 44,
-            height: 44,
-            borderRadius: 22,
-            heading: Text(
-              'Select color',
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            subheading: Text(
-              'Select color shade',
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
+          onColorChanged: (Color color) =>
+            setState(() => screenPickerColor = color),
+          width: 44,
+          height: 44,
+          borderRadius: 22,
+          heading: Text(
+            'Select color',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          subheading: Text(
+            'Select color shade',
+            style: Theme.of(context).textTheme.subtitle1,
           ),
         ),
       ),
     ),
+  ),
 ```
 
 This gives us round color pick items and an indicator for the selected color:
@@ -427,37 +420,56 @@ This guide will go through most of the API settings.
 This chapter shows the different visible elements of the color picker that you can enable and disable, or show 
 and hide by adding Widgets to the picker.
 
-#### Enable pickers
+As shown in above example, at the core is a passed `Color(...)` object to the property `color` and a
+`ValueChanged<Color>` callback `onColorChanged` that is called whenever a new color value is selected in the color 
+picker. What you do with the callback depends on your use case, in the shown examples we typically just update the 
+passed in color with `setState`. However, in the earlier dialog example it was also demonstrated how it interactively 
+could be used to change the AppBar color of the app itself. You can of course use the picker to change any color in
+your application theme.
 
-By default, the Material **primary** colors and **accent** colors pickers are enabled. To change the enabled picker 
-you provide `ColorPickerType` key to `bool` value map with the pickers you want via property `pickersEnabled`. You only need to 
-provide map values for keys you want to change. Values that are not provided use their defaults. 
+```dart
+ColorPicker(
+  color: myColor,
+  onColorChanged: (Color color) => setState(() => myColor = color),
+),
+```
+Below we will explore other, both basic and more advanced featues of the **FlexColorPicker**.
+
+#### Enabled pickers
+
+By default, the Material **primary** colors and **accent** colors pickers are enabled. To change the enabled pickers 
+you provide a `ColorPickerType` key to `bool` value map, with the pickers you want enabled to the property
+`pickersEnabled`. You only need to provide key-values pairs for picker keys you want to change. Key values that are not 
+provided use their defaults. 
+
 If you only have one picker enabled, there is no control shown that will allow you to switch between the pickers. 
 If all pickers are disabled, the Material primary color picker is shown.
 
-If all other features are disabled (by default they are not), this represents an example of a minimum picker 
-showing only the main colors of Material primary colors. The following setting would turn OFF the accent 
-color picker and produce the shown picker, provided all other default settings are also disabled: 
+If all other features are disabled (by default they are not), the screenshot below represents an example of a 
+bare-bones minimum picker, showing only the main colors of Material primary colors. If other defaults are OFF to enable
+producing this picker style, only the following `pickersEnabled` setting to disable the accent color picker is needed 
+to get the shown picker: 
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-1.png?raw=true" alt="Pickers 1"/>
 
-Normally you would enable a few more pickers, when you do the picker selector automatically appears:
+Normally you would enable a few more pickers, here we enable the primary, secondary, near black and white and the wheel
+pickers. Since more than one picker is enabled, the color picker selector automatically appears:
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-2.png?raw=true" alt="Pickers 2"/>
 
-The picker labels have default English labels, but you can override them to customize or translate them by
-providing `ColorPickerType` key to `String`  map with the picker lables you want to change via property 
-`pickerTypeLabels`. You only have to provide values for label keys you want to change, omitted keys will keep
+The picker labels have default English labels, but you can override them to customize or translate them, by
+providing a `ColorPickerType` key to `String`  value map with the picker labels you want to change via the property 
+`pickerTypeLabels`. You only have to provide key-value pairs for the labels you want to change, omitted keys will keep
 their default labels.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-3.png?raw=true" alt="Pickers 3"/>
 
 #### Enable shades
 
-The default settings automatically enables selection of the Material primary and Accent **color shades** after selection
-of the main color. In the above example `enableShadesSelection` has on purpose been disabled to produce the above main
-color only picker example. Below we enable the Material color shades selection. Typically you want to keep the default
-value have them enabled.
+By default, selection of the Material primary and Accent **color shades** after selection of the main color is 
+**enabled**. In the above example `enableShadesSelection` had on purpose been disabled to produce the above main
+color only picker example. Below we enable the Material color shades selection. You probably want to be able
+to also select the Material shade colors, so typically, you would just keep the default enabled value.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-4.png?raw=true" alt="Pickers 4"/>
 
@@ -479,11 +491,6 @@ is false any passed in opacity, in the color value or in colors pasted into the 
 opaque by applying alpha value #FF to it.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-5.png?raw=true" alt="Picker 5"/>
-
-
-
-
-
 
 #### Show Material name
 #### Show Color Name
@@ -509,18 +516,6 @@ opaque by applying alpha value #FF to it.
 #### Formats and paste parsing
 
 ### Desktop ready
-
-
-```dart
-ColorPicker(
-  ...
-  pickersEnabled: const <ColorPickerType, bool>{
-    ColorPickerType.accent: false,
-   },
-   ...
-)
-```
-
 
 
 ```dart
