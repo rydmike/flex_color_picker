@@ -3,55 +3,149 @@ import 'package:flutter/material.dart';
 
 import '../models/color_picker_type.dart';
 
-/// PickerSelector widget.
+/// A widget used to select the active color picker
 ///
 /// Not library exposed, private to the library.
 @immutable
-class PickerSelector extends StatelessWidget {
+class SelectPicker extends StatelessWidget {
   /// Default const constructor.
-  const PickerSelector({
+  const SelectPicker({
     Key? key,
-    required this.pickerTypes,
-    required this.value,
-    required this.onValueChanged,
+    required this.pickers,
+    required this.pickerLabels,
+    required this.picker,
+    required this.onPickerChanged,
     this.thumbColor,
-    required this.columnSpacing,
+    this.textStyle,
+    this.columnSpacing = 8,
   }) : super(key: key);
 
-  /// A map of used pickers and their widgets.
-  final Map<ColorPickerType, Widget> pickerTypes;
+  /// A map of used picker types to select which segments to show and use.
+  final Map<ColorPickerType, bool> pickers;
 
-  /// Current active picker selection
-  final ColorPickerType value;
+  /// THe labels for the picker segments.
+  final Map<ColorPickerType, String> pickerLabels;
+
+  /// Current active picker.
+  final ColorPickerType picker;
 
   /// Callback to change picker type.
-  final ValueChanged<ColorPickerType> onValueChanged;
+  final ValueChanged<ColorPickerType> onPickerChanged;
 
-  /// The current thumb color of the picker selector.
+  /// The thumb color of the selected segment.
   ///
   /// Uses cupertino default light and dark style if not provided.
   final Color? thumbColor;
 
-  /// The spacing after the picker.
+  /// Text style of the text items in the picker
+  ///
+  /// If not provided, default to `Theme.of(context).textTheme.caption`.
+  final TextStyle? textStyle;
+
+  /// The spacing after the picker. Defaults to 8.
   final double columnSpacing;
 
   @override
   Widget build(BuildContext context) {
+    // Set default text style for the segmented slider control.
+    final TextStyle _segmentTextStyle = textStyle ??
+        Theme.of(context).textTheme.caption ??
+        const TextStyle(fontSize: 12);
+
+    final Color _thumbColor = thumbColor ??
+        const CupertinoDynamicColor.withBrightness(
+          color: Color(0xFFFFFFFF),
+          darkColor: Color(0xFF636366),
+        );
+
+    final Color? _thumbOnColor = thumbColor == null
+        ? null
+        : ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+            ? Colors.black
+            : Colors.white;
+
     return SizedBox(
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.only(bottom: columnSpacing),
         child: CupertinoSlidingSegmentedControl<ColorPickerType>(
-          children: pickerTypes,
+          children: <ColorPickerType, Widget>{
+            if (pickers[ColorPickerType.both]!)
+              ColorPickerType.both: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.both] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.both
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+            if (pickers[ColorPickerType.primary]!)
+              ColorPickerType.primary: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.primary] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.primary
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+            if (pickers[ColorPickerType.accent]!)
+              ColorPickerType.accent: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.accent] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.accent
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+            if (pickers[ColorPickerType.bw]!)
+              ColorPickerType.bw: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.bw] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.bw
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+            if (pickers[ColorPickerType.custom]!)
+              ColorPickerType.custom: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.custom] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.custom
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+            if (pickers[ColorPickerType.wheel]!)
+              ColorPickerType.wheel: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.wheel] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.wheel
+                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
+                      : _segmentTextStyle,
+                ),
+              ),
+          },
           thumbColor: thumbColor ??
               const CupertinoDynamicColor.withBrightness(
                 color: Color(0xFFFFFFFF),
                 darkColor: Color(0xFF636366),
               ),
           onValueChanged: (ColorPickerType? value) {
-            if (value != null) onValueChanged(value);
+            if (value != null) onPickerChanged(value);
           },
-          groupValue: value,
+          groupValue: picker,
         ),
       ),
     );

@@ -35,6 +35,7 @@ class OpacitySlider extends StatelessWidget {
     this.onChangeEnd,
     this.thumbRadius = 16,
     this.trackHeight = 22,
+    this.focusNode,
   })  : assert(thumbRadius >= 12 && thumbRadius <= 30,
             'The thumbRadius must be 12 to 30.'),
         assert(trackHeight >= 10 && trackHeight <= 50,
@@ -49,16 +50,6 @@ class OpacitySlider extends StatelessWidget {
 
   /// Called when the opacity value is changed.
   final ValueChanged<double> onChanged;
-
-  /// The radius of the thumb on the opacity slider.
-  ///
-  /// Defaults to 16.
-  final double thumbRadius;
-
-  /// The height of the slider track.
-  ///
-  /// Defaults to 36
-  final double trackHeight;
 
   /// Called when the user starts selecting a new value for the opacity slider.
   ///
@@ -77,6 +68,31 @@ class OpacitySlider extends StatelessWidget {
   /// selecting a new value by ending a drag or a click.
   final ValueChanged<double>? onChangeEnd;
 
+  /// The radius of the thumb on the opacity slider.
+  ///
+  /// Defaults to 16.
+  final double thumbRadius;
+
+  /// The height of the slider track.
+  ///
+  /// Defaults to 36
+  final double trackHeight;
+
+  /// An optional focus node to use as the focus node for this widget.
+  ///
+  /// If one is not supplied, then one will be automatically allocated, owned,
+  /// and managed by this widget. The widget will be focusable even if a
+  /// focusNode is not supplied. If supplied, the given focusNode will be
+  /// hosted by this widget, but not owned. See FocusNode for more information
+  /// on what being hosted and/or owned implies.
+  ///
+  /// Supplying a focus node is sometimes useful if an ancestor to this
+  /// widget wants to control when this widget has the focus. The owner will
+  /// be responsible for calling FocusNode.dispose on the focus node when it is
+  /// done with it, but this widget will attach/detach and reparent the
+  /// node when needed.
+  final FocusNode? focusNode;
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
@@ -94,6 +110,7 @@ class OpacitySlider extends StatelessWidget {
               onChanged: onChanged,
               onChangeStart: onChangeStart,
               onChangeEnd: onChangeEnd,
+              focusNode: focusNode,
             ),
           );
         },

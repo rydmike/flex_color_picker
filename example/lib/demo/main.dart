@@ -30,7 +30,7 @@ class _FlexColorPickerDemoAppState extends State<FlexColorPickerDemoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // checkerboardRasterCacheImages: true,
+      checkerboardRasterCacheImages: false,
       title: 'FlexColorPicker',
       //
       theme: AppTheme.light,
