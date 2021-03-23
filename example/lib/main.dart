@@ -225,7 +225,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   }
 }
 
-TODO: Delete this before publish, just part of CodeSNap images
+// TODO: Delete this before publish, just part of CodeSNap images
 
 final ColorPicker picker = //
 ColorPicker(
@@ -243,11 +243,3 @@ ColorPicker(
   //
   onColorChanged: (_) {},
 );
-
-
-  //  ColorPickerType.both: false,
-  //   ColorPickerType.primary: true,
-  //   ColorPickerType.accent: true,
-  //   ColorPickerType.bw: false,
-  //   ColorPickerType.custom: true,
-  //   ColorPickerType.wheel: true,
