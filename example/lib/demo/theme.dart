@@ -17,10 +17,10 @@ class AppTheme {
       colorScheme: colorSchemeLight,
       textTheme: textTheme,
     ).copyWith(
-      scaffoldBackgroundColor: const Color(0xFFFDFDFD),
-      toggleableActiveColor: const Color(0xFF55ACEE),
+      scaffoldBackgroundColor: App.scaffoldBackgroundLight,
+      toggleableActiveColor: colorSchemeLight.secondary,
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white.withOpacity(0.9),
+        backgroundColor: App.secondaryVariantDark.withOpacity(0.9),
         foregroundColor: Colors.black,
         elevation: 0.5,
         backwardsCompatibility: false,
@@ -45,6 +45,8 @@ class AppTheme {
         primaryVariant: App.primaryVariantLight,
         secondary: App.secondaryLight,
         secondaryVariant: App.secondaryVariantLight,
+        surface: App.surfaceLight,
+        background: App.backgroundLight,
       );
 
   /// The used dark theme.
@@ -53,9 +55,10 @@ class AppTheme {
       colorScheme: colorSchemeDark,
       textTheme: textTheme,
     ).copyWith(
-      toggleableActiveColor: const Color(0xFFA0D1F5),
+      scaffoldBackgroundColor: App.scaffoldBackgroundDark,
+      toggleableActiveColor: colorSchemeDark.secondary,
       appBarTheme: AppBarTheme(
-        backgroundColor: const Color(0xFF121212).withOpacity(0.9),
+        backgroundColor: App.primaryLight.withOpacity(0.83),
         foregroundColor: Colors.white,
         elevation: 0.5,
         backwardsCompatibility: false,
@@ -154,7 +157,7 @@ class AppTheme {
       ToggleButtonsThemeData(
         color: colorScheme.onSurface,
         selectedColor: colorScheme.onPrimary,
-        fillColor: colorScheme.secondary.withOpacity(0.9),
+        fillColor: colorScheme.secondary.withOpacity(0.94),
         hoverColor: colorScheme.primary.withOpacity(0.2),
         focusColor: colorScheme.primary.withOpacity(0.3),
         borderWidth: 1.5,

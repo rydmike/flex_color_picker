@@ -14,14 +14,14 @@ class ScreenColorIndicator extends ConsumerWidget {
     return ListTile(
       title: const Text('Select color below to change this color'),
       subtitle: Text(
-          '${ColorTools.materialNameAndARGBCode(watch(screenPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap2)} '
-          'aka ${ColorTools.nameThatColor(watch(screenPickerColorPod).state)}'),
+          '${ColorTools.materialNameAndARGBCode(watch(cardPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap2)} '
+          'aka ${ColorTools.nameThatColor(watch(cardPickerColorPod).state)}'),
       trailing: ColorIndicator(
         height: watch(sizePod).state,
         width: watch(sizePod).state,
         borderRadius: watch(borderRadiusPod).state,
         elevation: watch(elevationPod).state,
-        color: watch(screenPickerColorPod).state,
+        color: watch(cardPickerColorPod).state,
         hasBorder: watch(hasBorderPod).state,
       ),
     );
