@@ -51,11 +51,13 @@ class ColorIndicator extends StatefulWidget {
   /// Defaults to false.
   final bool isSelected;
 
-  /// Set to true, if a an indicator should request focus if it is selected.
+  /// Set to true, if an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected,
-  /// setting this value to true is to make it request focus when it is drawn,
-  /// but only if it's value has changed and if this flag is true.
+  /// The indicator will always request focus when it clicked and selected.
+  /// Setting this value to true is to make it request focus when it is drawn,
+  /// but only if its value has just changed so that its [isSelected] is now
+  /// true and if this flag is true. The extra flag gives us mechanism to
+  /// control of the box should focus when [isSelected] is changed to true.
   ///
   /// Defaults to false.
   final bool selectedRequestsFocus;
@@ -120,7 +122,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
 
   @override
   void didUpdateWidget(covariant ColorIndicator oldWidget) {
-    // The widget requests focus only when its value was updated, is selected
+    // The widget requests focus when its value was updated, is selected
     // and the flag 'selectedRequestsFocus' is true.
     if (widget.isSelected &&
         widget.selectedRequestsFocus &&

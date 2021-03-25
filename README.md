@@ -407,15 +407,19 @@ Here is an example of the demo application running on Windows desktop.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
 
-## API Guide
+# FlexColorPicker API Guide
 
-The **FlexColorPicker** has a large amount of additional features. It's behavior can easily be modified with its direct
+The **FlexColorPicker** has a large amount of additional features. Its behavior can easily be modified with its direct
 properties and two additional configuration property classes `ColorPickerActionButtons` and
-`ColorPickerCopyPasteBehavior` that can configured and passed in for even more options.
+`ColorPickerCopyPasteBehavior`, that can be configured and passed in for even more customization options.
 
-This guide will go through most of the API settings.
+This guide goes through the API settings, and provides links to API references.
 
-### Elements of the Picker
+>**NOTE**   
+>In the first version of 2.0.0 reference links are not provided to all API. Newer API doc ref link will be 
+> added in a +1 documentation update after 2.0.0 has been released, when the links can be obtained.
+
+## Elements of the Picker
 
 This chapter shows the different visible elements of the color picker that you can enable and disable, or show 
 and hide by adding Widgets to the picker.
@@ -433,9 +437,11 @@ ColorPicker(
   onColorChanged: (Color color) => setState(() => myColor = color),
 ),
 ```
-Below we will explore other, both basic and more advanced featues of the **FlexColorPicker**.
+Below we will explore other, both basic and more advanced features of the **FlexColorPicker**.
 
-#### Enabled pickers
+### Enabled Color Pickers
+
+[API reference: pickersEnabled](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickersEnabled.html)
 
 By default, the Material **primary** colors and **accent** colors pickers are enabled. To change the enabled pickers 
 you provide a `ColorPickerType` key to `bool` value map, with the pickers you want enabled to the property
@@ -457,66 +463,127 @@ pickers. Since more than one picker is enabled, the color picker selector automa
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-2.png?raw=true" alt="Pickers 2"/>
 
-The picker labels have default English labels, but you can override them to customize or translate them, by
-providing a `ColorPickerType` key to `String`  value map with the picker labels you want to change via the property 
-`pickerTypeLabels`. You only have to provide key-value pairs for the labels you want to change, omitted keys will keep
-their default labels.
+If you want to show both Material primary and accent colors in the same picker you can enable the 
+`ColorPickerType.both` picker. In that case you usually want to disable `ColorPickerType.primary` and 
+`ColorPickerType.accent`, as they then contain duplicates of already available color in the `both` picker. The live 
+Web demo implements this as exclusive selections in its logic. It is of course possible to show all three pickers, but
+it does not really make much sense.
+
+#### Custom Color Swatches
+
+[API reference: customColorSwatchesAndNames](https://pub.dev/documentation/flex_color_picker/2.0.0-nullsafety.4/flex_color_picker/ColorPicker/customColorSwatchesAndNames.html)
+
+To use the custom color swatch picker you have to define your own custom `ColorSwatch` colors and pass them to the
+picker via the `customColorSwatchesAndNames` property. By default, there are no custom colors defined. If you
+enabled the `custom` picker and have not provided any custom color swatches, the picker will not be shown despite 
+being enabled since it has no colors to show.
+
+You can make `ColorSwatch` objects with the Flutter SDK `MaterialColor` or the `MaterialAccentColor` classes by 
+providing swatch color shades for each index. Alternatively you can use the helpers 
+`ColorTools.createPrimarySwatch(color)` and `ColorTools.createAccentSwatch(color)` by just giving it a single color 
+value. For `createPrimarySwatch` the provided color will always be used as the base for [500] index and 
+for `createAccentSwatch` for as color for index [200], the rest of the index are computed. 
+
+>Please note that these
+helpers just produce lighter and darker shades of the provided color for lower and higher swatch indexes. If you
+give e.g. the `createPrimarySwatch` the same color value as a built-in Material primary color with index [500], you
+will not get the same swatch as the built-in hand tuned Material primary color swatch. 
+
+To start define a final Map with your custom `ColorSwatch` objects and their names. Here we make three, with the
+different mentioned methods.
+
+```dart
+final Map<ColorSwatch<Object>, String> customSwatches =
+<ColorSwatch<Object>, String>{
+  const MaterialColor(0xFFfae738, <int, Color>{
+    50: Color(0xFFfffee9),
+    100: Color(0xFFfff9c6),
+    200: Color(0xFFfff59f),
+    300: Color(0xFFfff178),
+    400: Color(0xFFfdec59),
+    500: Color(0xFFfae738),
+    600: Color(0xFFf3dd3d),
+    700: Color(0xFFdfc735),
+    800: Color(0xFFcbb02f),
+    900: Color(0xFFab8923),
+  }): 'Alpine',
+  ColorTools.createPrimarySwatch(const Color(0xFFBC350F)): 'Rust',
+  ColorTools.createAccentSwatch(const Color(0xFFB062DB)): 'Lavender',
+};
+```
+And use it in your color picker.
+
+```dart
+ColorPicker(
+  color: myColor,
+  onColorChanged: (Color color) => setState(() => myColor = color),
+  pickersEnabled: const <ColorPickerType, bool>{
+    ColorPickerType.both: false,
+    ColorPickerType.primary: true,
+    ColorPickerType.accent: true,
+    ColorPickerType.bw: false,
+    ColorPickerType.custom: true,
+    ColorPickerType.wheel: true,
+  },
+  customColorSwatchesAndNames: customSwatches,
+```
+
+#### Customized labels
+
+[API reference: pickerTypeLabels](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickerTypeLabels.html)
+
+The picker labels have default English labels, you can override them to customize or translate the labels. You set the
+labels by providing a `ColorPickerType` key to `String` value map with the picker labels you want to change with the
+property `pickerTypeLabels`. You only have to provide key-value pairs for the labels you want to change, omitted keys 
+will keep their default labels.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-3.png?raw=true" alt="Pickers 3"/>
 
-#### Enable shades
+### Enable Shades Selection
 
-By default, selection of the Material primary and Accent **color shades** after selection of the main color is 
-**enabled**. In the above example `enableShadesSelection` had on purpose been disabled to produce the above main
-color only picker example. Below we enable the Material color shades selection. You probably want to be able
+[API reference: enableShadesSelection](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableShadesSelection.html)
+
+By default, selection of the Material primary and Accent **color swatch shade color**, after selection of the main 
+color is **enabled**. In the above example `enableShadesSelection` had on purpose been disabled to produce the above,
+main only color picker example.
+
+Below we enable the Material color swatch shades selection. You probably want to be able
 to also select the Material shade colors, so typically, you would just keep the default enabled value.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-4.png?raw=true" alt="Pickers 4"/>
 
-#### Enable opacity
+### Enable Opacity
 
-You can enable an opacity slider by setting `enableOpacity` to `true` with it you can adjust the opacity of the
-selected color. You can adjust opacity from fully opaque at 100%, to totally transparent at 0%. The select color and 
-the impact of the opacity value on the selected color is visualized by the checkered gradient on the opacity slider, 
-and the selected color's opacity gradient on the slider, that shows the actual opacity of the resulting color 
-selection and opacity applied to it.
+[API reference: enableOpacity](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableOpacity.html)
 
-The slider thumb only show opacity value changes in 1% increments, however the slider actually has 255 discrete steps,
+You can enable a color opacity slider by setting `enableOpacity` to `true`. With the slider you can adjust the opacity
+of the selected color. You can adjust opacity from fully opaque at 100%, to totally transparent at 0%. The selected
+color and the impact of the opacity value on it, is visualized by the checkered gradient on the opacity slider, 
+and the selected color's opacity gradient on the slider. The thumb's position visualize the resulting color's opacity 
+when applied over a background.
+
+The slider thumb only show opacity value changes in 1% increments, however the slider has 255 discrete steps,
 so there is a step for every alpha value in the resulting ARGB color value. If the color code value is also enabled and
 set show alpha value, you can see that it can be adjusted in single steps as well.
 
 You cannot pass in the opacity separately to the color picker to get a starting opacity value. If your passed in color
 value has opacity in its alpha channel, it will automatically get used, but only if `enableOpacity` is true. If it
-is false any passed in opacity, in the color value or in colors pasted into the picker, is ignored and used as fully
-opaque by applying alpha value #FF to it.
+is false, any passed in opacity/alpha in the color value or in colors pasted into the picker, is ignored and used as
+fully opaque by applying alpha value #FF to it.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-5.png?raw=true" alt="Picker 5"/>
 
-#### Show Material name
-#### Show Color Name
-#### Show Color Code
-#### Show Recent colors
+### Show Material name
+### Show Color Name
+### Show Color Code
+### Show Recent colors
 
-### Picker Design
-#### Item size, border, radius, elevation, spacing and run spacing
-#### Wheel size, width and border
-#### Opacity slider height, width and thumb radius
+## Picker Design
+### Item size, border, radius, elevation, spacing and run spacing
+### Wheel size, width and border
+### Opacity slider height, width and thumb radius
 
-### Picker Layout
-#### Alignment
-#### Row Space
-#### Content Padding
-#### Dialog Buttons
-
-### Copy-Paste Actions and Behavior 
-#### Keyboard shortcuts
-#### Toolbar buttons
-#### Code entry field
-#### Context menu
-#### Formats and paste parsing
-
-### Desktop ready
-
+## Picker Layout
 
 ```dart
 ColorPicker(
@@ -533,7 +600,24 @@ ColorPicker(
 )
 ```
 
-## Additional Resources
+### Alignment
+### Row Space
+### Content Padding
+### Dialog Buttons
+
+## Copy-Paste Actions and Behavior 
+### Keyboard shortcuts
+### Toolbar buttons
+### Code entry field
+### Context menu
+### Formats and paste parsing
+
+## Desktop ready
+
+
+
+
+# Additional Resources
 
 The above introduction was a walk through of the bundled example, please see the [example section](https://pub.dev/packages/flex_color_picker/example) for the complete source code.
 

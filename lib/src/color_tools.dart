@@ -151,25 +151,45 @@ class ColorTools {
     Colors.grey: greyName,
   };
 
+  /// Frequently used index list for Material primary color handling.
+  static const List<int> _indexPrimary = <int>[
+    50,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+  ];
+
+  /// Frequently used index list for Material primary color handling, with the
+  /// [850] index.
+  static const List<int> _indexPrimaryWith850 = <int>[
+    50,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    850,
+    900,
+  ];
+
+  /// Frequently used index list for Material accent color handling.
+  static const List<int> _indexAccent = <int>[100, 200, 400, 700];
+
   /// Check if the given color is included in any Material primary color swatch.
   ///
   /// Returns true if the color is a Material primary color, otherwise false.
   static bool isPrimaryColor(Color color) {
-    final List<int> index = <int>[
-      50,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      800,
-      850,
-      900,
-    ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
-      for (final int i in index) {
+      for (final int i in _indexPrimaryWith850) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
@@ -189,21 +209,8 @@ class ColorTools {
   /// index value and return this created custom primary color swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static MaterialColor primarySwatch(Color color) {
-    final List<int> index = <int>[
-      50,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      800,
-      850,
-      900,
-    ];
     for (final ColorSwatch<Object> swatch in primaryColors) {
-      for (final int i in index) {
+      for (final int i in _indexPrimaryWith850) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch as MaterialColor; // Color found in a swatch, return it.
         }
@@ -235,23 +242,11 @@ class ColorTools {
   /// Material primary color and then a Material like swatch, if it was
   /// not a standard material primary color hue.
   static MaterialColor createPrimarySwatch(Color color) {
-    final List<double> strengths = <double>[
-      0.05,
-      0.1,
-      0.2,
-      0.3,
-      0.4,
-      0.5,
-      0.6,
-      0.7,
-      0.8,
-      0.9,
-    ];
     final Map<int, Color> swatch = <int, Color>{};
     final int r = color.red, g = color.green, b = color.blue;
-    for (final double strength in strengths) {
-      final double ds = 0.5 - strength;
-      swatch[(strength * 1000).round()] = Color.fromRGBO(
+    for (final int strength in _indexPrimary) {
+      final double ds = 0.5 - strength / 1000;
+      swatch[strength] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
         g + ((ds < 0 ? g : (255 - g)) * ds).round(),
         b + ((ds < 0 ? b : (255 - b)) * ds).round(),
@@ -363,9 +358,8 @@ class ColorTools {
   ///
   /// Returns true if the color is a Material accent color, otherwise false.
   static bool isAccentColor(Color color) {
-    final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
-      for (final int i in index) {
+      for (final int i in _indexAccent) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
@@ -385,9 +379,8 @@ class ColorTools {
   /// as [200] index value and return this created custom color accent swatch.
   /// This color swatch can then be used as a accent Material color swatch.
   static MaterialAccentColor accentSwatch(Color color) {
-    final List<int> index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColors) {
-      for (final int i in index) {
+      for (final int i in _indexAccent) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch as MaterialAccentColor; // Found in a swatch, return it.
         }
@@ -408,12 +401,11 @@ class ColorTools {
   /// returned swatch with lighter hues for lower index and darker shades
   /// for higher indexes.
   static MaterialAccentColor createAccentSwatch(Color color) {
-    final List<double> strengths = <double>[0.1, 0.2, 0.4, 0.7];
     final Map<int, Color> swatch = <int, Color>{};
     final int r = color.red, g = color.green, b = color.blue;
-    for (final double strength in strengths) {
-      final double ds = 0.2 - strength;
-      swatch[(strength * 1000).round()] = Color.fromRGBO(
+    for (final int strength in _indexAccent) {
+      final double ds = 0.2 - strength / 1000;
+      swatch[strength] = Color.fromRGBO(
           r + ((ds < 0 ? r : (255 - r)) * ds).round(),
           g + ((ds < 0 ? g : (255 - g)) * ds).round(),
           b + ((ds < 0 ? b : (255 - b)) * ds).round(),
@@ -537,20 +529,8 @@ class ColorTools {
   ///
   /// Returns true if the color is a black or white swatch, otherwise false.
   static bool isBlackAndWhiteColor(Color color) {
-    final List<int> index = <int>[
-      50,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      800,
-      900,
-    ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
-      for (final int i in index) {
+      for (final int i in _indexPrimary) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return true; // Color found in a swatch, return true.
         }
@@ -569,21 +549,8 @@ class ColorTools {
   /// the mid 500 value and return this created custom primary color Swatch.
   /// This color swatch can then be used as a primary Material color swatch.
   static ColorSwatch<Object> blackAndWhiteSwatch(Color color) {
-    final List<int> index = <int>[
-      50,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      800,
-      850,
-      900,
-    ];
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
-      for (final int i in index) {
+      for (final int i in _indexPrimary) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           return swatch; // Color found in a swatch, return it.
         }
@@ -600,20 +567,8 @@ class ColorTools {
   static bool isCustomColor(
       Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
-      final List<int> index = <int>[
-        50,
-        100,
-        200,
-        300,
-        400,
-        500,
-        600,
-        700,
-        800,
-        900,
-      ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
-        for (final int i in index) {
+        for (final int i in _indexPrimary) {
           if (swatch[i] == color || swatch[i]?.value == color.value) {
             return true; // Color found in a swatch, return true.
           }
@@ -635,20 +590,8 @@ class ColorTools {
   static ColorSwatch<Object> customSwatch(
       Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
-      final List<int> index = <int>[
-        50,
-        100,
-        200,
-        300,
-        400,
-        500,
-        600,
-        700,
-        800,
-        900,
-      ];
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
-        for (final int i in index) {
+        for (final int i in _indexPrimary) {
           if (swatch[i] == color || swatch[i]?.value == color.value) {
             return swatch; // Color found in a swatch so we return it
           }
@@ -669,7 +612,6 @@ class ColorTools {
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String _name =
         materialName(color, colorSwatchNameMap: colorSwatchNameMap);
-
     if (_name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(0x${colorCode(color)})';
@@ -687,7 +629,6 @@ class ColorTools {
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String _name =
         materialName(color, colorSwatchNameMap: colorSwatchNameMap);
-
     if (_name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(${colorCode(color)})';
@@ -707,23 +648,9 @@ class ColorTools {
   static String materialName(Color color,
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap,
       bool withIndex = true}) {
-    List<int> index = <int>[
-      50,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      850,
-      800,
-      900,
-    ];
-
     // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
-      for (final int i in index) {
+      for (final int i in _indexPrimary) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${blackAndWhiteNames[swatch]} [$i]';
@@ -733,10 +660,9 @@ class ColorTools {
         }
       }
     }
-
     // If it is a primary color, return name, shade and and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
-      for (final int i in index) {
+      for (final int i in _indexPrimaryWith850) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${primaryColorNames[swatch]} [$i]';
@@ -746,11 +672,10 @@ class ColorTools {
         }
       }
     }
-
     // If it is an accent color, return name, shade and optional index.
-    index = <int>[100, 200, 400, 700];
+    // index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColorsNames.keys) {
-      for (final int i in index) {
+      for (final int i in _indexAccent) {
         if (swatch[i] == color || swatch[i]?.value == color.value) {
           if (withIndex) {
             return '${accentColorsNames[swatch]} [$i]';
@@ -760,25 +685,12 @@ class ColorTools {
         }
       }
     }
-
-    // If we have a custom color and name map passed, we will check if the color
-    // exists in it as well and what name it has in the map and
+    // If we have a custom color and name map passed, we will check if the
+    // color exists in it as well and what name it has in the map and
     // return name, shade and optional index.
     if (colorSwatchNameMap != null) {
-      final List<int> index = <int>[
-        50,
-        100,
-        200,
-        300,
-        400,
-        500,
-        600,
-        700,
-        800,
-        900,
-      ];
       for (final ColorSwatch<Object> swatch in colorSwatchNameMap.keys) {
-        for (final int i in index) {
+        for (final int i in _indexPrimary) {
           if (swatch[i] == color || swatch[i]?.value == color.value) {
             if (withIndex) {
               return '${colorSwatchNameMap[swatch]} [$i]';
