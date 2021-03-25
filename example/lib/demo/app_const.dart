@@ -18,16 +18,33 @@ class App {
   static const double minColumnWidth = 390;
 
   // Light theme colors
-  static const Color primaryLight = Color(0xFF3B5998);
-  static const Color primaryVariantLight = Color(0xFF3F729B);
-  static const Color secondaryLight = Color(0xFF55ACEE);
-  static const Color secondaryVariantLight = Color(0xFFA2D1F6);
+  // static const Color primaryLight = Color(0xFF3B5998);
+  // static const Color primaryVariantLight = Color(0xFF3F729B);
+  // static const Color secondaryLight = Color(0xFF55ACEE);
+  // static const Color secondaryVariantLight = Color(0xFFA2D1F6);
+  //
+  // // Dark theme colors
+  // static const Color primaryDark = Color(0xFF8B9DC3);
+  // static const Color primaryVariantDark = Color(0xFF799CB9);
+  // static const Color secondaryDark = Color(0xFFA0D1F5);
+  // static const Color secondaryVariantDark = Color(0xFF607D93);
+
+  static const Color primaryLight = Color(0xFF1D3656);
+  static const Color primaryVariantLight = Color(0xFF0C1115);
+  static const Color secondaryLight = Color(0xFFE59A18);
+  static const Color secondaryVariantLight = Color(0xFFF0B03F);
+  static const Color backgroundLight = Color(0xFFF9F9F9);
+  static const Color surfaceLight = Color(0xFFFBFBFB);
+  static const Color scaffoldBackgroundLight = Color(0xFFFDFDFD);
 
   // Dark theme colors
-  static const Color primaryDark = Color(0xFF8B9DC3);
-  static const Color primaryVariantDark = Color(0xFF799CB9);
-  static const Color secondaryDark = Color(0xFFA0D1F5);
-  static const Color secondaryVariantDark = Color(0xFF607D93);
+  static const Color primaryDark = Color(0xFF587BA1);
+  static const Color primaryVariantDark = Color(0xFFF0F7FE);
+  static const Color secondaryDark = Color(0xFFEBB251);
+  static const Color secondaryVariantDark = Color(0xFFFDF4E4);
+  static const Color backgroundDark = Color(0xFF121517);
+  static const Color surfaceDark = Color(0xFF131517);
+  static const Color scaffoldBackgroundDark = Color(0xFF131517);
 
   // Some custom example colors for our custom picker.
   static const Color guideNewPrimary = Color(0xFF6200EE);
@@ -102,11 +119,4 @@ class App {
             ? Colors.white
             : Colors.black;
   }
-
-  // static Color onColor(Color color) {
-  //   return ThemeData.estimateBrightnessForColor(primaryLight) ==
-  //           Brightness.light
-  //       ? Colors.black
-  //       : Colors.white;
-  // }
 }

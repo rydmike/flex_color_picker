@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
+// This file contain simple Riverpod provider's, that I called "Pod:s" as
+// it is nice and short.
+//
+// This demo is perhaps a bit a-typical in the sense that we want every
+// toggle to update something as it happens while minimizing re-builds as
+// much as possible. All the properties are just values so a simple
+// StateProvider works rather nicely and is simple to use, there is just a
+// lot of them. Still using each in individual widgets to toggle each
+// state providers state is pretty easy and simple to do and maintain.
+
 // themeModePod is a [StateProvider] to provide the state of
 // the [ThemeMode], used to toggle the application wide theme mode
 final StateProvider<ThemeMode> themeModePod =
@@ -10,7 +20,7 @@ final StateProvider<ThemeMode> themeModePod =
 });
 
 // StateProviders for the colors we are manipulating.
-final StateProvider<Color> screenPickerColorPod =
+final StateProvider<Color> cardPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.blue;
 });
@@ -31,7 +41,7 @@ final StateProvider<Color> onColorChangeEndPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
-// StateProviders for the recent used colors.
+// StateProviders for the recent used color list.
 final StateProvider<List<Color>> screenRecentColorsPod =
     StateProvider<List<Color>>((ProviderReference ref) {
   return <Color>[];

@@ -15,13 +15,13 @@ class ColorPickerCard extends ConsumerWidget {
     return Card(
       elevation: 3,
       child: ColorPicker(
-        color: watch(screenPickerColorPod).state,
+        color: watch(cardPickerColorPod).state,
         onColorChangeStart: (Color color) {
           context.read(onColorChangeStartPod).state = color;
           // debugPrint('onColorChangeStart called');
         },
         onColorChanged: (Color color) {
-          context.read(screenPickerColorPod).state = color;
+          context.read(cardPickerColorPod).state = color;
           context.read(onColorChangedPod).state = color;
           // debugPrint('onColorChanged called');
         },
