@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # https://pub.dev/packages/flutter_riverpod
+  flutter_riverpod: ^0.13.1+1
+
   google_fonts: ^2.0.0
 
 dev_dependencies:

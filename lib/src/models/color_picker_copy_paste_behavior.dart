@@ -37,13 +37,13 @@ enum ColorPickerCopyFormat {
   numHexAARRGGBB,
 }
 
-/// Defines the FlexColorPicker's copy and paste behavior.
+/// Used by FlexColorPicker to define how copy-paste operations behave.
 ///
 /// You can control if the picker has:
 /// * Copy and paste buttons in the top toolbar.
-/// * Long press copy and paste context menu.
-/// * Ctrl-C and Ctrl-V keyboard shortcuts also when not in edit field.
-///   Automatically uses Command instead of Ctrl on macOS.
+/// * Long press and/or right click copy and paste context menu.
+/// * Ctrl-C and Ctrl-V keyboard shortcuts, also when not in edit field.
+///   Keyboard shortcuts automatically uses Command instead of Ctrl on macOS.
 /// * Edit color code field with a copy color icon.
 ///
 /// You can also:
@@ -53,10 +53,8 @@ enum ColorPickerCopyFormat {
 /// * Define paste color string parsing error feedback type.
 ///
 /// Paste operation supports all RGB string formats defined by
-/// [ColorPickerCopyFormat], but default copy format is only in selected
+/// [ColorPickerCopyFormat], but copy format is only in selected
 /// [copyFormat].
-///
-/// Used by FlexColorPicker to define how copy paste operations behave.
 @immutable
 class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Default constructor
@@ -85,50 +83,48 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.parseShortHexCode = false,
       this.editUsesParsedPaste = false});
 
-  /// A CTRL-C press will copy the clipboard into the picker.
+  /// A CMD/CTRL-C press will copy the clipboard into the picker.
   ///
   /// When enabled, this keyboard copy color shortcut works when the
   /// ColorPicker and one of its focusable widgets have focus. Those include
-  /// color indicator, color field, buttons, and the picker selector as
-  /// well as the color wheel.
+  /// color indicator, color field, buttons, opacity slider and the picker
+  /// selector as well as the color wheel.
   ///
   /// Defaults to true.
   final bool ctrlC;
 
-  /// A CTRL-V press will paste the clipboard into the picker.
+  /// A CMD/CTRL-V press will paste the clipboard into the picker.
   ///
-  /// When enabled, this keyboard paste color shortcut works when the
+  /// When enabled, this keyboard copy color shortcut works when the
   /// ColorPicker and one of its focusable widgets have focus. Those include
-  /// color indicator, color field, buttons, and the picker selector as well
-  /// as the color wheel.
+  /// color indicator, color field, buttons, opacity slider and the picker
+  /// selector as well as the color wheel.
   ///
   /// Defaults to true.
   final bool ctrlV;
 
-  /// Show a copy action icon in the picker title bar end.
+  /// Show a copy action icon in the picker title bar.
   ///
   /// Defaults to false.
   final bool copyButton;
 
-  /// Show a paste action icon in the picker title bar end.
+  /// Show a paste action icon in the picker title bar.
   ///
   /// Defaults to false.
   final bool pasteButton;
 
-  /// Icon used for the copy action icon in the title bar.
+  /// Icon used for the copy action.
   ///
-  /// This one is useful if you are not showing the color code that has
-  /// a copy icon action already.
-  /// The presence of the action button is determined by to the color picker
-  /// provided `ColorPickerCopyPasteBehavior.copyButton` property value.
+  /// The COPY icon is used on the toolbar, in the context menu and code field,
+  /// when those features are enabled.
   ///
   /// Defaults to [Icons.copy].
   final IconData copyIcon;
 
   /// Icon used for the paste action icon in the title bar.
   ///
-  /// The presence of the action button is determined by to the color picker
-  /// provided `ColorPickerCopyPasteBehavior.pasteButton` property value.
+  /// The PASTE icon is used on the toolbar, in the context menu and code field,
+  /// when those features are enabled.
   ///
   /// Defaults to [Icons.paste].
   final IconData pasteIcon;
@@ -151,23 +147,23 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// on Linux and Windows platforms and on macOS ' (CMD-V)' is added.
   final String? pasteTooltip;
 
-  /// Defines the default format of the copied string.
+  /// Defines the format of the copied color code string.
   ///
   /// Defaults to [ColorPickerCopyFormat.dartCode].
   final ColorPickerCopyFormat copyFormat;
 
-  /// Use long press on picker background to get a copy and paste menu action.
+  /// Use long press on picker background to open a copy and paste menu.
   ///
   /// Defaults to false.
   final bool longPressMenu;
 
-  /// Use secondary button click on picker to get a copy and paste menu action.
+  /// Use secondary button click on picker to open a copy and paste menu.
   ///
   /// Defaults to false.
   final bool secondaryMenu;
 
   /// Use secondary button click on a device and long press on iOs/Android
-  /// device on the picker to get a copy and paste menu action.
+  /// devices on the picker, to open a copy and paste menu.
   ///
   /// Defaults to false.
   final bool secondaryOnDesktopLongOnDevice;
@@ -181,10 +177,11 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ///
   /// The menu is compact, so icons are small by design.
   ///
-  /// Uses any none null property in passed in [IconThemeData]. If the
-  /// passed value is null, or any property in it is null, then it uses
-  /// property values from `Theme.of(context).iconTheme`, if they are not
-  /// null. For any null value, the following fallback defaults are used:
+  /// Uses any none null property in passed in [IconThemeData]. If it is
+  /// is null, or any property in it is null, then it uses the
+  /// property values from surrounding `Theme.of(context).iconTheme` if they
+  /// are defined. For any values that remain null value, the following
+  /// fallback defaults are used:
   ///   color: remains null, so default [IconThemeData] color behavior is kept.
   ///   size: 16
   ///   opacity: 0.90
@@ -192,7 +189,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
 
   /// The theme of the popup menu.
   ///
-  /// Uses any none null property in provided [PopupMenuThemeData], if value is
+  /// Uses any none null property in provided [PopupMenuThemeData], if it is
   /// null or any property in it is null, then it uses property values from
   /// `Theme.of(context).popupMenuTheme` if they are not null, for any null
   /// value the following fallback defaults are used:

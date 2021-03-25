@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_const.dart';
+
 /// The themes for this app.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
@@ -12,12 +14,7 @@ class AppTheme {
   /// The used light theme.
   static ThemeData get light {
     return ThemeData.from(
-      colorScheme: const ColorScheme.light().copyWith(
-        primary: const Color(0xFF3B5998),
-        primaryVariant: const Color(0xFF3F729B),
-        secondary: const Color(0xFF55ACEE),
-        secondaryVariant: const Color(0xFFA2D1F6),
-      ),
+      colorScheme: colorSchemeLight,
       textTheme: textTheme,
     ).copyWith(
       scaffoldBackgroundColor: const Color(0xFFFDFDFD),
@@ -36,21 +33,24 @@ class AppTheme {
       elevatedButtonTheme: elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme,
       textButtonTheme: textButtonTheme,
+      toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
       visualDensity: comfortablePlatformDensity,
     );
   }
 
+  // Light theme color scheme.
+  static ColorScheme get colorSchemeLight => const ColorScheme.light().copyWith(
+        primary: App.primaryLight,
+        primaryVariant: App.primaryVariantLight,
+        secondary: App.secondaryLight,
+        secondaryVariant: App.secondaryVariantLight,
+      );
+
   /// The used dark theme.
   static ThemeData get dark {
     return ThemeData.from(
-      colorScheme: const ColorScheme.dark().copyWith(
-        primary: const Color(0xFF8B9DC3),
-        primaryVariant: const Color(0xFF799CB9),
-        secondary: const Color(0xFFA0D1F5),
-        secondaryVariant: const Color(0xFF607D93),
-        onPrimary: Colors.white,
-      ),
+      colorScheme: colorSchemeDark,
       textTheme: textTheme,
     ).copyWith(
       toggleableActiveColor: const Color(0xFFA0D1F5),
@@ -68,10 +68,19 @@ class AppTheme {
       elevatedButtonTheme: elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme,
       textButtonTheme: textButtonTheme,
+      toggleButtonsTheme: toggleButtonsThemeData(colorSchemeDark),
       tooltipTheme: tooltipTheme(true),
       visualDensity: comfortablePlatformDensity,
     );
   }
+
+  // Dark theme color scheme.
+  static ColorScheme get colorSchemeDark => const ColorScheme.dark().copyWith(
+        primary: App.primaryDark,
+        primaryVariant: App.primaryVariantDark,
+        secondary: App.secondaryDark,
+        secondaryVariant: App.secondaryVariantDark,
+      );
 
   // TODO: Investigate potential GoogleFonts font issue on Windows platform.
   // Making a custom text theme here, via on-line GoogleFonts load. Intended to
@@ -113,29 +122,47 @@ class AppTheme {
   );
 
   /// Theme definitions give ElevatedButton a Stadium rounded design.
-  static ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-    shape: const StadiumBorder(),
-    padding: roundButtonPadding,
-  ));
+  static ElevatedButtonThemeData get elevatedButtonTheme =>
+      ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+        padding: roundButtonPadding,
+      ));
 
   /// Theme definitions give OutlinedButton a Stadium rounded design.
-  static OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-    shape: const StadiumBorder(),
-    padding: roundButtonPadding,
-  ));
+  static OutlinedButtonThemeData get outlinedButtonTheme =>
+      OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+        shape: const StadiumBorder(),
+        padding: roundButtonPadding,
+      ));
 
   /// Theme definitions give TextButton a Stadium rounded design.
-  static TextButtonThemeData textButtonTheme = TextButtonThemeData(
-      style: TextButton.styleFrom(
-    shape: const StadiumBorder(),
-    padding: roundButtonPadding,
-  ));
+  static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
+          style: TextButton.styleFrom(
+        shape: const StadiumBorder(),
+        padding: roundButtonPadding,
+      ));
 
   /// The stadium rounded buttons need a bit more padding to look.
   static const EdgeInsets roundButtonPadding =
-      EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+      EdgeInsets.symmetric(horizontal: 20, vertical: 12);
+
+  /// ToggleButtons theme
+  static ToggleButtonsThemeData toggleButtonsThemeData(
+          ColorScheme colorScheme) =>
+      ToggleButtonsThemeData(
+        color: colorScheme.onSurface,
+        selectedColor: colorScheme.onPrimary,
+        fillColor: colorScheme.secondary.withOpacity(0.9),
+        hoverColor: colorScheme.primary.withOpacity(0.2),
+        focusColor: colorScheme.primary.withOpacity(0.3),
+        borderWidth: 1.5,
+        borderColor: colorScheme.primary,
+        selectedBorderColor: colorScheme.primary,
+        constraints: const BoxConstraints(minWidth: 50, minHeight: 50),
+        borderRadius: BorderRadius.circular(50),
+      );
 
   /// Use an alternative tooltip style.
   static TooltipThemeData tooltipTheme(bool isDark) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Wrap the [child] with a [Tooltip] if [condition] is true, if
-/// [condition] is false, just return the [child].
+/// Wrap the [child] with a [Tooltip] if [condition] is true and [tooltip] is
+/// not null and [tooltip] is not empty, otherwise just return the [child].
 class MaybeTooltip extends StatelessWidget {
   /// Const default constructor.
   const MaybeTooltip({

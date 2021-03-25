@@ -1,30 +1,12 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
+import 'app_const.dart';
 import 'color_picker_screen.dart';
+import 'picker_toggle_buttons/theme_mode_switch.dart';
 
-// Just a simple way to leave a trace of what version you built a Flutter
-// Web demo with inside the app. You can also show it in the demo,
-// like in this example, so people testing it don't have to ask.
-const String kFlutterVersion = 'Channel dev 2.1.0-12.1.pre SKIA';
-const String kColorPickerVersion = '2.0.0-nullsafety.5';
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.themeMode}) : super(key: key);
-  final ValueChanged<ThemeMode> themeMode;
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late bool isDark;
-
-  @override
-  void initState() {
-    isDark = false;
-    super.initState();
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
             'FlexColorPicker',
             style: Theme.of(context).textTheme.headline4,
           ),
-
           Text(
-            'Full feature demo for v2',
+            'Features demo for v2',
             style: Theme.of(context).textTheme.headline6,
           ),
           const SizedBox(height: 30),
@@ -157,28 +138,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 20),
           // Theme mode toggle
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 270),
-            child: SwitchListTile.adaptive(
-              title: const Text('Dark mode'),
-              subtitle: const Text('Turn OFF for light mode'),
-              value: isDark,
-              onChanged: (bool value) {
-                setState(() {
-                  isDark = value;
-                  widget.themeMode(isDark ? ThemeMode.dark : ThemeMode.light);
-                });
-              },
-            ),
-          ),
-
+          const ThemeModeSwitch(),
           const Spacer(),
           Text(
-            'Using flex_color_picker version $kColorPickerVersion',
+            'Using flex_color_picker version ${App.colorPickerVersion}',
             style: Theme.of(context).textTheme.caption,
           ),
           Text(
-            'Built with Flutter $kFlutterVersion',
+            'Built with Flutter ${App.flutterVersion}',
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),

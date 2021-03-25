@@ -1,4 +1,6 @@
+import 'dart:collection';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -52,15 +54,26 @@ class ColorPicker extends StatefulWidget {
   /// Default constructor for the color picker.
   const ColorPicker({
     Key? key,
+    // Core properties, set color and change callbacks.
     this.color = Colors.blue,
     required this.onColorChanged,
     this.onColorChangeStart,
     this.onColorChangeEnd,
+    // Color picker types shown and used by the color picker.
+    this.pickersEnabled = const <ColorPickerType, bool>{
+      ColorPickerType.both: false,
+      ColorPickerType.primary: true,
+      ColorPickerType.accent: true,
+      ColorPickerType.bw: false,
+      ColorPickerType.custom: false,
+      ColorPickerType.wheel: false,
+    },
+    this.enableShadesSelection = true,
+    this.includeIndex850 = false,
+    // Layout
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.padding = const EdgeInsets.all(16),
     this.columnSpacing = 8,
-    this.enableShadesSelection = true,
-    this.includeIndex850 = false,
     // Opacity slider
     this.enableOpacity = false,
     this.opacityTrackHeight = 36,
@@ -108,15 +121,6 @@ class ColorPicker extends StatefulWidget {
     this.onRecentColorsChanged,
     // Enable tooltips
     this.enableTooltips = true,
-    // Color picker types shown and used by the color picker.
-    this.pickersEnabled = const <ColorPickerType, bool>{
-      ColorPickerType.both: false,
-      ColorPickerType.primary: true,
-      ColorPickerType.accent: true,
-      ColorPickerType.bw: false,
-      ColorPickerType.custom: false,
-      ColorPickerType.wheel: false,
-    },
     // Segmented color picker selector control properties.
     this.selectedPickerTypeColor,
     this.pickerTypeTextStyle,
@@ -180,6 +184,37 @@ class ColorPicker extends StatefulWidget {
   /// interaction on the color wheel or on a color or transparency slider.
   final ValueChanged<Color>? onColorChangeEnd;
 
+  /// A [ColorPickerType] to bool map. Defines which pickers are enabled in the
+  /// color picker's sliding selector and thus available as color pickers.
+  ///
+  /// Available options are based on the [ColorPickerType] enum that
+  /// includes values `both`, `primary`, `accent`, `bw`, `custom` and `wheel`.
+  ///
+  /// By default a map that sets primary and accent pickers to true and
+  /// other pickers to false is used.
+  ///
+  /// To modify key-value enable/disable pairs, you only have to provide values
+  /// for the pairs you want to change from their default value. Any missing
+  /// key-value pair in the provided map will keep its default value.
+  final Map<ColorPickerType, bool> pickersEnabled;
+
+  /// Set to true to allow selection of color swatch shades.
+  ///
+  /// If false only the main color from a swatch is shown and can be selected.
+  /// This is index [500] for Material primary colors and index [200] for accent
+  /// colors. On the Wheel, only the selected color is shown there is no
+  /// color related color swatch to the selected color shown.
+  ///
+  /// Defaults to true.
+  final bool enableShadesSelection;
+
+  /// There is an extra index [850] used only by grey Material color in Flutter.
+  /// If you want to include it in the grey color shades selection, then set
+  /// to true.
+  ///
+  /// Defaults to false.
+  final bool includeIndex850;
+
   /// Cross axis alignment used to layout the main content of the
   /// color picker in a column. Defaults to CrossAxisAlignment.center.
   final CrossAxisAlignment crossAxisAlignment;
@@ -193,21 +228,6 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Default to 8 dp.
   final double columnSpacing;
-
-  /// Set to true to allow selection of color swatch shades. If false
-  /// only the main color from a swatch is shown and can be selected. This
-  /// is index [500] for Material primary colors and index [200] for accent
-  /// colors.
-  ///
-  /// Defaults to true.
-  final bool enableShadesSelection;
-
-  /// There is an extra index [850] used only by grey Material color in Flutter.
-  /// If you want to include it in the grey color shades selection, then set
-  /// to true.
-  ///
-  /// Defaults to false.
-  final bool includeIndex850;
 
   /// Enable the opacity control for the color value.
   ///
@@ -483,20 +503,6 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to true.
   final bool enableTooltips;
 
-  /// A [ColorPickerType] to bool map.
-  ///
-  /// Defines which picker types are
-  /// enabled in the color picker's sliding segmented selector and
-  /// are thus available as color pickers.
-  ///
-  /// Available options are based on the [ColorPickerType] enum that
-  /// includes both, primary, accent, bw, custom and wheel.
-  /// Any undefined or missing enum keys in a given map are treated as false.
-  ///
-  /// By default a map that that sets primary and accent pickers to true is
-  /// used if no or a null map is given.
-  final Map<ColorPickerType, bool> pickersEnabled;
-
   /// The color of the thumb on the slider that shows the selected picker.
   ///
   /// If not defined, defaults to Color(0xFFFFFFFF) (white) in light theme and
@@ -509,20 +515,28 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to Theme.of(context).textTheme.caption, if not defined.
   final TextStyle? pickerTypeTextStyle;
 
-  /// A [ColorPickerType] to String map that contains labels for picker types.
+  /// A [ColorPickerType] to String map that contains labels for the picker
+  /// type selector.
   ///
-  /// Default label strings are provided in English, if not defined.
+  /// Default label strings are provided in English, if not defined or omitted
+  /// in a provided map. The default values are:
+  ///  * ColorPickerType.primary: 'Primary & Accent'
+  ///  * ColorPickerType.accent: 'Primary'
+  ///  * ColorPickerType.bw: 'Accent'
+  ///  * ColorPickerType.both: 'Black & White'
+  ///  * ColorPickerType.custom: 'Custom'
+  ///  * ColorPickerType.wheel: 'Wheel'
   final Map<ColorPickerType, String> pickerTypeLabels;
 
   /// Color swatch to name map, with custom swatches and their names.
   ///
-  /// Use to provide color swatches for the custom color picker, including their
-  /// custom names. These colors, their swatch shades and names, are shown
-  /// and used when the picker type [ColorPickerType.custom] option is enabled
-  /// in the color picker.
+  /// Used to provide [ColorSwatch] objects for the custom color picker,
+  /// including their custom name label. These colors, their swatch shades
+  /// and names, are shown and used when the picker type
+  /// [ColorPickerType.custom] option is enabled in the color picker.
   ///
-  /// Default to an empty map, if the map is empty, it will not be shown
-  /// even if it is enabled in [pickersEnabled].
+  /// Defaults to an empty map. If the map is empty, the custom colors picker
+  /// will not be shown even if it is enabled in [pickersEnabled].
   final Map<ColorSwatch<Object>, String> customColorSwatchesAndNames;
 
   /// English default label for picker with both primary and accent colors.
@@ -839,8 +853,7 @@ class _ColorPickerState extends State<ColorPicker> {
   bool _usePickerSelector = false;
 
   // We need a map we can guarantee has no gaps, so we make a local
-  // version of it that is always complete,
-  // gets initialized in the initSelectedValue() function.
+  // version of it that is always complete.
   late Map<ColorPickerType, bool> _pickers;
 
   // The current state of the list with the recent color selections.
@@ -925,14 +938,22 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
+    debugPrint('didUpdateWidget called **************************************');
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
+      debugPrint('didUpdateWidget enableOpacity = '
+          '${widget.enableOpacity == oldWidget.enableOpacity}');
       _selectedColor =
           widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
     }
     // Picker labels map changed, update used one, with its default fallbacks.
-    if (widget.pickerTypeLabels != oldWidget.pickerTypeLabels) {
+
+    if (!mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)) {
+      debugPrint('didUpdateWidget pickerTypeLabels mapEquals: '
+          '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}');
+      // debugPrint('didUpdateWidget pickerTypeLabels = '
+      //     '${widget.pickerTypeLabels == oldWidget.pickerTypeLabels}');
       _pickerLabels = <ColorPickerType, String>{
         ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
             ColorPicker._selectBothLabel,
@@ -953,9 +974,63 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     // Pickers customColorSwatchesAndNames map changed, or pickersEnabled map
     // changed, they depend on each other, so we always update state of both.
-    if (widget.customColorSwatchesAndNames !=
-            oldWidget.customColorSwatchesAndNames ||
-        widget.pickersEnabled != oldWidget.pickersEnabled) {
+    // debugPrint('${widget.customColorSwatchesAndNames}');
+    // debugPrint('${oldWidget.customColorSwatchesAndNames}');
+    //
+    // debugPrint('didUpdateWidget customColorSwatchesAndNames {} mapEquals: '
+    //     '${mapEquals({
+    //   ...widget.customColorSwatchesAndNames
+    // }, {
+    //   ...oldWidget.customColorSwatchesAndNames
+    // })}');
+    // debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() != '
+    //     '${widget.customColorSwatchesAndNames.toString() != oldWidget.customColorSwatchesAndNames.toString()}');
+
+    // if (!(mapEquals(widget.customColorSwatchesAndNames,
+    //     oldWidget.customColorSwatchesAndNames) ||
+    //     widget.customColorSwatchesAndNames.toString() ==
+    //         widget.customColorSwatchesAndNames.toString()) ||
+    //     !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
+
+    if (!mapEquals(widget.customColorSwatchesAndNames,
+            oldWidget.customColorSwatchesAndNames) ||
+        !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
+      // if (widget.customColorSwatchesAndNames.toString() !=
+      //         widget.customColorSwatchesAndNames.toString() ||
+      //     !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
+      // TODO: Investigate this mapEquals issue more.
+      // In above un-equality check, the mapEquals, or with map != operator,
+      // does not work if you provide a map made with createPrimarySwatch or
+      // createAccentSwatch, it should, not sure why it does not. Works OK if
+      // you give the value via a final values, but not as created each time in
+      // the property, which is inefficient, so don't do that anyway. But if
+      // done the Wheel Picker does not work as intended if the above if is
+      // evaluated incorrectly.
+      //
+      // The issue will be that it will not keep the
+      // Wheel picker active when selecting known swatch color in it, it will
+      // move to the picker where it exists, this is not desired, we want to
+      // stay on the Wheel. If you see the wrong behavior it is due to the
+      // above IF being evaluated incorrectly.
+      //
+      // Comparing the `customColorSwatchesAndNames` new and old Widget maps
+      // toString results it was observed they they were equal for the problem
+      // use case, while the [mapEquals] or == operator was not. Thus requiring
+      // both it and the mapEquals to not be equal, we may resolve the IF branch
+      // being entered incorrectly.
+
+      // debugPrint('didUpdateWidget customColorSwatchesAndNames mapEquals: '
+      //     '${mapEquals(widget.customColorSwatchesAndNames, oldWidget.customColorSwatchesAndNames)}');
+      //
+      // debugPrint('didUpdateWidget customColorSwatchesAndNames = '
+      //     '${widget.customColorSwatchesAndNames == oldWidget.customColorSwatchesAndNames}');
+
+      debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() = '
+          '${widget.customColorSwatchesAndNames.toString() == oldWidget.customColorSwatchesAndNames.toString()}');
+
+      // debugPrint('${widget.customColorSwatchesAndNames}');
+      // debugPrint('${oldWidget.customColorSwatchesAndNames}');
+
       // Update _typeToSwatchMap, because custom color swatches were updated.
       _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
         ColorPickerType.both: ColorTools.primaryAndAccentColors,
@@ -969,7 +1044,7 @@ class _ColorPickerState extends State<ColorPicker> {
           ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
         ],
       };
-      // Updated enabled color pickers, with defaults if none given, depends
+      // Update enabled color pickers, with defaults if none given, depends
       // on customColorSwatchesAndNames, so we need to update this also when
       // it changes, not just the enabled pickers.
       _pickers = <ColorPickerType, bool>{
@@ -987,6 +1062,12 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.wheel:
             widget.pickersEnabled[ColorPickerType.wheel] ?? false,
       };
+      debugPrint('didUpdateWidget pickersEnabled mapEquals: '
+          '${mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)}');
+      // debugPrint('didUpdateWidget pickersEnabled = '
+      //     '${widget.pickersEnabled == oldWidget.pickersEnabled}');
+      //
+      debugPrint('didUpdateWidget calls _findPicker and _updateActiveSwatch');
       // When the above happens, we need to find the right picker again.
       _findPicker();
       // And update the active swatch as well.
@@ -1008,7 +1089,7 @@ class _ColorPickerState extends State<ColorPicker> {
     _usePickerSelector =
         _pickers.values.fold<int>(0, (int t, bool e) => t + (e ? 1 : 0)) > 1;
 
-    // If we have a picker selector, we get the best one, of the enabled ones,
+    // If we have a picker selector, we get the best one of the enabled ones,
     // to show the current _selectedColor.
     if (_usePickerSelector) {
       _activePicker = findColorInSelector(
@@ -1041,7 +1122,7 @@ class _ColorPickerState extends State<ColorPicker> {
         _activePicker = ColorPickerType.primary;
       }
     }
-    // We need to set focus on the wheel, when it is the selected picker
+    // We need to set focus on the wheel when it is the selected picker
     // and the shades that would normally grab focus are not shown. If we do
     // no do this, focus may be on Edit input field, and if it is focused
     // the virtual keyboard will appear when wheel is displayed. We do not
@@ -1054,8 +1135,8 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Update shades swatch to the correct swatch for the selected color.
   void _updateActiveSwatch() {
-    // The normal case is that we have a standard swatch where we need to
-    // find the swatch that contains the color.
+    // The typical case is that we have a normal swatch where we need to
+    // find the swatch that contains the _selectedColor.
     if (_activePicker != ColorPickerType.wheel) {
       // Get list of color swatches from the map for the active picker.
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
@@ -1068,7 +1149,7 @@ class _ColorPickerState extends State<ColorPicker> {
       ) as ColorSwatch<Object>?;
       // For the wheel picker we need to check if the selected color belongs to
       // a pre-defined swatch and if it does, return that as the active swatch.
-      // If the selected color does not belong to any pre-defined color swath
+      // If the selected color does not belong to any pre-defined color swatch,
       // then we compute a color swatch for it.
     } else {
       if (ColorTools.isAccentColor(_selectedColor.withAlpha(0xFF))) {
@@ -1089,7 +1170,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // case we set active swatch to the first swatch in active list, just
     // to get an active swatch selection. This is a fall back from an error
     // situation where a selected color was passed to the color picker that was
-    // not found in any of the provided swatches in the active pickers.
+    // not found in any of the provided swatches in any enabled pickers.
     // If the wheel picker is enabled, then the color will always be found
     // in it as a last resort.
     _activeSwatch ??= _activeColorSwatchList[0];
@@ -1105,18 +1186,22 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    // The effective used text themes, if null was passed in we assign defaults.
+    // The effective used text style, if null was passed in we assign defaults.
     final TextStyle effectiveMaterialNameStyle =
         (widget.materialNameTextStyle ??
-            Theme.of(context).textTheme.bodyText2)!;
+                Theme.of(context).textTheme.bodyText2) ??
+            const TextStyle();
     final TextStyle effectiveGenericNameStyle =
-        (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2)!;
+        (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
+            const TextStyle();
 
     // Set the default integer code value text style to bodyText2 if not given.
     final TextStyle effectiveCodeStyle =
-        (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2)!;
+        (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
+            const TextStyle();
 
-    // The logic below is used to determine if we will have a context menu.
+    // The logic below is used to determine if we will have a context menu
+    // present at all in the Widget tree.
     final TargetPlatform _platform = Theme.of(context).platform;
     final bool _useLongPress = widget.copyPasteBehavior.longPressMenu ||
         (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
@@ -1170,7 +1255,7 @@ class _ColorPickerState extends State<ColorPicker> {
         child: Padding(
           padding: widget.padding,
           // The ColorPicker layout is a column. It is up to the user to ensure
-          // that it it fits, or use a scrolling parent if it does not.
+          // that it fits, or use a scrolling parent if it does not.
           child: Column(
             crossAxisAlignment: widget.crossAxisAlignment,
             children: <Widget>[
@@ -1192,7 +1277,7 @@ class _ColorPickerState extends State<ColorPicker> {
                         : null,
                     onOk: widget.actionButtons.okButton
                         ? () {
-                            // OK was pressed, we pop and return TRUE
+                            // OK was pressed, we pop and return TRUE.
                             // In case this was not used in a dialog the
                             // canPop will at least avoid a crash, but may
                             // still do the wrong thing.
@@ -1203,7 +1288,7 @@ class _ColorPickerState extends State<ColorPicker> {
                         : null,
                     onClose: widget.actionButtons.closeButton
                         ? () {
-                            // Cancel was pressed, we pop and return FALSE
+                            // Cancel was pressed, we pop and return FALSE.
                             // In case this was not used in a dialog the
                             // canPop will at least avoid a crash, but may
                             // still do the wrong thing.
