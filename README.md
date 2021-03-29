@@ -47,8 +47,6 @@ picker widget in your own custom dialog.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-lower.png?raw=true" alt="ColorPicker variations lower"/>
 
-
-
 ## Getting Started
 
 In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
@@ -607,16 +605,16 @@ provide your own localized Material color names. For example:
 ### Show Color Code
 
 The color code field shows the RGB color value of the selected color. On the Wheel picker the field also functions
-as a HEX RGB color code entry field. The Wheel picker will move its indicators to the show the color of the entered
-color code as the entry is done.
+as a HEX RGB color code entry field. The Wheel picker will move its indicators to show the color of the entered
+color code, as the entry is done.
 
 By default, the code field just has a grey background, but you can also configure it to use the current selected color
-as its background. The color code field can also have a copy button as a suffix. This is enabled by default, it allows
-you to copy the current color to the clipboard. There are different options for enabling copy-paste commands
+as its background color. The color code field can also have a copy button as a suffix. This is enabled by default, 
+it allows you to copy the current color to the clipboard. There are different options for enabling copy-paste commands
 in the FlexColorPicker, they are described in detail in 
-[the copy-paste actions and behavior chapter](#copy-paste-actions-and-behavior).
+the [copy-paste actions and behavior](#copy-paste-actions-and-behavior) chapter.
 
-The color code value can be shown in five different formats, the displayed format at the same time define the recived
+The color code value can be shown in five different formats, the displayed format also defines the received
 string format of the copied RGB value.
 
 ### Show Recent colors
@@ -627,22 +625,25 @@ list.
 
 Selecting a recently used color moves, moves the picker to picker where the color was and selects it again. If opacity
 is enabled, the opacity the color had when it was selected is also applied. Normally when selecting colors and opacity
-is enabled, the value the opacity slider is at is kept. But selecting a recently used color, will retain the opacity
-it had when it was selected and got added to the recently used colors list.
+is enabled, the value the opacity slider is at is kept. However, selecting a recently used color, will retain the 
+opacity it had when it was selected and got added to the recently used colors list.
 
-Thee is also an optional callback, that is called everytime a new color is added to the list, with the complete new
-list of recently used colors. If the optional callback is not provided, then it is not called.
+There is also an optional callback, that is called everytime a new color is added to the list with the complete new
+list of recently used colors. If the optional callback is not provided, then it is not called. You can use this 
+callback to save and restore the recently used colors if so desired. 
 
 ### Add Title and Heading Widgets
 
-You can provide custom heading widgets for the picker title, heading, shades selection color subheading, 
-wheel subheading, opacity slider subheading and subheading for the recently used colors list.
+You can provide custom heading widgets for the picker toolbar title, main heading, shades selection color subheading, 
+wheel subheading, opacity slider subheading and subheading for the recently used colors list. The headings
+can be any Widget, but typically the would be Text widgets with a suitable style.
 
 ## Picker Design
 
 The picker design API refers to properties that affect size, shape and spacing of the color indicator Widgets in 
-the color picker. The `ColorIndicator` can also be used a small convienient color box widget outside of the color
-picker, like the example where it is used to show the selected color and to open a dialog to modify the color.
+the color picker. The `ColorIndicator` can also be used a small convenient color box widget, outside of the color
+picker. This is done in the example where it is used to show the selected color and to open a dialog to modify 
+the color.
 
 ### Picker color item indicators
 
@@ -652,7 +653,6 @@ run spacing. The examples below show some properties and actual result.
 ### Wheel size, width and border
 
 The color wheel size, width and border can be modified, below a few examples.
-
 
 The color wheel width must be 4 to 50, defaults to 16dp. The width must be 100 to max 500, defaults to 190dp.
 
