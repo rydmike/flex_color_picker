@@ -1,9 +1,9 @@
 // Picker indicators
-export 'picker_indicators/dialog_color_indicator.dart';
+export 'picker_indicators/card_picker_color_indicator.dart';
+export 'picker_indicators/dialog_picker_color_indicator.dart';
 export 'picker_indicators/on_changed_color_indicator.dart';
 export 'picker_indicators/on_end_color_indicator.dart';
 export 'picker_indicators/on_start_color_indicator.dart';
-export 'picker_indicators/screen_color_indicator.dart';
 // Slider settings controls
 export 'picker_sliders/border_radius_slider.dart';
 export 'picker_sliders/column_spacing_slider.dart';

@@ -7,30 +7,26 @@ class App {
   // prevents external instantiation and extension.
   App._();
 
-  // Just a simple way to leave a trace of what version you built a Flutter
-// Web demo with inside the app. You can also show it in the demo,
-// like in this example, so people testing it don't have to ask.
-  static const String flutterVersion = 'Channel dev 2.1.0-12.1.pre SKIA';
-  static const String colorPickerVersion = '2.0.0-nullsafety.5';
+  // Just a simple way to leave a trace of what version we built the Flutter
+  // Web demo with inside the app. Shown on the start screen in the demo,
+  // so people testing it don't have to ask.
+  static const String appName = 'FlexColorPicker';
+  static const String version = '2.0.0-nullsafety.5';
+  static const String packageVersion = 'FlexColorScheme package $version';
+  static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
+  static const String flutterVersion = 'Channel dev 2.1.0-12.1.pre, CanvasKit';
+  static const String copyright = '© 2020, 2021';
+  static const String author = 'Mike Rydstrom';
+  static const String license = 'BSD 3-Clause License';
+  static const String icon = 'assets/images/app_icon.png';
 
   // Max width of the body content when used on a wide screen.
   static const double maxBodyWidth = 2100;
   static const double minColumnWidth = 390;
 
   // Light theme colors
-  // static const Color primaryLight = Color(0xFF3B5998);
-  // static const Color primaryVariantLight = Color(0xFF3F729B);
-  // static const Color secondaryLight = Color(0xFF55ACEE);
-  // static const Color secondaryVariantLight = Color(0xFFA2D1F6);
-  //
-  // // Dark theme colors
-  // static const Color primaryDark = Color(0xFF8B9DC3);
-  // static const Color primaryVariantDark = Color(0xFF799CB9);
-  // static const Color secondaryDark = Color(0xFFA0D1F5);
-  // static const Color secondaryVariantDark = Color(0xFF607D93);
-
-  static const Color primaryLight = Color(0xFF1D3656);
-  static const Color primaryVariantLight = Color(0xFF0C1115);
+  static const Color primaryLight = Color(0xFF184782);
+  static const Color primaryVariantLight = Color(0xFF0E2B4E);
   static const Color secondaryLight = Color(0xFFE59A18);
   static const Color secondaryVariantLight = Color(0xFFF0B03F);
   static const Color backgroundLight = Color(0xFFF9F9F9);
@@ -46,7 +42,7 @@ class App {
   static const Color surfaceDark = Color(0xFF131517);
   static const Color scaffoldBackgroundDark = Color(0xFF131517);
 
-  // Some custom example colors for our custom picker.
+  // Custom example colors for our custom picker.
   static const Color guideNewPrimary = Color(0xFF6200EE);
   static const Color guideNewPrimaryVariant = Color(0xFF3700B3);
   static const Color guideNewSecondary = Color(0xFF03DAC6);
@@ -65,7 +61,7 @@ class App {
   static const Color blueJean = Color(0xFF4f75b8);
   static const Color deepBlueSea = Color(0xFF132b80);
 
-  // Make a custom color swatch to name map from the above custom colors.
+  // A custom color swatch, to name map, for the above custom colors.
   static Map<ColorSwatch<Object>, String> get colorsNameMap =>
       <ColorSwatch<Object>, String>{
         ColorTools.createPrimarySwatch(guideNewPrimary): 'Guide Purple',
@@ -107,7 +103,7 @@ class App {
         ColorTools.createAccentSwatch(const Color(0xFFB062DB)): 'Lavender',
       };
 
-  // Compute text color for the 'OnEvent' chips.
+  // Compute text color for the three 'OnChange' chips.
   static Color getChipTextColor(Color background, bool isLight) {
     final bool isLightBackground =
         ThemeData.estimateBrightnessForColor(background) == Brightness.light;

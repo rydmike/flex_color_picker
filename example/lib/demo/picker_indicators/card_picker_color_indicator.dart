@@ -6,8 +6,8 @@ import '../app_const.dart';
 import '../pods.dart';
 
 @immutable
-class ScreenColorIndicator extends ConsumerWidget {
-  const ScreenColorIndicator({Key? key}) : super(key: key);
+class CardPickerColorIndicator extends ConsumerWidget {
+  const CardPickerColorIndicator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {

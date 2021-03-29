@@ -35,7 +35,7 @@ class ColorPickerActionButtons with Diagnosticable {
     this.closeTooltipIsClose = true,
     this.toolIconsThemeData,
     this.visualDensity,
-    this.padding = const EdgeInsets.all(0),
+    this.padding = EdgeInsets.zero,
     this.alignment = Alignment.center,
     this.splashRadius = 24,
     this.constraints = const BoxConstraints(minHeight: 42, minWidth: 42),

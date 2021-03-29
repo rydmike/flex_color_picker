@@ -17,7 +17,7 @@ class OnEndColorIndicator extends ConsumerWidget {
     return MaybeTooltip(
       condition: watch(enableTooltipsPod).state,
       tooltip: 'ColorPicker(onColorChangeEnd: '
-          '(Color ${background.hexAlpha}) { ... } );',
+          '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
         label: Text(
           'Start ${background.hexAlpha}',

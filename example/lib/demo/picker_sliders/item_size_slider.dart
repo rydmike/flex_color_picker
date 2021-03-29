@@ -15,9 +15,9 @@ class ItemSizeSlider extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     return MaybeTooltip(
       condition: watch(enableTooltipsPod).state,
-      tooltip: 'ColorPicker(\n'
-          '  width: ${context.read(sizePod).state.floor().toString()},\n'
-          '  height: ${context.read(sizePod).state.floor().toString()})',
+      tooltip: 'ColorPicker('
+          'width: ${context.read(sizePod).state.floor().toString()}, '
+          ' height: ${context.read(sizePod).state.floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item size'),
         subtitle: Slider.adaptive(

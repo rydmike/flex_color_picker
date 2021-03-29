@@ -521,7 +521,6 @@ linter:
     #
     # PACKAGE:       ENABLE   : By commenting it out.
     # APPLICATION:   DISABLE  : With false value.
-    #
     # public_member_api_docs: false
 
     # DO sort constructor declarations before other members.

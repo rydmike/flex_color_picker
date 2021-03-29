@@ -84,7 +84,7 @@ class ContextPopupMenu<T> extends StatefulWidget {
 }
 
 class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
-  Offset _downPosition = const Offset(0, 0);
+  Offset _downPosition = Offset.zero;
 
   @override
   Widget build(BuildContext context) {

@@ -7,8 +7,8 @@ import '../color_picker_dialog.dart';
 import '../pods.dart';
 
 @immutable
-class DialogColorIndicator extends ConsumerWidget {
-  const DialogColorIndicator({Key? key}) : super(key: key);
+class DialogPickerColorIndicator extends ConsumerWidget {
+  const DialogPickerColorIndicator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {

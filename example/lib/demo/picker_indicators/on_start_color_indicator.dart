@@ -17,7 +17,7 @@ class OnStartColorIndicator extends ConsumerWidget {
     return MaybeTooltip(
       condition: watch(enableTooltipsPod).state,
       tooltip: 'ColorPicker(onColorChangeStart: '
-          '(Color ${background.hexAlpha}) { ... } );',
+          '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
         label: Text(
           'Start ${watch(onColorChangeStartPod).state.hexAlpha}',
