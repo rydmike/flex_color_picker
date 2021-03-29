@@ -227,19 +227,24 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 
 // TODO: Delete this before publish, just part of CodeSNap images
 
-final ColorPicker picker = //
-ColorPicker(
-  enableOpacity: true,
-
-  enableShadesSelection: true,
-  pickersEnabled: const <ColorPickerType, bool>{
-    ColorPickerType.both: false,
-    ColorPickerType.primary: true,
-    ColorPickerType.accent: true,
-    ColorPickerType.bw: false,
-    ColorPickerType.custom: false,
-    ColorPickerType.wheel: true,
-  },
-  //
-  onColorChanged: (_) {},
-);
+void A(BuildContext context) {
+  final ColorPicker picker =
+  ColorPicker(
+    showMaterialName: true,
+    materialNameTextStyle: Theme.of(context).textTheme.subtitle2,
+    showColorName: true,
+    colorNameTextStyle: Theme.of(context).textTheme.subtitle2,
+    //
+    enableShadesSelection: true,
+    pickersEnabled: const <ColorPickerType, bool>{
+      ColorPickerType.both: false,
+      ColorPickerType.primary: true,
+      ColorPickerType.accent: true,
+      ColorPickerType.bw: false,
+      ColorPickerType.custom: false,
+      ColorPickerType.wheel: true,
+    },
+    //
+    onColorChanged: (_) {},
+  );
+}

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 ///
 /// The static color names are not const on purpose, they have default values
 /// for their English Material color names. If you need to translate them
-/// setup a function that modifies them as needed once in your app,
+/// setup a function that modifies them as needed in your app,
 /// something simple like this may be all you need:
 ///
 /// ```
@@ -31,8 +31,8 @@ import 'package:flutter/material.dart';
 ///   :
 /// }
 /// ```
-/// In a real app you would be using translated strings from whatever
-/// translation tool you are using, and not just two Swedish examples.
+/// In a translated app you would be using translated strings from your used
+/// translation tool, and call it whenever the used language is changed.
 class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
@@ -243,7 +243,9 @@ class ColorTools {
   /// not a standard material primary color hue.
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int r = color.red, g = color.green, b = color.blue;
+    final int r = color.red;
+    final int g = color.green;
+    final int b = color.blue;
     for (final int strength in _indexPrimary) {
       final double ds = 0.5 - strength / 1000;
       swatch[strength] = Color.fromRGBO(
@@ -402,7 +404,9 @@ class ColorTools {
   /// for higher indexes.
   static MaterialAccentColor createAccentSwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int r = color.red, g = color.green, b = color.blue;
+    final int r = color.red;
+    final int g = color.green;
+    final int b = color.blue;
     for (final int strength in _indexAccent) {
       final double ds = 0.2 - strength / 1000;
       swatch[strength] = Color.fromRGBO(
@@ -781,7 +785,11 @@ class _ColorName {
     final int s = (hsl.saturation * 100).toInt();
     final int l = (hsl.lightness * 100).toInt();
 
-    int ndf1, ndf2, ndf, df = -1, cl = -1;
+    int ndf1;
+    int ndf2;
+    int ndf;
+    int df = -1;
+    int cl = -1;
     for (int i = 0; i < colorNames.length; i++) {
       if (decodeColor == colorNames[i].getCode) return colorNames[i];
 

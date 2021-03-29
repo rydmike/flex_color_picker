@@ -30,7 +30,7 @@ class ColorPickerCard extends ConsumerWidget {
           // debugPrint('onColorChangeEnd called');
         },
         onRecentColorsChanged: (List<Color> colors) {
-          context.read(screenRecentColorsPod).state = colors;
+          context.read(cardRecentColorsPod).state = colors;
         },
         crossAxisAlignment: watch(alignmentPod).state,
         padding: EdgeInsets.all(watch(paddingPod).state),
@@ -119,10 +119,9 @@ class ColorPickerCard extends ConsumerWidget {
         colorCodeReadOnly: watch(colorCodeReadOnlyPod).state,
         showColorValue: watch(showColorValuePod).state,
         showRecentColors: watch(showRecentColorsPod).state,
-        recentColors: watch(screenRecentColorsPod).state,
+        recentColors: watch(cardRecentColorsPod).state,
         maxRecentColors: 8,
-        // TODO Restore this to default example
-        customColorSwatchesAndNames: App.colorsNameMap2,
+        customColorSwatchesAndNames: App.colorsNameMap,
         colorCodeTextStyle: Theme.of(context).textTheme.subtitle1,
         colorCodePrefixStyle: Theme.of(context).textTheme.caption,
       ),

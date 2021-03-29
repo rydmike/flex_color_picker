@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  # https://pub.dev/packages/flex_color_picker
   flex_color_picker:
     path: ../
 
@@ -15,7 +16,12 @@ dependencies:
   # https://pub.dev/packages/flutter_riverpod
   flutter_riverpod: ^0.13.1+1
 
+  # https://pub.dev/packages/google_fonts
   google_fonts: ^2.0.0
+
+  # https://pub.dev/packages/url_launcher
+  # Used for launching a WEB URL (by Google flutter.dev).
+  url_launcher: ^6.0.2
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +30,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # All image assets used by the program.
+  # Only an app icon used in the About dialog.
+  assets:
+    - assets/images/

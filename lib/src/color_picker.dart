@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +109,11 @@ class ColorPicker extends StatefulWidget {
     this.showColorCode = false,
     this.colorCodeHasColor = false,
     this.colorCodeTextStyle,
-    this.colorCodeIcon,
+    @Deprecated('This property is deprecated and no longer has any function. '
+        'It was removed in v2.0.0. To modify the copy icon on the color code '
+        'entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: '
+        'myIcon)` and provide it via the `copyPasteBehavior` property.')
+        this.colorCodeIcon,
     this.colorCodePrefixStyle,
     this.colorCodeReadOnly = false,
     this.showColorValue = false,
@@ -400,6 +403,11 @@ class ColorPicker extends StatefulWidget {
 
   /// Set to true to show an English color name of the selected [color].
   ///
+  /// Use the [ColorTools.nameThatColor] function to give an English name to
+  /// any selected color. The function uses a list of 1566 color codes and
+  /// their names, it finds the color that closest matches the given color in
+  /// the list and returns its color name.
+  ///
   /// Defaults to false.
   final bool showColorName;
 
@@ -438,9 +446,9 @@ class ColorPicker extends StatefulWidget {
   /// Old property, no longer in use. This property is now set via
   /// property [copyPasteBehavior] and [ColorPickerCopyPasteBehavior.copyIcon]
   @Deprecated('This property is deprecated and no longer has any function. '
-      'It was removed in v2.x.x. To modify the copy icon on the color code '
-      'entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)`'
-      ' and provide it via the `copyPasteBehavior` property.')
+      'It was removed in v2.0.0. To modify the copy icon on the color code '
+      'entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: '
+      'myIcon)` and provide it via the `copyPasteBehavior` property.')
   final IconData? colorCodeIcon;
 
   /// The TextStyle of the prefix of the color code.
@@ -484,7 +492,9 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool showRecentColors;
 
-  /// The maximum numbers of recent colors to show in a list.
+  /// The maximum numbers of recent colors to show in the list of recent colors.
+  ///
+  /// The max recent colors must be from 2 to 20. Defaults to 5.
   final int maxRecentColors;
 
   /// A list with the recently select colors.
@@ -585,7 +595,7 @@ class ColorPicker extends StatefulWidget {
     /// Padding around the dialog title, if a title is used.
     /// Defaults to const EdgeInsets.all(0), since the title is normally omitted
     /// and provided via the [heading] property of the [ColorPicker] instead.
-    final EdgeInsetsGeometry titlePadding = const EdgeInsets.all(0),
+    final EdgeInsetsGeometry titlePadding = EdgeInsets.zero,
 
     /// Padding around the Cancel and Select action buttons at the bottom of
     /// the dialog.
@@ -609,7 +619,7 @@ class ColorPicker extends StatefulWidget {
     ///
     /// Defaults to const EdgeInsets.all(0), as the content padding is normally
     /// expected to be a part of the [ColorPicker].
-    final EdgeInsetsGeometry contentPadding = const EdgeInsets.all(0),
+    final EdgeInsetsGeometry contentPadding = EdgeInsets.zero,
 
     /// The amount of padding added to [MediaQueryData.viewInsets] on the
     /// outside of the [ColorPicker] dialog.
@@ -972,19 +982,6 @@ class _ColorPickerState extends State<ColorPicker> {
             ColorPicker._selectWheelAnyLabel,
       };
     }
-    // Pickers customColorSwatchesAndNames map changed, or pickersEnabled map
-    // changed, they depend on each other, so we always update state of both.
-    // debugPrint('${widget.customColorSwatchesAndNames}');
-    // debugPrint('${oldWidget.customColorSwatchesAndNames}');
-    //
-    // debugPrint('didUpdateWidget customColorSwatchesAndNames {} mapEquals: '
-    //     '${mapEquals({
-    //   ...widget.customColorSwatchesAndNames
-    // }, {
-    //   ...oldWidget.customColorSwatchesAndNames
-    // })}');
-    // debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() != '
-    //     '${widget.customColorSwatchesAndNames.toString() != oldWidget.customColorSwatchesAndNames.toString()}');
 
     // if (!(mapEquals(widget.customColorSwatchesAndNames,
     //     oldWidget.customColorSwatchesAndNames) ||
@@ -992,16 +989,32 @@ class _ColorPickerState extends State<ColorPicker> {
     //         widget.customColorSwatchesAndNames.toString()) ||
     //     !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
 
-    if (!mapEquals(widget.customColorSwatchesAndNames,
-            oldWidget.customColorSwatchesAndNames) ||
+    // debugPrint('didUpdateWidget customColorSwatchesAndNames mapEquals: '
+    //     '${mapEquals(widget.customColorSwatchesAndNames, oldWidget.customColorSwatchesAndNames)}');
+    // debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() = '
+    //     '${widget.customColorSwatchesAndNames.toString() == oldWidget.customColorSwatchesAndNames.toString()}');
+    // debugPrint('didUpdateWidget pickersEnabled mapEquals: '
+    //     '${mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)}');
+
+    // Pickers customColorSwatchesAndNames map changed, or pickersEnabled map
+    // changed, they depend on each other, so we always update state of both.
+    if (widget.customColorSwatchesAndNames.toString() !=
+            oldWidget.customColorSwatchesAndNames.toString() ||
         !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
+      debugPrint('didUpdateWidget ** entered find picker branch!');
+      debugPrint('didUpdateWidget pickersEnabled mapEquals: '
+          '${mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)}');
+
+      debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() != '
+          '${widget.customColorSwatchesAndNames.toString() != oldWidget.customColorSwatchesAndNames.toString()}');
+
       // if (widget.customColorSwatchesAndNames.toString() !=
       //         widget.customColorSwatchesAndNames.toString() ||
       //     !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
       // TODO: Investigate this mapEquals issue more.
       // In above un-equality check, the mapEquals, or with map != operator,
       // does not work if you provide a map made with createPrimarySwatch or
-      // createAccentSwatch, it should, not sure why it does not. Works OK if
+      // createAccentSwatch. It should, not sure why it does not. Works OK if
       // you give the value via a final values, but not as created each time in
       // the property, which is inefficient, so don't do that anyway. But if
       // done the Wheel Picker does not work as intended if the above if is
@@ -1018,18 +1031,6 @@ class _ColorPickerState extends State<ColorPicker> {
       // use case, while the [mapEquals] or == operator was not. Thus requiring
       // both it and the mapEquals to not be equal, we may resolve the IF branch
       // being entered incorrectly.
-
-      // debugPrint('didUpdateWidget customColorSwatchesAndNames mapEquals: '
-      //     '${mapEquals(widget.customColorSwatchesAndNames, oldWidget.customColorSwatchesAndNames)}');
-      //
-      // debugPrint('didUpdateWidget customColorSwatchesAndNames = '
-      //     '${widget.customColorSwatchesAndNames == oldWidget.customColorSwatchesAndNames}');
-
-      debugPrint('didUpdateWidget customColorSwatchesAndNames.toString() = '
-          '${widget.customColorSwatchesAndNames.toString() == oldWidget.customColorSwatchesAndNames.toString()}');
-
-      // debugPrint('${widget.customColorSwatchesAndNames}');
-      // debugPrint('${oldWidget.customColorSwatchesAndNames}');
 
       // Update _typeToSwatchMap, because custom color swatches were updated.
       _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
@@ -1062,11 +1063,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.wheel:
             widget.pickersEnabled[ColorPickerType.wheel] ?? false,
       };
-      debugPrint('didUpdateWidget pickersEnabled mapEquals: '
-          '${mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)}');
-      // debugPrint('didUpdateWidget pickersEnabled = '
-      //     '${widget.pickersEnabled == oldWidget.pickersEnabled}');
-      //
+
+      // debugPrint('${widget.customColorSwatchesAndNames}');
+      // debugPrint('${oldWidget.customColorSwatchesAndNames}');
       debugPrint('didUpdateWidget calls _findPicker and _updateActiveSwatch');
       // When the above happens, we need to find the right picker again.
       _findPicker();
@@ -1824,14 +1823,25 @@ class _ColorPickerState extends State<ColorPicker> {
       if (widget.copyPasteBehavior.snackBarParseError) {
         String? snackBarMessage = widget.copyPasteBehavior.snackBarMessage;
         if (snackBarMessage == null) {
+          // The new experimental lint rules "use_build_context_synchronously"
+          // warns us to check if context is still mounted if we have
+          // async delays in an async function, since the state could have been
+          // unmounted and disposed during the delay(s).
+          if (!mounted) return;
           // Get the Material localizations.
           final MaterialLocalizations translate =
+              // ignore:
               MaterialLocalizations.of(context);
           snackBarMessage = '${translate.pasteButtonLabel}: '
               '${translate.invalidDateFormatLabel}';
         }
         // Wait 300ms, if we show it at once, it feel to fast.
         await Future<void>.delayed(const Duration(milliseconds: 300));
+        // The new experimental lint rules "use_build_context_synchronously"
+        // warns us to check if context is still mounted if we have
+        // async delays in an async function, since the state could have been
+        // unmounted and disposed during the delay(s).
+        if (!mounted) return;
         // Show a snack bar with the paste error message.
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

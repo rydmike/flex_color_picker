@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).padding.top),
           const Spacer(),
           Text(
-            'FlexColorPicker',
+            App.appName,
             style: Theme.of(context).textTheme.headline4,
           ),
           Text(
@@ -141,7 +141,7 @@ class HomeScreen extends StatelessWidget {
           const ThemeModeSwitch(),
           const Spacer(),
           Text(
-            'Using flex_color_picker version ${App.colorPickerVersion}',
+            'Using flex_color_picker version ${App.version}',
             style: Theme.of(context).textTheme.caption,
           ),
           Text(

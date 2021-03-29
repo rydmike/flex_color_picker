@@ -2,54 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
-// This file contain simple Riverpod provider's, that I called "Pod:s" as
-// it is nice and short.
+// Simple Riverpod State provider's, that I called "Pod:s" as it is nice
+// and short, and might become the official new name for Riverpod providers.
 //
-// This demo is perhaps a bit a-typical in the sense that we want every
+// This demo app is perhaps a bit a-typical in the sense that we want every
 // toggle to update something as it happens while minimizing re-builds as
-// much as possible. All the properties are just values so a simple
-// StateProvider works rather nicely and is simple to use, there is just a
-// lot of them. Still using each in individual widgets to toggle each
-// state providers state is pretty easy and simple to do and maintain.
+// much as possible. All the properties are just simple values, maps or simple
+// objects like 'Color' so a simple StateProvider for each property works
+// rather nicely and is simple to use, there is just a
+// lot of them. Still using each in one individual widgets to toggle each
+// state provider's state is pretty easy and simple to do and maintain.
+// It also leaves the wrapper very clean and they read well.
+//
+// For more complex use cases and classes, use StateNotifierProvider instead.
 
 // themeModePod is a [StateProvider] to provide the state of
-// the [ThemeMode], used to toggle the application wide theme mode
+// the [ThemeMode], used to toggle the application wide theme mode.
 final StateProvider<ThemeMode> themeModePod =
     StateProvider<ThemeMode>((ProviderReference ref) {
   return ThemeMode.system;
 });
 
-// StateProviders for the colors we are manipulating.
+// The other plethora f other state providers are all related to manipulating
+// input and view output from the FlexColorPicker.
+
+// StateProvider for the color we give to the color picker on the card.
 final StateProvider<Color> cardPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.blue;
 });
+
+// StateProvider for the color we give to the color picker in the dialog.
 final StateProvider<Color> dialogPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.red;
 });
-// StateProviders for the colors we get we via onChange callbacks.
+
+// StateProviders for the color we get back via onColorChangeStart callback.
 final StateProvider<Color> onColorChangeStartPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
+
+// StateProviders for the color we get back via onColorChanged callback
 final StateProvider<Color> onColorChangedPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
+
+// StateProviders for the color we get back via onColorChangeEnd callback
 final StateProvider<Color> onColorChangeEndPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
-// StateProviders for the recent used color list.
-final StateProvider<List<Color>> screenRecentColorsPod =
+
+// StateProvider for the recently used colors for color picker on the card.
+// We could start with some specific list as well. We get a new list of
+// recently used colors back from the color picker whenever a new color is
+// selected and its internal list is updated, the callback for this is
+// `onRecentColorsChanged`. We just update the entire list state with the
+// new list we get from the picker. Using the callback is optional, but you
+// could use it to store recently used colors during the session or even
+// between sessions.
+final StateProvider<List<Color>> cardRecentColorsPod =
     StateProvider<List<Color>>((ProviderReference ref) {
   return <Color>[];
 });
+
+// StateProvider for the recently used colors for color picker in the dialog.
 final StateProvider<List<Color>> dialogRecentColorsPod =
     StateProvider<List<Color>>((ProviderReference ref) {
   return <Color>[];
 });
+
+// ****************************************************************************
+// The rest of the provider all deal with the API input settings for the
+// FlexColorPicker demo. They are mostly in the order they appear on the screen.
+// ****************************************************************************
 
 // ****************************************************************************
 //  Show and Hide Riverpod "Pod" providers.

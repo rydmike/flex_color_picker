@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
 import 'app_const.dart';
@@ -19,12 +18,12 @@ class AppTheme {
     ).copyWith(
       scaffoldBackgroundColor: App.scaffoldBackgroundLight,
       toggleableActiveColor: colorSchemeLight.secondary,
-      appBarTheme: AppBarTheme(
-        backgroundColor: App.secondaryVariantDark.withOpacity(0.9),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 0.5,
+        elevation: 0,
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
@@ -57,12 +56,12 @@ class AppTheme {
     ).copyWith(
       scaffoldBackgroundColor: App.scaffoldBackgroundDark,
       toggleableActiveColor: colorSchemeDark.secondary,
-      appBarTheme: AppBarTheme(
-        backgroundColor: App.primaryLight.withOpacity(0.83),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: App.scaffoldBackgroundDark,
         foregroundColor: Colors.white,
-        elevation: 0.5,
+        elevation: 0,
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light,
@@ -208,7 +207,7 @@ class AppTheme {
       case TargetPlatform.windows:
         return VisualDensity.comfortable;
     }
-    return const VisualDensity();
+    return VisualDensity.standard;
   }
 
   /// The current default theme for Material themed Tooltips are poor design

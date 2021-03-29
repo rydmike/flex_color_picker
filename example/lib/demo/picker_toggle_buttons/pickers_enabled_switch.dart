@@ -24,7 +24,7 @@ class PickersEnabledSwitch extends ConsumerWidget {
     return MaybeTooltip(
       condition: watch(enableTooltipsPod).state,
       tooltip: 'ColorPicker(pickersEnabled:\n'
-          '  ${context.read(pickersEnabledPod).state});',
+          '  ${context.read(pickersEnabledPod).state})',
       child: ListTile(
         title: const Text('Enabled pickers'),
         trailing: ToggleButtons(

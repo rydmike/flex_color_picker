@@ -234,7 +234,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               suffixIcon: widget.copyPasteBehavior.editFieldCopyButton
                   ? IconButton(
                       icon: Icon(widget.copyPasteBehavior.copyIcon),
-                      padding: const EdgeInsets.all(0),
+                      padding: EdgeInsets.zero,
                       tooltip: copyTooltip,
                       iconSize: iconSize,
                       splashRadius: borderRadius,
