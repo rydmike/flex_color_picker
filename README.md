@@ -510,7 +510,7 @@ final Map<ColorSwatch<Object>, String> customSwatches =
   ColorTools.createAccentSwatch(const Color(0xFFB062DB)): 'Lavender',
 };
 ```
-And then use the map it in your color picker.
+Then use the `customSwatches` map in your color picker.
 
 ```dart
 ColorPicker(
@@ -681,14 +681,29 @@ but typically they would be `Text` widgets with a suitable style.
 The picker design APIs refers to properties that affect size, shape and spacing of the color indicator Widgets in 
 the color picker, as well as the color wheel and opacity slider sizing. 
 
-The `ColorIndicator` can also be used a small convenient color box widget outside of the color
-picker. This is done in the default example where it is used to show the selected color and also to open a dialog 
-to modify the color.
+The `ColorIndicator` can also be used as a color indicator and selection widget outside the color picker. This is done 
+in the default example where it is used to show the selected color and also to open a dialog to modify the color.
 
-### Picker color item indicators
+### Color Picker Items
+API reference: [height, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/height.html)
+[width, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/width.html)
+[borderRadius, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/borderRadius.html)
+[hasBorder, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/hasBorder.html)
+[borderColor, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/borderColor.html)
+[elevation, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/elevation.html)
+[spacing, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/spacing.html)
+[runSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/runSpacing.html)
 
-The boxes that show the colors can be modified, for height, width, border, radius, elevation, spacing and their 
-run spacing. The examples below show some properties and actual result.
+The color items that show the available colors can be modified, `height`, `width`, `borderRadius` their `elevation`
+and if the have a border `hasBorder` and what color the border is `borderColor`. Additionally, the `spacing` between the
+color box items and their `runSpacing` when they wrap to more than one row can be adjusted. The color picker item
+for the Material, Accent, B&W and Custom colors are implemented with a `Wrap` widget, as are their shade colors, 
+and the recently used colors list. 
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-13.png?raw=true" alt="Picker 13"/>
+
+Please see the API reference for
+defaults and allowed values.
 
 ### Wheel size, width and border
 
@@ -696,36 +711,95 @@ The color wheel size, width and border can be modified, below a few examples.
 
 The color wheel width must be 4 to 50, defaults to 16dp. The width must be 100 to max 500, defaults to 190dp.
 
+*Add images and more text...*
+
 ### Opacity slider height, width and thumb radius
 
 The opacity sliders height, width and thumb radius can be modified. below some examples.
-If the width is not defined (default) it expands to fill available width, it's min allowed width is 150 dp, if 
+If the width is not defined (default) it expands to fill available width, it's minimum allowed width is 150 dp, if 
 is lower it will be... 
 
-## Picker Layout
-### Alignment
-### Row Space
-### Content Padding
-### Dialog Buttons
+*Add images and more text...*
 
-## Copy-Paste Actions and Behavior 
+## Picker Layout
+
+The picker layout APIs deal with spacing of the elements in the color picker, their alignment and padding.
+
+API reference: [crossAxisAlignment, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/crossAxisAlignment.html)
+[padding, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/padding.html)
+[columnSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/title.html)
+
+Use the properties `crossAxisAlignment`, `padding` and `columnSpacing` to adjust the look of the color picker content.
+The `columnSpacing` refers to the additional vertical spacing between each element visible the column used by the color 
+picker layout for its layout. The `padding` and `crossAxisAlignment` are as is standard in Flutter. Please note that
+`title`widget is not a part of the `Column` body layout of the color picker, and it is not affected by the
+`crossAxisAlignment` property. The `title` is a bit like an app bar title, but it is always start aligned to leave
+enough room for 1 to 4 action buttons, that can optionally be enabled for the title bar, and they always appear at
+the end.
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-12.png?raw=true" alt="Picker 12"/>
+
+### Tooltips
+API reference: [enableTooltips](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableTooltips.html)
+
+The `enableTooltips` property default to true to enable all tooltips that are available in the color picker. If the
+tooltips get in the way you can disable them all by setting this property to `false`. Why not consider providing a 
+property in your app that allows users to turn ON and OFF the tooltips in the app? FlexColorPicker includes this 
+toggle to make that easy to implement when it comes to its tooltip behavior.
+
+The tooltip strings used in FlexColorPicker are all based on existing labels in Flutter and by default use
+Material localizations and thus change with the locale, so they support all languages that Flutter does out of the box.
+You can still override the tooltip labels if so required and provide your own tooltip labels.
+
+The following tooltips exist, and have the default values shown in the table below.
+
+| Usage | English tooltip | Used MaterialLocalizations.of(context) |
+| --- | ---   | ---   |
+| Copy button | Copy | copyButtonLabel |
+| Paste button | Paste | pasteButtonLabel |
+| OK button | OK | okButtonLabel |
+| Cancel button | Cancel | cancelButtonLabel |
+| Close button | Close | closeButtonLabel |
+
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-14.png?raw=true" alt="Picker 14" width="500"/>
+
+When the keyboard copy/paste shortcuts are enabled, the Copy and Paste tooltips automatically
+also receive platform aware keyboard shortcut info after the localized tooltip label. On macOS
+' (CMD-C)' is appended to the copy tooltip and ' (CMD-V)' is appended to the paste tooltip.
+On other platforms ' (CTRL-C)' is appended to the copy tooltip and ' (CTRL-V)' to the paste tooltip.
+
+## Action Buttons
+*Add images and more text...*
+
+## Copy-Paste Actions and Behavior
+*Add images and more text...*
+
 ### Keyboard shortcuts
+*Add images and more text...*
+
 ### Toolbar buttons
+*Add images and more text...*
+
 ### Code entry field
+*Add images and more text...*
+
 ### Context menu
+*Add images and more text...*
+
 ### Formats and paste parsing
+API reference: [showColorCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorCode.html)
 
 The color code value can be shown in five different formats, the displayed format also defines the received
 string format of the copied RGB value.
 
-API reference: [showColorCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorCode.html)
-
+*Add images and more text...*
 
 ## Desktop and Web Ready
 
-The FlexColorPicker is Web and Desktop ready. For most parts focus behaves as epxected, and it supports keyboard 
-navigation and control. As shown above, if configured, it also has keyboard shortcuts for copy/paste commands. 
-The wheel picker cannot be operated with just a keyboard, it needs mouse or touch control, it will likely remain so.
+The FlexColorPicker is Web and Desktop ready. For most parts focus behaves as expected, and it supports keyboard 
+navigation and control. As shown above, if configured, it also has keyboard shortcuts for copy and paste commands. 
+The wheel picker cannot be operated with just a keyboard, it needs a mouse or touch control, it will likely remain so.
 The opacity slider can be operated via keyboard only. Future picker options will offer other color pickers using 
 only sliders for custom color selection, this will enable them to use keyboard color selection as well.
 
@@ -740,6 +814,6 @@ There are some more configuration options available for the `ColorPicker`, use t
 The source code of the [live Web example](https://rydmike.com/flexcolorpicker/) is included in the package example 
 folder, in "example/lib/demo/main.dart". By studying it you can see practical examples of how to use all the features
 it uses. The live Web demo also has tooltips showing the used API behind every demonstrated interactive control, this
-can be used as quick reference and to find the actual used API value as you interactively configure the Web example.
+can be used as quick reference and to find the actual used API-value as you interactively configure the Web example.
 
 Happy color picking!
