@@ -14,7 +14,7 @@ class CardPickerColorIndicator extends ConsumerWidget {
     return ListTile(
       title: const Text('Select color below to change this color'),
       subtitle: Text(
-          '${ColorTools.materialNameAndARGBCode(watch(cardPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap2)} '
+          '${ColorTools.materialNameAndARGBCode(watch(cardPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap)} '
           'aka ${ColorTools.nameThatColor(watch(cardPickerColorPod).state)}'),
       trailing: ColorIndicator(
         height: watch(sizePod).state,

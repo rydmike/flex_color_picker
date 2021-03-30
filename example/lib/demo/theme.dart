@@ -84,7 +84,7 @@ class AppTheme {
         secondaryVariant: App.secondaryVariantDark,
       );
 
-  // TODO: Investigate potential GoogleFonts font issue on Windows platform.
+  // TODO: Investigate potential GoogleFonts issue on Windows platform.
   // Making a custom text theme here, via on-line GoogleFonts load. Intended to
   // use something else than "Roboto", but they were all a little bit
   // broken on Windows platform, not sure why. Need to download and try as

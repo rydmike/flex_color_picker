@@ -51,6 +51,10 @@ class ColorPickerScreen extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Scrollbar(
+                  interactive: true,
+                  showTrackOnHover: true,
+                  isAlwaysShown: true,
+                  radius: const Radius.circular(7),
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     children: <Widget>[

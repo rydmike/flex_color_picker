@@ -72,12 +72,6 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     wheelHasBorder: watch(wheelHasBorderPod).state,
     enableTooltips: watch(enableTooltipsPod).state,
     pickersEnabled: watch(pickersEnabledPod).state,
-    // Label override with custom or e.g. translated label.
-    // pickerTypeLabels: const <ColorPickerType, String>{
-    //   ColorPickerType.accent: 'Secondary',
-    //   ColorPickerType.bw: 'Near B&W',
-    //   ColorPickerType.wheel: 'Any',
-    // },
     title: watch(showTitlePod).state
         ? Text(
             'ColorPicker',
@@ -123,8 +117,7 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     showRecentColors: watch(showRecentColorsPod).state,
     recentColors: watch(dialogRecentColorsPod).state,
     maxRecentColors: 5,
-    // TODO Restore this to default example
-    customColorSwatchesAndNames: App.colorsNameMap2,
+    customColorSwatchesAndNames: App.colorsNameMap,
   ).showPickerDialog(
     context,
     // Let's make an even more transparent barrier color than black12
