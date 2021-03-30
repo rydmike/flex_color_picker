@@ -230,6 +230,20 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 void A(BuildContext context) {
   final ColorPicker picker =
   ColorPicker(
+    width: 53,
+    height: 53,
+    borderRadius: 3,
+    elevation: 4,
+    spacing: 5,
+    runSpacing: 5,
+    hasBorder: true,
+    borderColor:
+      Colors.black54,
+    //
+    crossAxisAlignment: CrossAxisAlignment.center,
+    padding: const EdgeInsets.all(12),
+    columnSpacing: 10,
+    //
     title: Text(
       'ColorPicker',
       style: Theme.of(context).textTheme.headline6,
@@ -258,7 +272,6 @@ void A(BuildContext context) {
     showColorCode: true,
     colorCodeHasColor: true,
     showColorValue: true,
-    //
     showMaterialName: true,
     showColorName: true,
     enableShadesSelection: true,
@@ -270,7 +283,6 @@ void A(BuildContext context) {
       ColorPickerType.custom: false,
       ColorPickerType.wheel: true,
     },
-    //
     onColorChanged: (_) {},
   );
 }

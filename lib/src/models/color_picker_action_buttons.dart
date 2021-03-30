@@ -119,7 +119,7 @@ class ColorPickerActionButtons with Diagnosticable {
   /// provide your own custom tooltip. This toggle is just convenient
   /// if you want to call the top toolbar buttons that closes/cancels the
   /// dialog "Close" (default) or "Cancel" like on a typical dialog bottom.
-  /// The "Close" tooltip, in the other hand is more in line with the 'x' icon,
+  /// The "Close" tooltip, on the other hand is more in line with the 'x' icon,
   /// that here also closes the dialog with dismiss result.
   ///
   /// Defaults to true.
