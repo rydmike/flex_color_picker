@@ -230,11 +230,37 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 void A(BuildContext context) {
   final ColorPicker picker =
   ColorPicker(
-    showMaterialName: true,
-    materialNameTextStyle: Theme.of(context).textTheme.subtitle2,
-    showColorName: true,
-    colorNameTextStyle: Theme.of(context).textTheme.subtitle2,
+    title: Text(
+      'ColorPicker',
+      style: Theme.of(context).textTheme.headline6,
+    ),
+    heading: Text(
+      'Select color',
+      style: Theme.of(context).textTheme.headline5,
+    ),
+    subheading: Text(
+      'Select color shade',
+      style: Theme.of(context).textTheme.subtitle1,
+    ),
+    wheelSubheading: Text(
+      'Selected color and its color swatch',
+      style: Theme.of(context).textTheme.subtitle1,
+    ),
+    opacitySubheading: Text(
+      'Opacity',
+      style: Theme.of(context).textTheme.subtitle1,
+    ),
+    recentColorsSubheading: Text(
+      'Recent colors',
+      style: Theme.of(context).textTheme.subtitle1,
+    ),
     //
+    showColorCode: true,
+    colorCodeHasColor: true,
+    showColorValue: true,
+    //
+    showMaterialName: true,
+    showColorName: true,
     enableShadesSelection: true,
     pickersEnabled: const <ColorPickerType, bool>{
       ColorPickerType.both: false,

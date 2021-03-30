@@ -85,24 +85,6 @@ class App {
         ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
       };
 
-  static Map<ColorSwatch<Object>, String> get colorsNameMap2 =>
-      <ColorSwatch<Object>, String>{
-        const MaterialColor(0xFFfae738, <int, Color>{
-          50: Color(0xFFfffee9),
-          100: Color(0xFFfff9c6),
-          200: Color(0xFFfff59f),
-          300: Color(0xFFfff178),
-          400: Color(0xFFfdec59),
-          500: Color(0xFFfae738),
-          600: Color(0xFFf3dd3d),
-          700: Color(0xFFdfc735),
-          800: Color(0xFFcbb02f),
-          900: Color(0xFFab8923),
-        }): 'Alpine',
-        ColorTools.createPrimarySwatch(const Color(0xFFBC350F)): 'Rust',
-        ColorTools.createAccentSwatch(const Color(0xFFB062DB)): 'Lavender',
-      };
-
   // Compute text color for the three 'OnChange' chips.
   static Color getChipTextColor(Color background, bool isLight) {
     final bool isLightBackground =

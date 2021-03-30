@@ -441,7 +441,7 @@ Below we will explore other, both basic and more advanced features of the **Flex
 
 ### Enabled Color Pickers
 
-[API reference: pickersEnabled](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickersEnabled.html)
+API reference: [pickersEnabled](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickersEnabled.html)
 
 By default, the Material **primary** colors and **accent** colors pickers are enabled. To change the enabled pickers 
 you provide a `ColorPickerType` key to `bool` value map, with the pickers you want enabled to the property
@@ -471,7 +471,7 @@ it does not really make much sense.
 
 #### Custom Color Swatches
 
-[API reference: customColorSwatchesAndNames](https://pub.dev/documentation/flex_color_picker/2.0.0-nullsafety.4/flex_color_picker/ColorPicker/customColorSwatchesAndNames.html)
+API reference: [customColorSwatchesAndNames](https://pub.dev/documentation/flex_color_picker/2.0.0-nullsafety.4/flex_color_picker/ColorPicker/customColorSwatchesAndNames.html)
 
 To use the custom color swatch picker you have to define your own custom `ColorSwatch` colors and pass them to the
 picker via the `customColorSwatchesAndNames` property. By default, there are no custom colors defined. If you
@@ -530,9 +530,8 @@ This will create three custom swatches, using our "Alpine", "Rust" and "Lavender
 swatch picker.
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-6.png?raw=true" alt="Picker 6"/>
 
-#### Customized labels
-
-[API reference: pickerTypeLabels](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickerTypeLabels.html)
+#### Customized labels 
+API reference: [pickerTypeLabels](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickerTypeLabels.html)
 
 The picker labels have default English labels, you can override them to customize or translate the labels. You set the
 labels by providing a `ColorPickerType` key to `String` value map with the picker labels you want to change with the
@@ -543,7 +542,7 @@ will keep their default labels.
 
 ### Enable Shades Selection
 
-[API reference: enableShadesSelection](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableShadesSelection.html)
+API reference: [enableShadesSelection](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableShadesSelection.html)
 
 By default, selection of the Material primary and Accent **color swatch shade color**, after selection of the main 
 color is **enabled**. In the above example `enableShadesSelection` had on purpose been disabled to produce the above,
@@ -556,7 +555,7 @@ to also select the Material shade colors, so typically, you would just keep the 
 
 ### Enable Opacity
 
-[API reference: enableOpacity](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableOpacity.html)
+API reference: [enableOpacity](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableOpacity.html)
 
 You can enable a color opacity slider by setting `enableOpacity` to `true`. With the slider you can adjust the opacity
 of the selected color. You can adjust opacity from fully opaque at 100%, to totally transparent at 0%. The selected
@@ -575,9 +574,9 @@ fully opaque by applying alpha value #FF to it.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-5.png?raw=true" alt="Picker 5"/>
 
-### Show Material Name and Show Color Name
+### Show Color Names
 
-[API reference: showMaterialName, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showMaterialName.html) 
+API reference: [showMaterialName, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showMaterialName.html) 
 [materialNameTextStyle, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/materialNameTextStyle.html) 
 [showColorName, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorName.html) 
 [colorNameTextStyle.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/colorNameTextStyle.html)
@@ -591,18 +590,28 @@ enabled. You can also provide the text style for both these text labels. If not 
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-7.png?raw=true" alt="Picker 7"/>
 
-This general color name is only available in English and cannot be translated in the current version. 
+#### Translate Material Color Names
 
-[API reference: Static color names](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorTools-class.html#static-properties)
+API reference: [Static color names](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorTools-class.html#static-properties)
 
-The Material color names are defined as static values with English default for all Material colors in `ColorTools`. 
+
+The Material color names are defined as static values with English defaults for all Material colors in `ColorTools`. 
 You can modify these values by directly changing their static string values. You could do this in function that you 
-call just once, or alternatively every time your app changes its translated locale, and then in the custom function 
+call just once, or every time your app changes its translated locale, and then in the custom function 
 provide your own localized Material color names. For example:
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-8.png?raw=true" alt="Picker 8"/>
 
+The name that color feature, using the lookup from 1566 color names, is only available in English and cannot be
+translated in the current version. 
+
 ### Show Color Code
+
+API reference: [showColorCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorCode.html)
+[colorCodeHasColor, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/colorCodeHasColor.html)
+[showColorValue, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorValue.html)
+[colorCodeTextStyle, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/colorCodeTextStyle.html)
+[colorCodePrefixStyle.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/colorCodePrefixStyle.html)
 
 The color code field shows the RGB color value of the selected color. On the Wheel picker the field also functions
 as a HEX RGB color code entry field. The Wheel picker will move its indicators to show the color of the entered
@@ -611,39 +620,70 @@ color code, as the entry is done.
 By default, the code field just has a grey background, but you can also configure it to use the current selected color
 as its background color. The color code field can also have a copy button as a suffix. This is enabled by default, 
 it allows you to copy the current color to the clipboard. There are different options for enabling copy-paste commands
-in the FlexColorPicker, they are described in detail in 
-the [copy-paste actions and behavior](#copy-paste-actions-and-behavior) chapter.
+in the FlexColorPicker and configuring the copy format also shown as prefix in the color code field. These features
+are described in detail in the [copy-paste actions and behavior](#copy-paste-actions-and-behavior) chapter. 
 
-The color code value can be shown in five different formats, the displayed format also defines the received
-string format of the copied RGB value.
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-9.png?raw=true" alt="Picker 9"/>
 
-### Show Recent colors
+The `TextStyle` of the color code display and entry field can be changed with `colorCodeTextStyle`. It
+defaults to Theme.of(context).textTheme.bodyText2, if not defined. There is also a separate style for the
+color code prefix that can be changed with `colorCodePrefixStyle`, if not defined it defaults to the same style as
+`colorCodeTextStyle`.
 
-When show recent colors is enabled, the color picker shows the recently used colors in a list at the bottom of the
-color picker. The list uses first in, first out the keep 2 to 20 colors (defaults to 5) on the recently used colors 
-list.
 
-Selecting a recently used color moves, moves the picker to picker where the color was and selects it again. If opacity
+### Show Recent Colors
+
+API reference: [showRecentColors, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showRecentColors.html)
+[maxRecentColors, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/maxRecentColors.html)
+[recentColors, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/recentColors.html)
+[onRecentColorsChanged.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/onRecentColorsChanged.html)
+
+When `showRecentColors` is enabled, the color picker shows recently selected colors in a list at the bottom of the
+color picker. The list uses first-in, first-out to keep min 2 to max 20 colors (defaults to 5) on the recently 
+used colors list, the desired max value can be modified with `maxRecentColors`.
+
+Selecting a recently used color moves the picker to picker where the color is located and selects it again. If opacity
 is enabled, the opacity the color had when it was selected is also applied. Normally when selecting colors and opacity
 is enabled, the value the opacity slider is at is kept. However, selecting a recently used color, will retain the 
-opacity it had when it was selected and got added to the recently used colors list.
+opacity the color had when it was selected and added to the recently used colors list. Selecting a color on the
+recently used colors will not move it first in the list, it will keep its current position. Selecting a color that is
+already on the list, will not add it again. The currently selected color is not added to the list until you select a
+new current color.
 
-There is also an optional callback, that is called everytime a new color is added to the list with the complete new
-list of recently used colors. If the optional callback is not provided, then it is not called. You can use this 
-callback to save and restore the recently used colors if so desired. 
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-10.png?raw=true" alt="Picker 10"/>
 
-### Add Title and Heading Widgets
+There is also an optional callback `onRecentColorsChanged`, that is called everytime a new color is added to the list 
+with the complete current list of recently used colors. If the optional callback is not provided, then it is not called. 
+You can use this callback to save and restore the recently used colors if so desired. To initialize the list when the
+color picker is created give it a starting list with `recentColors`. This could be list kept just in state during
+the current app session, or it could have been persisted and restored from a previous session.
 
-You can provide custom heading widgets for the picker toolbar title, main heading, shades selection color subheading, 
-wheel subheading, opacity slider subheading and subheading for the recently used colors list. The headings
-can be any Widget, but typically the would be Text widgets with a suitable style.
+### Title and Heading Widgets
+
+API reference: [title, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/title.html)
+[heading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/heading.html)
+[subheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/subheading.html)
+[wheelSubheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelSubheading.html)
+[opacitySubheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacitySubheading.html)
+[recentColorsSubheading.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/recentColorsSubheading.html)
+
+
+You can provide custom heading widgets for the picker toolbar `title`, main `heading`, shades selection color 
+`subheading`, 
+and the `wheelSubheading`, opacity slider `opacitySubheading` and subheading for the recently used colors list
+`recentColorsSubheading`. If a heading is `null` it is omitted. The headings can be any Widget, 
+but typically they would be `Text` widgets with a suitable style.
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-11.png?raw=true" alt="Picker 11"/>
 
 ## Picker Design
 
-The picker design API refers to properties that affect size, shape and spacing of the color indicator Widgets in 
-the color picker. The `ColorIndicator` can also be used a small convenient color box widget, outside of the color
-picker. This is done in the example where it is used to show the selected color and to open a dialog to modify 
-the color.
+The picker design APIs refers to properties that affect size, shape and spacing of the color indicator Widgets in 
+the color picker, as well as the color wheel and opacity slider sizing. 
+
+The `ColorIndicator` can also be used a small convenient color box widget outside of the color
+picker. This is done in the default example where it is used to show the selected color and also to open a dialog 
+to modify the color.
 
 ### Picker color item indicators
 
@@ -674,6 +714,12 @@ is lower it will be...
 ### Code entry field
 ### Context menu
 ### Formats and paste parsing
+
+The color code value can be shown in five different formats, the displayed format also defines the received
+string format of the copied RGB value.
+
+API reference: [showColorCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorCode.html)
+
 
 ## Desktop and Web Ready
 
