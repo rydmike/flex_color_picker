@@ -69,12 +69,6 @@ class ColorPickerCard extends ConsumerWidget {
         wheelHasBorder: watch(wheelHasBorderPod).state,
         enableTooltips: watch(enableTooltipsPod).state,
         pickersEnabled: watch(pickersEnabledPod).state,
-        // Label override with custom or e.g. translated label.
-        // pickerTypeLabels: const <ColorPickerType, String>{
-        //   ColorPickerType.accent: 'Secondary',
-        //   ColorPickerType.bw: 'Near B&W',
-        //   ColorPickerType.wheel: 'Any',
-        // },
         selectedPickerTypeColor: colorScheme.primary,
         title: watch(showTitlePod).state
             ? Text(

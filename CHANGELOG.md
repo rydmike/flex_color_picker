@@ -2,8 +2,27 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0-nullsafety.5] - March 31, 2021
+* **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true. 
+* **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties 
+  of the underlying `AlertDialog` used to make the dialog, this includes e.g. the `backgroundColor`, `elevation`,
+  `clipBehavior` and `shape` as new exposed properties that may be useful.
+* **New feature:** An alternative color picker dialog that just awaits and returns selected color, or null
+  if color selection was added. This picker might be simpler to use in some scenarios, but does not allow
+  for the feature where colors and theme's can update in the background behind the dialog as colors are selected
+  in it, before it is even closed. However, if you just need to open a dialog, select a color and move on, this
+  version offers a simpler API for that. Under the hood it is just a wrapper for the previous more 
+  complicated version.
+* **Improvement:** Performance was improved via more optimized rebuilds.   
+* **Documentation:** First version of updated documentation with API guide documentation is now included. It still 
+  requires proof-reading  before stable release, but getting closer now.
+* **Examples:** The Web example, with the built-in API tooltips guides, got a major rewrite. It was originally
+  not intended to be as large as it grew to be, but since it grew so much it needed a rewrite. It now uses 
+  Riverpod to make its simple state management needs very easy to handle simpler. We might add persisting 
+  the settings at some point as well.
+
 ## [2.0.0-nullsafety.4] - March 22, 2021
-* **New Feature:** A bool `enableOpacity` property was added that enables an opacity 
+* **New feature:** A bool `enableOpacity` property was added that enables an opacity 
   slider that can be used to control the alpha channel in the selected ARGB color value. The slider 
   height can be controlled with `opacityTrackHeight`, the width with `opacityTrackWidth` and the 
   slider thumb size with `opacityThumbRadius`. There is also a `opacitySubheading` Widget that can 

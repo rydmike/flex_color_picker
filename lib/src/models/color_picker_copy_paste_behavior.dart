@@ -6,20 +6,16 @@ import 'package:flutter/material.dart';
 /// When you copy a [Color] value from the color picker, this enum is
 /// used to configure the desired default format of the received RGB string.
 ///
-/// If you have alpha channel or opacity enabled, the alpha value will not
-/// be included in the copied RGB string format. The copy format always takes
-/// precedence, use the format you require for your application and if
-/// opacity/alpha usage is enabled.
+/// If you have opacity enabled for the picker, the alpha value will not
+/// be included in the copied RGB string if you use a format that does
+/// not include the alpha value.
 ///
-/// A planned future feature of ColorPicker will allow you to copy the color
-/// value in other than RGB hex strings as well.
-///
-/// When you paste a color string value to the color picker, it can
-/// automatically parse a string from any of these RGB strings formats to a Dart
-/// and Flutter [Color] object, regardless of what the default copy format is.
-/// Additionally the paste color value can be in the 3-char short RGB hex
-/// format, it will also be correctly parsed to its [Color] value.
-///
+/// When you paste a color string value into the color picker, it can
+/// automatically parse a string from any of the available RGB strings formats
+/// to a Dart and Flutter [Color] object, regardless of what the copy format is.
+/// Additionally the pasted color value can be in the 3-char short RGB hex
+/// format, it will also be correctly parsed to its [Color] value, provided
+/// that [ColorPickerCopyPasteBehavior.parseShortHexCode] is true.
 enum ColorPickerCopyFormat {
   /// In Flutter/Dart Hex RGB format '0xAARRGGBB'.
   dartCode,
@@ -51,6 +47,7 @@ enum ColorPickerCopyFormat {
 /// * Define icons for copy and paste icons.
 /// * Define icon theme's for the copy and paste icons.
 /// * Define paste color string parsing error feedback type.
+/// * Modify the tooltips for copy and paste buttons.
 ///
 /// Paste operation supports all RGB string formats defined by
 /// [ColorPickerCopyFormat], but copy format is only in selected
@@ -83,7 +80,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.parseShortHexCode = false,
       this.editUsesParsedPaste = false});
 
-  /// A CMD/CTRL-C press will copy the clipboard into the picker.
+  /// A keyboard CMD/CTRL-C press will copy the clipboard into the picker.
   ///
   /// When enabled, this keyboard copy color shortcut works when the
   /// ColorPicker and one of its focusable widgets have focus. Those include
@@ -93,7 +90,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to true.
   final bool ctrlC;
 
-  /// A CMD/CTRL-V press will paste the clipboard into the picker.
+  /// A keyboard CMD/CTRL-V press will paste the clipboard into the picker.
   ///
   /// When enabled, this keyboard copy color shortcut works when the
   /// ColorPicker and one of its focusable widgets have focus. Those include
@@ -103,27 +100,27 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to true.
   final bool ctrlV;
 
-  /// Show a copy action icon in the picker title bar.
+  /// Show a copy action icon in the picker top tool bar.
   ///
   /// Defaults to false.
   final bool copyButton;
 
-  /// Show a paste action icon in the picker title bar.
+  /// Show a paste action icon in the picker top tool bar.
   ///
   /// Defaults to false.
   final bool pasteButton;
 
   /// Icon used for the copy action.
   ///
-  /// The COPY icon is used on the toolbar, in the context menu and code field,
-  /// when those features are enabled.
+  /// The same COPY icon is used in the top tool bar, on the context menu and
+  /// after the code field, when those features are enabled.
   ///
   /// Defaults to [Icons.copy].
   final IconData copyIcon;
 
   /// Icon used for the paste action icon in the title bar.
   ///
-  /// The PASTE icon is used on the toolbar, in the context menu and code field,
+  /// The same PASTE icon is used in the top tool bar and on the context menu,
   /// when those features are enabled.
   ///
   /// Defaults to [Icons.paste].
@@ -150,25 +147,36 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defines the format of the copied color code string.
   ///
   /// Defaults to [ColorPickerCopyFormat.dartCode].
+  ///
+  /// * [ColorPickerCopyFormat.dartCode] is Flutter Hex RGB format '0xAARRGGBB'.
+  /// * [ColorPickerCopyFormat.hexRRGGBB] is Hex RGB format with no
+  ///   alpha 'RRGGBB'.
+  /// * [ColorPickerCopyFormat.hexAARRGGBB] is Hex RGB format with
+  ///   alpha 'AARRGGBB'.
+  /// * [ColorPickerCopyFormat.numHexRRGGBB] is Web Hex RGB format with a
+  ///   leading num # sign and no alpha '#RRGGBB'.
+  /// * [ColorPickerCopyFormat.numHexAARRGGBB] is Web Hex RGB format with a
+  ///   * leading num # sign and alpha '#AARRGGBB'.
   final ColorPickerCopyFormat copyFormat;
 
-  /// Use long press on picker background to open a copy and paste menu.
+  /// Use long press in the picker to open a color copy and paste menu.
   ///
   /// Defaults to false.
   final bool longPressMenu;
 
-  /// Use secondary button click on picker to open a copy and paste menu.
+  /// Use secondary button click in the picker to open a color copy and paste
+  /// menu.
   ///
   /// Defaults to false.
   final bool secondaryMenu;
 
   /// Use secondary button click on a device and long press on iOs/Android
-  /// devices on the picker, to open a copy and paste menu.
+  /// devices in the picker, to open a color copy and paste menu.
   ///
   /// Defaults to false.
   final bool secondaryOnDesktopLongOnDevice;
 
-  /// Show a copy button in the color code edit and display field.
+  /// Show a copy button suffix in the color code edit and display field.
   ///
   /// Defaults to true.
   final bool editFieldCopyButton;
@@ -213,8 +221,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to 30 dp.
   final double menuItemHeight;
 
-  /// Show a snack bar paste parse error when pasting something that could not
-  /// be parsed to a color value.
+  /// Show a snack bar paste parse error message when pasting something that
+  /// could not be parsed to a color value.
   ///
   /// A paste parse error occurs when something is pasted into the color picker
   /// that cannot parsed to a color value.
@@ -269,31 +277,30 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   final bool parseShortHexCode;
 
   /// If true, the color code entry field uses parsed paste action for
-  /// keyboard shortcut CTRL-V and CMD-V,
+  /// keyboard shortcuts CTRL-V and CMD-V,
   ///
   /// A standard text field, will just paste whatever text is in the copy/paste
   /// buffer into the field. This is the `false` default behavior here too,
   /// with the exception that the field only accepts valid hex value input
-  /// chars (0-9, A-F), so it always pastes the acceptable input chars from
-  /// the paste buffer.
+  /// chars (0-9, A-F), so it always filters and pastes only the acceptable
+  /// input chars from the paste buffer.
   ///
-  /// If this property is `true`, it will use the more clever color copy/paste
-  /// value parsing used by the other copy and paste actions used when the input
-  /// field is not in focus, in the code entry field when it is in focus.
+  /// If this property is `true`, the edit field will use the same color
+  /// paste value parsing used by the other paste actions used when the input
+  /// field is not in focus.
   /// This results in a paste action in the field that always fully replaces
   /// the content with the parsed color value of the pasted data, not just
-  /// pasting in the string in the copy/paste buffer.
+  /// pasting in the string in the paste buffer over selected text.
   ///
   /// Currently this setting only impacts CTRL-V and CMD-V keyboard shortcut
   /// pasting on desktops. The paste on Android and iOS are not intercepted
-  /// when this setting is true. The code edit TextField always pastes the
-  /// standard way, but with the char input filter and max length restrictions
-  /// still applied.
+  /// when this setting is true.
   ///
-  /// Defaults to `false`.
-  /// This is equivalent to past versions (1.x) default behavior when
-  /// pasting strings into the code entry field. Setting the value to true may
-  /// be preferred for a more consistent paste experience.
+  /// Defaults to false.
+  ///
+  /// The false setting is equivalent to past versions (1.x) default behavior
+  /// when pasting strings into the code entry field. Setting the value to true
+  /// may be preferred for a more consistent paste experience.
   final bool editUsesParsedPaste;
 
   /// Copy the object with one or more provided properties changed.

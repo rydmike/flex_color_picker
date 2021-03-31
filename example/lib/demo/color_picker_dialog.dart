@@ -6,6 +6,7 @@ import 'app_const.dart';
 import 'pods.dart';
 
 Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
+  final ColorScheme colorScheme = Theme.of(context).colorScheme;
   return ColorPicker(
     color: watch(dialogPickerColorPod).state,
     onColorChangeStart: (Color color) {
@@ -72,6 +73,7 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     wheelHasBorder: watch(wheelHasBorderPod).state,
     enableTooltips: watch(enableTooltipsPod).state,
     pickersEnabled: watch(pickersEnabledPod).state,
+    selectedPickerTypeColor: colorScheme.primary,
     title: watch(showTitlePod).state
         ? Text(
             'ColorPicker',
@@ -120,9 +122,10 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     customColorSwatchesAndNames: App.colorsNameMap,
   ).showPickerDialog(
     context,
+    elevation: 4,
     // Let's make an even more transparent barrier color than black12
     barrierColor: const Color(0x0F000000), // 6% opacity black
     constraints:
-        const BoxConstraints(minHeight: 500, minWidth: 480, maxWidth: 480),
+        const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
   );
 }
