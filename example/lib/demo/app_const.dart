@@ -34,10 +34,10 @@ class App {
   static const Color scaffoldBackgroundLight = Color(0xFFFDFDFD);
 
   // Dark theme colors
-  static const Color primaryDark = Color(0xFF587BA1);
-  static const Color primaryVariantDark = Color(0xFFF0F7FE);
-  static const Color secondaryDark = Color(0xFFEBB251);
-  static const Color secondaryVariantDark = Color(0xFFFDF4E4);
+  static const Color primaryDark = Color(0xFF6098D3);
+  static const Color primaryVariantDark = Color(0xFF5F87B2);
+  static const Color secondaryDark = Color(0xFFEDBA62);
+  static const Color secondaryVariantDark = Color(0xFFEAB04D);
   static const Color backgroundDark = Color(0xFF121517);
   static const Color surfaceDark = Color(0xFF131517);
   static const Color scaffoldBackgroundDark = Color(0xFF131517);

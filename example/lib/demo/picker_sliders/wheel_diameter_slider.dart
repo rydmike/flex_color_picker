@@ -19,7 +19,7 @@ class WheelDiameterSlider extends ConsumerWidget {
         subtitle: Slider.adaptive(
           min: 150,
           max: 500,
-          divisions: 40,
+          divisions: 500 - 150,
           label: context.read(wheelDiameterPod).state.floor().toString(),
           value: watch(wheelDiameterPod).state,
           onChanged: (double value) =>

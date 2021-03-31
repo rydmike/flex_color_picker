@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
               );
             },
             child: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(7),
               child: Text(
                 'Try the color picker',
                 style: Theme.of(context).textTheme.headline6,

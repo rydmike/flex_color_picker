@@ -30,7 +30,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme,
+      outlinedButtonTheme: outlinedButtonTheme(App.primaryLight),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
@@ -68,7 +68,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme,
+      outlinedButtonTheme: outlinedButtonTheme(App.primaryDark),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeDark),
       tooltipTheme: tooltipTheme(true),
@@ -132,10 +132,14 @@ class AppTheme {
       ));
 
   /// Theme definitions give OutlinedButton a Stadium rounded design.
-  static OutlinedButtonThemeData get outlinedButtonTheme =>
+  static OutlinedButtonThemeData outlinedButtonTheme(Color borderColor) =>
       OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
         shape: const StadiumBorder(),
+        side: BorderSide(
+          color: borderColor,
+          width: 2,
+        ),
         padding: roundButtonPadding,
       ));
 
@@ -159,7 +163,7 @@ class AppTheme {
         fillColor: colorScheme.secondary.withOpacity(0.94),
         hoverColor: colorScheme.primary.withOpacity(0.2),
         focusColor: colorScheme.primary.withOpacity(0.3),
-        borderWidth: 1.5,
+        borderWidth: 2,
         borderColor: colorScheme.primary,
         selectedBorderColor: colorScheme.primary,
         constraints: const BoxConstraints(minWidth: 50, minHeight: 50),

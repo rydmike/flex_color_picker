@@ -230,6 +230,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 void A(BuildContext context) {
   final ColorPicker picker =
   ColorPicker(
+    wheelDiameter: 250,
+    wheelWidth: 10,
+    wheelHasBorder: true,
+    borderColor: Colors.black38,
+    //
     width: 53,
     height: 53,
     borderRadius: 3,
@@ -237,9 +242,6 @@ void A(BuildContext context) {
     spacing: 5,
     runSpacing: 5,
     hasBorder: true,
-    borderColor:
-      Colors.black54,
-    //
     crossAxisAlignment: CrossAxisAlignment.center,
     padding: const EdgeInsets.all(12),
     columnSpacing: 10,

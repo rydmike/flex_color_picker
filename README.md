@@ -695,23 +695,29 @@ API reference: [height, ](https://pub.dev/documentation/flex_color_picker/latest
 [runSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/runSpacing.html)
 
 The color items that show the available colors can be modified, `height`, `width`, `borderRadius` their `elevation`
-and if the have a border `hasBorder` and what color the border is `borderColor`. Additionally, the `spacing` between the
-color box items and their `runSpacing` when they wrap to more than one row can be adjusted. The color picker item
-for the Material, Accent, B&W and Custom colors are implemented with a `Wrap` widget, as are their shade colors, 
-and the recently used colors list. 
+and if the have a border `hasBorder` and what color the border is `borderColor`, it defaults to divider theme. 
+
+Additionally, the `spacing` between the color box items and their `runSpacing` when they wrap to more than one 
+row can be adjusted. The color picker item for the Material, Accent, B&W and Custom colors are implemented 
+with a `Wrap` widget, as are their shade colors, and the recently used colors list. 
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-13.png?raw=true" alt="Picker 13"/>
 
 Please see the API reference for
 defaults and allowed values.
 
-### Wheel size, width and border
+### Wheel diameter, width and border
+API reference: [wheelDiameter, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelDiameter.html)
+[wheelWidth, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelWidth.html)
+[wheelHasBorder, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelHasBorder.html)
+[borderColor.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/borderColor.html)
 
-The color wheel size, width and border can be modified, below a few examples.
+The color picker `wheelDiameter`, `wheelWidth` and the wheel's border can be modified. The `borderColor` is defined 
+by the same property as the color picker items, but it has its own enable/disable toggle `wheelHasBorder`. The 
+color wheel width must be from 4 to 50 dp, and it defaults to 16 dp. The color wheel diameter 
+must be from 100 to max 500 dp, and it defaults to 190 dp.
 
-The color wheel width must be 4 to 50, defaults to 16dp. The width must be 100 to max 500, defaults to 190dp.
-
-*Add images and more text...*
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-15.png?raw=true" alt="Picker 15"/>
 
 ### Opacity slider height, width and thumb radius
 
@@ -742,7 +748,7 @@ the end.
 ### Tooltips
 API reference: [enableTooltips](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableTooltips.html)
 
-The `enableTooltips` property default to true to enable all tooltips that are available in the color picker. If the
+The `enableTooltips` property defaults to true and enables all tooltips that are available in the color picker. If the
 tooltips get in the way you can disable them all by setting this property to `false`. Why not consider providing a 
 property in your app that allows users to turn ON and OFF the tooltips in the app? FlexColorPicker includes this 
 toggle to make that easy to implement when it comes to its tooltip behavior.
@@ -792,6 +798,20 @@ API reference: [showColorCode, ](https://pub.dev/documentation/flex_color_picker
 
 The color code value can be shown in five different formats, the displayed format also defines the received
 string format of the copied RGB value.
+
+*Add images and more text...*
+
+## Dialogs
+
+The FlexColorPicker comes with two built-in ready to use dialogs. You can also make your own by including the
+`ColorPicker()` in your own dialog or overlays designs. In this chapter we will look at the two built in dialogs,
+that are really the same dialog but designed for slightly different use cases.
+
+### ColorPicker show dialog method
+
+*Add images and more text...*
+
+### Get picked color function 
 
 *Add images and more text...*
 

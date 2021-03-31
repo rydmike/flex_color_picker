@@ -38,9 +38,9 @@ class ColorIndicator extends StatefulWidget {
   /// Set to false if the indicator should not get focus after user clicked
   /// on it.
   ///
-  /// Bu default the indicator gets focus when it is clicked, by setting this
-  /// to false it remains un focused. This is useful eg when it is used as
-  /// a tap area that should always show the correct color. If it is focused
+  /// By default the indicator gets focus when it is clicked, by setting this
+  /// to false it remains un-focused. This is useful eg when it is used as
+  /// a tap area that should always show the correct color. If it is focused,
   /// the correct color get obscured by the focus color.
   ///
   /// Defaults to true.
@@ -56,8 +56,8 @@ class ColorIndicator extends StatefulWidget {
   /// The indicator will always request focus when it clicked and selected.
   /// Setting this value to true is to make it request focus when it is drawn,
   /// but only if its value has just changed so that its [isSelected] is now
-  /// true and if this flag is true. The extra flag gives us mechanism to
-  /// control of the box should focus when [isSelected] is changed to true.
+  /// true and if this flag is true. The extra flag gives us a mechanism to
+  /// control if the box should focus when [isSelected] is changed to true.
   ///
   /// Defaults to false.
   final bool selectedRequestsFocus;
@@ -71,9 +71,9 @@ class ColorIndicator extends StatefulWidget {
   ///
   /// The size of the [selectedIcon] is 60% of the smaller of [width]
   /// and [height]. The color of indicator icon is black or white based on
-  /// on what contrast best fits with the selected color.
+  /// on what contrast best fits on the selected color.
   ///
-  /// Defaults to a check mark ([Icons.check]).
+  /// Defaults to a check mark [Icons.check].
   final IconData selectedIcon;
 
   /// The background color of the color indicator.
@@ -172,7 +172,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           // but it did not work as desired with eg. just a
           // ValueKey<Color>(widget.color). But using UniqueKey() results in
           // desired un-focus function working. I also tried this approach
-          // ValueKey<int>(hashValues(hashCode, widget.color)) to try cut
+          // ValueKey<int>(hashValues(hashCode, widget.color)) to try to cut
           // down on rebuilds while still retaining the desired feature, but
           // it did not work either, keeping the UniqueKey for now.
           key: UniqueKey(),
