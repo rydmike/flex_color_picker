@@ -14,7 +14,7 @@ class ColorPickerScreen extends StatelessWidget {
     // Used for a simple scrollable column based responsive layout
     final double width = MediaQuery.of(context).size.width;
     // That can have 1 to max 4 columns
-    int columns = width ~/ App.minColumnWidth;
+    int columns = width ~/ AppConst.minColumnWidth;
     if (columns < 1) columns = 1;
     if (columns > 4) columns = 4;
 
@@ -43,7 +43,7 @@ class ColorPickerScreen extends StatelessWidget {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: App.maxBodyWidth),
+          constraints: const BoxConstraints(maxWidth: AppConst.maxBodyWidth),
           child: Row(
             // The Row contains 1 to 4 ListViews, each in an Expanded widget.
             //
@@ -51,10 +51,6 @@ class ColorPickerScreen extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Scrollbar(
-                  interactive: true,
-                  showTrackOnHover: true,
-                  isAlwaysShown: true,
-                  radius: const Radius.circular(7),
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     children: <Widget>[
@@ -139,9 +135,8 @@ class _Column1 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Divider(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
+          padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'FlexColorPicker',
             style: Theme.of(context).textTheme.headline4,
@@ -184,6 +179,7 @@ class _Column1 extends StatelessWidget {
               'PASTE supports all above formats. COPY in selected format.'),
         ),
         const ParseShortHexCodeSwitch(),
+        const Divider(),
       ],
     );
   }
@@ -196,9 +192,8 @@ class _Column2 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Divider(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
+          padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Show and hide',
             style: Theme.of(context).textTheme.headline4,
@@ -226,6 +221,7 @@ class _Column2 extends StatelessWidget {
         const SubheadingSwitch(),
         const OpacitySubheadingSwitch(),
         const RecentSubheadingSwitch(),
+        const Divider(),
       ],
     );
   }
@@ -238,9 +234,8 @@ class _Column3 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Divider(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
+          padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Picker design',
             style: Theme.of(context).textTheme.headline4,
@@ -266,6 +261,7 @@ class _Column3 extends StatelessWidget {
         const Divider(),
         //
         const EnableTooltipsSwitch(),
+        const Divider(),
       ],
     );
   }
@@ -278,9 +274,8 @@ class _Column4 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Divider(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
+          padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Picker layout',
             style: Theme.of(context).textTheme.headline4,
@@ -314,6 +309,7 @@ class _Column4 extends StatelessWidget {
         const EditUsesParsedPasteSwitch(),
         const SnackbarParseErrorSwitch(),
         const FeedbackParseErrorSwitch(),
+        const Divider(),
       ],
     );
   }

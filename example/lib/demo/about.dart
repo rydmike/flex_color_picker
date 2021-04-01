@@ -44,14 +44,15 @@ void showAppAboutDialog(BuildContext context) {
 
   showAboutDialog(
     context: context,
-    applicationName: App.appName,
-    applicationVersion: App.version,
+    applicationName: AppConst.appName,
+    applicationVersion: AppConst.version,
     applicationIcon: const SizedBox(
       height: 100,
       width: 100,
-      child: Image(image: AssetImage(App.icon)),
+      child: Image(image: AssetImage(AppConst.icon)),
     ),
-    applicationLegalese: '${App.copyright} ${App.author} ${App.license}',
+    applicationLegalese:
+        '${AppConst.copyright} ${AppConst.author} ${AppConst.license}',
     children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(top: 24),
@@ -61,12 +62,12 @@ void showAppAboutDialog(BuildContext context) {
               TextSpan(
                 style: aboutTextStyle,
                 text: 'This example shows the features of the '
-                    '${App.appName} package. To learn more, check '
+                    '${AppConst.appName} package. To learn more, check '
                     'out the package on ',
               ),
               LinkTextSpan(
                 style: linkStyle,
-                url: App.packageUrl,
+                url: AppConst.packageUrl,
                 text: 'pub.dev',
               ),
               TextSpan(
@@ -76,8 +77,8 @@ void showAppAboutDialog(BuildContext context) {
               ),
               TextSpan(
                 style: footerStyle,
-                text: 'Built with ${App.flutterVersion}, '
-                    'using ${App.packageVersion}\n\n',
+                text: 'Built with ${AppConst.flutterVersion}, '
+                    'using ${AppConst.packageVersion}\n\n',
               ),
             ],
           ),

@@ -119,7 +119,7 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     showRecentColors: watch(showRecentColorsPod).state,
     recentColors: watch(dialogRecentColorsPod).state,
     maxRecentColors: 5,
-    customColorSwatchesAndNames: App.colorsNameMap,
+    customColorSwatchesAndNames: AppConst.colorsNameMap,
   ).showPickerDialog(
     context,
     elevation: 4,

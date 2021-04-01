@@ -230,6 +230,24 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 void A(BuildContext context) {
   final ColorPicker picker =
   ColorPicker(
+    actionButtons: const ColorPickerActionButtons(
+      // Make sure that you only enable the OK and Cancel button in the
+      // top toolbar when the picker is used in a dialog.
+      okButton: false, // OK top toolbar button.
+      closeButton: true, // Close top toolbar button.
+      dialogActionButtons: true, // Dialog has bottom action buttons.
+      dialogActionIcons: true, // Bottom action buttons have icons.
+      // Type of button for each bottom action button.
+      dialogOkButtonType: ColorPickerActionButtonType.outlined,
+      dialogCancelButtonType: ColorPickerActionButtonType.text,
+    ),
+    //
+    opacityTrackHeight: 35,
+    opacityTrackWidth: 164,
+    opacityThumbRadius: 23,
+    //
+    //
+    //
     wheelDiameter: 250,
     wheelWidth: 10,
     wheelHasBorder: true,

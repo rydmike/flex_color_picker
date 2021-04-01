@@ -720,12 +720,17 @@ must be from 100 to max 500 dp, and it defaults to 190 dp.
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-15.png?raw=true" alt="Picker 15"/>
 
 ### Opacity slider height, width and thumb radius
+API reference: [opacityTrackHeight, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityTrackHeight.html)
+[opacityTrackWidth, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityTrackWidth.html)
+[opacityThumbRadius.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityThumbRadius.html)
 
-The opacity sliders height, width and thumb radius can be modified. below some examples.
-If the width is not defined (default) it expands to fill available width, it's minimum allowed width is 150 dp, if 
-is lower it will be... 
+The opacity slider's height `opacityTrackHeight`, width `opacityTrackWidth` and radius `opacityThumbRadius` can be 
+adjusted, below some examples:
 
-*Add images and more text...*
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-16.png?raw=true" alt="Picker 16"/>
+
+If the width is not defined (default) it expands to fill available width, it's minimum allowed width is 150 dp. The
+slider height must be from 8 to 50 dp and thumb radius from 12 to 30 dp.
 
 ## Picker Layout
 
@@ -775,11 +780,54 @@ also receive platform aware keyboard shortcut info after the localized tooltip l
 ' (CMD-C)' is appended to the copy tooltip and ' (CMD-V)' is appended to the paste tooltip.
 On other platforms ' (CTRL-C)' is appended to the copy tooltip and ' (CTRL-V)' to the paste tooltip.
 
-## Action Buttons
-*Add images and more text...*
+## Dialog Action Buttons
+API reference: [ColorPickerActionButtons](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerActionButtons-class.html)
+
+The API surface of the color picker was getting very large, so two configuration classes were created to
+group additional settings. The first one is the `ColorPickerActionButtons` used to define the color picker's 
+OK and Cancel action buttons, and their style when it is used in the built-in dialogs.
+
+You can define if OK and close action buttons are on a top toolbar or only in the dialog bottom. The top toolbar buttons
+are plain icon only buttons. For the bottom Dialog buttons you can choose between `TextButton`, `OutlinedButton` and
+`ElevatedButton`.  The used icons can be changed form default ones, as can used tooltips. The label's on the bottom
+action buttons can be changed. By the default, they like the tooltips, use Material localizations, so they should
+work well enough out of the box for most locales. The bottom action buttons can also use the default or
+customized OK and Cancel icons as prefix icons to the labels. The icons are however always shared with the 
+corresponding top toolbar icon buttons.
+
+The recommendation is to not use the top and bottom action buttons at the same time, but rather select one of the 
+two options. The API does however allow using both or even a mix and match. It is for example possible to 
+show **Cancel** and **OK** actions at the bottom of the dialog, and also add just an 'x' icon in the upper end corner 
+of the dialog that also cancel-closes the dialog as expected.
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-17.png?raw=true" alt="Picker 17"/>
+
+The bottom action buttons, and their style depend on their ambient theme. There are a few more dialog action
+buttons design properties you can adjust, please se the [ColorPickerActionButtons API reference](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerActionButtons-class.html) for additional 
+details.
 
 ## Copy-Paste Actions and Behavior
-*Add images and more text...*
+API reference: [ColorPickerCopyPasteBehavior](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior-class.html)
+
+The `ColorPickerCopyPasteBehavior` is the second configuration class group. It is used to configure the desired
+copy-paste behavior of the color picker. You can control if the picker has:
+
+* Copy and paste action buttons in the top toolbar.
+* Long press and/or right click copy and paste context menu.
+* Ctrl-C and Ctrl-V keyboard shortcuts, also when not in edit field.
+  Keyboard shortcuts automatically uses Command instead of Ctrl on macOS.
+* A copy color action button in the code entry and display field.
+
+You can also:
+* Define default result RGB string format of a copy command.
+* Define icons for copy and paste action buttons.
+* Define icon theme's for the copy and paste icons.
+* Define paste color string parsing error feedback type and message if used.
+* Modify the tooltips for copy and paste buttons.
+
+Paste operation supports all RGB string formats defined by 
+[ColorPickerCopyFormat](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyFormat-class.html), 
+but copy format is only in selected `copyFormat`.
 
 ### Keyboard shortcuts
 *Add images and more text...*
