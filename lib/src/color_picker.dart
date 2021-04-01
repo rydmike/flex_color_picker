@@ -1679,6 +1679,7 @@ class _ColorPickerState extends State<ColorPicker> {
                               // code was edited, the wheel should update.
                               _wheelShouldUpdate = true;
                               _editShouldUpdate = false;
+                              _updateActiveSwatch();
                             });
                             widget.onColorChanged(_selectedColor);
                             if (widget.onColorChangeEnd != null) {
