@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).padding.top),
           const Spacer(),
           Text(
-            App.appName,
+            AppConst.appName,
             style: Theme.of(context).textTheme.headline4,
           ),
           Text(
@@ -141,11 +141,11 @@ class HomeScreen extends StatelessWidget {
           const ThemeModeSwitch(),
           const Spacer(),
           Text(
-            'Using flex_color_picker version ${App.version}',
+            'Using flex_color_picker version ${AppConst.version}',
             style: Theme.of(context).textTheme.caption,
           ),
           Text(
-            'Built with Flutter ${App.flutterVersion}',
+            'Built with Flutter ${AppConst.flutterVersion}',
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),

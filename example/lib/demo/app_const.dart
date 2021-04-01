@@ -2,10 +2,10 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 /// App contains consts, colors and static helper functions used in the app.
-class App {
+class AppConst {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
-  App._();
+  AppConst._();
 
   // Just a simple way to leave a trace of what version we built the Flutter
   // Web demo with inside the app. Shown on the start screen in the demo,
@@ -23,6 +23,8 @@ class App {
   // Max width of the body content when used on a wide screen.
   static const double maxBodyWidth = 2100;
   static const double minColumnWidth = 390;
+  // The outline thickness of OutlinedButton and ToggleButtons
+  static const double outlineThickness = 1.8;
 
   // Light theme colors
   static const Color primaryLight = Color(0xFF184782);

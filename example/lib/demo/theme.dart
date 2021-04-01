@@ -16,7 +16,7 @@ class AppTheme {
       colorScheme: colorSchemeLight,
       textTheme: textTheme,
     ).copyWith(
-      scaffoldBackgroundColor: App.scaffoldBackgroundLight,
+      scaffoldBackgroundColor: AppConst.scaffoldBackgroundLight,
       toggleableActiveColor: colorSchemeLight.secondary,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
@@ -30,7 +30,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme(App.primaryLight),
+      outlinedButtonTheme: outlinedButtonTheme(AppConst.primaryLight),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
@@ -40,12 +40,12 @@ class AppTheme {
 
   // Light theme color scheme.
   static ColorScheme get colorSchemeLight => const ColorScheme.light().copyWith(
-        primary: App.primaryLight,
-        primaryVariant: App.primaryVariantLight,
-        secondary: App.secondaryLight,
-        secondaryVariant: App.secondaryVariantLight,
-        surface: App.surfaceLight,
-        background: App.backgroundLight,
+        primary: AppConst.primaryLight,
+        primaryVariant: AppConst.primaryVariantLight,
+        secondary: AppConst.secondaryLight,
+        secondaryVariant: AppConst.secondaryVariantLight,
+        surface: AppConst.surfaceLight,
+        background: AppConst.backgroundLight,
       );
 
   /// The used dark theme.
@@ -54,10 +54,10 @@ class AppTheme {
       colorScheme: colorSchemeDark,
       textTheme: textTheme,
     ).copyWith(
-      scaffoldBackgroundColor: App.scaffoldBackgroundDark,
+      scaffoldBackgroundColor: AppConst.scaffoldBackgroundDark,
       toggleableActiveColor: colorSchemeDark.secondary,
       appBarTheme: const AppBarTheme(
-        backgroundColor: App.scaffoldBackgroundDark,
+        backgroundColor: AppConst.scaffoldBackgroundDark,
         foregroundColor: Colors.white,
         elevation: 0,
         backwardsCompatibility: false,
@@ -68,7 +68,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme(App.primaryDark),
+      outlinedButtonTheme: outlinedButtonTheme(AppConst.primaryDark),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeDark),
       tooltipTheme: tooltipTheme(true),
@@ -78,10 +78,10 @@ class AppTheme {
 
   // Dark theme color scheme.
   static ColorScheme get colorSchemeDark => const ColorScheme.dark().copyWith(
-        primary: App.primaryDark,
-        primaryVariant: App.primaryVariantDark,
-        secondary: App.secondaryDark,
-        secondaryVariant: App.secondaryVariantDark,
+        primary: AppConst.primaryDark,
+        primaryVariant: AppConst.primaryVariantDark,
+        secondary: AppConst.secondaryDark,
+        secondaryVariant: AppConst.secondaryVariantDark,
       );
 
   // TODO: Investigate potential GoogleFonts issue on Windows platform.
@@ -138,7 +138,7 @@ class AppTheme {
         shape: const StadiumBorder(),
         side: BorderSide(
           color: borderColor,
-          width: 2,
+          width: AppConst.outlineThickness,
         ),
         padding: roundButtonPadding,
       ));
@@ -163,7 +163,7 @@ class AppTheme {
         fillColor: colorScheme.secondary.withOpacity(0.94),
         hoverColor: colorScheme.primary.withOpacity(0.2),
         focusColor: colorScheme.primary.withOpacity(0.3),
-        borderWidth: 2,
+        borderWidth: AppConst.outlineThickness,
         borderColor: colorScheme.primary,
         selectedBorderColor: colorScheme.primary,
         constraints: const BoxConstraints(minWidth: 50, minHeight: 50),

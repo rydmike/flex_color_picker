@@ -141,17 +141,29 @@ class ColorPicker extends StatefulWidget {
     this.customColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
     //
   })  : assert(columnSpacing >= 0 && columnSpacing <= 300,
-            'The picker item column spacing must be >= 0 and <= 300 dp.'),
-        assert(width > 15 && width <= 150,
-            'The pick item width must be > 15 and <= 150 dp.'),
-        assert(height > 15 && height <= 150,
-            'The pick item height must be > 15 and <= 150 dp.'),
+            'The picker item column spacing must be from 0 to max 300 dp.'),
+        assert(spacing >= 0 && spacing <= 50,
+            'The picker item spacing must be from 0 to max 50 dp.'),
+        assert(runSpacing >= 0 && runSpacing <= 50,
+            'The picker item runSpacing must be from 0 to max 50 dp.'),
+        assert(elevation >= 0, 'The picker item elevation must be >= 0 dp.'),
+        assert(width >= 15 && width <= 150,
+            'The pick item width must be from 15 to max 150 dp.'),
+        assert(height >= 15 && height <= 150,
+            'The pick item height must be from 15 to max 150 dp.'),
+        assert(
+            borderRadius == null || (borderRadius >= 0 && borderRadius <= 50),
+            'The pick item borderRadius must be null or from 0 to max 50 dp.'),
         assert(opacityTrackWidth == null || opacityTrackWidth >= 150,
             'The opacity slider track width must be null or >= 150.'),
+        assert(opacityTrackHeight >= 8 && opacityTrackHeight <= 50,
+            'The opacity slider track height must be from 8 to max 50 dp.'),
+        assert(opacityThumbRadius >= 12 && opacityThumbRadius <= 30,
+            'The opacity slider thumb radius must be from 12 to max 30 dp.'),
         assert(wheelDiameter >= 100 && wheelDiameter <= 500,
-            'The wheel diameter must be >= 100 and <= 500.'),
+            'The wheel diameter must be from 100 to max 500 dp.'),
         assert(wheelWidth >= 4 && wheelWidth <= 50,
-            'The color wheel width must be >= 4 and <= 50 dp.'),
+            'The color wheel width must be from 4 to max 50 dp.'),
         assert(
             maxRecentColors >= _minRecentColors &&
                 maxRecentColors <= _maxRecentColors,
@@ -233,7 +245,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Vertical spacing between items in the color picker column.
   ///
-  /// Defaults to 8 dp.
+  /// Defaults to 8 dp. Must be from 0 to 300 dp.
   final double columnSpacing;
 
   /// Enable the opacity control for the color value.
@@ -257,7 +269,7 @@ class ColorPicker extends StatefulWidget {
   /// The width of the opacity slider track.
   ///
   /// If null, the slider fills to expand available width of the picker.
-  /// If not null, must be >= 150 dp.
+  /// If not null, it must be >= 150 dp.
   final double? opacityTrackWidth;
 
   /// The radius of the thumb on the opacity slider.
@@ -286,28 +298,28 @@ class ColorPicker extends StatefulWidget {
 
   /// Width of the color indicator items.
   ///
-  /// Defaults to 40 dp.
+  /// Defaults to 40 dp. Must be from 15 to 150 dp.
   final double width;
 
   /// Height of the color indicator items.
   ///
-  /// Defaults to 40 dp.
+  /// Defaults to 40 dp. Must be from 15 to 150 dp.
   final double height;
 
   /// The horizontal spacing between the color picker indicator items.
   ///
-  /// Defaults to 4 dp.
+  /// Defaults to 4 dp. Must be from 0 to 50 dp.
   final double spacing;
 
   /// The space between the color picker color item rows, when they need to
   /// be wrapped to multiple rows.
   ///
-  /// Defaults to 4 dp.
+  /// Defaults to 4 dp. Must be from 0 to 50 dp.
   final double runSpacing;
 
   /// The Material elevation of the color indicator items.
   ///
-  /// Defaults to 0 dp.
+  /// Defaults to 0 dp. Must be >= 0.
   final double elevation;
 
   /// Set to true, to show a 1 dp border around the color indicator items.
@@ -320,7 +332,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Border radius of the color indicator items.
   ///
-  /// Defaults to [width]/4.
+  /// If null, it defaults to [width]/4. Must be from 0 to 50 dp, if not null.
   final double? borderRadius;
 
   /// The color of the 1 dp optional border used on [ColorIndicator] and on

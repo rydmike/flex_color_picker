@@ -22,7 +22,8 @@ class OnEndColorIndicator extends ConsumerWidget {
         label: Text(
           'Start ${background.hexAlpha}',
           style: TextStyle(
-              color: App.getChipTextColor(background, isLight), fontSize: 12),
+              color: AppConst.getChipTextColor(background, isLight),
+              fontSize: 12),
         ),
         backgroundColor: background,
       ),

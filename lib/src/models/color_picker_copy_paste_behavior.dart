@@ -35,18 +35,18 @@ enum ColorPickerCopyFormat {
 
 /// Used by FlexColorPicker to define how copy-paste operations behave.
 ///
-/// You can control if the picker has:
-/// * Copy and paste buttons in the top toolbar.
+/// * Copy and paste action buttons in the top toolbar.
 /// * Long press and/or right click copy and paste context menu.
 /// * Ctrl-C and Ctrl-V keyboard shortcuts, also when not in edit field.
 ///   Keyboard shortcuts automatically uses Command instead of Ctrl on macOS.
-/// * Edit color code field with a copy color icon.
+/// * A copy color action button in the code entry and display field.
 ///
 /// You can also:
-/// * Define default result RGB string format of copy command.
-/// * Define icons for copy and paste icons.
+///
+/// * Define default result RGB string format of a copy command.
+/// * Define icons for copy and paste action buttons.
 /// * Define icon theme's for the copy and paste icons.
-/// * Define paste color string parsing error feedback type.
+/// * Define paste color string parsing error feedback type and message if used.
 /// * Modify the tooltips for copy and paste buttons.
 ///
 /// Paste operation supports all RGB string formats defined by
@@ -190,9 +190,11 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// property values from surrounding `Theme.of(context).iconTheme` if they
   /// are defined. For any values that remain null value, the following
   /// fallback defaults are used:
+  /// ```
   ///   color: remains null, so default [IconThemeData] color behavior is kept.
   ///   size: 16
   ///   opacity: 0.90
+  /// ```
   final IconThemeData? menuIconThemeData;
 
   /// The theme of the popup menu.
@@ -201,6 +203,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// null or any property in it is null, then it uses property values from
   /// `Theme.of(context).popupMenuTheme` if they are not null, for any null
   /// value the following fallback defaults are used:
+  /// ```
   ///   color: theme.cardColor.withOpacity(0.9)
   ///   shape: RoundedRectangleBorder(
   ///            borderRadius: BorderRadius.circular(8),
@@ -209,6 +212,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ///   elevation: 3
   ///   textStyle: theme.textTheme.bodyText2!
   ///   enableFeedback: true
+  /// ```
   final PopupMenuThemeData? menuThemeData;
 
   /// The width of the menu.
