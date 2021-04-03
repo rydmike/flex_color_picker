@@ -198,7 +198,7 @@ class AppTheme {
   /// This is a variant of the [VisualDensity.adaptivePlatformDensity] that
   /// returns [VisualDensity.compact] for the desktop platforms. If this seems
   /// too dense and you prefer `comfortable` on desktop and still like the even
-  /// less dense default on on devices, then use this platform dependent
+  /// less dense default on devices, then use this platform dependent
   /// [VisualDensity] function as `visualDensity` for your theme.
   static VisualDensity get comfortablePlatformDensity {
     switch (defaultTargetPlatform) {
@@ -218,13 +218,8 @@ class AppTheme {
   /// choices for desktop https://material.io/components/tooltips#specs.
   /// See issue: https://github.com/flutter/flutter/issues/71429
   /// The font size of 10 dp is just too small for desktops with pixel density
-  /// 1.0 also the dark tooltips on light theme and light tooltips on dark
-  /// themes seem more reminiscent of bootstrap Web theme and does not fit so
-  /// well on desktop, windows native for example uses light tooltips on light
-  /// themes. This default theme for tooltips uses that design choice and also
-  /// makes desktop and hence Web tooltips a bit larger as well, by using
-  /// 13dp font size instead of the too small 10 dp. Normally I use 12dp on
-  /// desktop, but reading the API tooltips at 13dp felt a bit easier.
+  /// 1.0. Normally I use 12dp on desktop, but reading the API tooltips at
+  /// 13 dp felt a bit easier.
   static double get tooltipFontSize {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:

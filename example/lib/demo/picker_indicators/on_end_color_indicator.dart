@@ -20,7 +20,7 @@ class OnEndColorIndicator extends ConsumerWidget {
           '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
         label: Text(
-          'Start ${background.hexAlpha}',
+          'End ${background.hexAlpha}',
           style: TextStyle(
               color: AppConst.getChipTextColor(background, isLight),
               fontSize: 12),

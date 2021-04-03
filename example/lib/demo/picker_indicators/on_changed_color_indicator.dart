@@ -20,7 +20,7 @@ class OnChangedColorIndicator extends ConsumerWidget {
           '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
         label: Text(
-          'Start ${background.hexAlpha}',
+          'Change ${background.hexAlpha}',
           style: TextStyle(
               color: AppConst.getChipTextColor(background, isLight),
               fontSize: 12),

@@ -230,6 +230,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 void A(BuildContext context) {
   final ColorPicker picker =
   ColorPicker(
+    copyPasteBehavior:
+      const ColorPickerCopyPasteBehavior(
+        copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+        parseShortHexCode: true,
+        editUsesParsedPaste: true,
+        snackBarParseError: true,
+        //
+      ),
+    //
     actionButtons: const ColorPickerActionButtons(
       // Make sure that you only enable the OK and Cancel button in the
       // top toolbar when the picker is used in a dialog.
