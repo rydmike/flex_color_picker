@@ -177,7 +177,7 @@ class ColorPicker extends StatefulWidget {
   /// Required [ValueChanged] callback, called when user selects
   /// a new color with new color value.
   ///
-  /// Called everytime the color value changes when operating thumbs on the
+  /// Called every time the color value changes when operating thumbs on the
   /// color wheel or color or transparency sliders
   ///
   /// Changing which picker type is viewed does not trigger this callback, it
@@ -539,7 +539,7 @@ class ColorPicker extends StatefulWidget {
   /// Optional callback that returns the current list of recently selected
   /// colors.
   ///
-  /// This optional callback is called everytime a new color is added to the
+  /// This optional callback is called every time a new color is added to the
   /// recent colors list with the complete current list of recently used colors.
   ///
   /// If the optional callback is not provided, then it is not called. You can
@@ -1075,6 +1075,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
     // debugPrint('didUpdateWidget called **********************************');
+
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
       // debugPrint('didUpdateWidget enableOpacity = '
@@ -1168,6 +1169,15 @@ class _ColorPickerState extends State<ColorPicker> {
       // And also update the active swatch again.
       _updateActiveSwatch();
     }
+    // If the recent colors that is stored in local state version is
+    // not equal to the one passed in, then the picker got a new externally
+    // provided recent colors list, and it should replace the current local
+    // state stored list with the new one. This is probably a fairly rare
+    // use-case, but let's  support it anyway.
+    if (!listEquals(widget.recentColors, _recentColors)) {
+      _recentColors = <Color>[...widget.recentColors];
+    }
+    //
     super.didUpdateWidget(oldWidget);
   }
 
