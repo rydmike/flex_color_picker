@@ -131,7 +131,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.1+1"
+    version: "0.14.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -163,6 +163,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   http:
     dependency: transitive
     description:
@@ -337,7 +344,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.1"
+    version: "0.14.0"
   shelf:
     dependency: transitive
     description:

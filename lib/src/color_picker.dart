@@ -1899,16 +1899,16 @@ class _ColorPickerState extends State<ColorPicker> {
         // selected outside the wheel and edit, they should update!
         _wheelShouldUpdate = true;
         _editShouldUpdate = true;
+        // Make a swatch of the new via paste _selectedColor for the wheel.
+        _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
+          ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+        ];
       });
       // Callback with new color
       widget.onColorChanged(_selectedColor);
       if (widget.onColorChangeEnd != null) {
         widget.onColorChangeEnd!(_selectedColor);
       }
-      // Make a swatch of the new via paste _selectedColor for the wheel.
-      _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
-        ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
-      ];
       // Move the picker to the pasted color value.
       _findPicker();
       _updateActiveSwatch();
