@@ -7,7 +7,7 @@ import 'pods/pods.dart';
 import 'pods/pods_observer.dart';
 import 'screens/home/home_screen.dart';
 import 'utils/hive_adapters.dart';
-import 'utils/store.dart';
+import 'utils/keys.dart';
 import 'utils/theme.dart';
 
 // More extensive demo of the ColorPicker, also published as a live web demo

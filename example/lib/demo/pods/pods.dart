@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
-import '../utils/store.dart';
+import '../utils/keys.dart';
 
 // Simple Riverpod State providers, that are called "Pod:s" as it is nice and
 // short, and it might even become the official new name for Riverpod providers.

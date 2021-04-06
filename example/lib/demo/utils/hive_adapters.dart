@@ -2,7 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-// Hive adapters
+// Custom Hive adapters, for additional data type storage.
 
 //*****************************************************************************
 class ColorAdapter extends TypeAdapter<Color> {
