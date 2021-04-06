@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
-/// The App utility class contains used consts values, strings and colors.
+/// The App utility class contains used consts doubles, strings and colors.
 class App {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
@@ -23,11 +23,13 @@ class App {
   // Max width of the body content when used on a wide screen.
   static const double maxBodyWidth = 2100;
   // Min allowed width for the columns, if lower, column count is reduced.
-  static const double minColumnWidth = 390;
+  static const double minColumnWidth = 395;
   // The outline thickness of OutlinedButton and ToggleButtons
   static const double outlineThickness = 1.5;
-  // Button rounding and minimum size.
-  static const double buttonRoundSize = 50;
+  // Border radius for rounded buttons
+  static const double borderRadius = 50;
+  // Rounded button minimum size.
+  static const double roundButtonMinSize = borderRadius + 2 * outlineThickness;
 
   // Light theme colors
   static const Color primaryLight = Color(0xFF184782);
