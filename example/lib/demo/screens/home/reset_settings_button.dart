@@ -8,15 +8,19 @@ class ResetSettingsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMaterialLocalizations(context),
+        'A context with Material localizations is required');
+    // Get the Material localizations.
+    final MaterialLocalizations translate = MaterialLocalizations.of(context);
     return OutlinedButton(
       // Button disabled when we have selected custom surface, because we
       // cannot (no point) copy custom surface colors to itself.
       onPressed: () async {
-        final bool? didReset = await const PlatformAlertDialog(
+        final bool? didReset = await PlatformAlertDialog(
           title: 'Reset Settings',
           content: 'Reset all FlexColorPicker settings to default values?',
-          defaultActionText: 'Ok',
-          cancelActionText: 'Cancel',
+          defaultActionText: translate.okButtonLabel,
+          cancelActionText: translate.cancelButtonLabel,
         ).show(context, useRootNavigator: true);
         if (didReset ?? false) resetSettings(context);
       },

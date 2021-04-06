@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
-import '../utils/store.dart';
+import '../utils/keys.dart';
 
 /// Provider "Pods" observer used to store the state of selected Riverpod
 /// providers and debugPrint changes to them in debug mode.
