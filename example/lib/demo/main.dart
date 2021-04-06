@@ -25,7 +25,7 @@ Future<void> main() async {
   // debugPrint('appDocPath: $appDocPath');
   // await Hive.initFlutter(HiveKeys.folder);
   Hive.init(appDocPath);
-  await Hive.openBox<dynamic>(Store.box);
+  await Hive.openBox<dynamic>(Keys.box);
   runApp(
     ProviderScope(
       observers: <ProviderObserver>[PodsObserver()],

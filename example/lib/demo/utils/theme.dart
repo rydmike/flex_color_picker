@@ -34,7 +34,7 @@ class AppTheme {
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
-      visualDensity: comfortablePlatformDensity,
+      visualDensity: VisualDensity.standard,
     );
   }
 
@@ -72,7 +72,7 @@ class AppTheme {
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeDark),
       tooltipTheme: tooltipTheme(true),
-      visualDensity: comfortablePlatformDensity,
+      visualDensity: VisualDensity.standard,
     );
   }
 
@@ -128,8 +128,8 @@ class AppTheme {
       ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
-        // padding: roundButtonPadding,
-        minimumSize: const Size(App.buttonRoundSize, App.buttonRoundSize),
+        padding: roundButtonPadding,
+        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
       ));
 
   /// Theme definitions give OutlinedButton a Stadium rounded design.
@@ -141,21 +141,21 @@ class AppTheme {
           color: borderColor,
           width: App.outlineThickness,
         ),
-        // padding: roundButtonPadding,
-        minimumSize: const Size(App.buttonRoundSize, App.buttonRoundSize),
+        padding: roundButtonPadding,
+        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
       ));
 
   /// Theme definitions give TextButton a Stadium rounded design.
   static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
           style: TextButton.styleFrom(
         shape: const StadiumBorder(),
-        // padding: roundButtonPadding,
-        minimumSize: const Size(App.buttonRoundSize, App.buttonRoundSize),
+        padding: roundButtonPadding,
+        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
       ));
 
   /// The stadium rounded buttons need a bit more padding to look.
   static const EdgeInsets roundButtonPadding =
-      EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+      EdgeInsets.symmetric(horizontal: 21);
 
   /// ToggleButtons theme
   static ToggleButtonsThemeData toggleButtonsThemeData(
@@ -170,8 +170,12 @@ class AppTheme {
         borderColor: colorScheme.primary,
         selectedBorderColor: colorScheme.primary,
         constraints: const BoxConstraints(
-            minWidth: App.buttonRoundSize, minHeight: App.buttonRoundSize),
-        borderRadius: BorderRadius.circular(App.buttonRoundSize),
+          minWidth: App.borderRadius,
+          maxWidth: App.borderRadius * 2,
+          minHeight: App.borderRadius,
+          maxHeight: App.borderRadius,
+        ),
+        borderRadius: BorderRadius.circular(App.borderRadius),
       );
 
   /// Use an alternative tooltip style.
@@ -192,30 +196,6 @@ class AppTheme {
             color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000)),
       ),
     );
-  }
-
-  /// Returns a [VisualDensity] that is adaptive to `comfortable` instead
-  /// of to the default `compact`, based on active [defaultTargetPlatform].
-  ///
-  /// For desktop platforms, this returns [VisualDensity.comfortable], and
-  /// for other platforms, it returns the default [VisualDensity].
-  /// This is a variant of the [VisualDensity.adaptivePlatformDensity] that
-  /// returns [VisualDensity.compact] for the desktop platforms. If this seems
-  /// too dense and you prefer `comfortable` on desktop and still like the even
-  /// less dense default on devices, then use this platform dependent
-  /// [VisualDensity] function as `visualDensity` for your theme.
-  static VisualDensity get comfortablePlatformDensity {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-      case TargetPlatform.iOS:
-      case TargetPlatform.fuchsia:
-        break;
-      case TargetPlatform.linux:
-      case TargetPlatform.macOS:
-      case TargetPlatform.windows:
-        return VisualDensity.comfortable;
-    }
-    return VisualDensity.standard;
   }
 
   /// The current default theme for Material themed Tooltips are poor design

@@ -1793,7 +1793,7 @@ class _ColorPickerState extends State<ColorPicker> {
       if (findPicker) {
         // Make a swatch of the selected color in the wheel.
         _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
-          ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+          ColorTools.createPrimarySwatch(_selectedColor.withAlpha(0xFF))
         ];
         _findPicker();
       }
@@ -1901,18 +1901,20 @@ class _ColorPickerState extends State<ColorPicker> {
         _editShouldUpdate = true;
         // Make a swatch of the new via paste _selectedColor for the wheel.
         _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
-          ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
+          ColorTools.createPrimarySwatch(_selectedColor.withAlpha(0xFF)),
         ];
+        // Move the picker to the pasted color value.
+        _findPicker();
+        _updateActiveSwatch();
       });
       // Callback with new color
       widget.onColorChanged(_selectedColor);
       if (widget.onColorChangeEnd != null) {
         widget.onColorChangeEnd!(_selectedColor);
       }
-      // Move the picker to the pasted color value.
-      _findPicker();
-      _updateActiveSwatch();
-    } else {
+    }
+    // Clipboard could not parsed to a Color()...
+    else {
       // TODO: Improve feedback/sound when it can be done with SDK features.
       // This is a nice idea, but it does not do much on most platforms.
       // Would just like to get a nice "error bleep" sound on all platforms

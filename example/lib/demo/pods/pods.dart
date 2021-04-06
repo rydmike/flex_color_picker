@@ -5,14 +5,15 @@ import 'package:hive/hive.dart';
 
 import '../utils/store.dart';
 
-// Simple Riverpod State providers, that I call "Pod:s" as it is nice and short,
-// and it might even become the official new name for Riverpod providers.
+// Simple Riverpod State providers, that are called "Pod:s" as it is nice and
+// short, and it might even become the official new name for Riverpod providers.
 //
-// This demo app is perhaps a bit a-typical in the sense that we want every
-// toggle to update something as it happens while minimizing re-builds as
-// much as possible. All the properties are just simple values, maps or simple
-// objects like 'Color' so a simple StateProvider for each property works
-// rather nicely and is simple to use, there is just a lot of them.
+// This demo app is perhaps a bit "a-typical" in the sense that we want every
+// toggle on the SettingScreen to update something as it happens while
+// minimizing re-builds as much as possible. All the properties are just simple
+// values, maps or simple objects like 'Color', so a StateProvider for each
+// property works rather nicely and is simple to use, there is just a lot of
+// them.
 //
 // Still using each "Pod" in an individual widgets to toggle each
 // state provider's state, is pretty easy and simple to do and maintain.
@@ -28,21 +29,45 @@ import '../utils/store.dart';
 //
 // For more complex use cases and classes, use StateNotifierProvider instead of
 // StateProvider, but in this case we want to track the state change of each
-// individual value below, and rebuild only needed parts for its change and to
+// individual value below, and rebuild only needed parts when it changes, and to
 // store/update only that particular value in the Hive box when it changed.
+// If we would have all the properties in a state notifier and use a state
+// notifier provider, we would get notified when any of all these properties
+// changed.
+//
+// With a change notifier and using a selector we could also do this,
+// but then we are using mutable state variables. Using a ChangeNotifier, with
+// setter and getter for each property that also persist them as they are
+// changed, we can do the same thing. Each property's UI widget could also use
+// a selector to only rebuild when its is updated. One can argue that using
+// mutable state this way might even be simpler or preferred over this
+// implementation. This was also an experiment and test to see if this can be
+// done like this and how it feels. With this amount of control value (there
+// are 55 of them that are persisted) it is becoming a bit tedious to do it
+// this ways too. However, bare in mind that with a change notifier, there would
+// need to be a local property and both a setter and getter for each
+// StateProvider below. Plus a separate Hive save (put) call for each setter.
+// The Hive storage is now a single line in the ProviderObserver, and the
+// StateProvider that are initialized from the Hive bix below, or via default
+// const map if Hive bix has now value, is actually quite compact considering
+// all it does. We do however have to deal with dynamic's and type casts to
+// make this work, but since it is all based type safe providers and const
+// values as keys we keep uniques in const map, it is fairly safe as long as
+// we don't use the wrong key for a provider when we get the value.
+//
 
 // A ref to the used Hive box, it should be opened before you use it, which it
 // will be since we open it once at the start of the app and don't close it
 // anywhere in this color picker demo app.
-final Box<dynamic> _box = Hive.box<dynamic>(Store.box);
+final Box<dynamic> _box = Hive.box<dynamic>(Keys.box);
 
 // themeModePod is a [StateProvider] to provide the state of
 // the [ThemeMode], used to toggle the application wide theme mode.
 final StateProvider<ThemeMode> themeModePod =
     StateProvider<ThemeMode>((ProviderReference ref) {
-  return _box.get(Store.themeMode,
-      defaultValue: Store.defaults[Store.themeMode]! as ThemeMode) as ThemeMode;
-}, name: Store.themeMode);
+  return _box.get(Keys.themeMode,
+      defaultValue: Keys.defaults[Keys.themeMode]! as ThemeMode) as ThemeMode;
+}, name: Keys.themeMode);
 
 // The other plethora f other state providers are all related to manipulating
 // input and view output from the FlexColorPicker.
@@ -50,16 +75,16 @@ final StateProvider<ThemeMode> themeModePod =
 // StateProvider for the color we give to the color picker on the card.
 final StateProvider<Color> cardPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
-  return _box.get(Store.cardPickerColor,
-      defaultValue: Store.defaults[Store.cardPickerColor]! as Color) as Color;
-}, name: Store.cardPickerColor);
+  return _box.get(Keys.cardPickerColor,
+      defaultValue: Keys.defaults[Keys.cardPickerColor]! as Color) as Color;
+}, name: Keys.cardPickerColor);
 
 // StateProvider for the color we give to the color picker in the dialog.
 final StateProvider<Color> dialogPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
-  return _box.get(Store.dialogPickerColor,
-      defaultValue: Store.defaults[Store.dialogPickerColor]! as Color) as Color;
-}, name: Store.dialogPickerColor);
+  return _box.get(Keys.dialogPickerColor,
+      defaultValue: Keys.defaults[Keys.dialogPickerColor]! as Color) as Color;
+}, name: Keys.dialogPickerColor);
 
 // StateProviders for the color we get back via onColorChangeStart callback.
 final StateProvider<Color> onColorChangeStartPod =
@@ -92,12 +117,11 @@ final StateProvider<List<Color>> cardRecentColorsPod =
   (ProviderReference ref) {
     // ignore: avoid_dynamic_calls
     return _box
-        .get(Store.cardRecentColors,
-            defaultValue:
-                Store.defaults[Store.cardRecentColors]! as List<Color>)
+        .get(Keys.cardRecentColors,
+            defaultValue: Keys.defaults[Keys.cardRecentColors]! as List<Color>)
         .cast<Color>() as List<Color>;
   },
-  name: Store.cardRecentColors,
+  name: Keys.cardRecentColors,
 );
 
 // StateProvider for the recently used colors for color picker in the dialog.
@@ -105,11 +129,10 @@ final StateProvider<List<Color>> dialogRecentColorsPod =
     StateProvider<List<Color>>((ProviderReference ref) {
   // ignore: avoid_dynamic_calls
   return _box
-      .get(Store.dialogRecentColors,
-          defaultValue:
-              Store.defaults[Store.dialogRecentColors]! as List<Color>)
+      .get(Keys.dialogRecentColors,
+          defaultValue: Keys.defaults[Keys.dialogRecentColors]! as List<Color>)
       .cast<Color>() as List<Color>;
-}, name: Store.dialogRecentColors);
+}, name: Keys.dialogRecentColors);
 
 // ****************************************************************************
 // The rest of the providers all deal with the API input settings for the
@@ -125,119 +148,116 @@ final StateProvider<Map<ColorPickerType, bool>> pickersEnabledPod =
     StateProvider<Map<ColorPickerType, bool>>((ProviderReference ref) {
   // ignore: avoid_dynamic_calls
   return _box
-      .get(Store.pickersEnabled,
-          defaultValue: Store.defaults[Store.pickersEnabled]!
-              as Map<ColorPickerType, bool>)
+      .get(Keys.pickersEnabled,
+          defaultValue:
+              Keys.defaults[Keys.pickersEnabled]! as Map<ColorPickerType, bool>)
       .cast<ColorPickerType, bool>() as Map<ColorPickerType, bool>;
-}, name: Store.pickersEnabled);
+}, name: Keys.pickersEnabled);
 
 // State of shades color selection.
 final StateProvider<bool> enableShadesSelectionPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.enableShadesSelection,
-          defaultValue: Store.defaults[Store.enableShadesSelection]! as bool)
-      as bool;
-}, name: Store.enableShadesSelection);
+  return _box.get(Keys.enableShadesSelection,
+      defaultValue: Keys.defaults[Keys.enableShadesSelection]! as bool) as bool;
+}, name: Keys.enableShadesSelection);
 
 // State of including index 850 for grey color.
 final StateProvider<bool> includeIndex850Pod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.includeIndex850,
-      defaultValue: Store.defaults[Store.includeIndex850]! as bool) as bool;
-}, name: Store.includeIndex850);
+  return _box.get(Keys.includeIndex850,
+      defaultValue: Keys.defaults[Keys.includeIndex850]! as bool) as bool;
+}, name: Keys.includeIndex850);
 
 // State of enabling opacity for color.
 final StateProvider<bool> enableOpacityPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.enableOpacity,
-      defaultValue: Store.defaults[Store.enableOpacity]! as bool) as bool;
-}, name: Store.enableOpacity);
+  return _box.get(Keys.enableOpacity,
+      defaultValue: Keys.defaults[Keys.enableOpacity]! as bool) as bool;
+}, name: Keys.enableOpacity);
 
 // State of showing Material color name.
 final StateProvider<bool> showMaterialNamePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showMaterialName,
-      defaultValue: Store.defaults[Store.showMaterialName]! as bool) as bool;
-}, name: Store.showMaterialName);
+  return _box.get(Keys.showMaterialName,
+      defaultValue: Keys.defaults[Keys.showMaterialName]! as bool) as bool;
+}, name: Keys.showMaterialName);
 
 // State of showing general color name.
 final StateProvider<bool> showColorNamePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showColorName,
-      defaultValue: Store.defaults[Store.showColorName]! as bool) as bool;
-}, name: Store.showColorName);
+  return _box.get(Keys.showColorName,
+      defaultValue: Keys.defaults[Keys.showColorName]! as bool) as bool;
+}, name: Keys.showColorName);
 
 // State of showing color code edit-display field: on/off.
 final StateProvider<bool> showColorCodePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showColorCode,
-      defaultValue: Store.defaults[Store.showColorCode]! as bool) as bool;
-}, name: Store.showColorCode);
+  return _box.get(Keys.showColorCode,
+      defaultValue: Keys.defaults[Keys.showColorCode]! as bool) as bool;
+}, name: Keys.showColorCode);
 
 // State of showing color code using color as background.
 final StateProvider<bool> colorCodeHasColorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.colorCodeHasColor,
-      defaultValue: Store.defaults[Store.colorCodeHasColor]! as bool) as bool;
-}, name: Store.colorCodeHasColor);
+  return _box.get(Keys.colorCodeHasColor,
+      defaultValue: Keys.defaults[Keys.colorCodeHasColor]! as bool) as bool;
+}, name: Keys.colorCodeHasColor);
 
 // State of color code field being read only.
 final StateProvider<bool> colorCodeReadOnlyPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.colorCodeReadOnly,
-      defaultValue: Store.defaults[Store.colorCodeReadOnly]! as bool) as bool;
-}, name: Store.colorCodeReadOnly);
+  return _box.get(Keys.colorCodeReadOnly,
+      defaultValue: Keys.defaults[Keys.colorCodeReadOnly]! as bool) as bool;
+}, name: Keys.colorCodeReadOnly);
 
 // State of showing color code int value.
 final StateProvider<bool> showColorValuePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showColorValue,
-      defaultValue: Store.defaults[Store.showColorValue]! as bool) as bool;
-}, name: Store.showColorValue);
+  return _box.get(Keys.showColorValue,
+      defaultValue: Keys.defaults[Keys.showColorValue]! as bool) as bool;
+}, name: Keys.showColorValue);
 
 // State of showing recently used colors.
 final StateProvider<bool> showRecentColorsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showRecentColors,
-      defaultValue: Store.defaults[Store.showRecentColors]! as bool) as bool;
-}, name: Store.showRecentColors);
+  return _box.get(Keys.showRecentColors,
+      defaultValue: Keys.defaults[Keys.showRecentColors]! as bool) as bool;
+}, name: Keys.showRecentColors);
 
 // State of showing title.
 final StateProvider<bool> showTitlePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showTitle,
-      defaultValue: Store.defaults[Store.showTitle]! as bool) as bool;
-}, name: Store.showTitle);
+  return _box.get(Keys.showTitle,
+      defaultValue: Keys.defaults[Keys.showTitle]! as bool) as bool;
+}, name: Keys.showTitle);
 
 // State of showing heading.
 final StateProvider<bool> showHeadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showHeading,
-      defaultValue: Store.defaults[Store.showHeading]! as bool) as bool;
-}, name: Store.showHeading);
+  return _box.get(Keys.showHeading,
+      defaultValue: Keys.defaults[Keys.showHeading]! as bool) as bool;
+}, name: Keys.showHeading);
 
 // State of showing sub heading, for both swatch color pickers and wheel.
 final StateProvider<bool> showSubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showSubheading,
-      defaultValue: Store.defaults[Store.showSubheading]! as bool) as bool;
-}, name: Store.showSubheading);
+  return _box.get(Keys.showSubheading,
+      defaultValue: Keys.defaults[Keys.showSubheading]! as bool) as bool;
+}, name: Keys.showSubheading);
 
 // State of showing subheading for opacity control.
 final StateProvider<bool> showOpacitySubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showOpacitySubheading,
-          defaultValue: Store.defaults[Store.showOpacitySubheading]! as bool)
-      as bool;
-}, name: Store.showOpacitySubheading);
+  return _box.get(Keys.showOpacitySubheading,
+      defaultValue: Keys.defaults[Keys.showOpacitySubheading]! as bool) as bool;
+}, name: Keys.showOpacitySubheading);
 
 // State of showing sub heading for recently used colors.
 final StateProvider<bool> showRecentSubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.showRecentSubheading,
-          defaultValue: Store.defaults[Store.showRecentSubheading]! as bool)
-      as bool;
-}, name: Store.showRecentSubheading);
+  return _box.get(Keys.showRecentSubheading,
+      defaultValue: Keys.defaults[Keys.showRecentSubheading]! as bool) as bool;
+}, name: Keys.showRecentSubheading);
 
 // ****************************************************************************
 //  Picker Design Riverpod "Pod" providers.
@@ -246,96 +266,95 @@ final StateProvider<bool> showRecentSubheadingPod =
 // State of picker item size.
 final StateProvider<double> sizePod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.size,
-      defaultValue: Store.defaults[Store.size]! as double) as double;
-}, name: Store.size);
+  return _box.get(Keys.size, defaultValue: Keys.defaults[Keys.size]! as double)
+      as double;
+}, name: Keys.size);
 
 // State of picker item border radius.
 final StateProvider<double> borderRadiusPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.borderRadius,
-      defaultValue: Store.defaults[Store.borderRadius]! as double) as double;
-}, name: Store.borderRadius);
+  return _box.get(Keys.borderRadius,
+      defaultValue: Keys.defaults[Keys.borderRadius]! as double) as double;
+}, name: Keys.borderRadius);
 
 // State of picker item elevation.
 final StateProvider<double> elevationPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.elevation,
-      defaultValue: Store.defaults[Store.elevation]! as double) as double;
-}, name: Store.elevation);
+  return _box.get(Keys.elevation,
+      defaultValue: Keys.defaults[Keys.elevation]! as double) as double;
+}, name: Keys.elevation);
 
 // State of picker item spacing.
 final StateProvider<double> spacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.spacing,
-      defaultValue: Store.defaults[Store.spacing]! as double) as double;
-}, name: Store.spacing);
+  return _box.get(Keys.spacing,
+      defaultValue: Keys.defaults[Keys.spacing]! as double) as double;
+}, name: Keys.spacing);
 
 // State of picker item run spacing.
 final StateProvider<double> runSpacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.runSpacing,
-      defaultValue: Store.defaults[Store.runSpacing]! as double) as double;
-}, name: Store.runSpacing);
+  return _box.get(Keys.runSpacing,
+      defaultValue: Keys.defaults[Keys.runSpacing]! as double) as double;
+}, name: Keys.runSpacing);
 
 // State of using border on picker items.
 final StateProvider<bool> hasBorderPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.hasBorder,
-      defaultValue: Store.defaults[Store.hasBorder]! as bool) as bool;
-}, name: Store.hasBorder);
+  return _box.get(Keys.hasBorder,
+      defaultValue: Keys.defaults[Keys.hasBorder]! as bool) as bool;
+}, name: Keys.hasBorder);
 
 // State of wheel diameter.
 final StateProvider<double> wheelDiameterPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.wheelDiameter,
-      defaultValue: Store.defaults[Store.wheelDiameter]! as double) as double;
-}, name: Store.wheelDiameter);
+  return _box.get(Keys.wheelDiameter,
+      defaultValue: Keys.defaults[Keys.wheelDiameter]! as double) as double;
+}, name: Keys.wheelDiameter);
 
 // State of wheel width.
 final StateProvider<double> wheelWidthPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.wheelWidth,
-      defaultValue: Store.defaults[Store.wheelWidth]! as double) as double;
-}, name: Store.wheelWidth);
+  return _box.get(Keys.wheelWidth,
+      defaultValue: Keys.defaults[Keys.wheelWidth]! as double) as double;
+}, name: Keys.wheelWidth);
 
 // State of using border on wheel picker .
 final StateProvider<bool> wheelHasBorderPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.wheelHasBorder,
-      defaultValue: Store.defaults[Store.wheelHasBorder]! as bool) as bool;
-}, name: Store.wheelHasBorder);
+  return _box.get(Keys.wheelHasBorder,
+      defaultValue: Keys.defaults[Keys.wheelHasBorder]! as bool) as bool;
+}, name: Keys.wheelHasBorder);
 
 // State of used height on color opacity slider.
 final StateProvider<double> opacityTrackHeightPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.opacityTrackHeight,
-          defaultValue: Store.defaults[Store.opacityTrackHeight]! as double)
+  return _box.get(Keys.opacityTrackHeight,
+          defaultValue: Keys.defaults[Keys.opacityTrackHeight]! as double)
       as double;
-}, name: Store.opacityTrackHeight);
+}, name: Keys.opacityTrackHeight);
 
 // State of used width on color opacity slider.
 final StateProvider<double> opacityTrackWidthPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.opacityTrackWidth,
-          defaultValue: Store.defaults[Store.opacityTrackWidth]! as double)
-      as double;
-}, name: Store.opacityTrackWidth);
+  return _box.get(Keys.opacityTrackWidth,
+      defaultValue: Keys.defaults[Keys.opacityTrackWidth]! as double) as double;
+}, name: Keys.opacityTrackWidth);
 
 // State of used thumb radius on color opacity slider.
 final StateProvider<double> opacityThumbRadiusPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.opacityThumbRadius,
-          defaultValue: Store.defaults[Store.opacityThumbRadius]! as double)
+  return _box.get(Keys.opacityThumbRadius,
+          defaultValue: Keys.defaults[Keys.opacityThumbRadius]! as double)
       as double;
-}, name: Store.opacityThumbRadius);
+}, name: Keys.opacityThumbRadius);
 
 // State of showing tooltips.
 final StateProvider<bool> enableTooltipsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.enableTooltips,
-      defaultValue: Store.defaults[Store.enableTooltips]! as bool) as bool;
-}, name: Store.enableTooltips);
+  return _box.get(Keys.enableTooltips,
+      defaultValue: Keys.defaults[Keys.enableTooltips]! as bool) as bool;
+}, name: Keys.enableTooltips);
 
 // ****************************************************************************
 //  Picker Layout Riverpod "Pod" providers.
@@ -344,59 +363,59 @@ final StateProvider<bool> enableTooltipsPod =
 // State of used alignment in the color picker
 final StateProvider<CrossAxisAlignment> alignmentPod =
     StateProvider<CrossAxisAlignment>((ProviderReference ref) {
-  return _box.get(Store.alignment,
-          defaultValue: Store.defaults[Store.alignment]! as CrossAxisAlignment)
+  return _box.get(Keys.alignment,
+          defaultValue: Keys.defaults[Keys.alignment]! as CrossAxisAlignment)
       as CrossAxisAlignment;
-}, name: Store.alignment);
+}, name: Keys.alignment);
 
 // State of used spacing between each item in the column in the picker.
 final StateProvider<double> columnSpacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.columnSpacing,
-      defaultValue: Store.defaults[Store.columnSpacing]! as double) as double;
-}, name: Store.columnSpacing);
+  return _box.get(Keys.columnSpacing,
+      defaultValue: Keys.defaults[Keys.columnSpacing]! as double) as double;
+}, name: Keys.columnSpacing);
 
 // State of used padding surrounding the content around the picker.
 final StateProvider<double> paddingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Store.padding,
-      defaultValue: Store.defaults[Store.padding]! as double) as double;
-}, name: Store.padding);
+  return _box.get(Keys.padding,
+      defaultValue: Keys.defaults[Keys.padding]! as double) as double;
+}, name: Keys.padding);
 
 // State of using a close button on dialog toolbar.
 final StateProvider<bool> closeButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.closeButton,
-      defaultValue: Store.defaults[Store.closeButton]! as bool) as bool;
-}, name: Store.closeButton);
+  return _box.get(Keys.closeButton,
+      defaultValue: Keys.defaults[Keys.closeButton]! as bool) as bool;
+}, name: Keys.closeButton);
 
 // State of using a OK button on dialog toolbar.
 final StateProvider<bool> okButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.okButton,
-      defaultValue: Store.defaults[Store.okButton]! as bool) as bool;
-}, name: Store.okButton);
+  return _box.get(Keys.okButton,
+      defaultValue: Keys.defaults[Keys.okButton]! as bool) as bool;
+}, name: Keys.okButton);
 
 // State of using having close button as last action on dialog toolbar.
 final StateProvider<bool> closeIsLastPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.closeIsLast,
-      defaultValue: Store.defaults[Store.closeIsLast]! as bool) as bool;
-}, name: Store.closeIsLast);
+  return _box.get(Keys.closeIsLast,
+      defaultValue: Keys.defaults[Keys.closeIsLast]! as bool) as bool;
+}, name: Keys.closeIsLast);
 
 // State of having Cancel OK bottom action in the dialog.
 final StateProvider<bool> dialogActionButtonsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.dialogActionButtons,
-      defaultValue: Store.defaults[Store.dialogActionButtons]! as bool) as bool;
-}, name: Store.dialogActionButtons);
+  return _box.get(Keys.dialogActionButtons,
+      defaultValue: Keys.defaults[Keys.dialogActionButtons]! as bool) as bool;
+}, name: Keys.dialogActionButtons);
 
 // State of having icons on Cancel OK bottom actions buttons in the dialog.
 final StateProvider<bool> dialogActionIconsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.dialogActionIcons,
-      defaultValue: Store.defaults[Store.dialogActionIcons]! as bool) as bool;
-}, name: Store.dialogActionIcons);
+  return _box.get(Keys.dialogActionIcons,
+      defaultValue: Keys.defaults[Keys.dialogActionIcons]! as bool) as bool;
+}, name: Keys.dialogActionIcons);
 
 // ****************************************************************************
 //  Copy Paste Actions Riverpod "Pod" providers.
@@ -405,93 +424,93 @@ final StateProvider<bool> dialogActionIconsPod =
 // State of used color code COPY format.
 final StateProvider<ColorPickerCopyFormat> copyFormatPod =
     StateProvider<ColorPickerCopyFormat>((ProviderReference ref) {
-  return _box.get(Store.copyFormat,
-      defaultValue: Store.defaults[Store.copyFormat]!
+  return _box.get(Keys.copyFormat,
+      defaultValue: Keys.defaults[Keys.copyFormat]!
           as ColorPickerCopyFormat) as ColorPickerCopyFormat;
-}, name: Store.copyFormat);
+}, name: Keys.copyFormat);
 
 // State of using CTRL-C keyboard shortcut.
 final StateProvider<bool> ctrlCPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.ctrlC,
-      defaultValue: Store.defaults[Store.ctrlC]! as bool) as bool;
-}, name: Store.ctrlC);
+  return _box.get(Keys.ctrlC, defaultValue: Keys.defaults[Keys.ctrlC]! as bool)
+      as bool;
+}, name: Keys.ctrlC);
 
 // State of using CTRL-V keyboard shortcut.
 final StateProvider<bool> ctrlVPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.ctrlV,
-      defaultValue: Store.defaults[Store.ctrlV]! as bool) as bool;
-}, name: Store.ctrlV);
+  return _box.get(Keys.ctrlV, defaultValue: Keys.defaults[Keys.ctrlV]! as bool)
+      as bool;
+}, name: Keys.ctrlV);
 
 // State of using Copy button on toolbar.
 final StateProvider<bool> copyButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.copyButton,
-      defaultValue: Store.defaults[Store.copyButton]! as bool) as bool;
-}, name: Store.copyButton);
+  return _box.get(Keys.copyButton,
+      defaultValue: Keys.defaults[Keys.copyButton]! as bool) as bool;
+}, name: Keys.copyButton);
 
 // State of using Paste button on toolbar.
 final StateProvider<bool> pasteButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.pasteButton,
-      defaultValue: Store.defaults[Store.pasteButton]! as bool) as bool;
-}, name: Store.pasteButton);
+  return _box.get(Keys.pasteButton,
+      defaultValue: Keys.defaults[Keys.pasteButton]! as bool) as bool;
+}, name: Keys.pasteButton);
 
 // State of using Paste button on edit code field.
 final StateProvider<bool> editFieldCopyButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.editFieldCopyButton,
-      defaultValue: Store.defaults[Store.editFieldCopyButton]! as bool) as bool;
-}, name: Store.editFieldCopyButton);
+  return _box.get(Keys.editFieldCopyButton,
+      defaultValue: Keys.defaults[Keys.editFieldCopyButton]! as bool) as bool;
+}, name: Keys.editFieldCopyButton);
 
 // State of using long press copy-paste context menu.
 final StateProvider<bool> longPressMenuPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.longPressMenu,
-      defaultValue: Store.defaults[Store.longPressMenu]! as bool) as bool;
-}, name: Store.longPressMenu);
+  return _box.get(Keys.longPressMenu,
+      defaultValue: Keys.defaults[Keys.longPressMenu]! as bool) as bool;
+}, name: Keys.longPressMenu);
 
 // State of using secondary (right) click copy-paste context menu.
 final StateProvider<bool> secondaryMenuPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.secondaryMenu,
-      defaultValue: Store.defaults[Store.secondaryMenu]! as bool) as bool;
-}, name: Store.secondaryMenu);
+  return _box.get(Keys.secondaryMenu,
+      defaultValue: Keys.defaults[Keys.secondaryMenu]! as bool) as bool;
+}, name: Keys.secondaryMenu);
 
 // State of using secondary (right) click on desktop and long press
 // on devices to show the copy-paste context menu
 final StateProvider<bool> secondaryDesktopOtherLongPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.secondaryDesktopOtherLong,
-      defaultValue:
-          Store.defaults[Store.secondaryDesktopOtherLong]! as bool) as bool;
-}, name: Store.secondaryDesktopOtherLong);
+  return _box.get(Keys.secondaryDesktopOtherLong,
+          defaultValue: Keys.defaults[Keys.secondaryDesktopOtherLong]! as bool)
+      as bool;
+}, name: Keys.secondaryDesktopOtherLong);
 
 // State of if Web 3-char code RGB, should be interpreted as RRGGBB.
 final StateProvider<bool> parseShortHexCodePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.parseShortHexCode,
-      defaultValue: Store.defaults[Store.parseShortHexCode]! as bool) as bool;
-}, name: Store.parseShortHexCode);
+  return _box.get(Keys.parseShortHexCode,
+      defaultValue: Keys.defaults[Keys.parseShortHexCode]! as bool) as bool;
+}, name: Keys.parseShortHexCode);
 
 // State of if text edit field should use code parser on keyboard paste.
 final StateProvider<bool> editUsesParsedPastePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.editUsesParsedPaste,
-      defaultValue: Store.defaults[Store.editUsesParsedPaste]! as bool) as bool;
-}, name: Store.editUsesParsedPaste);
+  return _box.get(Keys.editUsesParsedPaste,
+      defaultValue: Keys.defaults[Keys.editUsesParsedPaste]! as bool) as bool;
+}, name: Keys.editUsesParsedPaste);
 
 // State of if color code parse error should result in a snackbar error message.
 final StateProvider<bool> snackbarParseErrorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.snackbarParseError,
-      defaultValue: Store.defaults[Store.snackbarParseError]! as bool) as bool;
-}, name: Store.snackbarParseError);
+  return _box.get(Keys.snackbarParseError,
+      defaultValue: Keys.defaults[Keys.snackbarParseError]! as bool) as bool;
+}, name: Keys.snackbarParseError);
 
 // State of if color code parse error should give audible and vibration alert.
 final StateProvider<bool> feedbackParseErrorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Store.feedbackParseError,
-      defaultValue: Store.defaults[Store.feedbackParseError]! as bool) as bool;
-}, name: Store.feedbackParseError);
+  return _box.get(Keys.feedbackParseError,
+      defaultValue: Keys.defaults[Keys.feedbackParseError]! as bool) as bool;
+}, name: Keys.feedbackParseError);

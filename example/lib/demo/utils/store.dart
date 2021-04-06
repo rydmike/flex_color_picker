@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 /// Key constants for key-value pairs for storing the settings as well
 /// as a map with default value for each key-value pair settings.
 /// The keys are also used as named for Riverpod "pod" state providers.
-class Store {
+class Keys {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
-  Store._();
+  Keys._();
 
   // Hive constants
   static const String folder = 'color_picker_demo';

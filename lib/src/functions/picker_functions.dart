@@ -58,8 +58,7 @@ ColorPickerType findColorInSelector({
         if (lookInShades) {
           if (isShadeOfMain(swatch, color, include850)) return key;
         } else {
-          if (swatch[500] == color) return key;
-          if (swatch[200] == color) return key;
+          if (swatch.value == color.value) return key;
         }
       }
     }
@@ -67,9 +66,7 @@ ColorPickerType findColorInSelector({
   // If we did not find the color in any of the swatches in the selector, we
   // will just return the first swatch available in the selector.
   for (final ColorPickerType key in typeToSwatchMap.keys) {
-    if (pickersEnabled[key]!) {
-      return key;
-    }
+    if (pickersEnabled[key]!) return key;
   }
   // And finally if no selector was set to enabled, we return material anyway.
   return ColorPickerType.primary;

@@ -14,14 +14,14 @@ class PodsObserver extends ProviderObserver {
     // it will be of type StateController.
     if (newValue is StateController) {
       // If it is one that we have a named key for, we will store it in Hive.
-      if (Store.defaults.containsKey(provider.name)) {
+      if (Keys.defaults.containsKey(provider.name)) {
         // Log the new value, just a debugPrint in DebugMode only.
         if (kDebugMode) {
           debugPrint('Pod: ${provider.name ?? provider.runtimeType} '
               'value: ${newValue.state}');
         }
         // Store the new value in our Hive box, that is already open.
-        final Box<dynamic> box = Hive.box<dynamic>(Store.box);
+        final Box<dynamic> box = Hive.box<dynamic>(Keys.box);
         box.put(provider.name, newValue.state);
       }
     }
