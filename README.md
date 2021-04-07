@@ -1129,23 +1129,38 @@ The FlexColorPicker comes with two built-in ready to use dialogs. You can also m
 that are really the same dialog but designed for slightly different use cases.
 
 ### ColorPicker showPickerDialog Method
+API reference: [showPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showPickerDialog.html)
+
+This dialog allows you track the ColorPicker's different **onChange** callbacks when the dialog is open and colors are 
+being manipulated and react to the changes as they happen. You can use this to for example interactively change color
+properties of the application's Widgets and even its theme, and see the effect of changes applied as a new color is 
+selected in the dialog picker, even while using the wheel and sliders.
 
 The dialog demo in the default example app shown earlier [here](#dialog-example) explains how to use
 the default built-in [ColorPicker(...).showPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showPickerDialog.html) method.
 
-This method allows you track the **onChange** callbacks when the dialog is open and colors are being manipulated and
-react to the changes as they happen. You can use this to for example interactively change color properties of
-the application's theme and see the changes applied as a new color is selected in th dialog picker.
-
 The disadvantage with this picker is that you have to maintain the state, store color before you open the dialog and
-restroe this color if the dialog is cancelled instead of a color selected.
+restore this color if the dialog is cancelled instead of a color selected. The API can also be bit cumbersome to use,
+although the above mentioned example show how it is done.
 
 ### Function showColorPickerDialog 
+API reference: [showColorPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorPickerDialog.html)
 
 The `showColorPickerDialog` function is often simpler to use, just call the function and await for it to return the 
-selected color, or null if the selection is cancelled. You still have to handle the null case. Of course if you
-make the dialog barrier un-dismissible and only have an OK (select) button enabled to close the dialog, then you
-will always get a `Color()` returned from the dialog. But if it is cancelled, null will be returned.
+selected color when the dialog is closed, if no color is selected it just returns the passed in color.
+
+This picker might be simpler to use in many scenarios, but it does not allow for the feature where colors and theme's 
+can update in the background behind the dialog, as colors are selected in it, before it is even closed. It also
+cannot return the list of recently selected colors, but you can provide it starting set of recently selected colors.
+
+In many case you just need to open a picker dialog, select a color, or cancel the selection and move on, this
+version offers a simpler API for that. Under the hood it is just a wrapper for the previous more
+capable version with the onChange callbacks. It shares all other properties and features with the `ColorPicker`
+combined with its `showPickerDialog` method.
+
+Since the properties `elevation` and `title` in the `showPickerDialog` method, would collide with the same
+named ones in the `ColorPicker`, the dialog's elevation and title in `showColorPickerDialog` are instead
+called `dailogElevation` and `dialogTitle` to avoid the property name conflict.
 
 # Desktop and Web Ready
 

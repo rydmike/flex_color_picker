@@ -7,12 +7,17 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 * **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties 
   of the underlying `AlertDialog` used to make the dialog, this includes e.g. the `backgroundColor`, `elevation`,
   `clipBehavior` and `shape` as new exposed properties that may be useful.
-* **New feature:** An alternative color picker dialog that just awaits and returns selected color, or null
-  if color selection was added. This picker might be simpler to use in some scenarios, but does not allow
+* **New feature:** Added a new alternative color picker dialog `Future<Color>` function `showColorPickerDialog`,
+  that just returns selected color from the dialog or original start color value, if no selection was made.
+  This picker might be simpler to use in some scenarios, but it does not allow
   for the feature where colors and theme's can update in the background behind the dialog as colors are selected
   in it, before it is even closed. However, if you just need to open a dialog, select a color and move on, this
   version offers a simpler API for that. Under the hood it is just a wrapper for the previous more 
-  complicated version.
+  capable version with the onChange callbacks. It shares all other properties and features with the `ColorPicker`
+  combined with its `showPickerDialog` method.  
+  Since the properties `elevation` and `title` in the `showPickerDialog` method, would collide with the same
+  named ones ones in `ColorPicker`, the dialog's elevation and title in `showColorPickerDialog` are instead
+  called `dailogElevation` and `dialogTitle`.
 * **Improvement:** Performance was improved via more optimized rebuilds.   
 * **Documentation:** First version of updated documentation with API guide documentation is now included. It still 
   requires proof-reading  before stable release, but getting closer now.
