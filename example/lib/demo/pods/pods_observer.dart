@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 
+import '../store/hive_store.dart';
 import '../utils/keys.dart';
 
 /// Provider "Pods" observer used to store the state of selected Riverpod
@@ -20,9 +20,8 @@ class PodsObserver extends ProviderObserver {
           debugPrint('Pod: ${provider.name ?? provider.runtimeType} '
               'value: ${newValue.state}');
         }
-        // Store the new value in our Hive box, that is already open.
-        final Box<dynamic> box = Hive.box<dynamic>(Keys.box);
-        box.put(provider.name, newValue.state);
+        // Store the new value in our Hive box.
+        hiveStore.put(provider.name, newValue.state);
       }
     }
   }

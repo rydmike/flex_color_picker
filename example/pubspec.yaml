@@ -23,7 +23,7 @@ dependencies:
   hive: ^2.0.2
 
   # https://pub.dev/packages/path_provider:
-  # path_provider: ^2.0.1
+  path_provider: ^2.0.1
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).

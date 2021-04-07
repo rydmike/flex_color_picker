@@ -8,28 +8,18 @@ import '../../utils/app.dart';
 // An about icon button used on the example's app bar, but only if the
 // app is built for web or desktop. Main usage is to show licenses on the Web
 // version and to show what version of Flutter the Live version of the
-// example app was built with. When building the example for an Android or
-// iOS device we assume somebody is just learning how to use the package
-// and don't show the about info.
+// example app was built with.
 class AboutIconButton extends StatelessWidget {
   const AboutIconButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final TargetPlatform platformIs = Theme.of(context).platform;
-    final bool showIconButton = kIsWeb ||
-        platformIs == TargetPlatform.windows ||
-        platformIs == TargetPlatform.macOS ||
-        platformIs == TargetPlatform.linux;
-
-    return showIconButton
-        ? IconButton(
-            icon: const Icon(Icons.info),
-            onPressed: () {
-              showAppAboutDialog(context);
-            },
-          )
-        : const SizedBox.shrink();
+    return IconButton(
+      icon: const Icon(Icons.info),
+      onPressed: () {
+        showAppAboutDialog(context);
+      },
+    );
   }
 }
 
@@ -74,11 +64,12 @@ void showAppAboutDialog(BuildContext context) {
                 text: '. It contains extensive documentation and the source '
                     'of this example application.\n\n',
               ),
-              TextSpan(
-                style: footerStyle,
-                text: 'Built with ${App.flutterVersion}, '
-                    'using ${App.packageVersion}\n\n',
-              ),
+              if (kIsWeb)
+                TextSpan(
+                  style: footerStyle,
+                  text: 'Live Web demo built with ${App.flutterVersion}, '
+                      'using ${App.packageVersion}\n\n',
+                ),
             ],
           ),
         ),

@@ -95,33 +95,36 @@ class AppTheme {
   // them yet used via GoogleFonts. Anyway sticking to plain old "roboto" for
   // now. At least with this setup will get the "Roboto" font on all platforms.
   // If no font is specified, we will get platform dependent default font,
-  // just wanted the same font here to ensure a consistent result in this demo.
-  static TextTheme textTheme = TextTheme(
-    headline1: GoogleFonts.roboto(
-        fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -1.5),
-    headline2: GoogleFonts.roboto(
-        fontSize: 48, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-    headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
-    headline4: GoogleFonts.roboto(
-        fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-    headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.w400),
-    headline6: GoogleFonts.roboto(
-        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-    bodyText1: GoogleFonts.roboto(
-        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-    bodyText2: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-    subtitle1: GoogleFonts.roboto(
-        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
-    subtitle2: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-    button: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-    caption: GoogleFonts.roboto(
-        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-    overline: GoogleFonts.roboto(
-        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
-  );
+  // just want the same font here for ALL platforms to ensure a consistent
+  // result in this demo.
+  static TextTheme get textTheme => TextTheme(
+        headline1: GoogleFonts.roboto(
+            fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+        headline2: GoogleFonts.roboto(
+            fontSize: 48, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+        headline3:
+            GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
+        headline4: GoogleFonts.roboto(
+            fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+        headline5:
+            GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.w400),
+        headline6: GoogleFonts.roboto(
+            fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+        bodyText1: GoogleFonts.roboto(
+            fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
+        bodyText2: GoogleFonts.roboto(
+            fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+        subtitle1: GoogleFonts.roboto(
+            fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
+        subtitle2: GoogleFonts.roboto(
+            fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+        button: GoogleFonts.roboto(
+            fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+        caption: GoogleFonts.roboto(
+            fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+        overline: GoogleFonts.roboto(
+            fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+      );
 
   /// Theme definitions give ElevatedButton a Stadium rounded design.
   static ElevatedButtonThemeData get elevatedButtonTheme =>
@@ -179,31 +182,30 @@ class AppTheme {
       );
 
   /// Use an alternative tooltip style.
-  static TooltipThemeData tooltipTheme(bool isDark) {
-    return TooltipThemeData(
-      padding: const EdgeInsets.fromLTRB(8, 4, 8, 5),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      textStyle: TextStyle(
-        color: isDark ? Colors.black : Colors.white,
-        fontSize: tooltipFontSize,
-      ),
-      decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFFCFCFCF).withOpacity(0.94)
-            : const Color(0xFF444444).withOpacity(0.93),
-        borderRadius: const BorderRadius.all(Radius.circular(6)),
-        border: Border.all(
-            color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000)),
-      ),
-    );
-  }
+  static TooltipThemeData tooltipTheme(bool isDark) => TooltipThemeData(
+        padding: const EdgeInsets.fromLTRB(8, 4, 8, 5),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        textStyle: TextStyle(
+          color: isDark ? Colors.black : Colors.white,
+          fontSize: tooltipFontSize,
+        ),
+        decoration: BoxDecoration(
+          color: isDark
+              ? const Color(0xFFCFCFCF).withOpacity(0.94)
+              : const Color(0xFF444444).withOpacity(0.93),
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
+          border: Border.all(
+            color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000),
+          ),
+        ),
+      );
 
   /// The current default theme for Material themed Tooltips are poor design
   /// choices for desktop https://material.io/components/tooltips#specs.
   /// See issue: https://github.com/flutter/flutter/issues/71429
   /// The font size of 10 dp is just too small for desktops with pixel density
   /// 1.0. Normally I use 12dp on desktop, but reading the API tooltips at
-  /// 13 dp felt a bit easier.
+  /// 13 dp was a bit nicer.
   static double get tooltipFontSize {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:
@@ -229,17 +231,14 @@ class AppTheme {
   }
 
   // Helper for system overlay style for AnnotatedRegion.
-  static SystemUiOverlayStyle overlayStyle(ThemeMode themeMode) =>
+  static SystemUiOverlayStyle overlayStyle(bool isLight) =>
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarBrightness:
-            themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness:
-            themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
-        systemNavigationBarColor: themeMode == ThemeMode.light
-            ? App.backgroundLight
-            : App.backgroundDark,
+        statusBarBrightness: isLight ? Brightness.light : Brightness.dark,
+        statusBarIconBrightness: isLight ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor:
+            isLight ? App.scaffoldBackgroundLight : App.scaffoldBackgroundDark,
         systemNavigationBarIconBrightness:
-            themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
+            isLight ? Brightness.dark : Brightness.light,
       );
 }
