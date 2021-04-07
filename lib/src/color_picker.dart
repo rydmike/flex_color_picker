@@ -22,6 +22,8 @@ import 'widgets/picker_selector.dart';
 import 'widgets/recent_colors.dart';
 import 'widgets/shade_colors.dart';
 
+part 'show_color_picker_dialog.dart';
+
 const int _minRecentColors = 2;
 const int _maxRecentColors = 20;
 
@@ -636,6 +638,9 @@ class ColorPicker extends StatefulWidget {
   /// Returns a Future bool, that resolves to true if the dialog is closed with
   /// OK action button, and to false if the cancel action was selected.
   /// Clicking outside the dialog also closes it and returns false.
+  ///
+  /// The actual color selected in the dialog is handled via the `onChange`
+  /// callbacks of the [ColorPicker] instance.
   Future<bool> showPickerDialog(
     /// The dialog requires a BuildContext.
     BuildContext context, {
