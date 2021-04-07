@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// Key constants for key-value pairs for storing the settings as well
 /// as a map with default value for each key-value pair settings.
-/// The keys are also used as named for Riverpod "pod" state providers.
+/// The keys are also used as names for Riverpod "pod" state providers.
 class Keys {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
@@ -17,7 +17,7 @@ class Keys {
   static const String dialogPickerColor = 'dialogPickerColor';
   static const String cardRecentColors = 'cardRecentColors';
   static const String dialogRecentColors = 'dialogRecentColors';
-  // Show and Hide River "" providers.
+  // Show and Hide Riverpod providers.
   static const String pickersEnabled = 'pickersEnabled';
   static const String enableShadesSelection = 'enableShadesSelection';
   static const String includeIndex850 = 'includeIndex850';
@@ -34,7 +34,7 @@ class Keys {
   static const String showSubheading = 'showSubheading';
   static const String showOpacitySubheading = 'showOpacitySubheading';
   static const String showRecentSubheading = 'showRecentSubheading';
-  // Picker Design River "" providers.
+  // Picker Design Riverpod providers.
   static const String size = 'size';
   static const String borderRadius = 'borderRadius';
   static const String elevation = 'elevation';
@@ -48,7 +48,7 @@ class Keys {
   static const String opacityTrackWidth = 'opacityTrackWidth';
   static const String opacityThumbRadius = 'opacityThumbRadius';
   static const String enableTooltips = 'enableTooltips';
-  // Picker Layout River "" providers.
+  // Picker Layout Riverpod providers.
   static const String alignment = 'alignment';
   static const String columnSpacing = 'columnSpacing';
   static const String padding = 'padding';
@@ -57,7 +57,7 @@ class Keys {
   static const String closeIsLast = 'closeIsLast';
   static const String dialogActionButtons = 'dialogActionButtons';
   static const String dialogActionIcons = 'dialogActionIcons';
-  // Copy Paste Actions River "" providers.
+  // Copy Paste Actions Riverpod providers.
   static const String copyFormat = 'copyFormat';
   static const String ctrlC = 'ctrlC';
   static const String ctrlV = 'ctrlV';
@@ -79,7 +79,7 @@ class Keys {
     dialogPickerColor: Color(0xFFF44336),
     cardRecentColors: <Color>[],
     dialogRecentColors: <Color>[],
-    // Show and Hide River "" providers.
+    // Show and Hide Riverpod providers.
     pickersEnabled: <ColorPickerType, bool>{
       ColorPickerType.both: false,
       ColorPickerType.primary: true,
@@ -103,7 +103,7 @@ class Keys {
     showSubheading: true,
     showOpacitySubheading: false,
     showRecentSubheading: true,
-    // Picker Design River "" providers.
+    // Picker Design Riverpod providers.
     size: 40.0,
     borderRadius: 4.0,
     elevation: 0.0,
@@ -117,7 +117,7 @@ class Keys {
     opacityTrackWidth: 700.0,
     opacityThumbRadius: 16.0,
     enableTooltips: true,
-    // Picker Layout River "" providers.
+    // Picker Layout Riverpod providers.
     alignment: CrossAxisAlignment.center,
     columnSpacing: 8.0,
     padding: 10.0,
@@ -126,7 +126,7 @@ class Keys {
     closeIsLast: true,
     dialogActionButtons: true,
     dialogActionIcons: true,
-    // Copy Paste Actions River "" providers.
+    // Copy Paste Actions Riverpod providers.
     copyFormat: ColorPickerCopyFormat.dartCode,
     ctrlC: true,
     ctrlV: true,

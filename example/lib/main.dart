@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(const ColorPickerDemo());
 
@@ -51,6 +51,7 @@ class ColorPickerPage extends StatefulWidget {
 class _ColorPickerPageState extends State<ColorPickerPage> {
   late Color screenPickerColor;
   late Color dialogPickerColor;
+  late Color dialogSelectColor;
   late bool isDark;
 
   // Define some custom colors for the custom picker segment.
@@ -80,6 +81,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   void initState() {
     screenPickerColor = Colors.blue;
     dialogPickerColor = Colors.red;
+    dialogSelectColor = Colors.purple;
     isDark = false;
     super.initState();
   }
@@ -97,7 +99,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           children: <Widget>[
             // Pick color in a dialog.
             ListTile(
-              title: const Text('Click this color to change it in a dialog'),
+              title: const Text('Click this color to modify it in a dialog'),
               subtitle: Text(
                 '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
                 'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
@@ -107,6 +109,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                 height: 44,
                 borderRadius: 4,
                 color: dialogPickerColor,
+                onSelectFocus: false,
                 onSelect: () async {
                   final Color colorBeforeDialog = dialogPickerColor;
                   if (!(await colorPickerDialog())) {
@@ -116,6 +119,56 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   }
                 },
               ),
+            ),
+            ListTile(
+              title: const Text(
+                  'Click this color to select a new one from a dialog'),
+              subtitle: Text(
+                '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
+                'aka ${ColorTools.nameThatColor(dialogSelectColor)}',
+              ),
+              trailing: ColorIndicator(
+                  width: 40,
+                  height: 40,
+                  borderRadius: 0,
+                  color: dialogSelectColor,
+                  elevation: 1,
+                  onSelectFocus: false,
+                  onSelect: () async {
+                    final Color newColor = await showColorPickerDialog(
+                      context,
+                      dialogSelectColor,
+                      title: Text('ColorPicker',
+                          style: Theme.of(context).textTheme.headline6),
+                      width: 40,
+                      height: 40,
+                      spacing: 0,
+                      runSpacing: 0,
+                      borderRadius: 0,
+                      wheelDiameter: 165,
+                      enableOpacity: true,
+                      showColorCode: true,
+                      colorCodeHasColor: true,
+                      pickersEnabled: <ColorPickerType, bool>{
+                        ColorPickerType.wheel: true,
+                      },
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        longPressMenu: true,
+                      ),
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        dialogActionButtons: false,
+                      ),
+                      constraints: const BoxConstraints(
+                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                    );
+                    setState(() {
+                      dialogSelectColor = newColor;
+                    });
+                  }),
             ),
 
             // Show the selected color.
@@ -203,6 +256,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       showMaterialName: true,
       showColorName: true,
       showColorCode: true,
+      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+        longPressMenu: true,
+      ),
       materialNameTextStyle: Theme.of(context).textTheme.caption,
       colorNameTextStyle: Theme.of(context).textTheme.caption,
       colorCodeTextStyle: Theme.of(context).textTheme.bodyText2,
@@ -220,98 +276,96 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ).showPickerDialog(
       context,
       constraints:
-          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
+          const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
     );
   }
 }
 
 // TODO: Delete this before publish, just part of CodeSNap images
 
-void A(BuildContext context) {
-  final ColorPicker picker =
-  ColorPicker(
-    copyPasteBehavior:
-      const ColorPickerCopyPasteBehavior(
-        copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
-        parseShortHexCode: true,
-        editUsesParsedPaste: true,
-        snackBarParseError: true,
-        //
-      ),
-    //
-    actionButtons: const ColorPickerActionButtons(
-      // Make sure that you only enable the OK and Cancel button in the
-      // top toolbar when the picker is used in a dialog.
-      okButton: false, // OK top toolbar button.
-      closeButton: true, // Close top toolbar button.
-      dialogActionButtons: true, // Dialog has bottom action buttons.
-      dialogActionIcons: true, // Bottom action buttons have icons.
-      // Type of button for each bottom action button.
-      dialogOkButtonType: ColorPickerActionButtonType.outlined,
-      dialogCancelButtonType: ColorPickerActionButtonType.text,
-    ),
-    //
-    opacityTrackHeight: 35,
-    opacityTrackWidth: 164,
-    opacityThumbRadius: 23,
-    //
-    //
-    //
-    wheelDiameter: 250,
-    wheelWidth: 10,
-    wheelHasBorder: true,
-    borderColor: Colors.black38,
-    //
-    width: 53,
-    height: 53,
-    borderRadius: 3,
-    elevation: 4,
-    spacing: 5,
-    runSpacing: 5,
-    hasBorder: true,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    padding: const EdgeInsets.all(12),
-    columnSpacing: 10,
-    //
-    title: Text(
-      'ColorPicker',
-      style: Theme.of(context).textTheme.headline6,
-    ),
-    heading: Text(
-      'Select color',
-      style: Theme.of(context).textTheme.headline5,
-    ),
-    subheading: Text(
-      'Select color shade',
-      style: Theme.of(context).textTheme.subtitle1,
-    ),
-    wheelSubheading: Text(
-      'Selected color and its color swatch',
-      style: Theme.of(context).textTheme.subtitle1,
-    ),
-    opacitySubheading: Text(
-      'Opacity',
-      style: Theme.of(context).textTheme.subtitle1,
-    ),
-    recentColorsSubheading: Text(
-      'Recent colors',
-      style: Theme.of(context).textTheme.subtitle1,
-    ),
-    //
-    showColorCode: true,
-    colorCodeHasColor: true,
-    showColorValue: true,
-    showMaterialName: true,
-    showColorName: true,
-    enableShadesSelection: true,
-    pickersEnabled: const <ColorPickerType, bool>{
-      ColorPickerType.both: false,
-      ColorPickerType.primary: true,
-      ColorPickerType.accent: true,
-      ColorPickerType.bw: false,
-      ColorPickerType.custom: false,
-      ColorPickerType.wheel: true,
-    },
-    onColorChanged: (_) {},
-  );
-}
+// void A(BuildContext context) {
+//   final ColorPicker picker = ColorPicker(
+//     copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+//       copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+//       parseShortHexCode: true,
+//       editUsesParsedPaste: true,
+//       snackBarParseError: true,
+//       //
+//     ),
+//     //
+//     actionButtons: const ColorPickerActionButtons(
+//       // Make sure that you only enable the OK and Cancel button in the
+//       // top toolbar when the picker is used in a dialog.
+//       okButton: false, // OK top toolbar button.
+//       closeButton: true, // Close top toolbar button.
+//       dialogActionButtons: true, // Dialog has bottom action buttons.
+//       dialogActionIcons: true, // Bottom action buttons have icons.
+//       // Type of button for each bottom action button.
+//       dialogOkButtonType: ColorPickerActionButtonType.outlined,
+//       dialogCancelButtonType: ColorPickerActionButtonType.text,
+//     ),
+//     //
+//     opacityTrackHeight: 35,
+//     opacityTrackWidth: 164,
+//     opacityThumbRadius: 23,
+//     //
+//     //
+//     //
+//     wheelDiameter: 250,
+//     wheelWidth: 10,
+//     wheelHasBorder: true,
+//     borderColor: Colors.black38,
+//     //
+//     width: 53,
+//     height: 53,
+//     borderRadius: 3,
+//     elevation: 4,
+//     spacing: 5,
+//     runSpacing: 5,
+//     hasBorder: true,
+//     crossAxisAlignment: CrossAxisAlignment.center,
+//     padding: const EdgeInsets.all(12),
+//     columnSpacing: 10,
+//     //
+//     title: Text(
+//       'ColorPicker',
+//       style: Theme.of(context).textTheme.headline6,
+//     ),
+//     heading: Text(
+//       'Select color',
+//       style: Theme.of(context).textTheme.headline5,
+//     ),
+//     subheading: Text(
+//       'Select color shade',
+//       style: Theme.of(context).textTheme.subtitle1,
+//     ),
+//     wheelSubheading: Text(
+//       'Selected color and its color swatch',
+//       style: Theme.of(context).textTheme.subtitle1,
+//     ),
+//     opacitySubheading: Text(
+//       'Opacity',
+//       style: Theme.of(context).textTheme.subtitle1,
+//     ),
+//     recentColorsSubheading: Text(
+//       'Recent colors',
+//       style: Theme.of(context).textTheme.subtitle1,
+//     ),
+//     //
+//     showColorCode: true,
+//     colorCodeHasColor: true,
+//     showColorValue: true,
+//     showMaterialName: true,
+//     showColorName: true,
+//     enableShadesSelection: true,
+//     pickersEnabled: const <ColorPickerType, bool>{
+//       ColorPickerType.both: false,
+//       ColorPickerType.primary: true,
+//       ColorPickerType.accent: true,
+//       ColorPickerType.bw: false,
+//       ColorPickerType.custom: false,
+//       ColorPickerType.wheel: true,
+//     },
+//     onColorChanged: (_) {},
+//   );
+// }

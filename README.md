@@ -18,6 +18,38 @@ copy-paste of color from/to the picker, including desktop keyboard copy/paste sh
         - [Live Web Demo](#live-web-demo)
     - [Simple Example](#simple-example)
     - [Dialog Example](#dialog-example)
+- [FlexColorPicker API Guide](#flexcolorpicker-api-guide)
+    - [Elements of the Picker](#elements-of-the-picker)
+        - [Enabled Color Pickers](#enabled-color-pickers)
+        - [Enable Shades Selection](#enable-shades-selection)
+        - [Custom Color Swatches](#custom-color-swatches)
+        - [Customized labels](#customized-labels)
+        - [Enable Opacity](#enable-opacity)
+        - [Show Color Names](#show-color-names)
+            - [Translate Material Color Names](#translate-material-color-names)
+        - [Show Color Code](#show-color-code)
+        - [Show Recent Colors](#show-recent-colors)
+        - [Title and Heading Widgets](#title-and-heading-widgets)
+    - [Picker Design](#picker-design)
+        - [Color Picker Items](#color-picker-items)
+        - [Wheel Diameter, Width and Border](#wheel-diameter-width-and-border)
+        - [Opacity Slider Height, Width and Thumb Radius](#opacity-slider-height-width-and-thumb-radius)
+    - [Picker Layout](#picker-layout)
+        - [Tooltips](#tooltips)
+    - [Dialog Action Buttons](#dialog-action-buttons)
+    - [Copy-Paste Actions and Behavior](#copy-paste-actions-and-behavior)
+        - [Code Field Copy Button](#code-field-copy-button)
+        - [Keyboard Shortcuts](#keyboard-shortcuts)
+        - [Toolbar Buttons](#toolbar-buttons)
+        - [Context Menu](#context-menu)
+        - [Color Code Formats and Paste Parsing](#color-code-formats-and-paste-parsing)
+    - [onChange Callbacks](#onchange-callbacks)
+    - [Dialogs](#dialogs)
+        - [ColorPicker showPickerDialog Method](#colorpicker-showpickerdialog-method)
+        - [Function flexColorPickerDialog](#function-colorpickerdialog)
+- [Desktop and Web Ready](#desktop-and-web-ready)
+- [Additional Resources](#additional-resources)      
+
 ---
 
 ## Picker Types
@@ -714,7 +746,7 @@ with a `Wrap` widget, as are their shade colors, and the recently used colors li
 
 Please see above API reference for defaults and allowed values.
 
-### Wheel diameter, width and border
+### Wheel Diameter, Width and Border
 API reference: [wheelDiameter, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelDiameter.html)
 [wheelWidth, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelWidth.html)
 [wheelHasBorder, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelHasBorder.html)
@@ -727,7 +759,7 @@ must be from 100 to max 500 dp, and it defaults to 190 dp.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-15.png?raw=true" alt="Picker 15"/>
 
-### Opacity slider height, width and thumb radius
+### Opacity Slider Height, Width and Thumb Radius
 API reference: [opacityTrackHeight, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityTrackHeight.html)
 [opacityTrackWidth, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityTrackWidth.html)
 [opacityThumbRadius.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacityThumbRadius.html)
@@ -1037,7 +1069,7 @@ without importing none SDK plugins/packages to make sounds. This package strives
 packages, so it will not add any additional none Flutter SDK imports. (Defaults to `false`).
 
 
-### onChange Callbacks
+## onChange Callbacks
 
 API reference: [onColorChanged, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/onColorChanged.html)
 [onColorChangeStart, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/onColorChangeStart.html)
@@ -1096,18 +1128,26 @@ The FlexColorPicker comes with two built-in ready to use dialogs. You can also m
 `ColorPicker()` in your own dialog or overlays designs. In this chapter we will look at the two built in dialogs,
 that are really the same dialog but designed for slightly different use cases.
 
-### ColorPicker show dialog method
+### ColorPicker showPickerDialog Method
 
 The dialog demo in the default example app shown earlier [here](#dialog-example) explains how to use
 the default built-in [ColorPicker(...).showPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showPickerDialog.html) method.
 
-This method allows you to listen to the 
+This method allows you track the **onChange** callbacks when the dialog is open and colors are being manipulated and
+react to the changes as they happen. You can use this to for example interactively change color properties of
+the application's theme and see the changes applied as a new color is selected in th dialog picker.
 
-### Get picked color function 
+The disadvantage with this picker is that you have to maintain the state, store color before you open the dialog and
+restroe this color if the dialog is cancelled instead of a color selected.
 
-*Add images and more text...*
+### Function showColorPickerDialog 
 
-## Desktop and Web Ready
+The `showColorPickerDialog` function is often simpler to use, just call the function and await for it to return the 
+selected color, or null if the selection is cancelled. You still have to handle the null case. Of course if you
+make the dialog barrier un-dismissible and only have an OK (select) button enabled to close the dialog, then you
+will always get a `Color()` returned from the dialog. But if it is cancelled, null will be returned.
+
+# Desktop and Web Ready
 
 The FlexColorPicker is Web and Desktop ready. For most parts focus behaves as expected, and it supports keyboard 
 navigation and control. As shown above, if configured, it also has keyboard shortcuts for copy and paste commands. 
