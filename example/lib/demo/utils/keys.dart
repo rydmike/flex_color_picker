@@ -8,11 +8,7 @@ class Keys {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
   Keys._();
-
-  // Hive constants
-  static const String folder = 'color_picker_demo';
-  static const String box = 'picker_settings';
-  // Hive string keys
+  // Hive string keys and names for the Riverpod providers.
   //
   // Key for theme mode, we will persist it too.
   static const String themeMode = 'themeMode';

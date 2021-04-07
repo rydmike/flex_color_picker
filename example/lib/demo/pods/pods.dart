@@ -1,8 +1,8 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 
+import '../store/hive_store.dart';
 import '../utils/keys.dart';
 
 // Simple Riverpod State providers, that are called "Pod:s" as it is nice and
@@ -48,24 +48,18 @@ import '../utils/keys.dart';
 // need to be a local property and both a setter and getter for each
 // StateProvider below. Plus a separate Hive save (put) call for each setter.
 // The Hive storage is now a single line in the ProviderObserver, and the
-// StateProvider that are initialized from the Hive bix below, or via default
+// StateProvider that are initialized from the Hive box below, or via default
 // const map if Hive bix has now value, is actually quite compact considering
 // all it does. We do however have to deal with dynamic's and type casts to
 // make this work, but since it is all based type safe providers and const
 // values as keys we keep uniques in const map, it is fairly safe as long as
 // we don't use the wrong key for a provider when we get the value.
-//
-
-// A ref to the used Hive box, it should be opened before you use it, which it
-// will be since we open it once at the start of the app and don't close it
-// anywhere in this color picker demo app.
-final Box<dynamic> _box = Hive.box<dynamic>(Keys.box);
 
 // themeModePod is a [StateProvider] to provide the state of
 // the [ThemeMode], used to toggle the application wide theme mode.
 final StateProvider<ThemeMode> themeModePod =
     StateProvider<ThemeMode>((ProviderReference ref) {
-  return _box.get(Keys.themeMode,
+  return hiveStore.get(Keys.themeMode,
       defaultValue: Keys.defaults[Keys.themeMode]! as ThemeMode) as ThemeMode;
 }, name: Keys.themeMode);
 
@@ -75,14 +69,14 @@ final StateProvider<ThemeMode> themeModePod =
 // StateProvider for the color we give to the color picker on the card.
 final StateProvider<Color> cardPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
-  return _box.get(Keys.cardPickerColor,
+  return hiveStore.get(Keys.cardPickerColor,
       defaultValue: Keys.defaults[Keys.cardPickerColor]! as Color) as Color;
 }, name: Keys.cardPickerColor);
 
 // StateProvider for the color we give to the color picker in the dialog.
 final StateProvider<Color> dialogPickerColorPod =
     StateProvider<Color>((ProviderReference ref) {
-  return _box.get(Keys.dialogPickerColor,
+  return hiveStore.get(Keys.dialogPickerColor,
       defaultValue: Keys.defaults[Keys.dialogPickerColor]! as Color) as Color;
 }, name: Keys.dialogPickerColor);
 
@@ -116,7 +110,7 @@ final StateProvider<List<Color>> cardRecentColorsPod =
     StateProvider<List<Color>>(
   (ProviderReference ref) {
     // ignore: avoid_dynamic_calls
-    return _box
+    return hiveStore
         .get(Keys.cardRecentColors,
             defaultValue: Keys.defaults[Keys.cardRecentColors]! as List<Color>)
         .cast<Color>() as List<Color>;
@@ -128,7 +122,7 @@ final StateProvider<List<Color>> cardRecentColorsPod =
 final StateProvider<List<Color>> dialogRecentColorsPod =
     StateProvider<List<Color>>((ProviderReference ref) {
   // ignore: avoid_dynamic_calls
-  return _box
+  return hiveStore
       .get(Keys.dialogRecentColors,
           defaultValue: Keys.defaults[Keys.dialogRecentColors]! as List<Color>)
       .cast<Color>() as List<Color>;
@@ -147,7 +141,7 @@ final StateProvider<List<Color>> dialogRecentColorsPod =
 final StateProvider<Map<ColorPickerType, bool>> pickersEnabledPod =
     StateProvider<Map<ColorPickerType, bool>>((ProviderReference ref) {
   // ignore: avoid_dynamic_calls
-  return _box
+  return hiveStore
       .get(Keys.pickersEnabled,
           defaultValue:
               Keys.defaults[Keys.pickersEnabled]! as Map<ColorPickerType, bool>)
@@ -157,105 +151,105 @@ final StateProvider<Map<ColorPickerType, bool>> pickersEnabledPod =
 // State of shades color selection.
 final StateProvider<bool> enableShadesSelectionPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.enableShadesSelection,
+  return hiveStore.get(Keys.enableShadesSelection,
       defaultValue: Keys.defaults[Keys.enableShadesSelection]! as bool) as bool;
 }, name: Keys.enableShadesSelection);
 
 // State of including index 850 for grey color.
 final StateProvider<bool> includeIndex850Pod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.includeIndex850,
+  return hiveStore.get(Keys.includeIndex850,
       defaultValue: Keys.defaults[Keys.includeIndex850]! as bool) as bool;
 }, name: Keys.includeIndex850);
 
 // State of enabling opacity for color.
 final StateProvider<bool> enableOpacityPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.enableOpacity,
+  return hiveStore.get(Keys.enableOpacity,
       defaultValue: Keys.defaults[Keys.enableOpacity]! as bool) as bool;
 }, name: Keys.enableOpacity);
 
 // State of showing Material color name.
 final StateProvider<bool> showMaterialNamePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showMaterialName,
+  return hiveStore.get(Keys.showMaterialName,
       defaultValue: Keys.defaults[Keys.showMaterialName]! as bool) as bool;
 }, name: Keys.showMaterialName);
 
 // State of showing general color name.
 final StateProvider<bool> showColorNamePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showColorName,
+  return hiveStore.get(Keys.showColorName,
       defaultValue: Keys.defaults[Keys.showColorName]! as bool) as bool;
 }, name: Keys.showColorName);
 
 // State of showing color code edit-display field: on/off.
 final StateProvider<bool> showColorCodePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showColorCode,
+  return hiveStore.get(Keys.showColorCode,
       defaultValue: Keys.defaults[Keys.showColorCode]! as bool) as bool;
 }, name: Keys.showColorCode);
 
 // State of showing color code using color as background.
 final StateProvider<bool> colorCodeHasColorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.colorCodeHasColor,
+  return hiveStore.get(Keys.colorCodeHasColor,
       defaultValue: Keys.defaults[Keys.colorCodeHasColor]! as bool) as bool;
 }, name: Keys.colorCodeHasColor);
 
 // State of color code field being read only.
 final StateProvider<bool> colorCodeReadOnlyPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.colorCodeReadOnly,
+  return hiveStore.get(Keys.colorCodeReadOnly,
       defaultValue: Keys.defaults[Keys.colorCodeReadOnly]! as bool) as bool;
 }, name: Keys.colorCodeReadOnly);
 
 // State of showing color code int value.
 final StateProvider<bool> showColorValuePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showColorValue,
+  return hiveStore.get(Keys.showColorValue,
       defaultValue: Keys.defaults[Keys.showColorValue]! as bool) as bool;
 }, name: Keys.showColorValue);
 
 // State of showing recently used colors.
 final StateProvider<bool> showRecentColorsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showRecentColors,
+  return hiveStore.get(Keys.showRecentColors,
       defaultValue: Keys.defaults[Keys.showRecentColors]! as bool) as bool;
 }, name: Keys.showRecentColors);
 
 // State of showing title.
 final StateProvider<bool> showTitlePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showTitle,
+  return hiveStore.get(Keys.showTitle,
       defaultValue: Keys.defaults[Keys.showTitle]! as bool) as bool;
 }, name: Keys.showTitle);
 
 // State of showing heading.
 final StateProvider<bool> showHeadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showHeading,
+  return hiveStore.get(Keys.showHeading,
       defaultValue: Keys.defaults[Keys.showHeading]! as bool) as bool;
 }, name: Keys.showHeading);
 
 // State of showing sub heading, for both swatch color pickers and wheel.
 final StateProvider<bool> showSubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showSubheading,
+  return hiveStore.get(Keys.showSubheading,
       defaultValue: Keys.defaults[Keys.showSubheading]! as bool) as bool;
 }, name: Keys.showSubheading);
 
 // State of showing subheading for opacity control.
 final StateProvider<bool> showOpacitySubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showOpacitySubheading,
+  return hiveStore.get(Keys.showOpacitySubheading,
       defaultValue: Keys.defaults[Keys.showOpacitySubheading]! as bool) as bool;
 }, name: Keys.showOpacitySubheading);
 
 // State of showing sub heading for recently used colors.
 final StateProvider<bool> showRecentSubheadingPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.showRecentSubheading,
+  return hiveStore.get(Keys.showRecentSubheading,
       defaultValue: Keys.defaults[Keys.showRecentSubheading]! as bool) as bool;
 }, name: Keys.showRecentSubheading);
 
@@ -266,70 +260,70 @@ final StateProvider<bool> showRecentSubheadingPod =
 // State of picker item size.
 final StateProvider<double> sizePod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.size, defaultValue: Keys.defaults[Keys.size]! as double)
-      as double;
+  return hiveStore.get(Keys.size,
+      defaultValue: Keys.defaults[Keys.size]! as double) as double;
 }, name: Keys.size);
 
 // State of picker item border radius.
 final StateProvider<double> borderRadiusPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.borderRadius,
+  return hiveStore.get(Keys.borderRadius,
       defaultValue: Keys.defaults[Keys.borderRadius]! as double) as double;
 }, name: Keys.borderRadius);
 
 // State of picker item elevation.
 final StateProvider<double> elevationPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.elevation,
+  return hiveStore.get(Keys.elevation,
       defaultValue: Keys.defaults[Keys.elevation]! as double) as double;
 }, name: Keys.elevation);
 
 // State of picker item spacing.
 final StateProvider<double> spacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.spacing,
+  return hiveStore.get(Keys.spacing,
       defaultValue: Keys.defaults[Keys.spacing]! as double) as double;
 }, name: Keys.spacing);
 
 // State of picker item run spacing.
 final StateProvider<double> runSpacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.runSpacing,
+  return hiveStore.get(Keys.runSpacing,
       defaultValue: Keys.defaults[Keys.runSpacing]! as double) as double;
 }, name: Keys.runSpacing);
 
 // State of using border on picker items.
 final StateProvider<bool> hasBorderPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.hasBorder,
+  return hiveStore.get(Keys.hasBorder,
       defaultValue: Keys.defaults[Keys.hasBorder]! as bool) as bool;
 }, name: Keys.hasBorder);
 
 // State of wheel diameter.
 final StateProvider<double> wheelDiameterPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.wheelDiameter,
+  return hiveStore.get(Keys.wheelDiameter,
       defaultValue: Keys.defaults[Keys.wheelDiameter]! as double) as double;
 }, name: Keys.wheelDiameter);
 
 // State of wheel width.
 final StateProvider<double> wheelWidthPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.wheelWidth,
+  return hiveStore.get(Keys.wheelWidth,
       defaultValue: Keys.defaults[Keys.wheelWidth]! as double) as double;
 }, name: Keys.wheelWidth);
 
 // State of using border on wheel picker .
 final StateProvider<bool> wheelHasBorderPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.wheelHasBorder,
+  return hiveStore.get(Keys.wheelHasBorder,
       defaultValue: Keys.defaults[Keys.wheelHasBorder]! as bool) as bool;
 }, name: Keys.wheelHasBorder);
 
 // State of used height on color opacity slider.
 final StateProvider<double> opacityTrackHeightPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.opacityTrackHeight,
+  return hiveStore.get(Keys.opacityTrackHeight,
           defaultValue: Keys.defaults[Keys.opacityTrackHeight]! as double)
       as double;
 }, name: Keys.opacityTrackHeight);
@@ -337,14 +331,14 @@ final StateProvider<double> opacityTrackHeightPod =
 // State of used width on color opacity slider.
 final StateProvider<double> opacityTrackWidthPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.opacityTrackWidth,
+  return hiveStore.get(Keys.opacityTrackWidth,
       defaultValue: Keys.defaults[Keys.opacityTrackWidth]! as double) as double;
 }, name: Keys.opacityTrackWidth);
 
 // State of used thumb radius on color opacity slider.
 final StateProvider<double> opacityThumbRadiusPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.opacityThumbRadius,
+  return hiveStore.get(Keys.opacityThumbRadius,
           defaultValue: Keys.defaults[Keys.opacityThumbRadius]! as double)
       as double;
 }, name: Keys.opacityThumbRadius);
@@ -352,7 +346,7 @@ final StateProvider<double> opacityThumbRadiusPod =
 // State of showing tooltips.
 final StateProvider<bool> enableTooltipsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.enableTooltips,
+  return hiveStore.get(Keys.enableTooltips,
       defaultValue: Keys.defaults[Keys.enableTooltips]! as bool) as bool;
 }, name: Keys.enableTooltips);
 
@@ -363,7 +357,7 @@ final StateProvider<bool> enableTooltipsPod =
 // State of used alignment in the color picker
 final StateProvider<CrossAxisAlignment> alignmentPod =
     StateProvider<CrossAxisAlignment>((ProviderReference ref) {
-  return _box.get(Keys.alignment,
+  return hiveStore.get(Keys.alignment,
           defaultValue: Keys.defaults[Keys.alignment]! as CrossAxisAlignment)
       as CrossAxisAlignment;
 }, name: Keys.alignment);
@@ -371,49 +365,49 @@ final StateProvider<CrossAxisAlignment> alignmentPod =
 // State of used spacing between each item in the column in the picker.
 final StateProvider<double> columnSpacingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.columnSpacing,
+  return hiveStore.get(Keys.columnSpacing,
       defaultValue: Keys.defaults[Keys.columnSpacing]! as double) as double;
 }, name: Keys.columnSpacing);
 
 // State of used padding surrounding the content around the picker.
 final StateProvider<double> paddingPod =
     StateProvider<double>((ProviderReference ref) {
-  return _box.get(Keys.padding,
+  return hiveStore.get(Keys.padding,
       defaultValue: Keys.defaults[Keys.padding]! as double) as double;
 }, name: Keys.padding);
 
 // State of using a close button on dialog toolbar.
 final StateProvider<bool> closeButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.closeButton,
+  return hiveStore.get(Keys.closeButton,
       defaultValue: Keys.defaults[Keys.closeButton]! as bool) as bool;
 }, name: Keys.closeButton);
 
 // State of using a OK button on dialog toolbar.
 final StateProvider<bool> okButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.okButton,
+  return hiveStore.get(Keys.okButton,
       defaultValue: Keys.defaults[Keys.okButton]! as bool) as bool;
 }, name: Keys.okButton);
 
 // State of using having close button as last action on dialog toolbar.
 final StateProvider<bool> closeIsLastPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.closeIsLast,
+  return hiveStore.get(Keys.closeIsLast,
       defaultValue: Keys.defaults[Keys.closeIsLast]! as bool) as bool;
 }, name: Keys.closeIsLast);
 
 // State of having Cancel OK bottom action in the dialog.
 final StateProvider<bool> dialogActionButtonsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.dialogActionButtons,
+  return hiveStore.get(Keys.dialogActionButtons,
       defaultValue: Keys.defaults[Keys.dialogActionButtons]! as bool) as bool;
 }, name: Keys.dialogActionButtons);
 
 // State of having icons on Cancel OK bottom actions buttons in the dialog.
 final StateProvider<bool> dialogActionIconsPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.dialogActionIcons,
+  return hiveStore.get(Keys.dialogActionIcons,
       defaultValue: Keys.defaults[Keys.dialogActionIcons]! as bool) as bool;
 }, name: Keys.dialogActionIcons);
 
@@ -424,7 +418,7 @@ final StateProvider<bool> dialogActionIconsPod =
 // State of used color code COPY format.
 final StateProvider<ColorPickerCopyFormat> copyFormatPod =
     StateProvider<ColorPickerCopyFormat>((ProviderReference ref) {
-  return _box.get(Keys.copyFormat,
+  return hiveStore.get(Keys.copyFormat,
       defaultValue: Keys.defaults[Keys.copyFormat]!
           as ColorPickerCopyFormat) as ColorPickerCopyFormat;
 }, name: Keys.copyFormat);
@@ -432,49 +426,49 @@ final StateProvider<ColorPickerCopyFormat> copyFormatPod =
 // State of using CTRL-C keyboard shortcut.
 final StateProvider<bool> ctrlCPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.ctrlC, defaultValue: Keys.defaults[Keys.ctrlC]! as bool)
-      as bool;
+  return hiveStore.get(Keys.ctrlC,
+      defaultValue: Keys.defaults[Keys.ctrlC]! as bool) as bool;
 }, name: Keys.ctrlC);
 
 // State of using CTRL-V keyboard shortcut.
 final StateProvider<bool> ctrlVPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.ctrlV, defaultValue: Keys.defaults[Keys.ctrlV]! as bool)
-      as bool;
+  return hiveStore.get(Keys.ctrlV,
+      defaultValue: Keys.defaults[Keys.ctrlV]! as bool) as bool;
 }, name: Keys.ctrlV);
 
 // State of using Copy button on toolbar.
 final StateProvider<bool> copyButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.copyButton,
+  return hiveStore.get(Keys.copyButton,
       defaultValue: Keys.defaults[Keys.copyButton]! as bool) as bool;
 }, name: Keys.copyButton);
 
 // State of using Paste button on toolbar.
 final StateProvider<bool> pasteButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.pasteButton,
+  return hiveStore.get(Keys.pasteButton,
       defaultValue: Keys.defaults[Keys.pasteButton]! as bool) as bool;
 }, name: Keys.pasteButton);
 
 // State of using Paste button on edit code field.
 final StateProvider<bool> editFieldCopyButtonPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.editFieldCopyButton,
+  return hiveStore.get(Keys.editFieldCopyButton,
       defaultValue: Keys.defaults[Keys.editFieldCopyButton]! as bool) as bool;
 }, name: Keys.editFieldCopyButton);
 
 // State of using long press copy-paste context menu.
 final StateProvider<bool> longPressMenuPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.longPressMenu,
+  return hiveStore.get(Keys.longPressMenu,
       defaultValue: Keys.defaults[Keys.longPressMenu]! as bool) as bool;
 }, name: Keys.longPressMenu);
 
 // State of using secondary (right) click copy-paste context menu.
 final StateProvider<bool> secondaryMenuPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.secondaryMenu,
+  return hiveStore.get(Keys.secondaryMenu,
       defaultValue: Keys.defaults[Keys.secondaryMenu]! as bool) as bool;
 }, name: Keys.secondaryMenu);
 
@@ -482,7 +476,7 @@ final StateProvider<bool> secondaryMenuPod =
 // on devices to show the copy-paste context menu
 final StateProvider<bool> secondaryDesktopOtherLongPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.secondaryDesktopOtherLong,
+  return hiveStore.get(Keys.secondaryDesktopOtherLong,
           defaultValue: Keys.defaults[Keys.secondaryDesktopOtherLong]! as bool)
       as bool;
 }, name: Keys.secondaryDesktopOtherLong);
@@ -490,27 +484,27 @@ final StateProvider<bool> secondaryDesktopOtherLongPod =
 // State of if Web 3-char code RGB, should be interpreted as RRGGBB.
 final StateProvider<bool> parseShortHexCodePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.parseShortHexCode,
+  return hiveStore.get(Keys.parseShortHexCode,
       defaultValue: Keys.defaults[Keys.parseShortHexCode]! as bool) as bool;
 }, name: Keys.parseShortHexCode);
 
 // State of if text edit field should use code parser on keyboard paste.
 final StateProvider<bool> editUsesParsedPastePod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.editUsesParsedPaste,
+  return hiveStore.get(Keys.editUsesParsedPaste,
       defaultValue: Keys.defaults[Keys.editUsesParsedPaste]! as bool) as bool;
 }, name: Keys.editUsesParsedPaste);
 
 // State of if color code parse error should result in a snackbar error message.
 final StateProvider<bool> snackbarParseErrorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.snackbarParseError,
+  return hiveStore.get(Keys.snackbarParseError,
       defaultValue: Keys.defaults[Keys.snackbarParseError]! as bool) as bool;
 }, name: Keys.snackbarParseError);
 
 // State of if color code parse error should give audible and vibration alert.
 final StateProvider<bool> feedbackParseErrorPod =
     StateProvider<bool>((ProviderReference ref) {
-  return _box.get(Keys.feedbackParseError,
+  return hiveStore.get(Keys.feedbackParseError,
       defaultValue: Keys.defaults[Keys.feedbackParseError]! as bool) as bool;
 }, name: Keys.feedbackParseError);
