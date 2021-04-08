@@ -1,10 +1,10 @@
 # This GitHub action runs on pull request to master, it:
 #
 #  - Installs dart and flutter
-#  - Uses flutter dev channel for now, will change to stable when web supported on stable.
+#  - Uses flutter beta channel for now.
 #  - Enables flutter web
 #  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on dev channel,
+#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
 #    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
 #    as long as they are not also deprecated on stable.
 #  - Show outdated packages, just added for info.
@@ -19,9 +19,10 @@
 #    - Use rpl to fix/modify the index.html file to give it the correct href deployment sub-folder.
 #  - This CI/CD stops here, it does not deploy, that is done by the deploy workflow, that is otherwise identical,
 #    but runs on release, when it is published, created or edited.
-#  TODO Maybe set this workflow up to also run on a weekly schedule to check that nothing is broken?
-#       Also planning to setup a matrix test run, but this one is anyway a nice test
-#       since it does not just runs tests, it also builds actual Web apps using the package.
+#
+#  TODO: Maybe set this workflow up to also run on a weekly schedule to check that nothing is broken?
+#        Also planning to setup a matrix test run, but this one is anyway a nice test
+#        since it does not just runs tests, it also builds actual Web apps using the package.
 #
 name: Build Samples
 on:
@@ -40,7 +41,7 @@ jobs:
       - name: Install Flutter and Dart SDK
         uses: subosito/flutter-action@v1.4.0
         with:
-          channel: "dev"
+          channel: "beta"
       - name: Show Dart SDK version
         run: dart --version
 
