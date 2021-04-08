@@ -19,7 +19,7 @@ copy-paste of color from/to the picker, including desktop keyboard copy/paste sh
     - [Getting Started](#getting-started)
         - [Default Example Application](#default-example-application)
         - [Live Web Demo](#live-web-demo)
-- [Example Tutorial](#example-tutorial)
+- [Tutorial](#tutorial)
     - [Color Indicator](#color-indicator)
     - [Screen ColorPicker](#screen-colorpicker)  
     - [Dialog ColorPicker Method](#dialog-colorpicker-method)
@@ -143,7 +143,7 @@ settings to their start default values as well.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
 
-# Example Tutorial
+# Tutorial
 
 In this chapter we use the default bundled example application as an introduction to the **FlexColorPicker**. We will
 create three different color pickers, with different configurations and using the `ColorPicker` three different ways 

@@ -244,9 +244,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     );
   }
 
-  MaterialColor? myColor;
-  MaterialAccentColor? myColor2;
-
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
       color: dialogPickerColor,
