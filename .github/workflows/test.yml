@@ -1,7 +1,6 @@
-# This GitHub action runs on push to master, it:
-#
-#  - Installs dart and flutter
-#  - Uses flutter dev channel for now, might setup a matrix later with beta and dev included too.
+# This GitHub actions runs on push to master, it:
+#  - Installs Dart and flutter
+#  - Uses Flutter beta channel for now, might setup a matrix later with other channels included too.
 #  - Gets package dependencies
 #  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features for now.
 #  - Show outdated packages, just added for info.
@@ -9,15 +8,10 @@
 #    dart format is not used.
 #  - Run all tests with coverage.
 #  - Upload code coverage output to Codecov for analysis.
-#
 name: Test
 on:
-  #release:
-  #  types: [published]
   push:
-    branches: [master]
-  #  branches: [2-0-0-stable-p1]
-
+    branches: [none]
 jobs:
   run_tests:
     name: Analyze and run all tests

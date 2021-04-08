@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'maybe_tooltip.dart';
 
-/// This is simple wrapper of the SwitchListTile.adaptive widget, used to
-/// wrap it with a tooltip and show the provided tooltip if one is provided.
-/// and the application settings say we should show it.
-///
-/// In this app this is used to show the Flexfold API property behind the
-/// toggle switch.
+/// This simple wrapper of the SwitchListTile.adaptive widget, is used to
+/// wrap it with a tooltip and show the provided tooltip if one is provided
+/// and tooltipEnabled is true.
 class SwitchTileTooltip extends StatelessWidget {
   /// Const default constructor.
   const SwitchTileTooltip({

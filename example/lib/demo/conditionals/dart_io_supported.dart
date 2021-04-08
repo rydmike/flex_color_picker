@@ -3,9 +3,9 @@ import 'dart:io' show Directory;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart' as path_provider;
 
-// This is a collection of unsupported functions in Flutter WEB that are all
+// This is a collection of unsupported functions in Flutter WEB that are
 // behind the dart.io package. They will only be imported on platforms
-// that support compiling them, basically all except WEB platform.
+// that support compiling them, basically all except the WEB platform.
 
 /// The [getAppDataDir] is a custom made folder/directory getter for different
 /// platforms that uses package path_provider.dart.

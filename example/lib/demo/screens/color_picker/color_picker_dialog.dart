@@ -5,22 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../pods/pods.dart';
 import '../../utils/app.dart';
 
+/// The ColorPicker shown in a dialog that is opened from the ColorPickerScreen.
 Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
   final ColorScheme colorScheme = Theme.of(context).colorScheme;
   return ColorPicker(
     color: watch(dialogPickerColorPod).state,
     onColorChangeStart: (Color color) {
       context.read(onColorChangeStartPod).state = color;
-      // debugPrint('onColorChangeStart called');
     },
     onColorChanged: (Color color) {
       context.read(dialogPickerColorPod).state = color;
       context.read(onColorChangedPod).state = color;
-      // debugPrint('onColorChanged called');
     },
     onColorChangeEnd: (Color color) {
       context.read(onColorChangeEndPod).state = color;
-      // debugPrint('onColorChangeEnd called');
     },
     onRecentColorsChanged: (List<Color> colors) {
       context.read(dialogRecentColorsPod).state = colors;

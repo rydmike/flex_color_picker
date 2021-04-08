@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../pods/pods.dart';
 import '../../utils/app.dart';
 
+/// The ColorPicker shown in a card on the ColorPickerScreen.
 @immutable
 class ColorPickerCard extends ConsumerWidget {
   const ColorPickerCard({Key? key}) : super(key: key);
@@ -18,16 +19,13 @@ class ColorPickerCard extends ConsumerWidget {
         color: watch(cardPickerColorPod).state,
         onColorChangeStart: (Color color) {
           context.read(onColorChangeStartPod).state = color;
-          // debugPrint('onColorChangeStart called');
         },
         onColorChanged: (Color color) {
           context.read(cardPickerColorPod).state = color;
           context.read(onColorChangedPod).state = color;
-          // debugPrint('onColorChanged called');
         },
         onColorChangeEnd: (Color color) {
           context.read(onColorChangeEndPod).state = color;
-          // debugPrint('onColorChangeEnd called');
         },
         onRecentColorsChanged: (List<Color> colors) {
           context.read(cardRecentColorsPod).state = colors;

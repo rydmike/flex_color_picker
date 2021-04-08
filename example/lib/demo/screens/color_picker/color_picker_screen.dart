@@ -7,6 +7,12 @@ import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
 
+/// Screen with the two ColorPickers and all controls and settings we use to
+/// manipulate their design and behavior.
+///
+/// The laout is responsive and can have 1 to 4 columns that contains the
+/// ColorPicker and the controls, each column when visible has its own
+/// ListView, so the columns can be scrolled individually when they are visible.
 class ColorPickerScreen extends StatelessWidget {
   const ColorPickerScreen({Key? key}) : super(key: key);
 
@@ -143,7 +149,7 @@ class _Column1 extends StatelessWidget {
             style: Theme.of(context).textTheme.headline4,
           ),
         ),
-        // Show the color selected in a dialog and open dialog to change it.
+        // Show the color selected in a dialog and open a dialog to change it.
         const DialogPickerColorIndicator(),
         // Show the color selected in the picker in a Card below.
         const CardPickerColorIndicator(),

@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../store/hive_store.dart';
 import '../utils/keys.dart';
 
-// Simple Riverpod State providers, that are called "Pod:s" as it is nice and
-// short, and it might even become the official new name for Riverpod providers.
+// Simple Riverpod State providers, that are called "Pod:s" in this app, just
+// because it is nice and short, and it might even become the official new
+// name for Riverpod providers.
 //
 // This demo app is perhaps a bit "a-typical" in the sense that we want every
 // toggle on the SettingScreen to update something as it happens while
@@ -18,45 +19,51 @@ import '../utils/keys.dart';
 // Still using each "Pod" in an individual widgets to toggle each
 // state provider's state, is pretty easy and simple to do and maintain.
 //
-// Most of these state providers red their default value from a Hive box, where
+// Most of these state providers read their default value from a Hive box, where
 // the last used value of the state provider is stored, if there is no value
-// for it in the hive box, they fall back to a lookup key value from const
-// { string_key : default_value } map. The string key has its onw const value
+// for it in the Hive box, they fall back to a lookup key value from const
+// { string_key : default_value } Map. The string key has its own const value
 // as well and it is used both as key for the default value map and as name
-// of the state provider. By giving the state providers unique names, we can
+// of its StateProvider. By giving the StateProviders unique names, we can
 // find them in a ProviderObserver and store their new value in the the Hive
 // box when their state value changes.
 //
-// For more complex use cases and classes, use StateNotifierProvider instead of
-// StateProvider, but in this case we want to track the state change of each
+// For more complex use cases and classes, use a StateNotifierProvider instead
+// of StateProvider, but in this case we want to track the state change of each
 // individual value below, and rebuild only needed parts when it changes, and to
 // store/update only that particular value in the Hive box when it changed.
 // If we would have all the properties in a state notifier and use a state
 // notifier provider, we would get notified when any of all these properties
 // changed.
 //
-// With a change notifier and using a selector we could also do this,
+// With a ChangeNotifier and using a Selector we could also do this,
 // but then we are using mutable state variables. Using a ChangeNotifier, with
 // setter and getter for each property that also persist them as they are
-// changed, we can do the same thing. Each property's UI widget could also use
-// a selector to only rebuild when its is updated. One can argue that using
-// mutable state this way might even be simpler or preferred over this
-// implementation. This was also an experiment and test to see if this can be
-// done like this and how it feels. With this amount of control value (there
-// are 55 of them that are persisted) it is becoming a bit tedious to do it
-// this ways too. However, bare in mind that with a change notifier, there would
-// need to be a local property and both a setter and getter for each
-// StateProvider below. Plus a separate Hive save (put) call for each setter.
-// The Hive storage is now a single line in the ProviderObserver, and the
-// StateProvider that are initialized from the Hive box below, or via default
-// const map if Hive box has no value, is actually quite compact considering
-// all it does. We do however have to deal with dynamic's and type casts to
+// changed, we can do a similar thing to this setup. Each property's UI widget
+// could then also use a selector to only rebuild when it is updated. One could
+// argue that using mutable state this way might even be simpler or preferred
+// over this implementation. This was also an experiment and test to see if this
+// can be done like this and how it feels.
+//
+// With this amount of control value (there are 55 of them that are persisted)
+// it is becoming a bit tedious to do it this ways too. However, bare in mind
+// that with a ChangeNotifier, there would need to be a local property and
+// both a setter and getter for each StateProvider below. Plus a separate
+// Hive save (put) call for each setter.
+//
+// The Hive save is now a single line in the ProviderObserver, and the
+// StateProviders are initialized from the Hive box below, or via default
+// const map if the Hive box has no value fro the named StateProvider that uses
+// the same const value as name as the key used in the Hive box. It is actually
+// quite compact considering  all it does.
+//
+// We do however have to deal with dynamic's and type casts to
 // make this work, but since it is all based type safe providers and const
 // values as keys we keep uniques in a const map, it is fairly safe as long as
 // we don't use the wrong key for a provider when we get the value.
 
-// themeModePod is a [StateProvider] to provide the state of
-// the [ThemeMode], used to toggle the application wide theme mode.
+// The themeModePod is a [StateProvider] to provide the state of
+// the [ThemeMode] used to toggle the application's theme mode.
 final StateProvider<ThemeMode> themeModePod =
     StateProvider<ThemeMode>((ProviderReference ref) {
   return hiveStore.get(Keys.themeMode,
@@ -64,7 +71,7 @@ final StateProvider<ThemeMode> themeModePod =
 }, name: Keys.themeMode);
 
 // All the other state providers are all related to manipulating
-// input and view output from the FlexColorPicker.
+// input to to the FlexColorPicker and to track some output from it as well.
 
 // StateProvider for the color we give to the color picker on the card.
 final StateProvider<Color> cardPickerColorPod =
@@ -80,32 +87,25 @@ final StateProvider<Color> dialogPickerColorPod =
       defaultValue: Keys.defaults[Keys.dialogPickerColor]! as Color) as Color;
 }, name: Keys.dialogPickerColor);
 
-// StateProviders for the color we get back via onColorChangeStart callback.
+// StateProvider for the color we get back via onColorChangeStart callback.
 final StateProvider<Color> onColorChangeStartPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
 
-// StateProviders for the color we get back via onColorChanged callback
+// StateProvider for the color we get back via onColorChanged callback
 final StateProvider<Color> onColorChangedPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
 
-// StateProviders for the color we get back via onColorChangeEnd callback
+// StateProvider for the color we get back via onColorChangeEnd callback
 final StateProvider<Color> onColorChangeEndPod =
     StateProvider<Color>((ProviderReference ref) {
   return Colors.white;
 });
 
 // StateProvider for the recently used colors for color picker on the card.
-// We could start with some specific list as well. We get a new list of
-// recently used colors back from the color picker whenever a new color is
-// selected and its internal list is updated, the callback for this is
-// `onRecentColorsChanged`. We just update the entire list state with the
-// new list we get from the picker. Using the callback is optional, but you
-// could use it to store recently used colors during the session or even
-// between sessions.
 final StateProvider<List<Color>> cardRecentColorsPod =
     StateProvider<List<Color>>(
   (ProviderReference ref) {

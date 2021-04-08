@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
-/// The App utility class contains used consts doubles, strings and colors.
+/// The App utility class contains used consts for doubles, strings and colors.
 class App {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
@@ -11,7 +11,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '2.0.0-nullsafety.5';
+  static const String version = '2.0.0 PRE';
   static const String packageVersion = 'FlexColorScheme package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
   static const String flutterVersion = 'Channel beta 2.1.0-12.2.pre, CanvasKit';

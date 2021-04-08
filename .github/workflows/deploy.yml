@@ -1,8 +1,7 @@
-# This GitHub action runs on a release, when it is published, created or edited.
-#
-#  - Installs dart and flutter
-#  - Uses flutter beta channel for now.
-#  - Enables flutter web
+# This GitHub actions runs on a release, when it is published, created or edited.
+#  - Installs Dart and flutter
+#  - Uses Flutter beta channel for now.
+#  - Enables Flutter web
 #  - Gets package dependencies
 #  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
 #    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
@@ -17,14 +16,13 @@
 #    - Flutter clean.
 #    - Flutter build web app, in release mode and with CanvasKit renderer.
 #    - Use rpl to fix/modify the index.html file to give it the correct href deployment sub-folder.
-#    - Deploy each built Web App to GitHub pages.
-#
+#    - Deploy the Web example to GitHub pages.
 name: Deploy Web
 on:
-  release:
-    types: [published]
-  #push:
-  #  branches: [master]
+  push:
+    branches: [master]
+  #release:
+  #  types: [published]
 # Edit and add other trigger options if an extra new Web deployment is needed.
 # Generally I only need a new deployment when I publish a new release, but I may want to trigger it on defaults:
 # prerelease or just an edit sometimes to test the workflow or a new build irl, these trigger types can be used then:

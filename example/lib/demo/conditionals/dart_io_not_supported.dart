@@ -1,6 +1,7 @@
 // These functions are not supported on the Web platform, so we make dummy
 // functions for them on the unsupported Web platform, where they are not
 // even needed, thus it does not matter that they are not supported.
+//
 // These dummy functions get imported instead of the real ones on the WEB
 // platform. On desktops iOS and Android the real functions get imported,
 //

@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 
 /// Key constants for key-value pairs for storing the settings as well
 /// as a map with default value for each key-value pair settings.
-/// The keys are also used as names for Riverpod "pod" state providers.
+/// The keys are also used as names for Riverpod "pod" StateProviders.
 class Keys {
   // This class is not meant to be instantiated or extended, this constructor
   // prevents external instantiation and extension.
   Keys._();
-  // Hive string keys and names for the Riverpod providers.
-  //
-  // Key for theme mode, we will persist it too.
+  // Key for theme mode, we persist it as well.
   static const String themeMode = 'themeMode';
   // Keys for the selected colors and recent colors.
   static const String cardPickerColor = 'cardPickerColor';

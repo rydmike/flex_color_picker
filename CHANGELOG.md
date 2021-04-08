@@ -2,6 +2,9 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.0] - April 9, 2021
+* **Documentation:** Only documentation updates from pre-release **2.0.0-nullsafety.5**
+
 ## [2.0.0-nullsafety.5] - April 8, 2021
 * **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true. 
 * **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties 
@@ -39,8 +42,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   The default start values are also defined via the Riverpod StateProvider's default values, that also 
   use their const Hive string key as their provider name. Each StateProvider gets its start setting value from 
   the Hive box with the same key. If the key does not exist yet in Hive, it falls back to a default value from a
-  const Map using the same sring const as its key, for the default fallback value. Reset back to default values is also 
-  done by setting all providers' state back to their default values as defined by the same const 
+  const Map using the same string const as its key, for the default fallback value. Reset back to default values is 
+  also done by setting all providers' state back to their default values as defined by the same const 
   fallback value map.
 
 ## [2.0.0-nullsafety.4] - March 22, 2021
@@ -238,18 +241,17 @@ These are the topics I currently have on the TODO list for this package. Do you 
 Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
 
 ### TODO
-- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
-- Release none pre-release version 2.
 - Add more tests.
 - Finalize tests.
-- Additional controls for selecting active picker, custom slider and ToggleButtons.  
-- Add one more color picker type "advanced", using sliders as controls.
+- Additional controls for selecting active picker, maybe a custom slider and ToggleButtons.  
+- Add one more color picker type "advanced", using only sliders as controls.
 
 ### MAYBE
 - Add selected colors to the custom colors section.
-- Store colors added to the custom colors section.
 
 ### COMPLETED
+- Release none pre-release version 2.
+- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Add a simpler optional async dialog picker function, that returns selected color. 
 - Add support for colors with opacity or alpha.
 - Improve copy/paste feature.

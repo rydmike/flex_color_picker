@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'platform_widget.dart';
 
+/// A platform adaptive implementation of an AlertDialog.
 class PlatformAlertDialog extends PlatformWidget {
   const PlatformAlertDialog({
     Key? key,

@@ -1842,12 +1842,13 @@ class _ColorPickerState extends State<ColorPicker> {
     if (_editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste) {
       return;
     }
-    // Make a Desktop OS independent copy/paste modifier key.
+    // Make an OS independent copy/paste modifier key.
     final bool isMacOS = event.data is RawKeyEventDataMacOs;
-    // This isCtrlPressed will be true when command key is pressed on macOS or
-    // when CTRL key is pressed on Windows and Linux desktops.
+    final bool isIos = event.data is RawKeyEventDataIos;
+    // This isCtrlPressed will be true when command key is pressed on macOS/iOS
+    // or when CTRL key is pressed on Windows and Linux.
     final bool isCtrlPressed =
-        isMacOS ? event.isMetaPressed : event.isControlPressed;
+        isMacOS || isIos ? event.isMetaPressed : event.isControlPressed;
     // The raw keyboard listener reacts to both up and down events, we only
     // use down of them, so we only execute the copy and paste command once
     // when the key are presses down, we do not want to do it 2nd time when

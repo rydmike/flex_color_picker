@@ -7,12 +7,13 @@ import 'pods.dart';
 
 /// Rest all color picker settings to their default values.
 ///
-/// This changes all setting values to their default we defined for the
-/// [Keys.defaults] map, but as that is done those updates are also persisted
-/// by the Observer and will be used next time app is started as well.
+/// This changes all setting values to their defaults we defined in the
+/// [Keys.defaults] map, as that is done those updates are also persisted
+/// by the ProviderObserver and will be used next time app is started.
 ///
-/// There is just a lot of these, easy to miss one and have to remember to
-/// add any new tracked state provider property to the list to be reset.
+/// There is just a lot of these (55 at the moment), so it easy to miss one
+/// and we have to remember to add any new tracked state provider property
+/// to the list to be reset.
 void resetSettings(BuildContext context) {
   //
   // The theme mode Riverpod "Pod" providers.

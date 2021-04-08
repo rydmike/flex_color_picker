@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app.dart';
 
-/// The themes for this app.
+/// The theme for this app.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
   AppTheme._();
