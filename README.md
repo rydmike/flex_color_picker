@@ -12,12 +12,15 @@ copy-paste of color from/to the picker, including desktop keyboard copy/paste sh
 ## Contents
 - [FlexColorPicker](#flexcolorpicker)
     - [Contents](#contents)
-    - [Picker Types](#picker-types)  
+    - [Color Picker Types](#color-picker-types)  
     - [Getting Started](#getting-started)
         - [Default Example Application](#default-example-application)
         - [Live Web Demo](#live-web-demo)
-    - [Simple Example](#simple-example)
-    - [Dialog Example](#dialog-example)
+- [Example Tutorial](#example-tutorial)
+    - [Color Indicator](#color-indicator)
+    - [Screen ColorPicker](#screen-colorpicker)  
+    - [Dialog ColorPicker Method](#dialog-colorpicker-method)
+    - [Dialog ColorPicker Function](#dialog-colorpicker-function)
 - [FlexColorPicker API Guide](#flexcolorpicker-api-guide)
     - [Elements of the Picker](#elements-of-the-picker)
         - [Enabled Color Pickers](#enabled-color-pickers)
@@ -46,13 +49,13 @@ copy-paste of color from/to the picker, including desktop keyboard copy/paste sh
     - [onChange Callbacks](#onchange-callbacks)
     - [Dialogs](#dialogs)
         - [ColorPicker showPickerDialog Method](#colorpicker-showpickerdialog-method)
-        - [Function flexColorPickerDialog](#function-colorpickerdialog)
+        - [Function showColorPickerDialog](#function-showcolorpickerdialog)
 - [Desktop and Web Ready](#desktop-and-web-ready)
 - [Additional Resources](#additional-resources)      
 
 ---
 
-## Picker Types
+## Color Picker Types
 
 The different types of available color pickers are:
 
@@ -70,13 +73,14 @@ accent colors.
 
 Give the `ColorPicker` a heading and a subheading for the color shades, typically Text widgets with appropriate style. 
 Decide if the Material shades can be selected or not and if the selected color name and RGB code are visible in the 
-picker. If the color HEX RGB code is visible, the picker can also includes a button that allows you to copy the selected 
-color's code to the clipboard directly from the field. On the wheel picker you can enter a HEX RGB color code and
-the wheel picker will move to select the color as it is being entered, while also creating a swatch for it.
+picker. If the color HEX RGB code is visible, the picker can also include a button that allows you to copy the selected 
+color's code to the clipboard directly from the field. On the wheel picker you can enter a HEX RGB color code, and
+the wheel picker will move to select the color as the color code is being entered, while also creating a color 
+swatch for it.
 
 The shape, size and spacing of the color picker items can be modified. There is a built-in dialog that can be used to
-show and use the `ColorPicker` in a dialog. You can of course also make your own dialog and just use the color
-picker widget in your own custom dialog.
+show and use the `ColorPicker` in a dialog. You can of course also make your own dialog and just use the `ColorPicker`
+widget in your own custom dialog or other overlay.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-lower.png?raw=true" alt="ColorPicker variations lower"/>
 
@@ -112,54 +116,71 @@ that opens up in a dialog, with all pickers enabled, except 3 `ColorPickerType.b
 
 ### Live Web Demo
 
-You can also try a live web demo of the [**FlexColorPicker here**](https://rydmike.com/flexcolorpicker). With the Web
-demo you can modify most of the color picker's API values. Use it as a tool to find a style that fits your 
+You can also try a live Web demo of the [**FlexColorPicker here**](https://rydmike.com/flexcolorpicker). With the Web
+demo you can modify most of the color picker's API values and use it as a tool to find a style that fits your 
 application.
 
-The source code for the Web demo, which is a bit more elaborate example than the default example, is also bundled with 
-the package source code in "example/lib/demo/main.dart".
+The source code for the Web demo, which is a bit more elaborate example than examples normally are, is also bundled with 
+the package source code in the "example/lib/demo" folder.
 
-The WEB demo has a responsive view, that expands into maximum four separately scrollable columns. The columns contain
-a massive amount of controls that you can use to adjust the color picker's settings. On a normal 1080p desktop screen,
-you can see most of the settings at the same time as the color picker, so you can test and see their impact on the 
-picker as you adjust them. 
+The Web demo has a responsive view, that expands into maximum four separately scrollable columns. The columns contain
+a massive amount of controls that you can use to adjust the color picker's settings. On a 1080p desktop screen,
+you can see most of the settings at the same time as the color picker, so you can test the settings and see their
+impact on the picker as you adjust them. 
 
-The WEB demo also has tooltips for each control, the tooltips show the name of the API it uses and its current value. 
+The Web demo also has tooltips for each control. The tooltips show the name of the API it uses and its current value. 
 With this feature you can use the web demo as a tool configure the color picker to a desired style, and find the APIs 
-and values that you used. The same toggle that is used to demo turning OFF the tooltips in the picker, also turns OFF
-the API tooltips in the demo, in case they get in the way. By default tooltips are ON, to show the used API and 
-its value.
+and values that you used. The same toggle that is used to turn OFF the tooltips in the picker, also turns OFF
+the API tooltips in the demo, in case they get in the way. By default, the tooltips are ON, to show the used API and 
+its current value.
+
+The **FlexColorPicker** Web demo also persist the settings you change, so the next time you use it, with the same 
+device and browser, it will restore the configuration that you left it in last time you used it. You can reset the
+settings to their start default values as well.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/web_color_picker_v2.gif?raw=true" alt="ColorPicker WEB demo"/>
 
-## Simple Example
+# Example Tutorial
 
-Here we use the default bundled simple example application as an introduction to the color picker. The example uses a 
-StatefulWidget where we define a `Color` variable and give it a start value in the `StatefulWidget`'s `initState()`.
+In this chapter we use the default bundled example application as an introduction to the **FlexColorPicker**. We will
+create three different color pickers, with different configurations and using the `ColorPicker` three different ways 
+as well.
+
+This example uses a `StatefulWidget` as its main page, the `ColorPickerPage`, where we define three different `Color`
+objects in its local state, and give them a start value in the `StatefulWidget`'s `initState()`.
+
+We will use these colors to indicate the currently selected color and as start color value for each picker.
 
 ```dart
 class _ColorPickerPageState extends State<ColorPickerPage> {
+  // Color for the picker shown in Card on the screen.
   late Color screenPickerColor;
+  // Color for the picker in a dialog using onChanged.
+  late Color dialogPickerColor;
+  // Color for picker using the color select dialog.
+  late Color dialogSelectColor; 
 
 @override
 void initState() {
   super.initState();
-  screenPickerColor = Colors.blue;
+  screenPickerColor = Colors.blue;  // Material blue.
+  dialogPickerColor = Colors.red;   // Material red.
+  dialogSelectColor = const Color(0xFFA239CA); // A purple color.
 }
 ```
+## Color Indicator
 
 We can use the `ColorIndicator` Widget, that the `ColorPicker` uses internally, to show and select a new color. 
 Alternatively you can make and use a custom for Widget for this purpose. Here we use the `ColorIndicator` in 
-a `ListTile`, we add it above the `ColorPicker` and use the `ColorIndicator` as its trailing property to show the 
-selected color.
+a `ListTile`, and use the `ColorIndicator` as its trailing property to show the selected color.
 
-The color picker also includes `ColorTools`, a set of helper functions, that you among other things can use to display
-names of the standard material colors, and their shade index value, as well as an optional Flutter style Hex color code. 
-Below we use `ColorTools.materialNameAndCode` in the `ListTile`'s `subtitle` property, to describe the selected color.
-We show its Material color name and index, as well as its Flutter style HEX code. 
+The **FlexColorPicker** package also includes `ColorTools`, a set of helper functions that you among other things, 
+can use to display names of the standard material colors, its shade index, as well as an optional Flutter 
+style Hex color code. We use the `ColorTools.materialNameAndCode` in the `ListTile`'s `subtitle` property, to 
+describe the selected color by showing its Material color name and index, as well as its Flutter style HEX color value. 
 
-We also use the `ColorTools.nameThatColor` function, that will name any color based on closest matching color from a
-list consisting of **1566** colors and their English names.
+We also use the `ColorTools.nameThatColor` function, that names any color based on the closest matching color from a
+list consisting of **1566** color values and their English names.
 
 We begin by adding this ListTile to a ListView in the Scaffold body.
 
@@ -191,12 +212,15 @@ We begin by adding this ListTile to a ListView in the Scaffold body.
    ...
 ```
 
-Next we add the `ColorPicker` to the `ListView`. We give it the defined starting color, in this case 
-`screenPickerColor`, a `heading` and `subHeading`, plus the required `onColorChanged` callback function. 
+## Screen ColorPicker
+
+Next we add the FlexColorPicker `ColorPicker` widget to the `ListView`. We give the `ColorPicker`'s `color` property 
+the defined starting color, in this case `screenPickerColor`. We also give the picker a `heading` and `subHeading`, 
+plus the required `onColorChanged` callback function. 
 
 We use the color from the callback in a `setState()` to modify the `screenPickerColor` to the color returned by
-the callback. The callback in the ColorPicker is called whenever you select a new color in the `ColorPicker`. In 
-this example we have also wrapped the color picker in a `Card`.
+the callback. The `onColorChanged` callback in the `ColorPicker` is called whenever you select a new color in 
+the `ColorPicker` with the selected `Color` value. In this example we have also wrapped the color picker in a `Card`.
 
 ```dart
   // Show the color picker in sized box in a raised card.
@@ -207,7 +231,9 @@ this example we have also wrapped the color picker in a `Card`.
       child: Card(
         elevation: 2,
         child: ColorPicker(
+          // Use the screenPickerColor as start color.
           color: screenPickerColor,
+          // Update the screenPickerColor using the callback.
           onColorChanged: (Color color) =>
             setState(() => screenPickerColor = color),
           width: 44,
@@ -227,28 +253,29 @@ this example we have also wrapped the color picker in a `Card`.
   ),
 ```
 
-This gives us round color pick items and an indicator for the selected color:
+This gives us round color pick items, and an indicator above the picker for the selected color:
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPicker02.png?raw=true" alt="ColorPicker round with indicator" width="300"/>
 
-## Dialog Example
+## Dialog ColorPicker Method 
 
 A common use case for a color picker is to show a color selection widget and allow users to select a new color in 
 a dialog. The `ColorPicker` comes with a built-in dialog that can be used for this. Alternatively you can just use 
 the `ColorPicker` widget and include it in your own custom dialog.
 
-For the dialog example we will show all the built-in picker color selection options, except the combined primary and 
-accent colors picker, and the near black and white shades' picker. We will also add some custom colors for the
+For the first dialog example we will show all the built-in picker color selection options, except the combined 
+primary and accent colors picker, and the near black and white shades' picker. We will add some custom colors for the
 **Custom** colors section of the `ColorPicker`.
 
 First we define our custom colors and from our color definitions we create primary and accent color swatches by 
 using `ColorTools.createPrimarySwatch` or `ColorTools.createAccentSwatch` for accent color swatches. 
 
-We add these color swatches as keys to a `ColorSwatch` `Map`, that we map to our own custom `String` name values 
+We add these color swatches as keys to a `ColorSwatch` `Map`, that we map to our own `String` name values 
 for our custom color swatches. You don't have to use the `ColorTools` functions to create the color swatches from 
-a color, you can just as well define and use your own custom hand tuned `ColorSwatch` swatches. The `ColorTools`
-functions are just convenient helpers that can be used to make Material like primary and accent color 
-swatches, from a single color.
+a color, you can just as well define and use your own custom hand tuned `ColorSwatch` swatches created
+with `MaterialColor` or `MaterialAccentColor` as shown in the [custom color swatches](#custom-color-swatches) chapter.
+The `ColorTools` functions are just convenient helpers that can be used to make Material like primary and accent color 
+swatches from a single color value.
 
 ```dart
   // Define custom colors. The 'guide' color values are from
@@ -274,28 +301,14 @@ swatches, from a single color.
   };
 ```
 
-Then add a `Color` object for the dialog picked color `dialogPickerColor` and set a start value for it as well, we use
-red in this case.
-
-```dart
-class _ColorPickerPageState extends State<ColorPickerPage> {
-  late Color screenPickerColor;
-  late Color dialogPickerColor;
-
-@override
-void initState() {
-  super.initState();
-  screenPickerColor = Colors.blue;
-  dialogPickerColor = Colors.red;
-}
-```
-
-We use another `ListTile` to display a `ColorIndicator`, that we style a bit differently for this example. We also 
-use its `onSelect` callback to open a dialog with another `ColorPicker`.
+We will use another `ListTile` to display a `ColorIndicator`, that we style a bit differently for this example. We also 
+use its `onSelect` callback to open a dialog with another `ColorPicker`. As the selected color we will use the
+`dialogPickerColor` we defined already in the beginnind of the tutorial.
 
 Before we open the dialog we store the current `dialogPickerColor`'s color value. This way we can restore this 
 color value if the user cancels the dialog. We put this ListTile before the previous one, first in our list view. 
-This will just ensure that it does not get hidden by the dialog on most phones.
+This will just ensure that it does not get hidden by the dialog on smaller phones. For demonstration purposes, 
+we want this color to be visible and not obscured by the dialog.
 
 ```dart
   // Pick color in a dialog.
@@ -311,8 +324,12 @@ This will just ensure that it does not get hidden by the dialog on most phones.
       height: 44,
       borderRadius: 4,
       color: dialogPickerColor,
+      onSelectFocus: false,
       onSelect: () async {
+        // Store current color before we open the dialog.
         final Color colorBeforeDialog = dialogPickerColor;
+        // Wait for the picker to close, if dialog was dismissed, 
+        // then restore the color we had before it was opened.
         if (!(await colorPickerDialog())) {
           setState(() {
             dialogPickerColor = colorBeforeDialog;
@@ -323,24 +340,35 @@ This will just ensure that it does not get hidden by the dialog on most phones.
   ),
 ```
 
-Next we create a method to show a `ColorPicker` with the built-in dialog. The `colorPickerDialog` is an asynchronous
-bool function, that returns `true` if the user closed the dialog picker with the **Select** button. If **Cancel** 
-was selected or user dismissed the dialog by clicking outside it, `false` is returned.
+>The above `onSelectFocus` property is just used to inform the `ColorIndicator` that we do not want it to keep focus 
+when we 
+select and click on it in desktop and Web applications. On those platforms it gets focus when we click on it to open
+the dialog from it. If it keeps focus while the dialog is open and just after it closed, the active focus overlay 
+color will distort its actual color a bit so that we cannot observe the correct color. We don't want that, this 
+property addresses this issues by un-focusing it after we click on it.
 
-The `pickersEnabled` takes a map with `ColorPickerType` enum keys to boolean values. The map defines which color 
+Next we create a method to show a `ColorPicker` with the built-in dialog method. The `colorPickerDialog` method is an
+asynchronous bool function, that returns `true` if the user closed the dialog picker with the **OK** or **Select** 
+button. If **Cancel** or **Close** was selected or if the user dismissed the dialog by clicking outside it, then
+`false` is returned.
+
+In this example we will first enable a few more color picker types. The `pickersEnabled` property takes a map 
+with `ColorPickerType` enum keys to boolean values. The map defines which color 
 pickers we want to enable and use in the `ColorPicker`. In the example below we included Material **primary**, 
 **accent** colors, and the **custom** colors we defined, plus the HSV **color wheel** that allows us to select any 
 color. We did not include the picker that combines the primary and accent colors in the same picker, nor the 
 near black and near white color picker.
 
-In the example below the custom colors we defined in `colorsNameMap` are given to the color picker's constructor 
+Below the custom colors we defined in `colorsNameMap` are given to the color picker's 
 property `customColorSwatchesAndNames`. If you leave `customColorSwatchesAndNames` without an entry and 
 happen to have `ColorPickerType.custom: true` enabled, the custom picker will not be shown.
 
 ```dart
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
+      // Use the dialogPickerColor as start color.
       color: dialogPickerColor,
+      // Update the dialogPickerColor using the callback.
       onColorChanged: (Color color) =>
           setState(() => dialogPickerColor = color),
       width: 40,
@@ -364,6 +392,9 @@ happen to have `ColorPickerType.custom: true` enabled, the custom picker will no
       showMaterialName: true,
       showColorName: true,
       showColorCode: true,
+      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+        longPressMenu: true,
+      ),
       materialNameTextStyle: Theme.of(context).textTheme.caption,
       colorNameTextStyle: Theme.of(context).textTheme.caption,
       colorCodeTextStyle: Theme.of(context).textTheme.caption,
@@ -385,62 +416,188 @@ happen to have `ColorPickerType.custom: true` enabled, the custom picker will no
 ```
 
 The above example uses a few more `ColorPicker` properties. It is styled to be more compact and to show the general 
-color name, as well as the HEX color code of the selected color in the dialog. With the color code indicator you can 
-also copy the color code with the copy icon button. When the wheel picker is active you can enter a hex color RGB 
-value, the two wheel color HSV selection indicators will then move to the color selection matching the entered 
-HEX RGB value.
+color name via `showColorName`, as well as the HEX color code with `showColorCode` of the selected color in the 
+dialog. With the color code field you can also copy the color value to the clipboard using the copy icon button
+suffix in the field. When the wheel picker is active you can also enter a hex color RGB value in the field, 
+the two wheel color HSV selection indicators will then move to the color selection matching the entered HEX RGB value.
+
+The above example also uses the `copyPasteBehavior` configuration class `ColorPickerCopyPasteBehavior()` with
+`longPressMenu` set to true to activate a long press context copy-paste menu in the picker.
 
 Most importantly the above example uses the `showPickerDialog` method to show the defined `ColorPicker` in a 
 pre-made dialog. The dialog also needs a build context, that we pass to it.
 
-In this example we also define size constraints for the dialog. If you do not define size constraints, it will 
+In this example we also define size `constraints` for the dialog. If you do not define size constraints, it will 
 auto size to fit the dialog content. Using constraints allows the dialog to keep the same size when the content 
-size changes slightly as you switch between the different color selection tools you enabled. 
-
-It looks a bit better if the dialog size does not change when you switch picker type with the selector. The color 
+size changes slightly as you switch between the different color selection tools you enabled. It just looks a bit 
+better if the dialog size does not change when you switch picker type with the type selector. The color 
 wheel picker in particular will often require more space. The wheel size can be customized as well, it does 
-however become more difficult to operate it, if it is made very small. In this example it is on purposes on the 
+however become more difficult to operate if it is made very small. In this example it is on purposes on the 
 lower side of still usable size.
 
 The end result of the above setup is a `ListTile` where the trailing color indicator widget can be clicked to 
 open a dialog to select a new color for the trailing `ColorIndicator` color.
 
-As the `dialogPickerColor` color changes in the dialog, the `ColorIndicator`'s color also changes via this
+As the `dialogPickerColor` changes the color in the dialog, the `ColorIndicator`'s color also changes via this
 interaction. If the dialog is cancelled, the `ColorIndicator`'s original color is restored.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemo.gif?raw=true" alt="ColorPicker dialog demo" width="300"/>
 
+**Bonus Exercise Not Included the Example Code** 
 
 As an extra exercise, and to better see this interactive change of the color when it is modified in the dialog, 
-try connecting the `dialogPickerColor` value to the `AppBar`'s `backgroundColor` property. Did you manage to do it?
-What happened?
+try connecting the `dialogPickerColor` color to the `AppBar`'s `backgroundColor` property. 
+
+Did you manage to do it? What happened?
 
 ```dart
 :
 appBar: AppBar(
+  // To do this, just add this row to the AppBar in the example.
   backgroundColor: dialogPickerColor,
   elevation: 1,
   centerTitle: true,
-  title: const Text('Color Picker Simple Demo'),
+  title: const Text('ColorPicker Demo'),
 ),
 ```
 
-As can be seen below, now the selected color in the dialog changes the `AppBar`'s color as you change color
-in the dialog, if you select the color, it is kept and cancelling it restores the `AppBar`'s color as well, 
-**pretty cool!**
+As can be seen below, now the selected color in the dialog changes the `AppBar`'s color and this happens as you
+change the color in the dialog, if you select the color, it is kept and cancelling it restores the `AppBar`'s 
+color as well, **pretty cool!**
 
-You can connect the color picking interaction to theme colors and modify your application's theme color 
-values interactively as well, but that goes beyond the scope of this example.
+You can also use this principle to connect the color picking interaction to colors that define your application's theme 
+colors and thus modify your application's theme color values interactively while the app is running. Showing how to do
+this goes a bit beyond the scope of this example, but it is pretty much as easy as the interactive AppBar background 
+color manipulation we just did.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerSimpleDemoAppBar.gif?raw=true" alt="ColorPicker appbar demo" width="300"/>
 
-The example also includes a light and dark theme mode toggle, so you can test the look and operation of the 
-color picker with a dark theme.
 
-**FlexColorPicker** works on all Flutter platforms, Android, iOS, Web, Windows, macOS and Linux.
-Here is an example of the demo application running on Windows desktop.
+## Dialog ColorPicker Function
 
-<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
+If you do not need the feature that allows you to modify and update colors interactively from the dialog via a 
+callback, you can use a simpler more straight forward async dialog function API, that just opens the picker with
+a pre-selected color and either returns the new selected color if it is closed with **OK** or returns the
+color you opened it with, if the dialog is closed with **Cancel** or dismiss action.
+
+You can call this `showColorPickerDialog` dialog function directly from e.g. `onTap` and `onSelect` callbacks 
+commonly found in Buttons, InkWell and similar Widgets with interaction callback, by making the callback async and 
+wait for `showColorPickerDialog` to return the selected color value and then do what you need with the returned color,
+after the dialog has been closed and you have the color selection result.
+
+Let's take a look at how this works. As before first we define another `ListTile` with a trailing `ColorIndicator`.
+We place it last after the previous two `ListTile`'s in our `ListView`, just before the `ColorPicker` that is in 
+the Card in the `ListView.` For the color that we manipulate we use the `dialogSelectColor` Color that we defined
+earlier. In this case the start color value is not a color that exists in the default Material primary and accent 
+color picker or any shade of them. The color picker will then automatically select the **Wheel** picker and show
+the start color value we defined in it.
+
+In this case we can make our `ColorIndicator`'s `onSelect` callback **async** and directly from it call the 
+`showColorPickerDialog`. In the function call we also define the `ColorPicker`'s properties we want it to use in
+the dialog. We just give it the start color and wait for it to return the color selection result when the dialog is
+closed via **OK** or **CANCEL**. After that we can e.g. use the returned color value, in this case we just update 
+our `dialogSelectColor` state variable. 
+
+```dart
+ListTile(
+  title: const Text('Click to select a new color from a dialog'),
+  subtitle: Text(
+    '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
+    'aka ${ColorTools.nameThatColor(dialogSelectColor)}',
+  ),
+  trailing: ColorIndicator(
+      width: 40,
+      height: 40,
+      borderRadius: 0,
+      color: dialogSelectColor,
+      elevation: 1,
+      onSelectFocus: false,
+      onSelect: () async {
+        // Wait for the dialog to return color selection result.
+        final Color newColor = await showColorPickerDialog(
+          // The dialog needs a context, we pass it in.
+          context,
+          // We use the dialogSelectColor, as its starting color.
+          dialogSelectColor,
+          title: Text('ColorPicker',
+              style: Theme.of(context).textTheme.headline6),
+          width: 40,
+          height: 40,
+          spacing: 0,
+          runSpacing: 0,
+          borderRadius: 0,
+          wheelDiameter: 165,
+          enableOpacity: true,
+          showColorCode: true,
+          colorCodeHasColor: true,
+          pickersEnabled: <ColorPickerType, bool>{
+            ColorPickerType.wheel: true,
+          },
+          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+            copyButton: true,
+            pasteButton: true,
+            longPressMenu: true,
+          ),
+          actionButtons: const ColorPickerActionButtons(
+            okButton: true,
+            closeButton: true,
+            dialogActionButtons: false,
+          ),
+          constraints: const BoxConstraints(
+              minHeight: 480, minWidth: 320, maxWidth: 320),
+        );
+        // We update the dialogSelectColor, to the returned result
+        // color. If the dialog was dismissed it actually returns
+        // the color we started with. The extra update for that
+        // below does not really matter, but if you want you can
+        // check if they are equal and skip the update below.
+        setState(() {
+          dialogSelectColor = newColor;
+        });
+      }),
+),
+```
+
+This dialog picker example also introduces a few more properties that we have not used before. For starters, 
+we gave it a `title` widget instead of a `heading`. The title is more like the title of an `AppBar`. We 
+also skipped all the sub-heading widgets to make a more compact picker. 
+
+We used the `copyPasteBehavior` to define a `ColorPickerCopyPasteBehavior` configuration
+that enables both copy (`copyButton: true`) and paste (`pasteButton: true`) action icon buttons in the picker's top
+title toolbar. We also kept the long-press copy-paste menu from the previous picker example.
+
+Additionally, we use the `actionButtons` to configure some options for the dialog action buttons with a 
+`ColorPickerActionButtons` configuration class. With it, we set `dialogActionButtons: false`, to remove 
+the dialog's bottom **CANCEL** and **OK** action buttons. Instead, we set `okButton: true` and `closeButton: true`, 
+to enable an 'OK' check mark icon-button and a 'Close' x icon-button in the dialog's top toolbar.
+
+As a major new feature we also in the `ColorPicker` set `enableOpacity: true`. This showa an opacity slider
+in the `ColorPicker` that we can adjust the opacity of the selected color with, from 0 to 100%. We also set
+`colorCodeHasColor: true`, this changes the style of the displayed color code field's background color,
+to always use and show the currently selected color as its background. Making it show the color result of our
+current color selection and opacity slider value. The opacity slider also has a checkered background
+so that you can get a feel for how opaque the selected opacity and active color is when overlayed on other 
+widgets or images.
+
+Below you can see the result of this picker setup, and also a demo of how you can copy-paste a selected color.
+In the demo below we just copy and pate a color from one dialog picker to another, but you can copy-paste colors
+between the picker and any app. On desktop the app also supports keyboard copy-paste short-cuts. For more
+information about the copy-paste features, see the API guide's chapter on its 
+[features](#copy-paste-actions-and-behavior).
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/color_picker_copy_paste_demo.gif?raw=true" alt="ColorPicker copy-paste demo" width="300"/>
+
+Under the hood `showColorPickerDialog` function uses the same `ColorPicker` and `showPickerDialog` method. 
+It just bundles them together in the single async `showColorPickerDialog` function. 
+The API surface of this function is quite larger, because it actually bundles, the `ColorPicker` its `showPickerDialog`
+method, and an `AlertDialog` plus the `showDialog` function, all intoone large function.
+
+Despite its large API surface, it is still rather convenient to use. You seldom need to use
+most of the underlying API properties, usually the default values for them work fine. They are however 
+exposed to the degree they can be, should you ever need them.
+
+**Finally**, the default example also includes a light and dark theme mode toggle. It is just there so you 
+can test the look and operation of the color picker with a dark theme.
 
 # FlexColorPicker API Guide
 
@@ -451,9 +608,9 @@ properties and two additional configuration property classes `ColorPickerActionB
 This guide goes through most of the API settings, and provides links to API references.
 
 > **NOTE**   
-> In the 2.0.0-nullsafety.x releases the API reference links are not working to newer APIs.
+> In the 2.0.0-nullsafety.x releases the API doc reference links are not working to newer APIs.
 > This is because the links have all been made with URLs that refer to "latest" released API, and many of the
-> APIs do not exist in the last stable 1.x release. This will be fixed when the 2.0.0 is released as
+> APIs do not exist in the last stable 1.x release. This will be fixed when the 2.0.0 is released as latest
 > stable version.
 
 ## Elements of the Picker
@@ -527,7 +684,7 @@ API reference: [customColorSwatchesAndNames](https://pub.dev/documentation/flex_
 To use the custom color swatch picker you have to define your own custom `ColorSwatch` colors and pass them to the
 picker via the `customColorSwatchesAndNames` property. By default, there are no custom colors defined. If you
 enabled the `custom` picker and have not provided any custom color swatches, the picker will not be shown despite 
-being enabled since it has no colors to show.
+being enabled, since it has no colors to show.
 
 You can make `ColorSwatch` objects with the Flutter SDK `MaterialColor` or the `MaterialAccentColor` classes by 
 providing swatch color shades for each index. Alternatively you can use the helpers 
@@ -1160,28 +1317,48 @@ combined with its `showPickerDialog` method.
 
 Since the properties `elevation` and `title` in the `showPickerDialog` method, would collide with the same
 named ones in the `ColorPicker`, the dialog's elevation and title in `showColorPickerDialog` are instead
-called `dailogElevation` and `dialogTitle` to avoid the property name conflict.
+called `dailogElevation` and `dialogTitle` to avoid the property name conflict when they are present in the
+same function.
 
 # Desktop and Web Ready
 
-The FlexColorPicker is Web and Desktop ready. For most parts focus behaves as expected, and it supports keyboard 
-navigation and control. As shown above, if configured, it also has keyboard shortcuts for copy and paste commands. 
-The wheel picker cannot be operated with just a keyboard, it needs a mouse or touch control, it will likely remain so.
-The opacity slider can be operated via keyboard only. Future picker options will offer other color pickers using 
-only sliders for custom color selection, this will enable them to use keyboard color selection as well.
+**FlexColorPicker** works on all Flutter platforms, Android, iOS, Web, Windows, macOS and Linux.
+Here is an example of the demo application running on Windows desktop.
 
-The used color picker selector control is based on the `CupertinoSlidingSegmentedControl` widget. It does not support
-keyboard control. Future versions may include additional optional picker selection controls, that support
-keyboard navigation and picker selection.
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
 
+The live Web demo is of course an example of it running in a Web environment, it runs well with either 
+[Flutter Web renderer](https://flutter.dev/docs/development/tools/web-renderers), HTML or CanvasKit.
+
+The FlexColorPicker goes a bit further than just working on Web and Desktop. For example, pick item focusing 
+behaves as can be expected. The picker supports keyboard navigation and control selection and activation, 
+especially when it is used in a dialog where other controls on the screen do not affect the intended keyboard 
+navigation order. As mentioned in the API guide, if the picker is so configured, it also has keyboard shortcuts 
+for copy and paste commands, that even adapt to the used desktop platform.
+
+The wheel picker cannot be operated with just a keyboard, it needs mouse or touch control. It will remain so, as it
+is not a design well suited to keyboard control, it is designed to require mouse or touch input to be operated.
+
+The opacity slider can be operated via keyboard only. Future picker options will offer other color picker type designs
+using only sliders for custom color selection, this will enable them to use keyboard color control and 
+selection as well.
+
+The used color picker type selector control is based on the `CupertinoSlidingSegmentedControl` widget. It does not
+support keyboard control. A future version may include additional optional picker type selection controls, that support
+keyboard navigation and picker selection. When added the current version will remain available as default for backwards 
+compatibility.
 
 # Additional Resources
 
-There are some more configuration options available for the `ColorPicker`, use the [API reference guide](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for additional information.
+There are more configuration options available in the `ColorPicker` than those described in the above
+API guide, use the complete [API doc reference](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/flex_color_picker-library.html) for 
+additional information.
 
 The source code of the [live Web example](https://rydmike.com/flexcolorpicker/) is included in the package example 
-folder, in "example/lib/demo/main.dart". By studying it you can see practical examples of how to use all the features
-it uses. The live Web demo also has tooltips showing the used API behind every demonstrated interactive control, this
+folder, in "example/lib/demo". By studying it you can see a practical examples of how to use all the features
+it uses. 
+
+The live Web demo also has tooltips showing the used API behind every demonstrated interactive control. This
 can be used as quick reference and to find the actual used API-value as you interactively configure the Web example.
 
-Happy color picking!
+**Happy color picking!**
