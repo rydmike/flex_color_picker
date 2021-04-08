@@ -15,7 +15,7 @@ class PodsObserver extends ProviderObserver {
     if (newValue is StateController) {
       // If it is one that we have a named key for, we will store it in Hive.
       if (Keys.defaults.containsKey(provider.name)) {
-        // Log the new value, just a debugPrint in DebugMode only.
+        // Log the new value, just a debugPrint and in DebugMode builds only.
         if (kDebugMode) {
           debugPrint('Pod: ${provider.name ?? provider.runtimeType} '
               'value: ${newValue.state}');
