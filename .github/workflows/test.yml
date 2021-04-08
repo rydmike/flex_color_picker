@@ -12,10 +12,10 @@
 #
 name: Test
 on:
-  #release:
-  #  types: [published]
-  push:
-    branches: [master]
+  release:
+    types: [published]
+  #push:
+  #  branches: [master]
   #  branches: [2-0-0-stable-p1]
 
 jobs:
