@@ -21,17 +21,17 @@
 #
 name: Deploy Web
 on:
-  #release:
-  #  types: [published]
-  push:
-    branches: [master]
+  release:
+    types: [published]
+  #push:
+  #  branches: [master]
 # Edit and add other trigger options if an extra new Web deployment is needed.
 # Generally I only need a new deployment when I publish a new release, but I may want to trigger it on defaults:
 # prerelease or just an edit sometimes to test the workflow or a new build irl, these trigger types can be used then:
 #    types: [published, created, edited, prereleased]
 jobs:
-  flutter_tests:
-    name: Analyze, test build and deploy 5 web apps
+  tests_build_deploy:
+    name: Analyze, test build and deploy the web demo
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

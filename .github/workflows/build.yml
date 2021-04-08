@@ -24,7 +24,7 @@
 #        Also planning to setup a matrix test run, but this one is anyway a nice test
 #        since it does not just runs tests, it also builds actual Web apps using the package.
 #
-name: Build Samples
+name: Build samples
 on:
   pull_request:
     branches: [none-null-safe]
@@ -33,8 +33,8 @@ on:
   # release:
   #   types: [ published ]
 jobs:
-  flutter_tests:
-    name: Analyze, test and build 5 web apps
+  tests_build:
+    name: Analyze, test and build the example and web app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

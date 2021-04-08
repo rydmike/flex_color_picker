@@ -49,10 +49,10 @@ import '../utils/keys.dart';
 // StateProvider below. Plus a separate Hive save (put) call for each setter.
 // The Hive storage is now a single line in the ProviderObserver, and the
 // StateProvider that are initialized from the Hive box below, or via default
-// const map if Hive bix has now value, is actually quite compact considering
+// const map if Hive box has no value, is actually quite compact considering
 // all it does. We do however have to deal with dynamic's and type casts to
 // make this work, but since it is all based type safe providers and const
-// values as keys we keep uniques in const map, it is fairly safe as long as
+// values as keys we keep uniques in a const map, it is fairly safe as long as
 // we don't use the wrong key for a provider when we get the value.
 
 // themeModePod is a [StateProvider] to provide the state of
@@ -63,7 +63,7 @@ final StateProvider<ThemeMode> themeModePod =
       defaultValue: Keys.defaults[Keys.themeMode]! as ThemeMode) as ThemeMode;
 }, name: Keys.themeMode);
 
-// The other plethora f other state providers are all related to manipulating
+// All the other state providers are all related to manipulating
 // input and view output from the FlexColorPicker.
 
 // StateProvider for the color we give to the color picker on the card.
