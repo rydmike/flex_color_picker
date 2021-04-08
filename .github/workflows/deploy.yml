@@ -4,7 +4,7 @@
 #  - Uses flutter beta channel for now.
 #  - Enables flutter web
 #  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on dev channel,
+#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
 #    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
 #    as long as they are not also deprecated on stable.
 #  - Show outdated packages, just added for info.
