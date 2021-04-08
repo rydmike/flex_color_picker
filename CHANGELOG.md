@@ -2,29 +2,46 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.0-nullsafety.5] - March 31, 2021
+## [2.0.0-nullsafety.5] - April 8, 2021
 * **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true. 
 * **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties 
   of the underlying `AlertDialog` used to make the dialog, this includes e.g. the `backgroundColor`, `elevation`,
   `clipBehavior` and `shape` as new exposed properties that may be useful.
-* **New feature:** Added a new alternative color picker dialog `Future<Color>` function `showColorPickerDialog`,
-  that just returns selected color from the dialog or original start color value, if no selection was made.
+* **New feature:** Added a new alternative color picker dialog function `showColorPickerDialog` that returns a
+  `Future<Color>` which when the dialog is closed, returns the selected color from the dialog or original start 
+  color value, if no selection was made.
   This picker might be simpler to use in some scenarios, but it does not allow
-  for the feature where colors and theme's can update in the background behind the dialog as colors are selected
+  for the feature where colors and theme's can update in the background behind the dialog, as colors are selected
   in it, before it is even closed. However, if you just need to open a dialog, select a color and move on, this
   version offers a simpler API for that. Under the hood it is just a wrapper for the previous more 
   capable version with the onChange callbacks. It shares all other properties and features with the `ColorPicker`
-  combined with its `showPickerDialog` method.  
+  combined with its `showPickerDialog` method, except all the **onChanged** callbacks that are excluded.  
   Since the properties `elevation` and `title` in the `showPickerDialog` method, would collide with the same
-  named ones ones in `ColorPicker`, the dialog's elevation and title in `showColorPickerDialog` are instead
-  called `dailogElevation` and `dialogTitle`.
+  named properties in `ColorPicker`. The dialog's elevation and title in the `showColorPickerDialog` are  
+  instead called `dailogElevation` and `dialogTitle` in it.
 * **Improvement:** Performance was improved via more optimized rebuilds.   
 * **Documentation:** First version of updated documentation with API guide documentation is now included. It still 
-  requires proof-reading  before stable release, but getting closer now.
-* **Examples:** The Web example, with the built-in API tooltips guides, got a major rewrite. It was originally
-  not intended to be as large as it grew to be, but since it grew so much it needed a rewrite. It now uses 
-  Riverpod to make its simple state management needs very easy to handle simpler. We might add persisting 
-  the settings at some point as well.
+  requires proof-reading before stable release, but getting close to be ready for release now.
+* **Default example:** The default example got a new picker that shows how to the new `showColorPickerDialog` function.
+* **Web example:** The Web example, with the built-in API tooltips guides, got a major rewrite. It was originally
+  not intended to be as large as it grew to be, but since it grew so much it needed a rewrite.   
+  It now uses Riverpod to make its simple state management needs easy to handle and much cleaner than before.
+  It also includes persisting the settings directly as settings are changed in the app. The persistence is 
+  implemented with Hive and should work on all Flutter platforms as well, but it has only been tested on Android, 
+  Web and Windows.   
+  As an experiment, only RiverPod StateProviders were used. While the setup is a bit tedious, it enables the desired 
+  fine-grained control over rebuilds of all the used setting control widgets. Each setting is also stored as an 
+  individual key-value pair in the used Hive box.  
+  A ProviderObserver that observes changes in the StateProviders we want to persist, is used to save any state change 
+  to the used Hive box, regardless of where the state is changed in the demo app. This setup was an experiment to 
+  see if it might work and provide some simplification benefits. At least in this case it did, and it is also a pretty
+  interesting and simple solution.  
+  The default start values are also defined via the Riverpod StateProvider's default values, that also 
+  use their const Hive string key as their provider name. Each StateProvider gets its start setting value from 
+  the Hive box with the same key. If the key does not exist yet in Hive, it falls back to a default value from a
+  const Map using the same sring const as its key, for the default fallback value. Reset back to default values is also 
+  done by setting all providers' state back to their default values as defined by the same const 
+  fallback value map.
 
 ## [2.0.0-nullsafety.4] - March 22, 2021
 * **New feature:** A bool `enableOpacity` property was added that enables an opacity 
@@ -217,23 +234,24 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 ---
 
 # Planned Updates and New Features
-These are the topics I currently have on the TODO list for this package. Have a new suggestion and idea?
+These are the topics I currently have on the TODO list for this package. Do you have a new suggestion and idea?
 Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
 
 ### TODO
+- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Release none pre-release version 2.
 - Add more tests.
 - Finalize tests.
-- Add support for colors with opacity or alpha.  
-- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Additional controls for selecting active picker, custom slider and ToggleButtons.  
-- Add one more color picker type "advanced".
+- Add one more color picker type "advanced", using sliders as controls.
 
 ### MAYBE
 - Add selected colors to the custom colors section.
 - Store colors added to the custom colors section.
 
 ### COMPLETED
+- Add a simpler optional async dialog picker function, that returns selected color. 
+- Add support for colors with opacity or alpha.
 - Improve copy/paste feature.
 - Version 2.0.0-nullsafety.0: Add null safe version.  
 - Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools,

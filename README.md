@@ -1,3 +1,6 @@
+[![Pub Version](https://img.shields.io/pub/v/flex_color_picker?label=flex_color_picker&labelColor=333940&logo=dart)](https://pub.dev/packages/flex_color_picker) ![GitHub Workflow Status (event)](https://img.shields.io/github/workflow/status/rydmike/flex_color_picker/Test?event=push)
+![Test](https://github.com/rydmike/flex_color_picker/workflows/Test/badge.svg) [![codecov](https://codecov.io/gh/rydmike/flex_color_picker/branch/master/graph/badge.svg?token=4XJU30IGO3)](https://codecov.io/gh/rydmike/flex_color_picker) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 # FlexColorPicker
 
 FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color 
@@ -618,12 +621,21 @@ This guide goes through most of the API settings, and provides links to API refe
 This chapter shows the different visible elements of the color picker that you can enable and disable, or add as 
 extra Widgets to the picker.
 
-In main example, at the core is a passed in `Color()` object to the color picker's property `color`, and a
-`ValueChanged<Color>` callback `onColorChanged`, that is called whenever a new color value is selected in the color 
-picker. What you do with the callback color depends on your use-case. In the shown examples we typically just update the 
-passed in color with `setState`. However, in the earlier dialog example, it was also demonstrated how it interactively 
-could be used to change the `AppBar` color of the app itself. You can of course use the picker to change any color in
+In **main example** and its tutorial, at the core is a passed in `Color()` object to the color picker's `color`
+property. It is used to pass in the color that the picker should select. It will update to show the new color if the 
+picker Widget is updated with a new color. The `color` property is **not** required, it defaults to `Colors.blue` 
+if it is omitted.
+
+The other important property is the `ValueChanged<Color>` callback `onColorChanged`. This is called whenever a new 
+color value is selected in the color picker, with the selected color. What you do with the callback color depends 
+on your use-case. In the shown examples we typically just update the passed in color with `setState` and this change
+is color is shown the example app in color indicator widget in the shape of a colored box or circle.
+
+However, in the earlier dialog example, it was also demonstrated how it can also be used to interactively change 
+the `AppBar` color of the app itself. You can of use the picker to change any color in
 your application theme, or the color used by any Widget.
+
+**The two core properties of the ColorPicker:**
 
 ```dart
 ColorPicker(
@@ -631,7 +643,7 @@ ColorPicker(
   onColorChanged: (Color color) => setState(() => myColor = color),
 ),
 ```
-Below we will explore other, both basic and more advanced features of the **FlexColorPicker**.
+Below we will explore more, both basic and advanced features of the **FlexColorPicker**.
 
 ### Enabled Color Pickers
 
