@@ -20,8 +20,8 @@
 #    but runs on release, when it is published.
 name: Build samples
 on:
-  #pull_request:
-  #  branches: [none]
+  pull_request:
+    branches: [none]
   # release:
   #   types: [published]
 jobs:
