@@ -153,6 +153,8 @@ class _Column1 extends StatelessWidget {
         const DialogPickerColorIndicator(),
         // Show the color selected in the picker in a Card below.
         const CardPickerColorIndicator(),
+        // Show the picker meta remote control widget.
+        const MetaPickerColorIndicator(),
         // The color picker in a Card.
         const Padding(
           padding: EdgeInsets.all(6),

@@ -1,6 +1,7 @@
 // Picker indicators
 export 'picker_indicators/card_picker_color_indicator.dart';
 export 'picker_indicators/dialog_picker_color_indicator.dart';
+export 'picker_indicators/meta_picker_color_indicator.dart';
 export 'picker_indicators/on_changed_color_indicator.dart';
 export 'picker_indicators/on_end_color_indicator.dart';
 export 'picker_indicators/on_start_color_indicator.dart';

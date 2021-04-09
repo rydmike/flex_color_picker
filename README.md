@@ -649,6 +649,12 @@ ColorPicker(
 ),
 ```
 
+If you need to update the `ColorPicker` externally, just pass in a new value to the `color` property. 
+In the above example you could just give the state variable `myColor` a new value from some other place than 
+the above `onColorChanged` callback, and call `setState`. The [live Web demo](https://rydmike.com/flexcolorpicker/)
+includes an example of how you can update the `ColorPicker` from other widget interactions, 
+or even remote control it completely from another `ColorPicker` opened as a dialog.
+
 ### Enabled Color Pickers
 
 API reference: [pickersEnabled](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickersEnabled.html)

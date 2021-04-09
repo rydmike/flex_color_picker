@@ -6,22 +6,32 @@ import '../../pods/pods.dart';
 import '../../utils/app.dart';
 
 /// The ColorPicker shown in a dialog that is opened from the ColorPickerScreen.
-Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
+Future<bool> colorPickerDialog(
+  BuildContext context,
+  ScopedReader watch, {
+  bool cardRemote = false,
+}) async {
   final ColorScheme colorScheme = Theme.of(context).colorScheme;
   return ColorPicker(
-    color: watch(dialogPickerColorPod).state,
+    color: cardRemote
+        ? watch(cardPickerColorPod).state
+        : watch(dialogPickerColorPod).state,
     onColorChangeStart: (Color color) {
       context.read(onColorChangeStartPod).state = color;
     },
     onColorChanged: (Color color) {
-      context.read(dialogPickerColorPod).state = color;
+      cardRemote
+          ? context.read(cardPickerColorPod).state = color
+          : context.read(dialogPickerColorPod).state = color;
       context.read(onColorChangedPod).state = color;
     },
     onColorChangeEnd: (Color color) {
       context.read(onColorChangeEndPod).state = color;
     },
     onRecentColorsChanged: (List<Color> colors) {
-      context.read(dialogRecentColorsPod).state = colors;
+      cardRemote
+          ? context.read(cardRecentColorsPod).state = colors
+          : context.read(dialogRecentColorsPod).state = colors;
     },
     crossAxisAlignment: watch(alignmentPod).state,
     padding: EdgeInsets.all(watch(paddingPod).state),
@@ -114,8 +124,10 @@ Future<bool> colorPickerDialog(BuildContext context, ScopedReader watch) async {
     colorCodeReadOnly: watch(colorCodeReadOnlyPod).state,
     showColorValue: watch(showColorValuePod).state,
     showRecentColors: watch(showRecentColorsPod).state,
-    recentColors: watch(dialogRecentColorsPod).state,
-    maxRecentColors: 5,
+    recentColors: cardRemote
+        ? watch(cardRecentColorsPod).state
+        : watch(dialogRecentColorsPod).state,
+    maxRecentColors: cardRemote ? 8 : 5,
     customColorSwatchesAndNames: App.colorsNameMap,
   ).showPickerDialog(
     context,

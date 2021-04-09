@@ -12,7 +12,7 @@ class CardPickerColorIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     return ListTile(
-      title: const Text('Select color below to change this color'),
+      title: const Text('Change this color with the ColorPicker below'),
       subtitle: Text(
           '${ColorTools.materialNameAndARGBCode(watch(cardPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap)} '
           'aka ${ColorTools.nameThatColor(watch(cardPickerColorPod).state)}'),
