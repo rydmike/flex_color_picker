@@ -20,7 +20,7 @@
 name: Deploy Web
 on:
   push:
-    branches: [master]
+    branches: [web-demo-experimental-feature]
   #release:
   #  types: [published]
 # Edit and add other trigger options if an extra new Web deployment is needed.
@@ -58,7 +58,7 @@ jobs:
       - name: Verify that Dart formatting is used, fail if not
         run: dart format --output=none --set-exit-if-changed .
 
-      - name: Test package FlexColorScheme using test coverage
+      - name: Test package FlexColorPicker using test coverage
         run: flutter test --coverage
 
       - name: Upload test coverage to Codecov
