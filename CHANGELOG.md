@@ -4,21 +4,20 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
 ## [2.0.1] - April 10, 2021
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a 
-  new value to update it and even "remote control" it, if so needed.  
+  new value to update it. You can even "remote control" the color picker by updating the `color`, if so needed.  
   
   This is mostly a potential use-case for desktop/web when the picker is not used in a dialog. 
-  You can of course can do this on a phone or tablet too, but often there is not room enough to use the picker 
-  this way on mobile devices. 
-  However, on desktops it is certainly a valid use case that should be supported. It was previously enabled,
-  but as we are going for full inclusion of web/desktop use-cases, it should certainly be supported.
-  This update adds support for it. The picker only updates if the externally provided
-  `color` constructor property differs from its internally kept color state. Finding the right picker, computing 
-  the swatches, is a bit demanding, but it seems to work fluidly, even when remote controlling the wheel and sliders
-  interactively, at least on desktop and web builds.
+  You can of course use this on a phone or tablet too, but often there is not room enough to keep the picker 
+  visible on the main surface this way on mobile devices. However, on desktops it is certainly a valid use 
+  case that should be supported. It was previously not supported by design, but as we are going for covering
+  web/desktop use-cases, it should certainly be supported. This update adds support for it. The picker only 
+  updates if the externally provided `color` constructor property differs from its internally kept color 
+  state. Finding the right picker, computing its swatches, is a bit demanding, but it seems to work fluidly, 
+  even when remote controlling the wheel and sliders interactively.
 
 * **Web example**: Updated the Web example to also show the "remote control" of the on-screen color picker. A
   remote control widget with a few color boxes, that you can click on to update its colors externally was added. 
-  The demo even goes meta, and you can use a modal dialog version of the ColorPicker, to control the ColorPicker 
+  The demo even goes meta! You can use a modal dialog version of the ColorPicker, to control the ColorPicker 
   on the screen in the card, from the dialog ColorPicker! Maybe not as such so useful, but an interesting demo.
   
 ## [2.0.0] - April 9, 2021
