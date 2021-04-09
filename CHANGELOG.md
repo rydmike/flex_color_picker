@@ -2,6 +2,25 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.0.1] - April 9, 2021
+* **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a 
+  new value to update it and even "remote control" it, if so needed.  
+  
+  This is mostly a potential use-case for desktop/web when the picker is not used in a dialog. 
+  You can of course can do this on a phone or tablet too, but often there is not room enough to use the picker 
+  this way on mobile devices. 
+  However, on desktops it is certainly a valid use case that should be supported. It was previously enabled,
+  but as we are going for full inclusion of web/desktop use-cases, it should certainly be supported.
+  This update adds support for it. The picker only updates if the externally provided
+  `color` constructor property differs from its internally kept color state. Finding the right picker, computing 
+  the swatches, is a bit demanding, but it seems to work fluidly, even when remote controlling the wheel and sliders
+  interactively, at least on desktop and web builds.
+
+* **Web example**: Updated the Web example to also show the "remote control" of the on-screen color picker. A
+  remote control widget with a few color boxes, that you can click on to update its colors externally was added. 
+  The demo even goes meta, and you can use a modal dialog version of the ColorPicker, to control the ColorPicker 
+  on the screen in the card, from the dialog ColorPicker! Maybe not as such so useful, but an interesting demo.
+  
 ## [2.0.0] - April 9, 2021
 * This release only contains documentation updates from pre-release **2.0.0-nullsafety.5**
 * Thi is the first stable release of the null-safe version
@@ -14,7 +33,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   ### Breaking Changes
   In addition to breaking changes as a result of the null-safety implementation, this release contain a few other
   **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
-  
+
 
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the

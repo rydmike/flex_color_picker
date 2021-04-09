@@ -11,7 +11,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '2.0.0';
+  static const String version = '2.0.1 PRE';
   static const String packageVersion = 'FlexColorScheme package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
   static const String flutterVersion = 'Channel beta 2.1.0-12.2.pre, CanvasKit';

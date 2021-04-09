@@ -1081,6 +1081,9 @@ class _ColorPickerState extends State<ColorPicker> {
   void didUpdateWidget(ColorPicker oldWidget) {
     // debugPrint('didUpdateWidget called **********************************');
 
+    // Set to true if a change was done where we need to find the picker again.
+    bool _shouldFindPickerAndSwatch = false;
+
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
       // debugPrint('didUpdateWidget enableOpacity = '
@@ -1089,8 +1092,8 @@ class _ColorPickerState extends State<ColorPicker> {
           widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
     }
-    // Picker labels map changed, update used one, with its default fallbacks.
 
+    // Picker labels map changed, update used one, with its default fallbacks.
     if (!mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)) {
       // debugPrint('didUpdateWidget pickerTypeLabels mapEquals: '
       //  '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}');
@@ -1134,6 +1137,8 @@ class _ColorPickerState extends State<ColorPicker> {
       // Therefore using `toString` comparisons for now to get around the issue,
       // not ideal, but it seems to work.
 
+      // debugPrint('didUpdateWidget pickersEnabled or custom swatch updated!');
+
       // Update _typeToSwatchMap, because custom color swatches were updated.
       _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
         ColorPickerType.both: ColorTools.primaryAndAccentColors,
@@ -1167,12 +1172,9 @@ class _ColorPickerState extends State<ColorPicker> {
       };
       // debugPrint('${widget.customColorSwatchesAndNames}');
       // debugPrint('${oldWidget.customColorSwatchesAndNames}');
-      // debugPrint('didUpdateWidget calls findPicker and updateActiveSwatch');
 
-      // When in this IF branch, we need to find the right picker again.
-      _findPicker();
-      // And also update the active swatch again.
-      _updateActiveSwatch();
+      // We should find picker and swatch after above updates.
+      _shouldFindPickerAndSwatch = true;
     }
     // If the recent colors that is stored in local state version is
     // not equal to the one passed in, then the picker got a new externally
@@ -1181,6 +1183,32 @@ class _ColorPickerState extends State<ColorPicker> {
     // use-case, but let's  support it anyway.
     if (!listEquals(widget.recentColors, _recentColors)) {
       _recentColors = <Color>[...widget.recentColors];
+    }
+    // The widget color was updated externally since it differs from internally
+    // kept state, we should update the widget to new color and find picker.
+    if (widget.color != _selectedColor) {
+      // debugPrint('didUpdateWidget external color update!');
+      _selectedColor =
+          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
+      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+      // Need to make a swatch too be able to find it on wheel, if it is there.
+      _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
+        ColorTools.createPrimarySwatch(_selectedColor.withAlpha(0xFF)),
+      ];
+      // Wheel and edit needs to update.
+      _wheelShouldUpdate = true;
+      _editShouldUpdate = true;
+      // We need to find the right picker again.
+      _shouldFindPickerAndSwatch = true;
+    }
+    //
+    if (_shouldFindPickerAndSwatch) {
+      // debugPrint('didUpdateWidget calls findPicker and updateActiveSwatch');
+
+      // When in this IF branch, we need to find the right picker again.
+      _findPicker();
+      // And also update the active swatch again.
+      _updateActiveSwatch();
     }
     //
     super.didUpdateWidget(oldWidget);
