@@ -1842,37 +1842,64 @@ class _ColorPickerState extends State<ColorPicker> {
     if (_editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste) {
       return;
     }
+
     // Make an OS independent copy/paste modifier key.
-    final bool isMacOS = event.data is RawKeyEventDataMacOs;
-    final bool isIos = event.data is RawKeyEventDataIos;
-    // This isCtrlPressed will be true when command key is pressed on macOS/iOS
-    // or when CTRL key is pressed on Windows and Linux.
-    final bool isCtrlPressed =
-        isMacOS || isIos ? event.isMetaPressed : event.isControlPressed;
+    //
+    // Found the usage of these in the SDK TextField copy/paste implementation.
+    final bool isRawKeyMacOS = event.data is RawKeyEventDataMacOs;
+    debugPrint('KeyEvent isMacOs: $isRawKeyMacOS');
+    final bool isRawKeyIos = event.data is RawKeyEventDataIos;
+    debugPrint('KeyEvent isRawKeyIos: $isRawKeyIos');
+    // BUT!!
+    // The above RawKeyEventData did not seem to work on Web when using an
+    // iPad+Safari and an Apple iPad keyboard, isRawKeyIos did not become true!
+    // So  CMD was not used, only CTRL worked. Maybe we can use context based
+    // Theme.platform instead here and skip RawKeyEventData, or just combine
+    // it with RawKeyEventData, since we have a context it might work.
+    final TargetPlatform platform = Theme.of(context).platform;
+    debugPrint('KeyEvent platform: $platform');
+
+    // Should COMMAND modifier be used instead of CTRL for keyboard COPY-PASTE?
+    // Use all sources we have to determine if it is iOS or macOS that should
+    // use CMD for copy/paste instead of CTRL.
+    final bool useCommandModifier = isRawKeyMacOS ||
+        isRawKeyIos ||
+        platform == TargetPlatform.iOS ||
+        platform == TargetPlatform.macOS;
+    debugPrint('KeyEvent useCommandModifier: $useCommandModifier');
+
+    // isModifierPressed will be true when COMMAND key is pressed on macOS/iOS
+    // or when CTRL key is pressed on other platforms.
+    final bool isModifierPressed =
+        useCommandModifier ? event.isMetaPressed : event.isControlPressed;
+    debugPrint('KeyEvent isModifierPressed: $isModifierPressed');
+
     // The raw keyboard listener reacts to both up and down events, we only
     // use down of them, so we only execute the copy and paste command once
-    // when the key are presses down, we do not want to do it 2nd time when
+    // when the keys are pressed down, we do not want to do it 2nd time when
     // the key goes up.
     if (event.runtimeType == RawKeyDownEvent) {
       // If logical key is paste OR CTRL+V and we use ctrlV paste behavior, then
       // we get the clipboard data.
       if ((event.logicalKey == LogicalKeyboardKey.paste ||
-              (isCtrlPressed && event.logicalKey == LogicalKeyboardKey.keyV)) &&
+              (isModifierPressed &&
+                  event.logicalKey == LogicalKeyboardKey.keyV)) &&
           widget.copyPasteBehavior.ctrlV) {
         _getClipboard();
       }
       // If logical key is copy or CTRL+C and we used ctrlC copy behavior, then
       // we set the current color to the clipboard data.
       if ((event.logicalKey == LogicalKeyboardKey.copy ||
-              (isCtrlPressed && event.logicalKey == LogicalKeyboardKey.keyC)) &&
+              (isModifierPressed &&
+                  event.logicalKey == LogicalKeyboardKey.keyC)) &&
           widget.copyPasteBehavior.ctrlC) {
         _setClipboard();
       }
     }
   }
 
-  // Get the current clipboard data. Try to parse it to a color value.
-  // If successful, set the current color to the color value.
+  // Get the current clipboard data. Try to parse it to a Color object.
+  // If successful, set the current color to the resulting Color.
   Future<void> _getClipboard() async {
     final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     // Clipboard data was null, exit.
@@ -1889,15 +1916,15 @@ class _ColorPickerState extends State<ColorPicker> {
       _addToRecentColors(_selectedColor);
       // This wait for 100ms feels a bit like a hack, but if not done, the
       // paste when using paste parser in the color code edit field DOES NOT
-      // WORK correctly. This delay allows the edit field to first process
-      // its variant of the paste, that we will disregard when the paste parser
-      // is active for the edit field, and it will be caught here also
-      // and we get the complete value as evaluated by the parser instead.
-      // The extra wait here has no visible impact on other pasting when the
-      // edit field is not active.
+      // WORK correctly. This delay allows the used TextField to first process
+      // its variant of the paste, that we will then override when the paste
+      // parser is active for the edit field, the paste command will be caught
+      // here again, and we get the complete value as evaluated by the parser
+      // applied instead. The extra wait here has no visible impact on other
+      // pasting when the edit field is not active.
       await Future<void>.delayed(const Duration(milliseconds: 100));
       setState(() {
-        // If opacity is not enabled we remove it from pasted colors.
+        // If opacity is not enabled, we remove any alpha from pasted colors.
         _selectedColor =
             widget.enableOpacity ? clipColor : clipColor.withAlpha(0xFF);
         _opacity = widget.enableOpacity ? _selectedColor.opacity : 1;
@@ -1909,7 +1936,7 @@ class _ColorPickerState extends State<ColorPicker> {
         _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
           ColorTools.createPrimarySwatch(_selectedColor.withAlpha(0xFF)),
         ];
-        // Move the picker to the pasted color value.
+        // Move the picker to the pasted color value and update active swatch.
         _findPicker();
         _updateActiveSwatch();
       });
