@@ -20,7 +20,7 @@
 name: Deploy Web
 on:
   push:
-    branches: [web-demo-experimental-feature]
+    branches: [none]
   #release:
   #  types: [published]
 # Edit and add other trigger options if an extra new Web deployment is needed.
