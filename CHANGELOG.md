@@ -2,7 +2,7 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.0.1] - April 9, 2021
+## [2.0.1] - April 10, 2021
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a 
   new value to update it and even "remote control" it, if so needed.  
   
