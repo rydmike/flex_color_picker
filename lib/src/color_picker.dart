@@ -1842,22 +1842,22 @@ class _ColorPickerState extends State<ColorPicker> {
     if (_editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste) {
       return;
     }
-
-    // Make an OS independent copy/paste modifier key.
+    // Make an OS independent copy/paste shortcut modifier key.
     //
     // Found the usage of these in the SDK TextField copy/paste implementation.
     final bool isRawKeyMacOS = event.data is RawKeyEventDataMacOs;
-    debugPrint('KeyEvent isMacOs: $isRawKeyMacOS');
+    // debugPrint('KeyEvent isRawKeyMacOS: $isRawKeyMacOS');
     final bool isRawKeyIos = event.data is RawKeyEventDataIos;
-    debugPrint('KeyEvent isRawKeyIos: $isRawKeyIos');
-    // BUT!!
+    // debugPrint('KeyEvent isRawKeyIos: $isRawKeyIos');
+    // **BUT**
     // The above RawKeyEventData did not seem to work on Web when using an
-    // iPad+Safari and an Apple iPad keyboard, isRawKeyIos did not become true!
-    // So  CMD was not used, only CTRL worked. Maybe we can use context based
-    // Theme.platform instead here and skip RawKeyEventData, or just combine
-    // it with RawKeyEventData, since we have a context it might work.
+    // iPad+Safari and an Apple 10.5 Pro iPad keyboard, isRawKeyIos did not
+    // become true!
+    // So CMD modifier did not get used, only CTRL worked. We can use context
+    // based Theme.platform instead here and skip RawKeyEventData, or just
+    // combine it with RawKeyEventData. Since we have a context it works too.
     final TargetPlatform platform = Theme.of(context).platform;
-    debugPrint('KeyEvent platform: $platform');
+    // debugPrint('KeyEvent platform: $platform');
 
     // Should COMMAND modifier be used instead of CTRL for keyboard COPY-PASTE?
     // Use all sources we have to determine if it is iOS or macOS that should
@@ -1866,28 +1866,28 @@ class _ColorPickerState extends State<ColorPicker> {
         isRawKeyIos ||
         platform == TargetPlatform.iOS ||
         platform == TargetPlatform.macOS;
-    debugPrint('KeyEvent useCommandModifier: $useCommandModifier');
+    // debugPrint('KeyEvent useCommandModifier: $useCommandModifier');
 
     // isModifierPressed will be true when COMMAND key is pressed on macOS/iOS
-    // or when CTRL key is pressed on other platforms.
+    // OR when CTRL key is pressed on other platforms.
     final bool isModifierPressed =
         useCommandModifier ? event.isMetaPressed : event.isControlPressed;
-    debugPrint('KeyEvent isModifierPressed: $isModifierPressed');
+    // debugPrint('KeyEvent isModifierPressed: $isModifierPressed');
 
-    // The raw keyboard listener reacts to both up and down events, we only
-    // use down of them, so we only execute the copy and paste command once
-    // when the keys are pressed down, we do not want to do it 2nd time when
+    // The raw keyboard listener reacts to both up and down events, we only use
+    // down, so that we only execute the copy and paste keyboard command once
+    // when the keys are pressed down. We do not want to do it 2nd time when
     // the key goes up.
     if (event.runtimeType == RawKeyDownEvent) {
-      // If logical key is paste OR CTRL+V and we use ctrlV paste behavior, then
-      // we get the clipboard data.
+      // If logical key is paste OR modifier+V and we use ctrlV paste behavior,
+      // we get the latest clipboard data.
       if ((event.logicalKey == LogicalKeyboardKey.paste ||
               (isModifierPressed &&
                   event.logicalKey == LogicalKeyboardKey.keyV)) &&
           widget.copyPasteBehavior.ctrlV) {
         _getClipboard();
       }
-      // If logical key is copy or CTRL+C and we used ctrlC copy behavior, then
+      // If logical key is copy or modifier+C and we used ctrlC copy behavior,
       // we set the current color to the clipboard data.
       if ((event.logicalKey == LogicalKeyboardKey.copy ||
               (isModifierPressed &&

@@ -3,7 +3,37 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.0.0] - April 9, 2021
-* **Documentation:** Only documentation updates from pre-release **2.0.0-nullsafety.5**
+* This release only contains documentation updates from pre-release **2.0.0-nullsafety.5**
+* Thi is the first stable release of the null-safe version
+* This is a **MAJOR** new feature release, in addition to the null-safety conversion.   
+  Please see changelogs from 2.0.0-nullsafety.0 to nullsafety.5, for a complete list of changes and new features.
+* To get familiar with version 2.0.0 and all its new features, it is recommended to go through the updated tutorial,
+  and the API guide in the readme file. 
+* For convenience, the list of breaking changes from last stable version 1.1.5 are listed below.
+  
+  ### Breaking Changes
+  In addition to breaking changes as a result of the null-safety implementation, this release contain a few other
+  **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
+  
+
+* The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color
+  code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
+  `copyPasteBehavior` property, it defaults to same icon as in versions 1.x.
+* The bottom dialog action button that selects the color now says **OK** instead of **Select**. The label for the OK
+  button by default comes from a Material localization. You can as before change it to whatever string you want.
+* The dialog bottom action button for **OK** by default now uses a plain `TextButton` and
+  not an `OutlinedButton`. This change is done to conform to a less opinionated default style. You can still
+  manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was
+  no choice.
+* The dialog bottom **OK** button is no longer auto-focused.
+* The extension `FlexPickerNoNullStringExtensions` on none nullable
+  `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
+  to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent
+  black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color.
+  The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
+  null when the `String?` cannot be parsed to a `Color`.
+* The color code edit and entry field now works more like a normal text entry field. It still
+  only accepts valid hex input and converts all input to uppercase.
 
 ## [2.0.0-nullsafety.5] - April 8, 2021
 * **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true. 
@@ -60,8 +90,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 * **Fix:** The property `editUsesParsedPaste` now works as intended, if true, desktop keyboard paste commands, 
   while editing a color value are intercepted, and the hole pasted buffer value gets parsed, it does not get 
   pasted into the field. For normal field paste functionality keep `editUsesParsedPaste` false (default). 
-* The color code edit and entry field now works more like a normal text entry field. It still only accepts
-  valid hex input and converts all input to uppercase.
+* **Minor breaking:** The color code edit and entry field now works more like a normal text entry field. It still 
+  only accepts valid hex input and converts all input to uppercase.
 * **New property:** If `colorCodeHasColor` is true, then the background of the color code entry field uses the current
   selected color.  
 * **New property** If `colorCodeReadOnly` the color code entry field is always read only. Normally color code can 
@@ -79,7 +109,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 * **New extension:** The extension `FlexPickerNullableStringExtensions` on `String?` got a new
   extension function `Color? toColorShortMaybeNull(bool enableShortRGB)`.
 * **Minor breaking:** The extension `FlexPickerNoNullStringExtensions` on none nullable 
-  `String` named `toColor` no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
+  `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent 
   black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color. 
   The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
@@ -149,10 +179,10 @@ example folder, in "example/lib/demo/main.dart".
  *See API documentation for more information.*
 
 ### Breaking changes
-The following are **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
+The following are **minor breaking changes** from version 1.1.5, they mostly concern visual nuances and label defaults.
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color 
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
-  `copyPasteBehavior` property, it defaults to same icon as in version 1.x. 
+  `copyPasteBehavior` property, it defaults to same icon as in version 1.1.5. 
 * The bottom dialog action button that selects the color now says **OK** instead of **Select**. The label for the OK 
   button by default comes from a Material localization. You can as before change it to whatever string you want.
 * The dialog bottom action button for **OK** by default now uses just a plain `TextButton` and 
@@ -163,9 +193,9 @@ The following are **minor breaking changes** from version 1.x, they mostly conce
   
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
-* A workaround to https://github.com/flutter/flutter/issues/71687 was introduced. The issue has not been resolved.
-  However, the workaround allows for the Wrap implementation that was changed to a Row in version 1.1.2, to be used
-  again.
+* A workaround to issue [#71687](https://github.com/flutter/flutter/issues/71687) was introduced. 
+  The issue has not been solved. However, the workaround allows for the Wrap implementation that was 
+  changed to a Row in version 1.1.2, to be used again.
 * The almost full API configurable Web example and demo, was included in the package in 
   "example/lib/demo/main.dart" together with the previous default example in "example/lib/main.dart". 
   Previously this Web example was in a separate GitHub repository. The example was updated to make it 
@@ -250,7 +280,7 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - Add selected colors to the custom colors section.
 
 ### COMPLETED
-- Release none pre-release version 2.
+- Release stable version 2.0.0
 - Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - Add a simpler optional async dialog picker function, that returns selected color. 
 - Add support for colors with opacity or alpha.

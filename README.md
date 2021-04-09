@@ -24,7 +24,7 @@ and buttons for handling COPY-PASTE of colors from and to the picker, including 
     - [Screen ColorPicker](#screen-colorpicker)  
     - [Dialog ColorPicker Method](#dialog-colorpicker-method)
     - [Dialog ColorPicker Function](#dialog-colorpicker-function)
-- [FlexColorPicker API Guide](#flexcolorpicker-api-guide)
+- [API Guide](#api-guide)
     - [Elements of the Picker](#elements-of-the-picker)
         - [Enabled Color Pickers](#enabled-color-pickers)
         - [Enable Shades Selection](#enable-shades-selection)
@@ -609,7 +609,7 @@ exposed to the degree they can be, should you ever need them.
 **Finally**, the default example also includes a light and dark theme mode toggle. It is there so that you 
 can test the look and operation of the color picker with a dark theme.
 
-# FlexColorPicker API Guide
+# API Guide
 
 In addition to what is covered in the above [tutorial](#tutorial), the **FlexColorPicker** has a large amount of 
 additional features. Its behavior can easily be modified with its direct
@@ -648,8 +648,6 @@ ColorPicker(
   onColorChanged: (Color color) => setState(() => myColor = color),
 ),
 ```
-
-
 
 ### Enabled Color Pickers
 
@@ -1352,7 +1350,7 @@ cumbersome to use, although the above mentioned example show how it is done.
 
 ### Function showColorPickerDialog 
 
-API reference: [showColorPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showColorPickerDialog.html)
+API reference: [showColorPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/showColorPickerDialog.html)
 
 The `showColorPickerDialog` function is often simpler to use. Just pass in a build context for the dialog, and the 
 required start color value, then call the function, with needed color picker and dialog setup properties, and 
@@ -1372,7 +1370,7 @@ its `showPickerDialog` method.
 
 The `showColorPickerDialog` dialog demo in the default example app shown earlier [here](#dialog-colorpicker-function) 
 explains how to use the built-in 
-[ColorPicker(...).showPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showPickerDialog.html) 
+[ColorPicker(...).showColorPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/showColorPickerDialog.html) 
 function.
 
 Since the properties `elevation` and `title`, in the `showPickerDialog` method would collide with the same
