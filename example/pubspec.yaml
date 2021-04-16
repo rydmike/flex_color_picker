@@ -19,7 +19,7 @@ dependencies:
   google_fonts: ^2.0.0
 
   # https://pub.dev/packages/hive
-  hive: ^2.0.2
+  hive: ^2.0.3
 
   # https://pub.dev/packages/path_provider:
   path_provider: ^2.0.1
