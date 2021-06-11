@@ -68,6 +68,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.longPressMenu = false,
       this.secondaryMenu = false,
       this.secondaryOnDesktopLongOnDevice = false,
+      this.secondaryOnDesktopLongOnDeviceAndWeb = false,
       this.editFieldCopyButton = true,
       this.menuIconThemeData,
       this.menuThemeData,
@@ -170,11 +171,19 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to false.
   final bool secondaryMenu;
 
-  /// Use secondary button click on a device and long press on iOs/Android
-  /// devices in the picker, to open a color copy and paste menu.
+  /// Use secondary button click on desktop and their web version and long
+  /// press on iOs/Android devices in the picker, to open a color copy and
+  /// paste context menu.
   ///
   /// Defaults to false.
   final bool secondaryOnDesktopLongOnDevice;
+
+  /// Use secondary button click on desktop and long press on iOs/Android
+  /// devices and all web builds in the picker, to open a color copy and
+  /// paste context menu.
+  ///
+  /// Defaults to false.
+  final bool secondaryOnDesktopLongOnDeviceAndWeb;
 
   /// Show a copy button suffix in the color code edit and display field.
   ///
@@ -321,6 +330,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     bool? longPressMenu,
     bool? secondaryMenu,
     bool? secondaryOnDesktopLongOnDevice,
+    bool? secondaryOnDesktopLongOnDeviceAndWeb,
     bool? editFieldCopyButton,
     IconThemeData? menuIconThemeData,
     PopupMenuThemeData? menuThemeData,
@@ -349,6 +359,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         (secondaryOnDesktopLongOnDevice == null ||
             identical(secondaryOnDesktopLongOnDevice,
                 this.secondaryOnDesktopLongOnDevice)) &&
+        (secondaryOnDesktopLongOnDeviceAndWeb == null ||
+            identical(secondaryOnDesktopLongOnDeviceAndWeb,
+                this.secondaryOnDesktopLongOnDeviceAndWeb)) &&
         (editFieldCopyButton == null ||
             identical(editFieldCopyButton, this.editFieldCopyButton)) &&
         (menuIconThemeData == null ||
@@ -387,6 +400,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       secondaryMenu: secondaryMenu ?? this.secondaryMenu,
       secondaryOnDesktopLongOnDevice:
           secondaryOnDesktopLongOnDevice ?? this.secondaryOnDesktopLongOnDevice,
+      secondaryOnDesktopLongOnDeviceAndWeb:
+          secondaryOnDesktopLongOnDeviceAndWeb ??
+              this.secondaryOnDesktopLongOnDeviceAndWeb,
       editFieldCopyButton: editFieldCopyButton ?? this.editFieldCopyButton,
       menuIconThemeData: menuIconThemeData ?? this.menuIconThemeData,
       menuThemeData: menuThemeData ?? this.menuThemeData,
@@ -419,6 +435,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         secondaryMenu == other.secondaryMenu &&
         secondaryOnDesktopLongOnDevice ==
             other.secondaryOnDesktopLongOnDevice &&
+        secondaryOnDesktopLongOnDeviceAndWeb ==
+            other.secondaryOnDesktopLongOnDeviceAndWeb &&
         editFieldCopyButton == other.editFieldCopyButton &&
         menuIconThemeData == other.menuIconThemeData &&
         menuThemeData == other.menuThemeData &&
@@ -447,6 +465,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       longPressMenu,
       secondaryMenu,
       secondaryOnDesktopLongOnDevice,
+      secondaryOnDesktopLongOnDeviceAndWeb,
       editFieldCopyButton,
       menuIconThemeData,
       menuThemeData,
@@ -479,6 +498,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     properties.add(DiagnosticsProperty<bool>('secondaryMenu', secondaryMenu));
     properties.add(DiagnosticsProperty<bool>(
         'secondaryOnDesktopLongOnDevice', secondaryOnDesktopLongOnDevice));
+    properties.add(DiagnosticsProperty<bool>(
+        'secondaryOnDesktopLongOnDeviceAndWeb',
+        secondaryOnDesktopLongOnDeviceAndWeb));
     properties.add(
         DiagnosticsProperty<bool>('editFieldCopyButton', editFieldCopyButton));
     properties.add(DiagnosticsProperty<IconThemeData?>(

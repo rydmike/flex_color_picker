@@ -50,6 +50,8 @@ Future<bool> colorPickerDialog(
       longPressMenu: watch(longPressMenuPod).state,
       secondaryMenu: watch(secondaryMenuPod).state,
       secondaryOnDesktopLongOnDevice: watch(secondaryDesktopOtherLongPod).state,
+      secondaryOnDesktopLongOnDeviceAndWeb:
+          watch(secondaryDesktopWebLongPod).state,
       editFieldCopyButton: watch(editFieldCopyButtonPod).state,
       parseShortHexCode: watch(parseShortHexCodePod).state,
       editUsesParsedPaste: watch(editUsesParsedPastePod).state,

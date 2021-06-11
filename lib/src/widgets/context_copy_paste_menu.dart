@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../universal_widgets/context_popup_menu.dart';
 
 /// Enum to handle copy and paste commands.
@@ -22,7 +23,8 @@ class ContextCopyPasteMenu extends StatelessWidget {
     Key? key,
     this.useLongPress = false,
     this.useSecondaryTapDown = false,
-    this.useSecondaryOnDesktopLongOnDevice = true,
+    this.useSecondaryOnDesktopLongOnDevice = false,
+    this.useSecondaryOnDesktopLongOnDeviceAndWeb = true,
     this.menuWidth = 80,
     this.menuItemHeight = 30,
     this.copyLabel,
@@ -56,8 +58,18 @@ class ContextCopyPasteMenu extends StatelessWidget {
   /// host system be configured to be some other buttons as well, often by
   /// switching mouse right and left buttons.
   ///
-  /// Defaults to true.
+  /// Defaults to false.
   final bool useSecondaryOnDesktopLongOnDevice;
+
+  /// Use secondary tap down on desktop, but long press on
+  /// iOS/Android device and Web.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  ///
+  /// Defaults to true.
+  final bool useSecondaryOnDesktopLongOnDeviceAndWeb;
 
   /// The width of the menu.
   ///
@@ -174,6 +186,8 @@ class ContextCopyPasteMenu extends StatelessWidget {
         useLongPress: useLongPress,
         useSecondaryTapDown: useSecondaryTapDown,
         useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
+        useSecondaryOnDesktopLongOnDeviceAndWeb:
+            useSecondaryOnDesktopLongOnDeviceAndWeb,
         items: <PopupMenuEntry<CopyPasteCommands>>[
           PopupMenuItem<CopyPasteCommands>(
             value: CopyPasteCommands.copy,

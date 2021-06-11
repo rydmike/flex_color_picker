@@ -315,6 +315,7 @@ class _Column4 extends StatelessWidget {
         const SecondaryMenuSwitch(),
         const LongPressMenuSwitch(),
         const SecondaryDesktopLongDeviceSwitch(),
+        const SecondaryDesktopLongWebDeviceSwitch(),
         const EditUsesParsedPasteSwitch(),
         const SnackbarParseErrorSwitch(),
         const FeedbackParseErrorSwitch(),

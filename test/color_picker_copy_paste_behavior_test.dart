@@ -73,6 +73,7 @@ void main() {
       longPressMenu: true,
       secondaryMenu: true,
       secondaryOnDesktopLongOnDevice: true,
+      secondaryOnDesktopLongOnDeviceAndWeb: true,
       editFieldCopyButton: false,
       menuIconThemeData:
           IconThemeData(opacity: 50, size: 30, color: Colors.black),
@@ -98,7 +99,7 @@ void main() {
         'EXPECT exact print string value.', () {
       expect(m4.toString(), equalsIgnoringHashCodes(
           // ignore: lines_longer_than_80_chars
-          'ColorPickerCopyPasteBehavior#00000(ctrlC: false, ctrlV: false, copyButton: true, pasteButton: true, copyIcon: IconData(U+0E59B), pasteIcon: IconData(U+0E65E), copyTooltip: "COPY", pasteTooltip: "PASTE", copyFormat: numHexAARRGGBB, longPressMenu: true, secondaryMenu: true, secondaryOnDesktopLongOnDevice: true, editFieldCopyButton: false, menuIconThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), menuThemeData: PopupMenuThemeData#00000(color: Color(0xffffffff), shape: RoundedRectangleBorder(BorderSide(Color(0xff000000), 0.0, BorderStyle.none), BorderRadius.zero), elevation: 3.0, text style: TextStyle(inherit: true, size: 12.0), enableFeedback: true), menuWidth: 85.0, menuItemHeight: 35.0, snackBarParseError: true, snackBarMessage: "Something went wrong", snackBarDuration: 0:00:01.500000, feedbackParseError: true, parseShortHexCode: true, editUsesParsedPaste: true)'));
+          'ColorPickerCopyPasteBehavior#00000(ctrlC: false, ctrlV: false, copyButton: true, pasteButton: true, copyIcon: IconData(U+0E085), pasteIcon: IconData(U+0E16A), copyTooltip: "COPY", pasteTooltip: "PASTE", copyFormat: numHexAARRGGBB, longPressMenu: true, secondaryMenu: true, secondaryOnDesktopLongOnDevice: true, secondaryOnDesktopLongOnDeviceAndWeb: true, editFieldCopyButton: false, menuIconThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), menuThemeData: PopupMenuThemeData#00000(color: Color(0xffffffff), shape: RoundedRectangleBorder(BorderSide(Color(0xff000000), 0.0, BorderStyle.none), BorderRadius.zero), elevation: 3.0, text style: TextStyle(inherit: true, size: 12.0), enableFeedback: true), menuWidth: 85.0, menuItemHeight: 35.0, snackBarParseError: true, snackBarMessage: "Something went wrong", snackBarDuration: 0:00:01.500000, feedbackParseError: true, parseShortHexCode: true, editUsesParsedPaste: true)'));
     });
     test(
         'CPCPB2.2: Test toStringShort implemented via debugFillProperties '
@@ -137,6 +138,7 @@ void main() {
           longPressMenu: true,
           secondaryMenu: true,
           secondaryOnDesktopLongOnDevice: true,
+          secondaryOnDesktopLongOnDeviceAndWeb: true,
           editFieldCopyButton: false,
           menuIconThemeData:
               const IconThemeData(opacity: 50, size: 30, color: Colors.black),

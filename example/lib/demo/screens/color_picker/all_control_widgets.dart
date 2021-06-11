@@ -46,6 +46,7 @@ export 'picker_switches/parse_short_hex_code_switch.dart';
 export 'picker_switches/recent_colors_switch.dart';
 export 'picker_switches/recent_subheading_switch.dart';
 export 'picker_switches/secondary_desktop_long_device_switch.dart';
+export 'picker_switches/secondary_desktop_long_web_device_switch.dart';
 export 'picker_switches/secondary_menu_switch.dart';
 export 'picker_switches/shades_switch.dart';
 export 'picker_switches/snackbar_parse_error_switch.dart';

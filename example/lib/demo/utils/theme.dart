@@ -30,7 +30,8 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme(App.primaryLight),
+      outlinedButtonTheme:
+          outlinedButtonTheme(colorSchemeLight, Colors.black38),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
@@ -68,7 +69,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme: outlinedButtonTheme(App.primaryDark),
+      outlinedButtonTheme: outlinedButtonTheme(colorSchemeDark, Colors.white38),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeDark),
       tooltipTheme: tooltipTheme(true),
@@ -132,33 +133,57 @@ class AppTheme {
           style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         padding: roundButtonPadding,
-        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
+        minimumSize: minButtonSize,
       ));
 
   /// Theme definitions give OutlinedButton a Stadium rounded design.
-  static OutlinedButtonThemeData outlinedButtonTheme(Color borderColor) =>
+  static OutlinedButtonThemeData outlinedButtonTheme(
+          ColorScheme scheme, Color disabledColor) =>
       OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-        shape: const StadiumBorder(),
-        side: BorderSide(
-          color: borderColor,
-          width: App.outlineThickness,
+        style: OutlinedButton.styleFrom(
+          shape: const StadiumBorder(),
+          // side: BorderSide(
+          //   color: borderColor,
+          //   width: App.outlineThickness,
+          // ),
+          padding: roundButtonPadding,
+          minimumSize: minButtonSize,
+        ).copyWith(
+          side: MaterialStateProperty.resolveWith<BorderSide?>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.disabled))
+                return BorderSide(
+                  color: disabledColor,
+                  width: 0.5,
+                );
+              if (states.contains(MaterialState.error))
+                return BorderSide(
+                  color: scheme.error,
+                  width: App.outlineThickness,
+                );
+              return BorderSide(
+                  color: scheme.primary, width: App.outlineThickness);
+            },
+          ),
         ),
-        padding: roundButtonPadding,
-        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
-      ));
+      );
 
   /// Theme definitions give TextButton a Stadium rounded design.
   static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
           style: TextButton.styleFrom(
         shape: const StadiumBorder(),
         padding: roundButtonPadding,
-        minimumSize: const Size(App.roundButtonMinSize, App.roundButtonMinSize),
+        minimumSize: minButtonSize,
       ));
 
-  /// The stadium rounded buttons need a bit more padding to look.
+  /// The stadium rounded buttons generally need a bit more padding to look good,
+  /// adjust here to tune the padding for all of them globally in the app.
+  /// Currently using the default padding the old buttons had.
   static const EdgeInsets roundButtonPadding =
-      EdgeInsets.symmetric(horizontal: 21);
+      EdgeInsets.symmetric(horizontal: 16);
+
+  /// The old buttons had a minimum size that looked better, we keep that.
+  static const Size minButtonSize = Size(88, 36);
 
   /// ToggleButtons theme
   static ToggleButtonsThemeData toggleButtonsThemeData(

@@ -30,7 +30,7 @@ const int _maxRecentColors = 20;
 /// A customizable Material primary color, accent color and custom colors,
 /// color picker.
 ///
-/// You can configure which material color swatches can be used for color
+/// You can configure which Material color swatches can be used for color
 /// selection, any combination of both primary/accent in same picker or in
 /// separate groups. There is an almost black and white shades picker and
 /// it is possible to include a page with custom material and accent swatches
@@ -1338,16 +1338,21 @@ class _ColorPickerState extends State<ColorPicker> {
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
             const TextStyle();
 
+    // TODO: Remove these comments
+    // final TargetPlatform _platform = Theme.of(context).platform;
+    // final bool _useLongPress = widget.copyPasteBehavior.longPressMenu ||
+    //     (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
+    //         !isDesktop(_platform));
+    // final bool _useSecondaryClick = widget.copyPasteBehavior.secondaryMenu ||
+    //     (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
+    //         isDesktop(_platform));
+
     // The logic below is used to determine if we will have a context menu
     // present at all in the Widget tree.
-    final TargetPlatform _platform = Theme.of(context).platform;
-    final bool _useLongPress = widget.copyPasteBehavior.longPressMenu ||
-        (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
-            !isDesktop(_platform));
-    final bool _useSecondaryClick = widget.copyPasteBehavior.secondaryMenu ||
-        (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
-            isDesktop(_platform));
-    final bool _useContextMenu = _useLongPress || _useSecondaryClick;
+    final bool _useContextMenu = widget.copyPasteBehavior.longPressMenu ||
+        widget.copyPasteBehavior.secondaryMenu ||
+        widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice ||
+        widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb;
 
     // Build and return the layout.
     // We start with a RawKeyboardListener that is used to handle keyboard
@@ -1367,6 +1372,8 @@ class _ColorPickerState extends State<ColorPicker> {
             useSecondaryTapDown: widget.copyPasteBehavior.secondaryMenu,
             useSecondaryOnDesktopLongOnDevice:
                 widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice,
+            useSecondaryOnDesktopLongOnDeviceAndWeb:
+                widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb,
             onSelected: (CopyPasteCommands? value) {
               if (value == CopyPasteCommands.copy) _setClipboard();
               if (value == CopyPasteCommands.paste) _getClipboard();
@@ -1830,9 +1837,12 @@ class _ColorPickerState extends State<ColorPicker> {
         ];
         _findPicker();
       }
-
+      // If we are not on the wheel, and a selected color is not a member
+      // of the current selected swatch, the update the active swatch.
+      // This check eliminates a rebuild when the selected color is a member
+      // of the currently displayed color swatch.
       if (_activePicker != ColorPickerType.wheel ||
-          !ColorTools.containPrimaryColor(_activeSwatch!, _selectedColor)) {
+          !ColorTools.swatchContainsColor(_activeSwatch!, _selectedColor)) {
         // Update the active swatch to match the selected color.
         _updateActiveSwatch();
       }
@@ -1880,7 +1890,6 @@ class _ColorPickerState extends State<ColorPicker> {
     final bool isRawKeyMacOS = event.data is RawKeyEventDataMacOs;
     // debugPrint('KeyEvent isRawKeyMacOS: $isRawKeyMacOS');
     final bool isRawKeyIos = event.data is RawKeyEventDataIos;
-    // debugPrint('KeyEvent isRawKeyIos: $isRawKeyIos');
     // **BUT**
     // The above RawKeyEventData did not seem to work on Web when using an
     // iPad+Safari and an Apple 10.5 Pro iPad keyboard, isRawKeyIos did not
@@ -1889,8 +1898,6 @@ class _ColorPickerState extends State<ColorPicker> {
     // based Theme.platform instead here and skip RawKeyEventData, or just
     // combine it with RawKeyEventData. Since we have a context it works too.
     final TargetPlatform platform = Theme.of(context).platform;
-    // debugPrint('KeyEvent platform: $platform');
-
     // Should COMMAND modifier be used instead of CTRL for keyboard COPY-PASTE?
     // Use all sources we have to determine if it is iOS or macOS that should
     // use CMD for copy/paste instead of CTRL.
@@ -1898,13 +1905,11 @@ class _ColorPickerState extends State<ColorPicker> {
         isRawKeyIos ||
         platform == TargetPlatform.iOS ||
         platform == TargetPlatform.macOS;
-    // debugPrint('KeyEvent useCommandModifier: $useCommandModifier');
 
     // isModifierPressed will be true when COMMAND key is pressed on macOS/iOS
     // OR when CTRL key is pressed on other platforms.
     final bool isModifierPressed =
         useCommandModifier ? event.isMetaPressed : event.isControlPressed;
-    // debugPrint('KeyEvent isModifierPressed: $isModifierPressed');
 
     // The raw keyboard listener reacts to both up and down events, we only use
     // down, so that we only execute the copy and paste keyboard command once
@@ -1978,7 +1983,7 @@ class _ColorPickerState extends State<ColorPicker> {
         widget.onColorChangeEnd!(_selectedColor);
       }
     }
-    // Clipboard could not parsed to a Color()...
+    // ELSE FOR: Clipboard could not parsed to a Color()
     else {
       // TODO: Improve feedback/sound when it can be done with SDK features.
       // This is a nice idea, but it does not do much on most platforms.

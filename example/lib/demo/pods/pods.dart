@@ -481,6 +481,15 @@ final StateProvider<bool> secondaryDesktopOtherLongPod =
       as bool;
 }, name: Keys.secondaryDesktopOtherLong);
 
+// State of using secondary (right) click on desktop and long press
+// on devices and web to show the copy-paste context menu
+final StateProvider<bool> secondaryDesktopWebLongPod =
+    StateProvider<bool>((ProviderReference ref) {
+  return hiveStore.get(Keys.secondaryDesktopWebLong,
+          defaultValue: Keys.defaults[Keys.secondaryDesktopWebLong]! as bool)
+      as bool;
+}, name: Keys.secondaryDesktopWebLong);
+
 // State of if Web 3-char code RGB, should be interpreted as RRGGBB.
 final StateProvider<bool> parseShortHexCodePod =
     StateProvider<bool>((ProviderReference ref) {
