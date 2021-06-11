@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:test/test.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:test/test.dart';
 
 void main() {
   //
@@ -224,6 +224,49 @@ void main() {
       }
     }
   });
+  //
+  // Test that all SDK colors belong to their swatch.
+  group(
+      'Test that SDK Material Colors swatch values with '
+      'ColorTools.swatchContainsColor()', () {
+    final List<int> index = <int>[
+      50,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      850, // Only used by grey swatch
+      900
+    ];
+    // The SDK excludes the grey color, we include it.
+    final List<ColorSwatch<Object>> swatches = <ColorSwatch<Object>>[
+      ...Colors.primaries,
+      Colors.grey,
+      ...Colors.accents,
+    ];
+    for (final ColorSwatch<Object> swatch in swatches) {
+      for (final int i in index) {
+        if (swatch[i] != null) {
+          test('Verify that ${swatch} contains color ${swatch[i]}[$i]', () {
+            expect(ColorTools.swatchContainsColor(swatch, swatch[i]!), true);
+          });
+          test(
+              'Verify that ${swatch} does not contain color ${swatch[i]!.withAlpha(0xF0)}[$i]',
+              () {
+            expect(
+                ColorTools.swatchContainsColor(
+                    swatch, swatch[i]!.withAlpha(0xF0)),
+                false);
+          });
+        }
+      }
+    }
+  });
+
   //
   // Test that all SDK primary colors return true with isPrimaryColor
   group(

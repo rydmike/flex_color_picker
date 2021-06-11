@@ -200,9 +200,16 @@ class ColorTools {
     return false;
   }
 
-  /// Judgment ColorsWatch contains colors
-  static bool containPrimaryColor(ColorSwatch<Object> swatch, Color color) {
-    for (final int i in _indexPrimary) {
+  /// Returns true if the [swatch] contains [color].
+  ///
+  /// Used by the ColorPicker to help reduce rebuilds in certain cases.
+  /// But you can also use it as help to determine if a [color] belongs to
+  /// a given [ColorSwatch].
+  static bool swatchContainsColor(ColorSwatch<Object> swatch, Color color) {
+    // We use index list with 850 index included to check all possible indexes
+    // in any swatch/ use case that might be used. This covers normal primary,
+    // primaries with the 850 index, and via primary also accent index.
+    for (final int i in _indexPrimaryWith850) {
       if (swatch[i] == color || swatch[i]?.value == color.value) {
         return true;
       }

@@ -7,7 +7,7 @@ FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` ca
 pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used 
 for the pick items can be customized.
 
-The picker is also Windows, Mac, Linux and Web desktop compatible, with proper focus handling plus optional menus 
+The picker is also Windows, Mac, Linux and Web desktop compatible. It has desktop focus handling plus optional menus 
 and buttons for handling COPY-PASTE of colors from and to the picker, including desktop COPY-PASTE keyboard shortcuts.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
@@ -78,8 +78,7 @@ Give the `ColorPicker` a heading and a subheading for the color shades, typicall
 Decide if the Material shades can be selected or not and if the selected color name and RGB code are visible in the 
 picker. If the color HEX RGB code is visible, the picker can also include a button that allows you to copy the selected 
 color's code to the clipboard directly from the field. On the wheel picker you can enter a HEX RGB color code, and
-the wheel picker will move to select the color as the color code is being entered, while also creating a color 
-swatch for it.
+the wheel picker will move to select the entered color, while also creating a color swatch for it.
 
 The shape, size and spacing of the color picker items can be modified. There is a built-in dialog that can be used to
 show and use the `ColorPicker` in a dialog. You can of course also make your own dialog and just use the `ColorPicker`
@@ -93,7 +92,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 
 ```yaml
 dependencies:  
-  flex_color_picker: ^2.0.1
+  flex_color_picker: ^2.0.2
 ```
 
 In your library file add the following import:
@@ -127,6 +126,17 @@ application.
 The source code for the Web demo, which is a bit more elaborate example than examples normally are, is also bundled with 
 the package source code in the "example/lib/demo" folder.
 
+> **IMPORTANT:** If the color picker's opacity slider feature is used on WEB builds `enableOpacity: true`, then you 
+> must build using the SKIA **canvaskit** renderer only. The opacity slider uses `ImageShader`, a Flutter API that 
+> is not yet available on **html** builds, at least not in version stable 2.2.1.
+> 
+> ```
+> flutter run -d chrome --web-renderer canvaskit
+> flutter build web --web-renderer canvaskit
+> ```
+> For more information see https://flutter.dev/docs/development/tools/web-renderers
+
+
 The Web demo has a responsive view, that expands into maximum four separately scrollable columns. The columns contain
 a massive amount of controls that you can use to adjust the color picker's settings. On a 1080p desktop screen,
 you can see most of the settings at the same time as the color picker. With this you can test the settings and see their
@@ -140,7 +150,7 @@ The same toggle that is used to turn OFF the tooltips in the color picker, also 
 the API tooltips in the demo, in case they get in the way. By default, the tooltips are ON, to show the used API and 
 its current value.
 
-The **FlexColorPicker** Web demo also persist the settings as you change them. The next time you use it, with the same 
+The **FlexColorPicker** web demo also persist the settings as you change them. The next time you use it, with the same 
 device and browser, it will restore the configuration that you left it in last time you used it. You can reset the
 settings to their start default values as well.
 
@@ -180,8 +190,8 @@ We can use the `ColorIndicator` Widget, that the `ColorPicker` also uses interna
 Alternatively you can make and use a custom for Widget for this purpose. In this tutorial we use the `ColorIndicator` in 
 a `ListTile`, and use the `ColorIndicator` as its trailing property to show the selected color.
 
-The **FlexColorPicker** package also includes `ColorTools`, a set of helper functions that you among other things, 
-can use to display names of the standard Material colors, shade index, as well as an optional Flutter 
+The **FlexColorPicker** package also includes `ColorTools`, a set of helper functions that among other things, 
+can display names of the standard Material colors, shade index, and an optional Flutter 
 style Hex color code. We use the `ColorTools.materialNameAndCode` in the `ListTile`'s `subtitle` property to 
 describe the selected color by showing its Material color name and index, as well as its Flutter style HEX color value. 
 
@@ -347,11 +357,11 @@ we want this color to be visible and not obscured by the dialog.
   ),
 ```
 
-> The above `onSelectFocus` property is just used to inform the `ColorIndicator` that we do not want it to keep focus
+> The above `onSelectFocus` property is used to inform the `ColorIndicator` that we do not want it to keep focus
 > when we select and click on it in desktop and Web applications. On those platforms it gets focus when we
 > click on it to open the dialog from it. If it keeps focus while the dialog is open and after the dialog is closed, 
-> the active focus overlay color will distort its actual color a bit, and then we cannot observe the selected 
-> color, until we un-focus it. We don't want that, this property addresses this issues by automatically un-focusing 
+> the active focus overlay color will distort its actual color a bit. In that case we cannot observe the selected 
+> color until we un-focus it. We don't want that, this property addresses this issues by automatically un-focusing 
 > it after we clicked on it.
 
 Next we create a method to show a `ColorPicker` with the built-in `colorPickerDialog` dialog method. 
@@ -426,8 +436,8 @@ happen to have `ColorPickerType.custom: true` enabled, the custom picker will no
 The above example uses a few more `ColorPicker` properties. It is styled to be more compact and to show the general 
 color name via `showColorName`, as well as the selected color's HEX color code by enabling `showColorCode`. With the 
 color code field you can also copy the color value to the clipboard using the copy icon button
-suffix in the field. When the wheel picker is active you can also enter a hex color RGB value in the field, 
-the two wheel color HSV selection indicators will then move to the color selection matching the entered HEX RGB value.
+suffix in the field. With the wheel picker you can also enter a hex color RGB value in the color code field. 
+The two wheel color HSV selection indicators will move to the color selection matching the entered HEX RGB value.
 
 The above example also uses the `copyPasteBehavior` configuration class `ColorPickerCopyPasteBehavior()` with
 `longPressMenu` set to true, to activate a long press context COPY-PASTE menu in the picker.
@@ -470,11 +480,11 @@ appBar: AppBar(
 ```
 
 As can be seen below, now the selected color in the dialog changes the `AppBar`'s color and this happens as you
-change the color in the dialog, if you select the color, it is kept and cancelling it restores the `AppBar`'s 
+change the color in the dialog. If you select the color, it is kept and cancelling, restores the `AppBar`'s 
 color as well, **pretty cool!**
 
-You can also use this principle to connect the color picking interaction to colors that define your application's theme 
-colors and thus modify your application's theme color values interactively while the app is running. Showing how to do
+You can use this principle to connect the color picking interaction to colors that define your application's theme 
+colors and modify your application's theme color values while the app is running. Showing how to do
 this goes a bit beyond the scope of this tutorial, but it is pretty much as easy as the interactive AppBar background 
 color manipulation we just did.
 
@@ -483,17 +493,17 @@ color manipulation we just did.
 ## Dialog ColorPicker Function
 
 If you do not need the feature that allows you to modify and update colors interactively from the dialog via a 
-callback, you can use a simpler more straight forward async dialog function API. This function just opens the picker 
+callback, you can use a more straight forward async dialog function API. This function opens the picker 
 with a pre-selected color and either returns the new selected color when closed with **OK**, or returns the
-color you opened it with, if the dialog is closed with **Cancel** or dismiss action.
+color you opened it with, when closed with **Cancel** action.
 
-You can call this `showColorPickerDialog` dialog function directly from e.g. an `onTap` or `onSelect` callback, 
+You can call this `showColorPickerDialog` dialog function directly from e.g., an `onTap` or `onSelect` callback, 
 commonly found in Buttons, InkWell and similar Widgets with interaction callbacks. Make the callback async and 
 wait for `showColorPickerDialog` to return the selected color value. 
 
 Let's take a look at how this works. As before, first we define another `ListTile` with a trailing `ColorIndicator`.
 We place it last after the previous two `ListTile`'s in our `ListView`, just before the `ColorPicker` that is in 
-the `Card` in the `ListView.` For the color that we manipulate, we use the `dialogSelectColor` Color that we defined
+the `Card` in the `ListView`. For the color that we manipulate, we use the `dialogSelectColor` Color that we defined
 earlier. In this case the start color value is not a color that exists in the default Material primary and accent 
 color picker or any shade of them. Because the color cannot be found in the pickers with pre-defined colors, the 
 color picker will automatically select the **Wheel** picker and show the start color value we defined in it.
@@ -582,8 +592,8 @@ in the `ColorPicker`, that we can use to adjust the opacity from 0 to 100% of th
 
 We also set `colorCodeHasColor: true`, this changes the style of the displayed color code field's background color.
 It will now use the currently selected color as the field's background color. Making it show the color result of our
-current color selection and opacity slider setting. The opacity slider has a checkered background
-so that you can get a feel for how opaque the selected opacity value, combined active color are, when it is used 
+current color selection and opacity slider setting. The opacity slider has a checkered background,
+so you can see how opaque the selected opacity value is, when it is used 
 on top of other widgets or images.
 
 Below you can see the result of this picker setup, and also a demo of how you can copy-paste a selected color.
@@ -598,7 +608,7 @@ information about the COPY-PASTE features, see the API guide's chapter regarding
 Under the hood, the `showColorPickerDialog` function uses the same `ColorPicker` and `showPickerDialog` method. 
 It just bundles them together in one single async `showColorPickerDialog` function.
 
-The API surface of this function is quite large, because it actually bundles all the `ColorPicker` properties, 
+The API surface of this function is quite large. It bundles all the `ColorPicker` properties, 
 including its `showPickerDialog` method's parameters, and an `AlertDialog`, with all its properties, plus 
 the `showDialog` function and its parameters, all into one large function.
 
@@ -633,8 +643,8 @@ modify.
 
 The other main property is the `ValueChanged<Color>` callback `onColorChanged`. This is called whenever a new 
 color value is selected in the color picker, with the selected color. What you do with the callback color depends 
-on your use-case. In the tutorial examples we typically just update the passed in color with `setState` and this changed
-color is shown the example app's color indicator widget in three ListTile's, in the shape of a colored box or circle.
+on your use-case. In the tutorial examples we update the passed in color with `setState`, and the changed
+color is shown in a color indicator widget, in the shape of a colored box or circle.
 
 However, in the one of the dialog examples, it was also demonstrated how it can also be used to interactively change 
 the `AppBar` color of the app itself. You can of use the picker to change any color in
@@ -666,7 +676,7 @@ provided use their defaults.
 
 If you only have one picker enabled, there is no sliding segment (tab) control shown that will allow you to switch 
 between different color picker types. That would be pointless, since there is only one color picker. If all pickers
-are disabled, the Material primary color picker will still shown.
+are disabled, the Material primary color picker will be shown.
 
 If all other features are disabled (by default they are not), the screenshot below represents an example of a 
 bare-bones **minimum picker**, showing only the main colors of the Material primary colors. If other defaults are OFF,
@@ -717,8 +727,8 @@ value. For `createPrimarySwatch` the provided color will always be used as the b
 for `createAccentSwatch` for as color for index [200], the rest of the index color shades are computed. 
 
 > Please note that these helpers just produce lighter and darker shades of the provided color for lower and higher 
-> swatch indexes. If you give e.g. the `createPrimarySwatch` the same color value as a built-in Material primary 
-> color with index [500], you will not get the same swatch as the built-in hand tuned Material primary color swatch. 
+> swatch indexes. If you give e.g., the `createPrimarySwatch` the same color value as a built-in Material primary 
+> color with index [500], you will not get the same swatch as the built-in Material primary color swatch. 
 
 To define color data to use with the `customColorSwatchesAndNames` property, to start using the custom color picker, 
 first make a final **Map** with your custom `ColorSwatch` objects, and their color names. 
@@ -785,14 +795,14 @@ and the selected color's opacity gradient on the slider. The thumb's position is
 when applied over a background.
 
 The slider thumb label only show opacity value changes in 1% increments. However, the slider has 255 discrete steps,
-so there is a step for every alpha value in the resulting ARGB color value. If the color code value is also enabled and
-set to a format that includes the alpha value, you can see that the alpha value can be adjusted in single increments
+so there is a step for every alpha value in the resulting ARGB color value. If the color code value is enabled and
+set to a format that includes the alpha, you can see that the alpha value can be adjusted in single increments
 with the slider.
 
 You cannot pass in the opacity separately to the color picker to get a starting opacity value. If your passed in color
 value has opacity in its alpha channel, it will automatically get used, but only if `enableOpacity` is true. If it
-is false, any passed in opacity or alpha in the color value, or in a color pasted into the picker, is ignored and used
-as fully opaque by applying alpha value #FF to it.
+is false, any opacity or alpha in the color value, or in a color pasted into the picker, is ignored and used
+as opaque by applying alpha #FF to it.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-5.png?raw=true" alt="Picker 5"/>
 
@@ -818,7 +828,7 @@ API reference: [Static color names](https://pub.dev/documentation/flex_color_pic
 
 The Material color names are defined as static values with English defaults for all Material colors in `ColorTools`. 
 You can modify these values by directly changing their static string values. You can do this in a function that you 
-call just once, or every time your app changes its translated locale, and then in the custom function 
+call just once, or every time your app changes its translated locale and then 
 provide your own localized Material color names. For example:
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-8.png?raw=true" alt="Picker 8"/>
@@ -878,11 +888,11 @@ with the complete current list of recently used colors. If the optional callback
 You can use this callback to save and restore the recently used colors. 
 
 To initialize the list when the color picker is created, give it a starting list with `recentColors`.
-This start list value could be a list kept just in state during during the current app session that can be used 
-when the color picker is created and re-opened to keep showing recent colors that were used previously during the 
-session, or the start list could even have been persisted and restored from a previous session. 
-The live Web demo actually persists and restores the recently used colors lists between 
-sessions, in addition to all the settings, so you can use it as an example of how to do this.
+This start list could be a list kept in state during the current app session. It is then used 
+when the color picker is created and re-opened to show same recent colors that were used previously during the 
+session. The start list could also even have been persisted and restored from a previous session. 
+The live Web demo persists and restores the recently used colors lists between 
+sessions, in addition to all the settings, you can use it as an example on how to do this.
 
 ### Title and Heading Widgets
 
@@ -921,7 +931,7 @@ API reference: [height, ](https://pub.dev/documentation/flex_color_picker/latest
 [spacing, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/spacing.html)
 [runSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/runSpacing.html)
 
-The color items that show the available colors can be modified, their `height`, `width`, `borderRadius` plus their
+The color items that show the available colors can be modified. Their `height`, `width`, `borderRadius` plus their
 `elevation`, and if they have a border `hasBorder` and what color the border is `borderColor`
 (defaults to divider theme) can all be changed. 
 
@@ -963,7 +973,7 @@ is 150 dp. The slider height must be from 8 to 50 dp and thumb radius from 12 to
 
 API reference: [crossAxisAlignment, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/crossAxisAlignment.html)
 [padding, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/padding.html)
-[columnSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/title.html)
+[columnSpacing.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/columnSpacing.html)
 
 The picker layout APIs deal with spacing of the elements in the color picker, their alignment and padding.
 
@@ -971,9 +981,9 @@ Use the properties `crossAxisAlignment`, `padding` and `columnSpacing` to adjust
 The `columnSpacing` refers to the additional vertical spacing between each element in the column used by the color 
 picker layout. The `padding` and `crossAxisAlignment` are as typically used in Flutter. Please note that
 `title` widget is not a part of the `Column` body layout of the color picker, and it is not affected by the
-`crossAxisAlignment` property. you can think of the `title` a bit like an app bar title, that is always start 
-aligned to leave enough room for 1 to 4 action icon buttons, that can optionally be enabled for the title bar, and that 
-always appear at the end.
+`crossAxisAlignment` property. You can think of the `title` a bit like an app bar title. It is always start 
+aligned to leave enough room for 1 to 4 action buttons. The action buttons can optionally be enabled for the title bar, 
+and they always appear at the end.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-12.png?raw=true" alt="Picker 12"/>
 
@@ -1027,25 +1037,25 @@ You can define if **OK** and **Close** action buttons are on the top toolbar, or
 area. The top toolbar buttons are plain icon only buttons. For the bottom dialog action buttons you can choose between
 `TextButton`, `OutlinedButton` and `ElevatedButton` for each button.
 
-The used icons can be changed from default ones, as can used tooltips. The labels on the bottom
-action buttons can also be changed. By the default, they like the tooltips, use Material localizations, so they should
+The used icons can be changed from default ones, as can their used tooltips. The labels on the bottom
+action buttons can also be changed. By the default they, like the tooltips, use Material localizations, so they 
 work well enough out of the box for most locales. The bottom action buttons can also use the default or
 customized OK and Cancel **icons as prefix** icons to the labels. These icons are always shared with the 
 corresponding icons defined for the top toolbar icon buttons.
 
-The recommendation is to not use the top and bottom action buttons at the same time, but rather select one of the 
+The recommendation is to **not** use the top and bottom action buttons at the same time, but rather select one of the 
 two options. The API does however allow using both or even a mix and match. It is for example possible to 
 show **Cancel** and **OK** actions at the bottom of the dialog, and also add just the 'x' close icon in the upper 
-end corner of the dialog that also cancel-closes the dialog as expected. This is still a pretty nice combination.
-Adding the **OK** icon button (by default a check icon) as a select and close button to the top toolbar is a bit 
-unconventional, if you also have the OK enabled on the bottom actions. Without it enabled, the OK and Close buttons 
-on the toolbar is a nice and compact alternative to select and close the dialog.
+end corner of the dialog. This 'x' icon then also cancel closes the dialog as expected, this is a usable combination.
+Adding the **OK** icon button (by default a check icon) as a select close button to the top toolbar is a bit 
+unconventional, if you also have the OK as a bottom action. Without it enabled, the OK and Close buttons 
+on the toolbar are a nice and compact alternative to selecting color or cancelling the dialog.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-17.png?raw=true" alt="Picker 17"/>
 
 The bottom action buttons, and their style depend on their ambient theme. 
 
-There are a few more dialog action buttons design properties you can adjust, please se the
+There are more dialog action buttons design properties you can adjust, please see the
 [ColorPickerActionButtons API reference](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerActionButtons-class.html)
 for additional details.
 
@@ -1096,17 +1106,17 @@ button existed already in version 1.x. It can now if so desired be removed by se
 API reference: [ctrlC, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/ctrlC.html)
 [ctrlV.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/ctrlV.html)
 
-When `ctrlC` and `ctrlV` properties are set to `true`, they are by default, a CTRL/CMD-C keyboard press on a 
-desktop keyboard will copy the currently selected color's RGB color code as text to the clipboard. A CTRL/CMD-V will 
-paste the current clipboard text into the picker, and the color picker will try to parse the pasted value as a color
-value and move to display the pasted color with the most suitable available picker. The CTRL modifier is used on 
-Windows and Linux desktop OS and the CMD modifier is used on macOS.
+When `ctrlC` and `ctrlV` properties are set to `true`, by default they are, a CTRL/CMD-C keyboard press on a 
+desktop keyboard will copy the currently selected color's RGB color code to the clipboard. A CTRL/CMD-V will 
+paste the current clipboard text into the picker. The color picker will then try to parse the pasted value as a color
+value and move to display the pasted color with the most suitable available picker. The CTRL keyboard modifier is used on 
+Windows and Linux desktop OS and the CMD modifier is used on macOS and iOS.
 
 When enabled, the keyboard copy color shortcuts work when one of the ColorPicker's focusable widgets have focus.
 These include the color indicators, color field, buttons, and the picker selector, as well as the color wheel. When the 
-picker is used in a modal dialog, one of these widgets will typically always have focus, but if the picker is used in 
-other layouts on the main surface, where other widgets may have focus, the keyboard shortcuts will not work until one 
-of the color pickers focusable widgets have focus.
+picker is used in a modal dialog, one of these widgets will typically always have focus. If the picker is used in 
+layouts on the main surface, where other widgets may have focus, the keyboard shortcuts will not work until 
+the color picker's focusable widgets gets focus.
 
 When the keyboard copy/paste shortcuts are enabled, the Copy and Paste tooltips by default 
 also receive platform aware keyboard shortcut info. After the localized default tooltip label, on macOS
@@ -1148,8 +1158,8 @@ enable a context like COPY-PASTE menu that can be triggered either via a long pr
 typically the right mouse button.
 
 The secondary right click is often a good option on Windows and Linux desktop apps, to some extent it may also work 
-on desktop web browsers. However, desktop browsers' built in right click menu also tend to ge triggered by it, and 
-this menu may get in the way of the color picker's COPY-PASTE menu when secondary click is used in 
+on desktop web browsers. However, desktop browsers' built in right click menu also tend to ge triggered by it. 
+This menu may get in the way of the color picker's COPY-PASTE menu when secondary click is used in 
 a desktop Web browser. On touch only devices, or other use cases when a mouse right click is not optimal, 
 the long press option to show the COPY-PASTE menu may work better.
 
@@ -1160,15 +1170,17 @@ Set property `longPressMenu` to `true` (defaults to false) to enable using long 
 picker, to open up the COPY-PASTE context menu.
 
 Set property `secondaryOnDesktopLongOnDevice` to `true` (defaults to false), to enable using long press in the color
-picker, to open up the COPY-PASTE context menu on iOS and Android touch devices, and to use secondary mouse button
-on desktop platforms Windows, Mac and Linux.
+picker, to open up the COPY-PASTE context menu on iOS and Android touch devices. While using secondary mouse button
+on desktop platforms Windows, Mac and Linux and their web variants.
 
->**NOTE:**  
-> Due to secondary mouse button on desktop Web browsers often activating
-the browsers own secondary button context menu, this last option is not ideal for desktop web browsers. You may want to
-implement your own preferred platform behavior by just using `secondaryMenu` and `longPressMenu` as appropriate for
-your use case. A future enhancement might add a `secondaryOnDesktopLongOnDeviceAndWeb` option to avoid right click
-menu on web desktop automatically, and thus automatically prefer long press on it as well.
+Set property `secondaryOnDesktopLongOnDeviceAndWeb` to `true` (defaults to false), to enable using long press in the color
+picker, to open up the COPY-PASTE context menu on Web, iOS and Android touch devices. While using secondary mouse button
+on desktop platforms Windows, Mac and Linux, but not if it is a desktop web app.
+
+> Due to secondary mouse button on desktop Web browsers often activating the browser's own 
+> secondary-button context menu, the `secondaryOnDesktopLongOnDevice` option may not be ideal for desktop 
+> web browsers. You may want to use `secondaryOnDesktopLongOnDeviceAndWeb` option instead to avoid right click
+> menu on web desktop automatically, and thus automatically prefer long press on it as well.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-20.png?raw=true" alt="Picker 20"/>
 
@@ -1180,15 +1192,15 @@ APIs [menuThemeData](https://pub.dev/documentation/flex_color_picker/latest/flex
 
 ### Color Code Formats and Paste Parsing
 
-API reference: [copyFormat, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/copyFormat.html)
-[parseShortHexCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/parseShortHexCode.html)
-[editUsesParsedPaste, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/editUsesParsedPaste.html)
-[snackBarParseError, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarParseError.html)
-[snackBarMessage, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarMessage.html)
-[snackBarDuration, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarDuration.html)
-[feedbackParseError.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/feedbackParseError.html)
+API reference: [copyFormat, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/copyFormat.html)
+[parseShortHexCode, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/parseShortHexCode.html)
+[editUsesParsedPaste, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/editUsesParsedPaste.html)
+[snackBarParseError, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarParseError.html)
+[snackBarMessage, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarMessage.html)
+[snackBarDuration, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarDuration.html)
+[feedbackParseError.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/feedbackParseError.html)
 
- [**copyFormat**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/copyFormat.html)  
+ [**copyFormat**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/copyFormat.html)  
 The color code display and edit field's value can be shown in five different formats by the setting the
  `copyformat` enum
 [ColorPickerCopyFormat](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyFormat-class.html)
@@ -1213,17 +1225,17 @@ in the complete 8-char hex code.
 
 If alpha values are not included in a pasted hex char string, it is always set to
 'FF'. If alpha is included in the pasted color value, but alpha via
-[enableOpacity](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableOpacity.html)
+[enableOpacity](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/enableOpacity.html)
 is not enabled for the color picker, then the alpha value included in the pasted color string value will be replaced
 with 'FF' or fully opaque.
 
-[**parseShortHexCode**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/parseShortHexCode.html)   
+[**parseShortHexCode**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/parseShortHexCode.html)   
 The color picker's paste parser can optionally also interpret 3-char hex code as done by CSS/WEB. This is enabled by
 setting `parseShortHexCode` to `true` (defaults to false). When true, the hex color code paste action and field 
 entry parser will interpret short three character web hex color codes like it is done in CSS/WEB. This results in 
 short HEX RGB color codes, like 123, ABC, F0C and 5D1 being interpreted as 112233, AABBCC, FF00CC and 55DD11.
 
-[**editUsesParsedPaste**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/editUsesParsedPaste.html)  
+[**editUsesParsedPaste**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/editUsesParsedPaste.html)  
 The color code entry field can also be set to use the paste parser by setting `editUsesParsedPaste` to `true` (defaults
 to false). When true, the color code entry field uses the paste parser for keyboard shortcuts CTRL-V and CMD-V. 
 A standard text field keyboard paste shortcut, will just paste whatever text is in the copy/paste buffer into the field.
@@ -1239,12 +1251,12 @@ equivalent to past versions (1.x) default behavior when pasting strings into the
 
 Setting `editUsesParsedPaste` to true, may be preferred for a more consistent paste experience in the picker.
 
-[**snackBarParseError**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarParseError.html)  
+[**snackBarParseError**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarParseError.html)  
 Set `snackBarParseError` to `true`, to show a snack bar paste parse error message when pasting something that
 could not be parsed to a color value, into the color picker. A paste parse error occurs when something is pasted 
 that cannot be parsed to a color value. 
 
-[**snackBarMessage**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarMessage.html)  
+[**snackBarMessage**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarMessage.html)  
 The `snackBarMessage` defines the text message label shown in the paste parse error snack bar. The `snackBarMessage` 
 label is shown in the snack bar when there is a paste parse error, and `snackBarParseError` is true. 
 
@@ -1258,11 +1270,11 @@ and a snack bar parse error message.
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-21.png?raw=true" alt="Picker 21"/>
 
 
-[**snackBarDuration**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/snackBarDuration.html)  
+[**snackBarDuration**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/snackBarDuration.html)  
 The duration the paste parse error snack bar message is shown can be set via `snackBarDuration`. It defaults to 
 `const Duration(milliseconds: 1800)`.
 
-[**feedbackParseError**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/feedbackParseError.html)  
+[**feedbackParseError**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/feedbackParseError.html)  
 By setting `feedbackParseError` to true the device will vibrate, make an audible click sound or an alert sound on some
 platforms, when a paste parse error occurs.
 
@@ -1392,9 +1404,17 @@ Here is an example of the demo application running on Windows desktop.
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerEnterCode.gif?raw=true" alt="ColorPicker on Windows" width="350"/>
 
 The live [Web demo](https://rydmike.com/flexcolorpicker/) is of course an example of it running in a Web environment. 
-The color picker runs well with either [Flutter Web renderer](https://flutter.dev/docs/development/tools/web-renderers), 
+For the major part the color picker runs well with either
+[Flutter Web renderer](https://flutter.dev/docs/development/tools/web-renderers), 
 HTML or CanvasKit.
 
+If the color picker's opacity slider feature is used on WEB builds `enableOpacity: true`, then you
+must build using the SKIA **canvaskit** renderer only. The opacity slider uses `ImageShader`, a Flutter API that
+is not yet available on **html** builds, at least not in version stable 2.2.1.
+ ```
+flutter run -d chrome --web-renderer canvaskit
+flutter build web --web-renderer canvaskit
+```
 The FlexColorPicker goes a bit further than just working on Web and Desktop. For example, pick item focusing 
 behaves as can be expected. The picker supports keyboard navigation and control selection and control activation, 
 especially when it is used in a dialog where other controls on the screen do not affect the intended keyboard 

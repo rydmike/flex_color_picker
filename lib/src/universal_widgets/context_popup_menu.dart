@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../functions/picker_functions.dart';
@@ -39,7 +40,8 @@ class ContextPopupMenu<T> extends StatefulWidget {
     required this.child,
     this.useLongPress = false,
     this.useSecondaryTapDown = false,
-    this.useSecondaryOnDesktopLongOnDevice = true,
+    this.useSecondaryOnDesktopLongOnDevice = false,
+    this.useSecondaryOnDesktopLongOnDeviceAndWeb = true,
   }) : super(key: key);
 
   /// The popup menu entries for the long press menu.
@@ -76,8 +78,18 @@ class ContextPopupMenu<T> extends StatefulWidget {
   /// host system be configured to be some other buttons as well, often by
   /// switching mouse right and left buttons.
   ///
-  /// Defaults to true.
+  /// Defaults to false.
   final bool useSecondaryOnDesktopLongOnDevice;
+
+  /// Use secondary tap down on desktop, but long press on
+  /// iOS/Android device and Web.
+  ///
+  /// Secondary button is typically the right button on a mouse, but may in the
+  /// host system be configured to be some other buttons as well, often by
+  /// switching mouse right and left buttons.
+  ///
+  /// Defaults to true.
+  final bool useSecondaryOnDesktopLongOnDeviceAndWeb;
 
   @override
   State<StatefulWidget> createState() => _ContextPopupMenuState<T>();
@@ -90,9 +102,13 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
   Widget build(BuildContext context) {
     final TargetPlatform _platform = Theme.of(context).platform;
     final bool _useLongPress = widget.useLongPress ||
-        (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(_platform));
+        (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(_platform) ||
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
+                (!isDesktop(_platform) || kIsWeb)));
     final bool _useSecondaryClick = widget.useSecondaryTapDown ||
-        (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(_platform));
+        (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(_platform) ||
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
+                (isDesktop(_platform) && !kIsWeb)));
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,

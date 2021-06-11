@@ -11,10 +11,10 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '2.0.1';
+  static const String version = '2.0.2';
   static const String packageVersion = 'FlexColorScheme package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
-  static const String flutterVersion = 'Channel beta 2.1.0-12.2.pre, CanvasKit';
+  static const String flutterVersion = 'Channel stable 2.2.1, CanvasKit';
   static const String copyright = '© 2020, 2021';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
@@ -29,7 +29,7 @@ class App {
   // Border radius for rounded buttons
   static const double borderRadius = 50;
   // Rounded button minimum size.
-  static const double roundButtonMinSize = borderRadius + 2 * outlineThickness;
+  // static const double roundButtonMinSize = borderRadius + 2 * outlineThickness;
 
   // Light theme colors
   static const Color primaryLight = Color(0xFF184782);

@@ -12,7 +12,7 @@ class SecondaryDesktopLongDeviceSwitch extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     return SwitchTileTooltip(
       title: const Text('Long press COPY-PASTE menu on Android/iOS, '
-          'right click on desktops'),
+          'right click on desktops and web desktop'),
       value: watch(secondaryDesktopOtherLongPod).state,
       onChanged: (bool value) =>
           context.read(secondaryDesktopOtherLongPod).state = value,

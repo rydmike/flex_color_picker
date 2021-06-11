@@ -65,6 +65,7 @@ class Keys {
   static const String longPressMenu = 'longPressMenu';
   static const String secondaryMenu = 'secondaryMenu';
   static const String secondaryDesktopOtherLong = 'secondaryDesktopOtherLong';
+  static const String secondaryDesktopWebLong = 'secondaryDesktopWebLong';
   static const String parseShortHexCode = 'parseShortHexCode';
   static const String editUsesParsedPaste = 'editUsesParsedPaste';
   static const String snackbarParseError = 'snackbarParseError';
@@ -131,9 +132,10 @@ class Keys {
     copyButton: true,
     pasteButton: true,
     editFieldCopyButton: true,
-    longPressMenu: true,
+    longPressMenu: false,
     secondaryMenu: false,
     secondaryDesktopOtherLong: false,
+    secondaryDesktopWebLong: true,
     parseShortHexCode: true,
     editUsesParsedPaste: true,
     snackbarParseError: true,
