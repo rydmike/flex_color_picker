@@ -15,12 +15,12 @@
 #  - Build the WEB demo app for FlexColorPicker.
 #    - Flutter clean.
 #    - Flutter build web app, in release mode and with CanvasKit renderer.
-#    - REMOVED: (Use rpl to fix/modify the index.html file to give it the correct href deployment sub-folder.)
+#    - Use rpl to fix/modify the index.html file to give it the correct href deployment sub-folder.
 #    - Deploy the Web example to GitHub pages.
 name: Deploy Web
 on:
-  #push:
-  #  branches: [none]
+  push:
+    branches: [master]
   release:
     types: [published]
 # Edit and add other trigger options if an extra new Web deployment is needed.
@@ -67,9 +67,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
 
-      # Remove rpl and build with new --base-href feature instead
-      #- name: Install rpl
-      #  run: sudo apt-get install rpl
+      - name: Install rpl
+        run: sudo apt-get install rpl
 
       # Default Example Build
 
@@ -85,11 +84,10 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --base-href="/flexcolorpicker/" --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/demo/main.dart
 
-      # Remove rpl fix since it was built with new --base-href feature instead
-      #- name: WEB EXAMPLE FIX href URL reference before publish
-      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
+      - name: WEB EXAMPLE FIX href URL reference before publish
+        run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
 
       - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4

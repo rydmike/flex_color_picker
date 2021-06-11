@@ -66,9 +66,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
 
-      # Remove rpl and build with new --base-href feature instead
-      #- name: Install rpl
-      #  run: sudo apt-get install rpl
+      - name: Install rpl
+        run: sudo apt-get install rpl
 
       # Default Example Build
 
@@ -84,8 +83,7 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --base-href="/flexcolorpicker/" --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/demo/main.dart
 
-      # Remove rpl fix since it was built with new --base-href feature instead
-      #- name: WEB EXAMPLE FIX href URL reference before publish
-      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
+      - name: WEB EXAMPLE FIX href URL reference before publish
+        run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
