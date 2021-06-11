@@ -1830,8 +1830,12 @@ class _ColorPickerState extends State<ColorPicker> {
         ];
         _findPicker();
       }
-      // Update the active swatch to match the selected color.
-      _updateActiveSwatch();
+
+      if (_activePicker != ColorPickerType.wheel ||
+          !ColorTools.containPrimaryColor(_activeSwatch!, _selectedColor)) {
+        // Update the active swatch to match the selected color.
+        _updateActiveSwatch();
+      }
     });
     // Call the change call back with the new color.
     widget.onColorChanged(_selectedColor);

@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 /// Static color tool functions used internally by FlexColorPicker.
@@ -196,6 +197,16 @@ class ColorTools {
       }
     }
     // Color was not in any primary color swatch, return false.
+    return false;
+  }
+
+  /// Judgment ColorsWatch contains colors
+  static bool containPrimaryColor(ColorSwatch<Object> swatch, Color color) {
+    for (final int i in _indexPrimary) {
+      if (swatch[i] == color || swatch[i]?.value == color.value) {
+        return true;
+      }
+    }
     return false;
   }
 
