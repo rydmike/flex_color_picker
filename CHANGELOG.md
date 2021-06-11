@@ -3,7 +3,7 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.0.2] - June 11, 2021
-* **Improvement:** Performance improved via an additional rebuild check.
+* **Improvement:** Performance slightly improved via an additional rebuild check.
 * **New feature:** ColorTools got a new static function `swatchContainsColor`.
 * **New feature:** Set property `secondaryOnDesktopLongOnDeviceAndWeb` to `true` (defaults to false) in
   ColorPickerCopyPasteBehavior, to enable using long press in the color picker, to open up the COPY-PASTE 
@@ -12,6 +12,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 * **Documentation:** Fixed broken API reference links in API guide chapter. Mentioned that WEB build
   requires a canvas kit build if `enableOpacity` feature is used. 
 * **Web example:** The live web example got updated to use the latest Flutter stable embedder.
+* **CI/CD:** Trying the CI/CD deployment with --base-href="/flexcolorpicker/" instead of repl.
   
 ## [2.0.1] - April 10, 2021
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a 
