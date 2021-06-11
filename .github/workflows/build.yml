@@ -21,7 +21,7 @@
 name: Build samples
 on:
   push:
-    branches: [v2-0-2-work]
+    branches: [none]
   pull_request:
     branches: [none]
   # release:
