@@ -36,7 +36,7 @@ jobs:
       #- name: Analyze Dart source
       #  run: dart analyze
 
-      #- name: Show outdated packges
+      #- name: Show outdated packages
       #  run: flutter pub outdated
 
       #- name: Verify that Dart formatting is used, fail if not

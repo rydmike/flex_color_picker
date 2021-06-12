@@ -88,8 +88,8 @@ class ColorPicker extends StatefulWidget {
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.selectedColorIcon = Icons.check,
     // Picker item and wheel picker properties.
-    this.width = 40.0,
-    this.height = 40.0,
+    this.width = 40,
+    this.height = 40,
     this.spacing = 4,
     this.runSpacing = 4,
     this.elevation = 0,

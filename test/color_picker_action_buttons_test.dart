@@ -137,7 +137,7 @@ void main() {
           dialogOkButtonLabel: 'OKAY',
           dialogOkButtonType: ColorPickerActionButtonType.elevated,
         ),
-        m4,
+        equals(m4),
       );
     });
     test(
@@ -172,7 +172,7 @@ void main() {
             dialogOkButtonLabel: null,
             dialogOkButtonType: null,
           ),
-          m2);
+          equals(m2));
     });
     test(
         'CPCPB3.4: GIVEN a ColorPickerActionButtons object EXPECT it to be '
@@ -201,7 +201,7 @@ void main() {
           dialogOkButtonLabel: 'OKAY',
           dialogOkButtonType: ColorPickerActionButtonType.elevated,
         ),
-        m4,
+        equals(m4),
       );
     });
   });

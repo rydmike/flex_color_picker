@@ -124,7 +124,6 @@ void main() {
         'CPCPB3.1: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to be '
         'equal to an unequal object when made equal with copyWith.', () {
       expect(
-        m4,
         m1.copyWith(
           ctrlC: false,
           ctrlV: false,
@@ -158,6 +157,7 @@ void main() {
           parseShortHexCode: true,
           editUsesParsedPaste: true,
         ),
+        equals(m4),
       );
     });
     test(
@@ -198,7 +198,7 @@ void main() {
             parseShortHexCode: null,
             editUsesParsedPaste: null,
           ),
-          m1.copyWith());
+          equals(m1.copyWith()));
     });
     test(
         'CPCPB3.4: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to be '
@@ -237,7 +237,7 @@ void main() {
           parseShortHexCode: true,
           editUsesParsedPaste: true,
         ),
-        m4,
+        equals(m4),
       );
     });
   });
