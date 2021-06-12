@@ -38,7 +38,7 @@ class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
   // coverage:ignore-line
-  ColorTools._();
+  ColorTools._(); // coverage:ignore-line
 
   /// List of all the standard Material primary color swatches.
   ///
@@ -769,37 +769,39 @@ class _ColorName {
   // Error handling show problematic color codes by returning white color
   // and RGB color code aof problematic color.
   factory _ColorName.fromColor(Color color) {
-    final String colorName =
-        color.value.toRadixString(16).padLeft(8, '0').substring(2);
-    try {
-      return _ColorName.fromHexRGB(colorName);
-    } catch (rangeException) {
-      return _ColorName(Colors.white, 'Code: #$colorName\nIs out of range!');
-    }
-  }
-  // Create a _ColorName from a HEX RGB string with format 'RRGGBB' or 'RGB'.
-  factory _ColorName.fromHexRGB(String color) {
-    String decodeColor = color;
-    decodeColor = decodeColor.toUpperCase();
-    if (decodeColor.length < 3 || decodeColor.length > 6) {
-      return _ColorName(Colors.white, 'Invalid color $decodeColor');
-    }
+    //   final String colorName =
+    //       color.value.toRadixString(16).padLeft(8, '0').substring(2);
+    //   try {
+    //     return _ColorName.fromHexRGB(colorName);
+    //   } catch (rangeException) {
+    //     return _ColorName(Colors.white, 'Code: #$colorName\nIs out of range!');
+    //   }
+    // }
+    // // Create a _ColorName from a HEX RGB string with format 'RRGGBB' or 'RGB'.
+    // factory _ColorName.fromHexRGB(String color) {
+    //   String decodeColor = color;
+    //   decodeColor = decodeColor.toUpperCase();
+    //   if (decodeColor.length < 3 || decodeColor.length > 6) {
+    //     return _ColorName(Colors.white, 'Invalid color $decodeColor');
+    //   }
+    //
+    //   if (decodeColor.length == 3) {
+    //     decodeColor = decodeColor.substring(0, 1) +
+    //         decodeColor.substring(0, 1) +
+    //         decodeColor.substring(1, 1) +
+    //         decodeColor.substring(1, 1) +
+    //         decodeColor.substring(2, 1) +
+    //         decodeColor.substring(2, 1);
+    //   }
+    //
+    //   final Color _color = Color(int.parse(decodeColor, radix: 16));
+    // final Color _color = color;
+    final String decodeColor = color.value.toRadixString(16);
+    final int r = color.red;
+    final int g = color.green;
+    final int b = color.blue;
 
-    if (decodeColor.length == 3) {
-      decodeColor = decodeColor.substring(0, 1) +
-          decodeColor.substring(0, 1) +
-          decodeColor.substring(1, 1) +
-          decodeColor.substring(1, 1) +
-          decodeColor.substring(2, 1) +
-          decodeColor.substring(2, 1);
-    }
-
-    final Color _color = Color(int.parse(decodeColor, radix: 16));
-    final int r = _color.red;
-    final int g = _color.green;
-    final int b = _color.blue;
-
-    final HSLColor hsl = HSLColor.fromColor(_color);
+    final HSLColor hsl = HSLColor.fromColor(color);
     final int h = hsl.hue.toInt();
     final int s = (hsl.saturation * 100).toInt();
     final int l = (hsl.lightness * 100).toInt();

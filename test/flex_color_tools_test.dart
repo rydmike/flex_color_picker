@@ -1047,6 +1047,12 @@ void main() {
           });
         }
       }
+      test('ColorTools.materialName no matching name, expect empty string', () {
+        expect(
+            ColorTools.materialName(const Color(0xFF03D556),
+                withIndex: true, colorSwatchNameMap: refCustomColors),
+            '');
+      });
     }
   });
   //
