@@ -165,5 +165,40 @@ void main() {
         'be unchanged after an empty copyWith.', () {
       expect(m4.copyWith(), m4);
     });
+
+    test(
+        'CPCPB3.3: GIVEN two identical but different '
+        'ColorPickerCopyPasteBehavior '
+        'object EXPECT them to be'
+        'be equal after an all null copyWith on 2nd one', () {
+      expect(
+          m2.copyWith(
+            ctrlC: null,
+            ctrlV: null,
+            copyButton: null,
+            pasteButton: null,
+            copyIcon: null,
+            pasteIcon: null,
+            copyTooltip: null,
+            pasteTooltip: null,
+            copyFormat: null,
+            longPressMenu: null,
+            secondaryMenu: null,
+            secondaryOnDesktopLongOnDevice: null,
+            secondaryOnDesktopLongOnDeviceAndWeb: null,
+            editFieldCopyButton: null,
+            menuIconThemeData: null,
+            menuThemeData: null,
+            menuWidth: null,
+            menuItemHeight: null,
+            snackBarParseError: null,
+            snackBarMessage: null,
+            snackBarDuration: null,
+            feedbackParseError: null,
+            parseShortHexCode: null,
+            editUsesParsedPaste: null,
+          ),
+          m1.copyWith());
+    });
   });
 }

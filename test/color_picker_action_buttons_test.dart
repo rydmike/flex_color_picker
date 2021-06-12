@@ -145,5 +145,34 @@ void main() {
         'be unchanged after an empty copyWith.', () {
       expect(m4.copyWith(), m4);
     });
+    test(
+        'CPAB3.3: GIVEN two identical but different ColorPickerActionButtons '
+        'object EXPECT them to be'
+        'be equal after an all null copyWith on 2nd one', () {
+      expect(
+          m1.copyWith(),
+          m2.copyWith(
+            okButton: null,
+            closeButton: null,
+            okIcon: null,
+            closeIcon: null,
+            closeIsLast: null,
+            okTooltip: null,
+            closeTooltip: null,
+            closeTooltipIsClose: null,
+            toolIconsThemeData: null,
+            visualDensity: null,
+            padding: null,
+            alignment: null,
+            splashRadius: null,
+            constraints: null,
+            dialogActionButtons: null,
+            dialogActionIcons: null,
+            dialogCancelButtonLabel: null,
+            dialogCancelButtonType: null,
+            dialogOkButtonLabel: null,
+            dialogOkButtonType: null,
+          ));
+    });
   });
 }
