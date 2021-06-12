@@ -148,10 +148,9 @@ void main() {
     test(
         'CPAB3.3: GIVEN two identical but different ColorPickerActionButtons '
         'object EXPECT them to be'
-        'be equal after an all null copyWith on 2nd one', () {
+        'be equal after an all null copyWith', () {
       expect(
-          m1.copyWith(),
-          m2.copyWith(
+          m1.copyWith(
             okButton: null,
             closeButton: null,
             okIcon: null,
@@ -172,7 +171,38 @@ void main() {
             dialogCancelButtonType: null,
             dialogOkButtonLabel: null,
             dialogOkButtonType: null,
-          ));
+          ),
+          m2);
+    });
+    test(
+        'CPCPB3.4: GIVEN a ColorPickerActionButtons object EXPECT it to be '
+        'equal to an equal object when copied with identical values.', () {
+      expect(
+        m4.copyWith(
+          okButton: true,
+          closeButton: true,
+          okIcon: Icons.android,
+          closeIcon: Icons.cancel,
+          closeIsLast: false,
+          okTooltip: 'GO',
+          closeTooltip: 'OFF',
+          closeTooltipIsClose: false,
+          toolIconsThemeData:
+              const IconThemeData(opacity: 50, size: 30, color: Colors.black),
+          visualDensity: VisualDensity.comfortable,
+          padding: const EdgeInsets.all(2),
+          alignment: Alignment.topLeft,
+          splashRadius: 30,
+          constraints: const BoxConstraints(minHeight: 46, minWidth: 46),
+          dialogActionButtons: false,
+          dialogActionIcons: true,
+          dialogCancelButtonLabel: 'DONE',
+          dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+          dialogOkButtonLabel: 'OKAY',
+          dialogOkButtonType: ColorPickerActionButtonType.elevated,
+        ),
+        m4,
+      );
     });
   });
 }

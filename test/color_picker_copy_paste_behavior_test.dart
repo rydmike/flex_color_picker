@@ -200,5 +200,45 @@ void main() {
           ),
           m1.copyWith());
     });
+    test(
+        'CPCPB3.4: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to be '
+        'equal to an equal object when copied with identical values.', () {
+      expect(
+        m4.copyWith(
+          ctrlC: false,
+          ctrlV: false,
+          copyButton: true,
+          pasteButton: true,
+          copyIcon: Icons.android,
+          pasteIcon: Icons.close,
+          copyTooltip: 'COPY',
+          pasteTooltip: 'PASTE',
+          copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+          longPressMenu: true,
+          secondaryMenu: true,
+          secondaryOnDesktopLongOnDevice: true,
+          secondaryOnDesktopLongOnDeviceAndWeb: true,
+          editFieldCopyButton: false,
+          menuIconThemeData:
+              const IconThemeData(opacity: 50, size: 30, color: Colors.black),
+          menuThemeData: const PopupMenuThemeData(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(),
+            elevation: 3,
+            textStyle: TextStyle(fontSize: 12),
+            enableFeedback: true,
+          ),
+          menuWidth: 85,
+          menuItemHeight: 35,
+          snackBarParseError: true,
+          snackBarMessage: 'Something went wrong',
+          snackBarDuration: const Duration(milliseconds: 1500),
+          feedbackParseError: true,
+          parseShortHexCode: true,
+          editUsesParsedPaste: true,
+        ),
+        m4,
+      );
+    });
   });
 }

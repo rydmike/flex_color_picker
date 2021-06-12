@@ -53,6 +53,7 @@ const int _maxRecentColors = 20;
 /// pre-defined ones, then the wheel picker will always generate a
 /// new swatch from the selected color, using the selected color as the new
 /// primary swatch 500 index midpoint.
+@immutable
 class ColorPicker extends StatefulWidget {
   /// Default constructor for the color picker.
   const ColorPicker({

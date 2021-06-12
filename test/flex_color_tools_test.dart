@@ -225,6 +225,20 @@ void main() {
     }
   });
   //
+  // Test no material name colors
+  group('Verify no material name color return values', () {
+    final Color m1 = Color(0xFF132B80);
+    test('Test that color 0xFF132B80 materialNameAndCode has no Material name',
+        () {
+      expect(ColorTools.materialNameAndCode(m1), equals('(0xFF132B80)'));
+    });
+    test(
+        'Test that color 0xFF132B80 materialNameAndARGBCode has no Material name',
+        () {
+      expect(ColorTools.materialNameAndARGBCode(m1), equals('(FF132B80)'));
+    });
+  });
+  //
   // Test that all SDK colors belong to their swatch.
   group(
       'Test that SDK Material Colors swatch values with '
@@ -329,6 +343,16 @@ void main() {
         }
       }
     }
+  });
+  //
+  // Test created MaterialColor for primarySwatch.
+  group('Verify primarySwatch equals createPrimarySwatch', () {
+    final MaterialColor m1 = ColorTools.primarySwatch(const Color(0xFF132B80));
+    final MaterialColor m2 =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    test('Test swatch equality for color 0xFF132B80', () {
+      expect(m1, equals(m2));
+    });
   });
   //
   // Reference test for create primary Swatch
@@ -590,6 +614,16 @@ void main() {
       }
     }
   });
+  // Test created MaterialAccentColor for accentSwatch.
+  group('Verify accentSwatch equals createAccentSwatch', () {
+    final MaterialAccentColor m1 =
+        ColorTools.accentSwatch(const Color(0xFF03DAC6));
+    final MaterialAccentColor m2 =
+        ColorTools.createAccentSwatch(const Color(0xFF03DAC6));
+    test('Test accentSwatch equality for color 0xFF03DAC6', () {
+      expect(m1, equals(m2));
+    });
+  });
   //
   // Reference test for create accent Swatch
   group('Verify reference value 0xFF03DAC6 for createAccentSwatch', () {
@@ -797,6 +831,18 @@ void main() {
       }
     }
   });
+
+  // Test created MaterialColor for blackAndWhiteSwatch.
+  group('Verify blackAndWhiteSwatch equals createPrimarySwatch', () {
+    final ColorSwatch<Object> m1 =
+        ColorTools.blackAndWhiteSwatch(const Color(0xFF132B80));
+    final MaterialColor m2 =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    test('Test blackAndWhiteSwatch equality for color 0xFF132B80', () {
+      expect(m1, equals(m2));
+    });
+  });
+
   // Test that all indexed B&W color shades find correct swatch color.
   group('Test that all B&W index colors belongs to its swatch.', () {
     final List<int> index = <int>[
@@ -913,6 +959,17 @@ void main() {
           true);
     });
   });
+  // Test created MaterialColor for customSwatch.
+  group('Verify customSwatch equals createPrimarySwatch', () {
+    final ColorSwatch<Object> m1 =
+        ColorTools.customSwatch(const Color(0xFF132B80), null);
+    final MaterialColor m2 =
+        ColorTools.createPrimarySwatch(const Color(0xFF132B80));
+    test('Test customSwatch equality for color 0xFF132B80', () {
+      expect(m1, equals(m2));
+    });
+  });
+
   //
   // Test Color names for all primary colors
   group('Test color names for all defined Custom colors.', () {

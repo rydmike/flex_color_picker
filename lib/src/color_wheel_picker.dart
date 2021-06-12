@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 /// The color wheel picker uses a custom painter to draw the HSV color wheel
 /// and rectangle. It can also be used on its own in other color picker
 /// implementations.
+@immutable
 class ColorWheelPicker extends StatefulWidget {
   /// Default constructor for the color wheel picker.
   const ColorWheelPicker({

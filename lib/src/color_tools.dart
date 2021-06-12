@@ -37,6 +37,7 @@ import 'package:flutter/material.dart';
 class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
+  // coverage:ignore-line
   ColorTools._();
 
   /// List of all the standard Material primary color swatches.

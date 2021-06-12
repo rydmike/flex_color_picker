@@ -24,6 +24,7 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 /// );
 ///
 /// Not library exposed, private to the library.
+@immutable
 class IfWrapper extends StatelessWidget {
   /// Default const constructor.
   const IfWrapper({
