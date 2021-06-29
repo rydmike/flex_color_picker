@@ -825,7 +825,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.text:
         _okButton = TextButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
           },
           child: _okButtonContent,
         );
@@ -833,7 +833,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.outlined:
         _okButton = OutlinedButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
           },
           child: _okButtonContent,
         );
@@ -841,7 +841,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.elevated:
         _okButton = ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
           },
           child: _okButtonContent,
         );
@@ -868,7 +868,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.text:
         _cancelButton = TextButton(
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
           },
           child: _cancelButtonContent,
         );
@@ -876,7 +876,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.outlined:
         _cancelButton = OutlinedButton(
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
           },
           child: _cancelButtonContent,
         );
@@ -884,7 +884,7 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.elevated:
         _cancelButton = ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
           },
           child: _cancelButtonContent,
         );
