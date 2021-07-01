@@ -6,10 +6,10 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 /// A builder that if the condition is true, will run its builder and the child
 /// will be wrapped by the builder, if false it just returns the child.
 ///
-/// A convenient way to wrap a widget with another widget, but only if
+/// A way to wrap a widget with another widget, but only if
 /// the condition is true. It can save you from having to define a large widget,
 /// assign it to a Widget, and then wrap it with another widget if some
-/// condition is true, with the IfWrapper you can do this directly in the
+/// condition is true. With the IfWrapper you can do this directly in the
 /// Widget tree.
 ///
 /// Widget widgetA = WidgetX(...);
