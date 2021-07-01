@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-// These too classes are a workaround to issue:
+// These two classes are a workaround to issue:
 // https://github.com/flutter/flutter/issues/71687
 // This workaround for the issue was made by:
 // @slightfoot and @matthew-carroll (GitHub accounts)
@@ -13,7 +13,7 @@ import 'package:flutter/rendering.dart';
 /// This widget is useful in situations where the `child` does not
 /// support dry layout, e.g., `TextField` as of 01/02/2021.
 ///
-/// Not library exposed, private to the library.
+/// Not library exposed, private to the package.
 @immutable
 class DryIntrinsicWidth extends SingleChildRenderObjectWidget {
   /// Default const constructor.
