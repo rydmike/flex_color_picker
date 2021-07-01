@@ -775,13 +775,34 @@ class ColorPicker extends StatefulWidget {
     /// be constrained by the screen size.
     bool useSafeArea = true,
 
-    /// The `useRootNavigator` argument is used to determine whether to push the
-    /// dialog to the [Navigator] furthest from or nearest to the given
-    /// `context`.
+    /// Usage of [useRootNavigator] here is deprecated.
     ///
-    /// By default, `useRootNavigator` is `true` and the dialog route created
-    /// by this method is pushed to the root navigator.
-    bool useRootNavigator = true,
+    /// The [useRootNavigator] argument is now respected on all Navigator
+    /// [pop] functions used in the [ColorPicker] widget itself and by
+    /// built-in dialogs used by the [ColorPicker]. In order to support this,
+    /// the current [useRootNavigator] property in the
+    /// [ColorPicker.showPickerDialog] and in the function
+    /// [showColorPickerDialog] had to be deprecated.
+    ///
+    /// The property has moved to become a configuration option in
+    /// [ColorPickerActionButtons] class in order to make it accessible to
+    /// the Navigator pop functions both in the [ColorPicker] widget itself,
+    /// as well as by built-in dialogs.
+    ///
+    /// The default behavior has not been changed, the setting still defaults
+    /// to using dialogs that use the root navigator, but now the pop
+    /// functions work as intended.
+    ///
+    /// If you for some reason have used none root navigators for the built-in
+    /// dialogs in previous version, you need to set
+    /// `ColorPickerActionButtons(useRootNavigator: false)` in
+    /// `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
+    @Deprecated(
+      'This property is no longer set here and has no function if assigned here. '
+      'From version 2.1.0 it must be defined via same property in configuration '
+      'class ColorPickerActionButtons(useRootNavigator).',
+    )
+        bool useRootNavigator = true,
 
     /// The `routeSettings` argument is passed to [showGeneralDialog],
     /// see [RouteSettings] for details.
@@ -825,7 +846,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.text:
         _okButton = TextButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(true);
           },
           child: _okButtonContent,
         );
@@ -833,7 +855,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.outlined:
         _okButton = OutlinedButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(true);
           },
           child: _okButtonContent,
         );
@@ -841,7 +864,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.elevated:
         _okButton = ElevatedButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(true);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(true);
           },
           child: _okButtonContent,
         );
@@ -868,7 +892,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.text:
         _cancelButton = TextButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(false);
           },
           child: _cancelButtonContent,
         );
@@ -876,7 +901,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.outlined:
         _cancelButton = OutlinedButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(false);
           },
           child: _cancelButtonContent,
         );
@@ -884,7 +910,8 @@ class ColorPicker extends StatefulWidget {
       case ColorPickerActionButtonType.elevated:
         _cancelButton = ElevatedButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: useRootNavigator).pop(false);
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(false);
           },
           child: _cancelButtonContent,
         );
@@ -899,7 +926,7 @@ class ColorPicker extends StatefulWidget {
         barrierDismissible: barrierDismissible,
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
-        useRootNavigator: useRootNavigator,
+        useRootNavigator: actionButtons.useRootNavigator,
         routeSettings: routeSettings,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -1427,8 +1454,14 @@ class _ColorPickerState extends State<ColorPicker> {
                             // In case this was not used in a dialog the
                             // canPop will at least avoid a crash, but may
                             // still do the wrong thing.
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop(true);
+                            if (Navigator.of(context,
+                                    rootNavigator:
+                                        widget.actionButtons.useRootNavigator)
+                                .canPop()) {
+                              Navigator.of(context,
+                                      rootNavigator:
+                                          widget.actionButtons.useRootNavigator)
+                                  .pop(true);
                             }
                           }
                         : null,
@@ -1438,8 +1471,14 @@ class _ColorPickerState extends State<ColorPicker> {
                             // In case this was not used in a dialog the
                             // canPop will at least avoid a crash, but may
                             // still do the wrong thing.
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop(false);
+                            if (Navigator.of(context,
+                                    rootNavigator:
+                                        widget.actionButtons.useRootNavigator)
+                                .canPop()) {
+                              Navigator.of(context,
+                                      rootNavigator:
+                                          widget.actionButtons.useRootNavigator)
+                                  .pop(false);
                             }
                           }
                         : null,

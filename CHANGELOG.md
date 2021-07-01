@@ -2,6 +2,24 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.1.0] - July 1, 2021
+* **Fix:** The `useRootNavigator` argument is now respected on all Navigator
+  `pop` functions used in the `ColorPicker` widget itself and by
+  built-in dialogs used by the `ColorPicker`. In order to support this,
+  the current `useRootNavigator` property in the `ColorPicker.showPickerDialog()` and 
+  in the function `showColorPickerDialog` had to be deprecated.
+  
+  The property has moved to become a configuration option in `ColorPickerActionButtons`
+  class in order to make it accessible to the Navigator pop functions both in 
+  the `ColorPicker` widget itself, as well as to built-in dialogs.
+  
+  The default behavior has not changed, the setting still defaults to using
+  dialogs that use the root navigator, but now the pop functions work as intended.
+  If you for some reason have used none root navigators for the built-in 
+  dialogs in previous versions, you need to set 
+  `ColorPickerActionButtons(useRootNavigator: false)` and pass it to 
+  `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
+
 ## [2.0.2] - June 11, 2021
 * **Improvement:** Performance slightly improved via an additional rebuild check.
 * **New feature:** ColorTools got a new static function `swatchContainsColor`.
@@ -19,7 +37,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   new value to update it. You can even "remote control" the color picker by updating the `color`, if so needed.  
   
   This is mostly a potential use-case for desktop/web when the picker is not used in a dialog. 
-  You can of course use this on a phone or tablet too, but often there is not room enough to keep the picker 
+  You can of course use this on a phone or tablet too, but often there is not enough room to keep the picker 
   visible on the main surface this way on mobile devices. However, on desktops it is certainly a valid use 
   case that should be supported. It was previously not supported by design, but as we are going for covering
   web/desktop use-cases, it should certainly be supported. This update adds support for it. The picker only 

@@ -48,6 +48,7 @@ class ColorPickerActionButtons with Diagnosticable {
     this.dialogCancelButtonType = ColorPickerActionButtonType.text,
     this.dialogOkButtonLabel,
     this.dialogOkButtonType = ColorPickerActionButtonType.text,
+    this.useRootNavigator = true,
   });
 
   /// Dialog has an OK icon button on top toolbar to select active color
@@ -227,6 +228,18 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to [ColorPickerActionButtonType.text] resulting in [TextButton].
   final ColorPickerActionButtonType dialogOkButtonType;
 
+  /// The `useRootNavigator` argument is used to determine whether to push the
+  /// ColorPicker dialog to the [Navigator] furthest from or nearest to the given
+  /// `context`.
+  ///
+  /// By default, `useRootNavigator` is `true` and the dialog route created
+  /// by build of ColorPicker dialogs are on the root.
+  ///
+  /// This setting was moved here in version 2.1.0 in order to make the
+  /// property accessible by Navigator pop functions both in the ColorPicker
+  /// widget itself, as well as built-in dialogs that uses the ColorPicker.
+  final bool useRootNavigator;
+
   /// Copy the object with one or more provided properties changed.
   ColorPickerActionButtons copyWith({
     bool? okButton,
@@ -249,6 +262,7 @@ class ColorPickerActionButtons with Diagnosticable {
     ColorPickerActionButtonType? dialogCancelButtonType,
     String? dialogOkButtonLabel,
     ColorPickerActionButtonType? dialogOkButtonType,
+    bool? useRootNavigator,
   }) {
     if ((okButton == null || identical(okButton, this.okButton)) &&
         (closeButton == null || identical(closeButton, this.closeButton)) &&
@@ -278,7 +292,9 @@ class ColorPickerActionButtons with Diagnosticable {
         (dialogOkButtonLabel == null ||
             identical(dialogOkButtonLabel, this.dialogOkButtonLabel)) &&
         (dialogOkButtonType == null ||
-            identical(dialogOkButtonType, this.dialogOkButtonType))) {
+            identical(dialogOkButtonType, this.dialogOkButtonType)) &&
+        (useRootNavigator == null ||
+            identical(useRootNavigator, this.useRootNavigator))) {
       return this;
     }
 
@@ -305,6 +321,7 @@ class ColorPickerActionButtons with Diagnosticable {
           dialogCancelButtonType ?? this.dialogCancelButtonType,
       dialogOkButtonLabel: dialogOkButtonLabel ?? this.dialogOkButtonLabel,
       dialogOkButtonType: dialogOkButtonType ?? this.dialogOkButtonType,
+      useRootNavigator: useRootNavigator ?? this.useRootNavigator,
     );
   }
 
@@ -333,12 +350,13 @@ class ColorPickerActionButtons with Diagnosticable {
         dialogCancelButtonLabel == other.dialogCancelButtonLabel &&
         dialogCancelButtonType == other.dialogCancelButtonType &&
         dialogOkButtonLabel == other.dialogOkButtonLabel &&
-        dialogOkButtonType == other.dialogOkButtonType;
+        dialogOkButtonType == other.dialogOkButtonType &&
+        useRootNavigator == other.useRootNavigator;
   }
 
   @override
   int get hashCode {
-    return hashValues(
+    final List<Object?> values = <Object?>[
       okButton,
       closeButton,
       okIcon,
@@ -359,7 +377,9 @@ class ColorPickerActionButtons with Diagnosticable {
       dialogCancelButtonType,
       dialogOkButtonLabel,
       dialogOkButtonType,
-    );
+      useRootNavigator,
+    ];
+    return hashList(values);
   }
 
   @override
@@ -394,5 +414,7 @@ class ColorPickerActionButtons with Diagnosticable {
     properties.add(StringProperty('dialogOkButtonLabel', dialogOkButtonLabel));
     properties.add(EnumProperty<ColorPickerActionButtonType>(
         'dialogOkButtonType', dialogOkButtonType));
+    properties
+        .add(DiagnosticsProperty<bool>('useRootNavigator', useRootNavigator));
   }
 }

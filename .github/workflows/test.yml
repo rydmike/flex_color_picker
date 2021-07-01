@@ -33,14 +33,14 @@ jobs:
       - name: Install Flutter package dependencies
         run: flutter pub get
 
-      #- name: Analyze Dart source
-      #  run: dart analyze
+      - name: Analyze Dart source
+        run: dart analyze
 
-      #- name: Show outdated packages
-      #  run: flutter pub outdated
+      - name: Show outdated packages
+        run: flutter pub outdated
 
-      #- name: Verify that Dart formatting is used, fail if not
-      #  run: dart format --output=none --set-exit-if-changed .
+      - name: Verify that Dart formatting is used, fail if not
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Test package FlexColorPicker with test coverage
         run: flutter test --coverage

@@ -537,13 +537,34 @@ Future<Color> showColorPickerDialog(
   /// be constrained by the screen size.
   bool useSafeArea = true,
 
-  /// The `useRootNavigator` argument is used to determine whether to push the
-  /// dialog to the [Navigator] furthest from or nearest to the given
-  /// `context`.
+  /// Usage of [useRootNavigator] here is deprecated.
   ///
-  /// By default, `useRootNavigator` is `true` and the dialog route created
-  /// by this method is pushed to the root navigator.
-  bool useRootNavigator = true,
+  /// The [useRootNavigator] argument is now respected on all Navigator
+  /// [pop] functions used in the [ColorPicker] widget itself and by
+  /// built-in dialogs used by the [ColorPicker]. In order to support this,
+  /// the current [useRootNavigator] property in the
+  /// [ColorPicker.showPickerDialog] and in the function
+  /// [showColorPickerDialog] had to be deprecated.
+  ///
+  /// The property has moved to become a configuration option in
+  /// [ColorPickerActionButtons] class in order to make it accessible to
+  /// the Navigator pop functions both in the [ColorPicker] widget itself,
+  /// as well as by built-in dialogs.
+  ///
+  /// The default behavior has not been changed, the setting still defaults
+  /// to using dialogs that use the root navigator, but now the pop
+  /// functions work as intended.
+  ///
+  /// If you for some reason have used none root navigators for the built-in
+  /// dialogs in previous version, you need to set
+  /// `ColorPickerActionButtons(useRootNavigator: false)` in
+  /// `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
+  @Deprecated(
+    'This property is no longer set here and has no function if assigned here. '
+    'From version 2.1.0 it must be defined via same property in configuration '
+    'class ColorPickerActionButtons(useRootNavigator).',
+  )
+      bool useRootNavigator = true,
 
   /// The `routeSettings` argument is passed to [showGeneralDialog],
   /// see [RouteSettings] for details.
@@ -636,7 +657,6 @@ Future<Color> showColorPickerDialog(
     barrierDismissible: barrierDismissible,
     barrierColor: barrierColor,
     useSafeArea: useSafeArea,
-    useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
     constraints: constraints,
   ))) {
