@@ -2,6 +2,9 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.1.1] - July 2, 2021
+* Documentation fix.
+
 ## [2.1.0] - July 2, 2021
 * **Fix:** The `useRootNavigator` argument is now respected on all Navigator
   `pop` functions used in the `ColorPicker` widget itself and by
