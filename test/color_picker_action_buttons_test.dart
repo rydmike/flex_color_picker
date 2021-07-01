@@ -149,7 +149,7 @@ void main() {
     });
     test(
         'CPAB3.3: GIVEN two identical but different ColorPickerActionButtons '
-        'object EXPECT them to be'
+        'objects EXPECT them to be'
         'be equal after an all null copyWith', () {
       expect(
           m1.copyWith(
@@ -178,7 +178,7 @@ void main() {
           equals(m2));
     });
     test(
-        'CPCPB3.4: GIVEN a ColorPickerActionButtons object EXPECT it to be '
+        'CPAB3.4: GIVEN a ColorPickerActionButtons object EXPECT it to be '
         'equal to an equal object when copied with identical values.', () {
       expect(
         m4.copyWith(
@@ -207,6 +207,36 @@ void main() {
         ),
         equals(m4),
       );
+    });
+    test(
+        'CPAB3.5: GIVEN two identical but different ColorPickerActionButtons '
+        'objects EXPECT them to be'
+        'be equal after an equal copyWith', () {
+      expect(
+          m1.copyWith(
+            okButton: true,
+            closeButton: null,
+            okIcon: null,
+            closeIcon: null,
+            closeIsLast: null,
+            okTooltip: null,
+            closeTooltip: null,
+            closeTooltipIsClose: null,
+            toolIconsThemeData: null,
+            visualDensity: null,
+            padding: null,
+            alignment: null,
+            splashRadius: null,
+            constraints: null,
+            dialogActionButtons: null,
+            dialogActionIcons: null,
+            dialogCancelButtonLabel: null,
+            dialogCancelButtonType: null,
+            dialogOkButtonLabel: null,
+            dialogOkButtonType: null,
+            useRootNavigator: null,
+          ),
+          equals(m2.copyWith(okButton: true)));
     });
   });
 }

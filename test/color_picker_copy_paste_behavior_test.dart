@@ -240,5 +240,40 @@ void main() {
         equals(m4),
       );
     });
+    test(
+        'CPCPB3.5: GIVEN two identical but different '
+        'ColorPickerCopyPasteBehavior '
+        'object EXPECT them to be'
+        'be equal after an equal copyWithe', () {
+      expect(
+        m2.copyWith(
+          ctrlC: true,
+          ctrlV: null,
+          copyButton: null,
+          pasteButton: null,
+          copyIcon: null,
+          pasteIcon: null,
+          copyTooltip: null,
+          pasteTooltip: null,
+          copyFormat: null,
+          longPressMenu: null,
+          secondaryMenu: null,
+          secondaryOnDesktopLongOnDevice: null,
+          secondaryOnDesktopLongOnDeviceAndWeb: null,
+          editFieldCopyButton: null,
+          menuIconThemeData: null,
+          menuThemeData: null,
+          menuWidth: null,
+          menuItemHeight: null,
+          snackBarParseError: null,
+          snackBarMessage: null,
+          snackBarDuration: null,
+          feedbackParseError: null,
+          parseShortHexCode: null,
+          editUsesParsedPaste: null,
+        ),
+        equals(m1.copyWith(ctrlC: true)),
+      );
+    });
   });
 }
