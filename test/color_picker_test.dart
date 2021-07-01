@@ -15,11 +15,14 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
     testWidgets('CPI1.1: Finds default ColorPicker()',
         (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
+      await tester.pumpWidget(
+        TestWidget(
           widget: ColorPicker(
-        key: testKey,
-        onColorChanged: (Color color) {},
-      )));
+            key: testKey,
+            onColorChanged: (Color color) {},
+          ),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -97,6 +100,292 @@ void main() {
               const <ColorSwatch<Object>, String>{};
       expect(find.byWidgetPredicate(defaultPicker), findsOneWidget);
     });
+    //
+    // *************************************************************************
+    //
+    testWidgets('CPI1.2: Finds custom-1 ColorPicker() with both picker',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            key: testKey,
+            color: Colors.red,
+            onColorChanged: (Color color) {},
+            onColorChangeStart: (Color color) {},
+            onColorChangeEnd: (Color color) {},
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: true,
+              ColorPickerType.primary: false,
+              ColorPickerType.accent: false,
+              ColorPickerType.bw: true,
+              ColorPickerType.custom: true,
+              ColorPickerType.wheel: true,
+            },
+            includeIndex850: true,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            enableOpacity: true,
+            actionButtons: const ColorPickerActionButtons(
+              okButton: true,
+              closeButton: true,
+              okTooltip: 'OK NOW',
+              closeTooltip: 'CLOSE NOW',
+            ),
+            hasBorder: true,
+            borderRadius: 10,
+            borderColor: Colors.black,
+            wheelWidth: 32,
+            wheelHasBorder: true,
+            title: const Text('Title1'),
+            heading: const Text('Title2'),
+            subheading: const Text('Title3'),
+            wheelSubheading: const Text('Title4'),
+            opacitySubheading: const Text('Title5'),
+            recentColorsSubheading: const Text('Title6'),
+            showMaterialName: true,
+            showColorName: true,
+            showColorCode: true,
+            colorCodeHasColor: true,
+            showColorValue: true,
+            showRecentColors: true,
+            maxRecentColors: 10,
+            recentColors: const <Color>[Colors.black, Colors.white],
+            onRecentColorsChanged: (List<Color> colors) {},
+            selectedPickerTypeColor: Colors.white,
+            customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
+              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+                  'Guide Purple Variant',
+              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+            },
+          ),
+        ),
+      );
+      //
+      final Finder widget = find.byKey(testKey);
+      expect(widget, findsOneWidget);
+
+      final WidgetPredicate customPicker = (Widget widget) =>
+          widget is ColorPicker &&
+          widget.color == Colors.red &&
+          widget.onColorChanged != null &&
+          widget.onColorChangeStart != null &&
+          widget.onColorChangeEnd != null &&
+          widget.pickersEnabled ==
+              const <ColorPickerType, bool>{
+                ColorPickerType.both: true,
+                ColorPickerType.primary: false,
+                ColorPickerType.accent: false,
+                ColorPickerType.bw: true,
+                ColorPickerType.custom: true,
+                ColorPickerType.wheel: true,
+              } &&
+          widget.enableShadesSelection == true &&
+          widget.includeIndex850 == true &&
+          widget.crossAxisAlignment == CrossAxisAlignment.start &&
+          widget.padding == const EdgeInsets.all(16) &&
+          widget.columnSpacing == 8 &&
+          widget.enableOpacity == true &&
+          widget.opacityTrackHeight == 36 &&
+          widget.opacityTrackWidth == null &&
+          widget.opacityThumbRadius == 16 &&
+          widget.actionButtons ==
+              const ColorPickerActionButtons(
+                okButton: true,
+                closeButton: true,
+                okTooltip: 'OK NOW',
+                closeTooltip: 'CLOSE NOW',
+              ) &&
+          widget.copyPasteBehavior == const ColorPickerCopyPasteBehavior() &&
+          widget.selectedColorIcon == Icons.check &&
+          widget.width == 40 &&
+          widget.height == 40 &&
+          widget.spacing == 4 &&
+          widget.runSpacing == 4 &&
+          widget.elevation == 0 &&
+          widget.hasBorder == true &&
+          widget.borderRadius == 10 &&
+          widget.borderColor == Colors.black &&
+          widget.wheelDiameter == 190 &&
+          widget.wheelWidth == 32 &&
+          widget.wheelHasBorder == true &&
+          widget.title != null &&
+          widget.heading != null &&
+          widget.subheading != null &&
+          widget.wheelSubheading != null &&
+          widget.opacitySubheading != null &&
+          widget.recentColorsSubheading != null &&
+          widget.showMaterialName == true &&
+          widget.materialNameTextStyle == null &&
+          widget.showColorName == true &&
+          widget.colorNameTextStyle == null &&
+          widget.showColorCode == true &&
+          widget.colorCodeHasColor == true &&
+          widget.colorCodeTextStyle == null &&
+          widget.colorCodePrefixStyle == null &&
+          widget.colorCodeReadOnly == false &&
+          widget.showColorValue == true &&
+          widget.showRecentColors == true &&
+          widget.maxRecentColors == 10 &&
+          widget.recentColors == const <Color>[Colors.black, Colors.white] &&
+          widget.onRecentColorsChanged != null &&
+          widget.enableTooltips == true &&
+          widget.selectedPickerTypeColor == Colors.white &&
+          widget.pickerTypeTextStyle == null &&
+          widget.pickerTypeLabels ==
+              const <ColorPickerType, String>{
+                ColorPickerType.primary: 'Primary',
+                ColorPickerType.accent: 'Accent',
+                ColorPickerType.bw: 'Black & White',
+                ColorPickerType.both: 'Primary & Accent',
+                ColorPickerType.custom: 'Custom',
+                ColorPickerType.wheel: 'Wheel',
+              } &&
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      expect(find.byWidgetPredicate(customPicker), findsOneWidget);
+    });
+    //
+    // *************************************************************************
+    //
+    testWidgets('CPI1.3: Finds custom-1 ColorPicker() using wheel',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            key: testKey,
+            color: const Color(0xFF3295C1), // Results in wheel selected
+            onColorChanged: (Color color) {},
+            onColorChangeStart: (Color color) {},
+            onColorChangeEnd: (Color color) {},
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: false,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: true,
+              ColorPickerType.bw: true,
+              ColorPickerType.custom: true,
+              ColorPickerType.wheel: true,
+            },
+            includeIndex850: true,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            enableOpacity: true,
+            actionButtons: const ColorPickerActionButtons(
+              okButton: true,
+              closeButton: true,
+              okTooltip: 'OK NOW',
+              closeTooltip: 'CLOSE NOW',
+            ),
+            hasBorder: true,
+            borderRadius: 10,
+            borderColor: Colors.black,
+            wheelWidth: 32,
+            wheelHasBorder: true,
+            title: const Text('Title1'),
+            heading: const Text('Title2'),
+            subheading: const Text('Title3'),
+            wheelSubheading: const Text('Title4'),
+            opacitySubheading: const Text('Title5'),
+            recentColorsSubheading: const Text('Title6'),
+            showMaterialName: true,
+            showColorName: true,
+            showColorCode: true,
+            colorCodeHasColor: true,
+            showColorValue: true,
+            showRecentColors: true,
+            maxRecentColors: 10,
+            recentColors: const <Color>[Colors.black, Colors.white],
+            onRecentColorsChanged: (List<Color> colors) {},
+            selectedPickerTypeColor: Colors.white,
+            customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
+              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+                  'Guide Purple Variant',
+              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+            },
+          ),
+        ),
+      );
+      //
+      final Finder widget = find.byKey(testKey);
+      expect(widget, findsOneWidget);
+
+      final WidgetPredicate customPicker = (Widget widget) =>
+          widget is ColorPicker &&
+          widget.color == const Color(0xFF3295C1) &&
+          widget.onColorChanged != null &&
+          widget.onColorChangeStart != null &&
+          widget.onColorChangeEnd != null &&
+          widget.pickersEnabled ==
+              const <ColorPickerType, bool>{
+                ColorPickerType.both: false,
+                ColorPickerType.primary: true,
+                ColorPickerType.accent: true,
+                ColorPickerType.bw: true,
+                ColorPickerType.custom: true,
+                ColorPickerType.wheel: true,
+              } &&
+          widget.enableShadesSelection == true &&
+          widget.includeIndex850 == true &&
+          widget.crossAxisAlignment == CrossAxisAlignment.start &&
+          widget.padding == const EdgeInsets.all(16) &&
+          widget.columnSpacing == 8 &&
+          widget.enableOpacity == true &&
+          widget.opacityTrackHeight == 36 &&
+          widget.opacityTrackWidth == null &&
+          widget.opacityThumbRadius == 16 &&
+          widget.actionButtons ==
+              const ColorPickerActionButtons(
+                okButton: true,
+                closeButton: true,
+                okTooltip: 'OK NOW',
+                closeTooltip: 'CLOSE NOW',
+              ) &&
+          widget.copyPasteBehavior == const ColorPickerCopyPasteBehavior() &&
+          widget.selectedColorIcon == Icons.check &&
+          widget.width == 40 &&
+          widget.height == 40 &&
+          widget.spacing == 4 &&
+          widget.runSpacing == 4 &&
+          widget.elevation == 0 &&
+          widget.hasBorder == true &&
+          widget.borderRadius == 10 &&
+          widget.borderColor == Colors.black &&
+          widget.wheelDiameter == 190 &&
+          widget.wheelWidth == 32 &&
+          widget.wheelHasBorder == true &&
+          widget.title != null &&
+          widget.heading != null &&
+          widget.subheading != null &&
+          widget.wheelSubheading != null &&
+          widget.opacitySubheading != null &&
+          widget.recentColorsSubheading != null &&
+          widget.showMaterialName == true &&
+          widget.materialNameTextStyle == null &&
+          widget.showColorName == true &&
+          widget.colorNameTextStyle == null &&
+          widget.showColorCode == true &&
+          widget.colorCodeHasColor == true &&
+          widget.colorCodeTextStyle == null &&
+          widget.colorCodePrefixStyle == null &&
+          widget.colorCodeReadOnly == false &&
+          widget.showColorValue == true &&
+          widget.showRecentColors == true &&
+          widget.maxRecentColors == 10 &&
+          widget.recentColors == const <Color>[Colors.black, Colors.white] &&
+          widget.onRecentColorsChanged != null &&
+          widget.enableTooltips == true &&
+          widget.selectedPickerTypeColor == Colors.white &&
+          widget.pickerTypeTextStyle == null &&
+          widget.pickerTypeLabels ==
+              const <ColorPickerType, String>{
+                ColorPickerType.primary: 'Primary',
+                ColorPickerType.accent: 'Accent',
+                ColorPickerType.bw: 'Black & White',
+                ColorPickerType.both: 'Primary & Accent',
+                ColorPickerType.custom: 'Custom',
+                ColorPickerType.wheel: 'Wheel',
+              } &&
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      expect(find.byWidgetPredicate(customPicker), findsOneWidget);
+    });
   });
 }
 
@@ -113,12 +402,8 @@ class TestWidget extends StatelessWidget {
         appBar: AppBar(
           title: const Text('TestWidget'),
         ),
-        body: Center(
-          child: SizedBox(
-            width: 500,
-            height: 800,
-            child: widget,
-          ),
+        body: SingleChildScrollView(
+          child: widget,
         ),
       ),
     );
