@@ -2,7 +2,7 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.1.0] - July 1, 2021
+## [2.1.0] - July 2, 2021
 * **Fix:** The `useRootNavigator` argument is now respected on all Navigator
   `pop` functions used in the `ColorPicker` widget itself and by
   built-in dialogs used by the `ColorPicker`. In order to support this,
@@ -19,6 +19,9 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   dialogs in previous versions, you need to set 
   `ColorPickerActionButtons(useRootNavigator: false)` and pass it to 
   `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
+* **Tests:** Started adding more tests and coverage report.
+    Total 5668 tests, coverage 65.36%.
+* Documentation and typo updates.
 
 ## [2.0.2] - June 11, 2021
 * **Improvement:** Performance slightly improved via an additional rebuild check.
@@ -30,7 +33,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 * **Documentation:** Fixed broken API reference links in API guide chapter. Mentioned that WEB build
   requires a canvas kit build if `enableOpacity` feature is used. 
 * **Web example:** The live web example got updated to use the latest Flutter stable embedder.
-* **CI/CD:** Trying the CI/CD deployment with --base-href="/flexcolorpicker/" instead of repl.
+* **CI/CD:** Tried the CI/CD deployment with --base-href="/flexcolorpicker/" instead of `repl`. Did not
+  work, continuing with `repl` for now.
   
 ## [2.0.1] - April 10, 2021
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a 

@@ -1,5 +1,5 @@
 [![Pub Version](https://img.shields.io/pub/v/flex_color_picker?label=flex_color_picker&labelColor=333940&logo=dart)](https://pub.dev/packages/flex_color_picker) ![GitHub Workflow Status (event)](https://img.shields.io/github/workflow/status/rydmike/flex_color_picker/Test?event=push)
-![Test](https://github.com/rydmike/flex_color_picker/workflows/Test/badge.svg)  [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+![Test](https://github.com/rydmike/flex_color_picker/workflows/Test/badge.svg) [![codecov](https://codecov.io/gh/rydmike/flex_color_picker/branch/master/graph/badge.svg?token=4XJU30IGO3)](https://codecov.io/gh/rydmike/flex_color_picker) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 # FlexColorPicker
 
@@ -1220,7 +1220,7 @@ parsed to its color value.
 
 The color picker's paste parser also filters out none valid HEX code related characters from the string, and 
 truncates it to the max length of above formats from the right (end) side!
-Partial values like e.g. '0', 'aC', '#334' and '0xFF34' are also allowed and are interpreted as being right aligned 
+Partial values like for example '0', 'aC', '#334' and '0xFF34' are also allowed and are interpreted as being right aligned 
 in the complete 8-char hex code. 
 
 If alpha values are not included in a pasted hex char string, it is always set to
@@ -1237,15 +1237,16 @@ short HEX RGB color codes, like 123, ABC, F0C and 5D1 being interpreted as 11223
 
 [**editUsesParsedPaste**](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerCopyPasteBehavior/editUsesParsedPaste.html)  
 The color code entry field can also be set to use the paste parser by setting `editUsesParsedPaste` to `true` (defaults
-to false). When true, the color code entry field uses the paste parser for keyboard shortcuts CTRL-V and CMD-V. 
-A standard text field keyboard paste shortcut, will just paste whatever text is in the copy/paste buffer into the field.
+to false). When true, the color code entry field uses the paste parser for keyboard paste shortcuts.  
+A standard text field keyboard paste shortcut, will paste whatever text is in the copy-paste buffer into the field.
 This is the `false` default behavior here too, with the exception that the field only accepts valid hex value input
-chars (0-9, A-F), so it always filters out and pastes only the acceptable input chars from the paste buffer.
+chars (0-9, A-F). It thus always filters out and pastes only the acceptable input characters from the paste buffer.
 
 When `editUsesParsedPaste` property is `true`, the edit field will use the same color paste value parser that is used
 by the other paste actions when the input field is not in focus. This results in a paste action in the entry field that 
-always fully replaces the content, with the parsed color value of the pasted string data, not just pasting in the 
-string in the paste buffer into the text field. Currently, this setting only impacts CTRL-V and CMD-V keyboard shortcut
+always fully replaces the content, with the parsed color value of the pasted string data. It does not paste in the 
+string in the paste buffer into the text field, it changes it to its parsed value, converted back to a string. 
+Currently, this setting only impacts CTRL-V and CMD-V keyboard shortcut
 pasting on desktops. The paste on Android and iOS are not intercepted when this setting is true. The false setting is 
 equivalent to past versions (1.x) default behavior when pasting strings into the code entry field. 
 
@@ -1260,7 +1261,7 @@ that cannot be parsed to a color value.
 The `snackBarMessage` defines the text message label shown in the paste parse error snack bar. The `snackBarMessage` 
 label is shown in the snack bar when there is a paste parse error, and `snackBarParseError` is true. 
 
-If the `snackBarMessage` is not defined, ie null, it defaults to the combination of the two Material localization
+If the `snackBarMessage` is not defined (is null), it defaults to the combination of the two Material localization
 labels `pasteButtonLabel`: `invalidDateFormatLabel`. In English this will it say
 **Paste: Invalid format**. The snackbar uses the closest ambient theme with SnackBarThemeData for its theming.
 
@@ -1317,10 +1318,10 @@ when such interaction ended. The `onColorChanged` and `onColorChangeEnd` will al
 color value, but `onColorChangeEnd` only when the interaction on the wheel and sliders have ended, with only the final
 result from the interaction.
 
-If you are using a state logging solution in your application, you could use the **start** and **end**
-events to get current selected color state when the change starts, and then just store the end result when the
-user has finished changing the color and if the color value was different. This is useful on the wheel thumbs and 
-opacity slider operations, as they will generate a lot of `onColorChanged` events while they are operated which you 
+If you are using a state logging solution in your application, you can use the **start** and **end**
+events to get current selected color state when the change starts. Then store the end result when the
+user has finished changing the color and only if the color value was different. This is useful on the wheel and 
+opacity slider operations, as they will generate a lot of `onColorChanged` events while they are operated, which you 
 may not want to log. If it is applicable to the use-case, then using the `showColorPickerDialog` function described
 [here](#function-showcolorpickerdialog), is another way around this when logging is used. 
 
@@ -1354,7 +1355,7 @@ API reference: [showPickerDialog](https://pub.dev/documentation/flex_color_picke
 
 This dialog allows you track the ColorPicker's different **onChange** callbacks when the dialog is open and colors are 
 being manipulated and react to the changes as they happen. You can use this to for example interactively change color
-properties of the application's Widgets and even its theme, and see the effect of changes applied as a new color is 
+properties of the application's Widgets and even its theme. You can see the effect of changes applied as a new color is 
 selected in the dialog picker, even while dragging the wheel and sliders.
 
 The `showPickerDialog` dialog demo in the default example app shown earlier [here](#dialog-colorpicker-method) 
@@ -1362,16 +1363,16 @@ explains how to use the built-in
 [ColorPicker(...).showPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/showPickerDialog.html)
 method.
 
-The disadvantage with this dialog is that you have to maintain the state, to e.g. store color before you open the 
-dialog and restore this color, if the dialog is cancelled instead of a color selected. The API can also be a bit 
-cumbersome to use, although the above mentioned example show how it is done.
+The disadvantage with this dialog is that to maintain the state yourself. You have to store color before you open the 
+dialog and restore this color if the dialog is cancelled, instead of a color selected. The API can also be a bit 
+cumbersome to use, although the above mentioned example shows how it is done.
 
 ### Function showColorPickerDialog 
 
 API reference: [showColorPickerDialog](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/showColorPickerDialog.html)
 
 The `showColorPickerDialog` function is often simpler to use. Just pass in a build context for the dialog, and the 
-required start color value, then call the function, with needed color picker and dialog setup properties, and 
+required start color value. Call the function, with needed color picker and dialog setup properties, and 
 await for it to return the selected color when the dialog is closed. 
 If no color is selected, when the dialog is cancelled or dismissed, then it just returns the passed in start color.
 
@@ -1393,8 +1394,8 @@ function.
 
 Since the properties `elevation` and `title`, in the `showPickerDialog` method would collide with the same
 named ones in the `ColorPicker`, the dialog's elevation and title in `showColorPickerDialog` are instead
-called `dailogElevation` and `dialogTitle`, to avoid the property name conflict when they are present in the
-same function.
+called `dailogElevation` and `dialogTitle`. This is to avoid the property name conflict when they are 
+present in the same function.
 
 # Desktop and Web Ready
 
