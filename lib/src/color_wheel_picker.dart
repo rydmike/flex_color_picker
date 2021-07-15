@@ -318,7 +318,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
                       colorValue: colorValue,
                       hasBorder: widget.hasBorder,
                       borderColor:
-                        widget.borderColor ?? Theme.of(context).dividerColor,
+                          widget.borderColor ?? Theme.of(context).dividerColor,
                       wheelWidth: widget.wheelWidth,
                     ),
                   ),
@@ -334,7 +334,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
                     painter: _WheelPainter(
                       hasBorder: widget.hasBorder,
                       borderColor:
-                        widget.borderColor ?? Theme.of(context).dividerColor,
+                          widget.borderColor ?? Theme.of(context).dividerColor,
                       wheelWidth: widget.wheelWidth,
                       ticks: 360,
                     ),
@@ -388,7 +388,7 @@ class _ShadePainter extends CustomPainter {
     final Rect _rectBox = Rect.fromLTWH(_center.dx - _squareRadius,
         _center.dy - _squareRadius, _squareRadius * 2, _squareRadius * 2);
     final RRect rRect =
-    RRect.fromRectAndRadius(_rectBox, const Radius.circular(4));
+        RRect.fromRectAndRadius(_rectBox, const Radius.circular(4));
 
     final Shader _horizontal = LinearGradient(
       colors: <Color>[
@@ -425,13 +425,12 @@ class _ShadePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ShadePainter oldDelegate) {
-    return
-      oldDelegate.hasBorder != hasBorder ||
-          oldDelegate.borderColor != borderColor ||
-          oldDelegate.wheelWidth != wheelWidth ||
-          oldDelegate.colorHue != colorHue ||
-          oldDelegate.colorSaturation != colorSaturation ||
-          oldDelegate.colorValue != colorValue;
+    return oldDelegate.hasBorder != hasBorder ||
+        oldDelegate.borderColor != borderColor ||
+        oldDelegate.wheelWidth != wheelWidth ||
+        oldDelegate.colorHue != colorHue ||
+        oldDelegate.colorSaturation != colorSaturation ||
+        oldDelegate.colorValue != colorValue;
   }
 }
 
@@ -464,7 +463,7 @@ class _WheelPainter extends CustomPainter {
     // creating an ellipse, so we/ keep it as a circle by always using the
     // shortest side in the surrounding rectangle to make a square.
     final double _shortestRectSide =
-    math.min(size.width, size.height).toDouble();
+        math.min(size.width, size.height).toDouble();
 
     final Rect rectCircle = Rect.fromCenter(
         center: _center,
@@ -510,11 +509,10 @@ class _WheelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_WheelPainter oldDelegate) {
-    return
-      oldDelegate.hasBorder != hasBorder ||
-          oldDelegate.borderColor != borderColor ||
-          oldDelegate.wheelWidth != wheelWidth ||
-          oldDelegate.ticks != ticks;
+    return oldDelegate.hasBorder != hasBorder ||
+        oldDelegate.borderColor != borderColor ||
+        oldDelegate.wheelWidth != wheelWidth ||
+        oldDelegate.ticks != ticks;
   }
 }
 
@@ -555,9 +553,9 @@ class _ShadeThumbPainter extends CustomPainter {
 
     // Define the selection thumb position on the square
     final double _paletteX =
-    _Wheel.saturationToVector(colorSaturation, _squareRadius, _center.dx);
+        _Wheel.saturationToVector(colorSaturation, _squareRadius, _center.dx);
     final double _paletteY =
-    _Wheel.valueToVector(colorValue, _squareRadius, _center.dy);
+        _Wheel.valueToVector(colorValue, _squareRadius, _center.dy);
     final Offset paletteVector = Offset(_paletteX, _paletteY);
 
     // Draw the wider black circle first, then draw the smaller white circle
@@ -569,10 +567,9 @@ class _ShadeThumbPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ShadeThumbPainter oldDelegate) {
-    return
-      oldDelegate.wheelWidth != wheelWidth ||
-          oldDelegate.colorSaturation != colorSaturation ||
-          oldDelegate.colorValue != colorValue;
+    return oldDelegate.wheelWidth != wheelWidth ||
+        oldDelegate.colorSaturation != colorSaturation ||
+        oldDelegate.colorValue != colorValue;
   }
 }
 
@@ -619,9 +616,8 @@ class _WheelThumbPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_WheelThumbPainter oldDelegate) {
-    return
-      oldDelegate.wheelWidth != wheelWidth ||
-          oldDelegate.colorHue != colorHue;
+    return oldDelegate.wheelWidth != wheelWidth ||
+        oldDelegate.colorHue != colorHue;
   }
 }
 
