@@ -7,7 +7,7 @@ environment:
 
 dependencies:
   # https://pub.dev/packages/flex_color_picker
-  # flex_color_picker: ^2.1.1
+  # flex_color_picker: ^2.1.2
   flex_color_picker:
     path: ../
 

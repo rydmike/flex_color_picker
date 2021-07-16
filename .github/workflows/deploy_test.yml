@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Flutter and Dart SDK
-        uses: subosito/flutter-action@v1.4.0
+        uses: subosito/flutter-action@vv1.5.3
         with:
           channel: "stable"
       - name: Show Dart SDK version
@@ -60,7 +60,7 @@ jobs:
         run: flutter test --coverage
 
       - name: Upload test coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v1.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
