@@ -25,6 +25,10 @@ class ColorPickerScreen extends StatelessWidget {
     if (columns < 1) columns = 1;
     if (columns > 4) columns = 4;
 
+    // AppBar background color
+    final Color bgColor = Theme.of(context).appBarTheme.backgroundColor ??
+        Theme.of(context).colorScheme.background;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -37,10 +41,14 @@ class ColorPickerScreen extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .appBarTheme
-                      .backgroundColor!
-                      .withOpacity(0.7),
+                  gradient: LinearGradient(
+                    begin: AlignmentDirectional.centerStart,
+                    end: AlignmentDirectional.centerEnd,
+                    colors: <Color>[
+                      bgColor,
+                      bgColor.withOpacity(0.2),
+                    ],
+                  ),
                   border: Border(
                     bottom: BorderSide(color: Theme.of(context).dividerColor),
                   )),
