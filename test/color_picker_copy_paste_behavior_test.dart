@@ -244,7 +244,7 @@ void main() {
         'CPCPB3.5: GIVEN two identical but different '
         'ColorPickerCopyPasteBehavior '
         'object EXPECT them to be'
-        'be equal after an equal copyWithe', () {
+        'be equal after an equal copyWith', () {
       expect(
         m2.copyWith(
           ctrlC: true,
@@ -273,6 +273,140 @@ void main() {
           editUsesParsedPaste: null,
         ),
         equals(m1.copyWith(ctrlC: true)),
+      );
+    });
+    test(
+        'CPCPB3.6: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to be '
+        'equal to another object with same copyWith values.', () {
+      expect(
+        m4.copyWith(
+          ctrlC: null,
+          ctrlV: false,
+          copyButton: true,
+          pasteButton: true,
+          copyIcon: Icons.android,
+          pasteIcon: Icons.close,
+          copyTooltip: 'COPY',
+          pasteTooltip: 'PASTE',
+          copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+          longPressMenu: true,
+          secondaryMenu: true,
+          secondaryOnDesktopLongOnDevice: true,
+          secondaryOnDesktopLongOnDeviceAndWeb: true,
+          editFieldCopyButton: false,
+          menuIconThemeData:
+              const IconThemeData(opacity: 50, size: 30, color: Colors.black),
+          menuThemeData: const PopupMenuThemeData(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(),
+            elevation: 3,
+            textStyle: TextStyle(fontSize: 12),
+            enableFeedback: true,
+          ),
+          menuWidth: 85,
+          menuItemHeight: 35,
+          snackBarParseError: true,
+          snackBarMessage: 'Something went wrong',
+          snackBarDuration: const Duration(milliseconds: 1500),
+          feedbackParseError: true,
+          parseShortHexCode: true,
+          editUsesParsedPaste: true,
+        ),
+        equals(
+          m4.copyWith(
+            ctrlC: null,
+            ctrlV: false,
+            copyButton: true,
+            pasteButton: true,
+            copyIcon: Icons.android,
+            pasteIcon: Icons.close,
+            copyTooltip: 'COPY',
+            pasteTooltip: 'PASTE',
+            copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+            longPressMenu: true,
+            secondaryMenu: true,
+            secondaryOnDesktopLongOnDevice: true,
+            secondaryOnDesktopLongOnDeviceAndWeb: true,
+            editFieldCopyButton: false,
+            menuIconThemeData:
+                const IconThemeData(opacity: 50, size: 30, color: Colors.black),
+            menuThemeData: const PopupMenuThemeData(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(),
+              elevation: 3,
+              textStyle: TextStyle(fontSize: 12),
+              enableFeedback: true,
+            ),
+            menuWidth: 85,
+            menuItemHeight: 35,
+            snackBarParseError: true,
+            snackBarMessage: 'Something went wrong',
+            snackBarDuration: const Duration(milliseconds: 1500),
+            feedbackParseError: true,
+            parseShortHexCode: true,
+            editUsesParsedPaste: true,
+          ),
+        ),
+      );
+    });
+    test(
+        'CPCPB3.7: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to be '
+        'equal to another object with same copyWith values.', () {
+      expect(
+        m2.copyWith(
+          ctrlC: null,
+          ctrlV: true,
+          copyButton: null,
+          pasteButton: null,
+          copyIcon: null,
+          pasteIcon: null,
+          copyTooltip: null,
+          pasteTooltip: null,
+          copyFormat: null,
+          longPressMenu: null,
+          secondaryMenu: null,
+          secondaryOnDesktopLongOnDevice: null,
+          secondaryOnDesktopLongOnDeviceAndWeb: null,
+          editFieldCopyButton: null,
+          menuIconThemeData: null,
+          menuThemeData: null,
+          menuWidth: null,
+          menuItemHeight: null,
+          snackBarParseError: null,
+          snackBarMessage: null,
+          snackBarDuration: null,
+          feedbackParseError: null,
+          parseShortHexCode: null,
+          editUsesParsedPaste: null,
+        ),
+        equals(
+          m2.copyWith(
+            ctrlC: null,
+            ctrlV: true,
+            copyButton: null,
+            pasteButton: null,
+            copyIcon: null,
+            pasteIcon: null,
+            copyTooltip: null,
+            pasteTooltip: null,
+            copyFormat: null,
+            longPressMenu: null,
+            secondaryMenu: null,
+            secondaryOnDesktopLongOnDevice: null,
+            secondaryOnDesktopLongOnDeviceAndWeb: null,
+            editFieldCopyButton: null,
+            menuIconThemeData: null,
+            menuThemeData: null,
+            menuWidth: null,
+            menuItemHeight: null,
+            snackBarParseError: null,
+            snackBarMessage: null,
+            snackBarDuration: null,
+            feedbackParseError: null,
+            parseShortHexCode: null,
+            editUsesParsedPaste: null,
+          ),
+        ),
       );
     });
   });

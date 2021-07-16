@@ -2,10 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.1.2] - July 15, 2021
+## [2.1.2] - July 16, 2021
 * **Improvement:** Improved performance by splitting wheel painting into
   multiple painters and introducing `RepaintBoundary` widgets around
-  expensive painters to avoid unnecessary repaints.
+  expensive painters to avoid unnecessary repaints. Thank you 
+  [Krista Koivisto](https://github.com/krista-koivisto) for this excellent contribution!
 
 ## [2.1.1] - July 2, 2021
 * Documentation fix.

@@ -11,7 +11,7 @@
 name: Test
 on:
   push:
-    branches: [none]
+    branches: [master]
 jobs:
   run_tests:
     name: Analyze and run all tests

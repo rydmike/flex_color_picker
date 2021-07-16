@@ -34,6 +34,44 @@ void main() {
           widget.borderColor == null;
       expect(find.byWidgetPredicate(defaultIndicator), findsOneWidget);
     });
+
+    testWidgets('CIND1.2: Finds custom-1 ColorIndicator()',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(TestWidget(
+          widget: ColorIndicator(
+        key: testKey,
+        onSelect: () {},
+        onSelectFocus: false,
+        isSelected: true,
+        selectedRequestsFocus: true,
+        elevation: 2,
+        selectedIcon: Icons.circle,
+        color: Colors.red,
+        width: 50,
+        height: 35,
+        borderRadius: 5,
+        hasBorder: true,
+        borderColor: Colors.black,
+      )));
+      final Finder widget = find.byKey(testKey);
+      expect(widget, findsOneWidget);
+
+      final WidgetPredicate defaultIndicator = (Widget widget) =>
+          widget is ColorIndicator &&
+          widget.onSelect != null &&
+          widget.onSelectFocus == false &&
+          widget.isSelected == true &&
+          widget.selectedRequestsFocus == true &&
+          widget.elevation == 2 &&
+          widget.selectedIcon == Icons.circle &&
+          widget.color == Colors.red &&
+          widget.width == 50 &&
+          widget.height == 35 &&
+          widget.borderRadius == 5 &&
+          widget.hasBorder == true &&
+          widget.borderColor == Colors.black;
+      expect(find.byWidgetPredicate(defaultIndicator), findsOneWidget);
+    });
   });
 }
 

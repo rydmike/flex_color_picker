@@ -47,6 +47,8 @@ class AppTheme {
         secondaryVariant: App.secondaryVariantLight,
         surface: App.surfaceLight,
         background: App.backgroundLight,
+        onPrimary: App.onPrimaryLight,
+        onSecondary: App.onSecondaryLight,
       );
 
   /// The used dark theme.
@@ -83,6 +85,10 @@ class AppTheme {
         primaryVariant: App.primaryVariantDark,
         secondary: App.secondaryDark,
         secondaryVariant: App.secondaryVariantDark,
+        surface: App.surfaceDark,
+        background: App.backgroundDark,
+        onPrimary: App.onPrimaryDark,
+        onSecondary: App.onSecondaryDark,
       );
 
   // TODO: Investigate potential GoogleFonts issue on Windows platform.
@@ -180,7 +186,7 @@ class AppTheme {
   /// adjust here to tune the padding for all of them globally in the app.
   /// Currently using the default padding the old buttons had.
   static const EdgeInsets roundButtonPadding =
-      EdgeInsets.symmetric(horizontal: 16);
+      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
 
   /// The old buttons had a minimum size that looked better, we keep that.
   static const Size minButtonSize = Size(88, 36);

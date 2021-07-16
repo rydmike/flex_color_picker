@@ -39,6 +39,40 @@ void main() {
           widget.shouldRequestsFocus == false;
       expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
     });
+
+    testWidgets('CWP1.1: Finds custom-1 ColorWheelPicker()',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(TestWidget(
+          widget: ColorWheelPicker(
+        key: testKey,
+        color: Colors.blue,
+        onChanged: (Color color) {},
+        onChangeStart: (Color color) {},
+        onChangeEnd: (Color color) {},
+        onWheel: (bool wheel) {},
+        wheelWidth: 20,
+        hasBorder: true,
+        borderColor: Colors.black,
+        shouldUpdate: true,
+        shouldRequestsFocus: true,
+      )));
+      final Finder widget = find.byKey(testKey);
+      expect(widget, findsOneWidget);
+
+      final WidgetPredicate defaultWheel = (Widget widget) =>
+          widget is ColorWheelPicker &&
+          widget.color == Colors.blue &&
+          widget.onChanged != null &&
+          widget.onChangeStart != null &&
+          widget.onChangeEnd != null &&
+          widget.onWheel != null &&
+          widget.wheelWidth == 20 &&
+          widget.hasBorder == true &&
+          widget.borderColor == Colors.black &&
+          widget.shouldUpdate == true &&
+          widget.shouldRequestsFocus == true;
+      expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
+    });
   });
 }
 

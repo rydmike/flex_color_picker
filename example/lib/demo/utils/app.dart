@@ -11,10 +11,10 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '2.1.1';
+  static const String version = '2.1.2';
   static const String packageVersion = 'FlexColorScheme package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
-  static const String flutterVersion = 'Channel stable 2.2.1, CanvasKit';
+  static const String flutterVersion = 'Channel stable 2.2.3, CanvasKit';
   static const String copyright = '© 2020, 2021';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
@@ -28,26 +28,28 @@ class App {
   static const double outlineThickness = 1.5;
   // Border radius for rounded buttons
   static const double borderRadius = 50;
-  // Rounded button minimum size.
-  // static const double roundButtonMinSize = borderRadius + 2 * outlineThickness;
 
   // Light theme colors
-  static const Color primaryLight = Color(0xFF184782);
-  static const Color primaryVariantLight = Color(0xFF0E2B4E);
-  static const Color secondaryLight = Color(0xFFE59A18);
+  static const Color primaryLight = Color(0xFF095D9E);
+  static const Color primaryVariantLight = Color(0xFF658EAF);
+  static const Color secondaryLight = Color(0xFFDD520F);
   static const Color secondaryVariantLight = Color(0xFFF0B03F);
-  static const Color backgroundLight = Color(0xFFF9F9F9);
-  static const Color surfaceLight = Color(0xFFFBFBFB);
-  static const Color scaffoldBackgroundLight = Color(0xFFFDFDFD);
+  static const Color backgroundLight = Color(0xFFFFFFFF);
+  static const Color surfaceLight = Color(0xFFFFFFFF);
+  static const Color scaffoldBackgroundLight = Color(0xFFFDFDFE);
+  static const Color onPrimaryLight = Color(0xFFFFFFFF);
+  static const Color onSecondaryLight = Color(0xFFFFFFFF);
 
   // Dark theme colors
-  static const Color primaryDark = Color(0xFF6098D3);
-  static const Color primaryVariantDark = Color(0xFF5F87B2);
-  static const Color secondaryDark = Color(0xFFEDBA62);
+  static const Color primaryDark = Color(0xFF538EBB);
+  static const Color primaryVariantDark = Color(0xFF88A7C1);
+  static const Color secondaryDark = Color(0xFFE47945);
   static const Color secondaryVariantDark = Color(0xFFEAB04D);
-  static const Color backgroundDark = Color(0xFF121517);
-  static const Color surfaceDark = Color(0xFF131517);
-  static const Color scaffoldBackgroundDark = Color(0xFF131517);
+  static const Color backgroundDark = Color(0xFF161F26);
+  static const Color surfaceDark = Color(0xFF161F26);
+  static const Color scaffoldBackgroundDark = Color(0xFF070A0C);
+  static const Color onPrimaryDark = Color(0xFFFFFFFF);
+  static const Color onSecondaryDark = Color(0xFFFFFFFF);
 
   // Some example custom colors for our custom picker.
   static const Color guideNewPrimary = Color(0xFF6200EE);
