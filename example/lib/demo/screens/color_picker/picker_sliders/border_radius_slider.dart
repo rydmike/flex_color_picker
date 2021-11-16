@@ -9,20 +9,20 @@ class BorderRadiusSlider extends ConsumerWidget {
   const BorderRadiusSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(borderRadius: '
-          '${context.read(borderRadiusPod).state.floor().toString()})',
+          '${ref.read(borderRadiusPod).floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item border radius'),
         subtitle: Slider.adaptive(
-          max: watch(sizePod).state / 2,
-          divisions: (context.read(sizePod).state / 2).floor(),
-          label: context.read(borderRadiusPod).state.floor().toString(),
-          value: watch(borderRadiusPod).state,
+          max: ref.watch(sizePod) / 2,
+          divisions: (ref.read(sizePod) / 2).floor(),
+          label: ref.read(borderRadiusPod).floor().toString(),
+          value: ref.watch(borderRadiusPod),
           onChanged: (double value) =>
-              context.read(borderRadiusPod).state = value,
+              ref.read(borderRadiusPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -34,7 +34,7 @@ class BorderRadiusSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(borderRadiusPod).state.floor().toString(),
+                ref.read(borderRadiusPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

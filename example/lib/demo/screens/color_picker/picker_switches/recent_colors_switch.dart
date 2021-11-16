@@ -9,17 +9,17 @@ class RecentColorsSwitch extends ConsumerWidget {
   const RecentColorsSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Recent colors'),
       subtitle: const Text('Show a list of recently selected colors. You '
           'can also control how many colors are kept with the API.'),
-      value: watch(showRecentColorsPod).state,
+      value: ref.watch(showRecentColorsPod),
       onChanged: (bool value) =>
-          context.read(showRecentColorsPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(showRecentColorsPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showRecentColors: '
-          '${context.read(showRecentColorsPod).state})',
+          '${ref.read(showRecentColorsPod)})',
     );
   }
 }

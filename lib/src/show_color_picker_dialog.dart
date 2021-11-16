@@ -537,12 +537,12 @@ Future<Color> showColorPickerDialog(
   /// be constrained by the screen size.
   bool useSafeArea = true,
 
-  /// Usage of [useRootNavigator] here is deprecated.
+  /// Usage of `useRootNavigator` here is deprecated.
   ///
-  /// The [useRootNavigator] argument is now respected on all Navigator
-  /// [pop] functions used in the [ColorPicker] widget itself and by
+  /// The `useRootNavigator` argument is now respected on all Navigator
+  /// pop functions used in the [ColorPicker] widget itself and by
   /// built-in dialogs used by the [ColorPicker]. In order to support this,
-  /// the current [useRootNavigator] property in the
+  /// the current `useRootNavigator` property in the
   /// [ColorPicker.showPickerDialog] and in the function
   /// [showColorPickerDialog] had to be deprecated.
   ///

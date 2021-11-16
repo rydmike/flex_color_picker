@@ -9,20 +9,20 @@ class PaddingSlider extends ConsumerWidget {
   const PaddingSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       // ignore: missing_whitespace_between_adjacent_strings
       tooltip: 'ColorPicker(padding: EdgeInsets.all'
-          '(${context.read(paddingPod).state.floor().toString()}))',
+          '(${ref.read(paddingPod).floor().toString()}))',
       child: ListTile(
         title: const Text('Color picker content padding'),
         subtitle: Slider.adaptive(
           max: 40,
           divisions: 40,
-          label: context.read(paddingPod).state.floor().toString(),
-          value: watch(paddingPod).state,
-          onChanged: (double value) => context.read(paddingPod).state = value,
+          label: ref.read(paddingPod).floor().toString(),
+          value: ref.watch(paddingPod),
+          onChanged: (double value) => ref.read(paddingPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -34,7 +34,7 @@ class PaddingSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(paddingPod).state.floor().toString(),
+                ref.read(paddingPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

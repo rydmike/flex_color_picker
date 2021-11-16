@@ -9,17 +9,17 @@ class ShadesSwitch extends ConsumerWidget {
   const ShadesSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable color shades'),
       subtitle: const Text('Turn OFF to only use the main '
           'color in a Material color swatch. Typically left ON.'),
-      value: watch(enableShadesSelectionPod).state,
+      value: ref.watch(enableShadesSelectionPod),
       onChanged: (bool value) =>
-          context.read(enableShadesSelectionPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(enableShadesSelectionPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(enableShadesSelection: '
-          '${context.read(enableShadesSelectionPod).state})',
+          '${ref.read(enableShadesSelectionPod)})',
     );
   }
 }

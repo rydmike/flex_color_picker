@@ -9,8 +9,8 @@ class CopyFormatSwitch extends ConsumerWidget {
   const CopyFormatSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final ColorPickerCopyFormat copyFormat = watch(copyFormatPod).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ColorPickerCopyFormat copyFormat = ref.watch(copyFormatPod);
     final List<bool> isSelected = <bool>[
       copyFormat == ColorPickerCopyFormat.dartCode,
       copyFormat == ColorPickerCopyFormat.hexRRGGBB,
@@ -19,7 +19,7 @@ class CopyFormatSwitch extends ConsumerWidget {
       copyFormat == ColorPickerCopyFormat.numHexAARRGGBB,
     ];
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(copyFormat:\n'
           '    $copyFormat))',
@@ -28,7 +28,7 @@ class CopyFormatSwitch extends ConsumerWidget {
         trailing: ToggleButtons(
           isSelected: isSelected,
           onPressed: (int newIndex) {
-            context.read(copyFormatPod).state =
+            ref.read(copyFormatPod.state).state =
                 ColorPickerCopyFormat.values[newIndex];
           },
           children: const <Widget>[

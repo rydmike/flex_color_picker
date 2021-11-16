@@ -9,17 +9,17 @@ class DialogActionIconsSwitch extends ConsumerWidget {
   const DialogActionIconsSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Dialog action buttons have icons'),
       subtitle: const Text('Use API to also customize button and icon.'),
-      value: watch(dialogActionIconsPod).state,
+      value: ref.watch(dialogActionIconsPod),
       onChanged: (bool value) =>
-          context.read(dialogActionIconsPod).state = value,
-      tooltipEnabled: watch(dialogActionIconsPod).state,
+          ref.read(dialogActionIconsPod.state).state = value,
+      tooltipEnabled: ref.watch(dialogActionIconsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionIcons: '
-          '${context.read(dialogActionIconsPod).state}))',
+          '${ref.read(dialogActionIconsPod)}))',
     );
   }
 }

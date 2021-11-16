@@ -149,7 +149,7 @@ void main() {
     });
     test(
         'CPAB3.3: GIVEN two identical but different ColorPickerActionButtons '
-        'objects EXPECT them to be'
+        'objects EXPECT them to '
         'be equal after an all null copyWith', () {
       expect(
           m1.copyWith(
@@ -210,7 +210,7 @@ void main() {
     });
     test(
         'CPAB3.5: GIVEN two identical but different ColorPickerActionButtons '
-        'objects EXPECT them to be'
+        'objects EXPECT them to '
         'be equal after an equal copyWith', () {
       expect(
           m1.copyWith(

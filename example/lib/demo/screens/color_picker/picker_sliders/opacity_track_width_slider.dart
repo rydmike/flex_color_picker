@@ -9,9 +9,9 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
   const OpacityTrackWidthSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double? usedOpacityTrackWidth;
-    final double trackWidth = context.read(opacityTrackWidthPod).state;
+    final double trackWidth = ref.read(opacityTrackWidthPod);
 
     if (trackWidth >= 150 && trackWidth < 700) {
       usedOpacityTrackWidth = trackWidth;
@@ -20,7 +20,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
     if (trackWidth >= 700) usedOpacityTrackWidth = null;
 
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityTrackWidth: '
           '${usedOpacityTrackWidth?.floor().toString()})',
       child: ListTile(
@@ -30,9 +30,9 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
           max: 700,
           divisions: 700 - 150,
           label: trackWidth.floor().toString(),
-          value: watch(opacityTrackWidthPod).state,
+          value: ref.watch(opacityTrackWidthPod),
           onChanged: (double value) =>
-              context.read(opacityTrackWidthPod).state = value,
+              ref.read(opacityTrackWidthPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

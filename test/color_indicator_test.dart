@@ -18,6 +18,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect == null &&
@@ -56,6 +57,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect != null &&

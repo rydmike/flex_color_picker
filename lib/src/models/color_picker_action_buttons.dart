@@ -229,8 +229,8 @@ class ColorPickerActionButtons with Diagnosticable {
   final ColorPickerActionButtonType dialogOkButtonType;
 
   /// The `useRootNavigator` argument is used to determine whether to push the
-  /// ColorPicker dialog to the [Navigator] furthest from or nearest to the given
-  /// `context`.
+  /// ColorPicker dialog to the [Navigator] furthest from or nearest to the
+  /// given `context`.
   ///
   /// By default, `useRootNavigator` is `true` and the dialog route created
   /// by build of ColorPicker dialogs are on the root.

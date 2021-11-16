@@ -9,16 +9,16 @@ class CloseButtonSwitch extends ConsumerWidget {
   const CloseButtonSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Dialog toolbar has CLOSE button'),
       subtitle: const Text('Use API to change icon and theme the button.'),
-      value: watch(closeButtonPod).state,
-      onChanged: (bool value) => context.read(closeButtonPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(closeButtonPod),
+      onChanged: (bool value) => ref.read(closeButtonPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(closeButton: '
-          '${context.read(closeButtonPod).state}))',
+          '${ref.read(closeButtonPod)}))',
     );
   }
 }

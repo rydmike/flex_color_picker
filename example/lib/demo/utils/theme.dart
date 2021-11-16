@@ -22,7 +22,6 @@ class AppTheme {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light,
@@ -63,7 +62,6 @@ class AppTheme {
         backgroundColor: App.scaffoldBackgroundDark,
         foregroundColor: Colors.white,
         elevation: 0,
-        backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
@@ -91,7 +89,7 @@ class AppTheme {
         onSecondary: App.onSecondaryDark,
       );
 
-  // TODO: Investigate potential GoogleFonts issue on Windows platform.
+  // TODO(rydmike): Investigate potential GoogleFonts issue on Windows platform.
   // Making a custom text theme here, via on-line GoogleFonts load. Intended to
   // use something else than "Roboto", but they were all a little bit
   // broken on Windows platform, not sure why. Need to download and try as
@@ -157,16 +155,18 @@ class AppTheme {
         ).copyWith(
           side: MaterialStateProperty.resolveWith<BorderSide?>(
             (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled))
+              if (states.contains(MaterialState.disabled)) {
                 return BorderSide(
                   color: disabledColor,
                   width: 0.5,
                 );
-              if (states.contains(MaterialState.error))
+              }
+              if (states.contains(MaterialState.error)) {
                 return BorderSide(
                   color: scheme.error,
                   width: App.outlineThickness,
                 );
+              }
               return BorderSide(
                   color: scheme.primary, width: App.outlineThickness);
             },
@@ -243,7 +243,9 @@ class AppTheme {
       case TargetPlatform.linux:
       case TargetPlatform.windows:
         return 13;
-      default:
+      case TargetPlatform.iOS:
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
         return 14;
     }
   }

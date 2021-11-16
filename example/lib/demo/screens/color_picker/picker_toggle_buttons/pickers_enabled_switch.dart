@@ -10,9 +10,9 @@ class PickersEnabledSwitch extends ConsumerWidget {
   static const double _kToggleFontSize = 11.5;
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Map<ColorPickerType, bool> pickersEnabled =
-        watch(pickersEnabledPod).state;
+        ref.watch(pickersEnabledPod);
     final List<bool> isSelected = <bool>[
       pickersEnabled[ColorPickerType.both] ?? false,
       pickersEnabled[ColorPickerType.primary] ?? false,
@@ -27,9 +27,9 @@ class PickersEnabledSwitch extends ConsumerWidget {
           title: Text('Enabled pickers'),
         ),
         MaybeTooltip(
-          condition: watch(enableTooltipsPod).state,
+          condition: ref.watch(enableTooltipsPod),
           tooltip: 'ColorPicker(pickersEnabled:\n'
-              '  ${context.read(pickersEnabledPod).state})',
+              '  ${ref.read(pickersEnabledPod)})',
           child: ListTile(
             trailing: ToggleButtons(
               isSelected: isSelected,
@@ -45,7 +45,8 @@ class PickersEnabledSwitch extends ConsumerWidget {
                 // If 'accent' turned ON, then 'Both' is turned OFF.
                 if (index == 2 && isSelected[2]) isSelected[0] = false;
                 // Assign new state to enabled pickers.
-                context.read(pickersEnabledPod).state = <ColorPickerType, bool>{
+                ref.read(pickersEnabledPod.state).state =
+                    <ColorPickerType, bool>{
                   ColorPickerType.both: isSelected[0],
                   ColorPickerType.primary: isSelected[1],
                   ColorPickerType.accent: isSelected[2],

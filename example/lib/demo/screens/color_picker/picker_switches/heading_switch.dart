@@ -9,15 +9,15 @@ class HeadingSwitch extends ConsumerWidget {
   const HeadingSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Heading'),
       subtitle: const Text('You can provide your own heading widget, if '
           'it is null there is no heading.'),
-      value: watch(showHeadingPod).state,
-      onChanged: (bool value) => context.read(showHeadingPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip: context.read(showHeadingPod).state
+      value: ref.watch(showHeadingPod),
+      onChanged: (bool value) => ref.read(showHeadingPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: ref.read(showHeadingPod)
           ? "ColorPicker(heading: Text('Select color'))"
           : 'ColorPicker(heading: null)',
     );

@@ -9,19 +9,20 @@ class ElevationSlider extends ConsumerWidget {
   const ElevationSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(elevation: '
-          '${context.read(elevationPod).state.floor().toString()})',
+          '${ref.read(elevationPod).floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item elevation'),
         subtitle: Slider.adaptive(
           max: 16,
           divisions: 16,
-          label: context.read(elevationPod).state.floor().toString(),
-          value: watch(elevationPod).state,
-          onChanged: (double value) => context.read(elevationPod).state = value,
+          label: ref.read(elevationPod).floor().toString(),
+          value: ref.watch(elevationPod),
+          onChanged: (double value) =>
+              ref.read(elevationPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -33,7 +34,7 @@ class ElevationSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(elevationPod).state.floor().toString(),
+                ref.read(elevationPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

@@ -114,14 +114,14 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
       behavior: HitTestBehavior.translucent,
       onLongPressStart: _useLongPress
           ? (LongPressStartDetails details) async {
-              if (widget.onOpen != null) widget.onOpen!();
+              widget.onOpen?.call();
               _downPosition = details.globalPosition;
               await _showMenu(_downPosition);
             }
           : null,
       onSecondaryTapDown: _useSecondaryClick
           ? (TapDownDetails details) async {
-              if (widget.onOpen != null) widget.onOpen!();
+              widget.onOpen?.call();
               _downPosition = details.globalPosition;
               await _showMenu(_downPosition);
             }
@@ -131,7 +131,7 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
   }
 
   Future<void> _showMenu(Offset position) async {
-    if (widget.onOpen != null) widget.onOpen!();
+    widget.onOpen?.call();
     final RenderBox? overlay =
         Overlay.of(context)?.context.findRenderObject() as RenderBox?;
     if (overlay != null) {

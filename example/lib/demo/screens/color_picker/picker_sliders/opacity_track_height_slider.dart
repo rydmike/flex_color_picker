@@ -9,21 +9,21 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
   const OpacityTrackHeightSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityTrackHeight: '
-          '${context.read(opacityTrackHeightPod).state.floor().toString()})',
+          '${ref.read(opacityTrackHeightPod).floor().toString()})',
       child: ListTile(
         title: const Text('Opacity slider height'),
         subtitle: Slider.adaptive(
           min: 10,
           max: 50,
           divisions: 50 - 10,
-          label: context.read(opacityTrackHeightPod).state.floor().toString(),
-          value: watch(opacityTrackHeightPod).state,
+          label: ref.read(opacityTrackHeightPod).floor().toString(),
+          value: ref.watch(opacityTrackHeightPod.state).state,
           onChanged: (double value) =>
-              context.read(opacityTrackHeightPod).state = value,
+              ref.read(opacityTrackHeightPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -35,7 +35,7 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(opacityTrackHeightPod).state.floor().toString(),
+                ref.read(opacityTrackHeightPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

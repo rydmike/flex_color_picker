@@ -9,16 +9,16 @@ class SecondaryMenuSwitch extends ConsumerWidget {
   const SecondaryMenuSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Secondary click COPY-PASTE menu'),
       subtitle: const Text('Typically mouse right click.'),
-      value: watch(secondaryMenuPod).state,
-      onChanged: (bool value) => context.read(secondaryMenuPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(secondaryMenuPod),
+      onChanged: (bool value) => ref.read(secondaryMenuPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(secondaryMenu: '
-          '${context.read(secondaryMenuPod).state}))',
+          '${ref.read(secondaryMenuPod)}))',
     );
   }
 }

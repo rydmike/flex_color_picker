@@ -9,16 +9,16 @@ class EditFieldCopySwitch extends ConsumerWidget {
   const EditFieldCopySwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable color code field COPY button'),
-      value: watch(editFieldCopyButtonPod).state,
+      value: ref.watch(editFieldCopyButtonPod),
       onChanged: (bool value) =>
-          context.read(editFieldCopyButtonPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(editFieldCopyButtonPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(editFieldCopyButton: '
-          '${context.read(editFieldCopyButtonPod).state}))',
+          '${ref.read(editFieldCopyButtonPod)}))',
     );
   }
 }

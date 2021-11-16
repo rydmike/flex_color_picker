@@ -9,15 +9,15 @@ class TitleSwitch extends ConsumerWidget {
   const TitleSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Toolbar title'),
       subtitle: const Text('You can provide your own picker toolbar title, if '
           'it is null there is no title.'),
-      value: watch(showTitlePod).state,
-      onChanged: (bool value) => context.read(showTitlePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip: context.read(showTitlePod).state
+      value: ref.watch(showTitlePod),
+      onChanged: (bool value) => ref.read(showTitlePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: ref.read(showTitlePod)
           ? "ColorPicker(title: Text('Color Picker'))"
           : 'ColorPicker(title: null)',
     );

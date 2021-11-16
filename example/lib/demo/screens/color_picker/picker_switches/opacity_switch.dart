@@ -9,15 +9,14 @@ class OpacitySwitch extends ConsumerWidget {
   const OpacitySwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable opacity'),
       subtitle: const Text('Use a slider to adjust color opacity.'),
-      value: watch(enableOpacityPod).state,
-      onChanged: (bool value) => context.read(enableOpacityPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip:
-          'ColorPicker(enableOpacity: ${context.read(enableOpacityPod).state})',
+      value: ref.watch(enableOpacityPod),
+      onChanged: (bool value) => ref.read(enableOpacityPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: 'ColorPicker(enableOpacity: ${ref.read(enableOpacityPod)})',
     );
   }
 }

@@ -9,17 +9,17 @@ class DialogActionsButtonsSwitch extends ConsumerWidget {
   const DialogActionsButtonsSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Dialog has bottom CANCEL OK buttons'),
       subtitle: const Text('Turn OFF to remove bottom action buttons.'),
-      value: watch(dialogActionButtonsPod).state,
+      value: ref.watch(dialogActionButtonsPod),
       onChanged: (bool value) =>
-          context.read(dialogActionButtonsPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(dialogActionButtonsPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionButtons: '
-          '${context.read(dialogActionButtonsPod).state}))',
+          '${ref.read(dialogActionButtonsPod)}))',
     );
   }
 }

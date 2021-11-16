@@ -14,169 +14,175 @@ import 'pods.dart';
 /// There is just a lot of these (55 at the moment), so it easy to miss one
 /// and we have to remember to add any new tracked state provider property
 /// to the list to be reset.
-void resetSettings(BuildContext context) {
+void resetSettings(WidgetRef ref) {
   //
   // The theme mode Riverpod "Pod" providers.
   //***************************************************************************
 
-  context.read(themeModePod).state =
+  ref.read(themeModePod.state).state =
       Keys.defaults[Keys.themeMode]! as ThemeMode;
 
   // Current selected colors Riverpod "Pod" providers.
   //***************************************************************************
 
-  context.read(cardPickerColorPod).state =
+  ref.read(cardPickerColorPod.state).state =
       Keys.defaults[Keys.cardPickerColor]! as Color;
 
-  context.read(dialogPickerColorPod).state =
+  ref.read(dialogPickerColorPod.state).state =
       Keys.defaults[Keys.dialogPickerColor]! as Color;
 
-  context.read(cardRecentColorsPod).state =
+  ref.read(cardRecentColorsPod.state).state =
       Keys.defaults[Keys.cardRecentColors]! as List<Color>;
 
-  context.read(dialogRecentColorsPod).state =
+  ref.read(dialogRecentColorsPod.state).state =
       Keys.defaults[Keys.dialogRecentColors]! as List<Color>;
 
   // Show and Hide Riverpod "Pod" providers.
   //***************************************************************************
 
-  context.read(pickersEnabledPod).state =
+  ref.read(pickersEnabledPod.state).state =
       Keys.defaults[Keys.pickersEnabled]! as Map<ColorPickerType, bool>;
 
-  context.read(includeIndex850Pod).state =
+  ref.read(includeIndex850Pod.state).state =
       Keys.defaults[Keys.includeIndex850]! as bool;
 
-  context.read(enableOpacityPod).state =
+  ref.read(enableOpacityPod.state).state =
       Keys.defaults[Keys.enableOpacity]! as bool;
 
-  context.read(showMaterialNamePod).state =
+  ref.read(showMaterialNamePod.state).state =
       Keys.defaults[Keys.showMaterialName]! as bool;
 
-  context.read(showColorNamePod).state =
+  ref.read(showColorNamePod.state).state =
       Keys.defaults[Keys.showColorName]! as bool;
 
-  context.read(showColorCodePod).state =
+  ref.read(showColorCodePod.state).state =
       Keys.defaults[Keys.showColorCode]! as bool;
 
-  context.read(colorCodeHasColorPod).state =
+  ref.read(colorCodeHasColorPod.state).state =
       Keys.defaults[Keys.colorCodeHasColor]! as bool;
 
-  context.read(colorCodeReadOnlyPod).state =
+  ref.read(colorCodeReadOnlyPod.state).state =
       Keys.defaults[Keys.colorCodeReadOnly]! as bool;
 
-  context.read(showColorValuePod).state =
+  ref.read(showColorValuePod.state).state =
       Keys.defaults[Keys.showColorValue]! as bool;
 
-  context.read(showRecentColorsPod).state =
+  ref.read(showRecentColorsPod.state).state =
       Keys.defaults[Keys.showRecentColors]! as bool;
 
-  context.read(showTitlePod).state = Keys.defaults[Keys.showTitle]! as bool;
+  ref.read(showTitlePod.state).state = Keys.defaults[Keys.showTitle]! as bool;
 
-  context.read(showHeadingPod).state = Keys.defaults[Keys.showHeading]! as bool;
+  ref.read(showHeadingPod.state).state =
+      Keys.defaults[Keys.showHeading]! as bool;
 
-  context.read(showSubheadingPod).state =
+  ref.read(showSubheadingPod.state).state =
       Keys.defaults[Keys.showSubheading]! as bool;
 
-  context.read(showOpacitySubheadingPod).state =
+  ref.read(showOpacitySubheadingPod.state).state =
       Keys.defaults[Keys.showOpacitySubheading]! as bool;
 
-  context.read(showRecentSubheadingPod).state =
+  ref.read(showRecentSubheadingPod.state).state =
       Keys.defaults[Keys.showRecentSubheading]! as bool;
 
   // Picker Design Riverpod "Pod" providers.
   //****************************************************************************
 
-  context.read(sizePod).state = Keys.defaults[Keys.size]! as double;
+  ref.read(sizePod.state).state = Keys.defaults[Keys.size]! as double;
 
-  context.read(borderRadiusPod).state =
+  ref.read(borderRadiusPod.state).state =
       Keys.defaults[Keys.borderRadius]! as double;
 
-  context.read(elevationPod).state = Keys.defaults[Keys.elevation]! as double;
+  ref.read(elevationPod.state).state = Keys.defaults[Keys.elevation]! as double;
 
-  context.read(spacingPod).state = Keys.defaults[Keys.spacing]! as double;
+  ref.read(spacingPod.state).state = Keys.defaults[Keys.spacing]! as double;
 
-  context.read(runSpacingPod).state = Keys.defaults[Keys.runSpacing]! as double;
+  ref.read(runSpacingPod.state).state =
+      Keys.defaults[Keys.runSpacing]! as double;
 
-  context.read(hasBorderPod).state = Keys.defaults[Keys.hasBorder]! as bool;
+  ref.read(hasBorderPod.state).state = Keys.defaults[Keys.hasBorder]! as bool;
 
-  context.read(wheelDiameterPod).state =
+  ref.read(wheelDiameterPod.state).state =
       Keys.defaults[Keys.wheelDiameter]! as double;
 
-  context.read(wheelWidthPod).state = Keys.defaults[Keys.wheelWidth]! as double;
+  ref.read(wheelWidthPod.state).state =
+      Keys.defaults[Keys.wheelWidth]! as double;
 
-  context.read(wheelHasBorderPod).state =
+  ref.read(wheelHasBorderPod.state).state =
       Keys.defaults[Keys.wheelHasBorder]! as bool;
 
-  context.read(opacityTrackHeightPod).state =
+  ref.read(opacityTrackHeightPod.state).state =
       Keys.defaults[Keys.opacityTrackHeight]! as double;
 
-  context.read(opacityTrackWidthPod).state =
+  ref.read(opacityTrackWidthPod.state).state =
       Keys.defaults[Keys.opacityTrackWidth]! as double;
 
-  context.read(opacityThumbRadiusPod).state =
+  ref.read(opacityThumbRadiusPod.state).state =
       Keys.defaults[Keys.opacityThumbRadius]! as double;
 
-  context.read(enableTooltipsPod).state =
+  ref.read(enableTooltipsPod.state).state =
       Keys.defaults[Keys.enableTooltips]! as bool;
 
   // Picker Layout Riverpod "Pod" providers.
   //****************************************************************************
 
-  context.read(alignmentPod).state =
+  ref.read(alignmentPod.state).state =
       Keys.defaults[Keys.alignment]! as CrossAxisAlignment;
 
-  context.read(columnSpacingPod).state =
+  ref.read(columnSpacingPod.state).state =
       Keys.defaults[Keys.columnSpacing]! as double;
 
-  context.read(paddingPod).state = Keys.defaults[Keys.padding]! as double;
+  ref.read(paddingPod.state).state = Keys.defaults[Keys.padding]! as double;
 
-  context.read(closeButtonPod).state = Keys.defaults[Keys.closeButton]! as bool;
+  ref.read(closeButtonPod.state).state =
+      Keys.defaults[Keys.closeButton]! as bool;
 
-  context.read(okButtonPod).state = Keys.defaults[Keys.okButton]! as bool;
+  ref.read(okButtonPod.state).state = Keys.defaults[Keys.okButton]! as bool;
 
-  context.read(closeIsLastPod).state = Keys.defaults[Keys.closeIsLast]! as bool;
+  ref.read(closeIsLastPod.state).state =
+      Keys.defaults[Keys.closeIsLast]! as bool;
 
-  context.read(dialogActionButtonsPod).state =
+  ref.read(dialogActionButtonsPod.state).state =
       Keys.defaults[Keys.dialogActionButtons]! as bool;
 
-  context.read(dialogActionIconsPod).state =
+  ref.read(dialogActionIconsPod.state).state =
       Keys.defaults[Keys.dialogActionIcons]! as bool;
 
   // Copy Paste Actions Riverpod "Pod" providers.
   //****************************************************************************
 
-  context.read(copyFormatPod).state =
+  ref.read(copyFormatPod.state).state =
       Keys.defaults[Keys.copyFormat]! as ColorPickerCopyFormat;
 
-  context.read(ctrlCPod).state = Keys.defaults[Keys.ctrlC]! as bool;
+  ref.read(ctrlCPod.state).state = Keys.defaults[Keys.ctrlC]! as bool;
 
-  context.read(ctrlVPod).state = Keys.defaults[Keys.ctrlV]! as bool;
+  ref.read(ctrlVPod.state).state = Keys.defaults[Keys.ctrlV]! as bool;
 
-  context.read(copyButtonPod).state = Keys.defaults[Keys.copyButton]! as bool;
+  ref.read(copyButtonPod.state).state = Keys.defaults[Keys.copyButton]! as bool;
 
-  context.read(pasteButtonPod).state = Keys.defaults[Keys.pasteButton]! as bool;
+  ref.read(pasteButtonPod.state).state =
+      Keys.defaults[Keys.pasteButton]! as bool;
 
-  context.read(editFieldCopyButtonPod).state =
+  ref.read(editFieldCopyButtonPod.state).state =
       Keys.defaults[Keys.editFieldCopyButton]! as bool;
 
-  context.read(longPressMenuPod).state =
+  ref.read(longPressMenuPod.state).state =
       Keys.defaults[Keys.longPressMenu]! as bool;
 
-  context.read(secondaryMenuPod).state =
+  ref.read(secondaryMenuPod.state).state =
       Keys.defaults[Keys.secondaryMenu]! as bool;
 
-  context.read(secondaryDesktopOtherLongPod).state =
+  ref.read(secondaryDesktopOtherLongPod.state).state =
       Keys.defaults[Keys.secondaryDesktopOtherLong]! as bool;
 
-  context.read(parseShortHexCodePod).state =
+  ref.read(parseShortHexCodePod.state).state =
       Keys.defaults[Keys.parseShortHexCode]! as bool;
 
-  context.read(editUsesParsedPastePod).state =
+  ref.read(editUsesParsedPastePod.state).state =
       Keys.defaults[Keys.editUsesParsedPaste]! as bool;
 
-  context.read(snackbarParseErrorPod).state =
+  ref.read(snackbarParseErrorPod.state).state =
       Keys.defaults[Keys.snackbarParseError]! as bool;
 
-  context.read(feedbackParseErrorPod).state =
+  ref.read(feedbackParseErrorPod.state).state =
       Keys.defaults[Keys.feedbackParseError]! as bool;
 }

@@ -9,17 +9,18 @@ class EnableTooltipsSwitch extends ConsumerWidget {
   const EnableTooltipsSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable tooltips'),
       subtitle: const Text('Turn OFF to disable all tooltips in the picker.'
           '\n(Also enables and disables API tooltips in this demo, all '
           'except this one.)'),
-      value: watch(enableTooltipsPod).state,
-      onChanged: (bool value) => context.read(enableTooltipsPod).state = value,
+      value: ref.watch(enableTooltipsPod),
+      onChanged: (bool value) =>
+          ref.read(enableTooltipsPod.state).state = value,
       tooltipEnabled: true,
       tooltip: 'ColorPicker(enableTooltips: '
-          '${watch(enableTooltipsPod).state})',
+          '${ref.watch(enableTooltipsPod)})',
     );
   }
 }

@@ -26,6 +26,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate defaultPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.blue &&
@@ -152,10 +153,12 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
-              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
+                  'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
                   'Guide Purple Variant',
-              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
+                  'Guide Teal',
             },
           ),
         ),
@@ -164,6 +167,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.red &&
@@ -295,10 +299,12 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
-              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
+                  'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
                   'Guide Purple Variant',
-              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
+                  'Guide Teal',
             },
           ),
         ),
@@ -307,6 +313,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == const Color(0xF03295C1) &&
@@ -426,7 +433,7 @@ void main() {
               dialogOkButtonLabel: 'OK ME',
               dialogOkButtonType: ColorPickerActionButtonType.outlined,
             ),
-            copyPasteBehavior: ColorPickerCopyPasteBehavior(
+            copyPasteBehavior: const ColorPickerCopyPasteBehavior(
               copyButton: true,
               pasteButton: true,
               copyTooltip: 'Copy ME',
@@ -463,10 +470,12 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
-              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
+                  'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
                   'Guide Purple Variant',
-              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
+                  'Guide Teal',
             },
           ),
         ),
@@ -476,6 +485,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == const Color(0xFA6200EE) &&
@@ -514,7 +524,7 @@ void main() {
                 dialogOkButtonType: ColorPickerActionButtonType.outlined,
               ) &&
           widget.copyPasteBehavior ==
-              ColorPickerCopyPasteBehavior(
+              const ColorPickerCopyPasteBehavior(
                 copyButton: true,
                 pasteButton: true,
                 copyTooltip: 'Copy ME',
@@ -616,7 +626,7 @@ void main() {
               dialogOkButtonLabel: 'OK ME',
               dialogOkButtonType: ColorPickerActionButtonType.outlined,
             ),
-            copyPasteBehavior: ColorPickerCopyPasteBehavior(
+            copyPasteBehavior: const ColorPickerCopyPasteBehavior(
               copyButton: true,
               pasteButton: true,
               copyTooltip: 'Copy ME',
@@ -653,10 +663,12 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
-              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
+                  'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
                   'Guide Purple Variant',
-              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
+                  'Guide Teal',
             },
           ),
         ),
@@ -666,6 +678,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.red.shade200 &&
@@ -704,7 +717,7 @@ void main() {
                 dialogOkButtonType: ColorPickerActionButtonType.outlined,
               ) &&
           widget.copyPasteBehavior ==
-              ColorPickerCopyPasteBehavior(
+              const ColorPickerCopyPasteBehavior(
                 copyButton: true,
                 pasteButton: true,
                 copyTooltip: 'Copy ME',
@@ -806,7 +819,7 @@ void main() {
               dialogOkButtonLabel: 'OK ME',
               dialogOkButtonType: ColorPickerActionButtonType.outlined,
             ),
-            copyPasteBehavior: ColorPickerCopyPasteBehavior(
+            copyPasteBehavior: const ColorPickerCopyPasteBehavior(
               copyButton: true,
               pasteButton: true,
               copyTooltip: 'Copy ME',
@@ -843,10 +856,12 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(Color(0xFF6200EE)): 'Guide Purple',
-              ColorTools.createPrimarySwatch(Color(0xFF3700B3)):
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
+                  'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
                   'Guide Purple Variant',
-              ColorTools.createAccentSwatch(Color(0xFF03DAC6)): 'Guide Teal',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
+                  'Guide Teal',
             },
           ),
         ),
@@ -856,6 +871,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.pinkAccent.shade700 &&
@@ -894,7 +910,7 @@ void main() {
                 dialogOkButtonType: ColorPickerActionButtonType.outlined,
               ) &&
           widget.copyPasteBehavior ==
-              ColorPickerCopyPasteBehavior(
+              const ColorPickerCopyPasteBehavior(
                 copyButton: true,
                 pasteButton: true,
                 copyTooltip: 'Copy ME',

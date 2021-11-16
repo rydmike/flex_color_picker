@@ -9,15 +9,15 @@ class ToolbarCopySwitch extends ConsumerWidget {
   const ToolbarCopySwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable toolbar COPY action button'),
-      value: watch(copyButtonPod).state,
-      onChanged: (bool value) => context.read(copyButtonPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(copyButtonPod),
+      onChanged: (bool value) => ref.read(copyButtonPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(copyButton: '
-          '${context.read(copyButtonPod).state}))',
+          '${ref.read(copyButtonPod)}))',
     );
   }
 }

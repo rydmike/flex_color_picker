@@ -11,109 +11,109 @@ class ColorPickerCard extends ConsumerWidget {
   const ColorPickerCard({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Card(
       elevation: 3,
       child: ColorPicker(
-        color: watch(cardPickerColorPod).state,
+        color: ref.watch(cardPickerColorPod),
         onColorChangeStart: (Color color) {
-          context.read(onColorChangeStartPod).state = color;
+          ref.read(onColorChangeStartPod.state).state = color;
         },
         onColorChanged: (Color color) {
-          context.read(cardPickerColorPod).state = color;
-          context.read(onColorChangedPod).state = color;
+          ref.read(cardPickerColorPod.state).state = color;
+          ref.read(onColorChangedPod.state).state = color;
         },
         onColorChangeEnd: (Color color) {
-          context.read(onColorChangeEndPod).state = color;
+          ref.read(onColorChangeEndPod.state).state = color;
         },
         onRecentColorsChanged: (List<Color> colors) {
-          context.read(cardRecentColorsPod).state = colors;
+          ref.read(cardRecentColorsPod.state).state = colors;
         },
-        crossAxisAlignment: watch(alignmentPod).state,
-        padding: EdgeInsets.all(watch(paddingPod).state),
-        enableShadesSelection: watch(enableShadesSelectionPod).state,
-        includeIndex850: watch(includeIndex850Pod).state,
-        enableOpacity: watch(enableOpacityPod).state,
-        opacityTrackHeight: watch(opacityTrackHeightPod).state,
-        opacityTrackWidth: watch(opacityTrackWidthPod).state,
-        opacityThumbRadius: watch(opacityThumbRadiusPod).state,
+        crossAxisAlignment: ref.watch(alignmentPod),
+        padding: EdgeInsets.all(ref.watch(paddingPod)),
+        enableShadesSelection: ref.watch(enableShadesSelectionPod),
+        includeIndex850: ref.watch(includeIndex850Pod),
+        enableOpacity: ref.watch(enableOpacityPod),
+        opacityTrackHeight: ref.watch(opacityTrackHeightPod),
+        opacityTrackWidth: ref.watch(opacityTrackWidthPod),
+        opacityThumbRadius: ref.watch(opacityThumbRadiusPod),
         copyPasteBehavior: ColorPickerCopyPasteBehavior(
-          ctrlC: watch(ctrlCPod).state,
-          ctrlV: watch(ctrlVPod).state,
-          copyButton: watch(copyButtonPod).state,
-          pasteButton: watch(pasteButtonPod).state,
-          copyFormat: watch(copyFormatPod).state,
-          longPressMenu: watch(longPressMenuPod).state,
-          secondaryMenu: watch(secondaryMenuPod).state,
+          ctrlC: ref.watch(ctrlCPod),
+          ctrlV: ref.watch(ctrlVPod),
+          copyButton: ref.watch(copyButtonPod),
+          pasteButton: ref.watch(pasteButtonPod),
+          copyFormat: ref.watch(copyFormatPod),
+          longPressMenu: ref.watch(longPressMenuPod),
+          secondaryMenu: ref.watch(secondaryMenuPod),
           secondaryOnDesktopLongOnDevice:
-              watch(secondaryDesktopOtherLongPod).state,
+              ref.watch(secondaryDesktopOtherLongPod),
           secondaryOnDesktopLongOnDeviceAndWeb:
-              watch(secondaryDesktopWebLongPod).state,
-          editFieldCopyButton: watch(editFieldCopyButtonPod).state,
-          parseShortHexCode: watch(parseShortHexCodePod).state,
-          editUsesParsedPaste: watch(editUsesParsedPastePod).state,
-          snackBarParseError: watch(snackbarParseErrorPod).state,
-          feedbackParseError: watch(feedbackParseErrorPod).state,
+              ref.watch(secondaryDesktopWebLongPod),
+          editFieldCopyButton: ref.watch(editFieldCopyButtonPod),
+          parseShortHexCode: ref.watch(parseShortHexCodePod),
+          editUsesParsedPaste: ref.watch(editUsesParsedPastePod),
+          snackBarParseError: ref.watch(snackbarParseErrorPod),
+          feedbackParseError: ref.watch(feedbackParseErrorPod),
         ),
-        width: watch(sizePod).state,
-        height: watch(sizePod).state,
-        spacing: watch(spacingPod).state,
-        runSpacing: watch(runSpacingPod).state,
-        elevation: watch(elevationPod).state,
-        hasBorder: watch(hasBorderPod).state,
-        borderRadius: watch(borderRadiusPod).state,
-        columnSpacing: watch(columnSpacingPod).state,
-        wheelDiameter: watch(wheelDiameterPod).state,
-        wheelWidth: watch(wheelWidthPod).state,
-        wheelHasBorder: watch(wheelHasBorderPod).state,
-        enableTooltips: watch(enableTooltipsPod).state,
-        pickersEnabled: watch(pickersEnabledPod).state,
+        width: ref.watch(sizePod),
+        height: ref.watch(sizePod),
+        spacing: ref.watch(spacingPod),
+        runSpacing: ref.watch(runSpacingPod),
+        elevation: ref.watch(elevationPod),
+        hasBorder: ref.watch(hasBorderPod),
+        borderRadius: ref.watch(borderRadiusPod),
+        columnSpacing: ref.watch(columnSpacingPod),
+        wheelDiameter: ref.watch(wheelDiameterPod),
+        wheelWidth: ref.watch(wheelWidthPod),
+        wheelHasBorder: ref.watch(wheelHasBorderPod),
+        enableTooltips: ref.watch(enableTooltipsPod),
+        pickersEnabled: ref.watch(pickersEnabledPod),
         selectedPickerTypeColor: colorScheme.primary,
-        title: watch(showTitlePod).state
+        title: ref.watch(showTitlePod)
             ? Text(
                 'ColorPicker',
                 style: Theme.of(context).textTheme.headline6,
               )
             : null,
-        heading: watch(showHeadingPod).state
+        heading: ref.watch(showHeadingPod)
             ? Text(
                 'Select color',
                 style: Theme.of(context).textTheme.headline5,
               )
             : null,
-        subheading: watch(showSubheadingPod).state
+        subheading: ref.watch(showSubheadingPod)
             ? Text(
                 'Select color shade',
                 style: Theme.of(context).textTheme.subtitle1,
               )
             : null,
-        wheelSubheading: watch(showSubheadingPod).state
+        wheelSubheading: ref.watch(showSubheadingPod)
             ? Text(
                 'Selected color and its color swatch',
                 style: Theme.of(context).textTheme.subtitle1,
               )
             : null,
-        opacitySubheading: watch(showOpacitySubheadingPod).state
+        opacitySubheading: ref.watch(showOpacitySubheadingPod)
             ? Text(
                 'Opacity',
                 style: Theme.of(context).textTheme.subtitle1,
               )
             : null,
-        recentColorsSubheading: watch(showRecentSubheadingPod).state
+        recentColorsSubheading: ref.watch(showRecentSubheadingPod)
             ? Text(
                 'Recent colors',
                 style: Theme.of(context).textTheme.subtitle1,
               )
             : null,
-        showMaterialName: watch(showMaterialNamePod).state,
-        showColorName: watch(showColorNamePod).state,
-        showColorCode: watch(showColorCodePod).state,
-        colorCodeHasColor: watch(colorCodeHasColorPod).state,
-        colorCodeReadOnly: watch(colorCodeReadOnlyPod).state,
-        showColorValue: watch(showColorValuePod).state,
-        showRecentColors: watch(showRecentColorsPod).state,
-        recentColors: watch(cardRecentColorsPod).state,
+        showMaterialName: ref.watch(showMaterialNamePod),
+        showColorName: ref.watch(showColorNamePod),
+        showColorCode: ref.watch(showColorCodePod),
+        colorCodeHasColor: ref.watch(colorCodeHasColorPod),
+        colorCodeReadOnly: ref.watch(colorCodeReadOnlyPod),
+        showColorValue: ref.watch(showColorValuePod),
+        showRecentColors: ref.watch(showRecentColorsPod),
+        recentColors: ref.watch(cardRecentColorsPod),
         maxRecentColors: 8,
         customColorSwatchesAndNames: App.colorsNameMap,
         colorCodeTextStyle: Theme.of(context).textTheme.subtitle1,

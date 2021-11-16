@@ -9,21 +9,21 @@ class WheelWidthSlider extends ConsumerWidget {
   const WheelWidthSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(wheelWidth: '
-          '${context.read(wheelWidthPod).state.floor().toString()})',
+          '${ref.read(wheelWidthPod).floor().toString()})',
       child: ListTile(
         title: const Text('Color wheel width'),
         subtitle: Slider.adaptive(
           min: 4,
           max: 50,
           divisions: 50 - 4,
-          label: context.read(wheelWidthPod).state.floor().toString(),
-          value: watch(wheelWidthPod).state,
+          label: ref.read(wheelWidthPod).floor().toString(),
+          value: ref.watch(wheelWidthPod),
           onChanged: (double value) =>
-              context.read(wheelWidthPod).state = value,
+              ref.read(wheelWidthPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -35,7 +35,7 @@ class WheelWidthSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(wheelWidthPod).state.floor().toString(),
+                ref.read(wheelWidthPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

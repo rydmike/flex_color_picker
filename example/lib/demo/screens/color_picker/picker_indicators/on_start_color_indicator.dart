@@ -11,15 +11,15 @@ class OnStartColorIndicator extends ConsumerWidget {
   const OnStartColorIndicator({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final Color background = watch(onColorChangeStartPod).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Color background = ref.watch(onColorChangeStartPod);
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(onColorChangeStart: '
           '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
-        label: Text('Start ${watch(onColorChangeStartPod).state.hexAlpha}',
+        label: Text('Start ${ref.watch(onColorChangeStartPod).hexAlpha}',
             style: TextStyle(
                 color: AppTheme.getChipTextColor(background, isLight),
                 fontSize: 12)),

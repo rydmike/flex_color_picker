@@ -775,12 +775,12 @@ class ColorPicker extends StatefulWidget {
     /// be constrained by the screen size.
     bool useSafeArea = true,
 
-    /// Usage of [useRootNavigator] here is deprecated.
+    /// Usage of `useRootNavigator` here is deprecated.
     ///
-    /// The [useRootNavigator] argument is now respected on all Navigator
-    /// [pop] functions used in the [ColorPicker] widget itself and by
+    /// The `useRootNavigator` argument is now respected on all Navigator
+    /// pop functions used in the [ColorPicker] widget itself and by
     /// built-in dialogs used by the [ColorPicker]. In order to support this,
-    /// the current [useRootNavigator] property in the
+    /// the current `useRootNavigator` property in the
     /// [ColorPicker.showPickerDialog] and in the function
     /// [showColorPickerDialog] had to be deprecated.
     ///
@@ -798,9 +798,9 @@ class ColorPicker extends StatefulWidget {
     /// `ColorPickerActionButtons(useRootNavigator: false)` in
     /// `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
     @Deprecated(
-      'This property is no longer set here and has no function if assigned here. '
-      'From version 2.1.0 it must be defined via same property in configuration '
-      'class ColorPickerActionButtons(useRootNavigator).',
+      'This property is no longer set here and has no function if assigned '
+      'here. From version 2.1.0 it must be defined via same property in '
+      'configuration class ColorPickerActionButtons(useRootNavigator).',
     )
         bool useRootNavigator = true,
 
@@ -1149,7 +1149,7 @@ class _ColorPickerState extends State<ColorPicker> {
     if (widget.customColorSwatchesAndNames.toString() !=
             oldWidget.customColorSwatchesAndNames.toString() ||
         !mapEquals(widget.pickersEnabled, oldWidget.pickersEnabled)) {
-      // TODO: Investigate the mapEquals issue.
+      // TODO(rydmike): Investigate the mapEquals issue.
       // In above un-equality check, the mapEquals, or with map != operator,
       // does not work if you provide a map made with createPrimarySwatch or
       // createAccentSwatch. It should, not sure why it does not. The Wheel
@@ -1366,15 +1366,6 @@ class _ColorPickerState extends State<ColorPicker> {
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
             const TextStyle();
 
-    // TODO: Remove these comments
-    // final TargetPlatform _platform = Theme.of(context).platform;
-    // final bool _useLongPress = widget.copyPasteBehavior.longPressMenu ||
-    //     (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
-    //         !isDesktop(_platform));
-    // final bool _useSecondaryClick = widget.copyPasteBehavior.secondaryMenu ||
-    //     (widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice &&
-    //         isDesktop(_platform));
-
     // The logic below is used to determine if we will have a context menu
     // present at all in the Widget tree.
     final bool _useContextMenu = widget.copyPasteBehavior.longPressMenu ||
@@ -1412,9 +1403,7 @@ class _ColorPickerState extends State<ColorPicker> {
               // call onColorChangeEnd event with the selected color.
               if (_onWheel) {
                 // But only if there is call back for it.
-                if (widget.onColorChangeEnd != null) {
-                  widget.onColorChangeEnd!(_selectedColor);
-                }
+                widget.onColorChangeEnd?.call(_selectedColor);
                 // We set onWheel to false as well, as we are no longer on
                 // the wheel and we handled the event.
                 setState(() {
@@ -1568,10 +1557,8 @@ class _ColorPickerState extends State<ColorPicker> {
                       shouldUpdate: _wheelShouldUpdate,
                       shouldRequestsFocus: _wheelShouldFocus,
                       onChangeStart: (Color color) {
-                        if (widget.onColorChangeStart != null) {
-                          widget
-                              .onColorChangeStart!(color.withOpacity(_opacity));
-                        }
+                        widget.onColorChangeStart
+                            ?.call(color.withOpacity(_opacity));
                         _addToRecentColors(color.withOpacity(_opacity));
                       },
                       onChanged: (Color color) {
@@ -1586,9 +1573,9 @@ class _ColorPickerState extends State<ColorPicker> {
                         widget.onColorChanged(_selectedColor);
                       },
                       onChangeEnd: (Color color) {
-                        if (widget.onColorChangeEnd != null) {
-                          widget.onColorChangeEnd!(color.withOpacity(_opacity));
-                        }
+                        widget.onColorChangeEnd?.call(
+                          color.withOpacity(_opacity),
+                        );
                       },
                       onWheel: (bool value) {
                         setState(() {
@@ -1760,9 +1747,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           enableTooltips: widget.enableTooltips,
                           shouldUpdate: _editShouldUpdate,
                           onColorChanged: (Color color) {
-                            if (widget.onColorChangeStart != null) {
-                              widget.onColorChangeStart!(_selectedColor);
-                            }
+                            widget.onColorChangeStart?.call(_selectedColor);
                             setState(() {
                               _selectedColor = color.withOpacity(_opacity);
                               // Color changed outside wheel picker, when the
@@ -1772,9 +1757,7 @@ class _ColorPickerState extends State<ColorPicker> {
                               _updateActiveSwatch();
                             });
                             widget.onColorChanged(_selectedColor);
-                            if (widget.onColorChangeEnd != null) {
-                              widget.onColorChangeEnd!(_selectedColor);
-                            }
+                            widget.onColorChangeEnd?.call(_selectedColor);
                             _addToRecentColors(color);
                           },
                           onEditFocused: (bool editInFocus) {
@@ -1848,9 +1831,7 @@ class _ColorPickerState extends State<ColorPicker> {
     bool findPicker = false,
   }) {
     // Call start callback with current selectedColor before change.
-    if (widget.onColorChangeStart != null) {
-      widget.onColorChangeStart!(_selectedColor);
-    }
+    widget.onColorChangeStart?.call(_selectedColor);
     // Add the previously selected color to recent colors.
     _addToRecentColors(_selectedColor);
     // update the state of the selectedColor to the new selected color.
@@ -1890,9 +1871,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // Call the change call back with the new color.
     widget.onColorChanged(_selectedColor);
     // We have and end callback, call it with the new color.
-    if (widget.onColorChangeEnd != null) {
-      widget.onColorChangeEnd!(_selectedColor);
-    }
+    widget.onColorChangeEnd?.call(_selectedColor);
   }
 
   void _addToRecentColors(Color color) {
@@ -1911,9 +1890,7 @@ class _ColorPickerState extends State<ColorPicker> {
       _recentColors = <Color>[color, ..._recentColors];
     });
     // Call callback for the handling recent colors, if there is one.
-    if (widget.onRecentColorsChanged != null) {
-      widget.onRecentColorsChanged!(_recentColors);
-    }
+    widget.onRecentColorsChanged?.call(_recentColors);
   }
 
   // Handle the keyboard events from the RawKeyboardListener.
@@ -1986,9 +1963,7 @@ class _ColorPickerState extends State<ColorPicker> {
         .toColorShortMaybeNull(widget.copyPasteBehavior.parseShortHexCode);
     // If result is not null, we got a valid color.
     if (clipColor != null) {
-      if (widget.onColorChangeStart != null) {
-        widget.onColorChangeStart!(_selectedColor);
-      }
+      widget.onColorChangeStart?.call(_selectedColor);
       // Add the previous selected color to recent colors
       _addToRecentColors(_selectedColor);
       // This wait for 100ms feels a bit like a hack, but if not done, the
@@ -2019,13 +1994,11 @@ class _ColorPickerState extends State<ColorPicker> {
       });
       // Callback with new color
       widget.onColorChanged(_selectedColor);
-      if (widget.onColorChangeEnd != null) {
-        widget.onColorChangeEnd!(_selectedColor);
-      }
+      widget.onColorChangeEnd?.call(_selectedColor);
     }
     // ELSE FOR: Clipboard could not parsed to a Color()
     else {
-      // TODO: Improve feedback/sound when it can be done with SDK features.
+      // TODO(rydmike): Improve sound when it can be done with SDK features.
       // This is a nice idea, but it does not do much on most platforms.
       // Would just like to get a nice "error bleep" sound on all platforms
       // without any plugin by using SDK only, but not doable, bummer.

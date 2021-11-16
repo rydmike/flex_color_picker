@@ -9,18 +9,18 @@ class ParseShortHexCodeSwitch extends ConsumerWidget {
   const ParseShortHexCodeSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Parse 3-char code as WEB 3-char hex RGB format'),
       subtitle: const Text('Applies to both paste action and color '
           'code entry.'),
-      value: watch(parseShortHexCodePod).state,
+      value: ref.watch(parseShortHexCodePod),
       onChanged: (bool value) =>
-          context.read(parseShortHexCodePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(parseShortHexCodePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(parseShortHexCode: '
-          '${context.read(parseShortHexCodePod).state}))',
+          '${ref.read(parseShortHexCodePod)}))',
     );
   }
 }

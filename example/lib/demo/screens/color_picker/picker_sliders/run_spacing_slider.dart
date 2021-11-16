@@ -9,20 +9,20 @@ class RunSpacingSlider extends ConsumerWidget {
   const RunSpacingSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(runSpacing: '
-          '${context.read(runSpacingPod).state.floor().toString()})',
+          '${ref.read(runSpacingPod).floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item run spacing'),
         subtitle: Slider.adaptive(
             max: 25,
             divisions: 25,
-            label: context.read(runSpacingPod).state.floor().toString(),
-            value: watch(runSpacingPod).state,
+            label: ref.read(runSpacingPod).floor().toString(),
+            value: ref.watch(runSpacingPod),
             onChanged: (double value) =>
-                context.read(runSpacingPod).state = value),
+                ref.read(runSpacingPod.state).state = value),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
           child: Column(
@@ -33,7 +33,7 @@ class RunSpacingSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(runSpacingPod).state.floor().toString(),
+                ref.read(runSpacingPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

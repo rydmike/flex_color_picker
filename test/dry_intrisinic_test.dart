@@ -14,16 +14,15 @@ void main() {
     testWidgets('DINT1.1: Finds DryIntrinsicWidth',
         (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget(
-          widget: DryIntrinsicWidth(
-              key: testKey, child: const Text('HELLO WORLD'))));
+          widget: DryIntrinsicWidth(key: testKey, child: Text('HELLO WORLD'))));
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
     });
     testWidgets('DINT1.2: Finds DryIntrinsicHeight',
         (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget(
-          widget: DryIntrinsicHeight(
-              key: testKey, child: const Text('HELLO WORLD'))));
+          widget:
+              DryIntrinsicHeight(key: testKey, child: Text('HELLO WORLD'))));
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
     });

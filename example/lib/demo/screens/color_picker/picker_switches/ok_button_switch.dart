@@ -9,16 +9,16 @@ class OkButtonSwitch extends ConsumerWidget {
   const OkButtonSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Dialog toolbar has OK button'),
       subtitle: const Text('Use API to change icon and theme the button.'),
-      value: watch(okButtonPod).state,
-      onChanged: (bool value) => context.read(okButtonPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(okButtonPod),
+      onChanged: (bool value) => ref.read(okButtonPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(okButton: '
-          '${context.read(okButtonPod).state}))',
+          '${ref.read(okButtonPod)}))',
     );
   }
 }

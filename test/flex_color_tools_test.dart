@@ -227,14 +227,14 @@ void main() {
   //
   // Test no material name colors
   group('Verify no material name color return values', () {
-    final Color m1 = Color(0xFF132B80);
+    const Color m1 = Color(0xFF132B80);
     test('Test that color 0xFF132B80 materialNameAndCode has no Material name',
         () {
       expect(ColorTools.materialNameAndCode(m1), equals('(0xFF132B80)'));
     });
     test(
-        'Test that color 0xFF132B80 materialNameAndARGBCode has no Material name',
-        () {
+        'Test that color 0xFF132B80 materialNameAndARGBCode '
+        'has no Material name', () {
       expect(ColorTools.materialNameAndARGBCode(m1), equals('(FF132B80)'));
     });
   });
@@ -265,12 +265,12 @@ void main() {
     for (final ColorSwatch<Object> swatch in swatches) {
       for (final int i in index) {
         if (swatch[i] != null) {
-          test('Verify that ${swatch} contains color ${swatch[i]}[$i]', () {
+          test('Verify that $swatch contains color ${swatch[i]}[$i]', () {
             expect(ColorTools.swatchContainsColor(swatch, swatch[i]!), true);
           });
           test(
-              'Verify that ${swatch} does not contain color ${swatch[i]!.withAlpha(0xF0)}[$i]',
-              () {
+              'Verify that $swatch does not contain '
+              'color ${swatch[i]!.withAlpha(0xF0)}[$i]', () {
             expect(
                 ColorTools.swatchContainsColor(
                     swatch, swatch[i]!.withAlpha(0xF0)),

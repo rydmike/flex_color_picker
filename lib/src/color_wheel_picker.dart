@@ -142,7 +142,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   // Get the radius of the wheel, it is half of the shortest side of the
   // surrounding rectangle minus the defined width of the color wheel.
   double wheelRadius(Size size) =>
-      math.min(size.width, size.height).toDouble() / 2 - widget.wheelWidth;
+      math.min(size.width, size.height) / 2 - widget.wheelWidth;
   double squareRadius(double radius) =>
       (radius - widget.wheelWidth / 2) / math.sqrt(2);
 
@@ -184,7 +184,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
           _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
 
       // If a start callback was given, call it with the start color.
-      if (widget.onChangeStart != null) widget.onChangeStart!(widget.color);
+      widget.onChangeStart?.call(widget.color);
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
       widget.onChanged(HSVColor.fromAHSV(
@@ -197,7 +197,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // Else, we did the onStart on the color wheel
     } else {
       // If a start callback given, call it with the start color.
-      if (widget.onChangeStart != null) widget.onChangeStart!(widget.color);
+      widget.onChangeStart?.call(widget.color);
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(_vector);
       // Convert the color to normal RGB value before returning it via callback.
@@ -262,7 +262,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
     // We are ending the dragging operation, call the onChangeEnd callback
     // with the color we ended up with.
-    if (widget.onChangeEnd != null) widget.onChangeEnd!(widget.color);
+    widget.onChangeEnd?.call(widget.color);
     // We have to call onChanged once more with final value as well.
     widget.onChanged(widget.color);
   }
@@ -309,7 +309,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
             cursor: MaterialStateMouseCursor.clickable,
             child: Stack(
               fit: StackFit.expand,
-              children: [
+              children: <Widget>[
                 RepaintBoundary(
                   child: CustomPaint(
                     painter: _ShadePainter(
@@ -374,7 +374,7 @@ class _ShadePainter extends CustomPainter {
   final double wheelWidth;
 
   static double wheelRadius(Size size, double wheelWidth) =>
-      math.min(size.width, size.height).toDouble() / 2 - wheelWidth / 2;
+      math.min(size.width, size.height) / 2 - wheelWidth / 2;
   static double squareRadius(double radius, double wheelWidth) =>
       (radius - wheelWidth / 2) / math.sqrt(2);
 
@@ -448,7 +448,7 @@ class _WheelPainter extends CustomPainter {
   final double wheelWidth;
 
   static double wheelRadius(Size size, double wheelWidth) =>
-      math.min(size.width, size.height).toDouble() / 2 - wheelWidth / 2;
+      math.min(size.width, size.height) / 2 - wheelWidth / 2;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -462,8 +462,7 @@ class _WheelPainter extends CustomPainter {
     // Responsive views might force the Size to become a rectangle, thus
     // creating an ellipse, so we/ keep it as a circle by always using the
     // shortest side in the surrounding rectangle to make a square.
-    final double _shortestRectSide =
-        math.min(size.width, size.height).toDouble();
+    final double _shortestRectSide = math.min(size.width, size.height);
 
     final Rect rectCircle = Rect.fromCenter(
         center: _center,
@@ -529,7 +528,7 @@ class _ShadeThumbPainter extends CustomPainter {
   final double wheelWidth;
 
   static double wheelRadius(Size size, double wheelWidth) =>
-      math.min(size.width, size.height).toDouble() / 2 - wheelWidth / 2;
+      math.min(size.width, size.height) / 2 - wheelWidth / 2;
   static double squareRadius(double radius, double wheelWidth) =>
       (radius - wheelWidth / 2) / math.sqrt(2);
 
@@ -584,7 +583,7 @@ class _WheelThumbPainter extends CustomPainter {
   final double wheelWidth;
 
   static double wheelRadius(Size size, double wheelWidth) =>
-      math.min(size.width, size.height).toDouble() / 2 - wheelWidth / 2;
+      math.min(size.width, size.height) / 2 - wheelWidth / 2;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -10,7 +10,7 @@ class MetaPickerColorIndicator extends ConsumerWidget {
   const MetaPickerColorIndicator({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       title: const Text('Control the ColorPicker below'),
       subtitle: Wrap(
@@ -27,22 +27,21 @@ class MetaPickerColorIndicator extends ConsumerWidget {
         ],
       ),
       trailing: ColorIndicator(
-        height: watch(sizePod).state,
-        width: watch(sizePod).state,
-        borderRadius: watch(borderRadiusPod).state,
-        elevation: watch(elevationPod).state,
-        color: watch(cardPickerColorPod).state,
-        hasBorder: watch(hasBorderPod).state,
+        height: ref.watch(sizePod),
+        width: ref.watch(sizePod),
+        borderRadius: ref.watch(borderRadiusPod),
+        elevation: ref.watch(elevationPod),
+        color: ref.watch(cardPickerColorPod),
+        hasBorder: ref.watch(hasBorderPod),
         onSelectFocus: false,
         onSelect: () async {
-          final Color colorBeforeDialog =
-              context.read(cardPickerColorPod).state;
+          final Color colorBeforeDialog = ref.read(cardPickerColorPod);
           if (!(await colorPickerDialog(
             context,
-            watch,
+            ref,
             cardRemote: true,
           ))) {
-            context.read(cardPickerColorPod).state = colorBeforeDialog;
+            ref.read(cardPickerColorPod.state).state = colorBeforeDialog;
           }
         },
       ),
@@ -59,18 +58,18 @@ class ColorControlBox extends ConsumerWidget {
   final Color color;
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ColorIndicator(
-      height: watch(sizePod).state * 0.8,
-      width: watch(sizePod).state * 0.8,
-      borderRadius: watch(borderRadiusPod).state * 0.8,
-      elevation: watch(elevationPod).state,
-      color: watch(enableOpacityPod).state ? color : color.withAlpha(0xFF),
-      hasBorder: watch(hasBorderPod).state,
+      height: ref.watch(sizePod) * 0.8,
+      width: ref.watch(sizePod) * 0.8,
+      borderRadius: ref.watch(borderRadiusPod) * 0.8,
+      elevation: ref.watch(elevationPod),
+      color: ref.watch(enableOpacityPod) ? color : color.withAlpha(0xFF),
+      hasBorder: ref.watch(hasBorderPod),
       onSelectFocus: false,
-      isSelected: watch(cardPickerColorPod).state == color,
+      isSelected: ref.watch(cardPickerColorPod) == color,
       onSelect: () {
-        context.read(cardPickerColorPod).state = color;
+        ref.read(cardPickerColorPod.state).state = color;
       },
     );
   }

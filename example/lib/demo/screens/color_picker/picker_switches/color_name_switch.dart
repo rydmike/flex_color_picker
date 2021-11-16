@@ -9,16 +9,16 @@ class ColorNameSwitch extends ConsumerWidget {
   const ColorNameSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Name that color'),
       subtitle: const Text('Give selected color a name based on closest '
           'matching color in a lookup with 1566 color names.'),
-      value: watch(showColorNamePod).state,
-      onChanged: (bool value) => context.read(showColorNamePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(showColorNamePod),
+      onChanged: (bool value) => ref.read(showColorNamePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showColorName: '
-          '${context.read(showColorNamePod).state})',
+          '${ref.read(showColorNamePod)})',
     );
   }
 }

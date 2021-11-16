@@ -9,17 +9,17 @@ class MaterialNameSwitch extends ConsumerWidget {
   const MaterialNameSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Material color name'),
       subtitle: const Text('If selected color is a standard Material color, '
           'its name is shown together with its shade index.'),
-      value: watch(showMaterialNamePod).state,
+      value: ref.watch(showMaterialNamePod),
       onChanged: (bool value) =>
-          context.read(showMaterialNamePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(showMaterialNamePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showMaterialName: '
-          '${context.read(showMaterialNamePod).state})',
+          '${ref.read(showMaterialNamePod)})',
     );
   }
 }

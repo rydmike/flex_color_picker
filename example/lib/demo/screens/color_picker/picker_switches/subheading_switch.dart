@@ -9,15 +9,16 @@ class SubheadingSwitch extends ConsumerWidget {
   const SubheadingSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Shades selection subheading'),
       subtitle: const Text('You can provide your own subheading widget, if '
           'it is null there is no sub heading.'),
-      value: watch(showSubheadingPod).state,
-      onChanged: (bool value) => context.read(showSubheadingPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip: context.read(showSubheadingPod).state
+      value: ref.watch(showSubheadingPod),
+      onChanged: (bool value) =>
+          ref.read(showSubheadingPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: ref.read(showSubheadingPod)
           ? "ColorPicker(subheading: Text('Select color shade'))"
           : 'ColorPicker(subheading: null)',
     );

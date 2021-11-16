@@ -9,21 +9,21 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
   const OpacityThumbRadiusSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityThumbRadius: '
-          '${context.read(opacityThumbRadiusPod).state.floor().toString()})',
+          '${ref.read(opacityThumbRadiusPod).floor().toString()})',
       child: ListTile(
         title: const Text('Opacity slider thumb radius'),
         subtitle: Slider.adaptive(
           min: 12,
           max: 30,
           divisions: 30 - 12,
-          label: context.read(opacityThumbRadiusPod).state.floor().toString(),
-          value: watch(opacityThumbRadiusPod).state,
+          label: ref.read(opacityThumbRadiusPod).floor().toString(),
+          value: ref.watch(opacityThumbRadiusPod),
           onChanged: (double value) =>
-              context.read(opacityThumbRadiusPod).state = value,
+              ref.read(opacityThumbRadiusPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -35,7 +35,7 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(opacityThumbRadiusPod).state.floor().toString(),
+                ref.read(opacityThumbRadiusPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

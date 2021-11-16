@@ -9,19 +9,19 @@ class SpacingSlider extends ConsumerWidget {
   const SpacingSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(spacing: '
-          '${context.read(spacingPod).state.floor().toString()})',
+          '${ref.read(spacingPod).floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item spacing'),
         subtitle: Slider.adaptive(
           max: 25,
           divisions: 25,
-          label: context.read(spacingPod).state.floor().toString(),
-          value: watch(spacingPod).state,
-          onChanged: (double value) => context.read(spacingPod).state = value,
+          label: ref.read(spacingPod).floor().toString(),
+          value: ref.watch(spacingPod),
+          onChanged: (double value) => ref.read(spacingPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -33,7 +33,7 @@ class SpacingSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(spacingPod).state.floor().toString(),
+                ref.read(spacingPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

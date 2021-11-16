@@ -9,17 +9,17 @@ class CloseIsLastSwitch extends ConsumerWidget {
   const CloseIsLastSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Dialog toolbar CLOSE is last button'),
       subtitle: const Text('The CLOSE button is last, turn OFF to make OK '
           'button the last one in the toolbar.'),
-      value: watch(closeIsLastPod).state,
-      onChanged: (bool value) => context.read(closeIsLastPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(closeIsLastPod),
+      onChanged: (bool value) => ref.read(closeIsLastPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(closeIsLast: '
-          '${context.read(closeIsLastPod).state}))',
+          '${ref.read(closeIsLastPod)}))',
     );
   }
 }

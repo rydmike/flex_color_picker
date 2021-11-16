@@ -67,23 +67,23 @@ void main() {
     for (final int i in index) {
       if (Colors.grey[i] != null) {
         test(
-            'Verify that color ${Colors.grey[i]}[$i] is a shade of ${Colors.grey}',
-            () {
+            'Verify that color ${Colors.grey[i]}[$i] is a '
+            'shade of ${Colors.grey}', () {
           expect(isShadeOfMain(Colors.grey, Colors.grey[i]!, true), true);
         });
       }
     }
     test(
-        'Verify that color index 850 is NOT a shade of ${Colors.grey} when 850 disabled',
-        () {
+        'Verify that color index 850 is NOT a '
+        'shade of ${Colors.grey} when 850 disabled', () {
       expect(isShadeOfMain(Colors.grey, Colors.grey[850]!, false), false);
     });
 
     for (final int i in index) {
       if (Colors.blue[i] != null) {
         test(
-            'Verify that color ${Colors.blue[i]}[$i] is a shade of ${Colors.blue}',
-            () {
+            'Verify that color ${Colors.blue[i]}[$i] is a '
+            'shade of ${Colors.blue}', () {
           expect(isShadeOfMain(Colors.blue, Colors.blue[i]!, false), true);
         });
       }

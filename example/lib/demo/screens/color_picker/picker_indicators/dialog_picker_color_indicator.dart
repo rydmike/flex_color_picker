@@ -11,25 +11,25 @@ class DialogPickerColorIndicator extends ConsumerWidget {
   const DialogPickerColorIndicator({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       title: const Text('Click this color to update it from a dialog'),
       subtitle: Text(
-          '${ColorTools.materialNameAndARGBCode(watch(dialogPickerColorPod).state, colorSwatchNameMap: App.colorsNameMap)} '
-          'aka ${ColorTools.nameThatColor(watch(dialogPickerColorPod).state)}'),
+          '${ColorTools.materialNameAndARGBCode(ref.watch(dialogPickerColorPod), colorSwatchNameMap: App.colorsNameMap)} '
+          'aka ${ColorTools.nameThatColor(ref.watch(dialogPickerColorPod))}'),
       trailing: ColorIndicator(
-        height: watch(sizePod).state,
-        width: watch(sizePod).state,
-        borderRadius: watch(borderRadiusPod).state,
-        elevation: watch(elevationPod).state,
-        color: watch(dialogPickerColorPod).state,
-        hasBorder: watch(hasBorderPod).state,
+        height: ref.watch(sizePod),
+        width: ref.watch(sizePod),
+        borderRadius: ref.watch(borderRadiusPod),
+        elevation: ref.watch(elevationPod),
+        color: ref.watch(dialogPickerColorPod),
+        hasBorder: ref.watch(hasBorderPod),
         onSelectFocus: false,
         onSelect: () async {
           final Color colorBeforeDialog =
-              context.read(dialogPickerColorPod).state;
-          if (!(await colorPickerDialog(context, watch))) {
-            context.read(dialogPickerColorPod).state = colorBeforeDialog;
+              ref.read(dialogPickerColorPod.state).state;
+          if (!(await colorPickerDialog(context, ref))) {
+            ref.read(dialogPickerColorPod.state).state = colorBeforeDialog;
           }
         },
       ),

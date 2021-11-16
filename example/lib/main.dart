@@ -25,9 +25,7 @@ class _ColorPickerDemoState extends State<ColorPickerDemo> {
       debugShowCheckedModeBanner: false,
       title: 'ColorPicker',
       theme: ThemeData.from(colorScheme: const ColorScheme.highContrastLight())
-          .copyWith(
-              scaffoldBackgroundColor: Colors.grey[50],
-              appBarTheme: const AppBarTheme(brightness: Brightness.dark)),
+          .copyWith(scaffoldBackgroundColor: Colors.grey[50]),
       darkTheme:
           ThemeData.from(colorScheme: const ColorScheme.highContrastDark()),
       themeMode: themeMode,

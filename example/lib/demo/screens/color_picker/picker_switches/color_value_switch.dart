@@ -9,16 +9,17 @@ class ColorValueSwitch extends ConsumerWidget {
   const ColorValueSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Color code integer value'),
       subtitle: const Text('Show color integer value, that can be painted and '
           'copied. Typically OFF, usable as a dev feature.'),
-      value: watch(showColorValuePod).state,
-      onChanged: (bool value) => context.read(showColorValuePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(showColorValuePod),
+      onChanged: (bool value) =>
+          ref.read(showColorValuePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showColorValue: '
-          '${context.read(showColorValuePod).state})',
+          '${ref.read(showColorValuePod)})',
     );
   }
 }

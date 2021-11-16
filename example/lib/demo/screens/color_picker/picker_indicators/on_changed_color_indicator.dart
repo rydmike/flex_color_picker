@@ -11,11 +11,11 @@ class OnChangedColorIndicator extends ConsumerWidget {
   const OnChangedColorIndicator({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final Color background = watch(onColorChangedPod).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Color background = ref.watch(onColorChangedPod);
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(onColorChanged: '
           '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(

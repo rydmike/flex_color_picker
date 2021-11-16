@@ -9,15 +9,15 @@ class HasBorderSwitch extends ConsumerWidget {
   const HasBorderSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Border around color pick items'),
       subtitle: const Text('With the API you can also adjust the '
           'border color.'),
-      value: watch(hasBorderPod).state,
-      onChanged: (bool value) => context.read(hasBorderPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip: 'ColorPicker(hasBorder: ${context.read(hasBorderPod).state})',
+      value: ref.watch(hasBorderPod),
+      onChanged: (bool value) => ref.read(hasBorderPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: 'ColorPicker(hasBorder: ${ref.read(hasBorderPod)})',
     );
   }
 }

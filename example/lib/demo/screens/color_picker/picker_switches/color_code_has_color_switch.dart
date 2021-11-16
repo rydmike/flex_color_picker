@@ -9,17 +9,17 @@ class ColorCodeHasColorSwitch extends ConsumerWidget {
   const ColorCodeHasColorSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Color code display and entry is colored'),
       subtitle: const Text('Turn ON to use selected color as field '
           'background color.'),
-      value: watch(colorCodeHasColorPod).state,
+      value: ref.watch(colorCodeHasColorPod),
       onChanged: (bool value) =>
-          context.read(colorCodeHasColorPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(colorCodeHasColorPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(colorCodeHasColor: '
-          '${context.read(colorCodeHasColorPod).state})',
+          '${ref.read(colorCodeHasColorPod)})',
     );
   }
 }

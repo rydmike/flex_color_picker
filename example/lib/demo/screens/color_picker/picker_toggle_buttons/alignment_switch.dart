@@ -8,15 +8,15 @@ class AlignmentSwitch extends ConsumerWidget {
   const AlignmentSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final CrossAxisAlignment alignment = watch(alignmentPod).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final CrossAxisAlignment alignment = ref.watch(alignmentPod);
     final List<bool> isSelected = <bool>[
       alignment == CrossAxisAlignment.start,
       alignment == CrossAxisAlignment.center,
       alignment == CrossAxisAlignment.end,
     ];
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(crossAxisAlignment:\n  $alignment})',
       child: ListTile(
         title: const Text('Content alignment'),
@@ -25,11 +25,11 @@ class AlignmentSwitch extends ConsumerWidget {
           isSelected: isSelected,
           onPressed: (int newIndex) {
             if (newIndex == 0) {
-              context.read(alignmentPod).state = CrossAxisAlignment.start;
+              ref.read(alignmentPod.state).state = CrossAxisAlignment.start;
             } else if (newIndex == 1) {
-              context.read(alignmentPod).state = CrossAxisAlignment.center;
+              ref.read(alignmentPod.state).state = CrossAxisAlignment.center;
             } else {
-              context.read(alignmentPod).state = CrossAxisAlignment.end;
+              ref.read(alignmentPod.state).state = CrossAxisAlignment.end;
             }
           },
           children: const <Widget>[

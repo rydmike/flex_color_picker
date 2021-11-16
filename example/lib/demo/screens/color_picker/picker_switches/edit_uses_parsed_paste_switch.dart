@@ -9,18 +9,18 @@ class EditUsesParsedPasteSwitch extends ConsumerWidget {
   const EditUsesParsedPasteSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Color code entry field uses paste parser'),
       subtitle: const Text('Turn OFF to use normal text field paste. '
           'This feature only applies to desktop keyboard shortcuts.'),
-      value: watch(editUsesParsedPastePod).state,
+      value: ref.watch(editUsesParsedPastePod),
       onChanged: (bool value) =>
-          context.read(editUsesParsedPastePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(editUsesParsedPastePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(editUsesParsedPaste: '
-          '${context.read(editUsesParsedPastePod).state}))',
+          '${ref.read(editUsesParsedPastePod)}))',
     );
   }
 }

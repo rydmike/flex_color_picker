@@ -44,14 +44,14 @@ class PickerDemoApp extends ConsumerWidget {
   const PickerDemoApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       checkerboardRasterCacheImages: false,
       title: 'FlexColorPicker',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: watch(themeModePod).state,
+      themeMode: ref.watch(themeModePod),
       home: const HomeScreen(),
     );
   }

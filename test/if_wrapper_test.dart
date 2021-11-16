@@ -41,7 +41,7 @@ class TestWidget extends StatelessWidget {
         ),
         body: IfWrapper(
           condition: wrap,
-          builder: (context, child) {
+          builder: (BuildContext context, Widget child) {
             return Center(child: child);
           },
           child: const Placeholder(),

@@ -9,20 +9,20 @@ class ColumnSpacingSlider extends ConsumerWidget {
   const ColumnSpacingSlider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(columnSpacing: '
-          '${context.read(columnSpacingPod).state.floor().toString()})',
+          '${ref.read(columnSpacingPod).floor().toString()})',
       child: ListTile(
         title: const Text('Vertical spacing between items'),
         subtitle: Slider.adaptive(
           max: 40,
           divisions: 40,
-          label: context.read(columnSpacingPod).state.floor().toString(),
-          value: watch(columnSpacingPod).state,
+          label: ref.read(columnSpacingPod).floor().toString(),
+          value: ref.watch(columnSpacingPod),
           onChanged: (double value) =>
-              context.read(columnSpacingPod).state = value,
+              ref.read(columnSpacingPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -34,7 +34,7 @@ class ColumnSpacingSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(columnSpacingPod).state.floor().toString(),
+                ref.read(columnSpacingPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

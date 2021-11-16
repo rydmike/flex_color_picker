@@ -9,16 +9,16 @@ class ColorCodeSwitch extends ConsumerWidget {
   const ColorCodeSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Color code display and entry'),
       subtitle: const Text('Show hex RGB value of the selected color. On the '
           'wheel picker you can also enter a HEX RGB value.'),
-      value: watch(showColorCodePod).state,
-      onChanged: (bool value) => context.read(showColorCodePod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(showColorCodePod),
+      onChanged: (bool value) => ref.read(showColorCodePod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showColorCode: '
-          '${context.read(showColorCodePod).state})',
+          '${ref.read(showColorCodePod)})',
     );
   }
 }

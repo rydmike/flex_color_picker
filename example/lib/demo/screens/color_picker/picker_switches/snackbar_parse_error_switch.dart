@@ -9,16 +9,16 @@ class SnackbarParseErrorSwitch extends ConsumerWidget {
   const SnackbarParseErrorSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Snackbar paste format error message'),
-      value: watch(snackbarParseErrorPod).state,
+      value: ref.watch(snackbarParseErrorPod),
       onChanged: (bool value) =>
-          context.read(snackbarParseErrorPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(snackbarParseErrorPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(snackBarParseError: '
-          '${context.read(snackbarParseErrorPod).state}))',
+          '${ref.read(snackbarParseErrorPod)}))',
     );
   }
 }

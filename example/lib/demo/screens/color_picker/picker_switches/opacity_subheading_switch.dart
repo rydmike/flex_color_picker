@@ -9,16 +9,16 @@ class OpacitySubheadingSwitch extends ConsumerWidget {
   const OpacitySubheadingSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Opacity slider subheading'),
       subtitle: const Text('You can provide your own subheading widget, if '
           'it is null there is no sub heading.'),
-      value: watch(showOpacitySubheadingPod).state,
+      value: ref.watch(showOpacitySubheadingPod),
       onChanged: (bool value) =>
-          context.read(showOpacitySubheadingPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
-      tooltip: context.read(showOpacitySubheadingPod).state
+          ref.read(showOpacitySubheadingPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
+      tooltip: ref.read(showOpacitySubheadingPod)
           ? '"ColorPicker(opacitySubheading: '
               "Text('Select opacity subheading shade'))"
           : 'ColorPicker(opacitySubheading: null)',

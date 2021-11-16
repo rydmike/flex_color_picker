@@ -9,16 +9,16 @@ class ControlCopySwitch extends ConsumerWidget {
   const ControlCopySwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Enable keyboard COPY shortcut'),
       subtitle: const Text('CMD-C on Apple, CTRL-C on other'),
-      value: watch(ctrlCPod).state,
-      onChanged: (bool value) => context.read(ctrlCPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(ctrlCPod),
+      onChanged: (bool value) => ref.read(ctrlCPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(ctrlC: '
-          '${context.read(ctrlCPod).state}))',
+          '${ref.read(ctrlCPod)}))',
     );
   }
 }

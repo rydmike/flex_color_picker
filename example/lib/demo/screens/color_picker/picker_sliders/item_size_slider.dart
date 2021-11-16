@@ -12,25 +12,25 @@ class ItemSizeSlider extends ConsumerWidget {
   static const double _pickItemMaxSize = 60;
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
-      condition: watch(enableTooltipsPod).state,
+      condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker('
-          'width: ${context.read(sizePod).state.floor().toString()}, '
-          ' height: ${context.read(sizePod).state.floor().toString()})',
+          'width: ${ref.read(sizePod).floor().toString()}, '
+          ' height: ${ref.read(sizePod).floor().toString()})',
       child: ListTile(
         title: const Text('Color picker item size'),
         subtitle: Slider.adaptive(
           min: _pickItemMinSize,
           max: _pickItemMaxSize,
           divisions: (_pickItemMaxSize - _pickItemMinSize).floor(),
-          label: context.read(sizePod).state.floor().toString(),
-          value: watch(sizePod).state,
+          label: ref.read(sizePod).floor().toString(),
+          value: ref.watch(sizePod.state).state,
           onChanged: (double value) {
-            if (value / 2 < context.read(borderRadiusPod).state) {
-              context.read(borderRadiusPod).state = value / 2;
+            if (value / 2 < ref.read(borderRadiusPod)) {
+              ref.read(borderRadiusPod.state).state = value / 2;
             }
-            context.read(sizePod).state = value;
+            ref.read(sizePod.state).state = value;
           },
         ),
         trailing: Padding(
@@ -43,7 +43,7 @@ class ItemSizeSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                context.read(sizePod).state.floor().toString(),
+                ref.read(sizePod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

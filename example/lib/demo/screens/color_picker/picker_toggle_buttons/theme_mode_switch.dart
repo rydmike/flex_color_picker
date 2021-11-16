@@ -8,8 +8,8 @@ class ThemeModeSwitch extends ConsumerWidget {
   const ThemeModeSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final ThemeMode themeMode = watch(themeModePod).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode themeMode = ref.watch(themeModePod);
     final List<bool> isSelected = <bool>[
       themeMode == ThemeMode.light,
       themeMode == ThemeMode.system,
@@ -26,11 +26,11 @@ class ThemeModeSwitch extends ConsumerWidget {
           }
         }
         if (newIndex == 0) {
-          context.read(themeModePod).state = ThemeMode.light;
+          ref.read(themeModePod.state).state = ThemeMode.light;
         } else if (newIndex == 1) {
-          context.read(themeModePod).state = ThemeMode.system;
+          ref.read(themeModePod.state).state = ThemeMode.system;
         } else {
-          context.read(themeModePod).state = ThemeMode.dark;
+          ref.read(themeModePod.state).state = ThemeMode.dark;
         }
       },
       children: const <Widget>[

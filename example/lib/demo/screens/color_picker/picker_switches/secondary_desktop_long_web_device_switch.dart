@@ -9,18 +9,18 @@ class SecondaryDesktopLongWebDeviceSwitch extends ConsumerWidget {
   const SecondaryDesktopLongWebDeviceSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Long press COPY-PASTE menu on Android/iOS/Web, '
           'right click on desktops'),
-      value: watch(secondaryDesktopWebLongPod).state,
+      value: ref.watch(secondaryDesktopWebLongPod),
       onChanged: (bool value) =>
-          context.read(secondaryDesktopWebLongPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+          ref.read(secondaryDesktopWebLongPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(\n'
           '    secondaryOnDesktopLongOnDeviceAndWeb: '
-          '${context.read(secondaryDesktopWebLongPod).state}))',
+          '${ref.read(secondaryDesktopWebLongPod)}))',
     );
   }
 }

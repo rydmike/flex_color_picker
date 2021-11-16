@@ -263,6 +263,30 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
                 ),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: fieldBorder,
+                ),
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: fieldBorder,
+                ),
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: fieldBorder,
+                ),
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: fieldBorder,
+                ),
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
             ),
             //
             onChanged: (String textColor) {

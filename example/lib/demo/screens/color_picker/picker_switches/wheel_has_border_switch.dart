@@ -9,16 +9,17 @@ class WheelHasBorderSwitch extends ConsumerWidget {
   const WheelHasBorderSwitch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Border around color wheel'),
       subtitle: const Text('With the API you can also adjust the '
           'border color'),
-      value: watch(wheelHasBorderPod).state,
-      onChanged: (bool value) => context.read(wheelHasBorderPod).state = value,
-      tooltipEnabled: watch(enableTooltipsPod).state,
+      value: ref.watch(wheelHasBorderPod),
+      onChanged: (bool value) =>
+          ref.read(wheelHasBorderPod.state).state = value,
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(wheelHasBorder: '
-          '${context.read(wheelHasBorderPod).state})',
+          '${ref.read(wheelHasBorderPod)})',
     );
   }
 }

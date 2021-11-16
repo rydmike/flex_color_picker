@@ -169,7 +169,7 @@ void main() {
     test(
         'CPCPB3.3: GIVEN two identical but different '
         'ColorPickerCopyPasteBehavior '
-        'object EXPECT them to be'
+        'object EXPECT them to '
         'be equal after an all null copyWith on 2nd one', () {
       expect(
           m2.copyWith(
@@ -243,7 +243,7 @@ void main() {
     test(
         'CPCPB3.5: GIVEN two identical but different '
         'ColorPickerCopyPasteBehavior '
-        'object EXPECT them to be'
+        'object EXPECT them to '
         'be equal after an equal copyWith', () {
       expect(
         m2.copyWith(

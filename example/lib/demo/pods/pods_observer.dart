@@ -8,20 +8,20 @@ import '../utils/keys.dart';
 /// providers and debugPrint changes to them in debug mode.
 class PodsObserver extends ProviderObserver {
   @override
-  void didUpdateProvider(
-      ProviderBase<dynamic, dynamic> provider, Object? newValue) {
-    // If it is one of the StateProviders that we are interested in,
-    // it will be of type StateController.
-    if (newValue is StateController) {
-      // If it is one that we have a named key for, we will store it in Hive.
+  void didUpdateProvider(ProviderBase<dynamic> provider, Object? previousValue,
+      Object? newValue, ProviderContainer container) {
+    // If it is a StateProvider we will save the value if...
+    if (provider is StateProvider) {
+      // If it is also one that we have a named key for.
       if (Keys.defaults.containsKey(provider.name)) {
         // Log the new value, just a debugPrint and in DebugMode builds only.
         if (kDebugMode) {
-          debugPrint('Pod: ${provider.name ?? provider.runtimeType} '
-              'value: ${newValue.state}');
+          debugPrint('HIVE PUT: ${provider.name ?? provider.runtimeType}\n'
+              '  new value: $newValue\n'
+              '  old value: $previousValue');
         }
         // Store the new value in our Hive box.
-        hiveStore.put(provider.name, newValue.state);
+        hiveStore.put(provider.name, newValue);
       }
     }
   }

@@ -25,6 +25,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate defaultWheel = (Widget widget) =>
           widget is ColorWheelPicker &&
           widget.color == Colors.blue &&
@@ -59,6 +60,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
+      // ignore: prefer_function_declarations_over_variables
       final WidgetPredicate defaultWheel = (Widget widget) =>
           widget is ColorWheelPicker &&
           widget.color == Colors.blue &&
