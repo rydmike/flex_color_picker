@@ -81,8 +81,6 @@ void showAppAboutDialog(BuildContext context) {
 /// An URL link TextSpan that contain an URL link that can be used as a
 /// working URL link text when using it in a [Text.rich] or lower
 /// level [RichText] widget.
-///
-/// This class was found in the Flutter Gallery app, including the comment below.
 class LinkTextSpan extends TextSpan {
   // Beware!
   // This class is only safe because the TapGestureRecognizer is not

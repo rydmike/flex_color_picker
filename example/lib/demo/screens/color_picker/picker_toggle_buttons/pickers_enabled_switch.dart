@@ -35,7 +35,7 @@ class PickersEnabledSwitch extends ConsumerWidget {
               isSelected: isSelected,
               onPressed: (int index) {
                 isSelected[index] = !isSelected[index];
-                // If 'Both' turned ON, then 'primary' and 'Accent' is turned OFF.
+                // If 'Both' turned ON, then 'primary' and 'Accent' is OFF.
                 if (index == 0 && isSelected[0]) {
                   isSelected[1] = false;
                   isSelected[2] = false;

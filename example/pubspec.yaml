@@ -27,7 +27,7 @@ dependencies:
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).
-  url_launcher: ^6.0.12
+  url_launcher: ^6.0.13
 
 dev_dependencies:
   flutter_test:

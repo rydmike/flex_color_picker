@@ -182,8 +182,8 @@ class AppTheme {
         minimumSize: minButtonSize,
       ));
 
-  /// The stadium rounded buttons generally need a bit more padding to look good,
-  /// adjust here to tune the padding for all of them globally in the app.
+  /// The stadium rounded buttons generally need a bit more padding to look
+  /// good, adjust here to tune the padding for all of them globally in the app.
   /// Currently using the default padding the old buttons had.
   static const EdgeInsets roundButtonPadding =
       EdgeInsets.symmetric(horizontal: 16, vertical: 8);

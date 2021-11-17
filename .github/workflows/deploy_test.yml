@@ -1,14 +1,14 @@
+# Not in active use (17.11.2021)
+#
 # This GitHub actions runs on a release, when it is published, created or edited.
 #  - Installs Dart and flutter
 #  - Uses Flutter beta channel for now.
 #  - Enables Flutter web
 #  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
-#    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
-#    as long as they are not also deprecated on stable.
+#  - Runs dart analyze, allows deprecation warnings.
 #  - Show outdated packages, just added for info.
-#  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
-#    dart format is not used.
+#  - Verify that dart format is used by all committed code, fails if not.
+#    Controversial but pub.dev penalizes you if dart format is not used.
 #  - Run all tests with coverage.
 #  - Upload code coverage output to Codecov for analysis.
 #  - Install linux rpl tool. It is used to automate the needed change of a line in index.html.
@@ -21,6 +21,8 @@ name: Deploy Web Test
 on:
   push:
     branches: [none]
+    paths-ignore:
+      - "**.md"
 # Edit and add other trigger options if an extra new Web deployment is needed.
 # Generally I only need a new deployment when I publish a new release, but I may want to trigger it on defaults:
 # prerelease or just an edit sometimes to test the workflow or a new build irl, these trigger types can be used then:
@@ -32,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Flutter and Dart SDK
-        uses: subosito/flutter-action@vv1.5.3
+        uses: subosito/flutter-action@v1.5.3
         with:
           channel: "stable"
       - name: Show Dart SDK version

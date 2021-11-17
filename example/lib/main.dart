@@ -101,6 +101,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             ListTile(
               title: const Text('Click this color to modify it in a dialog'),
               subtitle: Text(
+                // ignore: lines_longer_than_80_chars
                 '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
                 'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
               ),
@@ -126,6 +127,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             ListTile(
               title: const Text('Click to select a new color from a dialog'),
               subtitle: Text(
+                // ignore: lines_longer_than_80_chars
                 '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
                 'aka ${ColorTools.nameThatColor(dialogSelectColor)}',
               ),

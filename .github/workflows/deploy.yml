@@ -3,26 +3,28 @@
 #  - Uses Flutter beta channel for now.
 #  - Enables Flutter web
 #  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
-#    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
-#    as long as they are not also deprecated on stable.
+#  - Runs dart analyze, allows deprecation warnings.
 #  - Show outdated packages, just added for info.
-#  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
-#    dart format is not used.
+#  - Verify that dart format is used by all committed code, fails if not.
+#    Controversial but pub.dev penalizes you if dart format is not used.
 #  - Run all tests with coverage.
 #  - Upload code coverage output to Codecov for analysis.
-#  - Install linux rpl tool. It is used to automate the needed change of a line in index.html.
+#  - Removed the usage of install linux rpl tool, not needed when using
+#    the --base-href build flag, we can set the folder correct on build now.
 #  - Build the WEB demo app for FlexColorPicker.
 #    - Flutter clean.
 #    - Flutter build web app, in release mode and with CanvasKit renderer.
-#    - Use rpl to fix/modify the index.html file to give it the correct href deployment sub-folder.
 #    - Deploy the Web example to GitHub pages.
 name: Deploy Web
 on:
   push:
     branches: [none]
+    paths-ignore:
+      - "**.md"
   release:
     types: [published]
+    paths-ignore:
+      - "**.md"
 # Edit and add other trigger options if an extra new Web deployment is needed.
 # Generally I only need a new deployment when I publish a new release, but I may want to trigger it on defaults:
 # prerelease or just an edit sometimes to test the workflow or a new build irl, these trigger types can be used then:
@@ -67,10 +69,10 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
 
-      - name: Install rpl
-        run: sudo apt-get install rpl
+      # - name: Install rpl (Eliminated need with: --base-href "/flexcolorpicker/")
+      #  run: sudo apt-get install rpl
 
-      # Default Example Build
+      # Default Example - Make a test web build of it too, not deployed.
 
       - name: DEFAULT EXAMPLE START BUILD - Flutter clean before build
         run: flutter clean && cd example && flutter clean
@@ -84,10 +86,10 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
 
-      - name: WEB EXAMPLE FIX href URL reference before publish
-        run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
+      # - name: WEB EXAMPLE FIX href URL reference before publish (Eliminated need with: --base-href "/flexcolorpicker/")
+      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
 
       - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4

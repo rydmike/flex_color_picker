@@ -12,6 +12,8 @@ name: Test
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - "**.md"
 jobs:
   run_tests:
     name: Analyze and run all tests

@@ -2,8 +2,8 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
-## [2.2.0] - November 16, 2021
-* Fix style for color entry field, to always uses the intended fixed stadium style.
+## [2.2.0] - November 17, 2021
+* Fixed the style for color entry field, to always uses the intended fixed stadium style.
 * Updated dependencies for the web demo, big change was Riverpod to use v1.0.0.
 * Lint rule updates.
 * Bump Dart SDK requirement to 2.14.

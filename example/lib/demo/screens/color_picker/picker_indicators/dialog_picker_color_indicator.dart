@@ -15,6 +15,7 @@ class DialogPickerColorIndicator extends ConsumerWidget {
     return ListTile(
       title: const Text('Click this color to update it from a dialog'),
       subtitle: Text(
+          // ignore: lines_longer_than_80_chars
           '${ColorTools.materialNameAndARGBCode(ref.watch(dialogPickerColorPod), colorSwatchNameMap: App.colorsNameMap)} '
           'aka ${ColorTools.nameThatColor(ref.watch(dialogPickerColorPod))}'),
       trailing: ColorIndicator(
