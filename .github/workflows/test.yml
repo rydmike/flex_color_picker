@@ -11,7 +11,7 @@
 name: Test
 on:
   push:
-    branches: [master]
+    branches: [none]
     paths-ignore:
       - "**.md"
 jobs:

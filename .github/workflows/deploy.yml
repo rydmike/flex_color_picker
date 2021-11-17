@@ -18,7 +18,7 @@
 name: Deploy Web
 on:
   push:
-    branches: [none]
+    branches: [master]
     paths-ignore:
       - "**.md"
   release:

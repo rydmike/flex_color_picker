@@ -116,9 +116,9 @@ packages:
   flex_color_picker:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: flex_color_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.2.0"
   flutter:
     dependency: "direct main"
