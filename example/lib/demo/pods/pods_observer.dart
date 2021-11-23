@@ -5,17 +5,19 @@ import '../store/hive_store.dart';
 import '../utils/keys.dart';
 
 /// Provider "Pods" observer used to store the state of selected Riverpod
-/// providers and debugPrint changes to them in debug mode.
+/// providers with Hive and debugPrint changes to them in none release mode.
 class PodsObserver extends ProviderObserver {
   @override
   void didUpdateProvider(ProviderBase<dynamic> provider, Object? previousValue,
       Object? newValue, ProviderContainer container) {
     // If it is a StateProvider we will save the value if...
     if (provider is StateProvider) {
-      // If it is also one that we have a named key for.
-      if (Keys.defaults.containsKey(provider.name)) {
-        // Log the new value, just a debugPrint and in DebugMode builds only.
-        if (kDebugMode) {
+      // If its new value is different from previous value AND
+      // it is one that we have a named key for, we store it in Hive
+      if (newValue != previousValue &&
+          Keys.defaults.containsKey(provider.name)) {
+        // Log the new value, but not in Release, just a debugPrint.
+        if (!kReleaseMode) {
           debugPrint('HIVE PUT: ${provider.name ?? provider.runtimeType}\n'
               '  new value: $newValue\n'
               '  old value: $previousValue');
