@@ -23,7 +23,7 @@ class MaybeTooltip extends StatelessWidget {
   Widget build(BuildContext context) {
     if (condition && tooltip != null && tooltip != '') {
       return Tooltip(
-        message: tooltip!,
+        message: tooltip,
         padding: padding,
         margin: margin,
         child: child,

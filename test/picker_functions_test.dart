@@ -1,5 +1,4 @@
 import 'package:flex_color_picker/src/functions/picker_functions.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
