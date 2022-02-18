@@ -13,20 +13,20 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^1.0.0
+  flutter_riverpod: ^1.0.3
 
   # https://pub.dev/packages/google_fonts
-  google_fonts: ^2.1.0
+  google_fonts: ^2.3.1
 
   # https://pub.dev/packages/hive
-  hive: ^2.0.4
+  hive: ^2.0.5
 
   # https://pub.dev/packages/path_provider:
-  path_provider: ^2.0.7
+  path_provider: ^2.0.9
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).
-  url_launcher: ^6.0.13
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   flutter_test:
