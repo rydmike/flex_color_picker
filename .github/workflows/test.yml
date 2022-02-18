@@ -1,6 +1,6 @@
 # This GitHub actions runs on push to master, it:
 #  - Installs Dart and flutter
-#  - Uses Flutter beta channel for now, might setup a matrix later with other channels included too.
+#  - Uses Flutter beta channel for now, might make a matrix later with other channels included too.
 #  - Gets package dependencies
 #  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features for now.
 #  - Show outdated packages, just added for info.
@@ -14,6 +14,12 @@ on:
     branches: [none]
     paths-ignore:
       - "**.md"
+
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - "**.md"
+
 jobs:
   run_tests:
     name: Analyze and run all tests

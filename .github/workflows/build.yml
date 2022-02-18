@@ -87,7 +87,7 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
 
-      - name: WEB EXAMPLE FIX href URL reference before publish
-        run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
+      # - name: WEB EXAMPLE FIX href URL reference before publish
+      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
