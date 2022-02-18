@@ -264,40 +264,6 @@ class ColorPickerActionButtons with Diagnosticable {
     ColorPickerActionButtonType? dialogOkButtonType,
     bool? useRootNavigator,
   }) {
-    if ((okButton == null || identical(okButton, this.okButton)) &&
-        (closeButton == null || identical(closeButton, this.closeButton)) &&
-        (okIcon == null || identical(okIcon, this.okIcon)) &&
-        (closeIcon == null || identical(closeIcon, this.closeIcon)) &&
-        (closeIsLast == null || identical(closeIsLast, this.closeIsLast)) &&
-        (okTooltip == null || identical(okTooltip, this.okTooltip)) &&
-        (closeTooltip == null || identical(closeTooltip, this.closeTooltip)) &&
-        (closeTooltipIsClose == null ||
-            identical(closeTooltipIsClose, this.closeTooltipIsClose)) &&
-        (toolIconsThemeData == null ||
-            identical(toolIconsThemeData, this.toolIconsThemeData)) &&
-        (visualDensity == null ||
-            identical(visualDensity, this.visualDensity)) &&
-        (padding == null || identical(padding, this.padding)) &&
-        (alignment == null || identical(alignment, this.alignment)) &&
-        (splashRadius == null || identical(splashRadius, this.splashRadius)) &&
-        (constraints == null || identical(constraints, this.constraints)) &&
-        (dialogActionButtons == null ||
-            identical(dialogActionButtons, this.dialogActionButtons)) &&
-        (dialogActionIcons == null ||
-            identical(dialogActionIcons, this.dialogActionIcons)) &&
-        (dialogCancelButtonLabel == null ||
-            identical(dialogCancelButtonLabel, this.dialogCancelButtonLabel)) &&
-        (dialogCancelButtonType == null ||
-            identical(dialogCancelButtonType, this.dialogCancelButtonType)) &&
-        (dialogOkButtonLabel == null ||
-            identical(dialogOkButtonLabel, this.dialogOkButtonLabel)) &&
-        (dialogOkButtonType == null ||
-            identical(dialogOkButtonType, this.dialogOkButtonType)) &&
-        (useRootNavigator == null ||
-            identical(useRootNavigator, this.useRootNavigator))) {
-      return this;
-    }
-
     return ColorPickerActionButtons(
       okButton: okButton ?? this.okButton,
       closeButton: closeButton ?? this.closeButton,

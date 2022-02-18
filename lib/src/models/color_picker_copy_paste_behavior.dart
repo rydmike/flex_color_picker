@@ -343,49 +343,6 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     bool? parseShortHexCode,
     bool? editUsesParsedPaste,
   }) {
-    if ((ctrlC == null || identical(ctrlC, this.ctrlC)) &&
-        (ctrlV == null || identical(ctrlV, this.ctrlV)) &&
-        (copyButton == null || identical(copyButton, this.copyButton)) &&
-        (pasteButton == null || identical(pasteButton, this.pasteButton)) &&
-        (copyIcon == null || identical(copyIcon, this.copyIcon)) &&
-        (pasteIcon == null || identical(pasteIcon, this.pasteIcon)) &&
-        (copyTooltip == null || identical(copyTooltip, this.copyTooltip)) &&
-        (pasteTooltip == null || identical(pasteTooltip, this.pasteTooltip)) &&
-        (copyFormat == null || identical(copyFormat, this.copyFormat)) &&
-        (longPressMenu == null ||
-            identical(longPressMenu, this.longPressMenu)) &&
-        (secondaryMenu == null ||
-            identical(secondaryMenu, this.secondaryMenu)) &&
-        (secondaryOnDesktopLongOnDevice == null ||
-            identical(secondaryOnDesktopLongOnDevice,
-                this.secondaryOnDesktopLongOnDevice)) &&
-        (secondaryOnDesktopLongOnDeviceAndWeb == null ||
-            identical(secondaryOnDesktopLongOnDeviceAndWeb,
-                this.secondaryOnDesktopLongOnDeviceAndWeb)) &&
-        (editFieldCopyButton == null ||
-            identical(editFieldCopyButton, this.editFieldCopyButton)) &&
-        (menuIconThemeData == null ||
-            identical(menuIconThemeData, this.menuIconThemeData)) &&
-        (menuThemeData == null ||
-            identical(menuThemeData, this.menuThemeData)) &&
-        (menuWidth == null || identical(menuWidth, this.menuWidth)) &&
-        (menuItemHeight == null ||
-            identical(menuItemHeight, this.menuItemHeight)) &&
-        (snackBarParseError == null ||
-            identical(snackBarParseError, this.snackBarParseError)) &&
-        (snackBarMessage == null ||
-            identical(snackBarMessage, this.snackBarMessage)) &&
-        (snackBarDuration == null ||
-            identical(snackBarDuration, this.snackBarDuration)) &&
-        (feedbackParseError == null ||
-            identical(feedbackParseError, this.feedbackParseError)) &&
-        (parseShortHexCode == null ||
-            identical(parseShortHexCode, this.parseShortHexCode)) &&
-        (editUsesParsedPaste == null ||
-            identical(editUsesParsedPaste, this.editUsesParsedPaste))) {
-      return this;
-    }
-
     return ColorPickerCopyPasteBehavior(
       ctrlC: ctrlC ?? this.ctrlC,
       ctrlV: ctrlV ?? this.ctrlV,
