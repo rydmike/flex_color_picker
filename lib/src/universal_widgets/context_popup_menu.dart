@@ -100,26 +100,26 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final TargetPlatform _platform = Theme.of(context).platform;
-    final bool _useLongPress = widget.useLongPress ||
-        (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(_platform) ||
+    final TargetPlatform platform = Theme.of(context).platform;
+    final bool useLongPress = widget.useLongPress ||
+        (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(platform) ||
             (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (!isDesktop(_platform) || kIsWeb)));
-    final bool _useSecondaryClick = widget.useSecondaryTapDown ||
-        (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(_platform) ||
+                (!isDesktop(platform) || kIsWeb)));
+    final bool useSecondaryClick = widget.useSecondaryTapDown ||
+        (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(platform) ||
             (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (isDesktop(_platform) && !kIsWeb)));
+                (isDesktop(platform) && !kIsWeb)));
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onLongPressStart: _useLongPress
+      onLongPressStart: useLongPress
           ? (LongPressStartDetails details) async {
               widget.onOpen?.call();
               _downPosition = details.globalPosition;
               await _showMenu(_downPosition);
             }
           : null,
-      onSecondaryTapDown: _useSecondaryClick
+      onSecondaryTapDown: useSecondaryClick
           ? (TapDownDetails details) async {
               widget.onOpen?.call();
               _downPosition = details.globalPosition;

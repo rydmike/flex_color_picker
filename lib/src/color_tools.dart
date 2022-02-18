@@ -634,13 +634,13 @@ class ColorTools {
   /// Flutter style Hex code is returned.
   static String materialNameAndCode(Color color,
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
-    final String _name =
+    final String name =
         materialName(color, colorSwatchNameMap: colorSwatchNameMap);
-    if (_name == '') {
+    if (name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(0x${colorCode(color)})';
     } else {
-      return '$_name (0x${colorCode(color)})';
+      return '$name (0x${colorCode(color)})';
     }
   }
 
@@ -651,13 +651,13 @@ class ColorTools {
   /// ARGB style Hex code is returned.
   static String materialNameAndARGBCode(Color color,
       {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
-    final String _name =
+    final String name =
         materialName(color, colorSwatchNameMap: colorSwatchNameMap);
-    if (_name == '') {
+    if (name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(${colorCode(color)})';
     } else {
-      return '$_name (${colorCode(color)})';
+      return '$name (${colorCode(color)})';
     }
   }
 

@@ -86,17 +86,17 @@ class ColorPickerToolbar extends StatelessWidget {
               : translate.cancelButtonLabel);
     }
     // Get current theme and passed in icon theme.
-    final ThemeData _theme = Theme.of(context);
-    final IconThemeData? _iconTheme = toolIcons.toolIconsThemeData;
+    final ThemeData theme = Theme.of(context);
+    final IconThemeData? iconTheme = toolIcons.toolIconsThemeData;
     // This is a merge of provided iconThemeData, with
     // fallback to default values, color has no default, remains as null.
-    final IconThemeData _effectiveIconTheme = _theme.iconTheme.copyWith(
-      color: _iconTheme?.color,
-      size: _iconTheme?.size ?? 22,
-      opacity: _iconTheme?.opacity ?? 0.90,
+    final IconThemeData effectiveIconTheme = theme.iconTheme.copyWith(
+      color: iconTheme?.color,
+      size: iconTheme?.size ?? 22,
+      opacity: iconTheme?.opacity ?? 0.90,
     );
     return Theme(
-      data: _theme.copyWith(iconTheme: _effectiveIconTheme),
+      data: theme.copyWith(iconTheme: effectiveIconTheme),
       child: Row(
         children: <Widget>[
           if (title != null) title!,
@@ -110,7 +110,7 @@ class ColorPickerToolbar extends StatelessWidget {
             IconButton(
               icon: Icon(copyPasteBehavior.copyIcon),
               onPressed: onCopy,
-              iconSize: _effectiveIconTheme.size!,
+              iconSize: effectiveIconTheme.size,
               visualDensity: toolIcons.visualDensity,
               padding: toolIcons.padding,
               alignment: toolIcons.alignment,
@@ -122,7 +122,7 @@ class ColorPickerToolbar extends StatelessWidget {
             IconButton(
               icon: Icon(copyPasteBehavior.pasteIcon),
               onPressed: onPaste,
-              iconSize: _effectiveIconTheme.size!,
+              iconSize: effectiveIconTheme.size,
               visualDensity: toolIcons.visualDensity,
               padding: toolIcons.padding,
               alignment: toolIcons.alignment,
@@ -134,7 +134,7 @@ class ColorPickerToolbar extends StatelessWidget {
             IconButton(
               icon: Icon(toolIcons.closeIcon),
               onPressed: onClose,
-              iconSize: _effectiveIconTheme.size!,
+              iconSize: effectiveIconTheme.size,
               visualDensity: toolIcons.visualDensity,
               padding: toolIcons.padding,
               alignment: toolIcons.alignment,
@@ -146,7 +146,7 @@ class ColorPickerToolbar extends StatelessWidget {
             IconButton(
               icon: Icon(toolIcons.okIcon),
               onPressed: onOk,
-              iconSize: _effectiveIconTheme.size!,
+              iconSize: effectiveIconTheme.size,
               visualDensity: toolIcons.visualDensity,
               padding: toolIcons.padding,
               alignment: toolIcons.alignment,
@@ -158,7 +158,7 @@ class ColorPickerToolbar extends StatelessWidget {
             IconButton(
               icon: Icon(toolIcons.closeIcon),
               onPressed: onClose,
-              iconSize: _effectiveIconTheme.size!,
+              iconSize: effectiveIconTheme.size,
               visualDensity: toolIcons.visualDensity,
               padding: toolIcons.padding,
               alignment: toolIcons.alignment,

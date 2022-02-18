@@ -143,45 +143,44 @@ class ContextCopyPasteMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
 
     // This is a merge of provided menuThemeData, with surrounding theme, with
     // fallback to default values.
-    final PopupMenuThemeData _effectiveMenuTheme =
-        _theme.popupMenuTheme.copyWith(
+    final PopupMenuThemeData effectiveMenuTheme = theme.popupMenuTheme.copyWith(
       color: menuThemeData?.color ??
-          _theme.popupMenuTheme.color ??
-          _theme.cardColor.withOpacity(0.9),
+          theme.popupMenuTheme.color ??
+          theme.cardColor.withOpacity(0.9),
       shape: menuThemeData?.shape ??
-          _theme.popupMenuTheme.shape ??
+          theme.popupMenuTheme.shape ??
           RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
-              side: BorderSide(color: _theme.dividerColor)),
+              side: BorderSide(color: theme.dividerColor)),
       elevation:
-          menuThemeData?.elevation ?? _theme.popupMenuTheme.elevation ?? 3,
+          menuThemeData?.elevation ?? theme.popupMenuTheme.elevation ?? 3,
       textStyle: menuThemeData?.textStyle ??
-          _theme.popupMenuTheme.textStyle ??
-          _theme.textTheme.bodyText2 ??
+          theme.popupMenuTheme.textStyle ??
+          theme.textTheme.bodyText2 ??
           const TextStyle(fontSize: 14),
       enableFeedback: menuThemeData?.enableFeedback ??
-          _theme.popupMenuTheme.enableFeedback ??
+          theme.popupMenuTheme.enableFeedback ??
           true,
     );
 
     // This is a merge of provided iconThemeData, with surrounding theme, with
     // fallback to default values, color has no default, remains as null.
-    final IconThemeData _effectiveIconTheme = _theme.iconTheme.copyWith(
-      color: menuIconThemeData?.color ?? _theme.iconTheme.color,
-      size: menuIconThemeData?.size ?? _theme.iconTheme.size ?? 16,
-      opacity: menuIconThemeData?.opacity ?? _theme.iconTheme.opacity ?? 0.90,
+    final IconThemeData effectiveIconTheme = theme.iconTheme.copyWith(
+      color: menuIconThemeData?.color ?? theme.iconTheme.color,
+      size: menuIconThemeData?.size ?? theme.iconTheme.size ?? 16,
+      opacity: menuIconThemeData?.opacity ?? theme.iconTheme.opacity ?? 0.90,
     );
 
     // Get the Material localizations.
     final MaterialLocalizations translate = MaterialLocalizations.of(context);
 
     return Theme(
-      data: _theme.copyWith(
-          popupMenuTheme: _effectiveMenuTheme, iconTheme: _effectiveIconTheme),
+      data: theme.copyWith(
+          popupMenuTheme: effectiveMenuTheme, iconTheme: effectiveIconTheme),
       child: ContextPopupMenu<CopyPasteCommands>(
         useLongPress: useLongPress,
         useSecondaryTapDown: useSecondaryTapDown,

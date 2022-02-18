@@ -48,19 +48,20 @@ class SelectPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Set default text style for the segmented slider control.
-    final TextStyle _segmentTextStyle = textStyle ??
+    final TextStyle segmentTextStyle = textStyle ??
         Theme.of(context).textTheme.caption ??
         const TextStyle(fontSize: 12);
 
-    final Color _thumbColor = thumbColor ??
+    final Color effectiveThumbColor = thumbColor ??
         const CupertinoDynamicColor.withBrightness(
           color: Color(0xFFFFFFFF),
           darkColor: Color(0xFF636366),
         );
 
-    final Color? _thumbOnColor = thumbColor == null
+    final Color? effectiveThumbOnColor = thumbColor == null
         ? null
-        : ThemeData.estimateBrightnessForColor(_thumbColor) == Brightness.light
+        : ThemeData.estimateBrightnessForColor(effectiveThumbColor) ==
+                Brightness.light
             ? Colors.black
             : Colors.white;
 
@@ -77,8 +78,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.both] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.both
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
             if (pickers[ColorPickerType.primary]!)
@@ -88,8 +89,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.primary] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.primary
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
             if (pickers[ColorPickerType.accent]!)
@@ -99,8 +100,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.accent] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.accent
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
             if (pickers[ColorPickerType.bw]!)
@@ -110,8 +111,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.bw] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.bw
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
             if (pickers[ColorPickerType.custom]!)
@@ -121,8 +122,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.custom] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.custom
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
             if (pickers[ColorPickerType.wheel]!)
@@ -132,8 +133,8 @@ class SelectPicker extends StatelessWidget {
                   pickerLabels[ColorPickerType.wheel] ?? '',
                   textAlign: TextAlign.center,
                   style: picker == ColorPickerType.wheel
-                      ? _segmentTextStyle.copyWith(color: _thumbOnColor)
-                      : _segmentTextStyle,
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
                 ),
               ),
           },

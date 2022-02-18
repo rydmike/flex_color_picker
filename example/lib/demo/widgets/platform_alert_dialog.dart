@@ -20,10 +20,9 @@ class PlatformAlertDialog extends PlatformWidget {
 
   Future<bool?> show(BuildContext context,
       {bool useRootNavigator = false}) async {
-    final TargetPlatform _platform = Theme.of(context).platform;
+    final TargetPlatform platform = Theme.of(context).platform;
 
-    return (_platform == TargetPlatform.iOS ||
-            _platform == TargetPlatform.macOS)
+    return (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS)
         ? await showCupertinoDialog<bool>(
             useRootNavigator: useRootNavigator,
             context: context,

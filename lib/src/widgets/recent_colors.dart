@@ -83,7 +83,7 @@ class RecentColors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double _borderRadius = borderRadius ?? width / 4.0;
+    final double effectiveBorderRadius = borderRadius ?? width / 4.0;
     return Padding(
       padding: EdgeInsets.only(bottom: columnSpacing),
       child: Wrap(
@@ -97,7 +97,7 @@ class RecentColors extends StatelessWidget {
               color: color,
               width: width,
               height: height,
-              borderRadius: _borderRadius,
+              borderRadius: effectiveBorderRadius,
               hasBorder: hasBorder,
               borderColor: borderColor,
               elevation: elevation,

@@ -141,13 +141,13 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   @override
   Widget build(BuildContext context) {
     // The indicator color is a "light" color.
-    final bool _isLight =
+    final bool isLight =
         ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
     // Set icon color to black on light color and to white on dark color.
-    final Color _iconColor = _isLight ? Colors.black : Colors.white;
+    final Color iconColor = isLight ? Colors.black : Colors.white;
     // If no border color is given, we use the theme divider color as
     // border color, it is typically a suitable grey color.
-    final Color _borderColor =
+    final Color borderColor =
         widget.borderColor ?? Theme.of(context).dividerColor;
 
     return Material(
@@ -158,7 +158,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           side: widget.hasBorder
-              ? BorderSide(color: _borderColor)
+              ? BorderSide(color: borderColor)
               : BorderSide.none),
       child: SizedBox(
         width: widget.width,
@@ -180,14 +180,14 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           // Only use focus color when in focus, but not selected.
           focusColor: widget.isSelected
               ? Colors.transparent
-              : _isLight
+              : isLight
                   ? Colors.black26
                   : Colors.white30,
           // Only use highlightColor color when in focus, but not selected.
           highlightColor: widget.isSelected
               ? Colors.transparent
               : Theme.of(context).highlightColor,
-          hoverColor: _isLight ? Colors.black26 : Colors.white30,
+          hoverColor: isLight ? Colors.black26 : Colors.white30,
           onTap: widget.onSelect != null
               ? () {
                   widget.onSelect!();
@@ -197,7 +197,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           child: widget.isSelected
               ? Icon(
                   widget.selectedIcon,
-                  color: _iconColor,
+                  color: iconColor,
                   // Size the select icon so it always fits nicely.
                   // The 0.6 value is just based on what looked good enough.
                   size: widget.width < widget.height
