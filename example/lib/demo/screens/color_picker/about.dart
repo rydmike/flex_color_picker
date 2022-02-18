@@ -64,12 +64,11 @@ void showAppAboutDialog(BuildContext context) {
                 text: '. It contains extensive documentation and the source '
                     'of this example application.\n\n',
               ),
-              if (kIsWeb)
-                TextSpan(
-                  style: footerStyle,
-                  text: 'Live Web demo built with ${App.flutterVersion}, '
-                      'using ${App.packageVersion}\n\n',
-                ),
+              TextSpan(
+                style: footerStyle,
+                text: 'Live Web demo built with ${App.flutterVersion}, '
+                    'using ${App.packageVersion}\n\n',
+              ),
             ],
           ),
         ),
