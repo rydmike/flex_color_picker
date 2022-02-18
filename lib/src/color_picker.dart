@@ -20,6 +20,7 @@ import 'widgets/opacity/opacity_slider.dart';
 import 'widgets/picker_selector.dart';
 import 'widgets/recent_colors.dart';
 import 'widgets/shade_colors.dart';
+import 'widgets/tonal_palette_colors.dart';
 
 part 'show_color_picker_dialog.dart';
 
@@ -73,6 +74,7 @@ class ColorPicker extends StatefulWidget {
     },
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
+    this.enableTonalPalette = false,
     // Layout
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.padding = const EdgeInsets.all(16),
@@ -102,6 +104,7 @@ class ColorPicker extends StatefulWidget {
     this.title,
     this.heading,
     this.subheading,
+    this.tonalSubheading,
     this.wheelSubheading,
     this.recentColorsSubheading,
     this.opacitySubheading,
@@ -233,6 +236,24 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool includeIndex850;
+
+  /// Set to true to allow selection of color tone from a tonal palette.
+  ///
+  /// When set to true, the ColorPicker will use Material 3 color utilities
+  /// to compute a tonal palette for the selected color, allowing you to
+  /// select a color tone from the Tonal Palette for the selected color.
+  ///
+  /// For more info on Material 3 Color system, see:
+  /// https://m3.material.io/styles/color/the-color-system/key-colors-tones
+  ///
+  /// The picker item size for tonal palette color indicator items is
+  /// 10/13 the size of defined width and height. This is done in order to
+  /// as far as possible try to match the width of the Primary Material Swatch
+  /// items total width, it has 10 colors, the M3 tonal palette has 13 colors.
+  /// The idea is try to match their width when they are both shown.
+  ///
+  /// Defaults to false.
+  final bool enableTonalPalette;
 
   /// Cross axis alignment used to layout the main content of the
   /// color picker in its column layout.
@@ -385,6 +406,12 @@ class ColorPicker extends StatefulWidget {
   /// Typically a Text widget, e.g. `Text('Select color shade')`.
   /// If not provided or null, there is no subheading for the color shades.
   final Widget? subheading;
+
+  /// Subheading widget for the color tone selection.
+  ///
+  /// Typically a Text widget, e.g. `Text('Select Material 3 color tone')`.
+  /// If not provided or null, there is no subheading for the color shades.
+  final Widget? tonalSubheading;
 
   /// Subheading widget for the HSV color wheel picker.
   ///
@@ -1007,6 +1034,11 @@ class _ColorPickerState extends State<ColorPicker> {
   // should update.
   bool _wheelShouldUpdate = true;
 
+  // The tonal picker should only update its tonal palette whe we click on
+  // colors in other color pciker, not when we select a color in the
+  // tonal palette. This local state is used to send the update signal.
+  bool _tonalShouldUpdate = true;
+
   // Color wheel picker should request focus.
   bool _wheelShouldFocus = false;
 
@@ -1094,8 +1126,12 @@ class _ColorPickerState extends State<ColorPicker> {
     // Always update the wheel and edit field when ColorPicker is initialized.
     _wheelShouldUpdate = true;
     _editShouldUpdate = true;
-    // If there are no shade colors displayed, the wheel must focus on init.
-    _wheelShouldFocus = !widget.enableShadesSelection;
+    // Always update tonal when ColorPicker is initialized.
+    _tonalShouldUpdate = true;
+    // If there are no shade or tonal colors displayed, the wheel must
+    // focus on init.
+    _wheelShouldFocus =
+        !widget.enableShadesSelection && !widget.enableTonalPalette;
     // Init the list of the recently used colors to their initial value.
     _recentColors = <Color>[...widget.recentColors];
     // Find the best color picker to show the current selectedColor value.
@@ -1225,6 +1261,8 @@ class _ColorPickerState extends State<ColorPicker> {
       // Wheel and edit needs to update.
       _wheelShouldUpdate = true;
       _editShouldUpdate = true;
+      // Tonal picker should update from external change.
+      _tonalShouldUpdate = true;
       // We need to find the right picker again.
       shouldFindPickerAndSwatch = true;
     }
@@ -1293,7 +1331,8 @@ class _ColorPickerState extends State<ColorPicker> {
     // the virtual keyboard will appear when wheel is displayed. We do not
     // want that to happen until the user clicks on the edit field.
     if (_activePicker == ColorPickerType.wheel &&
-        !widget.enableShadesSelection) {
+        !widget.enableShadesSelection &&
+        !widget.enableTonalPalette) {
       _wheelShouldFocus = true;
     }
   }
@@ -1504,10 +1543,11 @@ class _ColorPickerState extends State<ColorPicker> {
                         _activePicker = value;
                         // If there is a color indicator, it will grab focus.
                         _selectedShouldFocus = true;
-                        // If we are on the wheel and shades selection is not
+                        // If we are on the wheel no shades selection is not
                         // enabled, then the wheel will grab the focus.
                         if (_activePicker == ColorPickerType.wheel &&
-                            !widget.enableShadesSelection) {
+                            !widget.enableShadesSelection &&
+                            !widget.enableTonalPalette) {
                           _wheelShouldFocus = true;
                         }
                         _updateActiveSwatch();
@@ -1565,6 +1605,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           _selectedColor = color.withOpacity(_opacity);
                           _wheelShouldUpdate = false;
                           _editShouldUpdate = true;
+                          _tonalShouldUpdate = true;
                           _selectedShouldFocus = true;
                           _wheelShouldFocus = false;
                           _updateActiveSwatch();
@@ -1613,12 +1654,45 @@ class _ColorPickerState extends State<ColorPicker> {
                     if (_activePicker == ColorPickerType.wheel) {
                       setState(() {
                         _selectedShouldFocus = true;
+                        _tonalShouldUpdate = true;
                       });
                     }
                   },
                   includeIndex850: widget.includeIndex850,
                   width: widget.width,
                   height: widget.height,
+                  borderRadius: widget.borderRadius,
+                  hasBorder: widget.hasBorder,
+                  borderColor: widget.borderColor,
+                  elevation: widget.elevation,
+                  selectedColorIcon: widget.selectedColorIcon,
+                  selectedRequestsFocus: _selectedShouldFocus,
+                ),
+              // Show the tonal sub-heading
+              if (widget.tonalSubheading != null && widget.enableTonalPalette)
+                Padding(
+                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                  child: widget.tonalSubheading,
+                ),
+              // Draw the tonal palette.
+              if (widget.enableTonalPalette)
+                TonalPaletteColors(
+                  spacing: widget.spacing,
+                  runSpacing: widget.runSpacing,
+                  columnSpacing: widget.columnSpacing,
+                  selectedColor: _selectedColor.withAlpha(0xFF),
+                  onSelectColor: (Color color) {
+                    _onSelectColor(color);
+                    setState(() {
+                      _selectedShouldFocus = true;
+                      _tonalShouldUpdate = false;
+                    });
+                  },
+                  tonalShouldUpdate: _tonalShouldUpdate,
+                  width: (widget.width + widget.spacing) * 10 / 13 -
+                      widget.spacing,
+                  height: (widget.width + widget.spacing) * 10 / 13 -
+                      widget.spacing,
                   borderRadius: widget.borderRadius,
                   hasBorder: widget.hasBorder,
                   borderColor: widget.borderColor,
@@ -1848,6 +1922,8 @@ class _ColorPickerState extends State<ColorPicker> {
       // selected outside the wheel and edit field, they should update!
       _wheelShouldUpdate = true;
       _editShouldUpdate = true;
+      // Tonal palette should be updated.
+      _tonalShouldUpdate = true;
 
       // Find best matching picker of the enabled ones for _selectedColor.
       if (findPicker) {

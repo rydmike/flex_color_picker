@@ -8,7 +8,8 @@ environment:
 
 dependencies:
   # https://pub.dev/packages/flex_color_picker
-  flex_color_picker: ^2.2.0
+  flex_color_picker:
+    path: ../
 
   flutter:
     sdk: flutter

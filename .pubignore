@@ -23,6 +23,10 @@ example/.fvm
 # is commented out by default.
 #.vscode/
 
+# We do not want the doc resource file in pub.dev, but they do go to GitHub.
+resources/
+
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

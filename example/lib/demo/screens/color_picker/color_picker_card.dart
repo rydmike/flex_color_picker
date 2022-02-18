@@ -34,6 +34,7 @@ class ColorPickerCard extends ConsumerWidget {
         padding: EdgeInsets.all(ref.watch(paddingPod)),
         enableShadesSelection: ref.watch(enableShadesSelectionPod),
         includeIndex850: ref.watch(includeIndex850Pod),
+        enableTonalPalette: ref.watch(enableTonesSelectionPod),
         enableOpacity: ref.watch(enableOpacityPod),
         opacityTrackHeight: ref.watch(opacityTrackHeightPod),
         opacityTrackWidth: ref.watch(opacityTrackWidthPod),
@@ -85,6 +86,12 @@ class ColorPickerCard extends ConsumerWidget {
         subheading: ref.watch(showSubheadingPod)
             ? Text(
                 'Select color shade',
+                style: Theme.of(context).textTheme.subtitle1,
+              )
+            : null,
+        tonalSubheading: ref.watch(showTonalSubheadingPod)
+            ? Text(
+                'Material 3 tonal palette',
                 style: Theme.of(context).textTheme.subtitle1,
               )
             : null,

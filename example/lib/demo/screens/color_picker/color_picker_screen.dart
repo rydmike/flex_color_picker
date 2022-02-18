@@ -219,8 +219,10 @@ class _Column2 extends StatelessWidget {
         //
         const PickersEnabledSwitch(),
         const SizedBox(height: 8),
+
         const ShadesSwitch(),
         const Index850Switch(),
+        const TonalSwitch(),
         const OpacitySwitch(),
         const Divider(),
         //
@@ -236,6 +238,7 @@ class _Column2 extends StatelessWidget {
         const TitleSwitch(),
         const HeadingSwitch(),
         const SubheadingSwitch(),
+        const TonalSubheadingSwitch(),
         const OpacitySubheadingSwitch(),
         const RecentSubheadingSwitch(),
         const Divider(),

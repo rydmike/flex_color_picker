@@ -397,8 +397,9 @@ void main() {
     //
     // *************************************************************************
     //
-    testWidgets('CPI1.4: Finds custom-3 ColorPicker() using custom colors',
-        (WidgetTester tester) async {
+    testWidgets(
+        'CPI1.4: Finds custom-3 ColorPicker() using custom colors '
+        'and tonal palette', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -418,6 +419,7 @@ void main() {
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
             enableOpacity: true,
+            enableTonalPalette: true,
             opacityTrackHeight: 40,
             opacityThumbRadius: 25,
             opacityTrackWidth: 300,
@@ -456,6 +458,7 @@ void main() {
             title: const Text('Title1'),
             heading: const Text('Title2'),
             subheading: const Text('Title3'),
+            tonalSubheading: const Text('Title3-t'),
             wheelSubheading: const Text('Title4'),
             opacitySubheading: const Text('Title5'),
             recentColorsSubheading: const Text('Title6'),

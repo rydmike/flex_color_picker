@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import '../../flex_color_picker.dart';
 import '../functions/picker_functions.dart';
 
-/// ShadeColors widget.
+/// TonalPaletteColors widget.
 ///
 /// Not library exposed, private to the library.
-class ShadeColors extends StatelessWidget {
+class TonalPaletteColors extends StatefulWidget {
   /// Default const constructor.
-  const ShadeColors({
+  const TonalPaletteColors({
     Key? key,
     required this.spacing,
     required this.runSpacing,
     required this.columnSpacing,
-    required this.activeSwatch,
     required this.selectedColor,
     required this.onSelectColor,
-    required this.includeIndex850,
+    required this.tonalShouldUpdate,
     required this.width,
     required this.height,
     this.borderRadius,
@@ -36,20 +35,14 @@ class ShadeColors extends StatelessWidget {
   /// The spacing after the main colors.
   final double columnSpacing;
 
-  // /// The currently active used list of color swatches we select color from.
-  // final List<ColorSwatch<Object>> activeColorSwatchList;
-
-  /// The active Swatch in the active Color swatch List.
-  final ColorSwatch<Object> activeSwatch;
-
   /// The selected color.
   final Color selectedColor;
 
   /// Void callback called when a color is selected.
   final ValueChanged<Color> onSelectColor;
 
-  /// Set to trued if index 850 is to be included in the main shades.
-  final bool includeIndex850;
+  /// Should the internal color to generate the Tonal Palette be updated?
+  final bool tonalShouldUpdate;
 
   /// Width of the color pick item.
   final double width;
@@ -83,31 +76,52 @@ class ShadeColors extends StatelessWidget {
   final bool selectedRequestsFocus;
 
   @override
+  State<TonalPaletteColors> createState() => _TonalPaletteColorsState();
+}
+
+class _TonalPaletteColorsState extends State<TonalPaletteColors> {
+  late List<Color> tonalColors;
+
+  @override
+  void initState() {
+    super.initState();
+    tonalColors = getTonalColors(widget.selectedColor);
+  }
+
+  @override
+  void didUpdateWidget(TonalPaletteColors oldWidget) {
+    if (widget.tonalShouldUpdate) {
+      tonalColors = getTonalColors(widget.selectedColor);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final double effectiveBorderRadius = borderRadius ?? width / 4.0;
+    final double effectiveBorderRadius =
+        widget.borderRadius ?? widget.width / 4.0;
     return Padding(
-      padding: EdgeInsets.only(bottom: columnSpacing),
+      padding: EdgeInsets.only(bottom: widget.columnSpacing),
       child: Wrap(
-        spacing: spacing,
-        runSpacing: runSpacing,
+        spacing: widget.spacing,
+        runSpacing: widget.runSpacing,
         children: <Widget>[
-          for (final Color color
-              in getMaterialColorShades(activeSwatch, includeIndex850))
+          for (final Color color in tonalColors)
             ColorIndicator(
-              isSelected:
-                  selectedColor == color || selectedColor.value == color.value,
+              isSelected: widget.selectedColor == color ||
+                  widget.selectedColor.value == color.value,
               color: color,
-              width: width,
-              height: height,
+              width: widget.width,
+              height: widget.height,
               borderRadius: effectiveBorderRadius,
-              hasBorder: hasBorder,
-              borderColor: borderColor,
-              elevation: elevation,
-              selectedIcon: selectedColorIcon,
+              hasBorder: widget.hasBorder,
+              borderColor: widget.borderColor,
+              elevation: widget.elevation,
+              selectedIcon: widget.selectedColorIcon,
               onSelect: () {
-                onSelectColor(color);
+                widget.onSelectColor(color);
               },
-              selectedRequestsFocus: selectedRequestsFocus,
+              selectedRequestsFocus: widget.selectedRequestsFocus,
             ),
         ],
       ),

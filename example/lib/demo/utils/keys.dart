@@ -18,6 +18,7 @@ class Keys {
   // Show and Hide Riverpod providers.
   static const String pickersEnabled = 'pickersEnabled';
   static const String enableShadesSelection = 'enableShadesSelection';
+  static const String enableTonesSelection = 'enableTonesSelection';
   static const String includeIndex850 = 'includeIndex850';
   static const String enableOpacity = 'enableOpacity';
   static const String showMaterialName = 'showMaterialName';
@@ -30,6 +31,7 @@ class Keys {
   static const String showTitle = 'showTitle';
   static const String showHeading = 'showHeading';
   static const String showSubheading = 'showSubheading';
+  static const String showTonalSubheading = 'showTonalSubheading';
   static const String showOpacitySubheading = 'showOpacitySubheading';
   static const String showRecentSubheading = 'showRecentSubheading';
   // Picker Design Riverpod providers.
@@ -88,6 +90,7 @@ class Keys {
       ColorPickerType.wheel: true,
     },
     enableShadesSelection: true,
+    enableTonesSelection: true,
     includeIndex850: false,
     enableOpacity: true,
     showMaterialName: true,
@@ -100,6 +103,7 @@ class Keys {
     showTitle: true,
     showHeading: false,
     showSubheading: true,
+    showTonalSubheading: true,
     showOpacitySubheading: false,
     showRecentSubheading: true,
     // Picker Design Riverpod providers.
@@ -108,7 +112,7 @@ class Keys {
     elevation: 0.0,
     spacing: 4.0,
     runSpacing: 4.0,
-    hasBorder: false,
+    hasBorder: true,
     wheelDiameter: 190.0,
     wheelWidth: 16.0,
     wheelHasBorder: false,

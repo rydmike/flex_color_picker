@@ -2,6 +2,44 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.3.0] - February 18, 2022
+**New feature** 
+* Added capability to show a Material 3 tonal palette as per 
+  [Material 3 design specification](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
+  
+* To enable it set new `ColorPicker` property `enableTonalPalette` to true.
+  It is false by default. Like the Material Swatch shades heading that
+  that has an optional `subHeading` widget, when tonal palette is enabled
+  you can show an optional `tonalSubheading` widget above it.
+
+  - When you click/select a color in the color picker and tonal palette is 
+  enabled, a 13 shade Material 3 tonal palette for the selected color will be 
+  generated, always starting with black, tone 0 for the used seed color and ending in white, tone 100.
+
+  - The official Material 3 Dart library is used to create the tonal palette 
+  from any selected color. The color you select functions a seed color to 
+  generate the tonal palette and might not itself be included and selected in
+  the palette. You can of course click on any color in the generated palette to
+  select and pick a color.
+
+  - Selecting a color in the tonal palette, only selects the color in the palette, 
+   it does not update the palette. Only when you select a color from the other 
+   color sources in the picker, is that color used as key, to seed and generate
+   an updated color palette for the selected color.
+
+  
+**Updated**
+* The WEB example was updated to include enabling and disabling 
+  the tonal palette and built it with Flutter version, stable 2.10.1.
+* All dependencies in the Web demo were updated to their latest
+  released version. 
+  
+  The Web demo example requires at least Flutter 2.10.0 to be built, 
+  it uses ColorScheme properties in its theme
+  tha were not available earlier and removed in 2.10.0 deprecated color
+  properties from its theme. The color picker package itself, still has 
+  unchanged version requirement of Dart SDK sdk: '>=2.14.0 <3.0.0'. 
+
 ## [2.2.0] - November 17, 2021
 * Fixed the style for color entry field, to always uses the intended fixed stadium style.
 * Updated dependencies for the web demo, big change was Riverpod to use v1.0.0.
@@ -12,7 +50,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 ## [2.1.2] - July 16, 2021
 * **Improvement:** Improved performance by splitting wheel painting into
   multiple painters and introducing `RepaintBoundary` widgets around
-  expensive painters to avoid unnecessary repaints. Thank you 
+  expensive painters to avoid unnecessary repaints. Thank you, 
   [Krista Koivisto](https://github.com/krista-koivisto) for this excellent contribution!
 
 ## [2.1.1] - July 2, 2021
@@ -93,7 +131,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   not an `OutlinedButton`. This change is done to conform to a less opinionated default style. You can still
   manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was
   no choice.
-* The dialog bottom **OK** button is no longer auto-focused.
+* The dialog bottom **OK** button is no longer autofocused.
 * The extension `FlexPickerNoNullStringExtensions` on none nullable
   `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent
@@ -122,7 +160,7 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
   instead called `dailogElevation` and `dialogTitle` in it.
 * **Improvement:** Performance was improved via more optimized rebuilds.   
 * **Documentation:** First version of updated documentation with API guide documentation is now included. It still 
-  requires proof-reading before stable release, but getting close to be ready for release now.
+  requires proofreading before stable release, but getting close to be ready for release now.
 * **Default example:** The default example got a new picker that shows how to the new `showColorPickerDialog` function.
 * **Web example:** The Web example, with the built-in API tooltips guides, got a major rewrite. It was originally
   not intended to be as large as it grew to be, but since it grew so much it needed a rewrite.   
@@ -257,7 +295,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
   not an `OutlinedButton`, this change is done to conform to a less opinionated default style. You can still
   manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was 
   no choice.
-* The dialog bottom **OK** button is no longer auto-focused. 
+* The dialog bottom **OK** button is no longer autofocused. 
   
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
@@ -360,6 +398,6 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - Release version 1.0.0.
 - Add "name that color" function that can give a name to "any" color in English.
 - For the color wheel picker, add text input to get a given color based on entered HEX code.
-- Fix doc images that show up OK in Github readme.md, but not on pub.dev.
+- Fix doc images that show up OK in GitHub readme.md, but not on pub.dev.
 - Review and correct documentation mistakes and typos, first pass anyway.
 - Review and update the API.
