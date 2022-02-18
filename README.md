@@ -4,11 +4,19 @@
 # FlexColorPicker
 
 FlexColorPicker is a customizable color picker for Flutter. The `ColorPicker` can show six different types of color 
-pickers, three of which are used for the standard Flutter Material colors and their shades. The size and style used 
-for the pick items can be customized.
+pickers, three of which are used for the standard Flutter Material Design 2 colors and their shades.
+The size and style used for the pick items can be customized.
 
-The picker is also Windows, Mac, Linux and Web desktop compatible. It has desktop focus handling plus optional menus 
-and buttons for handling COPY-PASTE of colors from and to the picker, including desktop COPY-PASTE keyboard shortcuts.
+The picker can optionally also generate Material Design 3 color system
+accurate tonal palettes, using any selected color in the picker, as key color to generate
+the tonal palette. A color from the generated tonal palette can then be picked as well.
+See the [Material Design 3 site](https://m3.material.io/styles/color/the-color-system/key-colors-tones)
+for more information about the Material 3 color system and tonal palettes.
+
+
+The picker is Windows, Mac, Linux and Web desktop compatible. It has desktop focus handling plus optional menus 
+and buttons for handling COPY-PASTE of colors from and to the picker, including desktop platform 
+aware COPY-PASTE keyboard shortcuts.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/ColorPickerAllSize50-upper.png?raw=true" alt="ColorPicker variations upper"/>
 
