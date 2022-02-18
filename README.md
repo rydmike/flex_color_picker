@@ -92,7 +92,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 
 ```yaml
 dependencies:  
-  flex_color_picker: ^2.1.2
+  flex_color_picker: ^2.3.0
 ```
 
 In your library file add the following import:
@@ -128,13 +128,18 @@ the package source code in the "example/lib/demo" folder.
 
 > **IMPORTANT:** If the color picker's opacity slider feature is used on WEB builds `enableOpacity: true`, then you 
 > must build using the SKIA **canvaskit** renderer only. The opacity slider uses `ImageShader`, a Flutter API that 
-> is not yet available on **html** builds, at least not in version stable 2.2.1.
+> was not yet available on **html** builds, at least not in version stable 2.2.1.
 > 
 > ```
 > flutter run -d chrome --web-renderer canvaskit
 > flutter build web --web-renderer canvaskit
 > ```
 > For more information see https://flutter.dev/docs/development/tools/web-renderers
+>
+> **UPDATE Feb 18, 2022:** When using Flutter stable version 2.10.1, the `ImageShader` API 
+> seems to be available and working also when using --web-renderer html, build. However, if you
+> run into issues with the opacity slider on web builds, try using canvaskit, instead of auto or
+> html renderer when you build the Web app.
 
 
 The Web demo has a responsive view, that expands into maximum four separately scrollable columns. The columns contain
@@ -711,6 +716,40 @@ which you do by setting `enableShadesSelection` to false.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-4.png?raw=true" alt="Pickers 4"/>
 
+### Enable Tonal Palette
+
+API reference: [enableTonalPalette](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableTonalPalette.html)
+
+By default, generation of a selected color's new Material 3 tonal palette is disabled, you can enable
+it by setting `enableTonalPalette` to true. 
+
+When you click/select a color in the color picker and tonal palette is enabled, a 13 shade 
+Material 3 tonal palette for the selected color will be generated, always starting with black,
+tone 0 for the used seed color and ending in white, tone 100.
+    
+The official Material 3 Dart library is used to create the tonal palette from any 
+selected color. The color you select functions a seed color to generate the tonal
+palette and might not itself be included and selected in the palette. You can 
+of course click on any color in the generated palette to select and pick a color.
+
+Selecting a color in the tonal palette, only selects the color in the palette, it 
+does not update the palette. Only when you select a color from the other color 
+sources in the picker, is that color used as key, to seed and generate an 
+updated color palette for the selected color.
+
+For more info on Material 3 Color system, see:
+https://m3.material.io/styles/color/the-color-system/key-colors-tones
+
+The picker item size for tonal palette color indicator items is
+10/13 the size of defined width and height. This is done in order to
+as far as possible try to match the width of the Primary Material Swatch
+items total width, it has 10 colors, the M3 tonal palette has 13 colors.
+The idea is try to match their width when they are both shown.
+
+
+
+<img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-tonal-4.png?raw=true" alt="Tonal pickers 4"/>
+
 ### Custom Color Swatches
 
 API reference: [customColorSwatchesAndNames](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/customColorSwatchesAndNames.html)
@@ -732,7 +771,8 @@ for `createAccentSwatch` for as color for index [200], the rest of the index col
 
 To define color data to use with the `customColorSwatchesAndNames` property, to start using the custom color picker, 
 first make a final **Map** with your custom `ColorSwatch` objects, and their color names. 
-You decide what the colors are called. Here we make three custom colors, with the different above mentioned methods.
+You decide what the colors are called. Here we make three custom colors, with the different 
+methods.
 
 ```dart
 final Map<ColorSwatch<Object>, String> customSwatches =
@@ -899,15 +939,20 @@ sessions, in addition to all the settings, you can use it as an example on how t
 API reference: [title, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/title.html)
 [heading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/heading.html)
 [subheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/subheading.html)
+[tonalSubheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/tonalSubheading.html)
 [wheelSubheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/wheelSubheading.html)
 [opacitySubheading, ](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/opacitySubheading.html)
 [recentColorsSubheading.](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/recentColorsSubheading.html)
 
 
 You can provide custom heading widgets for the picker's toolbar `title`, main `heading`, shades selection color 
-`subheading`, and the `wheelSubheading`, opacity slider `opacitySubheading` and subheading for the recently used 
+`subheading`, tonal palette `tonalSubheading` and the `wheelSubheading`, opacity slider 
+`opacitySubheading` and subheading for the recently used 
 colors list `recentColorsSubheading`. If a heading is `null`, it is omitted. The headings can be any Widget, 
 but typically they are `Text` widgets with a suitable style, as shown below.
+
+The `tonalSubheading` in the tonal palette added in version 2.3.0 is not shown in the example 
+image below, but it would be below the shade `subheading` and equivalent to it.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-11.png?raw=true" alt="Picker 11"/>
 
@@ -1340,9 +1385,9 @@ Optional `ValueChanged<List<Color>>` callback that returns the current list of r
 
 This optional callback is called every time a new color is added to the recent colors list with the complete current 
 list of recently used colors. If the optional callback is not provided, then it is not called. You can
-use this callback to save and restore the recently used colors. To initialize the list when the color picker is created 
-give it a starting via `recentColors`. This could be a list kept just in state during the current app session, 
-or it could have been persisted and restored from a previous session.
+use this callback to save and restore the recently used colors. To initialize the list when the color picker
+is created give it a starting value via `recentColors`. This could be a list kept just in state during
+the current app session, or it could have been persisted and restored from a previous session.
 
 ## Dialogs
 
@@ -1365,7 +1410,7 @@ method.
 
 The disadvantage with this dialog is that to maintain the state yourself. You have to store color before you open the 
 dialog and restore this color if the dialog is cancelled, instead of a color selected. The API can also be a bit 
-cumbersome to use, although the above mentioned example shows how it is done.
+cumbersome to use, the above example demonstrates how to do it.
 
 ### Function showColorPickerDialog 
 

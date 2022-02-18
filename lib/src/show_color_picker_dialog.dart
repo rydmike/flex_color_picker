@@ -47,6 +47,24 @@ Future<Color> showColorPickerDialog(
   /// Defaults to false.
   bool includeIndex850 = false,
 
+  /// Set to true to allow selection of color tone from a tonal palette.
+  ///
+  /// When set to true, the ColorPicker will use Material 3 color utilities
+  /// to compute a tonal palette for the selected color, allowing you to
+  /// select a color tone from the Tonal Palette for the selected color.
+  ///
+  /// For more info on Material 3 Color system, see:
+  /// https://m3.material.io/styles/color/the-color-system/key-colors-tones
+  ///
+  /// The picker item size for tonal palette color indicator items is
+  /// 10/13 the size of defined width and height. This is done in order to
+  /// as far as possible try to match the width of the Primary Material Swatch
+  /// items total width, it has 10 colors, the M3 tonal palette has 13 colors.
+  /// The idea is try to match their width when they are both shown.
+  ///
+  /// Defaults to false.
+  final bool enableTonalPalette = false,
+
   /// Cross axis alignment used to layout the main content of the
   /// color picker in its column layout.
   ///
@@ -199,6 +217,12 @@ Future<Color> showColorPickerDialog(
   /// Typically a Text widget, e.g. `Text('Select color shade')`.
   /// If not provided or null, there is no subheading for the color shades.
   Widget? subheading,
+
+  /// Subheading widget for the color tone selection.
+  ///
+  /// Typically a Text widget, e.g. `Text('Select color shade')`.
+  /// If not provided or null, there is no subheading for the color shades.
+  Widget? tonalSubheading,
 
   /// Subheading widget for the HSV color wheel picker.
   ///
@@ -595,6 +619,7 @@ Future<Color> showColorPickerDialog(
     pickersEnabled: pickersEnabled,
     enableShadesSelection: enableShadesSelection,
     includeIndex850: includeIndex850,
+    enableTonalPalette: enableTonalPalette,
     crossAxisAlignment: crossAxisAlignment,
     padding: padding,
     columnSpacing: columnSpacing,

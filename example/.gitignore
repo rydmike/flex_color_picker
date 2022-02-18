@@ -9,6 +9,7 @@
 .history
 .svn/
 .fvm/
+example/.fvm
 
 # IntelliJ related
 *.iml
@@ -30,6 +31,7 @@
 .pub-cache/
 .pub/
 build/
+example/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar

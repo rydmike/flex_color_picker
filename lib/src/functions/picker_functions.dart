@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:material_color_utilities/material_color_utilities.dart';
 
 import '../models/color_picker_type.dart';
 
@@ -118,4 +121,13 @@ List<Color> getMaterialColorShades(ColorSwatch<Object> color, bool include850) {
     if (color[850] != null && include850) color[850]!,
     if (color[900] != null) color[900]!,
   ];
+}
+
+/// Return the M3 tonal palette for a passed in color as a list of Colors.
+List<Color> getTonalColors(Color color) {
+  final Cam16 camColor = Cam16.fromInt(color.value);
+  final TonalPalette tonalColors =
+      TonalPalette.of(camColor.hue, math.max(48, camColor.chroma));
+
+  return tonalColors.asList.map((int e) => Color(e)).toList();
 }

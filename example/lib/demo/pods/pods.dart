@@ -156,6 +156,13 @@ final StateProvider<bool> enableShadesSelectionPod =
       defaultValue: Keys.defaults[Keys.enableShadesSelection]! as bool) as bool;
 }, name: Keys.enableShadesSelection);
 
+// State of shades color selection.
+final StateProvider<bool> enableTonesSelectionPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.enableTonesSelection,
+      defaultValue: Keys.defaults[Keys.enableTonesSelection]! as bool) as bool;
+}, name: Keys.enableTonesSelection);
+
 // State of including index 850 for grey color.
 final StateProvider<bool> includeIndex850Pod =
     StateProvider<bool>((StateProviderRef<bool> ref) {
@@ -239,6 +246,13 @@ final StateProvider<bool> showSubheadingPod =
   return hiveStore.get(Keys.showSubheading,
       defaultValue: Keys.defaults[Keys.showSubheading]! as bool) as bool;
 }, name: Keys.showSubheading);
+
+// State of showing tonal sub heading, for both swatch color pickers and wheel.
+final StateProvider<bool> showTonalSubheadingPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.showTonalSubheading,
+      defaultValue: Keys.defaults[Keys.showTonalSubheading]! as bool) as bool;
+}, name: Keys.showTonalSubheading);
 
 // State of showing subheading for opacity control.
 final StateProvider<bool> showOpacitySubheadingPod =

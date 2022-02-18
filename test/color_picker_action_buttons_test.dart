@@ -143,9 +143,20 @@ void main() {
       );
     });
     test(
-        'CPAB3.2: GIVEN a ColorPickerActionButtons object EXPECT it to '
+        'CPAB3.2a: GIVEN a ColorPickerActionButtons object EXPECT it to '
         'be unchanged after an empty copyWith.', () {
-      expect(m4.copyWith(), m4);
+      expect(
+        m4.copyWith(),
+        equals(m4),
+      );
+    });
+    test(
+        'CPAB3.2b: GIVEN a ColorPickerActionButtons object EXPECT it to '
+        'be unchanged after an empty copyWith.', () {
+      expect(
+        m4.copyWith(okButton: false),
+        equals(m4.copyWith(okButton: false)),
+      );
     });
     test(
         'CPAB3.3: GIVEN two identical but different ColorPickerActionButtons '
