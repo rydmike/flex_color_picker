@@ -826,9 +826,9 @@ class ColorPicker extends StatefulWidget {
     final MaterialLocalizations translate = MaterialLocalizations.of(context);
 
     // Make the dialog OK button.
-    final String _okButtonLabel =
+    final String okButtonLabel =
         actionButtons.dialogOkButtonLabel ?? translate.okButtonLabel;
-    final Widget _okButtonContent = Wrap(
+    final Widget okButtonContent = Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
@@ -837,44 +837,44 @@ class ColorPicker extends StatefulWidget {
             padding: const EdgeInsetsDirectional.only(end: 4),
             child: Icon(actionButtons.okIcon),
           ),
-        Text(_okButtonLabel),
+        Text(okButtonLabel),
       ],
     );
-    Widget _okButton;
+    Widget okButton;
     switch (actionButtons.dialogOkButtonType) {
       case ColorPickerActionButtonType.text:
-        _okButton = TextButton(
+        okButton = TextButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(true);
           },
-          child: _okButtonContent,
+          child: okButtonContent,
         );
         break;
       case ColorPickerActionButtonType.outlined:
-        _okButton = OutlinedButton(
+        okButton = OutlinedButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(true);
           },
-          child: _okButtonContent,
+          child: okButtonContent,
         );
         break;
       case ColorPickerActionButtonType.elevated:
-        _okButton = ElevatedButton(
+        okButton = ElevatedButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(true);
           },
-          child: _okButtonContent,
+          child: okButtonContent,
         );
         break;
     }
 
     // Make the dialog OK button.
-    final String _cancelButtonLabel =
+    final String cancelButtonLabel =
         actionButtons.dialogCancelButtonLabel ?? translate.cancelButtonLabel;
-    final Widget _cancelButtonContent = Wrap(
+    final Widget cancelButtonContent = Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
@@ -883,42 +883,42 @@ class ColorPicker extends StatefulWidget {
             padding: const EdgeInsetsDirectional.only(end: 4),
             child: Icon(actionButtons.closeIcon),
           ),
-        Text(_cancelButtonLabel),
+        Text(cancelButtonLabel),
       ],
     );
-    Widget _cancelButton;
+    Widget cancelButton;
     switch (actionButtons.dialogCancelButtonType) {
       case ColorPickerActionButtonType.text:
-        _cancelButton = TextButton(
+        cancelButton = TextButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(false);
           },
-          child: _cancelButtonContent,
+          child: cancelButtonContent,
         );
         break;
       case ColorPickerActionButtonType.outlined:
-        _cancelButton = OutlinedButton(
+        cancelButton = OutlinedButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(false);
           },
-          child: _cancelButtonContent,
+          child: cancelButtonContent,
         );
         break;
       case ColorPickerActionButtonType.elevated:
-        _cancelButton = ElevatedButton(
+        cancelButton = ElevatedButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
                 .pop(false);
           },
-          child: _cancelButtonContent,
+          child: cancelButtonContent,
         );
         break;
     }
 
     // False if dialog cancelled, true if color selected
-    bool _colorWasSelected = false;
+    bool colorWasSelected = false;
 
     await showDialog<bool>(
         context: context,
@@ -941,8 +941,8 @@ class ColorPicker extends StatefulWidget {
             contentPadding: contentPadding,
             actions: actionButtons.dialogActionButtons
                 ? <Widget>[
-                    _cancelButton,
-                    _okButton,
+                    cancelButton,
+                    okButton,
                   ]
                 : null,
             actionsPadding: actionsPadding,
@@ -958,9 +958,9 @@ class ColorPicker extends StatefulWidget {
         }).then((bool? value) {
       // If the dialog return value was null, then we got here by a
       // barrier dismiss, then we set the return value to false.
-      _colorWasSelected = value ?? false;
+      colorWasSelected = value ?? false;
     });
-    return _colorWasSelected;
+    return colorWasSelected;
   }
 }
 
@@ -1109,7 +1109,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // debugPrint('didUpdateWidget called **********************************');
 
     // Set to true if a change was done where we need to find the picker again.
-    bool _shouldFindPickerAndSwatch = false;
+    bool shouldFindPickerAndSwatch = false;
 
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
@@ -1201,7 +1201,7 @@ class _ColorPickerState extends State<ColorPicker> {
       // debugPrint('${oldWidget.customColorSwatchesAndNames}');
 
       // We should find picker and swatch after above updates.
-      _shouldFindPickerAndSwatch = true;
+      shouldFindPickerAndSwatch = true;
     }
     // If the recent colors that is stored in local state version is
     // not equal to the one passed in, then the picker got a new externally
@@ -1226,10 +1226,10 @@ class _ColorPickerState extends State<ColorPicker> {
       _wheelShouldUpdate = true;
       _editShouldUpdate = true;
       // We need to find the right picker again.
-      _shouldFindPickerAndSwatch = true;
+      shouldFindPickerAndSwatch = true;
     }
     //
-    if (_shouldFindPickerAndSwatch) {
+    if (shouldFindPickerAndSwatch) {
       // debugPrint('didUpdateWidget calls findPicker and updateActiveSwatch');
 
       // When in this IF branch, we need to find the right picker again.
@@ -1367,7 +1367,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
     // The logic below is used to determine if we will have a context menu
     // present at all in the Widget tree.
-    final bool _useContextMenu = widget.copyPasteBehavior.longPressMenu ||
+    final bool useContextMenu = widget.copyPasteBehavior.longPressMenu ||
         widget.copyPasteBehavior.secondaryMenu ||
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice ||
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb;
@@ -1383,7 +1383,7 @@ class _ColorPickerState extends State<ColorPicker> {
       // entire color picker with a Copy-Paste context menu, if it is not
       // enabled, it is not a part of the widget tree at all.
       child: IfWrapper(
-        condition: _useContextMenu,
+        condition: useContextMenu,
         builder: (BuildContext context, Widget child) {
           return ContextCopyPasteMenu(
             useLongPress: widget.copyPasteBehavior.longPressMenu,

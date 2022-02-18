@@ -41,9 +41,9 @@ class AppTheme {
   // Light theme color scheme.
   static ColorScheme get colorSchemeLight => const ColorScheme.light().copyWith(
         primary: App.primaryLight,
-        primaryVariant: App.primaryVariantLight,
+        primaryContainer: App.primaryContainerLight,
         secondary: App.secondaryLight,
-        secondaryVariant: App.secondaryVariantLight,
+        secondaryContainer: App.secondaryContainerLight,
         surface: App.surfaceLight,
         background: App.backgroundLight,
         onPrimary: App.onPrimaryLight,
@@ -80,9 +80,9 @@ class AppTheme {
   // Dark theme color scheme.
   static ColorScheme get colorSchemeDark => const ColorScheme.dark().copyWith(
         primary: App.primaryDark,
-        primaryVariant: App.primaryVariantDark,
+        primaryContainer: App.primaryContainerDark,
         secondary: App.secondaryDark,
-        secondaryVariant: App.secondaryVariantDark,
+        secondaryContainer: App.secondaryContainerDark,
         surface: App.surfaceDark,
         background: App.backgroundDark,
         onPrimary: App.onPrimaryDark,

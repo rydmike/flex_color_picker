@@ -161,27 +161,28 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final RenderBox renderBox =
         renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
 
-    final Size _size = renderBox.size;
-    final double _radius = wheelRadius(_size);
-    final double _squareRadius = squareRadius(_radius);
-    final Offset _startPosition = renderBox.localToGlobal(Offset.zero);
-    final Offset _center = Offset(_size.width / 2, _size.height / 2);
-    final Offset _vector = offset - _startPosition - _center;
+    final Size size = renderBox.size;
+    final double radius = wheelRadius(size);
+    final double effectiveSquareRadius = squareRadius(radius);
+    final Offset startPosition = renderBox.localToGlobal(Offset.zero);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final Offset vector = offset - startPosition - center;
 
     // We are operating the wheel, so onWheel is true.
     widget.onWheel(true);
 
     // Did the onStart, start on the square Palette box?
-    isSquare =
-        _vector.dx.abs() < _squareRadius && _vector.dy.abs() < _squareRadius;
+    isSquare = vector.dx.abs() < effectiveSquareRadius &&
+        vector.dy.abs() < effectiveSquareRadius;
     // We started on the square palette box
     if (isSquare) {
       // Calculate the color saturation
       colorSaturation =
-          _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
+          _Wheel.vectorToSaturation(vector.dx, effectiveSquareRadius)
+              .clamp(0.0, 1.0);
       // Calculate the color value
-      colorValue =
-          _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
+      colorValue = _Wheel.vectorToValue(vector.dy, effectiveSquareRadius)
+          .clamp(0.0, 1.0);
 
       // If a start callback was given, call it with the start color.
       widget.onChangeStart?.call(widget.color);
@@ -199,7 +200,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // If a start callback given, call it with the start color.
       widget.onChangeStart?.call(widget.color);
       // Calculate the color Hue
-      colorHue = _Wheel.vectorToHue(_vector);
+      colorHue = _Wheel.vectorToHue(vector);
       // Convert the color to normal RGB value before returning it via callback.
       widget.onChanged(HSVColor.fromAHSV(
         color.alpha,
@@ -217,11 +218,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
 
     final Size size = renderBox.size;
-    final double _radius = wheelRadius(size);
-    final double _squareRadius = squareRadius(_radius);
-    final Offset _startPosition = renderBox.localToGlobal(Offset.zero);
-    final Offset _center = Offset(size.width / 2, size.height / 2);
-    final Offset _vector = offset - _startPosition - _center;
+    final double radius = wheelRadius(size);
+    final double effectiveSquareRadius = squareRadius(radius);
+    final Offset startPosition = renderBox.localToGlobal(Offset.zero);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final Offset vector = offset - startPosition - center;
 
     // We are operating the wheel, so onWheel is true.
     widget.onWheel(true);
@@ -230,10 +231,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     if (isSquare) {
       // Calculate the color saturation
       colorSaturation =
-          _Wheel.vectorToSaturation(_vector.dx, _squareRadius).clamp(0.0, 1.0);
+          _Wheel.vectorToSaturation(vector.dx, effectiveSquareRadius)
+              .clamp(0.0, 1.0);
       // Calculate the color value
-      colorValue =
-          _Wheel.vectorToValue(_vector.dy, _squareRadius).clamp(0.0, 1.0);
+      colorValue = _Wheel.vectorToValue(vector.dy, effectiveSquareRadius)
+          .clamp(0.0, 1.0);
       // Make a HSV color from its component values and convert to RGB and
       // return this color in the callback.
       widget.onChanged(
@@ -242,7 +244,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       // The updates are for the color wheel
     } else {
       // Calculate the color Hue
-      colorHue = _Wheel.vectorToHue(_vector);
+      colorHue = _Wheel.vectorToHue(vector);
       // Convert the color to normal RGB color before it is returned.
       widget.onChanged(HSVColor.fromAHSV(
         color.alpha,
@@ -380,38 +382,41 @@ class _ShadePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset _center = Offset(size.width / 2, size.height / 2);
-    final double _radius = wheelRadius(size, wheelWidth);
-    final double _squareRadius = squareRadius(_radius, wheelWidth);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = wheelRadius(size, wheelWidth);
+    final double effectiveSquareRadius = squareRadius(radius, wheelWidth);
 
     // Draw the color shade palette.
-    final Rect _rectBox = Rect.fromLTWH(_center.dx - _squareRadius,
-        _center.dy - _squareRadius, _squareRadius * 2, _squareRadius * 2);
+    final Rect rectBox = Rect.fromLTWH(
+        center.dx - effectiveSquareRadius,
+        center.dy - effectiveSquareRadius,
+        effectiveSquareRadius * 2,
+        effectiveSquareRadius * 2);
     final RRect rRect =
-        RRect.fromRectAndRadius(_rectBox, const Radius.circular(4));
+        RRect.fromRectAndRadius(rectBox, const Radius.circular(4));
 
-    final Shader _horizontal = LinearGradient(
+    final Shader horizontal = LinearGradient(
       colors: <Color>[
         Colors.white,
         HSVColor.fromAHSV(1, colorHue, 1, 1).toColor()
       ],
-    ).createShader(_rectBox);
+    ).createShader(rectBox);
     canvas.drawRRect(
         rRect,
         Paint()
           ..style = PaintingStyle.fill
-          ..shader = _horizontal);
+          ..shader = horizontal);
 
-    final Shader _vertical = const LinearGradient(
+    final Shader vertical = const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: <Color>[Colors.transparent, Colors.black],
-    ).createShader(_rectBox);
+    ).createShader(rectBox);
     canvas.drawRRect(
         rRect,
         Paint()
           ..style = PaintingStyle.fill
-          ..shader = _vertical);
+          ..shader = vertical);
 
     // Draw a border around the outer edge of the square shade picker.
     if (hasBorder) {
@@ -452,27 +457,27 @@ class _WheelPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset _center = Offset(size.width / 2, size.height / 2);
-    final double _radius = wheelRadius(size, wheelWidth);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = wheelRadius(size, wheelWidth);
 
-    const double _rads = (2 * math.pi) / 360;
-    const double _step = 1;
-    const double _aliasing = 0.5;
+    const double rads = (2 * math.pi) / 360;
+    const double step = 1;
+    const double aliasing = 0.5;
 
     // Responsive views might force the Size to become a rectangle, thus
     // creating an ellipse, so we/ keep it as a circle by always using the
     // shortest side in the surrounding rectangle to make a square.
-    final double _shortestRectSide = math.min(size.width, size.height);
+    final double shortestRectSide = math.min(size.width, size.height);
 
     final Rect rectCircle = Rect.fromCenter(
-        center: _center,
-        width: _shortestRectSide - wheelWidth,
-        height: _shortestRectSide - wheelWidth);
+        center: center,
+        width: shortestRectSide - wheelWidth,
+        height: shortestRectSide - wheelWidth);
 
     // Draw the color circle
     for (int i = 0; i < ticks; i++) {
-      final double sRad = (i - _aliasing) * _rads;
-      final double eRad = (i + _step) * _rads;
+      final double sRad = (i - aliasing) * rads;
+      final double eRad = (i + step) * rads;
       final Paint segmentPaint = Paint()
         ..color = HSVColor.fromAHSV(1, i.toDouble(), 1, 1).toColor()
         ..style = PaintingStyle.stroke
@@ -490,16 +495,16 @@ class _WheelPainter extends CustomPainter {
     if (hasBorder) {
       // Draw border around the inner side of the color wheel
       canvas.drawCircle(
-          _center,
-          _radius - wheelWidth / 2,
+          center,
+          radius - wheelWidth / 2,
           Paint()
             ..style = PaintingStyle.stroke
             ..color = borderColor);
 
       // Draw border around the outer side of the color wheel
       canvas.drawCircle(
-          _center,
-          _radius + wheelWidth / 2,
+          center,
+          radius + wheelWidth / 2,
           Paint()
             ..style = PaintingStyle.stroke
             ..color = borderColor);
@@ -534,34 +539,34 @@ class _ShadeThumbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset _center = Offset(size.width / 2, size.height / 2);
-    final double _radius = wheelRadius(size, wheelWidth);
-    final double _squareRadius = squareRadius(_radius, wheelWidth);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = wheelRadius(size, wheelWidth);
+    final double effectiveSquareRadius = squareRadius(radius, wheelWidth);
 
     // Define paint style for the selection thumbs:
     // Outer black circle.
-    final Paint _paintBlack = Paint()
+    final Paint paintBlack = Paint()
       ..color = Colors.black
       ..strokeWidth = 5
       ..style = PaintingStyle.stroke;
     // Inner white circle, to be placed on top of the black one.
-    final Paint _paintWhite = Paint()
+    final Paint paintWhite = Paint()
       ..color = Colors.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
     // Define the selection thumb position on the square
-    final double _paletteX =
-        _Wheel.saturationToVector(colorSaturation, _squareRadius, _center.dx);
-    final double _paletteY =
-        _Wheel.valueToVector(colorValue, _squareRadius, _center.dy);
-    final Offset paletteVector = Offset(_paletteX, _paletteY);
+    final double paletteX = _Wheel.saturationToVector(
+        colorSaturation, effectiveSquareRadius, center.dx);
+    final double paletteY =
+        _Wheel.valueToVector(colorValue, effectiveSquareRadius, center.dy);
+    final Offset paletteVector = Offset(paletteX, paletteY);
 
     // Draw the wider black circle first, then draw the smaller white circle
     // on top of it, giving the appearance of a white indicator with black
     // edges around it.
-    canvas.drawCircle(paletteVector, 12, _paintBlack);
-    canvas.drawCircle(paletteVector, 12, _paintWhite);
+    canvas.drawCircle(paletteVector, 12, paintBlack);
+    canvas.drawCircle(paletteVector, 12, paintWhite);
   }
 
   @override
@@ -587,30 +592,30 @@ class _WheelThumbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset _center = Offset(size.width / 2, size.height / 2);
-    final double _radius = wheelRadius(size, wheelWidth);
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = wheelRadius(size, wheelWidth);
 
     // Define paint style for the selection thumbs:
     // Outer black circle.
-    final Paint _paintBlack = Paint()
+    final Paint paintBlack = Paint()
       ..color = Colors.black
       ..strokeWidth = 5
       ..style = PaintingStyle.stroke;
     // Inner white circle, to be placed on top of the black one.
-    final Paint _paintWhite = Paint()
+    final Paint paintWhite = Paint()
       ..color = Colors.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
     // Define the selection thumb position on the color wheel.
-    final Offset _wheel = _Wheel.hueToVector(
-        (colorHue + 360.0) * math.pi / 180.0, _radius, _center);
+    final Offset wheel = _Wheel.hueToVector(
+        (colorHue + 360.0) * math.pi / 180.0, radius, center);
 
     // Draw the wider black circle first, then draw the smaller white circle
     // on top of it, giving the appearance of a white indicator with black
     // edges around it.
-    canvas.drawCircle(_wheel, wheelWidth / 2 + 4, _paintBlack);
-    canvas.drawCircle(_wheel, wheelWidth / 2 + 4, _paintWhite);
+    canvas.drawCircle(wheel, wheelWidth / 2 + 4, paintBlack);
+    canvas.drawCircle(wheel, wheelWidth / 2 + 4, paintWhite);
   }
 
   @override

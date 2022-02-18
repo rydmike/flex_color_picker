@@ -10,7 +10,7 @@ import 'color_picker_card.dart';
 /// Screen with the two ColorPickers and all controls and settings we use to
 /// manipulate their design and behavior.
 ///
-/// The laout is responsive and can have 1 to 4 columns that contains the
+/// The layout is responsive and can have 1 to 4 columns that contains the
 /// ColorPicker and the controls, each column when visible has its own
 /// ListView, so the columns can be scrolled individually when they are visible.
 class ColorPickerScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class ColorPickerScreen extends StatelessWidget {
         flexibleSpace: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: AlignmentDirectional.centerStart,
