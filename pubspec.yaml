@@ -1,6 +1,6 @@
 name: flex_color_picker
 description: A customizable Flutter primary, accent and custom color picker. Includes an optional HSV wheel color picker.
-version: 2.2.0
+version: 2.3.0
 homepage: https://github.com/rydmike/flex_color_picker
 
 environment:
@@ -9,6 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Color utilities by Google (material.io).
+  # Used to compute and create Tonal Palette theme colors.
+  # Flutter SDK from 2.10.0 stable also uses and depends on this package.
+  # Using ^0.1.3 because Flutter stable 2.10.0 uses it, master is on ^0.1.4
+  material_color_utilities: ^0.1.3
 
 dev_dependencies:
   collection:
