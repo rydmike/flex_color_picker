@@ -14,7 +14,7 @@ class App {
   static const String version = '2.2.0';
   static const String packageVersion = 'FlexColorScheme package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
-  static const String flutterVersion = 'Channel stable 2.5.3, CanvasKit';
+  static const String flutterVersion = 'Channel stable 2.10.1';
   static const String copyright = '© 2020, 2021';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
