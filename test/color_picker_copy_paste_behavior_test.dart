@@ -94,6 +94,40 @@ void main() {
       editUsesParsedPaste: true,
     );
 
+    const ColorPickerCopyPasteBehavior m5 = ColorPickerCopyPasteBehavior(
+      ctrlC: false,
+      ctrlV: false,
+      copyButton: true,
+      pasteButton: true,
+      copyIcon: Icons.android,
+      pasteIcon: Icons.close,
+      copyTooltip: 'COPY',
+      pasteTooltip: 'PASTE',
+      copyFormat: ColorPickerCopyFormat.numHexAARRGGBB,
+      longPressMenu: true,
+      secondaryMenu: true,
+      secondaryOnDesktopLongOnDevice: true,
+      secondaryOnDesktopLongOnDeviceAndWeb: true,
+      editFieldCopyButton: false,
+      menuIconThemeData:
+          IconThemeData(opacity: 50, size: 30, color: Colors.black),
+      menuThemeData: PopupMenuThemeData(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(),
+        elevation: 3,
+        textStyle: TextStyle(fontSize: 12),
+        enableFeedback: true,
+      ),
+      menuWidth: 85,
+      menuItemHeight: 35,
+      snackBarParseError: true,
+      snackBarMessage: 'Something went wrong',
+      snackBarDuration: Duration(milliseconds: 1500),
+      feedbackParseError: true,
+      parseShortHexCode: true,
+      editUsesParsedPaste: true,
+    );
+
     test(
         'CPCPB2.1: Test toString implemented via debugFillProperties '
         'EXPECT exact print string value.', () {
@@ -112,6 +146,10 @@ void main() {
     });
     test('CPCPB2.4: Test hashCode copyWith has same exact value.', () {
       expect(m4.hashCode, equals(m4.copyWith().hashCode));
+    });
+
+    test('CPCPB2.5: Test m4 and m5 equals, made with same props.', () {
+      expect(m4, equals(m5));
     });
 
     //**************************************************************************
@@ -163,7 +201,7 @@ void main() {
     test(
         'CPCPB3.2: GIVEN a ColorPickerCopyPasteBehavior object EXPECT it to '
         'be unchanged after an empty copyWith.', () {
-      expect(m4.copyWith(), m4);
+      expect(m4, equals(m4.copyWith()));
     });
 
     test(
@@ -280,7 +318,7 @@ void main() {
         'equal to another object with same copyWith values.', () {
       expect(
         m4.copyWith(
-          ctrlC: null,
+          ctrlC: true,
           ctrlV: false,
           copyButton: true,
           pasteButton: true,
@@ -313,8 +351,8 @@ void main() {
           editUsesParsedPaste: true,
         ),
         equals(
-          m4.copyWith(
-            ctrlC: null,
+          m5.copyWith(
+            ctrlC: true,
             ctrlV: false,
             copyButton: true,
             pasteButton: true,
