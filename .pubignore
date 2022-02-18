@@ -25,6 +25,8 @@ example/.fvm
 
 # We do not want the doc resource file in pub.dev, but they do go to GitHub.
 resources/
+# It feels like pub publish uploads the .git folder too, trying to exclude it.
+.git/
 
 
 # Flutter/Dart/Pub related

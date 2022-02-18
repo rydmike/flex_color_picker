@@ -3,7 +3,9 @@
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
 ## [2.3.0] - February 18, 2022
-**New feature** 
+
+**NEW FEATURE**
+
 * Added capability to show a Material 3 tonal palette as per 
   [Material 3 design specification](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
   
@@ -14,7 +16,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
 
   - When you click/select a color in the color picker and tonal palette is 
   enabled, a 13 shade Material 3 tonal palette for the selected color will be 
-  generated, always starting with black, tone 0 for the used seed color and ending in white, tone 100.
+  generated, always starting with black, tone 0 for the used seed color and 
+  ending in white, tone 100.
 
   - The official Material 3 Dart library is used to create the tonal palette 
   from any selected color. The color you select functions a seed color to 
@@ -28,7 +31,8 @@ All notable changes to the **FlexColorPicker** package will be documented in thi
    an updated color palette for the selected color.
 
   
-**Updated**
+**UPDATED**
+
 * The WEB example was updated to include enabling and disabling 
   the tonal palette and built it with Flutter version, stable 2.10.1.
 * All dependencies in the Web demo were updated to their latest
