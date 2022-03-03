@@ -33,7 +33,6 @@ example/.fvm
 .pub/
 build/
 example/build/
-coverage/lcov.info
 
 # Android related
 **/android/**/gradle-wrapper.jar
