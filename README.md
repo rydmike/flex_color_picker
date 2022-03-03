@@ -100,7 +100,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 
 ```yaml
 dependencies:  
-  flex_color_picker: ^2.3.0
+  flex_color_picker: ^2.3.1
 ```
 
 In your library file add the following import:

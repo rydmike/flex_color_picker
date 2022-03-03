@@ -2,6 +2,17 @@
 
 All notable changes to the **FlexColorPicker** package will be documented in this file.
 
+## [2.3.1] - March 3, 2022
+
+**FIX**
+
+* Fix for nullable/none nullable difference for Flutter
+  `IconButton` between Flutter version 2.10.0 and earlier versions, e.g.
+   2.8.1, where `iconSize` is nullable in Flutter 2.10.x, but not e.g. in 
+   Flutter 2.8.1. See issue [report #40](https://github.com/rydmike/flex_color_picker/issues/40)
+   and [PR #41](https://github.com/rydmike/flex_color_picker/pull/41).
+
+
 ## [2.3.0] - February 18, 2022
 
 **NEW FEATURE**
