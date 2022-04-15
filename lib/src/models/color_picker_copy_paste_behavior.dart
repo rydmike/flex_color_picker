@@ -102,7 +102,6 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Defaults to true.
   final bool ctrlV;
 
-
   /// When true, the picker tries to grab the focus when the picker is created.
   ///
   /// By default the picker tries to set focus to its own widgets when it is
@@ -281,7 +280,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// labels `pasteButtonLabel`: `invalidDateFormatLabel` in a [Text] widget.
   /// In English it says "Paste: Invalid format.".
   ///
-  /// The snackbar uses the closest theme with SnackBarThemeData for its
+  /// The snackBar uses the closest theme with SnackBarThemeData for its
   /// theming.
   final String? snackBarMessage;
 
@@ -349,7 +348,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ColorPickerCopyPasteBehavior copyWith({
     bool? ctrlC,
     bool? ctrlV,
-    bool?  autoFocus,
+    bool? autoFocus,
     bool? copyButton,
     bool? pasteButton,
     IconData? copyIcon,
