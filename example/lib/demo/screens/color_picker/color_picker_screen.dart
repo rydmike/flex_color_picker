@@ -1,9 +1,7 @@
-import 'dart:ui';
-
-import 'package:color_picker_example/demo/widgets/flex_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app.dart';
+import '../../widgets/flex_app_bar.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
@@ -28,10 +26,6 @@ class ColorPickerScreen extends StatelessWidget {
     int columns = width ~/ App.minColumnWidth;
     if (columns < 1) columns = 1;
     if (columns > 4) columns = 4;
-
-    // AppBar background color
-    final Color bgColor = Theme.of(context).appBarTheme.backgroundColor ??
-        Theme.of(context).colorScheme.background;
 
     // ScrollControllers for potential 4 List views
     final ScrollController scrollOne = ScrollController();
