@@ -1,11 +1,15 @@
 import 'dart:ui';
 
+import 'package:color_picker_example/demo/widgets/flex_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
+import 'picker_switches/picker_auto_focus_switch.dart';
+import 'picker_text_fields/text_field_focus_demo.dart';
+import 'picker_toggle_buttons/actions_order_switch.dart';
 
 /// Screen with the two ColorPickers and all controls and settings we use to
 /// manipulate their design and behavior.
@@ -29,33 +33,25 @@ class ColorPickerScreen extends StatelessWidget {
     final Color bgColor = Theme.of(context).appBarTheme.backgroundColor ??
         Theme.of(context).colorScheme.background;
 
+    // ScrollControllers for potential 4 List views
+    final ScrollController scrollOne = ScrollController();
+    final ScrollController scrollTwo = ScrollController();
+    final ScrollController scrollThree = ScrollController();
+    final ScrollController scrollFour = ScrollController();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: FlexAppBar.styled(
+        context,
         centerTitle: true,
         title: const Text('FlexColorPicker Demo'),
         actions: const <Widget>[AboutIconButton()],
-        backgroundColor: Colors.transparent,
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: AlignmentDirectional.centerStart,
-                    end: AlignmentDirectional.centerEnd,
-                    colors: <Color>[
-                      bgColor,
-                      bgColor.withOpacity(0.2),
-                    ],
-                  ),
-                  border: Border(
-                    bottom: BorderSide(color: Theme.of(context).dividerColor),
-                  )),
-            ),
-          ),
-        ),
-      ),
+        blurred: true,
+        opacity: 0.5,
+        gradient: false,
+        hasBorderOnSurface: true,
+        scrim: false,
+      ).toAppBar(),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: App.maxBodyWidth),
@@ -66,7 +62,11 @@ class ColorPickerScreen extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Scrollbar(
+                  controller: scrollOne,
+                  isAlwaysShown: true,
+                  interactive: true,
                   child: ListView(
+                    controller: scrollOne,
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     children: <Widget>[
                       SizedBox(
@@ -86,7 +86,11 @@ class ColorPickerScreen extends StatelessWidget {
               if (columns > 1)
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollTwo,
+                    isAlwaysShown: true,
+                    interactive: true,
                     child: ListView(
+                      controller: scrollTwo,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
                         SizedBox(
@@ -105,7 +109,11 @@ class ColorPickerScreen extends StatelessWidget {
               if (columns > 2)
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollThree,
+                    isAlwaysShown: true,
+                    interactive: true,
                     child: ListView(
+                      controller: scrollThree,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
                         SizedBox(
@@ -123,7 +131,11 @@ class ColorPickerScreen extends StatelessWidget {
               if (columns > 3)
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollFour,
+                    isAlwaysShown: true,
+                    interactive: true,
                     child: ListView(
+                      controller: scrollFour,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
                         SizedBox(
@@ -168,6 +180,7 @@ class _Column1 extends StatelessWidget {
           padding: EdgeInsets.all(6),
           child: ColorPickerCard(),
         ),
+
         ListTile(
           subtitle: Wrap(runSpacing: 8, children: const <Widget>[
             OnStartColorIndicator(),
@@ -196,6 +209,8 @@ class _Column1 extends StatelessWidget {
               'PASTE supports all above formats. COPY in selected format.'),
         ),
         const ParseShortHexCodeSwitch(),
+        const Divider(),
+        const TextFieldFocusDemo(),
         const Divider(),
       ],
     );
@@ -308,6 +323,7 @@ class _Column4 extends StatelessWidget {
         const OkButtonSwitch(),
         const CloseIsLastSwitch(),
         const DialogActionsButtonsSwitch(),
+        const ActionsOrderSwitch(),
         const DialogActionIconsSwitch(),
         const Divider(),
         //
@@ -320,6 +336,7 @@ class _Column4 extends StatelessWidget {
         ),
         const ControlCopySwitch(),
         const ControlPasteSwitch(),
+        const PickerAutoFocusSwitch(),
         const ToolbarCopySwitch(),
         const ToolbarPasteSwitch(),
         const EditFieldCopySwitch(),

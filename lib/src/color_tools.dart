@@ -1,6 +1,8 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
+import 'functions/picker_functions.dart';
 
 /// Static color tool functions used internally by FlexColorPicker.
 ///
@@ -240,11 +242,12 @@ class ColorTools {
     return createPrimarySwatch(color);
   }
 
-  // Found this little Material shade calculation gem here:
-  // https://medium.com/@filipvk/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
-  // Originally made by by Filip Velickovic https://filipvk.bitbucket.io/
-
   /// Create a primary color Material swatch from a given color value.
+  ///
+  /// The original version of this swatch calculation is based on this
+  /// https://medium.com/@filipvk/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
+  /// by Filip Velickovic https://filipvk.bitbucket.io/
+  /// It has been slightly modified.
   ///
   /// The provided color value is used as the Material swatch default color 500
   /// in the returned swatch, with lighter hues for lower indexes and darker
@@ -255,11 +258,27 @@ class ColorTools {
   /// This function is an approximation and gives an automated way of creating
   /// a material like primary swatch.
   ///
-  /// The official Material colors contain hand tuned color swatches. To get
-  /// an official Material swatch from a color use [primarySwatch] that
+  /// The official Material colors contain hand picked references colors.
+  /// To get an official Material swatch from a color use [primarySwatch] that
   /// returns the real Material swatch first for a color, if it is a standard
-  /// Material primary color and then a Material like swatch, if it was
-  /// not a standard material primary color hue.
+  /// Material primary color, and then creates a Material like swatch with this
+  /// function, if it was not a standard material primary color hue.
+  ///
+  /// There are reversed engineered JS versions of the official Material Color
+  /// algorithm made from the Material Guide web tools. If anybody has the
+  /// energy to make a Dart version of it, that would be fabulous.
+  /// SO discussion here:
+  /// https://stackoverflow.com/questions/32942503/material-design-color-palette
+  ///
+  /// Starting points here:
+  /// - https://github.com/mbitson/mcg/issues/19
+  /// - Best one: https://github.com/eugeneford/material-palette-generator
+  /// - https://github.com/edelstone/material-palette-generator
+  ///
+  /// The official M2 guide it should match:
+  /// https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+  /// And its color tool where the JS reverse engineered version is from:
+  /// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6002ee
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
     final int r = color.red;
@@ -274,6 +293,16 @@ class ColorTools {
         1,
       );
     }
+    // The above gives a starting point, this tunes it a bit better, still far
+    // from the real algorithm.
+    swatch[50] = swatch[50]!.lighten(18);
+    swatch[100] = swatch[100]!.lighten(16);
+    swatch[200] = swatch[200]!.lighten(14);
+    swatch[300] = swatch[300]!.lighten(10);
+    swatch[400] = swatch[400]!.lighten(6);
+    swatch[700] = swatch[700]!.darken(2);
+    swatch[800] = swatch[800]!.darken(3);
+    swatch[900] = swatch[900]!.darken(4);
     return MaterialColor(color.value, swatch);
   }
 
@@ -434,6 +463,10 @@ class ColorTools {
           b + ((ds < 0 ? b : (255 - b)) * ds).round(),
           1);
     }
+    // The above gives a starting point, this tunes it a bit better, still far
+    // from the real algorithm.
+    swatch[100] = swatch[100]!.lighten(14);
+    swatch[700] = swatch[700]!.lighten(2);
     return MaterialAccentColor(color.value, swatch);
   }
 
@@ -786,12 +819,12 @@ class _ColorName {
     for (int i = 0; i < colorNames.length; i++) {
       if (decodeColor == colorNames[i].getCode) return colorNames[i];
 
-      ndf1 = pow(r - colorNames[i].getRed, 2).toInt() +
-          pow(g - colorNames[i].getGreen, 2).toInt() +
-          pow(b - colorNames[i].getBlue, 2).toInt();
-      ndf2 = pow(h - colorNames[i].getHue, 2).toInt() +
-          pow(s - colorNames[i].getSaturation, 2).toInt() +
-          pow(l - colorNames[i].getLightness, 2).toInt();
+      ndf1 = math.pow(r - colorNames[i].getRed, 2).toInt() +
+          math.pow(g - colorNames[i].getGreen, 2).toInt() +
+          math.pow(b - colorNames[i].getBlue, 2).toInt();
+      ndf2 = math.pow(h - colorNames[i].getHue, 2).toInt() +
+          math.pow(s - colorNames[i].getSaturation, 2).toInt() +
+          math.pow(l - colorNames[i].getLightness, 2).toInt();
       ndf = ndf1 + ndf2 * 2;
       if (df < 0 || df > ndf) {
         df = ndf;

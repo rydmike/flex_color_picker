@@ -362,20 +362,20 @@ void main() {
     test('Test swatch value is provided Color value 0xFF132B80', () {
       expect(refColor.value, 0xFF132B80);
     });
-    test('Test swatch index [50] reference value 0xFF7D8AB9', () {
-      expect(refColor[50], const Color(0xFF7D8AB9));
+    test('Test swatch index [50] reference value 0xffb9c0d9', () {
+      expect(refColor[50], const Color(0xffb9c0d9));
     });
-    test('Test swatch index [100] reference value 0xFF7180B3', () {
-      expect(refColor[100], const Color(0xFF7180B3));
+    test('Test swatch index [100] reference value 0xffa6b0cf', () {
+      expect(refColor[100], const Color(0xffa6b0cf));
     });
-    test('Test swatch index [200] reference value 0xFF5A6BA6', () {
-      expect(refColor[200], const Color(0xFF5A6BA6));
+    test('Test swatch index [200] reference value 0xff8895bf', () {
+      expect(refColor[200], const Color(0xff8895bf));
     });
-    test('Test swatch index [300] reference value 0xFF425599', () {
-      expect(refColor[300], const Color(0xFF425599));
+    test('Test swatch index [300] reference value 0xff576cb7', () {
+      expect(refColor[300], const Color(0xff576cb7));
     });
-    test('Test swatch index [400] reference value 0xFF2B408D', () {
-      expect(refColor[400], const Color(0xFF2B408D));
+    test('Test swatch index [400] reference value 0xff324ba4', () {
+      expect(refColor[400], const Color(0xff324ba4));
     });
     test('Test swatch index [500] reference value 0xFF132B80', () {
       expect(refColor[500], const Color(0xFF132B80));
@@ -383,14 +383,14 @@ void main() {
     test('Test swatch index [600] reference value 0xFF112773', () {
       expect(refColor[600], const Color(0xFF112773));
     });
-    test('Test swatch index [700] reference value 0xFF0F2266', () {
-      expect(refColor[700], const Color(0xFF0F2266));
+    test('Test swatch index [700] reference value 0xff0e1f5d', () {
+      expect(refColor[700], const Color(0xff0e1f5d));
     });
-    test('Test swatch index [800] reference value 0xFF0D1E5A', () {
-      expect(refColor[800], const Color(0xFF0D1E5A));
+    test('Test swatch index [800] reference value 0xff0b1a4d', () {
+      expect(refColor[800], const Color(0xff0b1a4d));
     });
-    test('Test swatch index [900] reference value 0xFF0B1A4D', () {
-      expect(refColor[900], const Color(0xFF0B1A4D));
+    test('Test swatch index [900] reference value 0xff08143b', () {
+      expect(refColor[900], const Color(0xff08143b));
     });
   });
   //
@@ -632,8 +632,8 @@ void main() {
     test('Test swatch value is provided Color value 0xFF03DAC6', () {
       expect(refColor.value, 0xFF03DAC6);
     });
-    test('Test swatch index [100] reference value 0xFF1CDECC', () {
-      expect(refColor[100], const Color(0xFF1CDECC));
+    test('Test swatch index [100] reference value 0xff58eadc', () {
+      expect(refColor[100], const Color(0xff58eadc));
     });
     test('Test swatch index [200] reference value 0xFF03DAC6', () {
       expect(refColor[200], const Color(0xFF03DAC6));
@@ -641,8 +641,8 @@ void main() {
     test('Test swatch index [400] reference value 0xFF02AE9E', () {
       expect(refColor[400], const Color(0xFF02AE9E));
     });
-    test('Test swatch index [700] reference value 0xFF026D63', () {
-      expect(refColor[700], const Color(0xFF026D63));
+    test('Test swatch index [700] reference value 0xff02776c', () {
+      expect(refColor[700], const Color(0xff02776c));
     });
   });
   //

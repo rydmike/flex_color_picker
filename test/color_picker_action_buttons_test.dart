@@ -56,7 +56,7 @@ void main() {
     //**************************************************************************
     // ColorPickerActionButtons unit tests.
     //
-    // toString and hashcode.
+    // toString and hashCode.
     //**************************************************************************
 
     // m4, is fully custom defined and totally different from m1 and m2.
@@ -77,6 +77,7 @@ void main() {
       splashRadius: 30,
       constraints: BoxConstraints(minHeight: 46, minWidth: 46),
       dialogActionButtons: false,
+      dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
       dialogActionIcons: true,
       dialogCancelButtonLabel: 'DONE',
       dialogCancelButtonType: ColorPickerActionButtonType.outlined,
@@ -90,7 +91,7 @@ void main() {
         'EXPECT exact print string value.', () {
       expect(m4.toString(), equalsIgnoringHashCodes(
           // ignore: lines_longer_than_80_chars
-          'ColorPickerActionButtons#00000(okButton: true, closeButton: true, okIcon: IconData(U+0E085), closeIcon: IconData(U+0E139), closeIsLast: false, okTooltip: "GO", closeTooltip: "OFF", closeTooltipIsClose: false, toolIconsThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), visualDensity: VisualDensity#00000(h: -1.0, v: -1.0)(horizontal: -1.0, vertical: -1.0), alignment: Alignment.topLeft, splashRadius: 30.0, constraints: BoxConstraints(46.0<=w<=Infinity, 46.0<=h<=Infinity), dialogActionButtons: false, dialogActionIcons: true, dialogCancelButtonLabel: "DONE", dialogCancelButtonType: outlined, dialogOkButtonLabel: "OKAY", dialogOkButtonType: elevated, useRootNavigator: false)'));
+          'ColorPickerActionButtons#00000(okButton: true, closeButton: true, okIcon: IconData(U+0E085), closeIcon: IconData(U+0E139), closeIsLast: false, okTooltip: "GO", closeTooltip: "OFF", closeTooltipIsClose: false, toolIconsThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), visualDensity: VisualDensity#00000(h: -1.0, v: -1.0)(horizontal: -1.0, vertical: -1.0), alignment: Alignment.topLeft, splashRadius: 30.0, constraints: BoxConstraints(46.0<=w<=Infinity, 46.0<=h<=Infinity), dialogActionButtons: false, dialogActionOrder: adaptive, dialogActionIcons: true, dialogCancelButtonLabel: "DONE", dialogCancelButtonType: outlined, dialogOkButtonLabel: "OKAY", dialogOkButtonType: elevated, useRootNavigator: false)'));
     });
     test(
         'CPAB2.2: Test toStringShort implemented via debugFillProperties '
@@ -132,6 +133,7 @@ void main() {
           splashRadius: 30,
           constraints: const BoxConstraints(minHeight: 46, minWidth: 46),
           dialogActionButtons: false,
+          dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
           dialogActionIcons: true,
           dialogCancelButtonLabel: 'DONE',
           dialogCancelButtonType: ColorPickerActionButtonType.outlined,
@@ -179,6 +181,7 @@ void main() {
             splashRadius: null,
             constraints: null,
             dialogActionButtons: null,
+            dialogActionOrder: null,
             dialogActionIcons: null,
             dialogCancelButtonLabel: null,
             dialogCancelButtonType: null,
@@ -209,6 +212,7 @@ void main() {
           splashRadius: 30,
           constraints: const BoxConstraints(minHeight: 46, minWidth: 46),
           dialogActionButtons: false,
+          dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
           dialogActionIcons: true,
           dialogCancelButtonLabel: 'DONE',
           dialogCancelButtonType: ColorPickerActionButtonType.outlined,
@@ -240,6 +244,7 @@ void main() {
             splashRadius: null,
             constraints: null,
             dialogActionButtons: null,
+            dialogActionOrder: null,
             dialogActionIcons: null,
             dialogCancelButtonLabel: null,
             dialogCancelButtonType: null,

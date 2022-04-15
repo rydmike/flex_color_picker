@@ -1,7 +1,15 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Set the bool flag to true to show debug prints. Even if it is forgotten
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off there too. Often I just leave them true if it is one
+// I want to see in dev mode, unless it is too chatty.
+const bool _debug = !kReleaseMode && false;
 
 /// A HSV color wheel based color picker for Flutter, used by FlexColorPicker.
 ///
@@ -157,7 +165,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   // Called when we start dragging any of the thumbs on the wheel or square
   void onStart(Offset offset) {
-    // This is bang and cast is not pretty, but SDK does it this was too.
+    // This is bang and cast is not pretty, but SDK does it this way too.
     final RenderBox renderBox =
         renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
 
@@ -167,6 +175,16 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Offset startPosition = renderBox.localToGlobal(Offset.zero);
     final Offset center = Offset(size.width / 2, size.height / 2);
     final Offset vector = offset - startPosition - center;
+
+    if (_debug) {
+      debugPrint('--------------------------------------------------');
+      debugPrint('size....................: $size');
+      debugPrint('radius..................: $radius');
+      debugPrint('effectiveSquareRadius...: $effectiveSquareRadius');
+      debugPrint('startPosition...........: $startPosition');
+      debugPrint('center..................: $center');
+      debugPrint('vector..................: $vector');
+    }
 
     // We are operating the wheel, so onWheel is true.
     widget.onWheel(true);
@@ -329,6 +347,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
                   painter: _ShadeThumbPainter(
                     colorSaturation: colorSaturation,
                     colorValue: colorValue,
+                    wheelWidth: widget.wheelWidth,
                   ),
                 ),
                 RepaintBoundary(
@@ -524,12 +543,11 @@ class _ShadeThumbPainter extends CustomPainter {
   const _ShadeThumbPainter({
     required this.colorSaturation,
     required this.colorValue,
-    this.wheelWidth = 16,
+    required this.wheelWidth,
   }) : super();
 
   final double colorSaturation; // The X coordinate 0...1
   final double colorValue; // The Y coordinate 0...1
-
   final double wheelWidth;
 
   static double wheelRadius(Size size, double wheelWidth) =>
@@ -573,7 +591,8 @@ class _ShadeThumbPainter extends CustomPainter {
   bool shouldRepaint(_ShadeThumbPainter oldDelegate) {
     return oldDelegate.wheelWidth != wheelWidth ||
         oldDelegate.colorSaturation != colorSaturation ||
-        oldDelegate.colorValue != colorValue;
+        oldDelegate.colorValue != colorValue ||
+        oldDelegate.wheelWidth != wheelWidth;
   }
 }
 

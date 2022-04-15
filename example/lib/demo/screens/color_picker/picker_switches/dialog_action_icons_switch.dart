@@ -16,7 +16,7 @@ class DialogActionIconsSwitch extends ConsumerWidget {
       value: ref.watch(dialogActionIconsPod),
       onChanged: (bool value) =>
           ref.read(dialogActionIconsPod.state).state = value,
-      tooltipEnabled: ref.watch(dialogActionIconsPod),
+      tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionIcons: '
           '${ref.read(dialogActionIconsPod)}))',

@@ -7,6 +7,35 @@ import '../models/color_picker_type.dart';
 
 /// These functions are not library exposed, they are private to the library.
 
+/// Privately used extensions on [Color] to lighten a color.
+extension FlexPickerColorExtensions on Color {
+  /// Lightens the color with the given integer percentage amount.
+  /// Defaults to 10%.
+  Color lighten([final int amount = 10]) {
+    if (amount <= 0) return this;
+    if (amount > 100) return Colors.white;
+    // HSLColor returns saturation 1 for black, we want 0 instead to be able
+    // lighten black color up along the grey scale from black.
+    final HSLColor hsl = this == const Color(0xFF000000)
+        ? HSLColor.fromColor(this).withSaturation(0)
+        : HSLColor.fromColor(this);
+    return hsl
+        .withLightness(math.min(1, math.max(0, hsl.lightness + amount / 100)))
+        .toColor();
+  }
+
+  /// Darkens the color with the given integer percentage amount.
+  /// Defaults to 10%.
+  Color darken([final int amount = 10]) {
+    if (amount <= 0) return this;
+    if (amount > 100) return Colors.black;
+    final HSLColor hsl = HSLColor.fromColor(this);
+    return hsl
+        .withLightness(math.min(1, math.max(0, hsl.lightness - amount / 100)))
+        .toColor();
+  }
+}
+
 /// Returns the control key label for the current platform.
 ///
 /// Windows, Linux: CTRL

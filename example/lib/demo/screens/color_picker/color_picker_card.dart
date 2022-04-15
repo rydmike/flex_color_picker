@@ -42,6 +42,7 @@ class ColorPickerCard extends ConsumerWidget {
         copyPasteBehavior: ColorPickerCopyPasteBehavior(
           ctrlC: ref.watch(ctrlCPod),
           ctrlV: ref.watch(ctrlVPod),
+          autoFocus: ref.watch(autoFocusPod),
           copyButton: ref.watch(copyButtonPod),
           pasteButton: ref.watch(pasteButtonPod),
           copyFormat: ref.watch(copyFormatPod),

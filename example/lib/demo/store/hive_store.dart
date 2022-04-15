@@ -17,6 +17,7 @@ void registerHiveAdapters() {
   Hive.registerAdapter(CrossAxisAlignmentAdapter());
   Hive.registerAdapter(ThemeModeAdapter());
   Hive.registerAdapter(ColorPickerCopyFormatAdapter());
+  Hive.registerAdapter(ColorPickerActionButtonOrderAdapter());
 }
 
 // A Hive data type adapter for class Color.
@@ -102,4 +103,22 @@ class ColorPickerCopyFormatAdapter extends TypeAdapter<ColorPickerCopyFormat> {
 
   @override
   int get typeId => 154;
+}
+
+// A Hive data type adapter for enum ColorPickerActionButtonOrder.
+class ColorPickerActionButtonOrderAdapter
+    extends TypeAdapter<ColorPickerActionButtonOrder> {
+  @override
+  ColorPickerActionButtonOrder read(BinaryReader reader) {
+    final int index = reader.readInt();
+    return ColorPickerActionButtonOrder.values[index];
+  }
+
+  @override
+  void write(BinaryWriter writer, ColorPickerActionButtonOrder obj) {
+    writer.writeInt(obj.index);
+  }
+
+  @override
+  int get typeId => 155;
 }
