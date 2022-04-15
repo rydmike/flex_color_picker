@@ -100,7 +100,7 @@ In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
 
 ```yaml
 dependencies:  
-  flex_color_picker: ^2.3.1
+  flex_color_picker: ^2.4.0
 ```
 
 In your library file add the following import:
@@ -1107,7 +1107,9 @@ on the toolbar are a nice and compact alternative to selecting color or cancelli
 
 The bottom action buttons, and their style depend on their ambient theme. 
 
-There are more dialog action buttons design properties you can adjust, please see the
+There are more dialog action buttons design properties you can adjust, you can for example change 
+the order of the OK and Cancel action, or have it be platform adaptive. 
+By default OK is on the right. Please see the
 [ColorPickerActionButtons API reference](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPickerActionButtons-class.html)
 for additional details.
 

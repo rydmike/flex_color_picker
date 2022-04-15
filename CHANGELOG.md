@@ -4,7 +4,6 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## [2.4.0] - April 15, 2022
 
-
 **FIX**
 
  * Fixes [issue #44](https://github.com/rydmike/flex_color_picker/issues/44) "High wheelWidth cause wrong cursor position in the ColorPicker"
@@ -14,19 +13,19 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * The order of the action buttons Cancel - OK on the bottom of the built-in
   dialog can be changed to OK - Cancel. come in three flavors controlled by enum
   `ColorPickerActionButtonOrder` having values:
-  - `okIsRight`, this is the default in order to no break past behavior.
+  - `okIsRight` this is the default in order to no break past behavior.
   - `okIsLeft`
-  - `adaptive`, order depends on platform. Windows uses okIsLeft others
+  - `adaptive` order depends on platform. Windows uses okIsLeft others
     `okIsRight`.
 
   The feature is enabled via the `ColorPickerActionButtons` configuration
   and its new property `dialogActionOrder`.
 
-* By default the picker tries to set focus to its own widgets when it is
+* By default, the picker tries to set focus to its own widgets when it is
   created. It does this when either [ctrlC] or [ctrlV] are enabled in
   order for the keyboard listener to be able to react to copy-paste events
   even if no control on the widget has been focused yet.
-  If you need another widget to retain focus. e.g. if the picker is used on
+  If you need another widget to retain focus, e.g., if the picker is used on a
   surface/scope shared with other widgets and not in its own dialog, then
   setting [autoFocus] to false might help.
 
@@ -56,14 +55,14 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   comes to Material 3. Which is using the actual seed algorithm for the primary
   tonal palette you get with the selected color as input. The wheel does detect when
   you have selected any Material 2 swatch color and shows its swatch then.
-  But for none such colors, it computes a `MaterialColor` swatch. This swatch
-  is still not using the correct algorithm, but it is a bit better now looking
-  now than before.
+  For other colors, it computes a `MaterialColor` swatch. This swatch
+  is still not using the correct algorithm, but it is a bit better looking
+  than before.
 
   There is currently no know Dart implementation of this algorithm, if there
   were it would be in use here. There are some versions in JS of the algorithm
-  that have been reverse engineered from the Material 2 design guide web site.
-  If someone want to make a Dart version that would be fabulous. Links and more
+  that have been reverse engineered from the Material 2 design guide website.
+  If someone wants to make a Dart version, that would be fabulous. Links and more
   information can be found in `ColorTools.createPrimarySwatch`
 
 **WED DEMO**
@@ -119,7 +118,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   it uses ColorScheme properties in its theme that were not available
   earlier and removed in 2.10.0 deprecated color properties from its theme.
   The color picker package itself, still has unchanged version requirement
-  of Dart SDK sdk: '>=2.14.0 < 3.0.0'.
+  of Dart SDK: '>=2.14.0 < 3.0.0'.
 
 ## [2.2.0] - November 17, 2021
 * Fixed the style for color entry field, to always uses the intended fixed stadium style.
@@ -212,7 +211,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   not an `OutlinedButton`. This change is done to conform to a less opinionated default style. You can still
   manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was
   no choice.
-* The dialog bottom **OK** button is no longer auto focused.
+* The dialog bottom **OK** button is no longer autofocused.
 * The extension `FlexPickerNoNullStringExtensions` on none nullable
   `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent
@@ -225,7 +224,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 ## [2.0.0-nullsafety.5] - April 8, 2021
 * **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true.
 * **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties
-  of the underlying `AlertDialog` used to make the dialog, this includes e.g. the `backgroundColor`, `elevation`,
+  of the underlying `AlertDialog` used to make the dialog, this includes e.g., the `backgroundColor`, `elevation`,
   `clipBehavior` and `shape` as new exposed properties that may be useful.
 * **New feature:** Added a new alternative color picker dialog function `showColorPickerDialog` that returns a
   `Future<Color>` which when the dialog is closed, returns the selected color from the dialog or original start
@@ -345,7 +344,7 @@ example folder, in "example/lib/demo/main.dart".
   corresponding prefix in the color code display/edit field when it is enabled.
 
   Paste supports parsing multiple RGB color string formats. It automatically detects what format is used and auto
-  parses to correct Flutter/Dart color value. You can e.g. paste string formatted as #RRGGBB RRGGBB #AARRGGBB
+  parses to correct Flutter/Dart color value. You can e.g., paste string formatted as #RRGGBB RRGGBB #AARRGGBB
   AARRGGBB #RGB RGB or 0xAARRGGBB, partial color string values also work. You can also activate
   a snack bar that informs the users if they paste color strings in an unsupported RGB string format into the
   color picker.
@@ -354,13 +353,13 @@ example folder, in "example/lib/demo/main.dart".
 
 * **New feature**: The picker can display recently used colors in a list of color indicators at the bottom of
   the picker. You can use the following properties to control it.
-    * `showRecentColors`: Set to true/false to enable/disable the usage of the recent colors feature.
-    * `recentColorsSubheading`: Subheading widget for the recently used colors. Typically, a Text widget,
-      e.g. Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
-    * `maxRecentColors`: Number of recent colors to track, from 2 to 20 allowed.
-    * `recentColors`: a list with current recent color, defaults to empty. You can store the last list
+    * `showRecentColors` set to true/false to enable/disable the usage of the recent colors feature.
+    * `recentColorsSubheading` subheading widget for the recently used colors. Typically, a Text widget,
+      e.g., Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
+    * `maxRecentColors` number of recent colors to track, from 2 to 20 allowed.
+    * `recentColors` a list with current recent color, defaults to empty. You can store the last list
       and use this list to restore the previous recent colors list.
-    * `onRecentColorsChanged`: Optional value callback that returns a copy the current list of recently
+    * `onRecentColorsChanged` optional value callback that returns a copy the current list of recently
       used colors. Use it store a copy of the recent colors in order to be able to restore it later.
 
  *See API documentation for more information.*
@@ -376,7 +375,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
   not an `OutlinedButton`, this change is done to conform to a less opinionated default style. You can still
   manually configure it to use an `OutlinedButton` instead as before. Now you can choose, before there was
   no choice.
-* The dialog bottom **OK** button is no longer auto focused.
+* The dialog bottom **OK** button is no longer autofocused.
 
 ## [2.0.0-nullsafety.0] - February 15, 2021
 * First version with null safety.
