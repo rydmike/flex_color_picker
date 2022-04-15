@@ -10,8 +10,29 @@ enum ColorPickerActionButtonType {
   /// Use [OutlinedButton] button.
   outlined,
 
-  /// Use [ElevatedButton] buton.
+  /// Use [ElevatedButton] button.
   elevated,
+}
+
+/// Used to define the order of OK and Cancel buttons on the FlexColorPicker
+/// dialog.
+enum ColorPickerActionButtonOrder {
+  /// OK is the right button.
+  okIsRight,
+
+  /// OK is the left button.
+  okIsLeft,
+
+  /// OK is on the place where it belongs depending on used platform
+  ///
+  /// Right:
+  ///
+  /// Cancel - OK : macOS, iOS, Android, Linux, Fuchsia
+  ///
+  /// Left:
+  ///
+  /// OK - Cancel : Windows
+  adaptive,
 }
 
 /// Defines the FlexColorPicker OK and Cancel actions buttons and their style.
@@ -43,6 +64,7 @@ class ColorPickerActionButtons with Diagnosticable {
     this.splashRadius = 24,
     this.constraints = const BoxConstraints(minHeight: 42, minWidth: 42),
     this.dialogActionButtons = true,
+    this.dialogActionOrder = ColorPickerActionButtonOrder.okIsRight,
     this.dialogActionIcons = false,
     this.dialogCancelButtonLabel,
     this.dialogCancelButtonType = ColorPickerActionButtonType.text,
@@ -181,13 +203,29 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to: const BoxConstraints(minHeight: 34, minWidth: 34),
   final BoxConstraints constraints;
 
-  /// If set to false, the bottom dialog action buttons are removed.
+  /// If set to false, the bottom dialog action buttons att the bottom
+  /// are removed.
   ///
   /// If you remove the bottom dialog action buttons, make sure to enabled the
   /// ones in the dialog toolbar.
   ///
   /// Defaults to true.
   final bool dialogActionButtons;
+
+  /// Defines the order of the OK and Cancel actions buttons at the bottom
+  /// of the dialog.
+  ///
+  /// Options are:
+  ///
+  /// * okIsRight: OK is the right button.
+  /// * okIsLeft: OK is the left button.
+  /// * adaptive: OK is on the place where it belongs on used platform
+  ///   Right: Cancel - OK : macOS, iOS, Android, Linux, Fuchsia
+  ///   Left : OK - Cancel : Windows
+  ///
+  /// Defaults to "okIsRight". Prefer using "adaptive", but defaults to
+  /// "okIsRight" in order to not break past behavior.
+  final ColorPickerActionButtonOrder dialogActionOrder;
 
   /// If set to true, the dialog bottom action buttons will be prefixed with
   /// an icon.
@@ -257,6 +295,7 @@ class ColorPickerActionButtons with Diagnosticable {
     double? splashRadius,
     BoxConstraints? constraints,
     bool? dialogActionButtons,
+    ColorPickerActionButtonOrder? dialogActionOrder,
     bool? dialogActionIcons,
     String? dialogCancelButtonLabel,
     ColorPickerActionButtonType? dialogCancelButtonType,
@@ -280,6 +319,7 @@ class ColorPickerActionButtons with Diagnosticable {
       splashRadius: splashRadius ?? this.splashRadius,
       constraints: constraints ?? this.constraints,
       dialogActionButtons: dialogActionButtons ?? this.dialogActionButtons,
+      dialogActionOrder: dialogActionOrder ?? this.dialogActionOrder,
       dialogActionIcons: dialogActionIcons ?? this.dialogActionIcons,
       dialogCancelButtonLabel:
           dialogCancelButtonLabel ?? this.dialogCancelButtonLabel,
@@ -312,6 +352,7 @@ class ColorPickerActionButtons with Diagnosticable {
         splashRadius == other.splashRadius &&
         constraints == other.constraints &&
         dialogActionButtons == other.dialogActionButtons &&
+        dialogActionOrder == other.dialogActionOrder &&
         dialogActionIcons == other.dialogActionIcons &&
         dialogCancelButtonLabel == other.dialogCancelButtonLabel &&
         dialogCancelButtonType == other.dialogCancelButtonType &&
@@ -338,6 +379,7 @@ class ColorPickerActionButtons with Diagnosticable {
       splashRadius,
       constraints,
       dialogActionButtons,
+      dialogActionOrder,
       dialogActionIcons,
       dialogCancelButtonLabel,
       dialogCancelButtonType,
@@ -371,6 +413,8 @@ class ColorPickerActionButtons with Diagnosticable {
         .add(DiagnosticsProperty<BoxConstraints?>('constraints', constraints));
     properties.add(
         DiagnosticsProperty<bool>('dialogActionButtons', dialogActionButtons));
+    properties.add(EnumProperty<ColorPickerActionButtonOrder>(
+        'dialogActionOrder', dialogActionOrder));
     properties
         .add(DiagnosticsProperty<bool>('dialogActionIcons', dialogActionIcons));
     properties.add(

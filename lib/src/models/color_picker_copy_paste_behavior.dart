@@ -58,6 +58,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   const ColorPickerCopyPasteBehavior(
       {this.ctrlC = true,
       this.ctrlV = true,
+      this.autoFocus = true,
       this.copyButton = false,
       this.pasteButton = false,
       this.copyIcon = Icons.copy,
@@ -100,6 +101,34 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ///
   /// Defaults to true.
   final bool ctrlV;
+
+
+  /// When true, the picker tries to grab the focus when the picker is created.
+  ///
+  /// By default the picker tries to set focus to its own widgets when it is
+  /// created. It does this when either [ctrlC] or [ctrlV] are enabled in
+  /// order for the keyboard listener to be able to react to copy-paste events
+  /// even if no control on the widget has been focused yet.
+  ///
+  /// If you need another widget to retain focus. e.g. if the picker is used on
+  /// surface/scope shared with other widgets and not in its own dialog, then
+  /// setting [autoFocus] to false might help.
+  ///
+  /// If both [ctrlC] and [ctrlV] are false, the picker yields the focus the
+  /// same way as setting [autoFocus] false, but then you have no keyboard
+  /// shortcut copy-paste functions at all. With [autoFocus] false, you
+  /// can still use keyboard copy-paste shortcuts and yield the focus from
+  /// the picker. When you do this, the copy-paste keyboard shortcuts will not
+  /// work until one of the picker's components have been focused by
+  /// interacting with them.
+  ///
+  /// The picker still grabs focus when you click on its background, as one way
+  /// to set focus to keyboard listener to enable copy-paste keyboard shortcuts
+  /// or when you operate any of its controls, the control in question
+  /// always gains focus.
+  ///
+  /// Default to true.
+  final bool autoFocus;
 
   /// Show a copy action icon in the picker top tool bar.
   ///
@@ -320,6 +349,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ColorPickerCopyPasteBehavior copyWith({
     bool? ctrlC,
     bool? ctrlV,
+    bool?  autoFocus,
     bool? copyButton,
     bool? pasteButton,
     IconData? copyIcon,
@@ -346,6 +376,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     return ColorPickerCopyPasteBehavior(
       ctrlC: ctrlC ?? this.ctrlC,
       ctrlV: ctrlV ?? this.ctrlV,
+      autoFocus: autoFocus ?? this.autoFocus,
       copyButton: copyButton ?? this.copyButton,
       pasteButton: pasteButton ?? this.pasteButton,
       copyIcon: copyIcon ?? this.copyIcon,
@@ -381,6 +412,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     return other is ColorPickerCopyPasteBehavior &&
         ctrlC == other.ctrlC &&
         ctrlV == other.ctrlV &&
+        autoFocus == other.autoFocus &&
         copyButton == other.copyButton &&
         pasteButton == other.pasteButton &&
         copyIcon == other.copyIcon &&
@@ -412,6 +444,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     final List<Object?> values = <Object?>[
       ctrlC,
       ctrlV,
+      autoFocus,
       copyButton,
       pasteButton,
       copyIcon,
@@ -443,6 +476,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<bool>('ctrlC', ctrlC));
     properties.add(DiagnosticsProperty<bool>('ctrlV', ctrlV));
+    properties.add(DiagnosticsProperty<bool>('autoFocus', autoFocus));
     properties.add(DiagnosticsProperty<bool>('copyButton', copyButton));
     properties.add(DiagnosticsProperty<bool>('pasteButton', pasteButton));
     properties.add(DiagnosticsProperty<IconData>('copyIcon', copyIcon));

@@ -144,6 +144,9 @@ void resetSettings(WidgetRef ref) {
   ref.read(dialogActionButtonsPod.state).state =
       Keys.defaults[Keys.dialogActionButtons]! as bool;
 
+  ref.read(dialogActionsOrderPod.state).state =
+      Keys.defaults[Keys.dialogActionOrder]! as ColorPickerActionButtonOrder;
+
   ref.read(dialogActionIconsPod.state).state =
       Keys.defaults[Keys.dialogActionIcons]! as bool;
 
@@ -156,6 +159,8 @@ void resetSettings(WidgetRef ref) {
   ref.read(ctrlCPod.state).state = Keys.defaults[Keys.ctrlC]! as bool;
 
   ref.read(ctrlVPod.state).state = Keys.defaults[Keys.ctrlV]! as bool;
+
+  ref.read(autoFocusPod.state).state = Keys.defaults[Keys.autoFocus]! as bool;
 
   ref.read(copyButtonPod.state).state = Keys.defaults[Keys.copyButton]! as bool;
 

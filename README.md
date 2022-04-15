@@ -221,8 +221,7 @@ We begin by adding this ListTile to a ListView in the Scaffold body.
       centerTitle: true,
       title: const Text('FlexColorPicker Demo'),
     ),
-    body: Scrollbar(
-      child: ListView(
+    body: ListView(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       children: <Widget>[
         // Show the selected color.

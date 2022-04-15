@@ -56,13 +56,14 @@ void main() {
     //**************************************************************************
     // ColorPickerCopyPasteBehavior unit tests.
     //
-    // toString and hashcode.
+    // toString and hashCode.
     //**************************************************************************
 
     // m4, is fully custom defined and totally different from m1 and m2.
     const ColorPickerCopyPasteBehavior m4 = ColorPickerCopyPasteBehavior(
       ctrlC: false,
       ctrlV: false,
+      autoFocus: true,
       copyButton: true,
       pasteButton: true,
       copyIcon: Icons.android,
@@ -97,6 +98,7 @@ void main() {
     const ColorPickerCopyPasteBehavior m5 = ColorPickerCopyPasteBehavior(
       ctrlC: false,
       ctrlV: false,
+      autoFocus: true,
       copyButton: true,
       pasteButton: true,
       copyIcon: Icons.android,
@@ -133,7 +135,7 @@ void main() {
         'EXPECT exact print string value.', () {
       expect(m4.toString(), equalsIgnoringHashCodes(
           // ignore: lines_longer_than_80_chars
-          'ColorPickerCopyPasteBehavior#00000(ctrlC: false, ctrlV: false, copyButton: true, pasteButton: true, copyIcon: IconData(U+0E085), pasteIcon: IconData(U+0E16A), copyTooltip: "COPY", pasteTooltip: "PASTE", copyFormat: numHexAARRGGBB, longPressMenu: true, secondaryMenu: true, secondaryOnDesktopLongOnDevice: true, secondaryOnDesktopLongOnDeviceAndWeb: true, editFieldCopyButton: false, menuIconThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), menuThemeData: PopupMenuThemeData#00000(color: Color(0xffffffff), shape: RoundedRectangleBorder(BorderSide(Color(0xff000000), 0.0, BorderStyle.none), BorderRadius.zero), elevation: 3.0, text style: TextStyle(inherit: true, size: 12.0), enableFeedback: true), menuWidth: 85.0, menuItemHeight: 35.0, snackBarParseError: true, snackBarMessage: "Something went wrong", snackBarDuration: 0:00:01.500000, feedbackParseError: true, parseShortHexCode: true, editUsesParsedPaste: true)'));
+          'ColorPickerCopyPasteBehavior#00000(ctrlC: false, ctrlV: false, autoFocus: true, copyButton: true, pasteButton: true, copyIcon: IconData(U+0E085), pasteIcon: IconData(U+0E16A), copyTooltip: "COPY", pasteTooltip: "PASTE", copyFormat: numHexAARRGGBB, longPressMenu: true, secondaryMenu: true, secondaryOnDesktopLongOnDevice: true, secondaryOnDesktopLongOnDeviceAndWeb: true, editFieldCopyButton: false, menuIconThemeData: IconThemeData#00000(color: Color(0xff000000), opacity: 1.0, size: 30.0), menuThemeData: PopupMenuThemeData#00000(color: Color(0xffffffff), shape: RoundedRectangleBorder(BorderSide(Color(0xff000000), 0.0, BorderStyle.none), BorderRadius.zero), elevation: 3.0, text style: TextStyle(inherit: true, size: 12.0), enableFeedback: true), menuWidth: 85.0, menuItemHeight: 35.0, snackBarParseError: true, snackBarMessage: "Something went wrong", snackBarDuration: 0:00:01.500000, feedbackParseError: true, parseShortHexCode: true, editUsesParsedPaste: true)'));
     });
     test(
         'CPCPB2.2: Test toStringShort implemented via debugFillProperties '
@@ -165,6 +167,7 @@ void main() {
         m1.copyWith(
           ctrlC: false,
           ctrlV: false,
+          autoFocus: true,
           copyButton: true,
           pasteButton: true,
           copyIcon: Icons.android,
@@ -213,6 +216,7 @@ void main() {
           m2.copyWith(
             ctrlC: null,
             ctrlV: null,
+            autoFocus: null,
             copyButton: null,
             pasteButton: null,
             copyIcon: null,
@@ -245,6 +249,7 @@ void main() {
         m4.copyWith(
           ctrlC: false,
           ctrlV: false,
+          autoFocus: true,
           copyButton: true,
           pasteButton: true,
           copyIcon: Icons.android,
@@ -287,6 +292,7 @@ void main() {
         m2.copyWith(
           ctrlC: true,
           ctrlV: null,
+          autoFocus: null,
           copyButton: null,
           pasteButton: null,
           copyIcon: null,
@@ -320,6 +326,7 @@ void main() {
         m4.copyWith(
           ctrlC: true,
           ctrlV: false,
+          autoFocus: true,
           copyButton: true,
           pasteButton: true,
           copyIcon: Icons.android,
@@ -354,6 +361,7 @@ void main() {
           m5.copyWith(
             ctrlC: true,
             ctrlV: false,
+            autoFocus: true,
             copyButton: true,
             pasteButton: true,
             copyIcon: Icons.android,
@@ -394,6 +402,7 @@ void main() {
         m2.copyWith(
           ctrlC: null,
           ctrlV: true,
+          autoFocus: null,
           copyButton: null,
           pasteButton: null,
           copyIcon: null,
@@ -421,6 +430,7 @@ void main() {
           m2.copyWith(
             ctrlC: null,
             ctrlV: true,
+            autoFocus: null,
             copyButton: null,
             pasteButton: null,
             copyIcon: null,

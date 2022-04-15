@@ -947,6 +947,14 @@ class ColorPicker extends StatefulWidget {
     // False if dialog cancelled, true if color selected
     bool colorWasSelected = false;
 
+    // Determine OK-Cancel button order.
+    final TargetPlatform platform = Theme.of(context).platform;
+    final bool okIsLeft = (platform == TargetPlatform.windows &&
+            actionButtons.dialogActionOrder ==
+                ColorPickerActionButtonOrder.adaptive) ||
+        actionButtons.dialogActionOrder ==
+            ColorPickerActionButtonOrder.okIsLeft;
+
     await showDialog<bool>(
         context: context,
         barrierDismissible: barrierDismissible,
@@ -968,8 +976,13 @@ class ColorPicker extends StatefulWidget {
             contentPadding: contentPadding,
             actions: actionButtons.dialogActionButtons
                 ? <Widget>[
-                    cancelButton,
-                    okButton,
+                    if (okIsLeft) ...<Widget>[
+                      okButton,
+                      cancelButton,
+                    ] else ...<Widget>[
+                      cancelButton,
+                      okButton,
+                    ]
                   ]
                 : null,
             actionsPadding: actionsPadding,
@@ -1004,7 +1017,7 @@ class _ColorPickerState extends State<ColorPicker> {
   late List<ColorSwatch<Object>> _activeColorSwatchList;
 
   // The active Swatch in the active Color swatch List. Can be null temporarily
-  // when we searched for a color in a swatched but did not find it anywhere.
+  // when we searched for a color in a swatch but did not find it anywhere.
   ColorSwatch<Object>? _activeSwatch;
 
   // Which picker are we using now.
@@ -1035,7 +1048,7 @@ class _ColorPickerState extends State<ColorPicker> {
   bool _wheelShouldUpdate = true;
 
   // The tonal picker should only update its tonal palette whe we click on
-  // colors in other color pciker, not when we select a color in the
+  // colors in other color picker, not when we select a color in the
   // tonal palette. This local state is used to send the update signal.
   bool _tonalShouldUpdate = true;
 
@@ -1411,13 +1424,18 @@ class _ColorPickerState extends State<ColorPicker> {
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice ||
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb;
 
-    // Build and return the layout.
+    // Should keyboard listener grab focus? If neither copy and paste keyboard
+    // shortcuts are enabled, there is no need to autofocus, so let's skip it
+    // then too, regardless of autofocus setting.
+    final bool autoFocus = widget.copyPasteBehavior.autoFocus &&
+        (widget.copyPasteBehavior.ctrlC || widget.copyPasteBehavior.ctrlV);
+
     // We start with a RawKeyboardListener that is used to handle keyboard
     // copy and paste events.
     return RawKeyboardListener(
       focusNode: _focusNode,
       onKey: _handleKeyEvent,
-      autofocus: true,
+      autofocus: autoFocus,
       // If the Copy-Paste context menu feature is enabled we wrap the
       // entire color picker with a Copy-Paste context menu, if it is not
       // enabled, it is not a part of the widget tree at all.

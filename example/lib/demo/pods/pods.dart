@@ -420,6 +420,15 @@ final StateProvider<bool> dialogActionButtonsPod =
       defaultValue: Keys.defaults[Keys.dialogActionButtons]! as bool) as bool;
 }, name: Keys.dialogActionButtons);
 
+// State of order OK cancel buttons in dialog actions
+final StateProvider<ColorPickerActionButtonOrder> dialogActionsOrderPod =
+    StateProvider<ColorPickerActionButtonOrder>(
+        (StateProviderRef<ColorPickerActionButtonOrder> ref) {
+  return hiveStore.get(Keys.dialogActionOrder,
+      defaultValue: Keys.defaults[Keys.dialogActionOrder]!
+          as ColorPickerActionButtonOrder) as ColorPickerActionButtonOrder;
+}, name: Keys.dialogActionOrder);
+
 // State of having icons on Cancel OK bottom actions buttons in the dialog.
 final StateProvider<bool> dialogActionIconsPod =
     StateProvider<bool>((StateProviderRef<bool> ref) {
@@ -453,6 +462,13 @@ final StateProvider<bool> ctrlVPod =
   return hiveStore.get(Keys.ctrlV,
       defaultValue: Keys.defaults[Keys.ctrlV]! as bool) as bool;
 }, name: Keys.ctrlV);
+
+// State of using auto focus on picker.
+final StateProvider<bool> autoFocusPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.autoFocus,
+      defaultValue: Keys.defaults[Keys.autoFocus]! as bool) as bool;
+}, name: Keys.autoFocus);
 
 // State of using Copy button on toolbar.
 final StateProvider<bool> copyButtonPod =

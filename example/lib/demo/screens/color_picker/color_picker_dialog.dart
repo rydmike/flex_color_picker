@@ -45,6 +45,7 @@ Future<bool> colorPickerDialog(
     copyPasteBehavior: ColorPickerCopyPasteBehavior(
       ctrlC: ref.watch(ctrlCPod),
       ctrlV: ref.watch(ctrlVPod),
+      autoFocus: ref.watch(autoFocusPod),
       copyButton: ref.watch(copyButtonPod),
       pasteButton: ref.watch(pasteButtonPod),
       copyFormat: ref.watch(copyFormatPod),
@@ -66,6 +67,7 @@ Future<bool> colorPickerDialog(
       closeButton: ref.watch(closeButtonPod),
       closeIsLast: ref.watch(closeIsLastPod),
       dialogActionButtons: ref.watch(dialogActionButtonsPod),
+      dialogActionOrder: ref.watch(dialogActionsOrderPod),
       dialogActionIcons: ref.watch(dialogActionIconsPod),
       dialogOkButtonType: ColorPickerActionButtonType.outlined,
       dialogCancelButtonType: ColorPickerActionButtonType.text,
