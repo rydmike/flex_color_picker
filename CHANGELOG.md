@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## [2.5.0] - April 21, 2022
+
+**NEW FEATURES**
+
+* Added new features to add padding between the wheel picker's shade square and hue wheel,
+  and to adjust the border radius on the shade square.
+  Addresses enhancement request [#47 "Square padding"](https://github.com/rydmike/flex_color_picker/issues/47).
+  The new features are available via `ColorPicker` properties `wheelSquarePadding` and `wheelSquareBorderRadius`.
+
 ## [2.4.0] - April 15, 2022
 
 **FIX**
