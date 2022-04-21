@@ -83,6 +83,8 @@ Future<bool> colorPickerDialog(
     wheelDiameter: ref.watch(wheelDiameterPod),
     wheelWidth: ref.watch(wheelWidthPod),
     wheelHasBorder: ref.watch(wheelHasBorderPod),
+    wheelSquarePadding: ref.watch(wheelSquarePaddingPod),
+    wheelSquareBorderRadius: ref.watch(wheelSquareBorderRadiusPod),
     enableTooltips: ref.watch(enableTooltipsPod),
     pickersEnabled: ref.watch(pickersEnabledPod),
     selectedPickerTypeColor: colorScheme.primary,

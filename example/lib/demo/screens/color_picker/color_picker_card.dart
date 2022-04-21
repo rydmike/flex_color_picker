@@ -68,6 +68,8 @@ class ColorPickerCard extends ConsumerWidget {
         columnSpacing: ref.watch(columnSpacingPod),
         wheelDiameter: ref.watch(wheelDiameterPod),
         wheelWidth: ref.watch(wheelWidthPod),
+        wheelSquarePadding: ref.watch(wheelSquarePaddingPod),
+        wheelSquareBorderRadius: ref.watch(wheelSquareBorderRadiusPod),
         wheelHasBorder: ref.watch(wheelHasBorderPod),
         enableTooltips: ref.watch(enableTooltipsPod),
         pickersEnabled: ref.watch(pickersEnabledPod),

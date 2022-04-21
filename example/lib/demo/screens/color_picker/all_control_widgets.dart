@@ -17,6 +17,8 @@ export 'picker_sliders/padding_slider.dart';
 export 'picker_sliders/run_spacing_slider.dart';
 export 'picker_sliders/spacing_slider.dart';
 export 'picker_sliders/wheel_diameter_slider.dart';
+export 'picker_sliders/wheel_square_border_radius_slider.dart';
+export 'picker_sliders/wheel_square_padding_slider.dart';
 export 'picker_sliders/wheel_width_slider.dart';
 // Switch settings controls
 export 'picker_switches/close_button_switch.dart';
@@ -43,6 +45,7 @@ export 'picker_switches/ok_button_switch.dart';
 export 'picker_switches/opacity_subheading_switch.dart';
 export 'picker_switches/opacity_switch.dart';
 export 'picker_switches/parse_short_hex_code_switch.dart';
+export 'picker_switches/picker_auto_focus_switch.dart';
 export 'picker_switches/recent_colors_switch.dart';
 export 'picker_switches/recent_subheading_switch.dart';
 export 'picker_switches/secondary_desktop_long_device_switch.dart';

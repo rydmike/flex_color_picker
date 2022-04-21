@@ -43,6 +43,8 @@ class Keys {
   static const String hasBorder = 'hasBorder';
   static const String wheelDiameter = 'wheelDiameter';
   static const String wheelWidth = 'wheelWidth';
+  static const String wheelSquarePadding = 'wheelSquarePadding';
+  static const String wheelSquareBorderRadius = 'wheelSquareBorderRadius';
   static const String wheelHasBorder = 'wheelHasBorder';
   static const String opacityTrackHeight = 'opacityTrackHeight';
   static const String opacityTrackWidth = 'opacityTrackWidth';
@@ -117,6 +119,8 @@ class Keys {
     hasBorder: true,
     wheelDiameter: 190.0,
     wheelWidth: 16.0,
+    wheelSquarePadding: 0.0,
+    wheelSquareBorderRadius: 4.0,
     wheelHasBorder: false,
     opacityTrackHeight: 22.0,
     opacityTrackWidth: 700.0,

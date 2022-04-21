@@ -99,6 +99,8 @@ class ColorPicker extends StatefulWidget {
     this.borderColor,
     this.wheelDiameter = 190,
     this.wheelWidth = 16,
+    this.wheelSquarePadding = 0,
+    this.wheelSquareBorderRadius = 4,
     this.wheelHasBorder = false,
     // Title, headings and sub headings used by the color picker.
     this.title,
@@ -374,6 +376,26 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to 16 dp. Must be from 4 to maximum 50 dp.
   final double wheelWidth;
+
+  /// Padding between shade square inside the hue wheel and inner
+  /// side of the wheel.
+  ///
+  /// Keep it reasonable in relation to wheelDiameter and wheelWidth, values
+  /// from 0 to 20 are recommended.
+  ///
+  /// Defaults to 0 dp.
+  final double wheelSquarePadding;
+
+  /// Border radius of the shade square inside the hue wheel.
+  ///
+  /// Keep it reasonable, the thumb center always goes out to the square box
+  /// corner, regardless of this border radius. It is only for visual design,
+  /// the edge color shades are in the sharp corner, even if not shown.
+  ///
+  /// Recommended values 0 to 16.
+  ///
+  /// Defaults to 4 dp.
+  final double wheelSquareBorderRadius;
 
   /// Set to true to show a 1 dp border around the color wheel.
   ///
@@ -1609,6 +1631,8 @@ class _ColorPickerState extends State<ColorPicker> {
                     child: ColorWheelPicker(
                       color: _selectedColor.withAlpha(0xFF),
                       wheelWidth: widget.wheelWidth,
+                      wheelSquarePadding: widget.wheelSquarePadding,
+                      wheelSquareBorderRadius: widget.wheelSquareBorderRadius,
                       hasBorder: widget.wheelHasBorder,
                       borderColor: widget.borderColor,
                       shouldUpdate: _wheelShouldUpdate,
