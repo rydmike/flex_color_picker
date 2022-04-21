@@ -328,6 +328,22 @@ final StateProvider<double> wheelWidthPod =
       defaultValue: Keys.defaults[Keys.wheelWidth]! as double) as double;
 }, name: Keys.wheelWidth);
 
+// State of wheel square padding.
+final StateProvider<double> wheelSquarePaddingPod =
+    StateProvider<double>((StateProviderRef<double> ref) {
+  return hiveStore.get(Keys.wheelSquarePadding,
+          defaultValue: Keys.defaults[Keys.wheelSquarePadding]! as double)
+      as double;
+}, name: Keys.wheelSquarePadding);
+
+// State of wheel square padding border radius.
+final StateProvider<double> wheelSquareBorderRadiusPod =
+    StateProvider<double>((StateProviderRef<double> ref) {
+  return hiveStore.get(Keys.wheelSquareBorderRadius,
+          defaultValue: Keys.defaults[Keys.wheelSquareBorderRadius]! as double)
+      as double;
+}, name: Keys.wheelSquareBorderRadius);
+
 // State of using border on wheel picker .
 final StateProvider<bool> wheelHasBorderPod =
     StateProvider<bool>((StateProviderRef<bool> ref) {

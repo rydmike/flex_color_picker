@@ -11,10 +11,10 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '2.4.0';
+  static const String version = '2.5.0';
   static const String packageVersion = 'FlexColorPicker package $version';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
-  static const String flutterVersion = 'Channel stable 2.10.4';
+  static const String flutterVersion = 'Channel stable 2.10.5';
   static const String copyright = '© 2020, 2021, 2022';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';

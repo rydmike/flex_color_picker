@@ -5,7 +5,6 @@ import '../../widgets/flex_app_bar.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
-import 'picker_switches/picker_auto_focus_switch.dart';
 import 'picker_text_fields/text_field_focus_demo.dart';
 import 'picker_toggle_buttons/actions_order_switch.dart';
 
@@ -281,6 +280,8 @@ class _Column3 extends StatelessWidget {
         //
         const WheelDiameterSlider(),
         const WheelWidthSlider(),
+        const WheelSquarePaddingSlider(),
+        const WheelSquareBorderRadiusSlider(),
         const WheelHasBorderSwitch(),
         const Divider(),
         //

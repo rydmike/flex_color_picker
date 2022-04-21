@@ -186,6 +186,26 @@ Future<Color> showColorPickerDialog(
   /// Defaults to 16 dp. Must be from 4 to maximum 50 dp.
   double wheelWidth = 16,
 
+  /// Padding between shade square inside the hue wheel and inner
+  /// side of the wheel.
+  ///
+  /// Keep it reasonable in relation to wheelDiameter and wheelWidth, values
+  /// from 0 to 20 are recommended.
+  ///
+  /// Defaults to 0 dp.
+  double wheelSquarePadding = 0,
+
+  /// Border radius of the shade square inside the hue wheel.
+  ///
+  /// Keep it reasonable, the thumb center always goes out to the square box
+  /// corner, regardless of this border radius. It is only for visual design,
+  /// the edge color shades are in the sharp corner, even if not shown.
+  ///
+  /// Recommended values 0 to 16.
+  ///
+  /// Defaults to 4 dp.
+  double wheelSquareBorderRadius = 4,
+
   /// Set to true to show a 1 dp border around the color wheel.
   ///
   /// Defaults to false.
@@ -640,6 +660,8 @@ Future<Color> showColorPickerDialog(
     borderColor: borderColor,
     wheelDiameter: wheelDiameter,
     wheelWidth: wheelWidth,
+    wheelSquarePadding: wheelSquarePadding,
+    wheelSquareBorderRadius: wheelSquareBorderRadius,
     wheelHasBorder: wheelHasBorder,
     title: title,
     heading: heading,

@@ -64,6 +64,8 @@ void main() {
           widget.borderColor == null &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 16 &&
+          widget.wheelSquarePadding == 0 &&
+          widget.wheelSquareBorderRadius == 4 &&
           widget.wheelHasBorder == false &&
           widget.title == null &&
           widget.heading == null &&
@@ -135,6 +137,8 @@ void main() {
             borderRadius: 10,
             borderColor: Colors.black,
             wheelWidth: 32,
+            wheelSquarePadding: 4,
+            wheelSquareBorderRadius: 6,
             wheelHasBorder: true,
             title: const Text('Title1'),
             heading: const Text('Title2'),
@@ -211,6 +215,8 @@ void main() {
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
+          widget.wheelSquarePadding == 4 &&
+          widget.wheelSquareBorderRadius == 6 &&
           widget.wheelHasBorder == true &&
           widget.title != null &&
           widget.heading != null &&
@@ -281,6 +287,8 @@ void main() {
             borderRadius: 10,
             borderColor: Colors.black,
             wheelWidth: 32,
+            wheelSquarePadding: 5,
+            wheelSquareBorderRadius: 0,
             wheelHasBorder: true,
             title: const Text('Title1'),
             heading: const Text('Title2'),
@@ -357,6 +365,8 @@ void main() {
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
+          widget.wheelSquarePadding == 5 &&
+          widget.wheelSquareBorderRadius == 0 &&
           widget.wheelHasBorder == true &&
           widget.title != null &&
           widget.heading != null &&
@@ -454,6 +464,8 @@ void main() {
             borderRadius: 10,
             borderColor: Colors.black,
             wheelWidth: 32,
+            wheelSquarePadding: 10,
+            wheelSquareBorderRadius: 2,
             wheelHasBorder: true,
             title: const Text('Title1'),
             heading: const Text('Title2'),
@@ -552,6 +564,8 @@ void main() {
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
+          widget.wheelSquarePadding == 10 &&
+          widget.wheelSquareBorderRadius == 2 &&
           widget.wheelWidth == 32 &&
           widget.wheelHasBorder == true &&
           widget.title != null &&
@@ -648,6 +662,8 @@ void main() {
             borderRadius: 10,
             borderColor: Colors.black,
             wheelWidth: 32,
+            wheelSquarePadding: 0,
+            wheelSquareBorderRadius: 0,
             wheelHasBorder: true,
             title: const Text('Title1'),
             heading: const Text('Title2'),
@@ -746,6 +762,8 @@ void main() {
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
+          widget.wheelSquarePadding == 0 &&
+          widget.wheelSquareBorderRadius == 0 &&
           widget.wheelHasBorder == true &&
           widget.title != null &&
           widget.heading != null &&
@@ -841,6 +859,8 @@ void main() {
             borderRadius: 10,
             borderColor: Colors.black,
             wheelWidth: 32,
+            wheelSquarePadding: 3.5,
+            wheelSquareBorderRadius: 3.5,
             wheelHasBorder: true,
             title: const Text('Title1'),
             heading: const Text('Title2'),
@@ -939,6 +959,8 @@ void main() {
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
+          widget.wheelSquarePadding == 3.5 &&
+          widget.wheelSquareBorderRadius == 3.5 &&
           widget.wheelHasBorder == true &&
           widget.title != null &&
           widget.heading != null &&

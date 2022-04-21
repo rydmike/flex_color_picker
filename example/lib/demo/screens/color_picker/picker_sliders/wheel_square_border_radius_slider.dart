@@ -5,25 +5,25 @@ import '../../../pods/pods.dart';
 import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
-class WheelWidthSlider extends ConsumerWidget {
-  const WheelWidthSlider({Key? key}) : super(key: key);
+class WheelSquareBorderRadiusSlider extends ConsumerWidget {
+  const WheelSquareBorderRadiusSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(wheelWidth: '
-          '${ref.read(wheelWidthPod).floor().toString()})',
+      tooltip: 'ColorPicker(wheelSquareBorderRadius: '
+          '${ref.read(wheelSquareBorderRadiusPod).floor().toString()})',
       child: ListTile(
-        title: const Text('Color wheel hue circle width'),
+        title: const Text('Color wheel shade square border radius'),
         subtitle: Slider.adaptive(
-          min: 4,
-          max: 50,
-          divisions: 50 - 4,
-          label: ref.read(wheelWidthPod).floor().toString(),
-          value: ref.watch(wheelWidthPod),
+          min: 0,
+          max: 16,
+          divisions: 16,
+          label: ref.read(wheelSquareBorderRadiusPod).floor().toString(),
+          value: ref.watch(wheelSquareBorderRadiusPod),
           onChanged: (double value) =>
-              ref.read(wheelWidthPod.state).state = value,
+              ref.read(wheelSquareBorderRadiusPod.state).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -35,7 +35,7 @@ class WheelWidthSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                ref.read(wheelWidthPod).floor().toString(),
+                ref.read(wheelSquareBorderRadiusPod).floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

@@ -34,6 +34,8 @@ void main() {
           widget.onChangeEnd == null &&
           widget.onWheel != null &&
           widget.wheelWidth == 16 &&
+          widget.wheelSquarePadding == 0 &&
+          widget.wheelSquareBorderRadius == 4 &&
           widget.hasBorder == false &&
           widget.borderColor == null &&
           widget.shouldUpdate == false &&
@@ -52,6 +54,8 @@ void main() {
         onChangeEnd: (Color color) {},
         onWheel: (bool wheel) {},
         wheelWidth: 20,
+        wheelSquarePadding: 4,
+        wheelSquareBorderRadius: 6,
         hasBorder: true,
         borderColor: Colors.black,
         shouldUpdate: true,
@@ -69,6 +73,8 @@ void main() {
           widget.onChangeEnd != null &&
           widget.onWheel != null &&
           widget.wheelWidth == 20 &&
+          widget.wheelSquarePadding == 4 &&
+          widget.wheelSquareBorderRadius == 6 &&
           widget.hasBorder == true &&
           widget.borderColor == Colors.black &&
           widget.shouldUpdate == true &&
