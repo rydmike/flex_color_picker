@@ -70,6 +70,23 @@ class App {
   static const Color blueJean = Color(0xFF4f75b8);
   static const Color deepBlueSea = Color(0xFF132b80);
 
+  // Add a custom white to black grey scale.
+  static const MaterialColor whiteToBlack = MaterialColor(
+    0xFF7C7D80, // Set the 500 index value here.
+    <int, Color>{
+      50: Color(0xFFFFFFFF),
+      100: Color(0xFFE1E2E4),
+      200: Color(0xFFC7C8CA),
+      300: Color(0xFFACADB0),
+      400: Color(0xFF949599),
+      500: Color(0xFF7C7D80),
+      600: Color(0xFF646567),
+      700: Color(0xFF48484A),
+      800: Color(0xFF212121),
+      900: Color(0xFF000000),
+    },
+  );
+
   // A custom color swatch, to name map, for the above custom colors.
   static Map<ColorSwatch<Object>, String> get colorsNameMap =>
       <ColorSwatch<Object>, String>{
@@ -92,5 +109,6 @@ class App {
         ColorTools.createPrimarySwatch(brightGreen): 'Bright green',
         ColorTools.createPrimarySwatch(blueJean): 'Washed jean blue',
         ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
+        whiteToBlack: 'White to black',
       };
 }
