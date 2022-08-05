@@ -7,7 +7,7 @@ import '../../../utils/app.dart';
 
 @immutable
 class CardPickerColorIndicator extends ConsumerWidget {
-  const CardPickerColorIndicator({Key? key}) : super(key: key);
+  const CardPickerColorIndicator({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

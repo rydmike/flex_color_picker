@@ -6,7 +6,7 @@ import '../../../pods/pods.dart';
 import '../../../widgets/maybe_tooltip.dart';
 
 class ActionsOrderSwitch extends ConsumerWidget {
-  const ActionsOrderSwitch({Key? key}) : super(key: key);
+  const ActionsOrderSwitch({super.key});
   static const double _kToggleFontSize = 11.5;
 
   @override

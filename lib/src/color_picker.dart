@@ -57,7 +57,7 @@ const int _maxRecentColors = 20;
 class ColorPicker extends StatefulWidget {
   /// Default constructor for the color picker.
   const ColorPicker({
-    Key? key,
+    super.key,
     // Core properties, set color and change callbacks.
     this.color = Colors.blue,
     required this.onColorChanged,
@@ -175,8 +175,7 @@ class ColorPicker extends StatefulWidget {
             maxRecentColors >= _minRecentColors &&
                 maxRecentColors <= _maxRecentColors,
             'The maxRecentColors must be >= $_minRecentColors '
-            'and <= $_maxRecentColors.'),
-        super(key: key);
+            'and <= $_maxRecentColors.');
 
   /// The active color selection when the color picker is created.
   final Color color;

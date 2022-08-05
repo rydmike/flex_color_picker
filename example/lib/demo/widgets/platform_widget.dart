@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// An abstraction to build platform adaptive Widgets.
 abstract class PlatformWidget extends StatelessWidget {
-  const PlatformWidget({Key? key}) : super(key: key);
+  const PlatformWidget({super.key});
 
   Widget buildCupertinoWidget(BuildContext context);
   Widget buildMaterialWidget(BuildContext context);

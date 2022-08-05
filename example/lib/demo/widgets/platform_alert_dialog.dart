@@ -6,12 +6,12 @@ import 'platform_widget.dart';
 /// A platform adaptive implementation of an AlertDialog.
 class PlatformAlertDialog extends PlatformWidget {
   const PlatformAlertDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.content,
     required this.defaultActionText,
     this.cancelActionText,
-  }) : super(key: key);
+  });
 
   final String title;
   final String content;
@@ -83,10 +83,10 @@ class PlatformAlertDialog extends PlatformWidget {
 
 class PlatformAlertDialogAction extends PlatformWidget {
   const PlatformAlertDialogAction({
-    Key? key,
+    super.key,
     required this.child,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final VoidCallback? onPressed;

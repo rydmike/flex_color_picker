@@ -17,7 +17,8 @@ class AppTheme {
       textTheme: textTheme,
     ).copyWith(
       scaffoldBackgroundColor: App.scaffoldBackgroundLight,
-      toggleableActiveColor: colorSchemeLight.secondary,
+      // TODO(rydmike): Remove commented deprecated API.
+      // toggleableActiveColor: colorSchemeLight.secondary,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -57,7 +58,8 @@ class AppTheme {
       textTheme: textTheme,
     ).copyWith(
       scaffoldBackgroundColor: App.scaffoldBackgroundDark,
-      toggleableActiveColor: colorSchemeDark.secondary,
+      // TODO(rydmike): Remove commented deprecated API.
+      // toggleableActiveColor: colorSchemeDark.secondary,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,

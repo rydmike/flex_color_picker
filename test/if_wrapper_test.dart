@@ -45,7 +45,7 @@ void main() {
 }
 
 class TestWidget extends StatelessWidget {
-  const TestWidget({Key? key, required this.wrap}) : super(key: key);
+  const TestWidget({super.key, required this.wrap});
   final bool wrap;
 
   @override
@@ -70,7 +70,7 @@ class TestWidget extends StatelessWidget {
 }
 
 class TestWidget2 extends StatelessWidget {
-  const TestWidget2({Key? key, required this.wrap}) : super(key: key);
+  const TestWidget2({super.key, required this.wrap});
   final bool wrap;
 
   @override

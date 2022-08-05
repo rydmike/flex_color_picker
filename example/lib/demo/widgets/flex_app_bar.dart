@@ -954,7 +954,7 @@ class FlexAppBar {
 class FlexAppBarStyling extends StatelessWidget {
   /// Default constructor.
   const FlexAppBarStyling({
-    final Key? key,
+    super.key,
     this.height = kToolbarHeight,
     required this.color,
     required this.endColor,
@@ -975,8 +975,7 @@ class FlexAppBarStyling extends StatelessWidget {
             'Start opacity must be from 0 to 1.'),
         assert(opacity >= 0 && opacity <= 1.0, 'Opacity must be from 0 to 1.'),
         assert(elevation == null || elevation >= 0.0,
-            'Elevation must be null or >= 0'),
-        super(key: key);
+            'Elevation must be null or >= 0');
 
   /// The flexible container height
   ///

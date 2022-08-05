@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class ParseShortHexCodeSwitch extends ConsumerWidget {
-  const ParseShortHexCodeSwitch({Key? key}) : super(key: key);
+  const ParseShortHexCodeSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

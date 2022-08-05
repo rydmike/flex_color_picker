@@ -33,7 +33,7 @@ import '../functions/picker_functions.dart';
 class ContextPopupMenu<T> extends StatefulWidget {
   /// Default const constructor.
   const ContextPopupMenu({
-    Key? key,
+    super.key,
     required this.items,
     required this.onSelected,
     this.onOpen,
@@ -42,7 +42,7 @@ class ContextPopupMenu<T> extends StatefulWidget {
     this.useSecondaryTapDown = false,
     this.useSecondaryOnDesktopLongOnDevice = false,
     this.useSecondaryOnDesktopLongOnDeviceAndWeb = true,
-  }) : super(key: key);
+  });
 
   /// The popup menu entries for the long press menu.
   final List<PopupMenuEntry<T>> items;

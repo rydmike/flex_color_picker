@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class CloseIsLastSwitch extends ConsumerWidget {
-  const CloseIsLastSwitch({Key? key}) : super(key: key);
+  const CloseIsLastSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

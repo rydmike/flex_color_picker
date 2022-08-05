@@ -5,7 +5,7 @@ import '../../../pods/pods.dart';
 import '../../../widgets/maybe_tooltip.dart';
 
 class AlignmentSwitch extends ConsumerWidget {
-  const AlignmentSwitch({Key? key}) : super(key: key);
+  const AlignmentSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -261,7 +261,7 @@ void main() {
       expect(blueTonals[12], equals(Colors.white));
     });
     test('Verify that blue TonalPalette index 5, tone 50 of is 0xff007ace', () {
-      expect(blueTonals[5], equals(const Color(0xff007ace)));
+      expect(blueTonals[5], equals(const Color(0xff007bcc)));
     });
   });
 }

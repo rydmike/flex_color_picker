@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class FeedbackParseErrorSwitch extends ConsumerWidget {
-  const FeedbackParseErrorSwitch({Key? key}) : super(key: key);
+  const FeedbackParseErrorSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

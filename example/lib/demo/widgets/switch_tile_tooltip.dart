@@ -8,14 +8,14 @@ import 'maybe_tooltip.dart';
 class SwitchTileTooltip extends StatelessWidget {
   /// Const default constructor.
   const SwitchTileTooltip({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.title,
     this.subtitle,
     this.tooltip,
     this.tooltipEnabled = false,
-  }) : super(key: key);
+  });
 
   final bool value;
   final ValueChanged<bool> onChanged;

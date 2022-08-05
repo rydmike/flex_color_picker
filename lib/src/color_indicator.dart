@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class ColorIndicator extends StatefulWidget {
   /// Default const constructor for the color indicator.
   const ColorIndicator({
-    Key? key,
+    super.key,
     this.onSelect,
     this.onSelectFocus = true,
     this.isSelected = false,
@@ -27,8 +27,7 @@ class ColorIndicator extends StatefulWidget {
         assert(width > 0, 'Width must be positive.'),
         assert(height > 0, 'Height must be positive.'),
         assert(borderRadius >= 0,
-            'The border radius must be greater or equal to 0.'),
-        super(key: key);
+            'The border radius must be greater or equal to 0.');
 
   /// Optional void callback, called when the color indicator is tapped.
   ///

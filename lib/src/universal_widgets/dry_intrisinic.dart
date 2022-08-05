@@ -18,9 +18,9 @@ import 'package:flutter/rendering.dart';
 class DryIntrinsicWidth extends SingleChildRenderObjectWidget {
   /// Default const constructor.
   const DryIntrinsicWidth({
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
+    super.key,
+    required Widget super.child,
+  });
 
   @override
   _RenderDryIntrinsicWidth createRenderObject(BuildContext context) =>
@@ -53,9 +53,9 @@ class _RenderDryIntrinsicWidth extends RenderIntrinsicWidth {
 class DryIntrinsicHeight extends SingleChildRenderObjectWidget {
   /// Default const constructor.
   const DryIntrinsicHeight({
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
+    super.key,
+    required Widget super.child,
+  });
 
   @override
   _RenderDryIntrinsicHeight createRenderObject(BuildContext context) =>

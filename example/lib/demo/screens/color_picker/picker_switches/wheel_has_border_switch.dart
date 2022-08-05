@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class WheelHasBorderSwitch extends ConsumerWidget {
-  const WheelHasBorderSwitch({Key? key}) : super(key: key);
+  const WheelHasBorderSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

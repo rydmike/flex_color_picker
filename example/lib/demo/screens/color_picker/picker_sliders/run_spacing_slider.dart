@@ -6,7 +6,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class RunSpacingSlider extends ConsumerWidget {
-  const RunSpacingSlider({Key? key}) : super(key: key);
+  const RunSpacingSlider({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

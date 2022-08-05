@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class ColorValueSwitch extends ConsumerWidget {
-  const ColorValueSwitch({Key? key}) : super(key: key);
+  const ColorValueSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -21,16 +21,11 @@ class OpacitySliderThumb extends RoundSliderThumbShape {
   /// and shows the slider `value` * 100 in the thumb.
   const OpacitySliderThumb({
     required this.color,
-    double enabledThumbRadius = 16.0,
-    double? disabledThumbRadius,
-    double elevation = 1.0,
-    double pressedElevation = 4.0,
-  }) : super(
-          enabledThumbRadius: enabledThumbRadius,
-          disabledThumbRadius: disabledThumbRadius,
-          elevation: elevation,
-          pressedElevation: pressedElevation,
-        );
+    super.enabledThumbRadius = 16.0,
+    super.disabledThumbRadius,
+    super.elevation,
+    super.pressedElevation = 4.0,
+  });
 
   /// Color used to fill the inside of the thumb.
   final Color color;

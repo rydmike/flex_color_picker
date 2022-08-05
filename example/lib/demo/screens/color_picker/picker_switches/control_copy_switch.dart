@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class ControlCopySwitch extends ConsumerWidget {
-  const ControlCopySwitch({Key? key}) : super(key: key);
+  const ControlCopySwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

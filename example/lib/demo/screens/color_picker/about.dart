@@ -9,7 +9,7 @@ import '../../utils/app.dart';
 // version and to show what version of Flutter the Live version of the
 // example app was built with.
 class AboutIconButton extends StatelessWidget {
-  const AboutIconButton({Key? key}) : super(key: key);
+  const AboutIconButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ void showAppAboutDialog(BuildContext context) {
               ),
               LinkTextSpan(
                 style: linkStyle,
-                url: App.packageUrl,
+                uri: App.packageUri,
                 text: 'pub.dev',
               ),
               TextSpan(
@@ -80,7 +80,6 @@ void showAppAboutDialog(BuildContext context) {
 /// working URL link text when using it in a [Text.rich] or lower
 /// level [RichText] widget.
 class LinkTextSpan extends TextSpan {
-  // Beware!
   // This class is only safe because the TapGestureRecognizer is not
   // given a deadline and therefore never allocates any resources.
   // In any other situation -- setting a deadline, using any of the less trivial
@@ -89,13 +88,11 @@ class LinkTextSpan extends TextSpan {
   // Since TextSpan itself is @immutable, this means that you would have to
   // manage the recognizer from outside the TextSpan, e.g. in the State of a
   // stateful widget that then hands the recognizer to the TextSpan.
-  LinkTextSpan({TextStyle? style, String? url, String? text})
+  LinkTextSpan({super.style, required Uri uri, required String super.text})
       : super(
-          style: style,
-          text: text ?? url,
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              launch(url!, forceSafariVC: false);
+              launchUrl(uri);
             },
         );
 }

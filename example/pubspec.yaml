@@ -3,7 +3,7 @@ description: Two examples of how to use the FlexColorPicker package.
 version: 2.6.0-dev.1
 publish_to: 'none'
 environment:
-  sdk: '>=2.12.0-0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
   flutter: '>=3.1.0-0.0.pre.2111'
 
 dependencies:
@@ -15,20 +15,20 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^1.0.3
+  flutter_riverpod: ^1.0.4
 
   # https://pub.dev/packages/google_fonts
-  google_fonts: ^2.3.1
+  google_fonts: ^3.0.1
 
   # https://pub.dev/packages/hive
-  hive: ^2.1.0
+  hive: ^2.2.3
 
   # https://pub.dev/packages/path_provider:
-  path_provider: ^2.0.9
+  path_provider: ^2.0.11
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:

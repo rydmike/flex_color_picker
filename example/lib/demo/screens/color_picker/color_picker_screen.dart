@@ -15,7 +15,7 @@ import 'picker_toggle_buttons/actions_order_switch.dart';
 /// ColorPicker and the controls, each column when visible has its own
 /// ListView, so the columns can be scrolled individually when they are visible.
 class ColorPickerScreen extends StatelessWidget {
-  const ColorPickerScreen({Key? key}) : super(key: key);
+  const ColorPickerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,9 @@ class ColorPickerScreen extends StatelessWidget {
               Expanded(
                 child: Scrollbar(
                   controller: scrollOne,
-                  isAlwaysShown: true,
+                  // TODO(rydmike): Remove commented deprecated API.
+                  // isAlwaysShown: true,
+                  thumbVisibility: true,
                   interactive: true,
                   child: ListView(
                     controller: scrollOne,
@@ -80,7 +82,9 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollTwo,
-                    isAlwaysShown: true,
+                    // TODO(rydmike): Remove commented deprecated API.
+                    // isAlwaysShown: true,
+                    thumbVisibility: true,
                     interactive: true,
                     child: ListView(
                       controller: scrollTwo,
@@ -103,7 +107,9 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollThree,
-                    isAlwaysShown: true,
+                    // TODO(rydmike): Remove commented deprecated API.
+                    // isAlwaysShown: true,
+                    thumbVisibility: true,
                     interactive: true,
                     child: ListView(
                       controller: scrollThree,
@@ -125,7 +131,9 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollFour,
-                    isAlwaysShown: true,
+                    // TODO(rydmike): Remove commented deprecated API.
+                    // isAlwaysShown: true,
+                    thumbVisibility: true,
                     interactive: true,
                     child: ListView(
                       controller: scrollFour,
@@ -148,7 +156,7 @@ class ColorPickerScreen extends StatelessWidget {
 }
 
 class _Column1 extends StatelessWidget {
-  const _Column1({Key? key}) : super(key: key);
+  const _Column1();
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +219,7 @@ class _Column1 extends StatelessWidget {
 }
 
 class _Column2 extends StatelessWidget {
-  const _Column2({Key? key}) : super(key: key);
+  const _Column2();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -256,7 +264,7 @@ class _Column2 extends StatelessWidget {
 }
 
 class _Column3 extends StatelessWidget {
-  const _Column3({Key? key}) : super(key: key);
+  const _Column3();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -298,7 +306,7 @@ class _Column3 extends StatelessWidget {
 }
 
 class _Column4 extends StatelessWidget {
-  const _Column4({Key? key}) : super(key: key);
+  const _Column4();
   @override
   Widget build(BuildContext context) {
     return Column(
