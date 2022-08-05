@@ -2,22 +2,42 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## [2.5.0] - April 21, 2022
+## 2.6.0-dev.1 
 
-**NEW FEATURES**
+**August 5, 2022**
+
+**CHANGE**
+
+* Updated material_color_utilities to ^0.2.0. Required to work against Flutter SDK master
+  3.1.0-0.0.pre.2111 or later. This version constraint does not work with Flutter 3.0.x stable.
+  This is a dev release for those that need to work with master channel where Flutter SDK depends on
+  material_color_utilities ^0.2.0.
+
+**DOCS**
+
+* Harmonized the changelog style and its past history. The new style and how it looks will be tested
+  with a dev release to ensure it works well on pub.
+
+## 2.5.0
+
+**April 21, 2022**
+
+**NEW**
 
 * Added new features to add padding between the wheel picker's shade square and hue wheel,
   and to adjust the border radius on the shade square.
   Addresses enhancement request [#47 "Square padding"](https://github.com/rydmike/flex_color_picker/issues/47).
   The new features are available via `ColorPicker` properties `wheelSquarePadding` and `wheelSquareBorderRadius`.
 
-## [2.4.0] - April 15, 2022
+## 2.4.0
+
+**April 15, 2022**
 
 **FIX**
 
  * Fixes [issue #44](https://github.com/rydmike/flex_color_picker/issues/44) "High wheelWidth cause wrong cursor position in the ColorPicker"
 
-**NEW FEATURES**
+**NEW**
 
 * The order of the action buttons Cancel - OK on the bottom of the built-in
   dialog can be changed to OK - Cancel. come in three flavors controlled by enum
@@ -56,7 +76,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   This new feature can potentially also be used to address [issue #33](https://github.com/rydmike/flex_color_picker/issues/33).
 
 
-**UPDATED**
+**CHANGE**
 
 * The generated Material Color swatch you get when you click on any color in the
   wheel picker has been updated and is a bit improved. It is still not the
@@ -74,11 +94,13 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   If someone wants to make a Dart version, that would be fabulous. Links and more
   information can be found in `ColorTools.createPrimarySwatch`
 
-**WED DEMO**
+**EXAMPLES**
 
   The web demo app has been updated to demonstrate above new features.
 
-## [2.3.1] - March 3, 2022
+## 2.3.1
+
+**March 3, 2022**
 
 **FIX**
 
@@ -87,9 +109,11 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   Flutter 2.10.x, but not in  Flutter 2.8.1. See issues [report #40](https://github.com/rydmike/flex_color_picker/issues/40) and [PR #41](https://github.com/rydmike/flex_color_picker/pull/41).
 
 
-## [2.3.0] - February 18, 2022
+## 2.3.0
 
-**NEW FEATURE**
+**February 18, 2022**
+
+**NEW**
 
 * Added capability to show a Material 3 tonal palette as per
   [Material 3 design specification](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
@@ -116,7 +140,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
    an updated color palette for the selected color.
 
 
-**UPDATED**
+**CHANGE**
 
 * The WEB example was updated to include enabling and disabling
   the tonal palette and built it with Flutter version, stable 2.10.1.
@@ -129,23 +153,37 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   The color picker package itself, still has unchanged version requirement
   of Dart SDK: '>=2.14.0 < 3.0.0'.
 
-## [2.2.0] - November 17, 2021
+## 2.2.0
+
+**November 17, 2021**
+
 * Fixed the style for color entry field, to always uses the intended fixed stadium style.
 * Updated dependencies for the web demo, big change was Riverpod to use v1.0.0.
 * Lint rule updates.
 * Bump Dart SDK requirement to 2.14.
 * Build and publish WEB demo with updated version using Flutter 2.5.3.
 
-## [2.1.2] - July 16, 2021
-* **Improvement:** Improved performance by splitting wheel painting into
+## 2.1.2
+
+**July 16, 2021**
+
+**CHANGE**
+
+* Improved performance by splitting wheel painting into
   multiple painters and introducing `RepaintBoundary` widgets around
   expensive painters to avoid unnecessary repaints. Thank you,
   [Krista Koivisto](https://github.com/krista-koivisto) for this excellent contribution!
 
-## [2.1.1] - July 2, 2021
+## 2.1.1
+
+**July 2, 2021**
+ 
 * Documentation fix.
 
-## [2.1.0] - July 2, 2021
+## 2.1.0
+
+**July 2, 2021**
+
 * **Fix:** The `useRootNavigator` argument is now respected on all Navigator
   `pop` functions used in the `ColorPicker` widget itself and by
   built-in dialogs used by the `ColorPicker`. In order to support this,
@@ -166,7 +204,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
     Total 5668 tests, coverage 65.36%.
 * Documentation and typo updates.
 
-## [2.0.2] - June 11, 2021
+## 2.0.2
+
+**June 11, 2021**
+
 * **Improvement:** Performance slightly improved via an additional rebuild check.
 * **New feature:** ColorTools got a new static function `swatchContainsColor`.
 * **New feature:** Set property `secondaryOnDesktopLongOnDeviceAndWeb` to `true` (defaults to false) in
@@ -179,7 +220,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * **CI/CD:** Tried the CI/CD deployment with --base-href="/flexcolorpicker/" instead of `repl`. Did not
   work, continuing with `repl` for now.
 
-## [2.0.1] - April 10, 2021
+## 2.0.1
+
+**April 10, 2021**
+
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a
   new value to update it. You can even "remote control" the color picker by updating the `color`, if so needed.
 
@@ -197,7 +241,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   The demo even goes meta! You can use a modal dialog version of the ColorPicker, to control the ColorPicker
   on the screen in the card, from the dialog ColorPicker! Maybe not as such so useful, but an interesting demo.
 
-## [2.0.0] - April 9, 2021
+## 2.0.0
+
+**April 9, 2021**
+
 * This release only contains documentation updates from pre-release **2.0.0-nullsafety.5**
 * Thi is the first stable release of the null-safe version
 * This is a **MAJOR** new feature release, in addition to the null-safety conversion.
@@ -206,10 +253,11 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   and the API guide in the readme file.
 * For convenience, the list of breaking changes from last stable version 1.1.5 are listed below.
 
-  ### Breaking Changes
-  In addition to breaking changes as a result of the null-safety implementation, this release contain a few other
-  **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
 
+**BREAKING**
+
+In addition to breaking changes as a result of the null-safety implementation, this release contain a few other
+**minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
 
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
@@ -230,7 +278,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * The color code edit and entry field now works more like a normal text entry field. It still
   only accepts valid hex input and converts all input to uppercase.
 
-## [2.0.0-nullsafety.5] - April 8, 2021
+## 2.0.0-nullsafety.5
+
+**April 8, 2021**
+
 * **Fix:** Setting `borderColor` did not change the border color on the wheel when `wheelHasBorder` was true.
 * **New features:** The `showPickerDialog` method now exposes most (= not directly controlled) properties
   of the underlying `AlertDialog` used to make the dialog, this includes e.g., the `backgroundColor`, `elevation`,
@@ -271,14 +322,20 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   also done by setting all providers' state back to their default values as defined by the same const
   fallback value map.
 
-## [2.0.0-nullsafety.4] - March 22, 2021
+## 2.0.0-nullsafety.4
+
+**March 22, 2021**
+
 * **New feature:** A bool `enableOpacity` property was added that enables an opacity
   slider that can be used to control the alpha channel in the selected ARGB color value. The slider
   height can be controlled with `opacityTrackHeight`, the width with `opacityTrackWidth` and the
   slider thumb size with `opacityThumbRadius`. There is also a `opacitySubheading` Widget that can
   be used to provide a Widget heading for the opacity slider.
 
-## [2.0.0-nullsafety.3] - March 12, 2021
+## 2.0.0-nullsafety.3
+
+**March 12, 2021**
+
 * **Fix:** Color code field no longer receives focus when switching to it on wheel page.
   Focus is set to color wheel, or the selected color shade, if the
   shade colors are present. The focus handling has also been improved for desktop usage.
@@ -313,10 +370,16 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 *See API documentation for more information.*
 
-## [2.0.0-nullsafety.2] - March 3, 2021
+## 2.0.0-nullsafety.2
+
+**March 3, 2021**
+
 * Documentation and live Web demo link fixes.
 
-## [2.0.0-nullsafety.1] - March 3, 2021
+## 2.0.0-nullsafety.1
+
+**March 3, 2021**
+
 There are many new features included in this version 2 pre-release. The new features can be explored with
 [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package
 example folder, in "example/lib/demo/main.dart".
@@ -373,8 +436,10 @@ example folder, in "example/lib/demo/main.dart".
 
  *See API documentation for more information.*
 
-### Breaking changes
+**BREAKING** 
+
 The following are **minor breaking changes** from version 1.1.5, they mostly concern visual nuances and label defaults.
+
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color
   code entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: myIcon)` and provide it to the
   `copyPasteBehavior` property, it defaults to same icon as in version 1.1.5.
@@ -386,7 +451,10 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
   no choice.
 * The dialog bottom **OK** button is no longer autofocused.
 
-## [2.0.0-nullsafety.0] - February 15, 2021
+## 2.0.0-nullsafety.0
+
+**February 15, 2021**
+
 * First version with null safety.
 * A workaround to issue [#71687](https://github.com/flutter/flutter/issues/71687) was introduced.
   The issue has not been solved. However, the workaround allows for the Wrap implementation that was
@@ -396,39 +464,60 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
   Previously this Web example was in a separate GitHub repository. The example was updated to make it
   responsive, to offer better usability on Web.
 
-## [1.1.5] - March 3, 2021
+## 1.1.5
+
+**March 3, 2021**
+
 * **Fix:** When `selectedPickerTypeColor` color was undefined, the thumb did not receive the same text color as the
   default and only one before in version 1.1.3 and earlier, in dark-mode. This broke compatibility with past style
   when using dark-mode. This fix restores the correct past style when the `selectedPickerTypeColor` is undefined.
 
-## [1.1.4] - March 3, 2021
+## 1.1.4
+
+**March 3, 2021**
+
 * **Feature:** New property `selectedPickerTypeColor`: Defines the color of the thumb on the slider that shows the selected picker.
 * **Feature:** New property `colorCodePrefixStyle`: Defines the text style of the prefix for the color code.
   If not defined it defaults to same style as `colorCodeTextStyle`.
 
-## [1.1.3] - December 22, 2020
+## 1.1.3
+
+**December 22, 2020**
+
 * **Fix:** Faulty documentation and comment for showPickerDialog parameter insetPadding.
 * **Fix:** Faulty default value for showPickerDialog parameter insetPadding, the new default
   value is the same as Flutter and Material default
   `EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0)`, as it should have been.
 * **Documentation:** Minor documentation style correction.
 
-## [1.1.2] - December 5, 2020
+## 1.1.2
+
+**December 5, 2020**
+
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
 When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
-## [1.1.1] - November 11, 2020
+## 1.1.1
+
+**November 11, 2020**
+
 * Updated the example app and documentation. The update includes updated screenshots and updated animated gifs.
 * Unit tests for ColorTools added, widget tests still pending for later updates.
 
-## [1.1.0] - November 6, 2020
+## 1.1.0
+
+**November 6, 2020**
+
 * New API: Added `showColorValue` to optionally display the int value of the selected color. This can be used to assist developers when they need to see or copy selected color values as int numbers.
 * New APIs: Exposed previously missing static color names in the API for all the accent and B&W color names in `ColorTools`. All the color name values default to English color names, but can now be changed to translated strings to provide Material color names in other languages as well.
 * Updated the live Web demo to demonstrate the `showColorValue` property.
 * Example and documentation updated.
 
-## [1.0.0] - November 5, 2020
+## 1.0.0
+
+**November 5, 2020**
+
 * First official release.
 * Example and documentation updated.
 * Updated the live Web demo version to use the released package.
@@ -440,7 +529,10 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * Renamed: API `colorName` -> `materialName`
 * Renamed: API `colorHexCode` -> `colorCode`
 
-## [1.0.0-dev.5] - November 5, 2020
+## 1.0.0-dev.5
+
+**November 5, 2020**
+
 * Added a feature on the wheel color picker that enables entry of a hex RGB value to select a color.
 * API changes to support separate display of Material color name `showMaterialName` and selected color code `showColorCode`, plus defining their text styles `materialNameTextStyle` and `colorCodeTextStyle`.
 * New API `showColorName` to display an English color name for any selected color, not just the Material color names or custom named color swatches. It has text style that can be defined as well `colorNameTextStyle`.
@@ -449,44 +541,50 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * A new method introduced in ColorTools called `nameThatColor(Color color)`. It returns a name for any color passed to it. Only supports English names. Based on a Dart port of http://chir.ag/projects/ntc, it contains 1566 colors and their names. It matches the given color to the closest similar color in the list and returns its name.
 * Example and documentation updated.
 
-## [1.0.0-dev.4] - November 2, 2020
+## 1.0.0-dev.4
+
+**November 2, 2020**
+
 * Update to try to get the images to show up on pub.dev.
 * Minor documentation corrections.
 
-## [1.0.0-dev.3] - November 2, 2020
+## 1.0.0-dev.3
+
+**November 2, 2020**
+
 * Significant API name changes and cleanup. Decided to implement previously planned changes before the official release, even if it will also impact our own usage of the package when we move to using the published version.
 
-## [1.0.0-dev.2] - October 30, 2020
+## 1.0.0-dev.2
+
+**October 30, 2020**
+
 * First development pre-release on pub.dev.
 
 ---
 
 # Planned Updates and New Features
+
 These are the topics I currently have on the TODO list for this package. Do you have a new suggestion and idea?
 Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
 
 ### TODO
-- Add more tests.
-- Finalize tests.
-- Additional controls for selecting active picker, maybe a custom slider and ToggleButtons.
-- Add one more color picker type "advanced", using only sliders as controls.
-
-### MAYBE
-- Add selected colors to the custom colors section.
-
-### COMPLETED
-- Release stable version 2.0.0
-- Add GitHub actions for test, analyze, coverage, build and web demo deployment.
-- Add a simpler optional async dialog picker function, that returns selected color.
-- Add support for colors with opacity or alpha.
-- Improve copy/paste feature.
-- Version 2.0.0-nullsafety.0: Add null safe version.
-- Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools,
-  more tests will be added later. ColorTools has 4694 tests.
-- Publish version 1.0.0 on pub.dev.
-- Release version 1.0.0.
-- Add "name that color" function that can give a name to "any" color in English.
-- For the color wheel picker, add text input to get a given color based on entered HEX code.
-- Fix doc images that show up OK in GitHub readme.md, but not on pub.dev.
-- Review and correct documentation mistakes and typos, first pass anyway.
-- Review and update the API.
+- [ ] Additional controls for selecting active picker, maybe a custom slider and ToggleButtons.
+- [ ] Add one more color picker type "advanced", using only sliders as controls.
+- [ ] Add support for other color formats than RGB.
+- [ ] Maybe: Add selected colors to the custom colors section.
+- [ ] Add more tests.
+- [ ] Finalize tests.
+- [x] Release stable version 2.0.0
+- [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.
+- [x] Add a simpler optional async dialog picker function, that returns selected color.
+- [x] Add support for colors with opacity or alpha.
+- [x] Improve copy/paste feature.
+- [x] Version 2.0.0-nullsafety.0: Add null safe version.
+- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
+- [x] Publish version 1.0.0 on pub.dev.
+- [x] Release version 1.0.0.
+- [x] Add "name that color" function that can give a name to "any" color in English.
+- [x] For the color wheel picker, add text input to get a given color based on entered HEX code.
+- [x] Fix doc images that show up OK in GitHub readme.md, but not on pub.dev.
+- [x] Review and correct documentation mistakes and typos, first pass anyway.
+- [x] Review and update the API.
