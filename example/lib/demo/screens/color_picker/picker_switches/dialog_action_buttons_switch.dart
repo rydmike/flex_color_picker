@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class DialogActionsButtonsSwitch extends ConsumerWidget {
-  const DialogActionsButtonsSwitch({Key? key}) : super(key: key);
+  const DialogActionsButtonsSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

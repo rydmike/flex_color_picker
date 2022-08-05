@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class EnableTooltipsSwitch extends ConsumerWidget {
-  const EnableTooltipsSwitch({Key? key}) : super(key: key);
+  const EnableTooltipsSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

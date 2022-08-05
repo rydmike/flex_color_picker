@@ -6,7 +6,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class OpacityTrackHeightSlider extends ConsumerWidget {
-  const OpacityTrackHeightSlider({Key? key}) : super(key: key);
+  const OpacityTrackHeightSlider({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -5,7 +5,7 @@ import '../../../pods/pods.dart';
 
 @immutable
 class ThemeModeSwitch extends ConsumerWidget {
-  const ThemeModeSwitch({Key? key}) : super(key: key);
+  const ThemeModeSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

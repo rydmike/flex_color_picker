@@ -41,7 +41,7 @@ Future<void> main() async {
 }
 
 class PickerDemoApp extends ConsumerWidget {
-  const PickerDemoApp({Key? key}) : super(key: key);
+  const PickerDemoApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

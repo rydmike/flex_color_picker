@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class Index850Switch extends ConsumerWidget {
-  const Index850Switch({Key? key}) : super(key: key);
+  const Index850Switch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

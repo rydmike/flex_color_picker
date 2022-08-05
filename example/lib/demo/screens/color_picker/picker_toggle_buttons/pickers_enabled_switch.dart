@@ -6,7 +6,7 @@ import '../../../pods/pods.dart';
 import '../../../widgets/maybe_tooltip.dart';
 
 class PickersEnabledSwitch extends ConsumerWidget {
-  const PickersEnabledSwitch({Key? key}) : super(key: key);
+  const PickersEnabledSwitch({super.key});
   static const double _kToggleFontSize = 11.5;
 
   @override

@@ -6,7 +6,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class ItemSizeSlider extends ConsumerWidget {
-  const ItemSizeSlider({Key? key}) : super(key: key);
+  const ItemSizeSlider({super.key});
 
   static const double _pickItemMinSize = 20;
   static const double _pickItemMaxSize = 60;

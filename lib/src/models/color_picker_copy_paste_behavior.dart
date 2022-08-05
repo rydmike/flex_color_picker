@@ -439,36 +439,33 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   }
 
   @override
-  int get hashCode {
-    final List<Object?> values = <Object?>[
-      ctrlC,
-      ctrlV,
-      autoFocus,
-      copyButton,
-      pasteButton,
-      copyIcon,
-      pasteIcon,
-      copyTooltip,
-      pasteTooltip,
-      copyFormat,
-      longPressMenu,
-      secondaryMenu,
-      secondaryOnDesktopLongOnDevice,
-      secondaryOnDesktopLongOnDeviceAndWeb,
-      editFieldCopyButton,
-      menuIconThemeData,
-      menuThemeData,
-      menuWidth,
-      menuItemHeight,
-      snackBarParseError,
-      snackBarMessage,
-      snackBarDuration,
-      feedbackParseError,
-      parseShortHexCode,
-      editUsesParsedPaste,
-    ];
-    return hashList(values);
-  }
+  int get hashCode => Object.hashAll(<Object?>[
+        ctrlC,
+        ctrlV,
+        autoFocus,
+        copyButton,
+        pasteButton,
+        copyIcon,
+        pasteIcon,
+        copyTooltip,
+        pasteTooltip,
+        copyFormat,
+        longPressMenu,
+        secondaryMenu,
+        secondaryOnDesktopLongOnDevice,
+        secondaryOnDesktopLongOnDeviceAndWeb,
+        editFieldCopyButton,
+        menuIconThemeData,
+        menuThemeData,
+        menuWidth,
+        menuItemHeight,
+        snackBarParseError,
+        snackBarMessage,
+        snackBarDuration,
+        feedbackParseError,
+        parseShortHexCode,
+        editUsesParsedPaste,
+      ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

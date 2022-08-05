@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class TitleSwitch extends ConsumerWidget {
-  const TitleSwitch({Key? key}) : super(key: key);
+  const TitleSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

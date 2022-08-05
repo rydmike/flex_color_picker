@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class LongPressMenuSwitch extends ConsumerWidget {
-  const LongPressMenuSwitch({Key? key}) : super(key: key);
+  const LongPressMenuSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

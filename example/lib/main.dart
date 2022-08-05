@@ -6,7 +6,7 @@ import 'demo/utils/app_scroll_behavior.dart';
 void main() => runApp(const ColorPickerDemo());
 
 class ColorPickerDemo extends StatefulWidget {
-  const ColorPickerDemo({Key? key}) : super(key: key);
+  const ColorPickerDemo({super.key});
 
   @override
   _ColorPickerDemoState createState() => _ColorPickerDemoState();
@@ -44,7 +44,7 @@ class _ColorPickerDemoState extends State<ColorPickerDemo> {
 }
 
 class ColorPickerPage extends StatefulWidget {
-  const ColorPickerPage({Key? key, required this.themeMode}) : super(key: key);
+  const ColorPickerPage({super.key, required this.themeMode});
   final ValueChanged<ThemeMode> themeMode;
 
   @override

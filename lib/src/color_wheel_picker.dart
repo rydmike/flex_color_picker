@@ -20,7 +20,7 @@ const bool _debug = !kReleaseMode && false;
 class ColorWheelPicker extends StatefulWidget {
   /// Default constructor for the color wheel picker.
   const ColorWheelPicker({
-    Key? key,
+    super.key,
     required this.color,
     required this.onChanged,
     this.onChangeStart,
@@ -33,9 +33,8 @@ class ColorWheelPicker extends StatefulWidget {
     this.borderColor,
     this.shouldUpdate = false,
     this.shouldRequestsFocus = false,
-  })  : assert(wheelWidth >= 4 && wheelWidth <= 50,
-            'The Wheel must be between 4 and 50dp'),
-        super(key: key);
+  }) : assert(wheelWidth >= 4 && wheelWidth <= 50,
+            'The Wheel must be between 4 and 50dp');
 
   /// The starting color value for the wheel color picker.
   final Color color;

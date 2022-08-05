@@ -13,7 +13,11 @@ class App {
   static const String appName = 'FlexColorPicker';
   static const String version = '2.6.0-dev.1';
   static const String packageVersion = 'FlexColorPicker package $version';
-  static const String packageUrl = 'https://pub.dev/packages/flex_color_picker';
+  static final Uri packageUri = Uri(
+    scheme: 'https',
+    host: 'pub.dev',
+    path: 'packages/flex_color_picker',
+  );
   static const String flutterVersion = 'Channel master 3.1.0-0.0.pre.2111';
   static const String copyright = '© 2020, 2021, 2022';
   static const String author = 'Mike Rydstrom';

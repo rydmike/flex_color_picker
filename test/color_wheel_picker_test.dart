@@ -85,7 +85,7 @@ void main() {
 }
 
 class TestWidget extends StatelessWidget {
-  const TestWidget({Key? key, required this.widget}) : super(key: key);
+  const TestWidget({super.key, required this.widget});
   final Widget widget;
 
   @override

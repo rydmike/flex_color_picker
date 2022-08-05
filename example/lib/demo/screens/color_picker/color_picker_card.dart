@@ -8,7 +8,7 @@ import '../../utils/app.dart';
 /// The ColorPicker shown in a card on the ColorPickerScreen.
 @immutable
 class ColorPickerCard extends ConsumerWidget {
-  const ColorPickerCard({Key? key}) : super(key: key);
+  const ColorPickerCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

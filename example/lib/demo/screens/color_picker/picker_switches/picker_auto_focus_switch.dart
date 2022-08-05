@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class PickerAutoFocusSwitch extends ConsumerWidget {
-  const PickerAutoFocusSwitch({Key? key}) : super(key: key);
+  const PickerAutoFocusSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

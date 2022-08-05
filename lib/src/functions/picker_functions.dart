@@ -158,5 +158,6 @@ List<Color> getTonalColors(Color color) {
   final TonalPalette tonalColors =
       TonalPalette.of(camColor.hue, math.max(48, camColor.chroma));
 
+  // ignore: unnecessary_lambdas
   return tonalColors.asList.map((int e) => Color(e)).toList();
 }

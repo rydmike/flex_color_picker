@@ -8,7 +8,7 @@ import '../color_picker_dialog.dart';
 
 @immutable
 class DialogPickerColorIndicator extends ConsumerWidget {
-  const DialogPickerColorIndicator({Key? key}) : super(key: key);
+  const DialogPickerColorIndicator({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +29,7 @@ class DialogPickerColorIndicator extends ConsumerWidget {
         onSelect: () async {
           final Color colorBeforeDialog =
               ref.read(dialogPickerColorPod.state).state;
+          // ignore: use_build_context_synchronously
           if (!(await colorPickerDialog(context, ref))) {
             ref.read(dialogPickerColorPod.state).state = colorBeforeDialog;
           }

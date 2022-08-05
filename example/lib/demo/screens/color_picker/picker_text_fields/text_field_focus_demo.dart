@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextFieldFocusDemo extends StatefulWidget {
-  const TextFieldFocusDemo({Key? key}) : super(key: key);
+  const TextFieldFocusDemo({super.key});
 
   @override
   State<TextFieldFocusDemo> createState() => _TextFieldFocusDemoState();

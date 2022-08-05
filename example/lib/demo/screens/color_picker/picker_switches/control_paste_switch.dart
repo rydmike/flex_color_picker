@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class ControlPasteSwitch extends ConsumerWidget {
-  const ControlPasteSwitch({Key? key}) : super(key: key);
+  const ControlPasteSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class SecondaryDesktopLongDeviceSwitch extends ConsumerWidget {
-  const SecondaryDesktopLongDeviceSwitch({Key? key}) : super(key: key);
+  const SecondaryDesktopLongDeviceSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

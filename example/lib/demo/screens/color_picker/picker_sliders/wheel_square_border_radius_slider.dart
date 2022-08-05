@@ -6,7 +6,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class WheelSquareBorderRadiusSlider extends ConsumerWidget {
-  const WheelSquareBorderRadiusSlider({Key? key}) : super(key: key);
+  const WheelSquareBorderRadiusSlider({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

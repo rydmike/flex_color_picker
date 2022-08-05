@@ -9,7 +9,7 @@ import '../functions/picker_functions.dart';
 class MainColors extends StatelessWidget {
   /// Default const constructor.
   const MainColors({
-    Key? key,
+    super.key,
     required this.spacing,
     required this.runSpacing,
     required this.columnSpacing,
@@ -25,7 +25,7 @@ class MainColors extends StatelessWidget {
     required this.elevation,
     required this.selectedColorIcon,
     this.selectedRequestsFocus = false,
-  }) : super(key: key);
+  });
 
   /// The spacing between the color pick items.
   final double spacing;

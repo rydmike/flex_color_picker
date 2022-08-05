@@ -6,7 +6,7 @@ import '../../../widgets/switch_tile_tooltip.dart';
 
 @immutable
 class HeadingSwitch extends ConsumerWidget {
-  const HeadingSwitch({Key? key}) : super(key: key);
+  const HeadingSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

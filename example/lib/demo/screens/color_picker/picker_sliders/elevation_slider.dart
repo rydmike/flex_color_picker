@@ -6,7 +6,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class ElevationSlider extends ConsumerWidget {
-  const ElevationSlider({Key? key}) : super(key: key);
+  const ElevationSlider({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

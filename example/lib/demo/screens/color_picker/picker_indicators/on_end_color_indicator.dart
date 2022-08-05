@@ -8,7 +8,7 @@ import '../../../widgets/maybe_tooltip.dart';
 
 @immutable
 class OnEndColorIndicator extends ConsumerWidget {
-  const OnEndColorIndicator({Key? key}) : super(key: key);
+  const OnEndColorIndicator({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -5,7 +5,7 @@ import '../../pods/pods_reset.dart';
 import '../../widgets/platform_alert_dialog.dart';
 
 class ResetSettingsButton extends ConsumerWidget {
-  const ResetSettingsButton({Key? key}) : super(key: key);
+  const ResetSettingsButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

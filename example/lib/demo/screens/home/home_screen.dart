@@ -9,7 +9,7 @@ import '../color_picker/picker_toggle_buttons/theme_mode_switch.dart';
 import 'reset_settings_button.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -362,33 +362,30 @@ class ColorPickerActionButtons with Diagnosticable {
   }
 
   @override
-  int get hashCode {
-    final List<Object?> values = <Object?>[
-      okButton,
-      closeButton,
-      okIcon,
-      closeIcon,
-      closeIsLast,
-      okTooltip,
-      closeTooltip,
-      closeTooltipIsClose,
-      toolIconsThemeData,
-      visualDensity,
-      padding,
-      alignment,
-      splashRadius,
-      constraints,
-      dialogActionButtons,
-      dialogActionOrder,
-      dialogActionIcons,
-      dialogCancelButtonLabel,
-      dialogCancelButtonType,
-      dialogOkButtonLabel,
-      dialogOkButtonType,
-      useRootNavigator,
-    ];
-    return hashList(values);
-  }
+  int get hashCode => Object.hashAll(<Object?>[
+        okButton,
+        closeButton,
+        okIcon,
+        closeIcon,
+        closeIsLast,
+        okTooltip,
+        closeTooltip,
+        closeTooltipIsClose,
+        toolIconsThemeData,
+        visualDensity,
+        padding,
+        alignment,
+        splashRadius,
+        constraints,
+        dialogActionButtons,
+        dialogActionOrder,
+        dialogActionIcons,
+        dialogCancelButtonLabel,
+        dialogCancelButtonType,
+        dialogOkButtonLabel,
+        dialogOkButtonType,
+        useRootNavigator,
+      ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

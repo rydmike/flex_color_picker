@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class MaybeTooltip extends StatelessWidget {
   /// Const default constructor.
   const MaybeTooltip({
-    Key? key,
+    super.key,
     required this.condition,
     this.tooltip,
     required this.child,
     this.padding,
     this.margin,
-  }) : super(key: key);
+  });
 
   final bool condition;
   final String? tooltip;

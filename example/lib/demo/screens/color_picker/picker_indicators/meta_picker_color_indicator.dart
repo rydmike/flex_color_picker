@@ -7,7 +7,7 @@ import '../color_picker_dialog.dart';
 
 @immutable
 class MetaPickerColorIndicator extends ConsumerWidget {
-  const MetaPickerColorIndicator({Key? key}) : super(key: key);
+  const MetaPickerColorIndicator({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +36,7 @@ class MetaPickerColorIndicator extends ConsumerWidget {
         onSelectFocus: false,
         onSelect: () async {
           final Color colorBeforeDialog = ref.read(cardPickerColorPod);
+          // ignore: use_build_context_synchronously
           if (!(await colorPickerDialog(
             context,
             ref,
@@ -51,9 +52,9 @@ class MetaPickerColorIndicator extends ConsumerWidget {
 
 class ColorControlBox extends ConsumerWidget {
   const ColorControlBox({
-    Key? key,
+    super.key,
     required this.color,
-  }) : super(key: key);
+  });
 
   final Color color;
 
