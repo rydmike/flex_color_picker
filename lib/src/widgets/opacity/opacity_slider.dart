@@ -130,7 +130,7 @@ ui.Image? _trackImage;
 Future<ui.Image> getTrackImage() {
   if (_trackImage != null) return Future<ui.Image>.value(_trackImage);
   final Completer<ui.Image> completer = Completer<ui.Image>();
-  const AssetImage('packages/flex_color_picker/assets/opacity.png')
+  const AssetImage('assets/opacity.png', package: 'flex_color_picker')
       .resolve(ImageConfiguration.empty)
       .addListener(ImageStreamListener((ImageInfo info, bool _) {
     _trackImage = info.image;

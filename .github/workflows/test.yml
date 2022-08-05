@@ -11,7 +11,7 @@
 name: Test
 on:
   push:
-    branches: [master]
+    branches: [master, v2-6-0-dev-1]
     paths-ignore:
       - "**.md"
 
@@ -30,7 +30,7 @@ jobs:
       - name: Install Flutter and Dart SDK
         uses: subosito/flutter-action@v1.5.3
         with:
-          channel: "stable"
+          channel: "master"
 
       - name: Show Dart SDK version
         run: dart --version
