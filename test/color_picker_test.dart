@@ -1008,6 +1008,7 @@ class TestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
     debugDefaultTargetPlatformOverride = null;
     return MaterialApp(
       title: 'TestWidget',
@@ -1022,3 +1023,14 @@ class TestWidget extends StatelessWidget {
     );
   }
 }
+
+// class TestAssetBundle extends CachingAssetBundle {
+//   @override
+//   Future<ByteData> load(String key) async {
+//     if (key == 'assets/opacity.png') {
+//       return ByteData.view(
+//           Uint8List.fromList(utf8.encode('Dummy data')).buffer);
+//     }
+//     return ByteData(0);
+//   }
+// }
