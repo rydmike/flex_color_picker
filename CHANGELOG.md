@@ -6,12 +6,19 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **August 5, 2022**
 
-**CHANGE**
+This is a dev release for those that need to work with master channel where Flutter SDK depends on
+material_color_utilities ^0.2.0.
 
-* Updated material_color_utilities to ^0.2.0. Required to work against Flutter SDK master
-  3.1.0-0.0.pre.2111 or later. This version constraint does not work with Flutter 3.0.x stable.
-  This is a dev release for those that need to work with master channel where Flutter SDK depends on
-  material_color_utilities ^0.2.0.
+* Updated material_color_utilities to ^0.2.0. This version constraint does not
+  work with Flutter 3.0.x stable or beta 3.3.x, and their earlier versions.
+  This dev release is required to use Flutter SDK **master** 3.1.0-0.0.pre.2111 or later,
+  that uses material_color_utilities 0.2.0.  
+
+* For other (older) version of Flutter SDK you can use package version 2.5.0 that has a 
+  material_color_utilities version constraint of ^0.1.3.
+
+* This release also updates Dart SDK constraint to '>=2.17.0 <3.0.0' and has Flutter listed as
+  '>=3.1.0-0.0.pre.2111'.  
 
 **DOCS**
 
