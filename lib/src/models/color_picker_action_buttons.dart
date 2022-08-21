@@ -14,6 +14,9 @@ enum ColorPickerActionButtonType {
   elevated,
 }
 
+// TODO(rydmike): Dialog button padding may have change in 3.3.0 beta.
+//   Revisit if it needs a revision when 3.3.0 stable is released.
+
 /// Used to define the order of OK and Cancel buttons on the FlexColorPicker
 /// dialog.
 enum ColorPickerActionButtonOrder {
