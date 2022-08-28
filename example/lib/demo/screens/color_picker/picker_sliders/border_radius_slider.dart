@@ -13,7 +13,7 @@ class BorderRadiusSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(borderRadius: '
-          '${ref.read(borderRadiusPod).floor().toString()})',
+          '${ref.read(borderRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item border radius'),
         subtitle: Slider.adaptive(

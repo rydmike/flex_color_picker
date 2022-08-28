@@ -1427,15 +1427,15 @@ class _ColorPickerState extends State<ColorPicker> {
     // The effective used text style, if null was passed in we assign defaults.
     final TextStyle effectiveMaterialNameStyle =
         (widget.materialNameTextStyle ??
-                Theme.of(context).textTheme.bodyText2) ??
+                Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
     final TextStyle effectiveGenericNameStyle =
-        (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
+        (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
 
     // Set the default integer code value text style to bodyText2 if not given.
     final TextStyle effectiveCodeStyle =
-        (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyText2) ??
+        (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
 
     // The logic below is used to determine if we will have a context menu

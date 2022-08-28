@@ -91,43 +91,43 @@ Future<bool> colorPickerDialog(
     title: ref.watch(showTitlePod)
         ? Text(
             'ColorPicker',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           )
         : null,
     heading: ref.watch(showHeadingPod)
         ? Text(
             'Select color',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           )
         : null,
     subheading: ref.watch(showSubheadingPod)
         ? Text(
             'Select color shade',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         : null,
     tonalSubheading: ref.watch(showTonalSubheadingPod)
         ? Text(
             'Material 3 tonal palette',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         : null,
     wheelSubheading: ref.watch(showSubheadingPod)
         ? Text(
             'Selected color and its color swatch',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         : null,
     opacitySubheading: ref.watch(showOpacitySubheadingPod)
         ? Text(
             'Opacity',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         : null,
     recentColorsSubheading: ref.watch(showRecentSubheadingPod)
         ? Text(
             'Recent colors',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         : null,
     showMaterialName: ref.watch(showMaterialNamePod),

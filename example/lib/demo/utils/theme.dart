@@ -92,31 +92,31 @@ class AppTheme {
       );
 
   static TextTheme get textTheme => TextTheme(
-        headline1: GoogleFonts.roboto(
+        displayLarge: GoogleFonts.roboto(
             fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -1.5),
-        headline2: GoogleFonts.roboto(
+        displayMedium: GoogleFonts.roboto(
             fontSize: 48, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-        headline3:
+        displaySmall:
             GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
-        headline4: GoogleFonts.roboto(
+        headlineMedium: GoogleFonts.roboto(
             fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-        headline5:
+        headlineSmall:
             GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.w400),
-        headline6: GoogleFonts.roboto(
+        titleLarge: GoogleFonts.roboto(
             fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-        bodyText1: GoogleFonts.roboto(
+        bodyLarge: GoogleFonts.roboto(
             fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-        bodyText2: GoogleFonts.roboto(
+        bodyMedium: GoogleFonts.roboto(
             fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-        subtitle1: GoogleFonts.roboto(
+        titleMedium: GoogleFonts.roboto(
             fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
-        subtitle2: GoogleFonts.roboto(
+        titleSmall: GoogleFonts.roboto(
             fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-        button: GoogleFonts.roboto(
+        labelLarge: GoogleFonts.roboto(
             fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-        caption: GoogleFonts.roboto(
+        bodySmall: GoogleFonts.roboto(
             fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-        overline: GoogleFonts.roboto(
+        labelSmall: GoogleFonts.roboto(
             fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
       );
 

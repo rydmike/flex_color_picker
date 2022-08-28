@@ -148,7 +148,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     // We use the dialogSelectColor, as its starting color.
                     dialogSelectColor,
                     title: Text('ColorPicker',
-                        style: Theme.of(context).textTheme.headline6),
+                        style: Theme.of(context).textTheme.titleLarge),
                     width: 40,
                     height: 40,
                     spacing: 0,
@@ -217,11 +217,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   borderRadius: 22,
                   heading: Text(
                     'Select color',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   subheading: Text(
                     'Select color shade',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
               ),
@@ -258,15 +258,15 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       wheelDiameter: 155,
       heading: Text(
         'Select color',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       subheading: Text(
         'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       wheelSubheading: Text(
         'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       showMaterialName: true,
       showColorName: true,
@@ -274,10 +274,10 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
         longPressMenu: true,
       ),
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.bodyText2,
-      colorCodePrefixStyle: Theme.of(context).textTheme.caption,
+      materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodyMedium,
+      colorCodePrefixStyle: Theme.of(context).textTheme.bodySmall,
       selectedPickerTypeColor: Theme.of(context).colorScheme.primary,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,

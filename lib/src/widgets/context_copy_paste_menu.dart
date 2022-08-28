@@ -162,7 +162,7 @@ class ContextCopyPasteMenu extends StatelessWidget {
           menuThemeData?.elevation ?? theme.popupMenuTheme.elevation ?? 3,
       textStyle: menuThemeData?.textStyle ??
           theme.popupMenuTheme.textStyle ??
-          theme.textTheme.bodyText2 ??
+          theme.textTheme.bodyMedium ??
           const TextStyle(fontSize: 14),
       enableFeedback: menuThemeData?.enableFeedback ??
           theme.popupMenuTheme.enableFeedback ??

@@ -13,7 +13,7 @@ class SpacingSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(spacing: '
-          '${ref.read(spacingPod).floor().toString()})',
+          '${ref.read(spacingPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item spacing'),
         subtitle: Slider.adaptive(

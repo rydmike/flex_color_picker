@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
             const Spacer(),
             Text(
               App.appName,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 16),
             Row(
@@ -133,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(7),
                 child: Text(
                   'Try the color picker',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
             ),
@@ -152,11 +152,11 @@ class HomeScreen extends StatelessWidget {
             const Spacer(),
             Text(
               'Using flex_color_picker version ${App.version}',
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
               'Web build with Flutter ${App.flutterVersion}',
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 10),
           ],

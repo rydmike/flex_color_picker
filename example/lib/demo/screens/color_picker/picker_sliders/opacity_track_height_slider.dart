@@ -13,7 +13,7 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityTrackHeight: '
-          '${ref.read(opacityTrackHeightPod).floor().toString()})',
+          '${ref.read(opacityTrackHeightPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider height'),
         subtitle: Slider.adaptive(

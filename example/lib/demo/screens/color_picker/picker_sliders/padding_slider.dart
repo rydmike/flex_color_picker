@@ -14,7 +14,7 @@ class PaddingSlider extends ConsumerWidget {
       condition: ref.watch(enableTooltipsPod),
       // ignore: missing_whitespace_between_adjacent_strings
       tooltip: 'ColorPicker(padding: EdgeInsets.all'
-          '(${ref.read(paddingPod).floor().toString()}))',
+          '(${ref.read(paddingPod).floor()}))',
       child: ListTile(
         title: const Text('Color picker content padding'),
         subtitle: Slider.adaptive(

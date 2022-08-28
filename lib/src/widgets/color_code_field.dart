@@ -170,7 +170,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
 
     // Set the default text style to bodyText2 if not given.
     TextStyle effectiveStyle = widget.textStyle ??
-        Theme.of(context).textTheme.bodyText2 ??
+        Theme.of(context).textTheme.bodyMedium ??
         const TextStyle(fontSize: 14);
 
     TextStyle effectivePrefixStyle = widget.prefixStyle ?? effectiveStyle;
