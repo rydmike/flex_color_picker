@@ -167,7 +167,7 @@ class _Column1 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'FlexColorPicker',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         // Show the color selected in a dialog and open a dialog to change it.
@@ -229,7 +229,7 @@ class _Column2 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Show and hide',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         //
@@ -274,7 +274,7 @@ class _Column3 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Picker design',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         // Color picker size
@@ -316,7 +316,7 @@ class _Column4 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 0, 14),
           child: Text(
             'Picker layout',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         const AlignmentSwitch(),
@@ -334,7 +334,7 @@ class _Column4 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 4, 0, 14),
           child: Text(
             'Copy paste actions',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         const ControlCopySwitch(),

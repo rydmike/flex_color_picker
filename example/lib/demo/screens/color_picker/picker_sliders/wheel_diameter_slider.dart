@@ -13,7 +13,7 @@ class WheelDiameterSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(wheelDiameter: '
-          '${ref.read(wheelDiameterPod).floor().toString()})',
+          '${ref.read(wheelDiameterPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel total width'),
         subtitle: Slider.adaptive(

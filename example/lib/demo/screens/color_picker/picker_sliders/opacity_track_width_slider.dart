@@ -22,7 +22,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityTrackWidth: '
-          '${usedOpacityTrackWidth?.floor().toString()})',
+          '${usedOpacityTrackWidth?.floor()})',
       child: ListTile(
         title: const Text('Opacity slider width'),
         subtitle: Slider.adaptive(

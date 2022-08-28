@@ -35,7 +35,7 @@ class ResetSettingsButton extends ConsumerWidget {
         padding: const EdgeInsets.all(7),
         child: Text(
           'Reset settings',
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
     );

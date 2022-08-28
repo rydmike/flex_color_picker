@@ -13,7 +13,7 @@ class ColumnSpacingSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(columnSpacing: '
-          '${ref.read(columnSpacingPod).floor().toString()})',
+          '${ref.read(columnSpacingPod).floor()})',
       child: ListTile(
         title: const Text('Vertical spacing between items'),
         subtitle: Slider.adaptive(

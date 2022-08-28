@@ -51,7 +51,7 @@ class SelectPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     // Set default text style for the segmented slider control.
     final TextStyle segmentTextStyle = textStyle ??
-        Theme.of(context).textTheme.caption ??
+        Theme.of(context).textTheme.bodySmall ??
         const TextStyle(fontSize: 12);
 
     final Color effectiveThumbColor = thumbColor ??

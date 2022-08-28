@@ -13,7 +13,7 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(opacityThumbRadius: '
-          '${ref.read(opacityThumbRadiusPod).floor().toString()})',
+          '${ref.read(opacityThumbRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider thumb radius'),
         subtitle: Slider.adaptive(

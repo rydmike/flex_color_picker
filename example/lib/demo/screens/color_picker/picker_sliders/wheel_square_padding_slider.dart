@@ -13,7 +13,7 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(wheelSquarePadding: '
-          '${ref.read(wheelSquarePaddingPod).floor().toString()})',
+          '${ref.read(wheelSquarePaddingPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel shade square padding'),
         subtitle: Slider.adaptive(

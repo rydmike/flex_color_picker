@@ -13,7 +13,7 @@ class RunSpacingSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(runSpacing: '
-          '${ref.read(runSpacingPod).floor().toString()})',
+          '${ref.read(runSpacingPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item run spacing'),
         subtitle: Slider.adaptive(

@@ -13,7 +13,7 @@ class WheelSquareBorderRadiusSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(wheelSquareBorderRadius: '
-          '${ref.read(wheelSquareBorderRadiusPod).floor().toString()})',
+          '${ref.read(wheelSquareBorderRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel shade square border radius'),
         subtitle: Slider.adaptive(

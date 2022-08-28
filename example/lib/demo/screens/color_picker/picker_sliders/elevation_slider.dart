@@ -13,7 +13,7 @@ class ElevationSlider extends ConsumerWidget {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(elevation: '
-          '${ref.read(elevationPod).floor().toString()})',
+          '${ref.read(elevationPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item elevation'),
         subtitle: Slider.adaptive(
