@@ -43,7 +43,7 @@ class ColorCodeField extends StatefulWidget {
 
   /// TextStyle of the color code display and edit field.
   ///
-  /// Defaults to Theme.of(context).textTheme.bodyText2;
+  /// Defaults to Theme.of(context).textTheme.bodyMedium;
   final TextStyle? textStyle;
 
   /// The TextStyle of the prefix of the color code.
@@ -168,7 +168,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     final Color fieldBorder =
         isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
 
-    // Set the default text style to bodyText2 if not given.
+    // Set the default text style to bodyMedium if not given.
     TextStyle effectiveStyle = widget.textStyle ??
         Theme.of(context).textTheme.bodyMedium ??
         const TextStyle(fontSize: 14);

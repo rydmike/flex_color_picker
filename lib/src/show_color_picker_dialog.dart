@@ -277,7 +277,7 @@ Future<Color> showColorPickerDialog(
 
   /// Text style for the displayed material color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   TextStyle? materialNameTextStyle,
 
   /// Set to true to show an English color name of the selected `color`.
@@ -292,7 +292,7 @@ Future<Color> showColorPickerDialog(
 
   /// Text style for the displayed color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   TextStyle? colorNameTextStyle,
 
   /// Set to true to show the RGB Hex color code of the selected `color`.
@@ -322,7 +322,7 @@ Future<Color> showColorPickerDialog(
 
   /// Text style for the displayed generic color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   TextStyle? colorCodeTextStyle,
 
   /// The TextStyle of the prefix of the color code.
@@ -412,7 +412,7 @@ Future<Color> showColorPickerDialog(
 
   /// The TextStyle of the labels in segmented color picker type selector.
   ///
-  /// Defaults to `Theme.of(context).textTheme.caption`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodySmall`, if not defined.
   TextStyle? pickerTypeTextStyle,
 
   /// A [ColorPickerType] to String map that contains labels for the picker
@@ -464,7 +464,7 @@ Future<Color> showColorPickerDialog(
   /// Style for the text in the dialog `title` of this `AlertDialog`.
   ///
   /// If null, `DialogTheme.titleTextStyle` is used. If that's null,
-  /// defaults to `TextTheme.headline6` of `ThemeData.textTheme`.
+  /// defaults to `TextTheme.titleLarge` of `ThemeData.textTheme`.
   final TextStyle? titleTextStyle,
 
   /// Padding around the content in the dialog.

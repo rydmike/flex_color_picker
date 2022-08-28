@@ -247,7 +247,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   ///            side: BorderSide(
   ///            color: theme.dividerColor))
   ///   elevation: 3
-  ///   textStyle: theme.textTheme.bodyText2!
+  ///   textStyle: theme.textTheme.bodyMedium!
   ///   enableFeedback: true
   /// ```
   final PopupMenuThemeData? menuThemeData;

@@ -467,7 +467,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed material color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   final TextStyle? materialNameTextStyle;
 
   /// Set to true to show an English color name of the selected [color].
@@ -482,7 +482,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   final TextStyle? colorNameTextStyle;
 
   /// Set to true to show the RGB Hex color code of the selected [color].
@@ -512,7 +512,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Text style for the displayed generic color name in the picker.
   ///
-  /// Defaults to `Theme.of(context).textTheme.bodyText2`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   final TextStyle? colorCodeTextStyle;
 
   /// Old property, no longer in use. This property is now set via
@@ -624,7 +624,7 @@ class ColorPicker extends StatefulWidget {
 
   /// The TextStyle of the labels in segmented color picker type selector.
   ///
-  /// Defaults to `Theme.of(context).textTheme.caption`, if not defined.
+  /// Defaults to `Theme.of(context).textTheme.bodySmall`, if not defined.
   final TextStyle? pickerTypeTextStyle;
 
   /// A [ColorPickerType] to String map that contains labels for the picker
@@ -705,7 +705,7 @@ class ColorPicker extends StatefulWidget {
     /// Style for the text in the [title] of this [AlertDialog].
     ///
     /// If null, [DialogTheme.titleTextStyle] is used. If that's null,
-    /// defaults to [TextTheme.headline6] of [ThemeData.textTheme].
+    /// defaults to [TextTheme.titleLarge] of [ThemeData.textTheme].
     final TextStyle? titleTextStyle,
 
     /// Padding around the content in the dialog.
@@ -1433,7 +1433,7 @@ class _ColorPickerState extends State<ColorPicker> {
         (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
 
-    // Set the default integer code value text style to bodyText2 if not given.
+    // Set the default integer code value text style to bodyMedium if not given.
     final TextStyle effectiveCodeStyle =
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
