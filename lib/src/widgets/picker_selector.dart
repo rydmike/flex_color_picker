@@ -41,7 +41,7 @@ class SelectPicker extends StatelessWidget {
 
   /// Text style of the text items in the picker
   ///
-  /// If not provided, default to `Theme.of(context).textTheme.caption`.
+  /// If not provided, default to `Theme.of(context).textTheme.bodySmall`.
   final TextStyle? textStyle;
 
   /// The spacing after the picker. Defaults to 8.

@@ -14,32 +14,32 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * This version no longer depends directly on package `material_color_utilities` it uses
   `flex_seed_scheme` instead, with a transitive dependency on `material_color_utilities`.
 
-* Changed all used `TextTheme` style names to M3 versions. 
-
-**TODO**
-
-* Documentation comments that refer to old M2 `TextTheme` style names still needs to be updated. 
+* Changed all used `TextTheme` style names to M3 versions, including docs. 
 
 ## 2.6.0-dev.2
 
 **August 21, 2022**
 
-This is a dev release for those that need to work with both master channel where Flutter master 
-SDK depends on material_color_utilities 0.2.0 and 3.3.0 beta, pre for upcoming Flutter 3.3.0 stable,
-use material_color_utilities 0.1.5. It uses a controversial package constraint of:
-```material_color_utilities: '>=0.1.5 <=0.2.0'```. Using older version 0.1.3 and 0.1.4 in theory 
-also works, but they contain some breaking color values in the used algorithm for calculation of
-tonal palettes. The color changes are very minor and typically not visible to the eye.
+**CHANGE**
 
-This dev release also disabled two trivial tests that contained incompatible results between 
-Flutter 3.0.5 stable, 3.3.0-0.4.pre beta and 3.1.0-x master.
+* This is a dev release for those that need to work with both master channel where Flutter master 
+  SDK depends on material_color_utilities 0.2.0 and 3.3.0 beta, pre for upcoming Flutter 3.3.0 
+  stable, use material_color_utilities 0.1.5. It uses a controversial package constraint of:
+  `material_color_utilities: '>=0.1.5 <=0.2.0'`. Using older version 0.1.3 and 0.1.4 in theory 
+  also works, but they contain some breaking color values in the used algorithm for calculation of
+  tonal palettes. The color changes are very minor and typically not visible to the eye.
+
+* This dev release also disabled two trivial tests that contained incompatible results between 
+  Flutter 3.0.5 stable, 3.3.0-0.4.pre beta and 3.1.0-x master.
 
 ## 2.6.0-dev.1 
 
 **August 5, 2022**
 
-This is a dev release for those that need to work with master channel where Flutter SDK depends on
-material_color_utilities ^0.2.0.
+**CHANGE**
+
+* This is a dev release for those that need to work with master channel where Flutter SDK depends on
+  material_color_utilities ^0.2.0.
 
 * Updated material_color_utilities to ^0.2.0. This version constraint does not
   work with Flutter 3.0.x stable or beta 3.3.x, and their earlier versions.

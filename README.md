@@ -269,11 +269,11 @@ the `ColorPicker` with the selected `Color` value. In this example we have also 
           borderRadius: 22,
           heading: Text(
             'Select color',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           subheading: Text(
             'Select color shade',
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
       ),
@@ -409,15 +409,15 @@ happen to have `ColorPickerType.custom: true` enabled, the custom picker will no
       wheelDiameter: 155,
       heading: Text(
         'Select color',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       subheading: Text(
         'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       wheelSubheading: Text(
         'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       showMaterialName: true,
       showColorName: true,
@@ -425,9 +425,9 @@ happen to have `ColorPickerType.custom: true` enabled, the custom picker will no
       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
         longPressMenu: true,
       ),
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+      materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
@@ -548,7 +548,7 @@ ListTile(
           // We use the dialogSelectColor, as its starting color.
           dialogSelectColor,
           title: Text('ColorPicker',
-              style: Theme.of(context).textTheme.headline6),
+              style: Theme.of(context).textTheme.titleLarge),
           width: 40,
           height: 40,
           spacing: 0,
@@ -865,7 +865,7 @@ It can also be configured to show a color name for any selected color based on t
 that uses a lookup list of **1566** color codes and their names. It finds the color that closest matches the selected 
 color on the list, and shows this as the selected color's name after the Material color name. You can also provide 
 the text style for these color name labels. If not provided they default to
-`Theme.of(context).textTheme.bodyText2`.
+`Theme.of(context).textTheme.bodyMedium`.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-7.png?raw=true" alt="Picker 7"/>
 
@@ -904,7 +904,7 @@ are described in detail in the [copy-paste actions and behavior](#copy-paste-act
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-9.png?raw=true" alt="Picker 9"/>
 
 The `TextStyle` of the color code display and entry field can be changed with `colorCodeTextStyle`. It
-defaults to `Theme.of(context).textTheme.bodyText2`, if not defined. There is also a separate style for the
+defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined. There is also a separate style for the
 color code prefix that can be changed with `colorCodePrefixStyle`, if not defined it defaults to the same style as
 `colorCodeTextStyle`.
 
