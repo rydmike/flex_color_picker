@@ -145,6 +145,7 @@ Future<bool> colorPickerDialog(
   ).showPickerDialog(
     context,
     elevation: 4,
+    actionsPadding: const EdgeInsets.all(16),
     // Let's make an even more transparent barrier color than black12
     barrierColor: const Color(0x0F000000), // 6% opacity black
     constraints:
