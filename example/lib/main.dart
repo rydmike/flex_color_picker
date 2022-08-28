@@ -290,6 +290,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,
+      actionsPadding: const EdgeInsets.all(16),
       constraints:
           const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
     );

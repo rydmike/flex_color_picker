@@ -2,6 +2,16 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 2.6.0-dev.3
+
+**August 28, 2022**
+
+This is a dev release that works with Flutter beta 3.3.0-0.5.pre and master channel.
+It has more relaxed constraints than 2.6.0-dev.2.
+
+This version no longer depends directly on package `material_color_utilities` it uses
+`flex_seed_scheme` instead, with a transitive dependency on `material_color_utilities`.
+
 ## 2.6.0-dev.2
 
 **August 21, 2022**

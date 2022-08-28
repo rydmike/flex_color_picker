@@ -11,8 +11,8 @@
 name: Test
 on:
   push:
-    branches: [master]
-    # branches: [master, v2-6-0-dev-1]
+    # branches: [master]
+    branches: [master, v2-6-0-dev-2]
     paths-ignore:
       - "**.md"
 
@@ -55,7 +55,7 @@ jobs:
         run: flutter test --coverage
 
       - name: Upload test coverage to Codecov
-        uses: codecov/codecov-action@v1.5.2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info

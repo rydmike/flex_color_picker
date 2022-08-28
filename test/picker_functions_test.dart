@@ -257,20 +257,12 @@ void main() {
     test('Verify that blue Tonal Palette index 0, tone 0 of is black', () {
       expect(blueTonals[0], equals(Colors.black));
     });
-    test('Verify that blue Tonal Palette index 12, tone 100 of is white', () {
-      expect(blueTonals[12], equals(Colors.white));
+    test('Verify that blue Tonal Palette index 14, tone 100 of is white', () {
+      expect(blueTonals[14], equals(Colors.white));
     });
-    // TODO(rydmike): Swap test for color util version.
-    // This passes with Material color utilities before v0.1.5, but fails
-    // with later package version:
-    //
-    // test('Verify that blue TonalPalette index 5, tone 50 of is 0xff007ace', () {
-    //   expect(blueTonals[5], equals(const Color(0xff007ace)));
-    // });
-    //
     // But with Material color utilities v0.1.5 or later this is new result:
-    test('Verify that blue TonalPalette index 5, tone 50 of is 0xff007bcc', () {
-      expect(blueTonals[5], equals(const Color(0xff007bcc)));
+    test('Verify that blue TonalPalette index 6, tone 50 of is 0xff007bcc', () {
+      expect(blueTonals[6], equals(const Color(0xff007bcc)));
     });
   });
 }

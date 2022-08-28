@@ -1730,9 +1730,9 @@ class _ColorPickerState extends State<ColorPicker> {
                     });
                   },
                   tonalShouldUpdate: _tonalShouldUpdate,
-                  width: (widget.width + widget.spacing) * 10 / 13 -
+                  width: (widget.width + widget.spacing) * 10 / 15 -
                       widget.spacing,
-                  height: (widget.width + widget.spacing) * 10 / 13 -
+                  height: (widget.width + widget.spacing) * 10 / 15 -
                       widget.spacing,
                   borderRadius: widget.borderRadius,
                   hasBorder: widget.hasBorder,
