@@ -2,6 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+**Aug 30, 2022**
+
+* Contains all updates from 2.6.0-dev, dev2 and dev3.
+* Updated minimum dependencies to Dart >=2.18.0 and Flutter >= 3.3.0.
+
 ## 2.6.0-dev.3
 
 **August 28, 2022**

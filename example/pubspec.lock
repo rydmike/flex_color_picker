@@ -105,14 +105,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.6.0-dev.3"
+    version: "2.6.0"
   flex_seed_scheme:
     dependency: transitive
     description:
       name: flex_seed_scheme
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0-dev.2"
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -575,5 +575,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.0-271.4.beta <3.0.0"
-  flutter: ">=3.0.0"
+  dart: ">=2.18.0 <3.0.0"
+  flutter: ">=3.3.0"
