@@ -86,6 +86,7 @@ class OpacitySliderTrack extends SliderTrackShape {
     bool isDiscrete = false,
     bool isEnabled = false,
     double additionalActiveTrackHeight = 2,
+    Offset? secondaryOffset,
   }) {
     assert(sliderTheme.disabledActiveTrackColor != null,
         'disabledActiveTrackColor cannot be null.');
