@@ -35,9 +35,9 @@ jobs:
     name: Analyze, test and build the example and web app
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Flutter and Dart SDK
-        uses: subosito/flutter-action@v1.5.3
+        uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - name: Show Dart SDK version
@@ -88,6 +88,3 @@ jobs:
 
       - name: WEB EXAMPLE release build using CanvasKit
         run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
-
-      # - name: WEB EXAMPLE FIX href URL reference before publish
-      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
