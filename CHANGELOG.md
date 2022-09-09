@@ -2,6 +2,16 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 2.6.1
+
+**Sep 9, 2022**
+
+* Add `secondaryOffset` to `OpacitySliderTrack` `paint` method override to **fix** new requirement 
+  for master channel compatibility, works with stable channel too. Thanks 
+  [Dan Reynolds](https://github.com/danReynolds) for the PR.
+
+## 2.6.0
+
 **Aug 30, 2022**
 
 * Contains all updates from 2.6.0-dev, dev2 and dev3.

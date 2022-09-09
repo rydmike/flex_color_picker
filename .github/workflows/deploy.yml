@@ -88,9 +88,6 @@ jobs:
       - name: WEB EXAMPLE release build using CanvasKit
         run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
 
-      # - name: WEB EXAMPLE FIX href URL reference before publish (Eliminated need with: --base-href "/flexcolorpicker/")
-      #  run: rpl '<base href="/">' '<base href="/flexcolorpicker/">' example/build/web/index.html
-
       - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
         env:
