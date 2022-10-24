@@ -204,6 +204,7 @@ class AppTheme {
   /// Use an alternative tooltip style.
   static TooltipThemeData tooltipTheme(bool isDark) => TooltipThemeData(
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 5),
+        waitDuration: const Duration(milliseconds: 1200),
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         textStyle: TextStyle(
           color: isDark ? Colors.black : Colors.white,

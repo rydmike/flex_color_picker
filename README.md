@@ -96,14 +96,11 @@ widget in your own custom dialog or other overlay.
 
 ## Getting Started
 
-In the `pubspec.yaml` of your **Flutter** project, add the following dependency:
+Add the `flex_color_picker` package to `pubspec.yaml`:
 
-```yaml
-dependencies:  
-  flex_color_picker: ^2.6.1
-```
+`dart pub add flex_color_picker` or `flutter pub add flex_color_picker`
 
-In your library file add the following import:
+Import the package to use it:
 
 ```dart
 import 'package:flex_color_picker/flex_color_picker.dart';
