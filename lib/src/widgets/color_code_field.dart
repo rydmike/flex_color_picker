@@ -221,17 +221,6 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               FilteringTextInputFormatter.allow(RegExp('[a-fA-F0-9]')),
               _UpperCaseTextFormatter(),
             ],
-            toolbarOptions: widget.readOnly
-                ? const ToolbarOptions(
-                    copy: true,
-                    selectAll: true,
-                  )
-                : const ToolbarOptions(
-                    copy: true,
-                    cut: true,
-                    selectAll: true,
-                    paste: true,
-                  ),
             decoration: InputDecoration(
               suffixIcon: widget.copyPasteBehavior.editFieldCopyButton
                   ? IconButton(
