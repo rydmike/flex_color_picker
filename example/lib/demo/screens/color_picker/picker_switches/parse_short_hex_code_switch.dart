@@ -16,7 +16,7 @@ class ParseShortHexCodeSwitch extends ConsumerWidget {
           'code entry.'),
       value: ref.watch(parseShortHexCodePod),
       onChanged: (bool value) =>
-          ref.read(parseShortHexCodePod.state).state = value,
+          ref.read(parseShortHexCodePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(parseShortHexCode: '

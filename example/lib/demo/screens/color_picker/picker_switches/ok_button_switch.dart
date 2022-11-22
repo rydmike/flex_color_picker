@@ -14,7 +14,7 @@ class OkButtonSwitch extends ConsumerWidget {
       title: const Text('Dialog toolbar has OK button'),
       subtitle: const Text('Use API to change icon and theme the button.'),
       value: ref.watch(okButtonPod),
-      onChanged: (bool value) => ref.read(okButtonPod.state).state = value,
+      onChanged: (bool value) => ref.read(okButtonPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(okButton: '

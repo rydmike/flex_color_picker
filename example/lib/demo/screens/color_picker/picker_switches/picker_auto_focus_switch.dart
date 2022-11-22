@@ -18,7 +18,7 @@ class PickerAutoFocusSwitch extends ConsumerWidget {
           'disabled, this settings does not matter, the picker never tries '
           'to autofocus when they are not used.'),
       value: ref.watch(autoFocusPod),
-      onChanged: (bool value) => ref.read(autoFocusPod.state).state = value,
+      onChanged: (bool value) => ref.read(autoFocusPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(autoFocus: '

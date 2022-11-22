@@ -22,7 +22,7 @@ class ColumnSpacingSlider extends ConsumerWidget {
           label: ref.read(columnSpacingPod).floor().toString(),
           value: ref.watch(columnSpacingPod),
           onChanged: (double value) =>
-              ref.read(columnSpacingPod.state).state = value,
+              ref.read(columnSpacingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

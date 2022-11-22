@@ -23,7 +23,7 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
           label: ref.read(wheelSquarePaddingPod).floor().toString(),
           value: ref.watch(wheelSquarePaddingPod),
           onChanged: (double value) =>
-              ref.read(wheelSquarePaddingPod.state).state = value,
+              ref.read(wheelSquarePaddingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

@@ -15,7 +15,8 @@ class ColorCodeSwitch extends ConsumerWidget {
       subtitle: const Text('Show hex RGB value of the selected color. On the '
           'wheel picker you can also enter a HEX RGB value.'),
       value: ref.watch(showColorCodePod),
-      onChanged: (bool value) => ref.read(showColorCodePod.state).state = value,
+      onChanged: (bool value) =>
+          ref.read(showColorCodePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showColorCode: '
           '${ref.read(showColorCodePod)})',

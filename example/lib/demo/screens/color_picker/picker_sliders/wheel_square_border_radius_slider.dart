@@ -23,7 +23,7 @@ class WheelSquareBorderRadiusSlider extends ConsumerWidget {
           label: ref.read(wheelSquareBorderRadiusPod).floor().toString(),
           value: ref.watch(wheelSquareBorderRadiusPod),
           onChanged: (double value) =>
-              ref.read(wheelSquareBorderRadiusPod.state).state = value,
+              ref.read(wheelSquareBorderRadiusPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

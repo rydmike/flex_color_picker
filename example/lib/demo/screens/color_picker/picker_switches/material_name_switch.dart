@@ -16,7 +16,7 @@ class MaterialNameSwitch extends ConsumerWidget {
           'its name is shown together with its shade index.'),
       value: ref.watch(showMaterialNamePod),
       onChanged: (bool value) =>
-          ref.read(showMaterialNamePod.state).state = value,
+          ref.read(showMaterialNamePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showMaterialName: '
           '${ref.read(showMaterialNamePod)})',

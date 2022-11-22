@@ -17,7 +17,7 @@ class EnableTooltipsSwitch extends ConsumerWidget {
           'except this one.)'),
       value: ref.watch(enableTooltipsPod),
       onChanged: (bool value) =>
-          ref.read(enableTooltipsPod.state).state = value,
+          ref.read(enableTooltipsPod.notifier).state = value,
       tooltipEnabled: true,
       tooltip: 'ColorPicker(enableTooltips: '
           '${ref.watch(enableTooltipsPod)})',

@@ -19,175 +19,180 @@ void resetSettings(WidgetRef ref) {
   // The theme mode Riverpod "Pod" providers.
   //***************************************************************************
 
-  ref.read(themeModePod.state).state =
+  ref.read(themeModePod.notifier).state =
       Keys.defaults[Keys.themeMode]! as ThemeMode;
 
   // Current selected colors Riverpod "Pod" providers.
   //***************************************************************************
 
-  ref.read(cardPickerColorPod.state).state =
+  ref.read(cardPickerColorPod.notifier).state =
       Keys.defaults[Keys.cardPickerColor]! as Color;
 
-  ref.read(dialogPickerColorPod.state).state =
+  ref.read(dialogPickerColorPod.notifier).state =
       Keys.defaults[Keys.dialogPickerColor]! as Color;
 
-  ref.read(cardRecentColorsPod.state).state =
+  ref.read(cardRecentColorsPod.notifier).state =
       Keys.defaults[Keys.cardRecentColors]! as List<Color>;
 
-  ref.read(dialogRecentColorsPod.state).state =
+  ref.read(dialogRecentColorsPod.notifier).state =
       Keys.defaults[Keys.dialogRecentColors]! as List<Color>;
 
   // Show and Hide Riverpod "Pod" providers.
   //***************************************************************************
 
-  ref.read(pickersEnabledPod.state).state =
+  ref.read(pickersEnabledPod.notifier).state =
       Keys.defaults[Keys.pickersEnabled]! as Map<ColorPickerType, bool>;
 
-  ref.read(includeIndex850Pod.state).state =
+  ref.read(includeIndex850Pod.notifier).state =
       Keys.defaults[Keys.includeIndex850]! as bool;
 
-  ref.read(enableOpacityPod.state).state =
+  ref.read(enableOpacityPod.notifier).state =
       Keys.defaults[Keys.enableOpacity]! as bool;
 
-  ref.read(showMaterialNamePod.state).state =
+  ref.read(showMaterialNamePod.notifier).state =
       Keys.defaults[Keys.showMaterialName]! as bool;
 
-  ref.read(showColorNamePod.state).state =
+  ref.read(showColorNamePod.notifier).state =
       Keys.defaults[Keys.showColorName]! as bool;
 
-  ref.read(showColorCodePod.state).state =
+  ref.read(showColorCodePod.notifier).state =
       Keys.defaults[Keys.showColorCode]! as bool;
 
-  ref.read(colorCodeHasColorPod.state).state =
+  ref.read(colorCodeHasColorPod.notifier).state =
       Keys.defaults[Keys.colorCodeHasColor]! as bool;
 
-  ref.read(colorCodeReadOnlyPod.state).state =
+  ref.read(colorCodeReadOnlyPod.notifier).state =
       Keys.defaults[Keys.colorCodeReadOnly]! as bool;
 
-  ref.read(showColorValuePod.state).state =
+  ref.read(showColorValuePod.notifier).state =
       Keys.defaults[Keys.showColorValue]! as bool;
 
-  ref.read(showRecentColorsPod.state).state =
+  ref.read(showRecentColorsPod.notifier).state =
       Keys.defaults[Keys.showRecentColors]! as bool;
 
-  ref.read(showTitlePod.state).state = Keys.defaults[Keys.showTitle]! as bool;
+  ref.read(showTitlePod.notifier).state =
+      Keys.defaults[Keys.showTitle]! as bool;
 
-  ref.read(showHeadingPod.state).state =
+  ref.read(showHeadingPod.notifier).state =
       Keys.defaults[Keys.showHeading]! as bool;
 
-  ref.read(showSubheadingPod.state).state =
+  ref.read(showSubheadingPod.notifier).state =
       Keys.defaults[Keys.showSubheading]! as bool;
 
-  ref.read(showOpacitySubheadingPod.state).state =
+  ref.read(showOpacitySubheadingPod.notifier).state =
       Keys.defaults[Keys.showOpacitySubheading]! as bool;
 
-  ref.read(showRecentSubheadingPod.state).state =
+  ref.read(showRecentSubheadingPod.notifier).state =
       Keys.defaults[Keys.showRecentSubheading]! as bool;
 
   // Picker Design Riverpod "Pod" providers.
   //****************************************************************************
 
-  ref.read(sizePod.state).state = Keys.defaults[Keys.size]! as double;
+  ref.read(sizePod.notifier).state = Keys.defaults[Keys.size]! as double;
 
-  ref.read(borderRadiusPod.state).state =
+  ref.read(borderRadiusPod.notifier).state =
       Keys.defaults[Keys.borderRadius]! as double;
 
-  ref.read(elevationPod.state).state = Keys.defaults[Keys.elevation]! as double;
+  ref.read(elevationPod.notifier).state =
+      Keys.defaults[Keys.elevation]! as double;
 
-  ref.read(spacingPod.state).state = Keys.defaults[Keys.spacing]! as double;
+  ref.read(spacingPod.notifier).state = Keys.defaults[Keys.spacing]! as double;
 
-  ref.read(runSpacingPod.state).state =
+  ref.read(runSpacingPod.notifier).state =
       Keys.defaults[Keys.runSpacing]! as double;
 
-  ref.read(hasBorderPod.state).state = Keys.defaults[Keys.hasBorder]! as bool;
+  ref.read(hasBorderPod.notifier).state =
+      Keys.defaults[Keys.hasBorder]! as bool;
 
-  ref.read(wheelDiameterPod.state).state =
+  ref.read(wheelDiameterPod.notifier).state =
       Keys.defaults[Keys.wheelDiameter]! as double;
 
-  ref.read(wheelWidthPod.state).state =
+  ref.read(wheelWidthPod.notifier).state =
       Keys.defaults[Keys.wheelWidth]! as double;
 
-  ref.read(wheelHasBorderPod.state).state =
+  ref.read(wheelHasBorderPod.notifier).state =
       Keys.defaults[Keys.wheelHasBorder]! as bool;
 
-  ref.read(opacityTrackHeightPod.state).state =
+  ref.read(opacityTrackHeightPod.notifier).state =
       Keys.defaults[Keys.opacityTrackHeight]! as double;
 
-  ref.read(opacityTrackWidthPod.state).state =
+  ref.read(opacityTrackWidthPod.notifier).state =
       Keys.defaults[Keys.opacityTrackWidth]! as double;
 
-  ref.read(opacityThumbRadiusPod.state).state =
+  ref.read(opacityThumbRadiusPod.notifier).state =
       Keys.defaults[Keys.opacityThumbRadius]! as double;
 
-  ref.read(enableTooltipsPod.state).state =
+  ref.read(enableTooltipsPod.notifier).state =
       Keys.defaults[Keys.enableTooltips]! as bool;
 
   // Picker Layout Riverpod "Pod" providers.
   //****************************************************************************
 
-  ref.read(alignmentPod.state).state =
+  ref.read(alignmentPod.notifier).state =
       Keys.defaults[Keys.alignment]! as CrossAxisAlignment;
 
-  ref.read(columnSpacingPod.state).state =
+  ref.read(columnSpacingPod.notifier).state =
       Keys.defaults[Keys.columnSpacing]! as double;
 
-  ref.read(paddingPod.state).state = Keys.defaults[Keys.padding]! as double;
+  ref.read(paddingPod.notifier).state = Keys.defaults[Keys.padding]! as double;
 
-  ref.read(closeButtonPod.state).state =
+  ref.read(closeButtonPod.notifier).state =
       Keys.defaults[Keys.closeButton]! as bool;
 
-  ref.read(okButtonPod.state).state = Keys.defaults[Keys.okButton]! as bool;
+  ref.read(okButtonPod.notifier).state = Keys.defaults[Keys.okButton]! as bool;
 
-  ref.read(closeIsLastPod.state).state =
+  ref.read(closeIsLastPod.notifier).state =
       Keys.defaults[Keys.closeIsLast]! as bool;
 
-  ref.read(dialogActionButtonsPod.state).state =
+  ref.read(dialogActionButtonsPod.notifier).state =
       Keys.defaults[Keys.dialogActionButtons]! as bool;
 
-  ref.read(dialogActionsOrderPod.state).state =
+  ref.read(dialogActionsOrderPod.notifier).state =
       Keys.defaults[Keys.dialogActionOrder]! as ColorPickerActionButtonOrder;
 
-  ref.read(dialogActionIconsPod.state).state =
+  ref.read(dialogActionIconsPod.notifier).state =
       Keys.defaults[Keys.dialogActionIcons]! as bool;
 
   // Copy Paste Actions Riverpod "Pod" providers.
   //****************************************************************************
 
-  ref.read(copyFormatPod.state).state =
+  ref.read(copyFormatPod.notifier).state =
       Keys.defaults[Keys.copyFormat]! as ColorPickerCopyFormat;
 
-  ref.read(ctrlCPod.state).state = Keys.defaults[Keys.ctrlC]! as bool;
+  ref.read(ctrlCPod.notifier).state = Keys.defaults[Keys.ctrlC]! as bool;
 
-  ref.read(ctrlVPod.state).state = Keys.defaults[Keys.ctrlV]! as bool;
+  ref.read(ctrlVPod.notifier).state = Keys.defaults[Keys.ctrlV]! as bool;
 
-  ref.read(autoFocusPod.state).state = Keys.defaults[Keys.autoFocus]! as bool;
+  ref.read(autoFocusPod.notifier).state =
+      Keys.defaults[Keys.autoFocus]! as bool;
 
-  ref.read(copyButtonPod.state).state = Keys.defaults[Keys.copyButton]! as bool;
+  ref.read(copyButtonPod.notifier).state =
+      Keys.defaults[Keys.copyButton]! as bool;
 
-  ref.read(pasteButtonPod.state).state =
+  ref.read(pasteButtonPod.notifier).state =
       Keys.defaults[Keys.pasteButton]! as bool;
 
-  ref.read(editFieldCopyButtonPod.state).state =
+  ref.read(editFieldCopyButtonPod.notifier).state =
       Keys.defaults[Keys.editFieldCopyButton]! as bool;
 
-  ref.read(longPressMenuPod.state).state =
+  ref.read(longPressMenuPod.notifier).state =
       Keys.defaults[Keys.longPressMenu]! as bool;
 
-  ref.read(secondaryMenuPod.state).state =
+  ref.read(secondaryMenuPod.notifier).state =
       Keys.defaults[Keys.secondaryMenu]! as bool;
 
-  ref.read(secondaryDesktopOtherLongPod.state).state =
+  ref.read(secondaryDesktopOtherLongPod.notifier).state =
       Keys.defaults[Keys.secondaryDesktopOtherLong]! as bool;
 
-  ref.read(parseShortHexCodePod.state).state =
+  ref.read(parseShortHexCodePod.notifier).state =
       Keys.defaults[Keys.parseShortHexCode]! as bool;
 
-  ref.read(editUsesParsedPastePod.state).state =
+  ref.read(editUsesParsedPastePod.notifier).state =
       Keys.defaults[Keys.editUsesParsedPaste]! as bool;
 
-  ref.read(snackbarParseErrorPod.state).state =
+  ref.read(snackbarParseErrorPod.notifier).state =
       Keys.defaults[Keys.snackbarParseError]! as bool;
 
-  ref.read(feedbackParseErrorPod.state).state =
+  ref.read(feedbackParseErrorPod.notifier).state =
       Keys.defaults[Keys.feedbackParseError]! as bool;
 }

@@ -42,7 +42,7 @@ class MetaPickerColorIndicator extends ConsumerWidget {
             ref,
             cardRemote: true,
           ))) {
-            ref.read(cardPickerColorPod.state).state = colorBeforeDialog;
+            ref.read(cardPickerColorPod.notifier).state = colorBeforeDialog;
           }
         },
       ),
@@ -70,7 +70,7 @@ class ColorControlBox extends ConsumerWidget {
       onSelectFocus: false,
       isSelected: ref.watch(cardPickerColorPod) == color,
       onSelect: () {
-        ref.read(cardPickerColorPod.state).state = color;
+        ref.read(cardPickerColorPod.notifier).state = color;
       },
     );
   }

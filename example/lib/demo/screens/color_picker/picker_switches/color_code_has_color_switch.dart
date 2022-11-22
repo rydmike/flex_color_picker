@@ -16,7 +16,7 @@ class ColorCodeHasColorSwitch extends ConsumerWidget {
           'background color.'),
       value: ref.watch(colorCodeHasColorPod),
       onChanged: (bool value) =>
-          ref.read(colorCodeHasColorPod.state).state = value,
+          ref.read(colorCodeHasColorPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(colorCodeHasColor: '
           '${ref.read(colorCodeHasColorPod)})',

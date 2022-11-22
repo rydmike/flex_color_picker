@@ -28,7 +28,7 @@ class CopyFormatSwitch extends ConsumerWidget {
         trailing: ToggleButtons(
           isSelected: isSelected,
           onPressed: (int newIndex) {
-            ref.read(copyFormatPod.state).state =
+            ref.read(copyFormatPod.notifier).state =
                 ColorPickerCopyFormat.values[newIndex];
           },
           children: const <Widget>[

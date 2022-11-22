@@ -14,7 +14,7 @@ class ControlPasteSwitch extends ConsumerWidget {
       title: const Text('Enable keyboard PASTE shortcut'),
       subtitle: const Text('CMD-V on Apple, CTRL-V on other'),
       value: ref.watch(ctrlVPod),
-      onChanged: (bool value) => ref.read(ctrlVPod.state).state = value,
+      onChanged: (bool value) => ref.read(ctrlVPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(ctrlV: '

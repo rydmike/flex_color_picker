@@ -17,21 +17,21 @@ Future<bool> colorPickerDialog(
         ? ref.watch(cardPickerColorPod)
         : ref.watch(dialogPickerColorPod),
     onColorChangeStart: (Color color) {
-      ref.read(onColorChangeStartPod.state).state = color;
+      ref.read(onColorChangeStartPod.notifier).state = color;
     },
     onColorChanged: (Color color) {
       cardRemote
-          ? ref.read(cardPickerColorPod.state).state = color
-          : ref.read(dialogPickerColorPod.state).state = color;
-      ref.read(onColorChangedPod.state).state = color;
+          ? ref.read(cardPickerColorPod.notifier).state = color
+          : ref.read(dialogPickerColorPod.notifier).state = color;
+      ref.read(onColorChangedPod.notifier).state = color;
     },
     onColorChangeEnd: (Color color) {
-      ref.read(onColorChangeEndPod.state).state = color;
+      ref.read(onColorChangeEndPod.notifier).state = color;
     },
     onRecentColorsChanged: (List<Color> colors) {
       cardRemote
-          ? ref.read(cardRecentColorsPod.state).state = colors
-          : ref.read(dialogRecentColorsPod.state).state = colors;
+          ? ref.read(cardRecentColorsPod.notifier).state = colors
+          : ref.read(dialogRecentColorsPod.notifier).state = colors;
     },
     crossAxisAlignment: ref.watch(alignmentPod),
     padding: EdgeInsets.all(ref.watch(paddingPod)),

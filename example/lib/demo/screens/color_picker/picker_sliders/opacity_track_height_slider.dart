@@ -21,9 +21,9 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
           max: 50,
           divisions: 50 - 10,
           label: ref.read(opacityTrackHeightPod).floor().toString(),
-          value: ref.watch(opacityTrackHeightPod.state).state,
+          value: ref.watch(opacityTrackHeightPod.notifier).state,
           onChanged: (double value) =>
-              ref.read(opacityTrackHeightPod.state).state = value,
+              ref.read(opacityTrackHeightPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

@@ -25,11 +25,11 @@ class AlignmentSwitch extends ConsumerWidget {
           isSelected: isSelected,
           onPressed: (int newIndex) {
             if (newIndex == 0) {
-              ref.read(alignmentPod.state).state = CrossAxisAlignment.start;
+              ref.read(alignmentPod.notifier).state = CrossAxisAlignment.start;
             } else if (newIndex == 1) {
-              ref.read(alignmentPod.state).state = CrossAxisAlignment.center;
+              ref.read(alignmentPod.notifier).state = CrossAxisAlignment.center;
             } else {
-              ref.read(alignmentPod.state).state = CrossAxisAlignment.end;
+              ref.read(alignmentPod.notifier).state = CrossAxisAlignment.end;
             }
           },
           children: const <Widget>[

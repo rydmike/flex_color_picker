@@ -13,7 +13,8 @@ class LongPressMenuSwitch extends ConsumerWidget {
     return SwitchTileTooltip(
       title: const Text('Long press COPY-PASTE menu'),
       value: ref.watch(longPressMenuPod),
-      onChanged: (bool value) => ref.read(longPressMenuPod.state).state = value,
+      onChanged: (bool value) =>
+          ref.read(longPressMenuPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(longPressMenu: '

@@ -22,7 +22,7 @@ class RunSpacingSlider extends ConsumerWidget {
             label: ref.read(runSpacingPod).floor().toString(),
             value: ref.watch(runSpacingPod),
             onChanged: (double value) =>
-                ref.read(runSpacingPod.state).state = value),
+                ref.read(runSpacingPod.notifier).state = value),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
           child: Column(

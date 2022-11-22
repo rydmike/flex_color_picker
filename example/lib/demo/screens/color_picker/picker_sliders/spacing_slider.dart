@@ -21,7 +21,8 @@ class SpacingSlider extends ConsumerWidget {
           divisions: 25,
           label: ref.read(spacingPod).floor().toString(),
           value: ref.watch(spacingPod),
-          onChanged: (double value) => ref.read(spacingPod.state).state = value,
+          onChanged: (double value) =>
+              ref.read(spacingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

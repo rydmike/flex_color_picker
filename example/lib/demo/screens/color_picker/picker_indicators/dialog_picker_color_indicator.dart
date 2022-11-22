@@ -28,10 +28,10 @@ class DialogPickerColorIndicator extends ConsumerWidget {
         onSelectFocus: false,
         onSelect: () async {
           final Color colorBeforeDialog =
-              ref.read(dialogPickerColorPod.state).state;
+              ref.read(dialogPickerColorPod.notifier).state;
           // ignore: use_build_context_synchronously
           if (!(await colorPickerDialog(context, ref))) {
-            ref.read(dialogPickerColorPod.state).state = colorBeforeDialog;
+            ref.read(dialogPickerColorPod.notifier).state = colorBeforeDialog;
           }
         },
       ),

@@ -18,17 +18,17 @@ class ColorPickerCard extends ConsumerWidget {
       child: ColorPicker(
         color: ref.watch(cardPickerColorPod),
         onColorChangeStart: (Color color) {
-          ref.read(onColorChangeStartPod.state).state = color;
+          ref.read(onColorChangeStartPod.notifier).state = color;
         },
         onColorChanged: (Color color) {
-          ref.read(cardPickerColorPod.state).state = color;
-          ref.read(onColorChangedPod.state).state = color;
+          ref.read(cardPickerColorPod.notifier).state = color;
+          ref.read(onColorChangedPod.notifier).state = color;
         },
         onColorChangeEnd: (Color color) {
-          ref.read(onColorChangeEndPod.state).state = color;
+          ref.read(onColorChangeEndPod.notifier).state = color;
         },
         onRecentColorsChanged: (List<Color> colors) {
-          ref.read(cardRecentColorsPod.state).state = colors;
+          ref.read(cardRecentColorsPod.notifier).state = colors;
         },
         crossAxisAlignment: ref.watch(alignmentPod),
         padding: EdgeInsets.all(ref.watch(paddingPod)),

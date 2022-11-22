@@ -16,7 +16,7 @@ class ColorCodeReadOnlySwitch extends ConsumerWidget {
           'Wheel picker. Set this to ON to make it read only.'),
       value: ref.watch(colorCodeReadOnlyPod),
       onChanged: (bool value) =>
-          ref.read(colorCodeReadOnlyPod.state).state = value,
+          ref.read(colorCodeReadOnlyPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(colorCodeReadOnly: '
           '${ref.read(colorCodeReadOnlyPod)})',

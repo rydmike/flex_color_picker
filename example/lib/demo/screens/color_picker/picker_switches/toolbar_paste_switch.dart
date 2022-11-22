@@ -13,7 +13,8 @@ class ToolbarPasteSwitch extends ConsumerWidget {
     return SwitchTileTooltip(
       title: const Text('Enable toolbar PASTE action button'),
       value: ref.watch(pasteButtonPod),
-      onChanged: (bool value) => ref.read(pasteButtonPod.state).state = value,
+      onChanged: (bool value) =>
+          ref.read(pasteButtonPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(pasteButton: '

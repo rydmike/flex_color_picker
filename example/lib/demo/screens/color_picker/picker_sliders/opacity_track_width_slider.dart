@@ -32,7 +32,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
           label: trackWidth.floor().toString(),
           value: ref.watch(opacityTrackWidthPod),
           onChanged: (double value) =>
-              ref.read(opacityTrackWidthPod.state).state = value,
+              ref.read(opacityTrackWidthPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

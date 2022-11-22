@@ -22,7 +22,8 @@ class PaddingSlider extends ConsumerWidget {
           divisions: 40,
           label: ref.read(paddingPod).floor().toString(),
           value: ref.watch(paddingPod),
-          onChanged: (double value) => ref.read(paddingPod.state).state = value,
+          onChanged: (double value) =>
+              ref.read(paddingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

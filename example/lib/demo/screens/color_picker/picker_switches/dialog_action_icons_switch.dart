@@ -15,7 +15,7 @@ class DialogActionIconsSwitch extends ConsumerWidget {
       subtitle: const Text('Use API to also customize button and icon.'),
       value: ref.watch(dialogActionIconsPod),
       onChanged: (bool value) =>
-          ref.read(dialogActionIconsPod.state).state = value,
+          ref.read(dialogActionIconsPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionIcons: '

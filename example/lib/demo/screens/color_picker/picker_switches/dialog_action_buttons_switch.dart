@@ -15,7 +15,7 @@ class DialogActionsButtonsSwitch extends ConsumerWidget {
       subtitle: const Text('Turn OFF to remove bottom action buttons.'),
       value: ref.watch(dialogActionButtonsPod),
       onChanged: (bool value) =>
-          ref.read(dialogActionButtonsPod.state).state = value,
+          ref.read(dialogActionButtonsPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionButtons: '

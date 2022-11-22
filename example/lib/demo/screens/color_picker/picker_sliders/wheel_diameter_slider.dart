@@ -23,7 +23,7 @@ class WheelDiameterSlider extends ConsumerWidget {
           label: ref.read(wheelDiameterPod).floor().toString(),
           value: ref.watch(wheelDiameterPod),
           onChanged: (double value) =>
-              ref.read(wheelDiameterPod.state).state = value,
+              ref.read(wheelDiameterPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

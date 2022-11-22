@@ -23,7 +23,7 @@ class WheelWidthSlider extends ConsumerWidget {
           label: ref.read(wheelWidthPod).floor().toString(),
           value: ref.watch(wheelWidthPod),
           onChanged: (double value) =>
-              ref.read(wheelWidthPod.state).state = value,
+              ref.read(wheelWidthPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

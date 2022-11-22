@@ -1,6 +1,6 @@
 name: color_picker_example
 description: Two examples of how to use the FlexColorPicker package.
-version: 2.6.1
+version: 2.7.0
 publish_to: 'none'
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^2.0.2
+  flutter_riverpod: ^2.1.1
 
   # https://pub.dev/packages/google_fonts
   google_fonts: ^3.0.1
@@ -28,7 +28,7 @@ dependencies:
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:

@@ -15,7 +15,8 @@ class CloseIsLastSwitch extends ConsumerWidget {
       subtitle: const Text('The CLOSE button is last, turn OFF to make OK '
           'button the last one in the toolbar.'),
       value: ref.watch(closeIsLastPod),
-      onChanged: (bool value) => ref.read(closeIsLastPod.state).state = value,
+      onChanged: (bool value) =>
+          ref.read(closeIsLastPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(closeIsLast: '

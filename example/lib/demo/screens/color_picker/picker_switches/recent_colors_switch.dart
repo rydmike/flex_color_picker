@@ -16,7 +16,7 @@ class RecentColorsSwitch extends ConsumerWidget {
           'can also control how many colors are kept with the API.'),
       value: ref.watch(showRecentColorsPod),
       onChanged: (bool value) =>
-          ref.read(showRecentColorsPod.state).state = value,
+          ref.read(showRecentColorsPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showRecentColors: '
           '${ref.read(showRecentColorsPod)})',

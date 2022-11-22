@@ -16,7 +16,7 @@ class EditUsesParsedPasteSwitch extends ConsumerWidget {
           'This feature only applies to desktop keyboard shortcuts.'),
       value: ref.watch(editUsesParsedPastePod),
       onChanged: (bool value) =>
-          ref.read(editUsesParsedPastePod.state).state = value,
+          ref.read(editUsesParsedPastePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(editUsesParsedPaste: '

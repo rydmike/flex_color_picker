@@ -15,7 +15,7 @@ class SecondaryDesktopLongWebDeviceSwitch extends ConsumerWidget {
           'right click on desktops'),
       value: ref.watch(secondaryDesktopWebLongPod),
       onChanged: (bool value) =>
-          ref.read(secondaryDesktopWebLongPod.state).state = value,
+          ref.read(secondaryDesktopWebLongPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(\n'

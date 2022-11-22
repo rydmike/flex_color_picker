@@ -16,7 +16,7 @@ class ColorValueSwitch extends ConsumerWidget {
           'copied. Typically OFF, usable as a dev feature.'),
       value: ref.watch(showColorValuePod),
       onChanged: (bool value) =>
-          ref.read(showColorValuePod.state).state = value,
+          ref.read(showColorValuePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(showColorValue: '
           '${ref.read(showColorValuePod)})',

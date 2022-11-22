@@ -16,7 +16,7 @@ class OpacitySubheadingSwitch extends ConsumerWidget {
           'it is null there is no sub heading.'),
       value: ref.watch(showOpacitySubheadingPod),
       onChanged: (bool value) =>
-          ref.read(showOpacitySubheadingPod.state).state = value,
+          ref.read(showOpacitySubheadingPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: ref.read(showOpacitySubheadingPod)
           ? '"ColorPicker(opacitySubheading: '

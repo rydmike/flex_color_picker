@@ -16,7 +16,7 @@ class Index850Switch extends ConsumerWidget {
           'the Grey swatch, turn this ON. Typically kept OFF.'),
       value: ref.watch(includeIndex850Pod),
       onChanged: (bool value) =>
-          ref.read(includeIndex850Pod.state).state = value,
+          ref.read(includeIndex850Pod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(includeIndex850: '
           '${ref.read(includeIndex850Pod)})',

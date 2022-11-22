@@ -22,7 +22,7 @@ class BorderRadiusSlider extends ConsumerWidget {
           label: ref.read(borderRadiusPod).floor().toString(),
           value: ref.watch(borderRadiusPod),
           onChanged: (double value) =>
-              ref.read(borderRadiusPod.state).state = value,
+              ref.read(borderRadiusPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

@@ -16,7 +16,7 @@ class FeedbackParseErrorSwitch extends ConsumerWidget {
           'is limited on most platforms in current Flutter SDK.'),
       value: ref.watch(feedbackParseErrorPod),
       onChanged: (bool value) =>
-          ref.read(feedbackParseErrorPod.state).state = value,
+          ref.read(feedbackParseErrorPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(\n'

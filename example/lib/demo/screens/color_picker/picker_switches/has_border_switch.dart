@@ -15,7 +15,7 @@ class HasBorderSwitch extends ConsumerWidget {
       subtitle: const Text('With the API you can also adjust the '
           'border color.'),
       value: ref.watch(hasBorderPod),
-      onChanged: (bool value) => ref.read(hasBorderPod.state).state = value,
+      onChanged: (bool value) => ref.read(hasBorderPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: 'ColorPicker(hasBorder: ${ref.read(hasBorderPod)})',
     );

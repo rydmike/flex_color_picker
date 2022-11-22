@@ -133,7 +133,7 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
   Future<void> _showMenu(Offset position) async {
     widget.onOpen?.call();
     final RenderBox? overlay =
-        Overlay.of(context)?.context.findRenderObject() as RenderBox?;
+        Overlay.of(context).context.findRenderObject() as RenderBox?;
     if (overlay != null) {
       final T? value = await showMenu<T>(
         context: context,

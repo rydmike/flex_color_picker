@@ -22,7 +22,7 @@ class ElevationSlider extends ConsumerWidget {
           label: ref.read(elevationPod).floor().toString(),
           value: ref.watch(elevationPod),
           onChanged: (double value) =>
-              ref.read(elevationPod.state).state = value,
+              ref.read(elevationPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

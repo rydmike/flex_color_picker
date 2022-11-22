@@ -29,13 +29,13 @@ class ActionsOrderSwitch extends ConsumerWidget {
           isSelected: isSelected,
           onPressed: (int newIndex) {
             if (newIndex == 0) {
-              ref.read(dialogActionsOrderPod.state).state =
+              ref.read(dialogActionsOrderPod.notifier).state =
                   ColorPickerActionButtonOrder.okIsLeft;
             } else if (newIndex == 1) {
-              ref.read(dialogActionsOrderPod.state).state =
+              ref.read(dialogActionsOrderPod.notifier).state =
                   ColorPickerActionButtonOrder.adaptive;
             } else {
-              ref.read(dialogActionsOrderPod.state).state =
+              ref.read(dialogActionsOrderPod.notifier).state =
                   ColorPickerActionButtonOrder.okIsRight;
             }
           },
