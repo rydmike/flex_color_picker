@@ -16,7 +16,7 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
           '${ref.read(opacityTrackHeightPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider height'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 10,
           max: 50,
           divisions: 50 - 10,

@@ -144,10 +144,9 @@ Future<bool> colorPickerDialog(
     customColorSwatchesAndNames: App.colorsNameMap,
   ).showPickerDialog(
     context,
-    elevation: 4,
-    actionsPadding: const EdgeInsets.all(16),
+    elevation: 2,
     // Let's make an even more transparent barrier color than black12
-    barrierColor: const Color(0x0F000000), // 6% opacity black
+    barrierColor: const Color(0x33000000), // 6% opacity black
     constraints:
         const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
   );

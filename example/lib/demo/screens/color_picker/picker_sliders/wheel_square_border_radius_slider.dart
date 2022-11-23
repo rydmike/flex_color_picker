@@ -16,7 +16,7 @@ class WheelSquareBorderRadiusSlider extends ConsumerWidget {
           '${ref.read(wheelSquareBorderRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel shade square border radius'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 0,
           max: 16,
           divisions: 16,

@@ -17,7 +17,7 @@ class PaddingSlider extends ConsumerWidget {
           '(${ref.read(paddingPod).floor()}))',
       child: ListTile(
         title: const Text('Color picker content padding'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           max: 40,
           divisions: 40,
           label: ref.read(paddingPod).floor().toString(),

@@ -40,7 +40,6 @@ class ColorTools {
   /// Private constructor, does not show up in code completion, useful when
   /// there are only static functions and we have nothing to construct.
   ColorTools._(); // coverage:ignore-line
-  // TODO(rydmike): Follow-up that private constructor is ignored in tests.
 
   /// List of all the standard Material primary color swatches.
   ///

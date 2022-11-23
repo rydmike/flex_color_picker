@@ -16,7 +16,7 @@ class SpacingSlider extends ConsumerWidget {
           '${ref.read(spacingPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item spacing'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           max: 25,
           divisions: 25,
           label: ref.read(spacingPod).floor().toString(),

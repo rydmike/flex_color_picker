@@ -479,17 +479,25 @@ Future<Color> showColorPickerDialog(
   /// Typically used to provide padding to the button bar between the button
   /// bar and the edges of the dialog.
   ///
-  /// Defaults to `EdgeInsets.symmetric(horizontal: 16)`.
-  final EdgeInsetsGeometry actionsPadding =
-      const EdgeInsets.symmetric(horizontal: 16),
+  /// Defaults to null and follows ambient [AlertDialog] themed actions padding
+  /// or [AlertDialog] default if not defined.
+  ///
+  /// Versions before FlexColorPicker 3.0.0 defaulted to
+  /// `EdgeInsets.symmetric(horizontal: 16) use it for same padding as in
+  /// previous versions.
+  final EdgeInsetsGeometry? actionsPadding,
 
   /// The padding that surrounds each bottom action button.
   ///
   /// This is different from [actionsPadding], which defines the padding
   /// between the entire button bar and the edges of the dialog.
   ///
-  /// Defaults to `EdgeInsets.all(16)`.
-  final EdgeInsetsGeometry buttonPadding = const EdgeInsets.all(16),
+  /// Defaults to null and follows ambient [AlertDialog] themed button padding
+  /// or [AlertDialog] default if not defined.
+  ///
+  /// Versions before FlexColorPicker 3.0.0 defaulted to `EdgeInsets.all(16),
+  /// use it for same button padding as in previous versions.
+  final EdgeInsetsGeometry? buttonPadding,
 
   /// The background color of the surface of this Dialog.
   ///
@@ -572,6 +580,10 @@ Future<Color> showColorPickerDialog(
   /// You can also make the barrier completely transparent.
   Color barrierColor = Colors.black12,
 
+  /// The `barrierLabel` argument is the semantic label used for a dismissible
+  /// barrier. This argument defaults to `null`.
+  String? barrierLabel,
+
   /// The `useSafeArea` argument is used to indicate if the dialog should only
   /// display in 'safe' areas of the screen not used by the operating system
   /// (see [SafeArea] for more details).
@@ -581,38 +593,12 @@ Future<Color> showColorPickerDialog(
   /// be constrained by the screen size.
   bool useSafeArea = true,
 
-  /// Usage of `useRootNavigator` here is deprecated.
-  ///
-  /// The `useRootNavigator` argument is now respected on all Navigator
-  /// pop functions used in the [ColorPicker] widget itself and by
-  /// built-in dialogs used by the [ColorPicker]. In order to support this,
-  /// the current `useRootNavigator` property in the
-  /// [ColorPicker.showPickerDialog] and in the function
-  /// [showColorPickerDialog] had to be deprecated.
-  ///
-  /// The property has moved to become a configuration option in
-  /// [ColorPickerActionButtons] class in order to make it accessible to
-  /// the Navigator pop functions both in the [ColorPicker] widget itself,
-  /// as well as by built-in dialogs.
-  ///
-  /// The default behavior has not been changed, the setting still defaults
-  /// to using dialogs that use the root navigator, but now the pop
-  /// functions work as intended.
-  ///
-  /// If you for some reason have used none root navigators for the built-in
-  /// dialogs in previous version, you need to set
-  /// `ColorPickerActionButtons(useRootNavigator: false)` in
-  /// `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
-  @Deprecated(
-    'This property is no longer set here and has no function if assigned here. '
-    'From version 2.1.0 it must be defined via same property in configuration '
-    'class ColorPickerActionButtons(useRootNavigator).',
-  )
-      bool useRootNavigator = true,
-
   /// The `routeSettings` argument is passed to [showGeneralDialog],
   /// see [RouteSettings] for details.
   RouteSettings? routeSettings,
+
+  /// Offset anchorPoint for the dialog.
+  Offset? anchorPoint,
 
   /// You can provide BoxConstraints to constrain the size of the dialog.
   ///
@@ -702,10 +688,12 @@ Future<Color> showColorPickerDialog(
     insetPadding: insetPadding,
     clipBehavior: clipBehavior,
     shape: shape,
-    barrierDismissible: barrierDismissible,
     barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    barrierLabel: barrierLabel,
     useSafeArea: useSafeArea,
     routeSettings: routeSettings,
+    anchorPoint: anchorPoint,
     constraints: constraints,
   ))) {
     selectedColor = color;

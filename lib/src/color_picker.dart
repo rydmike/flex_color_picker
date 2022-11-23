@@ -24,6 +24,13 @@ import 'widgets/tonal_palette_colors.dart';
 
 part 'show_color_picker_dialog.dart';
 
+// Set the bool flag to true to show debug prints. Even if you forgot
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off here for just this feature. You can leave it true
+// below to see this feature's logs in debug mode.
+const bool _debug = !kReleaseMode && false;
+
 const int _minRecentColors = 2;
 const int _maxRecentColors = 20;
 
@@ -720,17 +727,25 @@ class ColorPicker extends StatefulWidget {
     /// Typically used to provide padding to the button bar between the button
     /// bar and the edges of the dialog.
     ///
-    /// Defaults to `EdgeInsets.symmetric(horizontal: 16)`.
-    final EdgeInsetsGeometry actionsPadding =
-        const EdgeInsets.symmetric(horizontal: 16),
+    /// Defaults to null and follows ambient [AlertDialog] themed actions
+    /// padding or [AlertDialog] default if not defined.
+    ///
+    /// Versions before FlexColorPicker 3.0.0 defaulted to
+    /// `EdgeInsets.symmetric(horizontal: 16) use it for same padding as in
+    /// previous versions.
+    final EdgeInsetsGeometry? actionsPadding,
 
     /// The padding that surrounds each bottom action button.
     ///
     /// This is different from [actionsPadding], which defines the padding
     /// between the entire button bar and the edges of the dialog.
     ///
-    /// Defaults to `EdgeInsets.all(16)`.
-    final EdgeInsetsGeometry buttonPadding = const EdgeInsets.all(16),
+    /// Defaults to null and follows ambient [AlertDialog] themed buttons
+    /// padding or [AlertDialog] default if not defined.
+    ///
+    /// Versions before FlexColorPicker 3.0.0 defaulted to `EdgeInsets.all(16),
+    /// use it for same button padding as in previous versions.
+    final EdgeInsetsGeometry? buttonPadding,
 
     /// The background color of the surface of this Dialog.
     ///
@@ -797,11 +812,6 @@ class ColorPicker extends StatefulWidget {
     /// The default shape is a RoundedRectangleBorder with a radius of 4.0.
     final ShapeBorder? shape,
 
-    /// If true, the dialog can be closed by clicking outside it.
-    ///
-    /// Defaults to true.
-    bool barrierDismissible = true,
-
     /// The background transparency color of the dialog barrier.
     ///
     /// Defaults to [Colors.black12] which is considerably lighter than the
@@ -813,6 +823,15 @@ class ColorPicker extends StatefulWidget {
     /// You can also make the barrier completely transparent.
     Color barrierColor = Colors.black12,
 
+    /// If true, the dialog can be closed by clicking outside it.
+    ///
+    /// Defaults to true.
+    bool barrierDismissible = true,
+
+    /// The `barrierLabel` argument is the semantic label used for a dismissible
+    /// barrier. This argument defaults to `null`.
+    String? barrierLabel,
+
     /// The `useSafeArea` argument is used to indicate if the dialog should only
     /// display in 'safe' areas of the screen not used by the operating system
     /// (see [SafeArea] for more details).
@@ -822,38 +841,12 @@ class ColorPicker extends StatefulWidget {
     /// be constrained by the screen size.
     bool useSafeArea = true,
 
-    /// Usage of `useRootNavigator` here is deprecated.
-    ///
-    /// The `useRootNavigator` argument is now respected on all Navigator
-    /// pop functions used in the [ColorPicker] widget itself and by
-    /// built-in dialogs used by the [ColorPicker]. In order to support this,
-    /// the current `useRootNavigator` property in the
-    /// [ColorPicker.showPickerDialog] and in the function
-    /// [showColorPickerDialog] had to be deprecated.
-    ///
-    /// The property has moved to become a configuration option in
-    /// [ColorPickerActionButtons] class in order to make it accessible to
-    /// the Navigator pop functions both in the [ColorPicker] widget itself,
-    /// as well as by built-in dialogs.
-    ///
-    /// The default behavior has not been changed, the setting still defaults
-    /// to using dialogs that use the root navigator, but now the pop
-    /// functions work as intended.
-    ///
-    /// If you for some reason have used none root navigators for the built-in
-    /// dialogs in previous version, you need to set
-    /// `ColorPickerActionButtons(useRootNavigator: false)` in
-    /// `ColorPicker(actionButtons)` or `showColorPickerDialog(actionButtons)`.
-    @Deprecated(
-      'This property is no longer set here and has no function if assigned '
-      'here. From version 2.1.0 it must be defined via same property in '
-      'configuration class ColorPickerActionButtons(useRootNavigator).',
-    )
-        bool useRootNavigator = true,
-
     /// The `routeSettings` argument is passed to [showGeneralDialog],
     /// see [RouteSettings] for details.
     RouteSettings? routeSettings,
+
+    /// Offset anchorPoint for the dialog.
+    Offset? anchorPoint,
 
     /// You can provide BoxConstraints to constrain the size of the dialog.
     ///
@@ -976,46 +969,50 @@ class ColorPicker extends StatefulWidget {
         actionButtons.dialogActionOrder ==
             ColorPickerActionButtonOrder.okIsLeft;
 
+    final AlertDialog pickerDialog = AlertDialog(
+      title: title,
+      titlePadding: titlePadding,
+      titleTextStyle: titleTextStyle,
+      content: constraints == null
+          ? this
+          : ConstrainedBox(
+              constraints: constraints,
+              child: this,
+            ),
+      contentPadding: contentPadding,
+      actions: actionButtons.dialogActionButtons
+          ? <Widget>[
+              if (okIsLeft) ...<Widget>[
+                okButton,
+                cancelButton,
+              ] else ...<Widget>[
+                cancelButton,
+                okButton,
+              ]
+            ]
+          : null,
+      actionsPadding: actionsPadding,
+      buttonPadding: buttonPadding,
+      backgroundColor: backgroundColor,
+      elevation: elevation,
+      semanticLabel: semanticLabel,
+      insetPadding: insetPadding,
+      clipBehavior: clipBehavior,
+      shape: shape,
+      scrollable: true,
+    );
+
     await showDialog<bool>(
         context: context,
         barrierDismissible: barrierDismissible,
         barrierColor: barrierColor,
+        barrierLabel: barrierLabel,
         useSafeArea: useSafeArea,
         useRootNavigator: actionButtons.useRootNavigator,
         routeSettings: routeSettings,
+        anchorPoint: anchorPoint,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: title,
-            titlePadding: titlePadding,
-            titleTextStyle: titleTextStyle,
-            content: constraints == null
-                ? this
-                : ConstrainedBox(
-                    constraints: constraints,
-                    child: this,
-                  ),
-            contentPadding: contentPadding,
-            actions: actionButtons.dialogActionButtons
-                ? <Widget>[
-                    if (okIsLeft) ...<Widget>[
-                      okButton,
-                      cancelButton,
-                    ] else ...<Widget>[
-                      cancelButton,
-                      okButton,
-                    ]
-                  ]
-                : null,
-            actionsPadding: actionsPadding,
-            buttonPadding: buttonPadding,
-            backgroundColor: backgroundColor,
-            elevation: elevation,
-            semanticLabel: semanticLabel,
-            insetPadding: insetPadding,
-            clipBehavior: clipBehavior,
-            shape: shape,
-            scrollable: true,
-          );
+          return pickerDialog;
         }).then((bool? value) {
       // If the dialog return value was null, then we got here by a
       // barrier dismiss, then we set the return value to false.
@@ -1176,15 +1173,18 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
-    // debugPrint('didUpdateWidget called **********************************');
-
+    if (_debug) {
+      debugPrint('didUpdateWidget called **********************************');
+    }
     // Set to true if a change was done where we need to find the picker again.
     bool shouldFindPickerAndSwatch = false;
 
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
-      // debugPrint('didUpdateWidget enableOpacity = '
-      //     '${widget.enableOpacity == oldWidget.enableOpacity}');
+      if (_debug) {
+        debugPrint('didUpdateWidget enableOpacity = '
+            '${widget.enableOpacity == oldWidget.enableOpacity}');
+      }
       _selectedColor =
           widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
@@ -1192,8 +1192,10 @@ class _ColorPickerState extends State<ColorPicker> {
 
     // Picker labels map changed, update used one, with its default fallbacks.
     if (!mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)) {
-      // debugPrint('didUpdateWidget pickerTypeLabels mapEquals: '
-      //  '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}');
+      if (_debug) {
+        debugPrint('didUpdateWidget pickerTypeLabels mapEquals: '
+            '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}');
+      }
       _pickerLabels = <ColorPickerType, String>{
         ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
             ColorPicker._selectBothLabel,
@@ -1234,8 +1236,9 @@ class _ColorPickerState extends State<ColorPicker> {
       // Therefore using `toString` comparisons for now to get around the issue,
       // not ideal, but it seems to work.
 
-      // debugPrint('didUpdateWidget pickersEnabled or custom swatch updated!');
-
+      if (_debug) {
+        debugPrint('didUpdateWidget pickersEnabled or custom swatch updated!');
+      }
       // Update _typeToSwatchMap, because custom color swatches were updated.
       _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
         ColorPickerType.both: ColorTools.primaryAndAccentColors,
@@ -1267,9 +1270,10 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.wheel:
             widget.pickersEnabled[ColorPickerType.wheel] ?? false,
       };
-      // debugPrint('${widget.customColorSwatchesAndNames}');
-      // debugPrint('${oldWidget.customColorSwatchesAndNames}');
-
+      if (_debug) {
+        debugPrint('${widget.customColorSwatchesAndNames}');
+        debugPrint('${oldWidget.customColorSwatchesAndNames}');
+      }
       // We should find picker and swatch after above updates.
       shouldFindPickerAndSwatch = true;
     }
@@ -1284,7 +1288,9 @@ class _ColorPickerState extends State<ColorPicker> {
     // The widget color was updated externally since it differs from internally
     // kept state, we should update the widget to new color and find picker.
     if (widget.color != _selectedColor) {
-      // debugPrint('didUpdateWidget external color update!');
+      if (_debug) {
+        debugPrint('didUpdateWidget external color update!');
+      }
       _selectedColor =
           widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
@@ -1302,8 +1308,9 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     //
     if (shouldFindPickerAndSwatch) {
-      // debugPrint('didUpdateWidget calls findPicker and updateActiveSwatch');
-
+      if (_debug) {
+        debugPrint('didUpdateWidget calls findPicker and updateActiveSwatch');
+      }
       // When in this IF branch, we need to find the right picker again.
       _findPicker();
       // And also update the active swatch again.
@@ -2021,7 +2028,9 @@ class _ColorPickerState extends State<ColorPicker> {
     //
     // Found the usage of these in the SDK TextField copy/paste implementation.
     final bool isRawKeyMacOS = event.data is RawKeyEventDataMacOs;
-    // debugPrint('KeyEvent isRawKeyMacOS: $isRawKeyMacOS');
+    if (_debug) {
+      debugPrint('KeyEvent isRawKeyMacOS: $isRawKeyMacOS');
+    }
     final bool isRawKeyIos = event.data is RawKeyEventDataIos;
     // **BUT**
     // The above RawKeyEventData did not seem to work on Web when using an

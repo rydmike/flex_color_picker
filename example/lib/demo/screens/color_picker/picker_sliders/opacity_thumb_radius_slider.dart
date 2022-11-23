@@ -16,7 +16,7 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
           '${ref.read(opacityThumbRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider thumb radius'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 12,
           max: 30,
           divisions: 30 - 12,

@@ -16,7 +16,7 @@ class ElevationSlider extends ConsumerWidget {
           '${ref.read(elevationPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item elevation'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           max: 16,
           divisions: 16,
           label: ref.read(elevationPod).floor().toString(),

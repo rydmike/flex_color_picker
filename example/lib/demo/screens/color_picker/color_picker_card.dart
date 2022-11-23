@@ -14,7 +14,7 @@ class ColorPickerCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Card(
-      elevation: 3,
+      elevation: 1,
       child: ColorPicker(
         color: ref.watch(cardPickerColorPod),
         onColorChangeStart: (Color color) {

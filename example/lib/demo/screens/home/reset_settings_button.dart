@@ -23,12 +23,6 @@ class ResetSettingsButton extends ConsumerWidget {
           defaultActionText: translate.okButtonLabel,
           cancelActionText: translate.cancelButtonLabel,
         ).show(context, useRootNavigator: true);
-        // TODO(rydmike): Potential lint rule false positive?
-        // Based on this: https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
-        // The rule should only apply to stateful widget. This Widget is
-        // Stateless, can't use proposed mounted check in a stateless widget!
-        // Thus we ignore the new experimental lint rule for now.
-        // ignore: use_ build_context_synchronously
         if (didReset ?? false) resetSettings(ref);
       },
       child: Padding(

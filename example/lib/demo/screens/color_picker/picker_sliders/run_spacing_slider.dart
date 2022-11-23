@@ -16,7 +16,7 @@ class RunSpacingSlider extends ConsumerWidget {
           '${ref.read(runSpacingPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item run spacing'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
             max: 25,
             divisions: 25,
             label: ref.read(runSpacingPod).floor().toString(),

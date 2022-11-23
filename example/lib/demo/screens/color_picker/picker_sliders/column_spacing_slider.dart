@@ -16,7 +16,7 @@ class ColumnSpacingSlider extends ConsumerWidget {
           '${ref.read(columnSpacingPod).floor()})',
       child: ListTile(
         title: const Text('Vertical spacing between items'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           max: 40,
           divisions: 40,
           label: ref.read(columnSpacingPod).floor().toString(),

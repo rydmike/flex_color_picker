@@ -16,7 +16,7 @@ class WheelDiameterSlider extends ConsumerWidget {
           '${ref.read(wheelDiameterPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel total width'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 150,
           max: 500,
           divisions: 500 - 150,

@@ -16,7 +16,7 @@ class WheelWidthSlider extends ConsumerWidget {
           '${ref.read(wheelWidthPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel hue circle width'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 4,
           max: 50,
           divisions: 50 - 4,

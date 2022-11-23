@@ -16,7 +16,7 @@ class BorderRadiusSlider extends ConsumerWidget {
           '${ref.read(borderRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item border radius'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           max: ref.watch(sizePod) / 2,
           divisions: (ref.read(sizePod) / 2).floor(),
           label: ref.read(borderRadiusPod).floor().toString(),

@@ -56,8 +56,6 @@ class ColorPickerScreen extends StatelessWidget {
               Expanded(
                 child: Scrollbar(
                   controller: scrollOne,
-                  // TODO(rydmike): Remove commented deprecated API.
-                  // isAlwaysShown: true,
                   thumbVisibility: true,
                   interactive: true,
                   child: ListView(
@@ -82,8 +80,6 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollTwo,
-                    // TODO(rydmike): Remove commented deprecated API.
-                    // isAlwaysShown: true,
                     thumbVisibility: true,
                     interactive: true,
                     child: ListView(
@@ -107,8 +103,6 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollThree,
-                    // TODO(rydmike): Remove commented deprecated API.
-                    // isAlwaysShown: true,
                     thumbVisibility: true,
                     interactive: true,
                     child: ListView(
@@ -131,8 +125,6 @@ class ColorPickerScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     controller: scrollFour,
-                    // TODO(rydmike): Remove commented deprecated API.
-                    // isAlwaysShown: true,
                     thumbVisibility: true,
                     interactive: true,
                     child: ListView(
@@ -212,6 +204,7 @@ class _Column1 extends StatelessWidget {
         const ParseShortHexCodeSwitch(),
         const Divider(),
         const TextFieldFocusDemo(),
+        const PickerAutoFocusSwitch(),
         const Divider(),
       ],
     );
@@ -339,7 +332,6 @@ class _Column4 extends StatelessWidget {
         ),
         const ControlCopySwitch(),
         const ControlPasteSwitch(),
-        const PickerAutoFocusSwitch(),
         const ToolbarCopySwitch(),
         const ToolbarPasteSwitch(),
         const EditFieldCopySwitch(),

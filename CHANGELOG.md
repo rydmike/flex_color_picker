@@ -2,12 +2,34 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.0.0
+
+**Nov 23, 2022**
+
+**STYLE BREAKING**
+
+* The color picker dialog `actionsPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.symmetric(horizontal: 16)`
+* The color picker dialog `buttonPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.all(16)`
+
+* The API usage of the above properties is unchanged. It is only the default behavior that has been updated to be less opinionated and enabled correct theme response.
+
+**REMOVED**
+
+* Removed in version 2.1.0 no longer used and deprecated parameter `useRootNavigator` in `ColorPicker` method `showPickerDialog`. 
+* Removed in version 2.1.0 no longer used and deprecated parameter `useRootNavigator` in function `showColorPickerDialog`.
+
+**NEW**
+
+* To `ColorPicker` method `showPickerDialog` added parameters `barrierLabel` and `anchorPoint` as pass along values to Flutter SDK `showDialog`.
+* To function `showColorPickerDialog` added parameters `barrierLabel` and `anchorPoint` as pass along values to Flutter SDK `showDialog`.
+
+
 ## 2.6.1
 
 **Sep 9, 2022**
 
 * Add `secondaryOffset` to `OpacitySliderTrack` `paint` method override to **fix** new requirement 
-  for master channel compatibility, works with stable channel too. Thanks 
+  for master channel compatibility, works with the stable channel too. Thanks 
   [Dan Reynolds](https://github.com/danReynolds) for the PR.
 
 ## 2.6.0

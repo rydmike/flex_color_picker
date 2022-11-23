@@ -16,7 +16,7 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
           '${ref.read(wheelSquarePaddingPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel shade square padding'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 0,
           max: 20,
           divisions: 20,

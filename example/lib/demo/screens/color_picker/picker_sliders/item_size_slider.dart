@@ -20,7 +20,7 @@ class ItemSizeSlider extends ConsumerWidget {
           'height: ${ref.read(sizePod).floor()})',
       child: ListTile(
         title: const Text('Color picker item size'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: _pickItemMinSize,
           max: _pickItemMaxSize,
           divisions: (_pickItemMaxSize - _pickItemMinSize).floor(),

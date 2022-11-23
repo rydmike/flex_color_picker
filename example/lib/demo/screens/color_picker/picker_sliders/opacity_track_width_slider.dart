@@ -25,7 +25,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
           '${usedOpacityTrackWidth?.floor()})',
       child: ListTile(
         title: const Text('Opacity slider width'),
-        subtitle: Slider.adaptive(
+        subtitle: Slider(
           min: 150,
           max: 700,
           divisions: 700 - 150,
