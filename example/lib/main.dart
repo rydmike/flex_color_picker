@@ -99,9 +99,12 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         children: <Widget>[
+          const SizedBox(height: 16),
           // Pick color in a dialog.
           ListTile(
-            title: const Text('Click this color to modify it in a dialog'),
+            title: const Text('Click this color to modify it in a dialog. '
+                'The color is modified while dialog is open, but returns '
+                'to previous value if dialog is cancelled'),
             subtitle: Text(
               // ignore: lines_longer_than_80_chars
               '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
@@ -127,7 +130,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             ),
           ),
           ListTile(
-            title: const Text('Click to select a new color from a dialog'),
+            title: const Text('Click to select a new color from a dialog '
+                'that uses custom open/close animation. The color is only '
+                'modified after dialog is closed with OK'),
             subtitle: Text(
               // ignore: lines_longer_than_80_chars
               '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
@@ -171,6 +176,22 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                       closeButton: true,
                       dialogActionButtons: false,
                     ),
+                    transitionBuilder: (BuildContext context,
+                        Animation<double> a1,
+                        Animation<double> a2,
+                        Widget widget) {
+                      final double curvedValue =
+                          Curves.easeInOutBack.transform(a1.value) - 1.0;
+                      return Transform(
+                        transform: Matrix4.translationValues(
+                            0.0, curvedValue * 200, 0.0),
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: widget,
+                        ),
+                      );
+                    },
+                    transitionDuration: const Duration(milliseconds: 400),
                     constraints: const BoxConstraints(
                         minHeight: 480, minWidth: 320, maxWidth: 320),
                   );
@@ -229,7 +250,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           ),
 
           // Theme mode toggle
-          SwitchListTile.adaptive(
+          SwitchListTile(
             title: const Text('Turn ON for dark mode'),
             subtitle: const Text('Turn OFF for light mode'),
             value: isDark,

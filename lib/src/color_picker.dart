@@ -1,3 +1,5 @@
+// ignore_for_file: comment_references
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -683,8 +685,13 @@ class ColorPicker extends StatefulWidget {
   ///
   /// The [showPickerDialog] method is a convenience function to show the
   /// [ColorPicker] widget in a modal dialog. It re-implements the standard
-  /// `showDialog` function with opinionated Cancel and OK buttons. It
-  /// also by default uses a lighter barrier color. This is useful if the
+  /// [showDialog] function with opinionated Cancel and OK buttons.
+  ///
+  /// If a [transitionBuilder] is provided the [showPickerDialog] instead uses
+  /// a [showGeneralDialog] implementation to show the [ColorPicker], this
+  /// allows for customization of the show animation.
+  ///
+  /// It also by default uses a lighter barrier color. This is useful if the
   /// color picker is used to dynamically change color of a widget or entire
   /// application theme, since we can then better see the impact of the color
   /// choice behind the modal dialog when the barrier is made almost fully
@@ -848,6 +855,21 @@ class ColorPicker extends StatefulWidget {
     /// Offset anchorPoint for the dialog.
     Offset? anchorPoint,
 
+    /// The [transitionBuilder] argument is used to define how the route
+    /// arrives on and leaves off the screen.
+    ///
+    /// If this transition is not specified, the default Material platform
+    /// transition builder for [showDialog] is used.
+    RouteTransitionsBuilder? transitionBuilder,
+
+    /// The [transitionDuration] argument is used to determine how long it takes
+    /// for the route to arrive on or leave off the screen.
+    ///
+    /// It only has any effect when a custom `transitionBuilder`is used.
+    ///
+    /// This argument defaults to 200 milliseconds.
+    Duration transitionDuration = const Duration(milliseconds: 200),
+
     /// You can provide BoxConstraints to constrain the size of the dialog.
     ///
     /// You might want to do this at least for the height, otherwise
@@ -969,7 +991,9 @@ class ColorPicker extends StatefulWidget {
         actionButtons.dialogActionOrder ==
             ColorPickerActionButtonOrder.okIsLeft;
 
-    final AlertDialog pickerDialog = AlertDialog(
+    // Put or [ColorPicker] instance `this` in an `AlertDialog` using all
+    // to it assigned and above defined properties.
+    Widget dialog = AlertDialog(
       title: title,
       titlePadding: titlePadding,
       titleTextStyle: titleTextStyle,
@@ -1002,22 +1026,65 @@ class ColorPicker extends StatefulWidget {
       scrollable: true,
     );
 
-    await showDialog<bool>(
+    // No `transitionBuilder` give, then use
+    // the platform and Material2/3 dependent default MaterialPage route
+    // transition via `showDialog`, as in all versions before 3.0.0.
+    if (transitionBuilder == null) {
+      await showDialog<bool>(
+          context: context,
+          barrierDismissible: barrierDismissible,
+          barrierColor: barrierColor,
+          barrierLabel: barrierLabel,
+          useSafeArea: useSafeArea,
+          useRootNavigator: actionButtons.useRootNavigator,
+          routeSettings: routeSettings,
+          anchorPoint: anchorPoint,
+          builder: (BuildContext context) {
+            return dialog;
+          }).then((bool? value) {
+        // If the dialog return value was null, then we got here by a
+        // barrier dismiss, then we set the return value to false.
+        colorWasSelected = value ?? false;
+      });
+    }
+    // If a `transitionBuilder` is given, we use `showGeneralDialog` using the
+    // given `transitionBuilder` and a custom `pageBuilder`, conditionally
+    // wrapping `SafeArea` around or AlertDialog widget and capturing the
+    // current theme that we and wrapping it around the page builder.
+    else {
+      final CapturedThemes themes = InheritedTheme.capture(
+        from: context,
+        to: Navigator.of(
+          context,
+          rootNavigator: true,
+        ).context,
+      );
+      if (useSafeArea) {
+        dialog = SafeArea(child: dialog);
+      }
+      await showGeneralDialog<bool>(
         context: context,
         barrierDismissible: barrierDismissible,
         barrierColor: barrierColor,
-        barrierLabel: barrierLabel,
-        useSafeArea: useSafeArea,
+        barrierLabel: barrierLabel ??
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         useRootNavigator: actionButtons.useRootNavigator,
         routeSettings: routeSettings,
         anchorPoint: anchorPoint,
-        builder: (BuildContext context) {
-          return pickerDialog;
-        }).then((bool? value) {
-      // If the dialog return value was null, then we got here by a
-      // barrier dismiss, then we set the return value to false.
-      colorWasSelected = value ?? false;
-    });
+        transitionBuilder: transitionBuilder,
+        transitionDuration: transitionDuration,
+        pageBuilder: (BuildContext context, Animation<double> animation1,
+            Animation<double> animation2) {
+          return themes.wrap(Builder(
+            builder: (BuildContext context) => dialog,
+          ));
+        },
+      ).then((bool? value) {
+        // If the dialog return value was null, then we got here by a
+        // barrier dismiss, then we set the return value to false.
+        colorWasSelected = value ?? false;
+      });
+    }
     return colorWasSelected;
   }
 }
@@ -1193,8 +1260,10 @@ class _ColorPickerState extends State<ColorPicker> {
     // Picker labels map changed, update used one, with its default fallbacks.
     if (!mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)) {
       if (_debug) {
-        debugPrint('didUpdateWidget pickerTypeLabels mapEquals: '
-            '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}');
+        debugPrint(
+          'didUpdateWidget pickerTypeLabels mapEquals: '
+          '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}',
+        );
       }
       _pickerLabels = <ColorPickerType, String>{
         ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??

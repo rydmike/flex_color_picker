@@ -6,22 +6,28 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **Nov 23, 2022**
 
-**STYLE BREAKING**
+**BREAKING - STYLE**
 
 * The color picker dialog `actionsPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.symmetric(horizontal: 16)`
 * The color picker dialog `buttonPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.all(16)`
 
-* The API usage of the above properties is unchanged. It is only the default behavior that has been updated to be less opinionated and enabled correct theme response.
+* The API usage of the above properties is unchanged. It is only the default behavior that has been updated to be less opinionated and to enable using theme-dependent settings.
 
-**REMOVED**
+**BREAKING - REMOVED**
 
-* Removed in version 2.1.0 no longer used and deprecated parameter `useRootNavigator` in `ColorPicker` method `showPickerDialog`. 
-* Removed in version 2.1.0 no longer used and deprecated parameter `useRootNavigator` in function `showColorPickerDialog`.
+* Removed in version 2.1.0 no longer used and already deprecated parameter `useRootNavigator` in `ColorPicker` method `showPickerDialog`. 
+* Removed in version 2.1.0 no longer used and already deprecated parameter `useRootNavigator` in function `showColorPickerDialog`.
 
 **NEW**
 
-* To `ColorPicker` method `showPickerDialog` added parameters `barrierLabel` and `anchorPoint` as pass along values to Flutter SDK `showDialog`.
-* To function `showColorPickerDialog` added parameters `barrierLabel` and `anchorPoint` as pass along values to Flutter SDK `showDialog`.
+* To `ColorPicker` method `showPickerDialog` and to function `showColorPickerDialog`, added parameters `barrierLabel` and `anchorPoint` as pass along values to Flutter SDK `showDialog` and `showGeneralDialog`.
+
+* To `ColorPicker` method `showPickerDialog` and to function `showColorPickerDialog` added parameters `transitionBuilder` and `transitionDuration`. If `transitionBuilder` is not null, the `showPickerDialog` and `showColorPickerDialog` will use the `showGeneralDialog` Flutter SDK function instead of `showDialog`. The `showGeneralDialog` function will be used with the provided `transitionBuilder` and `transitionDuration`. The `transitionDuration` only has any impact when the `transitionBuilder` is used. If `transitionBuilder` is null, then the `showPickerDialog` and `showColorPickerDialog` use the Flutter SDK `showDialog` implementation as before, thus using the default Material platform dependent `showDialog` transition and duration. 
+
+**EXAMPLES**
+
+* Default example: Added an example of how to use the `transitionBuilder`.
+* Web example: Modernized its theme by using Material 3 and a seed generated `ColorScheme`.
 
 
 ## 2.6.1
@@ -29,7 +35,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 **Sep 9, 2022**
 
 * Add `secondaryOffset` to `OpacitySliderTrack` `paint` method override to **fix** new requirement 
-  for master channel compatibility, works with the stable channel too. Thanks 
+  for master channel compatibility, works with the stable channel too. Thanks, 
   [Dan Reynolds](https://github.com/danReynolds) for the PR.
 
 ## 2.6.0
@@ -59,10 +65,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **CHANGE**
 
-* This is a dev release for those that need to work with both master channel where Flutter master 
+* This is a dev release for those that need to work with both master channel, where Flutter master 
   SDK depends on material_color_utilities 0.2.0 and 3.3.0 beta, pre for upcoming Flutter 3.3.0 
   stable, use material_color_utilities 0.1.5. It uses a controversial package constraint of:
-  `material_color_utilities: '>=0.1.5 <=0.2.0'`. Using older version 0.1.3 and 0.1.4 in theory 
+  `material_color_utilities: '>=0.1.5 <=0.2.0'`. Using older versions 0.1.3 and 0.1.4 in theory 
   also works, but they contain some breaking color values in the used algorithm for calculation of
   tonal palettes. The color changes are very minor and typically not visible to the eye.
 
@@ -75,15 +81,15 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **CHANGE**
 
-* This is a dev release for those that need to work with master channel where Flutter SDK depends on
-  material_color_utilities ^0.2.0.
+* This is a dev release for those that need to work with the master channel, where Flutter SDK 
+  depends on material_color_utilities ^0.2.0.
 
 * Updated material_color_utilities to ^0.2.0. This version constraint does not
   work with Flutter 3.0.x stable or beta 3.3.x, and their earlier versions.
   This dev release is required to use Flutter SDK **master** 3.1.0-0.0.pre.2111 or later,
   that uses material_color_utilities 0.2.0.  
 
-* For other (older) version of Flutter SDK you can use package version 2.5.0 that has a 
+* For other (older) versions of Flutter SDK you can use package version 2.5.0 that has a 
   material_color_utilities version constraint of ^0.1.3.
 
 * This release also updates Dart SDK constraint to '>=2.17.0 <3.0.0' and has Flutter listed as
@@ -135,11 +141,11 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   setting [autoFocus] to false might help.
 
   If both [ctrlC] and [ctrlV] are false, the picker yields the focus the
-  same way as setting [autoFocus] false, but then you have no keyboard shortcut
+  same way as setting [autoFocus] false, but then you have no keyboard-shortcut
   copy-paste functions at all. With [autoFocus] false, you can still use
   keyboard copy-paste shortcuts and yield the focus from the picker.
   When you do this, the copy-paste keyboard shortcuts will not work until
-  one of the pickers components have been focused by interacting with them.
+  one of the picker's components is focused by interacting with any of them.
 
   The picker still grabs focus when you click on its background, as one way
   to set focus to keyboard listener to enable copy-paste keyboard shortcuts
@@ -157,16 +163,16 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * The generated Material Color swatch you get when you click on any color in the
   wheel picker has been updated and is a bit improved. It is still not the
   actual M2 `MaterialColor` swatch algorithm, like the Tonal Palette is when it
-  comes to Material 3. Which is using the actual seed algorithm for the primary
-  tonal palette you get with the selected color as input. The wheel does detect when
-  you have selected any Material 2 swatch color and shows its swatch then.
+  comes to Material 3. It uses the actual seed algorithm for the primary
+  tonal palette you get with the selected color as input. The wheel detects when
+  you select any Material 2 swatch color and shows its swatch then.
   For other colors, it computes a `MaterialColor` swatch. This swatch
   is still not using the correct algorithm, but it is a bit better looking
   than before.
 
   There is currently no know Dart implementation of this algorithm, if there
   were it would be in use here. There are some versions in JS of the algorithm
-  that have been reverse engineered from the Material 2 design guide website.
+  that have been reverse-engineered from the Material 2 design guide website.
   If someone wants to make a Dart version, that would be fabulous. Links and more
   information can be found in `ColorTools.createPrimarySwatch`
 
@@ -180,7 +186,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **FIX**
 
-* Fix for nullable/none nullable difference for Flutter `IconButton` between Flutter
+* Fix for nullable/none-nullable difference for Flutter `IconButton` between Flutter
   version 2.10.0 and earlier versions Flutter 2.8.1, where `iconSize` is nullable in
   Flutter 2.10.x, but not in  Flutter 2.8.1. See issues [report #40](https://github.com/rydmike/flex_color_picker/issues/40) and [PR #41](https://github.com/rydmike/flex_color_picker/pull/41).
 
@@ -191,7 +197,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **NEW**
 
-* Added capability to show a Material 3 tonal palette as per
+* Added capability to show a Material 3 tonal-palette as per
   [Material 3 design specification](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
 
 * To enable it set new `ColorPicker` property `enableTonalPalette` to true.
@@ -200,44 +206,44 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   you can show an optional `tonalSubheading` widget above it.
 
   - When you click/select a color in the color picker and tonal palette is
-  enabled, a 13 shade Material 3 tonal palette for the selected color will be
+  enabled, a 13 shade Material 3 tonal-palette for the selected color will be
   generated, always starting with black, tone 0 for the used seed color and
   ending in white, tone 100.
 
   - The official Material 3 Dart library is used to create the tonal palette
   from any selected color. The color you select functions a seed color to
   generate the tonal palette and might not be included itself and selected in
-  the palette. You can of course click on any color in the generated palette to
+  the palette. You can, of course, click on any color in the generated palette to
   select and pick a color.
 
-  - Selecting a color in the tonal palette, only selects the color in the palette,
-   it does not update the palette. Only when you select a color from the other
-   color sources in the picker, is that color used as key, to seed and generate
+  - Selecting a color in the tonal palette, only selects the color in the palette. 
+   It does not update the palette. Only when you select a color from the other
+   color sources in the picker, is that color used as key color, to seed and generate
    an updated color palette for the selected color.
 
 
 **CHANGE**
 
 * The WEB example was updated to include enabling and disabling
-  the tonal palette and built it with Flutter version, stable 2.10.1.
+  the tonal palette and built it with the Flutter version stable 2.10.1.
 * All dependencies in the Web demo were updated to their latest
   released version.
 
-  The Web demo example requires at least Flutter 2.10.0 to be built,
-  it uses ColorScheme properties in its theme that were not available
+  The Web demo example requires at least Flutter 2.10.0 to be built.
+  It uses ColorScheme properties in its theme that were not available
   earlier and removed in 2.10.0 deprecated color properties from its theme.
-  The color picker package itself, still has unchanged version requirement
+  The color picker package itself, still has the same version requirement as before
   of Dart SDK: '>=2.14.0 < 3.0.0'.
 
 ## 2.2.0
 
 **November 17, 2021**
 
-* Fixed the style for color entry field, to always uses the intended fixed stadium style.
+* Fixed the style for color entry field, to always use the intended fixed stadium style.
 * Updated dependencies for the web demo, big change was Riverpod to use v1.0.0.
 * Lint rule updates.
 * Bump Dart SDK requirement to 2.14.
-* Build and publish WEB demo with updated version using Flutter 2.5.3.
+* Build and publish WEB demo with the updated version using Flutter 2.5.3.
 
 ## 2.1.2
 
@@ -290,7 +296,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   ColorPickerCopyPasteBehavior, to enable using long press in the color picker, to open up the COPY-PASTE
   context menu on Web, iOS and Android touch devices. While using secondary mouse button
   on desktop platforms Windows, Mac and Linux, but not if it is a desktop web app.
-* **Documentation:** Fixed broken API reference links in API guide chapter. Mentioned that WEB build
+* **Documentation:** Fixed broken API reference links in the API guide chapter. Mentioned that WEB build
   requires a canvas kit build if `enableOpacity` feature is used.
 * **Web example:** The live web example got updated to use the latest Flutter stable embedder.
 * **CI/CD:** Tried the CI/CD deployment with --base-href="/flexcolorpicker/" instead of `repl`. Did not
@@ -303,10 +309,10 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * **New feature:** Enabled updating the color picker externally. Just set the `color` property of the widget to a
   new value to update it. You can even "remote control" the color picker by updating the `color`, if so needed.
 
-  This is mostly a potential use-case for desktop/web when the picker is not used in a dialog.
-  You can of course use this on a phone or tablet too, but often there is not enough room to keep the picker
+  This is mostly a potential use-case for desktop and web, when the picker is not used in a dialog.
+  You can, of course, use this on a phone or tablet too, but often there is not enough space to keep the picker
   visible on the main surface this way on mobile devices. However, on desktops it is certainly a valid use
-  case that should be supported. It was previously not supported by design, but as we are going for covering
+  case that should be supported. It was previously not supported by design, but as we are going to support 
   web/desktop use-cases, it should certainly be supported. This update adds support for it. The picker only
   updates if the externally provided `color` constructor property differs from its internally kept color
   state. Finding the right picker, computing its swatches, is a bit demanding, but it seems to work fluidly,
@@ -327,12 +333,12 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   Please see changelogs from 2.0.0-nullsafety.0 to nullsafety.5, for a complete list of changes and new features.
 * To get familiar with version 2.0.0 and all its new features, it is recommended to go through the updated tutorial,
   and the API guide in the readme file.
-* For convenience, the list of breaking changes from last stable version 1.1.5 are listed below.
+* For convenience, the list of breaking changes from the previous stable version 1.1.5 is shown below.
 
 
 **BREAKING**
 
-In addition to breaking changes as a result of the null-safety implementation, this release contain a few other
+In addition to breaking changes as a result of the null-safety implementation, this release contains a few other
 **minor breaking changes** from version 1.x, they mostly concern visual nuances and label defaults.
 
 * The `colorCodeIcon` has been deprecated and no longer has any function. To modify the copy icon on the color
@@ -348,11 +354,11 @@ In addition to breaking changes as a result of the null-safety implementation, t
 * The extension `FlexPickerNoNullStringExtensions` on none nullable
   `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent
-  black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color.
+  black `Color(0x00000000)`, if it is fully opaque black, it works better as a fallback safety color.
   The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
   null when the `String?` cannot be parsed to a `Color`.
-* The color code edit and entry field now works more like a normal text entry field. It still
-  only accepts valid hex input and converts all input to uppercase.
+* The color code edit and entry field now work more like a normal text entry field. It still
+  only accepts valid hex input and converts all inputs to uppercase.
 
 ## 2.0.0-nullsafety.5
 
@@ -375,19 +381,19 @@ In addition to breaking changes as a result of the null-safety implementation, t
   named properties in `ColorPicker`. The dialog's elevation and title in the `showColorPickerDialog` are
   instead called `dialogElevation` and `dialogTitle` in it.
 * **Improvement:** Performance was improved via more optimized rebuilds.
-* **Documentation:** First version of updated documentation with API guide documentation is now included. It still
-  requires proofreading before stable release, but getting close to be ready for release now.
+* **Documentation:** The first version of updated documentation with API guide documentation is now included. It still
+  requires proofreading before stable release, but getting close to being ready for release now.
 * **Default example:** The default example got a new picker that shows how to the new `showColorPickerDialog` function.
 * **Web example:** The Web example, with the built-in API tooltips guides, got a major rewrite. It was originally
   not intended to be as large as it grew to be, but since it grew so much it needed a rewrite.
   It now uses Riverpod to make its simple state management needs easy to handle and much cleaner than before.
-  It also includes persisting the settings directly as settings are changed in the app. The persistence is
-  implemented with Hive and should work on all Flutter platforms as well, but it has only been tested on Android,
+  It also includes persisting the settings directly as settings are changed in the app. Persistence is
+  implemented with Hive, and should work on all Flutter platforms as well, but it has only been tested on Android,
   Web and Windows.
   As an experiment, only RiverPod StateProviders were used. While the setup is a bit tedious, it enables the desired
   fine-grained control over rebuilds of all the used setting control widgets. Each setting is also stored as an
   individual key-value pair in the used Hive box.
-  A ProviderObserver that observes changes in the StateProviders we want to persist, is used to save any state change
+  A ProviderObserver that observes changes in the StateProviders we want to persist is used to save any state change
   to the used Hive box, regardless of where the state is changed in the demo app. This setup was an experiment to
   see if it might work and provide some simplification benefits. At least in this case it did, and it is also a pretty
   interesting and simple solution.
@@ -412,19 +418,19 @@ In addition to breaking changes as a result of the null-safety implementation, t
 
 **March 12, 2021**
 
-* **Fix:** Color code field no longer receives focus when switching to it on wheel page.
-  Focus is set to color wheel, or the selected color shade, if the
-  shade colors are present. The focus handling has also been improved for desktop usage.
+* **Fix:** Color code field no longer receives focus when switching to it on the wheel page.
+  Focus is set to color wheel, or the selected color shade if shade colors are present.
+  The focus handling has also been improved for desktop usage.
 * **Fix:** The property `editUsesParsedPaste` now works as intended, if true, desktop keyboard paste commands,
   while editing a color value are intercepted, and the hole pasted buffer value gets parsed, it does not get
   pasted into the field. For normal field paste functionality keep `editUsesParsedPaste` false (default).
-* **Minor breaking:** The color code edit and entry field now works more like a normal text entry field. It still
-  only accepts valid hex input and converts all input to uppercase.
+* **Minor breaking:** The color code edit and entry field now work more like a normal text entry field. It still
+  only accepts valid hex input and converts all inputs to uppercase.
 * **New property:** If `colorCodeHasColor` is true, then the background of the color code entry field uses the current
   selected color.
-* **New property** If `colorCodeReadOnly` the color code entry field is always read only. Normally color code can
+* **New property** If `colorCodeReadOnly` the color code entry field is always read only. Normally, color code can
   be edited on the wheel picker, set this to true to make it read only there as well. Copy/paste operations still work
-  if they are enabled even if the color code field entry is in read only mode.
+  if they are enabled even if the color code field entry is in read-only mode.
 * **New feature:** The `copyPasteBehavior` property received three new features and properties:
    * The copy/paste context menu can now also optionally use secondary, typically mouse right, click by setting
      `secondaryMenu` to true.
@@ -439,7 +445,7 @@ In addition to breaking changes as a result of the null-safety implementation, t
 * **Minor breaking:** The extension `FlexPickerNoNullStringExtensions` on none nullable
   `String` named `toColor`, no longer returns color value `Color(0x00000000)` for colors that cannot be parsed
   to a Color. It now returns `Color(0xFF000000)`. This is because the Flutter SDK dislikes the fully transparent
-  black `Color(0x00000000)`, if it is full opaque black, it works better as a fallback safety color.
+  black `Color(0x00000000)`, if it is fully opaque black, it works better as a fallback safety color.
   The `FlexPickerNullableStringExtensions` on `String?` named `toColorMaybeNull` works as before by returning
   null when the `String?` cannot be parsed to a `Color`.
 * **Tests:** Added unit tests for `ColorPickerActionButtonType` and `ColorPickerCopyPasteBehavior`.
@@ -456,12 +462,12 @@ In addition to breaking changes as a result of the null-safety implementation, t
 
 **March 3, 2021**
 
-There are many new features included in this version 2 pre-release. The new features can be explored with
+There are many new features included in this version 2 pre-release. The new features can be explored with the
 [live Web example](https://rydmike.com/flexcolorpicker/). Its source code is also included in the package
 example folder, in "example/lib/demo/main.dart".
 
-* **Improvement:** The wheel picker now move on pointer down to point location, it no longer requires a slight movement
-  for its thumbs to move to the selected start tracking point.
+* **Improvement:** The wheel picker now moves on pointer-down to point location, it no longer 
+  requires a slight movement for its thumbs to move to the selected start tracking point.
 * **Improvements:** Keyboard traversal of the colors and selecting indicator colors with the keyboard via
   enter or space. The wheel can however still not be operated with a keyboard, only touch and mouse controlled.
 * **New property:** `onColorChangeStart` called when user starts color selection with current color before the change.
@@ -472,13 +478,13 @@ example folder, in "example/lib/demo/main.dart".
   If not defined it defaults to same style as `colorCodeTextStyle`.
   Ported from none null-safe version 1.1.4, does not exist in version 2.0.0-nullsafety.0.
 * **New property:** `title` is a Widget used as an app bar type of title widget above the heading. Can also
-  include copy, paste, select-close and cancel-cancel icon buttons when picker is used as a dialog.
+  include copy, paste, select-close and cancel-cancel icon buttons when the picker is used as a dialog.
 * **New feature:** There is an `actionButtons` property that takes an `ColorPickerActionButtons()`. It is used to
   define what type of **Ok** and **Cancel** action buttons the color picker has when used in a dialog.
   It is possible to define if bottom action buttons should be `TextButton`, `OutlinedButton` or `ElevatedButton`
-  per button. If not defined, the labels on the buttons come from Material localizations, not from default hard
-  coded values. See breaking label for the 'Select' label. There are optional select/OK and cancel icon buttons
-  that can be used in the title bar for a more compact dialog.
+  per button. If not defined, the labels on the buttons come from Material localizations, not from
+  hard-coded default values. See breaking label for the 'Select' label. There are optional select/OK and 
+  cancel icon buttons that can be used in the title bar for a more compact dialog.
 * **New feature**: There is a `copyPasteBehavior` property that takes an `ColorPickerCopyPasteBehavior()`.
   It is used to define the copy/paste behavior of the color picker, including:
     * Keyboard shortcuts: CTRL-C, CMD-C, CTRL-V, CMD-V
@@ -503,7 +509,7 @@ example folder, in "example/lib/demo/main.dart".
   the picker. You can use the following properties to control it.
     * `showRecentColors` set to true/false to enable/disable the usage of the recent colors feature.
     * `recentColorsSubheading` subheading widget for the recently used colors. Typically, a Text widget,
-      e.g., Text('Recent colors'). If not provided there is no sub heading for the recently used colors.
+      e.g., Text('Recent colors'). If not provided, there is no sub heading for the recently used colors.
     * `maxRecentColors` number of recent colors to track, from 2 to 20 allowed.
     * `recentColors` a list with current recent color, defaults to empty. You can store the last list
       and use this list to restore the previous recent colors list.
@@ -535,10 +541,10 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 * A workaround to issue [#71687](https://github.com/flutter/flutter/issues/71687) was introduced.
   The issue has not been solved. However, the workaround allows for the Wrap implementation that was
   changed to a Row in version 1.1.2, to be used again.
-* The almost full API configurable Web example and demo, was included in the package in
+* The almost full API-configurable Web demo is included in the package in
   "example/lib/demo/main.dart" together with the previous default example in "example/lib/main.dart".
   Previously this Web example was in a separate GitHub repository. The example was updated to make it
-  responsive, to offer better usability on Web.
+  responsive, to offer better usability on Web builds.
 
 ## 1.1.5
 
@@ -579,7 +585,7 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 **November 11, 2020**
 
 * Updated the example app and documentation. The update includes updated screenshots and updated animated gifs.
-* Unit tests for ColorTools added, widget tests still pending for later updates.
+* Unit tests for ColorTools added. Widget tests are still pending for later updates.
 
 ## 1.1.0
 
@@ -597,7 +603,7 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 * First official release.
 * Example and documentation updated.
 * Updated the live Web demo version to use the released package.
-* New API: Added `shouldUpdate` to the color wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API that is not needed unless you make your own picker from scratch, and you want to use the wheel picker in your own picker.
+* New API: Added `shouldUpdate` to the color-wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API. It is not needed unless you make your own picker from scratch, and you want to use the wheel picker in your own picker.
 * Final API name tweaks before version 1.0.0 release:
 * Renamed: API `createPrimaryColor` -> `createPrimarySwatch`
 * Renamed: API `createAccentColor` -> `createAccentSwatch`
@@ -628,7 +634,7 @@ When the issue is resolved, the implementation will be reverted to Wrap again. U
 
 **November 2, 2020**
 
-* Significant API name changes and cleanup. Decided to implement previously planned changes before the official release, even if it will also impact our own usage of the package when we move to using the published version.
+* Significant API name changes and cleanup. Decided to implement previously planned changes before the official release.
 
 ## 1.0.0-dev.2
 
@@ -650,17 +656,17 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - [ ] Maybe: Add selected colors to the custom colors section.
 - [ ] Add more tests.
 - [ ] Finalize tests.
-- [x] Release stable version 2.0.0
+- [x] Release the stable version 2.0.0
 - [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - [x] Add a simpler optional async dialog picker function, that returns selected color.
 - [x] Add support for colors with opacity or alpha.
 - [x] Improve copy/paste feature.
 - [x] Version 2.0.0-nullsafety.0: Add null safe version.
-- [x] Version 1.1.1: Add first set of tests for the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
+- [x] Version 1.1.1: Add first tests of the ColorPicker, so far only unit tests for ColorTools, more tests will be added later. ColorTools has 4694 tests.
 - [x] Publish version 1.0.0 on pub.dev.
 - [x] Release version 1.0.0.
 - [x] Add "name that color" function that can give a name to "any" color in English.
-- [x] For the color wheel picker, add text input to get a given color based on entered HEX code.
+- [x] For the color-wheel picker, add text input to get a given color based on entered HEX code.
 - [x] Fix doc images that show up OK in GitHub readme.md, but not on pub.dev.
 - [x] Review and correct documentation mistakes and typos, first pass anyway.
 - [x] Review and update the API.

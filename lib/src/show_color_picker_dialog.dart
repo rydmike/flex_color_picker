@@ -1,3 +1,5 @@
+// ignore_for_file: comment_references
+
 part of 'color_picker.dart';
 
 /// Define a color picker, show its dialog and wait for it to return a color.
@@ -600,6 +602,21 @@ Future<Color> showColorPickerDialog(
   /// Offset anchorPoint for the dialog.
   Offset? anchorPoint,
 
+  /// The [transitionBuilder] argument is used to define how the route
+  /// arrives on and leaves off the screen.
+  ///
+  /// If this transition is not specified, the default Material platform
+  /// transition builder for [showDialog] is used.
+  RouteTransitionsBuilder? transitionBuilder,
+
+  /// The [transitionDuration] argument is used to determine how long it takes
+  /// for the route to arrive on or leave off the screen.
+  ///
+  /// It only has any effect when a custom `transitionBuilder`is used.
+  ///
+  /// This argument defaults to 200 milliseconds.
+  Duration transitionDuration = const Duration(milliseconds: 200),
+
   /// You can provide BoxConstraints to constrain the size of the dialog.
   ///
   /// You might want to do this at least for the height, otherwise
@@ -694,6 +711,8 @@ Future<Color> showColorPickerDialog(
     useSafeArea: useSafeArea,
     routeSettings: routeSettings,
     anchorPoint: anchorPoint,
+    transitionBuilder: transitionBuilder,
+    transitionDuration: transitionDuration,
     constraints: constraints,
   ))) {
     selectedColor = color;
