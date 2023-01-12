@@ -112,6 +112,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   late double colorSaturation;
   late double colorValue;
 
+  // Previous widget color value, stored to avoid double call in onEnd.
+  late Color previousColor;
+
   // Used to set focus to the Focus() we wrap around our custom paint.
   late FocusNode _focusNode;
 
@@ -119,6 +122,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   void initState() {
     super.initState();
     colorHue = color.hue;
+    previousColor = widget.color;
     colorSaturation = color.saturation;
     colorValue = color.value;
     _focusNode = FocusNode();
@@ -154,6 +158,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       if (color.value != colorValue) {
         colorValue = color.value;
       }
+    }
+    if (oldWidget.color != widget.color) {
+      previousColor = widget.color;
     }
   }
 
@@ -298,8 +305,10 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // We are ending the dragging operation, call the onChangeEnd callback
     // with the color we ended up with.
     widget.onChangeEnd?.call(widget.color);
-    // We have to call onChanged once more with final value as well.
-    widget.onChanged(widget.color);
+    // We have to call onChanged once more with final value as well,
+    // but only if it has changed internally since last call, otherwise
+    // we have already called it once before with that value.
+    if (widget.color != previousColor) widget.onChanged(widget.color);
   }
 
   @override

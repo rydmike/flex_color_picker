@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+
+## 3.0.1
+
+**Jan 12, 2023**
+
+**FIX**
+
+* The `onColorChanged` was called twice if just clicking on the wheel color picker's wheel or square to set a new color value via a single click. This fixes it, and such clicks now only generate one `onColorChanged` call-back. Dragging on the wheel and square still generate `onColorChanged` call-backs during the entire drag process. To get callbacks just at start or end of drags, use `onColorChangeStart` and `onColorChangeEnd` as before. 
+
 ## 3.0.0
 
 **Nov 23, 2022**
