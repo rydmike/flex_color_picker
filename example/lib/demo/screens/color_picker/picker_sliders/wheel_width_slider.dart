@@ -20,7 +20,7 @@ class WheelWidthSlider extends ConsumerWidget {
           min: 4,
           max: 50,
           divisions: 50 - 4,
-          label: ref.read(wheelWidthPod).floor().toString(),
+          label: ref.watch(wheelWidthPod).floor().toString(),
           value: ref.watch(wheelWidthPod),
           onChanged: (double value) =>
               ref.read(wheelWidthPod.notifier).state = value,

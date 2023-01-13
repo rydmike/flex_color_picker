@@ -20,7 +20,7 @@ class PaddingSlider extends ConsumerWidget {
         subtitle: Slider(
           max: 40,
           divisions: 40,
-          label: ref.read(paddingPod).floor().toString(),
+          label: ref.watch(paddingPod).floor().toString(),
           value: ref.watch(paddingPod),
           onChanged: (double value) =>
               ref.read(paddingPod.notifier).state = value,

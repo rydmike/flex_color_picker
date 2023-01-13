@@ -24,7 +24,7 @@ class ItemSizeSlider extends ConsumerWidget {
           min: _pickItemMinSize,
           max: _pickItemMaxSize,
           divisions: (_pickItemMaxSize - _pickItemMinSize).floor(),
-          label: ref.read(sizePod).floor().toString(),
+          label: ref.watch(sizePod).floor().toString(),
           value: ref.watch(sizePod.notifier).state,
           onChanged: (double value) {
             if (value / 2 < ref.read(borderRadiusPod)) {

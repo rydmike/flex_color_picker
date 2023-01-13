@@ -19,7 +19,7 @@ class RunSpacingSlider extends ConsumerWidget {
         subtitle: Slider(
             max: 25,
             divisions: 25,
-            label: ref.read(runSpacingPod).floor().toString(),
+            label: ref.watch(runSpacingPod).floor().toString(),
             value: ref.watch(runSpacingPod),
             onChanged: (double value) =>
                 ref.read(runSpacingPod.notifier).state = value),

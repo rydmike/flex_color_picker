@@ -20,7 +20,7 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
           min: 12,
           max: 30,
           divisions: 30 - 12,
-          label: ref.read(opacityThumbRadiusPod).floor().toString(),
+          label: ref.watch(opacityThumbRadiusPod).floor().toString(),
           value: ref.watch(opacityThumbRadiusPod),
           onChanged: (double value) =>
               ref.read(opacityThumbRadiusPod.notifier).state = value,

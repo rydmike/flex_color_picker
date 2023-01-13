@@ -11,7 +11,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double? usedOpacityTrackWidth;
-    final double trackWidth = ref.read(opacityTrackWidthPod);
+    final double trackWidth = ref.watch(opacityTrackWidthPod);
 
     if (trackWidth >= 150 && trackWidth < 700) {
       usedOpacityTrackWidth = trackWidth;

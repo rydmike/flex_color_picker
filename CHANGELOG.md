@@ -3,6 +3,14 @@
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
 
+## 3.0.2
+
+**Jan 13, 2023**
+
+**FIX**
+ 
+* Fixed the color picker item size Slider in the Web demo app. No changes to the package.
+
 ## 3.0.1
 
 **Jan 12, 2023**

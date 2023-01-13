@@ -19,7 +19,7 @@ class SpacingSlider extends ConsumerWidget {
         subtitle: Slider(
           max: 25,
           divisions: 25,
-          label: ref.read(spacingPod).floor().toString(),
+          label: ref.watch(spacingPod).floor().toString(),
           value: ref.watch(spacingPod),
           onChanged: (double value) =>
               ref.read(spacingPod.notifier).state = value,

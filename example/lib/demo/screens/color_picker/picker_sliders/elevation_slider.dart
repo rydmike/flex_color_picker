@@ -19,7 +19,7 @@ class ElevationSlider extends ConsumerWidget {
         subtitle: Slider(
           max: 16,
           divisions: 16,
-          label: ref.read(elevationPod).floor().toString(),
+          label: ref.watch(elevationPod).floor().toString(),
           value: ref.watch(elevationPod),
           onChanged: (double value) =>
               ref.read(elevationPod.notifier).state = value,

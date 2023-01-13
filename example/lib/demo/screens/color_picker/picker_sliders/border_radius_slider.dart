@@ -19,7 +19,7 @@ class BorderRadiusSlider extends ConsumerWidget {
         subtitle: Slider(
           max: ref.watch(sizePod) / 2,
           divisions: (ref.read(sizePod) / 2).floor(),
-          label: ref.read(borderRadiusPod).floor().toString(),
+          label: ref.watch(borderRadiusPod).floor().toString(),
           value: ref.watch(borderRadiusPod),
           onChanged: (double value) =>
               ref.read(borderRadiusPod.notifier).state = value,

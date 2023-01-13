@@ -20,7 +20,7 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
           min: 0,
           max: 20,
           divisions: 20,
-          label: ref.read(wheelSquarePaddingPod).floor().toString(),
+          label: ref.watch(wheelSquarePaddingPod).floor().toString(),
           value: ref.watch(wheelSquarePaddingPod),
           onChanged: (double value) =>
               ref.read(wheelSquarePaddingPod.notifier).state = value,

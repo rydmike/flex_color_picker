@@ -20,7 +20,7 @@ class WheelSquareBorderRadiusSlider extends ConsumerWidget {
           min: 0,
           max: 16,
           divisions: 16,
-          label: ref.read(wheelSquareBorderRadiusPod).floor().toString(),
+          label: ref.watch(wheelSquareBorderRadiusPod).floor().toString(),
           value: ref.watch(wheelSquareBorderRadiusPod),
           onChanged: (double value) =>
               ref.read(wheelSquareBorderRadiusPod.notifier).state = value,

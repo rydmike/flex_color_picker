@@ -19,7 +19,7 @@ class ColumnSpacingSlider extends ConsumerWidget {
         subtitle: Slider(
           max: 40,
           divisions: 40,
-          label: ref.read(columnSpacingPod).floor().toString(),
+          label: ref.watch(columnSpacingPod).floor().toString(),
           value: ref.watch(columnSpacingPod),
           onChanged: (double value) =>
               ref.read(columnSpacingPod.notifier).state = value,
