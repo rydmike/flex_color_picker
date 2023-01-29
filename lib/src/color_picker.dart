@@ -1,5 +1,3 @@
-// ignore_for_file: comment_references
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +23,8 @@ import 'widgets/shade_colors.dart';
 import 'widgets/tonal_palette_colors.dart';
 
 part 'show_color_picker_dialog.dart';
+
+// ignore_for_file: comment_references
 
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
@@ -706,7 +706,6 @@ class ColorPicker extends StatefulWidget {
   Future<bool> showPickerDialog(
     /// The dialog requires a BuildContext.
     BuildContext context, {
-
     /// Title of the color picker dialog, often omitted in favor of using a
     /// [title] and/or [heading] already defined in the [ColorPicker].
     Widget? title,

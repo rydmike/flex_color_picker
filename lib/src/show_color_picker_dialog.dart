@@ -10,7 +10,6 @@ Future<Color> showColorPickerDialog(
 
   /// The active color selection when the color picker is created.
   Color color, {
-
   /// A [ColorPickerType] to bool map. Defines which pickers are enabled in the
   /// color picker's sliding selector and thus available as color pickers.
   ///

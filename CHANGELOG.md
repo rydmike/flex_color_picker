@@ -2,6 +2,14 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.0.3
+
+**Jan 30, 2023**
+
+**FIX**
+
+* Dart format and analyzer updates for Flutter 3.7.0.
+* Add example screenshots to pubspec.yaml.
 
 ## 3.0.2
 
