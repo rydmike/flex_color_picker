@@ -167,9 +167,6 @@ void main() {
           ),
         ),
       );
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -253,9 +250,6 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      // Wait for 200 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-
       expect(find.byWidgetPredicate(customPicker, skipOffstage: false),
           findsOneWidget);
     });
@@ -323,9 +317,6 @@ void main() {
           ),
         ),
       );
-      // Wait for 200 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -409,8 +400,6 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -505,9 +494,6 @@ void main() {
           ),
         ),
       );
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -612,8 +598,6 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -705,9 +689,6 @@ void main() {
           ),
         ),
       );
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -812,8 +793,6 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -905,9 +884,6 @@ void main() {
           ),
         ),
       );
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -1012,8 +988,6 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      // Wait for 100 milliseconds, enough for the opacity image to load.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
   });

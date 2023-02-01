@@ -1079,6 +1079,23 @@ void main() {
       });
     }
   });
+  //
+  // Test case where named color not found.
+  //
+  // No color value I can throw at it seems to generate the error case, where
+  // does not find a color. Commenting it out for now.
+  //
+  // const Color decodeColor = Color(-200000000000000);
+  // group('Test nameThatColor function with exact color code match', () {
+  //   test(
+  //       'ColorTools.nameThatColor Color(0x00000000) '
+  //       'has exact name "Color [$decodeColor] not found!"', () {
+  //     expect(
+  //       ColorTools.nameThatColor(decodeColor),
+  //       'Color [$decodeColor] not found!',
+  //     );
+  //   });
+  // });
 }
 
 // A custom color code modifier that changes the RGB value up a bit, but not

@@ -4,11 +4,11 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.1.0
 
-**Jan 31, 2023**
+**Feb 1, 2023**
 
 **CHANGE**
 
-* Requires minimum Flutter 3.7.0 and Dart 2.19.0 that is used by Flutter 3.17. Version 3.7.0 of Flutter broke the nullable `Overlay.of` API, the new API is `Overlay.maybeOf`. This forced a new release of **FlexColorPicker** that requires minimum Flutter 3.7 that breaks compatibility with older versions of Flutter.
+* Requires minimum Flutter 3.7.0 and Dart 2.19.0 that is used by Flutter 3.17. Version 3.7.0 of Flutter broke the nullable `Overlay.of` API. The new API is `Overlay.maybeOf`. This forced a new release of **FlexColorPicker** that requires minimum Flutter 3.7 that breaks compatibility with older versions of Flutter.
 
 **FIX**
 

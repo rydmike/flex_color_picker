@@ -265,4 +265,71 @@ void main() {
       expect(blueTonals[6], equals(const Color(0xff007bcc)));
     });
   });
+
+  //****************************************************************************
+  // FlexColorExtensions unit tests.
+  //
+  // Color.lighten function, reference value and edge cases tests.
+  //****************************************************************************
+  group('FCE2: WITH Color extension Color.lighten.', () {
+    const Color col = Color(0xFF6200EE);
+    const Color white = Color(0xFFFFFFFF);
+    const Color black = Color(0xFF000000);
+    // const Color? nullColor = null;
+    test('FCE2.01: GIVEN lighten() EXPECT default lighten(10).', () {
+      // ignore: avoid_redundant_argument_values
+      expect(col.lighten(), col.lighten(10));
+    });
+    test('FCE2.02: GIVEN lighten(0) EXPECT no change.', () {
+      expect(col.lighten(0), col);
+    });
+    test('FCE2.03: GIVEN lighten(<0) EXPECT no change.', () {
+      expect(col.lighten(-1), col);
+    });
+    test('FCE2.04: GIVEN lighten(100) EXPECT White.', () {
+      expect(col.lighten(100), white);
+    });
+    test('FCE2.05: GIVEN lighten(>100) EXPECT White.', () {
+      expect(col.lighten(101), white);
+    });
+    test('FCE2.06: GIVEN $col.lighten(20) EXPECT Color(0xff9b55ff).', () {
+      expect(col.lighten(20), const Color(0xff9b55ff));
+    });
+    test('FCE2.07: GIVEN $black.lighten(1) EXPECT Color(0xff9b55ff).', () {
+      expect(black.lighten(1), const Color(0xff030303));
+    });
+  });
+
+  //****************************************************************************
+  // FlexColorExtensions unit tests.
+  //
+  // Color.darken function, reference value and edge cases tests.
+  //****************************************************************************
+  group('FCE3: WITH Color extension Color.darken ', () {
+    const Color col = Color(0xFF6200EE);
+    const Color white = Color(0xFFFFFFFF);
+    const Color black = Color(0xFF000000);
+    test('FCE3.01: GIVEN darken() EXPECT default darken(10).', () {
+      // ignore: avoid_redundant_argument_values
+      expect(col.darken(), col.darken(10));
+    });
+    test('FCE3.02: GIVEN darken(0) EXPECT no change.', () {
+      expect(col.darken(0), col);
+    });
+    test('FCE3.03: GIVEN darken(<0) EXPECT no change.', () {
+      expect(col.darken(-1), col);
+    });
+    test('FCE3.04: GIVEN darken(100) EXPECT black.', () {
+      expect(col.darken(100), black);
+    });
+    test('FCE3.05: GIVEN darken(>100) EXPECT black.', () {
+      expect(col.darken(101), black);
+    });
+    test('FCE3.06: GIVEN $col.darken(20) EXPECT Color(0xff380088).', () {
+      expect(col.darken(20), const Color(0xff380088));
+    });
+    test('FCE3.08: GIVEN $white.darken(1) EXPECT Color(0xfffcfcfc).', () {
+      expect(white.darken(1), const Color(0xfffcfcfc));
+    });
+  });
 }
