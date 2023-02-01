@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -1546,8 +1548,8 @@ class _ColorPickerState extends State<ColorPicker> {
             useSecondaryOnDesktopLongOnDeviceAndWeb:
                 widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb,
             onSelected: (CopyPasteCommands? value) {
-              if (value == CopyPasteCommands.copy) _setClipboard();
-              if (value == CopyPasteCommands.paste) _getClipboard();
+              if (value == CopyPasteCommands.copy) unawaited(_setClipboard());
+              if (value == CopyPasteCommands.paste) unawaited(_getClipboard());
             },
             onOpen: () {
               // If we were on the wheel when the menu got opened, it's
@@ -2132,7 +2134,7 @@ class _ColorPickerState extends State<ColorPicker> {
               (isModifierPressed &&
                   event.logicalKey == LogicalKeyboardKey.keyV)) &&
           widget.copyPasteBehavior.ctrlV) {
-        _getClipboard();
+        unawaited(_getClipboard());
       }
       // If logical key is copy or modifier+C and we used ctrlC copy behavior,
       // we set the current color to the clipboard data.
@@ -2140,7 +2142,7 @@ class _ColorPickerState extends State<ColorPicker> {
               (isModifierPressed &&
                   event.logicalKey == LogicalKeyboardKey.keyC)) &&
           widget.copyPasteBehavior.ctrlC) {
-        _setClipboard();
+        unawaited(_setClipboard());
       }
     }
   }
@@ -2216,12 +2218,11 @@ class _ColorPickerState extends State<ColorPicker> {
           if (!mounted) return;
           // Get the Material localizations.
           final MaterialLocalizations translate =
-              // ignore:
               MaterialLocalizations.of(context);
           snackBarMessage = '${translate.pasteButtonLabel}: '
               '${translate.invalidDateFormatLabel}';
         }
-        // Wait 300ms, if we show it at once, it feel to fast.
+        // Wait 300ms, if we show it at once, it feels to fast.
         await Future<void>.delayed(const Duration(milliseconds: 300));
         // The new experimental lint rules "use_build_context_synchronously"
         // warns us to check if context is still mounted if we have

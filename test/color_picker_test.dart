@@ -126,8 +126,7 @@ void main() {
             },
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-            // enableOpacity: true,
+            enableOpacity: true,
             actionButtons: const ColorPickerActionButtons(
               okButton: true,
               closeButton: true,
@@ -168,6 +167,8 @@ void main() {
           ),
         ),
       );
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
@@ -193,8 +194,7 @@ void main() {
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-          widget.enableOpacity == false &&
+          widget.enableOpacity == true &&
           widget.opacityTrackHeight == 36 &&
           widget.opacityTrackWidth == null &&
           widget.opacityThumbRadius == 16 &&
@@ -253,7 +253,11 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
-      expect(find.byWidgetPredicate(customPicker), findsOneWidget);
+      // Wait for 200 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+
+      expect(find.byWidgetPredicate(customPicker, skipOffstage: false),
+          findsOneWidget);
     });
     //
     // *************************************************************************
@@ -278,8 +282,7 @@ void main() {
             },
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-            // enableOpacity: true,
+            enableOpacity: true,
             actionButtons: const ColorPickerActionButtons(
               okButton: true,
               closeButton: true,
@@ -320,6 +323,8 @@ void main() {
           ),
         ),
       );
+      // Wait for 200 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
@@ -345,8 +350,7 @@ void main() {
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-          widget.enableOpacity == false &&
+          widget.enableOpacity == true &&
           widget.opacityTrackHeight == 36 &&
           widget.opacityTrackWidth == null &&
           widget.opacityThumbRadius == 16 &&
@@ -405,6 +409,8 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -432,8 +438,7 @@ void main() {
             },
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-            // enableOpacity: true,
+            enableOpacity: true,
             enableTonalPalette: true,
             opacityTrackHeight: 40,
             opacityThumbRadius: 25,
@@ -500,7 +505,8 @@ void main() {
           ),
         ),
       );
-
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
@@ -526,8 +532,7 @@ void main() {
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-          widget.enableOpacity == false &&
+          widget.enableOpacity == true &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -607,6 +612,8 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -633,8 +640,7 @@ void main() {
             },
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-            // enableOpacity: true,
+            enableOpacity: true,
             opacityTrackHeight: 40,
             opacityThumbRadius: 25,
             opacityTrackWidth: 300,
@@ -699,7 +705,8 @@ void main() {
           ),
         ),
       );
-
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
@@ -725,8 +732,7 @@ void main() {
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-          widget.enableOpacity == false &&
+          widget.enableOpacity == true &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -806,6 +812,8 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
@@ -832,8 +840,7 @@ void main() {
             },
             includeIndex850: true,
             crossAxisAlignment: CrossAxisAlignment.start,
-            // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-            // enableOpacity: true,
+            enableOpacity: true,
             opacityTrackHeight: 40,
             opacityThumbRadius: 25,
             opacityTrackWidth: 300,
@@ -898,7 +905,8 @@ void main() {
           ),
         ),
       );
-
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       //
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
@@ -924,8 +932,7 @@ void main() {
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          // TODO(rydmike): Figure out why opacity PNG does not load in tests.
-          widget.enableOpacity == false &&
+          widget.enableOpacity == true &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -1005,6 +1012,8 @@ void main() {
                 ColorPickerType.wheel: 'Wheel',
               } &&
           widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      // Wait for 100 milliseconds, enough for the opacity image to load.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
   });

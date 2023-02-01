@@ -99,6 +99,7 @@ class OpacitySlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: FutureBuilder<ui.Image>(
+        // ignore: discarded_futures
         future: getTrackImage(),
         builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
           if (!snapshot.hasData) return const SizedBox.shrink();

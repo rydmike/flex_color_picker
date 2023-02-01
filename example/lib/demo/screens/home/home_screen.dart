@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,13 +123,13 @@ class HomeScreen extends StatelessWidget {
 
             OutlinedButton(
               onPressed: () {
-                Navigator.push<Object>(
+                unawaited(Navigator.push<Object>(
                   context,
                   MaterialPageRoute<Object>(
                     builder: (BuildContext context) =>
                         const ColorPickerScreen(),
                   ),
-                );
+                ));
               },
               child: Padding(
                 padding: const EdgeInsets.all(7),

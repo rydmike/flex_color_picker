@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +32,7 @@ class PodsObserver extends ProviderObserver {
               '  old value: $previousValue');
         }
         // Store the new value in our Hive box.
-        hiveStore.put(provider.name, newValue);
+        unawaited(hiveStore.put(provider.name, newValue));
       }
     }
   }
