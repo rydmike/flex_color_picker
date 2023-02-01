@@ -11,7 +11,7 @@
 name: Test
 on:
   push:
-    branches: [master]
+    branches: [none]
     paths-ignore:
       - "**.md"
 
@@ -58,4 +58,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
-      

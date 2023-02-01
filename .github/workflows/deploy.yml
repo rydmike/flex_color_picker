@@ -69,11 +69,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage/lcov.info
 
-      # - name: Install rpl (Eliminated need with: --base-href "/flexcolorpicker/")
-      #  run: sudo apt-get install rpl
-
       # Default Example - Make a test web build of it too, not deployed.
-
       - name: DEFAULT EXAMPLE START BUILD - Flutter clean before build
         run: flutter clean && cd example && flutter clean
 
@@ -81,7 +77,6 @@ jobs:
         run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/main.dart
 
       # Web Build and deploy
-
       - name: WEB EXAMPLE START BUILD - Flutter clean before build
         run: flutter clean && cd example && flutter clean
 
@@ -98,4 +93,3 @@ jobs:
           destination_repo: 'rydmike/rydmike.github.io'
           user_email: 'm.rydstrom@gmail.com'
           user_name: 'rydmike'
-
