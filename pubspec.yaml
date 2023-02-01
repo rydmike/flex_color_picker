@@ -5,6 +5,18 @@ homepage: https://github.com/rydmike/flex_color_picker
 repository: https://github.com/rydmike/flex_color_picker
 issue_tracker: https://github.com/rydmike/flex_color_picker/issues
 documentation: https://github.com/rydmike/flex_color_picker/blob/master/README.md
+screenshots:
+  - description: 'Home screen of the FlexColorPicker web demo.'
+    path: example/screenshots/wed_demo_home.png
+  - description: 'Picking a primary swatch color with FlexColorPicker.'
+    path: example/screenshots/primary_swatch_picker.png
+  - description: 'Picking a custom swatch color with FlexColorPicker.'
+    path: example/screenshots/custom_swatch_picker.png
+  - description: 'Picking an arbitrary color with FlexColorPicker, you can also enter its hex-code.'
+    path: example/screenshots/wheel_picker_light.png
+  - description: 'Picking an arbitrary color with FlexColorPicker, in dark mode.'
+    path: example/screenshots/wheel_picker_dark.png
+
 environment:
   sdk: '>=2.19.0-0 <4.0.0'
   flutter: '>=3.7.0'
