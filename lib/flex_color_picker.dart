@@ -10,3 +10,4 @@ export 'src/color_wheel_picker.dart' show ColorWheelPicker;
 export 'src/models/color_picker_action_buttons.dart';
 export 'src/models/color_picker_copy_paste_behavior.dart';
 export 'src/models/color_picker_type.dart';
+export 'src/widgets/color_code_field.dart';
