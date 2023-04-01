@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,12 +8,11 @@ import '../models/color_picker_copy_paste_behavior.dart';
 import '../universal_widgets/dry_intrisinic.dart';
 
 /// Color code entry and display field used by the color picker.
-///
-/// Not library exposed, private to the library.
+@immutable
 class ColorCodeField extends StatefulWidget {
   /// Default const constructor.
   const ColorCodeField({
-    Key? key,
+    super.key,
     required this.color,
     this.readOnly = false,
     required this.onColorChanged,
@@ -27,7 +24,7 @@ class ColorCodeField extends StatefulWidget {
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.enableTooltips = true,
     this.shouldUpdate = false,
-  }) : super(key: key);
+  });
 
   /// Current color value for the field.
   final Color color;
