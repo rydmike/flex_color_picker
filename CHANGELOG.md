@@ -8,7 +8,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **NEW**
 
-* Based on user request and PR  exposed widget `ColorCodeField` as a part of package public API, so it can be used externally as well. The `ColorCodeField` is the color code entry and display field used by the `ColorPicker`. 
+* Based on user request, exposed widget `ColorCodeField` as a part of the package's public API. It can now be used externally as well. The `ColorCodeField` is the color code entry and display field used by the `ColorPicker`. 
 
 ## 3.1.0
 
@@ -102,7 +102,8 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **CHANGE**
 
-* This is a dev release for those that need to work with both master channel, where Flutter master 
+* This is a dev release for those that need to work with both stable and master channel, where 
+  Flutter master 
   SDK depends on material_color_utilities 0.2.0 and 3.3.0 beta, pre for upcoming Flutter 3.3.0 
   stable, use material_color_utilities 0.1.5. It uses a controversial package constraint of:
   `material_color_utilities: '>=0.1.5 <=0.2.0'`. Using older versions 0.1.3 and 0.1.4 in theory 
@@ -126,7 +127,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   This dev release is required to use Flutter SDK **master** 3.1.0-0.0.pre.2111 or later,
   that uses material_color_utilities 0.2.0.  
 
-* For other (older) versions of Flutter SDK you can use package version 2.5.0 that has a 
+* For other (older) versions of Flutter SDK, you can use package version 2.5.0 that has a 
   material_color_utilities version constraint of ^0.1.3.
 
 * This release also updates Dart SDK constraint to '>=2.17.0 <3.0.0' and has Flutter listed as
@@ -143,7 +144,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **NEW**
 
-* Added new features to add padding between the wheel picker's shade square and hue wheel,
+* Added new features to add padding between the wheel-picker's shade square and hue wheel,
   and to adjust the border radius on the shade square.
   Addresses enhancement request [#47 "Square padding"](https://github.com/rydmike/flex_color_picker/issues/47).
   The new features are available via `ColorPicker` properties `wheelSquarePadding` and `wheelSquareBorderRadius`.
@@ -169,7 +170,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   The feature is enabled via the `ColorPickerActionButtons` configuration
   and its new property `dialogActionOrder`.
 
-* By default, the picker tries to set focus to its own widgets when it is
+* By default, the color picker tries to set focus to its own internal widgets when it is
   created. It does this when either [ctrlC] or [ctrlV] are enabled in
   order for the keyboard listener to be able to react to copy-paste events
   even if no control on the widget has been focused yet.
@@ -225,7 +226,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 * Fix for nullable/none-nullable difference for Flutter `IconButton` between Flutter
   version 2.10.0 and earlier versions Flutter 2.8.1, where `iconSize` is nullable in
-  Flutter 2.10.x, but not in  Flutter 2.8.1. See issues [report #40](https://github.com/rydmike/flex_color_picker/issues/40) and [PR #41](https://github.com/rydmike/flex_color_picker/pull/41).
+  Flutter 2.10.x, but not in Flutter 2.8.1. See issues [report #40](https://github.com/rydmike/flex_color_picker/issues/40) and [PR #41](https://github.com/rydmike/flex_color_picker/pull/41).
 
 
 ## 2.3.0
@@ -269,7 +270,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   The Web demo example requires at least Flutter 2.10.0 to be built.
   It uses ColorScheme properties in its theme that were not available
   earlier and removed in 2.10.0 deprecated color properties from its theme.
-  The color picker package itself, still has the same version requirement as before
+  The color picker package itself still has the same version requirement as before
   of Dart SDK: '>=2.14.0 < 3.0.0'.
 
 ## 2.2.0
@@ -280,7 +281,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 * Updated dependencies for the web demo, big change was Riverpod to use v1.0.0.
 * Lint rule updates.
 * Bump Dart SDK requirement to 2.14.
-* Build and publish WEB demo with the updated version using Flutter 2.5.3.
+* Build and publish the WEB demo with the updated version using Flutter 2.5.3.
 
 ## 2.1.2
 
@@ -353,7 +354,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   web/desktop use-cases, it should certainly be supported. This update adds support for it. The picker only
   updates if the externally provided `color` constructor property differs from its internally kept color
   state. Finding the right picker, computing its swatches, is a bit demanding, but it seems to work fluidly,
-  even when remote controlling the wheel and sliders interactively.
+  even when remote-controlling the wheel and sliders interactively.
 
 * **Web example**: Updated the Web example to also show the "remote control" of the on-screen color picker. A
   remote control widget with a few color boxes, that you can click on to update its colors externally was added.
@@ -535,7 +536,7 @@ example folder, in "example/lib/demo/main.dart".
   corresponding prefix in the color code display/edit field when it is enabled.
 
   Paste supports parsing multiple RGB color string formats. It automatically detects what format is used and auto
-  parses to correct Flutter/Dart color value. You can e.g., paste string formatted as #RRGGBB RRGGBB #AARRGGBB
+  parses to correct Flutter/Dart color value. You can, for example, paste string formatted as #RRGGBB RRGGBB #AARRGGBB
   AARRGGBB #RGB RGB or 0xAARRGGBB, partial color string values also work. You can also activate
   a snack bar that informs the users if they paste color strings in an unsupported RGB string format into the
   color picker.
@@ -551,7 +552,7 @@ example folder, in "example/lib/demo/main.dart".
     * `recentColors` a list with current recent color, defaults to empty. You can store the last list
       and use this list to restore the previous recent colors list.
     * `onRecentColorsChanged` optional value callback that returns a copy the current list of recently
-      used colors. Use it store a copy of the recent colors in order to be able to restore it later.
+      used colors. Use it to store a copy of the recent colors in order to be able to restore it later.
 
  *See API documentation for more information.*
 
@@ -580,7 +581,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
   changed to a Row in version 1.1.2, to be used again.
 * The almost full API-configurable Web demo is included in the package in
   "example/lib/demo/main.dart" together with the previous default example in "example/lib/main.dart".
-  Previously this Web example was in a separate GitHub repository. The example was updated to make it
+  Previously, this Web example was in a separate GitHub repository. The example was updated to make it
   responsive, to offer better usability on Web builds.
 
 ## 1.1.5
@@ -614,7 +615,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 **December 5, 2020**
 
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687
-When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling it is typically not needed.
+When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the added benefit of breaking the color code display+input field, and the rarely used int value, into two rows in case a large font is used in a narrow view when they are both configured to be shown. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling, it is typically not needed.
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
 ## 1.1.1
@@ -695,7 +696,7 @@ Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_
 - [ ] Finalize tests.
 - [x] Release the stable version 2.0.0
 - [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.
-- [x] Add a simpler optional async dialog picker function, that returns selected color.
+- [x] Add a simpler optional async dialog picker function that returns selected color.
 - [x] Add support for colors with opacity or alpha.
 - [x] Improve copy/paste feature.
 - [x] Version 2.0.0-nullsafety.0: Add null safe version.
