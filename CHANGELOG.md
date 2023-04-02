@@ -2,6 +2,14 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.2.0
+
+**Apr 2, 2023**
+
+**NEW**
+
+* Based on user request and PR  exposed widget `ColorCodeField` as a part of package public API, so it can be used externally as well. The `ColorCodeField` is the color code entry and display field used by the `ColorPicker`. 
+
 ## 3.1.0
 
 **Feb 1, 2023**

@@ -7,7 +7,7 @@ import '../models/color_picker_action_buttons.dart';
 import '../models/color_picker_copy_paste_behavior.dart';
 import '../universal_widgets/dry_intrisinic.dart';
 
-/// Color code entry and display field used by the color picker.
+/// Color code entry and display field used by the FlexColorPicker.
 @immutable
 class ColorCodeField extends StatefulWidget {
   /// Default const constructor.
@@ -29,7 +29,9 @@ class ColorCodeField extends StatefulWidget {
   /// Current color value for the field.
   final Color color;
 
-  /// Is in read only mode, we should not be able to select either.
+  /// Is in read only mode.
+  ///
+  /// Default to false.
   final bool readOnly;
 
   /// Color code of the entered color string is returned back in this callback.
