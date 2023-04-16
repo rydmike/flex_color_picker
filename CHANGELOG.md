@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.2.1
+
+**Apr 16, 2023**
+
+- Changed to using `flex_seed_scheme: ^1.2.4` that depends on  `material_color_utilities` with version constraint set to `>=0.2.0 <0.4.0` from `^0.2.0`.
+  - This change enables the package to be used on current Flutter **stable** 3.7 versions, as well as the latest 3.10.x versions on channels **beta** and **master**. It will also work with the next stable Flutter release after 3.7.
+- Updated default example to use Material 3.
+
+
 ## 3.2.0
 
 **Apr 2, 2023**
