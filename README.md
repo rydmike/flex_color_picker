@@ -130,22 +130,6 @@ application.
 The source code for the Web demo, which is a bit more elaborate example than examples normally are, is also bundled with 
 the package source code in the "example/lib/demo" folder.
 
-> **IMPORTANT:** If the color picker's opacity slider feature is used on WEB builds `enableOpacity: true`, then you 
-> may prefer using the SKIA **canvaskit** renderer on builds with older Flutter versions. The opacity slider 
-> uses `ImageShader`, a Flutter API that is not available on **html** builds, at least not in the stable 2.2.1 version
-> 
-> ```
-> flutter run -d chrome --web-renderer canvaskit
-> flutter build web --web-renderer canvaskit
-> ```
-> For more information, see https://flutter.dev/docs/development/tools/web-renderers
->
-> **UPDATE Feb 18, 2022:** When using Flutter stable version 2.10.1, the `ImageShader` API
-> seems to be available and working also when using --web-renderer html, build. However, if you
-> run into issues with the opacity slider on web builds, prefer using canvaskit instead of auto or
-> html renderer when you use the `ColorPicker` in web apps and enable the opacity slider.
-
-
 The Web demo has a responsive view that expands into maximum four separately scrollable columns. The columns contain
 a massive amount of controls that you can use to adjust the color picker's settings. On a 1080p desktop screen,
 you can see most of the settings at the same time as the color picker. With this, you can test the settings and see their
