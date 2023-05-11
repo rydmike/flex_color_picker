@@ -95,7 +95,7 @@ class ColorWheelPicker extends StatefulWidget {
   final bool shouldRequestsFocus;
 
   @override
-  _ColorWheelPickerState createState() => _ColorWheelPickerState();
+  State<ColorWheelPicker> createState() => _ColorWheelPickerState();
 }
 
 class _ColorWheelPickerState extends State<ColorWheelPicker> {

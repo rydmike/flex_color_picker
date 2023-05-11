@@ -107,7 +107,7 @@ class ColorIndicator extends StatefulWidget {
   final Color? borderColor;
 
   @override
-  _ColorIndicatorState createState() => _ColorIndicatorState();
+  State<ColorIndicator> createState() => _ColorIndicatorState();
 }
 
 class _ColorIndicatorState extends State<ColorIndicator> {

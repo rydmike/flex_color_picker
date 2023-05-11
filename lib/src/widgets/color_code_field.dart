@@ -89,7 +89,7 @@ class ColorCodeField extends StatefulWidget {
   final bool shouldUpdate;
 
   @override
-  _ColorCodeFieldState createState() => _ColorCodeFieldState();
+  State<ColorCodeField> createState() => _ColorCodeFieldState();
 }
 
 // Color code display and entry field.

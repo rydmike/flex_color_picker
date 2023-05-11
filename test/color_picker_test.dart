@@ -42,12 +42,12 @@ void main() {
                 ColorPickerType.custom: false,
                 ColorPickerType.wheel: false,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == false &&
+          widget.enableShadesSelection &&
+          !widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.center &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == false &&
+          !widget.enableOpacity &&
           widget.opacityTrackHeight == 36 &&
           widget.opacityTrackWidth == null &&
           widget.opacityThumbRadius == 16 &&
@@ -59,35 +59,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == false &&
+          !widget.hasBorder &&
           widget.borderRadius == null &&
           widget.borderColor == null &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 16 &&
           widget.wheelSquarePadding == 0 &&
           widget.wheelSquareBorderRadius == 4 &&
-          widget.wheelHasBorder == false &&
+          !widget.wheelHasBorder &&
           widget.title == null &&
           widget.heading == null &&
           widget.subheading == null &&
           widget.wheelSubheading == null &&
           widget.recentColorsSubheading == null &&
           widget.opacitySubheading == null &&
-          widget.showMaterialName == false &&
+          !widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == false &&
+          !widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == false &&
-          widget.colorCodeHasColor == false &&
+          !widget.showColorCode &&
+          !widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == false &&
-          widget.showRecentColors == false &&
+          !widget.colorCodeReadOnly &&
+          !widget.showColorValue &&
+          !widget.showRecentColors &&
           widget.maxRecentColors == 5 &&
           widget.recentColors == const <Color>[] &&
           widget.onRecentColorsChanged == null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == null &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==
@@ -186,12 +186,12 @@ void main() {
                 ColorPickerType.custom: true,
                 ColorPickerType.wheel: true,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == true &&
+          widget.enableShadesSelection &&
+          widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == true &&
+          widget.enableOpacity &&
           widget.opacityTrackHeight == 36 &&
           widget.opacityTrackWidth == null &&
           widget.opacityThumbRadius == 16 &&
@@ -209,35 +209,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
           widget.wheelSquarePadding == 4 &&
           widget.wheelSquareBorderRadius == 6 &&
-          widget.wheelHasBorder == true &&
+          widget.wheelHasBorder &&
           widget.title != null &&
           widget.heading != null &&
           widget.subheading != null &&
           widget.wheelSubheading != null &&
           widget.opacitySubheading != null &&
           widget.recentColorsSubheading != null &&
-          widget.showMaterialName == true &&
+          widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == true &&
+          widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == true &&
-          widget.colorCodeHasColor == true &&
+          widget.showColorCode &&
+          widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == true &&
-          widget.showRecentColors == true &&
+          !widget.colorCodeReadOnly &&
+          widget.showColorValue &&
+          widget.showRecentColors &&
           widget.maxRecentColors == 10 &&
           widget.recentColors == const <Color>[Colors.black, Colors.white] &&
           widget.onRecentColorsChanged != null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == Colors.white &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==
@@ -336,12 +336,12 @@ void main() {
                 ColorPickerType.custom: true,
                 ColorPickerType.wheel: true,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == true &&
+          widget.enableShadesSelection &&
+          widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == true &&
+          widget.enableOpacity &&
           widget.opacityTrackHeight == 36 &&
           widget.opacityTrackWidth == null &&
           widget.opacityThumbRadius == 16 &&
@@ -359,35 +359,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
           widget.wheelSquarePadding == 5 &&
           widget.wheelSquareBorderRadius == 0 &&
-          widget.wheelHasBorder == true &&
+          widget.wheelHasBorder &&
           widget.title != null &&
           widget.heading != null &&
           widget.subheading != null &&
           widget.wheelSubheading != null &&
           widget.opacitySubheading != null &&
           widget.recentColorsSubheading != null &&
-          widget.showMaterialName == true &&
+          widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == true &&
+          widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == true &&
-          widget.colorCodeHasColor == true &&
+          widget.showColorCode &&
+          widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == true &&
-          widget.showRecentColors == true &&
+          !widget.colorCodeReadOnly &&
+          widget.showColorValue &&
+          widget.showRecentColors &&
           widget.maxRecentColors == 10 &&
           widget.recentColors == const <Color>[Colors.black, Colors.white] &&
           widget.onRecentColorsChanged != null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == Colors.white &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==
@@ -513,12 +513,12 @@ void main() {
                 ColorPickerType.custom: true,
                 ColorPickerType.wheel: true,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == true &&
+          widget.enableShadesSelection &&
+          widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == true &&
+          widget.enableOpacity &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -557,35 +557,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelSquarePadding == 10 &&
           widget.wheelSquareBorderRadius == 2 &&
           widget.wheelWidth == 32 &&
-          widget.wheelHasBorder == true &&
+          widget.wheelHasBorder &&
           widget.title != null &&
           widget.heading != null &&
           widget.subheading != null &&
           widget.wheelSubheading != null &&
           widget.opacitySubheading != null &&
           widget.recentColorsSubheading != null &&
-          widget.showMaterialName == true &&
+          widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == true &&
+          widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == true &&
-          widget.colorCodeHasColor == true &&
+          widget.showColorCode &&
+          widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == true &&
-          widget.showRecentColors == true &&
+          !widget.colorCodeReadOnly &&
+          widget.showColorValue &&
+          widget.showRecentColors &&
           widget.maxRecentColors == 10 &&
           widget.recentColors == const <Color>[Colors.black, Colors.white] &&
           widget.onRecentColorsChanged != null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == Colors.white &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==
@@ -708,12 +708,12 @@ void main() {
                 ColorPickerType.custom: true,
                 ColorPickerType.wheel: true,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == true &&
+          widget.enableShadesSelection &&
+          widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == true &&
+          widget.enableOpacity &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -752,35 +752,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
           widget.wheelSquarePadding == 0 &&
           widget.wheelSquareBorderRadius == 0 &&
-          widget.wheelHasBorder == true &&
+          widget.wheelHasBorder &&
           widget.title != null &&
           widget.heading != null &&
           widget.subheading != null &&
           widget.wheelSubheading != null &&
           widget.opacitySubheading != null &&
           widget.recentColorsSubheading != null &&
-          widget.showMaterialName == true &&
+          widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == true &&
+          widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == true &&
-          widget.colorCodeHasColor == true &&
+          widget.showColorCode &&
+          widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == true &&
-          widget.showRecentColors == true &&
+          !widget.colorCodeReadOnly &&
+          widget.showColorValue &&
+          widget.showRecentColors &&
           widget.maxRecentColors == 10 &&
           widget.recentColors == const <Color>[Colors.black, Colors.white] &&
           widget.onRecentColorsChanged != null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == Colors.white &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==
@@ -903,12 +903,12 @@ void main() {
                 ColorPickerType.custom: true,
                 ColorPickerType.wheel: true,
               } &&
-          widget.enableShadesSelection == true &&
-          widget.includeIndex850 == true &&
+          widget.enableShadesSelection &&
+          widget.includeIndex850 &&
           widget.crossAxisAlignment == CrossAxisAlignment.start &&
           widget.padding == const EdgeInsets.all(16) &&
           widget.columnSpacing == 8 &&
-          widget.enableOpacity == true &&
+          widget.enableOpacity &&
           widget.opacityTrackHeight == 40 &&
           widget.opacityThumbRadius == 25 &&
           widget.opacityTrackWidth == 300 &&
@@ -947,35 +947,35 @@ void main() {
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&
           widget.elevation == 0 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderRadius == 10 &&
           widget.borderColor == Colors.black &&
           widget.wheelDiameter == 190 &&
           widget.wheelWidth == 32 &&
           widget.wheelSquarePadding == 3.5 &&
           widget.wheelSquareBorderRadius == 3.5 &&
-          widget.wheelHasBorder == true &&
+          widget.wheelHasBorder &&
           widget.title != null &&
           widget.heading != null &&
           widget.subheading != null &&
           widget.wheelSubheading != null &&
           widget.opacitySubheading != null &&
           widget.recentColorsSubheading != null &&
-          widget.showMaterialName == true &&
+          widget.showMaterialName &&
           widget.materialNameTextStyle == null &&
-          widget.showColorName == true &&
+          widget.showColorName &&
           widget.colorNameTextStyle == null &&
-          widget.showColorCode == true &&
-          widget.colorCodeHasColor == true &&
+          widget.showColorCode &&
+          widget.colorCodeHasColor &&
           widget.colorCodeTextStyle == null &&
           widget.colorCodePrefixStyle == null &&
-          widget.colorCodeReadOnly == false &&
-          widget.showColorValue == true &&
-          widget.showRecentColors == true &&
+          !widget.colorCodeReadOnly &&
+          widget.showColorValue &&
+          widget.showRecentColors &&
           widget.maxRecentColors == 10 &&
           widget.recentColors == const <Color>[Colors.black, Colors.white] &&
           widget.onRecentColorsChanged != null &&
-          widget.enableTooltips == true &&
+          widget.enableTooltips &&
           widget.selectedPickerTypeColor == Colors.white &&
           widget.pickerTypeTextStyle == null &&
           widget.pickerTypeLabels ==

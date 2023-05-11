@@ -24,16 +24,16 @@ void main() {
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect == null &&
-          widget.onSelectFocus == true &&
-          widget.isSelected == false &&
-          widget.selectedRequestsFocus == false &&
+          widget.onSelectFocus &&
+          !widget.isSelected &&
+          !widget.selectedRequestsFocus &&
           widget.elevation == 0 &&
           widget.selectedIcon == Icons.check &&
           widget.color == Colors.blue &&
           widget.width == 40 &&
           widget.height == 40 &&
           widget.borderRadius == 10 &&
-          widget.hasBorder == false &&
+          !widget.hasBorder &&
           widget.borderColor == null;
       expect(find.byWidgetPredicate(defaultIndicator), findsOneWidget);
     });
@@ -63,16 +63,16 @@ void main() {
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect != null &&
-          widget.onSelectFocus == false &&
-          widget.isSelected == true &&
-          widget.selectedRequestsFocus == true &&
+          !widget.onSelectFocus &&
+          widget.isSelected &&
+          widget.selectedRequestsFocus &&
           widget.elevation == 2 &&
           widget.selectedIcon == Icons.circle &&
           widget.color == Colors.red &&
           widget.width == 50 &&
           widget.height == 35 &&
           widget.borderRadius == 5 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderColor == Colors.black;
       expect(find.byWidgetPredicate(defaultIndicator), findsOneWidget);
     });

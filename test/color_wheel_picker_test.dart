@@ -36,10 +36,10 @@ void main() {
           widget.wheelWidth == 16 &&
           widget.wheelSquarePadding == 0 &&
           widget.wheelSquareBorderRadius == 4 &&
-          widget.hasBorder == false &&
+          !widget.hasBorder &&
           widget.borderColor == null &&
-          widget.shouldUpdate == false &&
-          widget.shouldRequestsFocus == false;
+          !widget.shouldUpdate &&
+          !widget.shouldRequestsFocus;
       expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
     });
 
@@ -75,10 +75,10 @@ void main() {
           widget.wheelWidth == 20 &&
           widget.wheelSquarePadding == 4 &&
           widget.wheelSquareBorderRadius == 6 &&
-          widget.hasBorder == true &&
+          widget.hasBorder &&
           widget.borderColor == Colors.black &&
-          widget.shouldUpdate == true &&
-          widget.shouldRequestsFocus == true;
+          widget.shouldUpdate &&
+          widget.shouldRequestsFocus;
       expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
     });
   });

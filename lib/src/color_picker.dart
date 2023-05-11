@@ -681,7 +681,7 @@ class ColorPicker extends StatefulWidget {
   static const String _selectWheelAnyLabel = 'Wheel';
 
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  State<ColorPicker> createState() => _ColorPickerState();
 
   /// Show the defined [ColorPicker] in a custom alert dialog.
   ///

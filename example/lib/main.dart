@@ -9,7 +9,7 @@ class ColorPickerDemo extends StatefulWidget {
   const ColorPickerDemo({super.key});
 
   @override
-  _ColorPickerDemoState createState() => _ColorPickerDemoState();
+  State<ColorPickerDemo> createState() => _ColorPickerDemoState();
 }
 
 class _ColorPickerDemoState extends State<ColorPickerDemo> {
@@ -46,7 +46,7 @@ class ColorPickerPage extends StatefulWidget {
   final ValueChanged<ThemeMode> themeMode;
 
   @override
-  _ColorPickerPageState createState() => _ColorPickerPageState();
+  State<ColorPickerPage> createState() => _ColorPickerPageState();
 }
 
 class _ColorPickerPageState extends State<ColorPickerPage> {
