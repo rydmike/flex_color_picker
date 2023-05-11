@@ -174,8 +174,8 @@ class _Column1 extends StatelessWidget {
           child: ColorPickerCard(),
         ),
 
-        ListTile(
-          subtitle: Wrap(runSpacing: 8, children: const <Widget>[
+        const ListTile(
+          subtitle: Wrap(runSpacing: 8, children: <Widget>[
             OnStartColorIndicator(),
             SizedBox(width: 8),
             OnChangedColorIndicator(),

@@ -13,10 +13,10 @@ class MetaPickerColorIndicator extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       title: const Text('Control the ColorPicker below'),
-      subtitle: Wrap(
+      subtitle: const Wrap(
         runSpacing: 4,
         spacing: 4,
-        children: const <Widget>[
+        children: <Widget>[
           ColorControlBox(color: Color(0xFF43A047)),
           ColorControlBox(color: Color(0xCAFF5252)),
           ColorControlBox(color: Color(0xFFF7F7F7)),
