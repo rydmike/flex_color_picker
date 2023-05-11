@@ -6,8 +6,8 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **May 11, 2023**
 
-- Changed to use `flex_seed_scheme ^1.3.0`. This version, no longer depends directly on `material_color_utilities`, thus avoiding all version issues and conflicts when Flutter changes what breaking version of `material_color_utilities` it uses on different channels and versions.
-- Tested package on Flutter 3.10 and rebuilt web demo example with the new Flutter release.
+- Updated to use minimum `flex_seed_scheme ^1.3.0`. This version, no longer depends on `material_color_utilities`, thus avoiding all version issues and conflicts when Flutter changes what breaking version of `material_color_utilities` it uses on different channels and versions.
+- Tested package with Flutter 3.10 and rebuilt web demo example with the new Flutter release.
 
 
 ## 3.2.1
@@ -62,8 +62,8 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **BREAKING - STYLE**
 
-* The color picker dialog `actionsPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.symmetric(horizontal: 16)`
-* The color picker dialog `buttonPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. Which have different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.all(16)`
+* The color picker dialog `actionsPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. It has different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.symmetric(horizontal: 16)`
+* The color picker dialog `buttonPadding` now default to null. This results in that if it is undefined, its value is determined by the ambient `AlertDialogTheme`, or if it is not defined either, the default for `AlertDialog`. It has different defaults depending on if Material 2 or Material 3 is used. Default value in previous versions of **FlexColorPicker** was: `EdgeInsets.all(16)`
 
 * The API usage of the above properties is unchanged. It is only the default behavior that has been updated to be less opinionated and to enable using theme-dependent settings.
 
@@ -281,8 +281,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 * The WEB example was updated to include enabling and disabling
   the tonal palette and built it with the Flutter version stable 2.10.1.
-* All dependencies in the Web demo were updated to their latest
-  released version.
+* All dependencies in the Web demo were updated to their latest version.
 
   The Web demo example requires at least Flutter 2.10.0 to be built.
   It uses ColorScheme properties in its theme that were not available
