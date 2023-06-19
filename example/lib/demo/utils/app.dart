@@ -72,6 +72,23 @@ class App {
     },
   );
 
+  // Add a custom white to black grey scale.
+  static const MaterialColor whiteBlueBlack = MaterialColor(
+    0xFF4355B9, // Set the 500 index value here.
+    <int, Color>{
+      50: Color(0xFFFFFFFF),
+      100: Color(0xFFF0EFFF),
+      200: Color(0xFFBAC3FF),
+      300: Color(0xFF5D6FD4),
+      400: Color(0xFF5D6FD4),
+      500: Color(0xFF4355B9),
+      600: Color(0xFF293CA0),
+      700: Color(0xFF08218A),
+      800: Color(0xFF00105C),
+      900: Color(0xFF000000),
+    },
+  );
+
   // A custom color swatch, to name map, for the above custom colors.
   static Map<ColorSwatch<Object>, String> get colorsNameMap =>
       <ColorSwatch<Object>, String>{
@@ -94,6 +111,7 @@ class App {
         ColorTools.createPrimarySwatch(brightGreen): 'Bright green',
         ColorTools.createPrimarySwatch(blueJean): 'Washed jean blue',
         ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
+        whiteBlueBlack: 'White via Blue to Black',
         whiteToBlack: 'White to black',
       };
 }
