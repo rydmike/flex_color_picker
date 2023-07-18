@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.2.3
+
+**July 18, 2023**
+
+**FIX**
+
+- Fixed issue [#66 White colour selects multiple colors](https://github.com/rydmike/flex_color_picker/issues/66).
+  - Part of original design with the picker was to only have a given color value appear in one color palette. When adding custom color palettes or using tonal palettes and not showing the material swatch palettes, the same color values may appear in multiple palettes. Selecting such a color value would highlight all the palettes the color appears in. Tonal palettes always contain white and black colors, so it is particularly problematic when using them. This fix prevents showing the color as selected in multiple palettes and avoids switching swatch palette when operating on tonal. As a part of this FIX, the main Material shade color index 500, or for Material accent color index 200, is only shown as selected when its color is actually selected in a Material shade or Material tonal color tone.
+
 ## 3.2.2
 
 **May 11, 2023**
