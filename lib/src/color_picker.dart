@@ -1138,11 +1138,11 @@ class _ColorPickerState extends State<ColorPicker> {
   // tonal palette. This local state is used to send the update signal.
   bool _tonalShouldUpdate = true;
 
-  // This is set to true when a tonal palette color is selected.
+  // This is set to true when a tonal palette color is selected, ie operated on.
   // If one is selected, we do not get main color selection indicator
   // unless it also matches main color [500], if it is found in the
-  // sub palette is is not selected.
-  bool _tonalSelected = false;
+  // sub palette, it is is not selected.
+  bool _tonalOperated = false;
 
   // Color wheel picker should request focus.
   bool _wheelShouldFocus = false;
@@ -1233,6 +1233,7 @@ class _ColorPickerState extends State<ColorPicker> {
     _editShouldUpdate = true;
     // Always update tonal when ColorPicker is initialized.
     _tonalShouldUpdate = true;
+    _tonalOperated = false;
     // If there are no shade or tonal colors displayed, the wheel must
     // focus on init.
     _wheelShouldFocus =
@@ -1379,6 +1380,7 @@ class _ColorPickerState extends State<ColorPicker> {
       _editShouldUpdate = true;
       // Tonal picker should update from external change.
       _tonalShouldUpdate = true;
+      _tonalOperated = false;
       // We need to find the right picker again.
       shouldFindPickerAndSwatch = true;
     }
@@ -1458,7 +1460,7 @@ class _ColorPickerState extends State<ColorPicker> {
   void _updateActiveSwatch() {
     // The typical case is that we have a normal swatch where we need to
     // find the swatch that contains the _selectedColor.
-    if (_activePicker != ColorPickerType.wheel) {
+    if (_activePicker != ColorPickerType.wheel && !_tonalOperated) {
       // Get list of color swatches from the map for the active picker.
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
       // Find the swatch that selected color belongs to from the swatches in
@@ -1692,7 +1694,10 @@ class _ColorPickerState extends State<ColorPicker> {
                   columnSpacing: widget.columnSpacing,
                   activeColorSwatchList: _activeColorSwatchList,
                   selectedColor: _selectedColor.withAlpha(0xFF),
-                  onSelectColor: _onSelectColor,
+                  onSelectColor: (Color color) {
+                    _tonalOperated = false;
+                    _onSelectColor(color);
+                  },
                   includeIndex850: widget.includeIndex850,
                   width: widget.width,
                   height: widget.height,
@@ -1702,7 +1707,6 @@ class _ColorPickerState extends State<ColorPicker> {
                   elevation: widget.elevation,
                   selectedColorIcon: widget.selectedColorIcon,
                   selectedRequestsFocus: _selectedShouldFocus,
-                  tonalSelected: _tonalSelected,
                 ),
               // This is the wheel case, draw the custom ColorWheelPicker.
               if (_activePicker == ColorPickerType.wheel)
@@ -1731,7 +1735,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           _wheelShouldUpdate = false;
                           _editShouldUpdate = true;
                           _tonalShouldUpdate = true;
-                          _tonalSelected = false;
+                          _tonalOperated = false;
                           _selectedShouldFocus = true;
                           _wheelShouldFocus = false;
                           _updateActiveSwatch();
@@ -1776,6 +1780,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   activeSwatch: _activeSwatch!,
                   selectedColor: _selectedColor.withAlpha(0xFF),
                   onSelectColor: (Color color) {
+                    _tonalOperated = false;
                     _onSelectColor(color);
                     if (_activePicker == ColorPickerType.wheel) {
                       setState(() {
@@ -1808,11 +1813,11 @@ class _ColorPickerState extends State<ColorPicker> {
                   columnSpacing: widget.columnSpacing,
                   selectedColor: _selectedColor.withAlpha(0xFF),
                   onSelectColor: (Color color) {
+                    _tonalOperated = true;
                     _onSelectColor(color);
                     setState(() {
                       _selectedShouldFocus = true;
                       _tonalShouldUpdate = false;
-                      _tonalSelected = true;
                     });
                   },
                   tonalShouldUpdate: _tonalShouldUpdate,
@@ -1954,8 +1959,8 @@ class _ColorPickerState extends State<ColorPicker> {
                               // code was edited, the wheel should update.
                               _wheelShouldUpdate = true;
                               _editShouldUpdate = false;
+                              _tonalOperated = false;
                               _updateActiveSwatch();
-                              _tonalSelected = false;
                             });
                             widget.onColorChanged(_selectedColor);
                             widget.onColorChangeEnd?.call(_selectedColor);
@@ -2068,13 +2073,10 @@ class _ColorPickerState extends State<ColorPicker> {
       if ((_activePicker != ColorPickerType.wheel ||
               !ColorTools.swatchContainsColor(
                   _activeSwatch!, _selectedColor)) &&
-          !_tonalSelected) {
+          !_tonalOperated) {
         // Update the active swatch to match the selected color.
         _updateActiveSwatch();
       }
-      // Select color always sets tonal selected to false, if the click
-      // is in tonal, it is set to true there.
-      _tonalSelected = false;
     });
     // Call the change call back with the new color.
     widget.onColorChanged(_selectedColor);

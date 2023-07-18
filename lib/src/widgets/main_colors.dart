@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../flex_color_picker.dart';
-import '../functions/picker_functions.dart';
 
 /// MainColors widget.
 ///
@@ -25,7 +24,6 @@ class MainColors extends StatelessWidget {
     required this.elevation,
     required this.selectedColorIcon,
     this.selectedRequestsFocus = false,
-    this.tonalSelected = false,
   });
 
   /// The spacing between the color pick items.
@@ -70,18 +68,12 @@ class MainColors extends StatelessWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
-  /// A tonal palette color is selected.
-  ///
-  /// When a tonal palette color is selected, we do not set a check
-  /// mark in the main color, unless it is the main color.
-  final bool tonalSelected;
-
   /// Set to true, if a an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected,
+  /// The indicator will always request focus when it is clicked and selected,
   /// setting this value to true is to make it request focus when it is drawn.
   /// This is used to set focus to the selected color, but only when
-  /// the piker is redrawn.
+  /// the picker is redrawn.
   ///
   /// Defaults to false.
   final bool selectedRequestsFocus;
@@ -97,12 +89,10 @@ class MainColors extends StatelessWidget {
         children: <Widget>[
           for (final ColorSwatch<Object> colorSwatch in activeColorSwatchList)
             ColorIndicator(
-              isSelected: isShadeOfMain(
-                    colorSwatch,
-                    selectedColor,
-                    includeIndex850,
-                  ) &&
-                  (!tonalSelected || selectedColor == colorSwatch[500]),
+              isSelected: (selectedColor == colorSwatch[500] &&
+                      colorSwatch is MaterialColor) ||
+                  (selectedColor == colorSwatch[200] &&
+                      colorSwatch is MaterialAccentColor),
               color: colorSwatch,
               width: width,
               height: height,
