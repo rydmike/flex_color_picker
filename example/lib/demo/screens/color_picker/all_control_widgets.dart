@@ -55,6 +55,7 @@ export 'picker_switches/shades_switch.dart';
 export 'picker_switches/snackbar_parse_error_switch.dart';
 export 'picker_switches/subheading_switch.dart';
 export 'picker_switches/title_switch.dart';
+export 'picker_switches/tonal_same_size_switch.dart';
 export 'picker_switches/tonal_subheading_switch.dart';
 export 'picker_switches/tonal_switch.dart';
 export 'picker_switches/toolbar_copy_switch.dart';

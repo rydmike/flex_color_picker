@@ -272,6 +272,7 @@ class _Column3 extends StatelessWidget {
         ),
         // Color picker size
         const ItemSizeSlider(),
+        const TonalSameSizeSwitch(),
         const BorderRadiusSlider(),
         const ElevationSlider(),
         const SpacingSlider(),
