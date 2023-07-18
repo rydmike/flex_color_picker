@@ -131,9 +131,10 @@ packages:
   flex_seed_scheme:
     dependency: transitive
     description:
-      path: "../../flex_seed_Scheme"
-      relative: true
-    source: path
+      name: flex_seed_scheme
+      sha256: "29c12aba221eb8a368a119685371381f8035011d18de5ba277ad11d7dfb8657f"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.4.0"
   flutter:
     dependency: "direct main"
