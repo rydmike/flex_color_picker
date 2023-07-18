@@ -25,6 +25,7 @@ class MainColors extends StatelessWidget {
     required this.elevation,
     required this.selectedColorIcon,
     this.selectedRequestsFocus = false,
+    this.tonalSelected = false,
   });
 
   /// The spacing between the color pick items.
@@ -69,6 +70,12 @@ class MainColors extends StatelessWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
+  /// A tonal palette color is selected.
+  ///
+  /// When a tonal palette color is selected, we do not set a check
+  /// mark in the main color, unless it is the main color.
+  final bool tonalSelected;
+
   /// Set to true, if a an indicator should request focus if it is selected.
   ///
   /// The indicator will always request focus when it clicked and selected,
@@ -91,10 +98,11 @@ class MainColors extends StatelessWidget {
           for (final ColorSwatch<Object> colorSwatch in activeColorSwatchList)
             ColorIndicator(
               isSelected: isShadeOfMain(
-                colorSwatch,
-                selectedColor,
-                includeIndex850,
-              ),
+                    colorSwatch,
+                    selectedColor,
+                    includeIndex850,
+                  ) &&
+                  (!tonalSelected || selectedColor == colorSwatch[500]),
               color: colorSwatch,
               width: width,
               height: height,

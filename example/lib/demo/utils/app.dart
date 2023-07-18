@@ -16,7 +16,7 @@ class App {
     host: 'pub.dev',
     path: 'packages/flex_color_picker',
   );
-  static const String flutterVersion = 'Channel stable 3.10.1 (canvaskit)';
+  static const String flutterVersion = 'Channel stable 3.10.6 (canvaskit)';
   static const String copyright = '© 2020 - 2023';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
@@ -79,7 +79,7 @@ class App {
       50: Color(0xFFFFFFFF),
       100: Color(0xFFF0EFFF),
       200: Color(0xFFBAC3FF),
-      300: Color(0xFF5D6FD4),
+      300: Color(0xFF7789F0),
       400: Color(0xFF5D6FD4),
       500: Color(0xFF4355B9),
       600: Color(0xFF293CA0),

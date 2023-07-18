@@ -18,7 +18,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
 
   # https://pub.dev/packages/google_fonts
-  google_fonts: ^4.0.4
+  google_fonts: ^5.1.0
 
   # https://pub.dev/packages/hive
   hive: ^2.2.3
@@ -28,7 +28,7 @@ dependencies:
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:
