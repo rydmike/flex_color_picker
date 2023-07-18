@@ -35,6 +35,7 @@ aware COPY-PASTE keyboard shortcuts.
     - [Elements of the Picker](#elements-of-the-picker)
         - [Enabled Color Pickers](#enabled-color-pickers)
         - [Enable Shades Selection](#enable-shades-selection)
+        - [Tonal Palette](#tonal-palette)
         - [Custom Color Swatches](#custom-color-swatches)
         - [Customized labels](#customized-labels)
         - [Enable Opacity](#enable-opacity)
@@ -721,11 +722,11 @@ which you do by setting `enableShadesSelection` to false.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-4.png?raw=true" alt="Pickers 4"/>
 
-### Enable Tonal Palette
+### Tonal Palette
 
-API reference: [enableTonalPalette](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableTonalPalette.html)
+API reference: [enableTonalPalette](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/enableTonalPalette.html), [tonalColorSameSize](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/tonalColorSameSize.html)
 
-By default, generation of a selected color's new Material 3 tonal-palette is disabled. You can enable
+By default, generation of a selected color's Material-3 tonal-palette is disabled. You can enable
 it by setting `enableTonalPalette` to true. 
 
 When you click/select a color in the color picker and tonal palette is enabled, a 15 shade 
@@ -742,16 +743,19 @@ does not update the palette. Only when you select a color from the other color
 sources in the picker, is that color used as key color, to seed and generate an 
 updated color palette for the selected color.
 
-For more info on Material 3 Color system, see:
-https://m3.material.io/styles/color/the-color-system/key-colors-tones
+For more info on Material-3 Color system, see the [official guide](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
 
 The picker item size for tonal palette color indicator items is
 10/13 the size of defined width and height. This is done in order to
 as far as possible try to match the width of the Primary Material Swatch
 items total width. It has 10 colors, the M3 tonal palette has 15 colors.
-The goal is to match their width when they are both shown.
+The goal is to match their width when they are both shown. If you want the tonal 
+palette color indicator items to be the same size as the other color indicators, 
+set `tonalColorSameSize: true`.
 
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-tonal-4.png?raw=true" alt="Tonal pickers 4"/>
+
+
 
 ### Custom Color Swatches
 
@@ -816,7 +820,7 @@ This will create three custom color swatches, using our "Alpine", "Rust" and "La
 swatch picker.
 <img src="https://github.com/rydmike/flex_color_picker/blob/master/resources/FCP-enabled-6.png?raw=true" alt="Picker 6"/>
 
-### Customized labels 
+### Customized labels
 API reference: [pickerTypeLabels](https://pub.dev/documentation/flex_color_picker/latest/flex_color_picker/ColorPicker/pickerTypeLabels.html)
 
 The picker labels have default English labels, you can override them to customize or translate the labels. You set the

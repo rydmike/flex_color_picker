@@ -102,6 +102,7 @@ class ColorPicker extends StatefulWidget {
     // Picker item and wheel picker properties.
     this.width = 40,
     this.height = 40,
+    this.tonalColorSameSize = false,
     this.spacing = 4,
     this.runSpacing = 4,
     this.elevation = 0,
@@ -340,6 +341,19 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to 40 dp. Must be from 15 to 150 dp.
   final double height;
+
+  /// Set to true to make tonal color items same size as the size defined
+  /// for main and swatch shades indicator items.
+  ///
+  /// If false, the tonal color items will be smaller and auto sized for the
+  /// palette to be same width as the Material Color palette.
+  ///
+  /// Defaults to false. The color boxes are smaller, but length of their
+  /// items is the same as MaterialColor swatch. You may prefer true to get
+  /// them to be same size, especially if you only use tonal palette.
+  ///
+  /// For legacy compatibility reasons, this property is false by default.
+  final bool tonalColorSameSize;
 
   /// The horizontal spacing between the color picker indicator items.
   ///
@@ -1821,10 +1835,14 @@ class _ColorPickerState extends State<ColorPicker> {
                     });
                   },
                   tonalShouldUpdate: _tonalShouldUpdate,
-                  width: (widget.width + widget.spacing) * 10 / 15 -
-                      widget.spacing,
-                  height: (widget.width + widget.spacing) * 10 / 15 -
-                      widget.spacing,
+                  width: widget.tonalColorSameSize
+                      ? widget.width
+                      : (widget.width + widget.spacing) * 10 / 15 -
+                          widget.spacing,
+                  height: widget.tonalColorSameSize
+                      ? widget.width
+                      : (widget.width + widget.spacing) * 10 / 15 -
+                          widget.spacing,
                   borderRadius: widget.borderRadius,
                   hasBorder: widget.hasBorder,
                   borderColor: widget.borderColor,

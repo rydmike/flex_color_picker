@@ -90,6 +90,9 @@ void resetSettings(WidgetRef ref) {
 
   ref.read(sizePod.notifier).state = Keys.defaults[Keys.size]! as double;
 
+  ref.read(tonalSameSizePod.notifier).state =
+      Keys.defaults[Keys.tonalSameSize]! as bool;
+
   ref.read(borderRadiusPod.notifier).state =
       Keys.defaults[Keys.borderRadius]! as double;
 

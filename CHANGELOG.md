@@ -2,9 +2,13 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.2.3
+## 3.3.0
 
 **July 18, 2023**
+
+**NEW**
+
+- Use `ColorPicker.tonalColorSameSize` set to true, to make the Material-3 HCT tonal palette color indicators use the same size as the size defined for the other color indicators. Previously and by default, the tonal color indicators are smaller to make the palette width match the width of the Material-2 swatch color palette, that has fewer colors.
 
 **FIX**
 

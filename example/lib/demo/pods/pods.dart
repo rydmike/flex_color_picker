@@ -163,6 +163,13 @@ final StateProvider<bool> enableTonesSelectionPod =
       defaultValue: Keys.defaults[Keys.enableTonesSelection]! as bool) as bool;
 }, name: Keys.enableTonesSelection);
 
+// State of using same size tonal color items.
+final StateProvider<bool> tonalSameSizePod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.tonalSameSize,
+      defaultValue: Keys.defaults[Keys.tonalSameSize]! as bool) as bool;
+}, name: Keys.tonalSameSize);
+
 // State of including index 850 for grey color.
 final StateProvider<bool> includeIndex850Pod =
     StateProvider<bool>((StateProviderRef<bool> ref) {

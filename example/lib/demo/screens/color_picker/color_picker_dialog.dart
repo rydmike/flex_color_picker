@@ -74,6 +74,7 @@ Future<bool> colorPickerDialog(
     ),
     width: ref.watch(sizePod),
     height: ref.watch(sizePod),
+    tonalColorSameSize: ref.watch(tonalSameSizePod),
     spacing: ref.watch(spacingPod),
     runSpacing: ref.watch(runSpacingPod),
     elevation: ref.watch(elevationPod),

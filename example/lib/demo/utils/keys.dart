@@ -19,6 +19,7 @@ class Keys {
   static const String pickersEnabled = 'pickersEnabled';
   static const String enableShadesSelection = 'enableShadesSelection';
   static const String enableTonesSelection = 'enableTonesSelection';
+  static const String tonalSameSize = 'tonalSameSize';
   static const String includeIndex850 = 'includeIndex850';
   static const String enableOpacity = 'enableOpacity';
   static const String showMaterialName = 'showMaterialName';
@@ -95,6 +96,7 @@ class Keys {
     },
     enableShadesSelection: true,
     enableTonesSelection: true,
+    tonalSameSize: false,
     includeIndex850: false,
     enableOpacity: true,
     showMaterialName: true,
