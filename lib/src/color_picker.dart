@@ -133,7 +133,7 @@ class ColorPicker extends StatefulWidget {
         'It was removed in v2.0.0. To modify the copy icon on the color code '
         'entry field, define the `ColorPickerCopyPasteBehavior(copyIcon: '
         'myIcon)` and provide it via the `copyPasteBehavior` property.')
-        this.colorCodeIcon,
+    this.colorCodeIcon,
     this.colorCodePrefixStyle,
     this.colorCodeReadOnly = false,
     this.showColorValue = false,
@@ -1138,6 +1138,12 @@ class _ColorPickerState extends State<ColorPicker> {
   // tonal palette. This local state is used to send the update signal.
   bool _tonalShouldUpdate = true;
 
+  // This is set to true when a tonal palette color is selected.
+  // If one is selected, we do not get main color selection indicator
+  // unless it also matches main color [500], if it is found in the
+  // sub palette is is not selected.
+  bool _tonalSelected = false;
+
   // Color wheel picker should request focus.
   bool _wheelShouldFocus = false;
 
@@ -1696,6 +1702,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   elevation: widget.elevation,
                   selectedColorIcon: widget.selectedColorIcon,
                   selectedRequestsFocus: _selectedShouldFocus,
+                  tonalSelected: _tonalSelected,
                 ),
               // This is the wheel case, draw the custom ColorWheelPicker.
               if (_activePicker == ColorPickerType.wheel)
@@ -1724,6 +1731,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           _wheelShouldUpdate = false;
                           _editShouldUpdate = true;
                           _tonalShouldUpdate = true;
+                          _tonalSelected = false;
                           _selectedShouldFocus = true;
                           _wheelShouldFocus = false;
                           _updateActiveSwatch();
@@ -1804,6 +1812,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     setState(() {
                       _selectedShouldFocus = true;
                       _tonalShouldUpdate = false;
+                      _tonalSelected = true;
                     });
                   },
                   tonalShouldUpdate: _tonalShouldUpdate,
@@ -1946,6 +1955,7 @@ class _ColorPickerState extends State<ColorPicker> {
                               _wheelShouldUpdate = true;
                               _editShouldUpdate = false;
                               _updateActiveSwatch();
+                              _tonalSelected = false;
                             });
                             widget.onColorChanged(_selectedColor);
                             widget.onColorChangeEnd?.call(_selectedColor);
@@ -2052,14 +2062,19 @@ class _ColorPickerState extends State<ColorPicker> {
         _findPicker();
       }
       // If we are not on the wheel, and a selected color is not a member
-      // of the current selected swatch, the update the active swatch.
+      // of the current selected swatch, then update the active swatch.
       // This check eliminates a rebuild when the selected color is a member
       // of the currently displayed color swatch.
-      if (_activePicker != ColorPickerType.wheel ||
-          !ColorTools.swatchContainsColor(_activeSwatch!, _selectedColor)) {
+      if ((_activePicker != ColorPickerType.wheel ||
+              !ColorTools.swatchContainsColor(
+                  _activeSwatch!, _selectedColor)) &&
+          !_tonalSelected) {
         // Update the active swatch to match the selected color.
         _updateActiveSwatch();
       }
+      // Select color always sets tonal selected to false, if the click
+      // is in tonal, it is set to true there.
+      _tonalSelected = false;
     });
     // Call the change call back with the new color.
     widget.onColorChanged(_selectedColor);
