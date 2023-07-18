@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off there too. Often I just leave them true if it is one
 // I want to see in dev mode, unless it is too chatty.
-const bool _debug = !kReleaseMode && false;
+const bool _debug = !kReleaseMode && true;
 
 /// A HSV color wheel based color picker for Flutter, used by FlexColorPicker.
 ///
@@ -34,7 +34,7 @@ class ColorWheelPicker extends StatefulWidget {
     this.shouldUpdate = false,
     this.shouldRequestsFocus = false,
   }) : assert(wheelWidth >= 4 && wheelWidth <= 50,
-            'The Wheel must be between 4 and 50dp');
+            'The wheel width must be between 4 and 50dp');
 
   /// The starting color value for the wheel color picker.
   final Color color;
@@ -103,8 +103,9 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   final GlobalKey renderBoxKey = GlobalKey();
 
   // True, when we are dragging on the square color saturation and value box.
-  // False, when we are are dragging on color wheel.
   bool isSquare = false;
+  // True, when we are dragging on the hue wheel.
+  bool isWheel = false;
 
   // We store the HSV color components as internal state for the
   // Hue wheel, and Saturation and Value for the square.
@@ -170,9 +171,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   // surrounding rectangle minus the defined width of the color wheel.
   double wheelRadius(Size size, double wheelWidth) =>
       math.min(size.width, size.height) / 2 - wheelWidth;
-  static double squareRadius(
-          double radius, double wheelWidth, double wheelSquarePadding) =>
-      (radius - wheelWidth / 2 - wheelSquarePadding) / math.sqrt(2);
+  static double squareRadius(double radius, double wheelSquarePadding) =>
+      (radius - wheelSquarePadding) / math.sqrt(2);
 
   Offset getOffset(Offset ratio) {
     // This is bang and cast is not pretty, but SDK does it this way too.
@@ -191,30 +191,40 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
     final Size size = renderBox.size;
     final double radius = wheelRadius(size, widget.wheelWidth);
+    final double radiusOuter = radius + widget.wheelWidth;
     final double effectiveSquareRadius =
-        squareRadius(radius, widget.wheelWidth, widget.wheelSquarePadding);
+        squareRadius(radius, widget.wheelSquarePadding);
     final Offset startPosition = renderBox.localToGlobal(Offset.zero);
     final Offset center = Offset(size.width / 2, size.height / 2);
     final Offset vector = offset - startPosition - center;
+    final double vectorLength = _Wheel.vectorLength(vector);
+
+    // Did the onStart, start on the square Palette box?
+    isSquare = vector.dx.abs() < effectiveSquareRadius &&
+        vector.dy.abs() < effectiveSquareRadius;
+
+    // Did the onStart, start on the wheel?
+    isWheel = vectorLength >= radius && vectorLength <= radiusOuter;
 
     if (_debug) {
       debugPrint('--------------------------------------------------');
       debugPrint('size....................: $size');
       debugPrint('radius..................: $radius');
+      debugPrint('radiusOuter.............: $radiusOuter');
       debugPrint('effectiveSquareRadius...: $effectiveSquareRadius');
       debugPrint('startPosition...........: $startPosition');
       debugPrint('center..................: $center');
       debugPrint('vector..................: $vector');
+      debugPrint('vectorLength............: $vectorLength');
+      debugPrint('isWheel.................: $isWheel');
+      debugPrint('isSquare................: $isSquare');
     }
 
-    // We are operating the wheel, so onWheel is true.
-    widget.onWheel(true);
-
-    // Did the onStart, start on the square Palette box?
-    isSquare = vector.dx.abs() < effectiveSquareRadius &&
-        vector.dy.abs() < effectiveSquareRadius;
-    // We started on the square palette box
+    // Did we start on the square palette box?
     if (isSquare) {
+      // We are operating somewhere on the wheel picker control,onWheel is true.
+      widget.onWheel(true);
+
       // Calculate the color saturation
       colorSaturation =
           _Wheel.vectorToSaturation(vector.dx, effectiveSquareRadius)
@@ -234,8 +244,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorValue,
       ).toColor());
 
-      // Else, we did the onStart on the color wheel
-    } else {
+      // Did we start onStart on the color wheel?
+    } else if (isWheel) {
+      // We are operating somewhere on the wheel picker control,onWheel is true.
+      widget.onWheel(true);
+
       // If a start callback given, call it with the start color.
       widget.onChangeStart?.call(widget.color);
       // Calculate the color Hue
@@ -247,6 +260,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorSaturation,
         colorValue,
       ).toColor());
+    } else {
+      // We are not operating anywhere on the wheel picker control.
+      widget.onWheel(false);
+      isWheel = false;
+      isSquare = false;
     }
   }
 
@@ -259,16 +277,17 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     final Size size = renderBox.size;
     final double radius = wheelRadius(size, widget.wheelWidth);
     final double effectiveSquareRadius =
-        squareRadius(radius, widget.wheelWidth, widget.wheelSquarePadding);
+        squareRadius(radius, widget.wheelSquarePadding);
     final Offset startPosition = renderBox.localToGlobal(Offset.zero);
     final Offset center = Offset(size.width / 2, size.height / 2);
     final Offset vector = offset - startPosition - center;
 
-    // We are operating the wheel, so onWheel is true.
-    widget.onWheel(true);
-
-    // Are the updates are for the square palette box?
+    // Are the updates for the square palette box?
     if (isSquare) {
+      // We are operating somewhere on the wheel picker control,onWheel is true.
+      widget.onWheel(true);
+      isWheel = false;
+
       // Calculate the color saturation
       colorSaturation =
           _Wheel.vectorToSaturation(vector.dx, effectiveSquareRadius)
@@ -281,8 +300,12 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       widget.onChanged(
           HSVColor.fromAHSV(color.alpha, colorHue, colorSaturation, colorValue)
               .toColor());
-      // The updates are for the color wheel
-    } else {
+      // Are updates are for the color wheel?
+    } else if (isWheel) {
+      // We Operating somewhere on the wheel picker control,onWheel is true.
+      widget.onWheel(true);
+      isSquare = false;
+
       // Calculate the color Hue
       colorHue = _Wheel.vectorToHue(vector);
       // Convert the color to normal RGB color before it is returned.
@@ -292,6 +315,11 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         colorSaturation,
         colorValue,
       ).toColor());
+    } else {
+      // We are not operating anywhere on the wheel picker control.
+      widget.onWheel(false);
+      isWheel = false;
+      isSquare = false;
     }
   }
 
@@ -301,6 +329,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // We can use this signal to know how to handle the drag cancel event
     // when we were operating the wheel.
     widget.onWheel(false);
+    isWheel = false;
+    isSquare = false;
 
     // We are ending the dragging operation, call the onChangeEnd callback
     // with the color we ended up with.
@@ -332,15 +362,15 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
       // NOTE: It would have been simpler to be able to call onEnd() on events
       // onVerticalDragCancel and onHorizontalDragCancel here as well.
-      // They get triggered when the longPress menu is activated,
+      // However, they get triggered when the longPress menu is activated,
       // if we were 'dragging' but had not moved, in that case we need to
       // issue an `onColorChangeEnd` when a cancellation happens due to that.
       // Mostly it worked, but not entirely, for some reason the drag cancel
       // events get triggered while dragging, for no apparent reason, since
       // there has been no known cancellation, weird, might be a Flutter bug?!
       //
-      // Due to this the cancel events could not be used here, since they led to
-      // random onEnd() calls which made the onEnd unreliable. The workaround
+      // Due to this, the cancel events could not be used here, since they led
+      // to random onEnd() calls which made the onEnd unreliable. The workaround
       // was to make the long press menu issue an "onOpen" event and handle the
       // issuing of that particular end dragging scenario in the parent
       // (color picker). Messy, but the workaround works.
@@ -683,8 +713,10 @@ class _WheelThumbPainter extends CustomPainter {
   }
 }
 
-// Draw the wheel part of the widget.
+// Internally used wheel math.
 class _Wheel {
+  static double vectorLength(Offset vector) =>
+      math.sqrt(vector.dx * vector.dx + vector.dy * vector.dy);
   static double vectorToHue(Offset vector) =>
       (((math.atan2(vector.dy, vector.dx)) * 180.0 / math.pi) + 360.0) % 360.0;
   static double vectorToSaturation(double vectorX, double squareRadius) =>
