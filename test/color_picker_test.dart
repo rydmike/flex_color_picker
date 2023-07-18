@@ -408,7 +408,7 @@ void main() {
     //
     testWidgets(
         'CPI1.4: Finds custom-3 ColorPicker() using custom colors '
-        'and tonal palette', (WidgetTester tester) async {
+        'and tonal palette and same size tonal', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -429,6 +429,7 @@ void main() {
             crossAxisAlignment: CrossAxisAlignment.start,
             enableOpacity: true,
             enableTonalPalette: true,
+            tonalColorSameSize: true,
             opacityTrackHeight: 40,
             opacityThumbRadius: 25,
             opacityTrackWidth: 300,
