@@ -2,6 +2,14 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.4.0
+
+**Oct 11, 2023**
+
+**NEW**
+
+- Add transparent color option
+
 ## 3.3.0
 
 **July 18, 2023**
