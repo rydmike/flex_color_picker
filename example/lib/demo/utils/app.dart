@@ -9,7 +9,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '3.3.2';
+  static const String version = '3.3.1';
   static const String packageVersion = 'FlexColorPicker package $version';
   static final Uri packageUri = Uri(
     scheme: 'https',
