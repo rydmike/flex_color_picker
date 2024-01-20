@@ -113,6 +113,12 @@ void resetSettings(WidgetRef ref) {
   ref.read(wheelWidthPod.notifier).state =
       Keys.defaults[Keys.wheelWidth]! as double;
 
+  ref.read(wheelSquarePaddingPod.notifier).state =
+      Keys.defaults[Keys.wheelSquarePadding]! as double;
+
+  ref.read(wheelSquareBorderRadiusPod.notifier).state =
+      Keys.defaults[Keys.wheelSquareBorderRadius]! as double;
+
   ref.read(wheelHasBorderPod.notifier).state =
       Keys.defaults[Keys.wheelHasBorder]! as bool;
 

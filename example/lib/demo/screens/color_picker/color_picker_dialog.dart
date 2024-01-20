@@ -142,6 +142,7 @@ Future<bool> colorPickerDialog(
         ? ref.watch(cardRecentColorsPod)
         : ref.watch(dialogRecentColorsPod),
     maxRecentColors: cardRemote ? 8 : 5,
+    enableTransparentCustomColors: ref.watch(enableTransparencyPod),
     customColorSwatchesAndNames: App.colorsNameMap,
   ).showPickerDialog(
     context,

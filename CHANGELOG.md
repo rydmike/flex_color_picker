@@ -4,11 +4,15 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.4.0
 
-**Oct 11, 2023**
+**Nov 16, 2023**
 
 **NEW**
 
 - Add transparent color option
+
+**FIX**
+
+- Web demo: Reset to defaults did not reset settings for...
 
 ## 3.3.0
 
@@ -24,7 +28,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
   - When clicking on the color wheels square color box part inside the Hue circle, the click moved the selection on wheel when clicking close to the square edge. This is now fixed. The fix also introduces exact wheel tap/drag to start an operation of Hue wheel. Previously, the Hue wheel would start operating when taping or dragging on the square containing the Hue wheel, but outside the squared color area inside it. Now to start dragging or make a tap action, it must start on the Hue wheel. Dragging around outside it or inside it, once a drag operation has started, works as before.  
 
 - Fixed issue [#66 White color selects multiple colors](https://github.com/rydmike/flex_color_picker/issues/66).
-  - Part of original design with the picker was to only have a given color value appear in one color palette. When adding custom color palettes or using tonal palettes, the same color values may appear in multiple palettes. Selecting such a color value would highlight all the palettes the color appears in. Tonal palettes always contain white and black colors, so it is particularly problematic when using them. This fix prevents showing the main color as selected in multiple palettes and avoids switching Material swatch palette when operating on a tonal palettes. As a part of this FIX, main Material swatch shade color index 500, or for Material accent swatch shade, color index 200, is only shown as selected when its color is actually selected in a Material swatch or Material tonal color tone.
+  - Part of original design with the picker was to only have a given color value appear in one color palette. When adding custom color palettes or using tonal palettes, the same color values may appear in multiple palettes. Selecting such a color value would highlight all the palettes the color appears in. Tonal palettes always contain white and black colors, so it is particularly problematic when using them. This fix prevents showing the main color as selected in multiple palettes and avoids switching Material swatch palette when operating on a tonal palettes. The main Material swatch shade color index 500 or for Material accent swatch shade color index 200, are only shown as selected when its color is actually selected in a Material swatch or Material tonal color tone.
 
 ## 3.2.2
 
