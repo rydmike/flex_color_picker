@@ -1275,6 +1275,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // Find the best color picker to show the current selectedColor value.
     _findPicker();
     // And update to the active swatch related to the selected color.
+    _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
     _updateActiveSwatch();
   }
 
@@ -1716,6 +1717,7 @@ class _ColorPickerState extends State<ColorPicker> {
                             !widget.enableTonalPalette) {
                           _wheelShouldFocus = true;
                         }
+                        _tonalOperated = false;
                         _updateActiveSwatch();
                       });
                     },

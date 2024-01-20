@@ -39,6 +39,7 @@ dev_dependencies:
   collection:
   flutter_test:
     sdk: flutter
+  patrol_finders: ^2.0.1+1
   test:
 
 flutter:

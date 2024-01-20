@@ -107,7 +107,7 @@ class OpacitySlider extends StatelessWidget {
             data: _opacitySliderTheme(color, trackHeight, thumbRadius),
             child: Slider(
               value: opacity,
-              // If we do 255 divisions we can ca get a discrete step for each
+              // If we do 255 divisions we can get a discrete step for each
               // alpha value, even if we only display int 0...100 as opacity.
               divisions: 255,
               onChanged: onChanged,
