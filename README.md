@@ -1,4 +1,4 @@
-[![Pub Version](https://img.shields.io/pub/v/flex_color_picker?label=flex_color_picker&labelColor=333940&logo=dart)](https://pub.dev/packages/flex_color_picker) ![Test](https://github.com/rydmike/flex_color_picker/workflows/Test/badge.svg) [![codecov](https://codecov.io/gh/rydmike/flex_color_picker/branch/master/graph/badge.svg?token=4XJU30IGO3)](https://codecov.io/gh/rydmike/flex_color_picker) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Pub Version](https://img.shields.io/pub/v/flex_color_picker?label=flex_color_picker&labelColor=333940&logo=dart)](https://pub.dev/packages/flex_color_picker) ![Test](https://github.com/rydmike/flex_color_picker/workflows/Test/badge.svg) [![codecov](https://codecov.io/gh/rydmike/flex_color_picker/graph/badge.svg?token=6GEGK5XEOP)](https://codecov.io/gh/rydmike/flex_color_picker) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 # FlexColorPicker
 
