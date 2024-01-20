@@ -2,6 +2,14 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.3.1
+
+**January 21, 2024**
+
+- FIX: Fixed issue [#71 _activeColorSwatchList init in Wheel with tonal palette case](https://github.com/rydmike/flex_color_picker/issues/71).
+- CHORE: Bump FlexSeedScheme to version 1.4.0.
+- TEST: Add tests, improve test coverage (65% -> 75%)
+
 ## 3.3.0
 
 **July 18, 2023**
