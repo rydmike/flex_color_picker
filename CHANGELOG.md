@@ -2,6 +2,12 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.3.2
+
+**January 21, 2024**
+
+- FIX: Update Codecov badge to use the new token format, so it works again.
+
 ## 3.3.1
 
 **January 21, 2024**
