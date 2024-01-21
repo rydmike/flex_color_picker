@@ -2,17 +2,17 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.4.0
+## 3.4.0 (WIP)
 
 **Jan 21, 2024**
 
 **NEW**
 
-- Add transparent color option
+- Add transparent color options (Work in progress, not yet fully implemented).
 
 **FIX**
 
-- Web demo: Reset to defaults did not reset settings for...
+- Web demo: Reset to defaults did not reset settings for wheelSquarePadding and wheelSquareBorderRadius. Fixed.
 
 
 ## 3.3.1
