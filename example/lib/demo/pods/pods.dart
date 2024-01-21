@@ -184,6 +184,13 @@ final StateProvider<bool> enableOpacityPod =
       defaultValue: Keys.defaults[Keys.enableOpacity]! as bool) as bool;
 }, name: Keys.enableOpacity);
 
+// State of enabling transparency for custom colors.
+final StateProvider<bool> enableTransparencyPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.enableTransparency,
+      defaultValue: Keys.defaults[Keys.enableTransparency]! as bool) as bool;
+}, name: Keys.enableTransparency);
+
 // State of showing Material color name.
 final StateProvider<bool> showMaterialNamePod =
     StateProvider<bool>((StateProviderRef<bool> ref) {

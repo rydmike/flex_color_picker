@@ -126,6 +126,7 @@ class ColorPickerCard extends ConsumerWidget {
         showRecentColors: ref.watch(showRecentColorsPod),
         recentColors: ref.watch(cardRecentColorsPod),
         maxRecentColors: 8,
+        enableTransparentCustomColors: ref.watch(enableTransparencyPod),
         customColorSwatchesAndNames: App.colorsNameMap,
         colorCodeTextStyle: Theme.of(context).textTheme.titleMedium,
         colorCodePrefixStyle: Theme.of(context).textTheme.bodySmall,

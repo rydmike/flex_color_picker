@@ -156,7 +156,8 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.custom: _selectCustomLabel,
       ColorPickerType.wheel: _selectWheelAnyLabel,
     },
-    // Custom color swatches and name map for the custom color swatches.
+    // Custom color, swatches and name map for the custom color swatches.
+    this.enableTransparentCustomColors = false,
     this.customColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
     //
   })  : assert(columnSpacing >= 0 && columnSpacing <= 300,
@@ -293,6 +294,11 @@ class ColorPicker extends StatefulWidget {
   /// When enabled, the opacity value is not returned as a separate value,
   /// it is returned in the alpha channel of the returned ARGB color value, in
   /// the onColor callbacks.
+  ///
+  /// When false, colors that has any other alpha value than 0xFF are changed
+  /// to 0xFF. To allow custom colors and pasted in color values without
+  /// setting [enableOpacity] to true and showing the opacity slider, set
+  /// [enableTransparentCustomColors] to true.
   ///
   /// Defaults to false.
   final bool enableOpacity;
@@ -664,6 +670,14 @@ class ColorPicker extends StatefulWidget {
   ///  * [ColorPickerType.custom] : 'Custom'
   ///  * [ColorPickerType.wheel] : 'Wheel'
   final Map<ColorPickerType, String> pickerTypeLabels;
+
+  /// Allow transparent custom colors.
+  ///
+  /// When set to true, custom colors can contain alpha channel also when
+  /// the opacity slider value [enableOpacity] is false.
+  ///
+  /// Defaults to false.
+  final bool enableTransparentCustomColors;
 
   /// Color swatch to name map, with custom swatches and their names.
   ///
@@ -1191,9 +1205,13 @@ class _ColorPickerState extends State<ColorPicker> {
     // Set selected color to the widget constructor provided start color,
     // if opacity is not enabled, override alpha to fully opaque.
     _selectedColor =
-        widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
+        widget.enableOpacity || widget.enableTransparentCustomColors
+            ? widget.color
+            : widget.color.withAlpha(0xFF);
     // Get current opacity of passed in color, if opacity is enabled.
-    _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+    _opacity = widget.enableOpacity || widget.enableTransparentCustomColors
+        ? widget.color.opacity
+        : 1;
     // Picker labels, use english fallbacks if none provided.
     _pickerLabels = <ColorPickerType, String>{
       ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
@@ -1276,8 +1294,12 @@ class _ColorPickerState extends State<ColorPicker> {
             '${widget.enableOpacity == oldWidget.enableOpacity}');
       }
       _selectedColor =
-          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
-      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+          widget.enableOpacity || widget.enableTransparentCustomColors
+              ? widget.color
+              : widget.color.withAlpha(0xFF);
+      _opacity = widget.enableOpacity || widget.enableTransparentCustomColors
+          ? widget.color.opacity
+          : 1;
     }
 
     // Picker labels map changed, update used one, with its default fallbacks.
@@ -1384,8 +1406,12 @@ class _ColorPickerState extends State<ColorPicker> {
         debugPrint('didUpdateWidget external color update!');
       }
       _selectedColor =
-          widget.enableOpacity ? widget.color : widget.color.withAlpha(0xFF);
-      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+          widget.enableOpacity || widget.enableTransparentCustomColors
+              ? widget.color
+              : widget.color.withAlpha(0xFF);
+      _opacity = widget.enableOpacity || widget.enableTransparentCustomColors
+          ? widget.color.opacity
+          : 1;
       // Need to make a swatch too be able to find it on wheel, if it is there.
       _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
         ColorTools.createPrimarySwatch(_selectedColor.withAlpha(0xFF)),
@@ -1481,7 +1507,9 @@ class _ColorPickerState extends State<ColorPicker> {
       // Find the swatch that selected color belongs to from the swatches in
       // the active picker and set this swatch as _activeSwatch.
       _activeSwatch = findColorSwatch(
-        _selectedColor.withAlpha(0xFF),
+        widget.enableTransparentCustomColors
+            ? _selectedColor
+            : _selectedColor.withAlpha(0xFF),
         _activeColorSwatchList,
         widget.includeIndex850,
       ) as ColorSwatch<Object>?;
@@ -2064,7 +2092,8 @@ class _ColorPickerState extends State<ColorPicker> {
     setState(() {
       // Set selected color to the new value.
       _selectedColor = keepOpacity ? color : color.withOpacity(_opacity);
-      if (keepOpacity && widget.enableOpacity) {
+      if (keepOpacity &&
+          (widget.enableOpacity || widget.enableTransparentCustomColors)) {
         _opacity = _selectedColor.opacity;
       }
       // When the a color was clicked and selected, the right item is already
@@ -2210,8 +2239,12 @@ class _ColorPickerState extends State<ColorPicker> {
       setState(() {
         // If opacity is not enabled, we remove any alpha from pasted colors.
         _selectedColor =
-            widget.enableOpacity ? clipColor : clipColor.withAlpha(0xFF);
-        _opacity = widget.enableOpacity ? _selectedColor.opacity : 1;
+            widget.enableOpacity || widget.enableTransparentCustomColors
+                ? clipColor
+                : clipColor.withAlpha(0xFF);
+        _opacity = widget.enableOpacity || widget.enableTransparentCustomColors
+            ? _selectedColor.opacity
+            : 1;
         // Color changed outside wheel and edit field, a new shade or color was
         // selected outside the wheel and edit, they should update!
         _wheelShouldUpdate = true;
