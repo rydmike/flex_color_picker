@@ -306,8 +306,6 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
         ColorPickerType.custom: true,
         ColorPickerType.wheel: true,
       },
-      enableTonalPalette: true, // Enable tonal palette
-
       customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,

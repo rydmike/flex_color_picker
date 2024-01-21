@@ -22,7 +22,6 @@ class Keys {
   static const String tonalSameSize = 'tonalSameSize';
   static const String includeIndex850 = 'includeIndex850';
   static const String enableOpacity = 'enableOpacity';
-  static const String enableTransparency = 'enableTransparency';
   static const String showMaterialName = 'showMaterialName';
   static const String showColorName = 'showColorName';
   static const String showColorCode = 'showColorCode';
@@ -100,7 +99,6 @@ class Keys {
     tonalSameSize: false,
     includeIndex850: false,
     enableOpacity: true,
-    enableTransparency: false,
     showMaterialName: true,
     showColorName: true,
     showColorCode: true,

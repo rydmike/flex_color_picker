@@ -56,23 +56,6 @@ class App {
   static const Color deepBlueSea = Color(0xFF132b80);
 
   // Add a custom white to black grey scale.
-  static const MaterialColor whiteBlueBlack = MaterialColor(
-    0xFF4355B9, // Set the 500 index value here.
-    <int, Color>{
-      50: Color(0xFFFFFFFF),
-      100: Color(0xFFF0EFFF),
-      200: Color(0xFFBAC3FF),
-      300: Color(0xFF7789F0),
-      400: Color(0xFF5D6FD4),
-      500: Color(0xFF4355B9),
-      600: Color(0xFF293CA0),
-      700: Color(0xFF08218A),
-      800: Color(0xFF00105C),
-      900: Color(0xFF000000),
-    },
-  );
-
-  // Add a custom white to black grey scale.
   static const MaterialColor whiteToBlack = MaterialColor(
     0xFF7C7D80, // Set the 500 index value here.
     <int, Color>{
@@ -89,24 +72,20 @@ class App {
     },
   );
 
-  // Add a custom black transparency.
-  //
-  // Index 50 is fully transparent black.
-  //
-  // Index 100 is 10% of max alpha value or 10% opacity, and so on.
-  static const MaterialColor blackTransparency = MaterialColor(
-    0x7F000000, // Set the 500 index value here.
+  // Add a custom white to black grey scale.
+  static const MaterialColor whiteBlueBlack = MaterialColor(
+    0xFF4355B9, // Set the 500 index value here.
     <int, Color>{
-      50: Color(0x00000000),
-      100: Color(0x19000000),
-      200: Color(0x33000000),
-      300: Color(0x4C000000),
-      400: Color(0x66000000),
-      500: Color(0x7F000000),
-      600: Color(0x99000000),
-      700: Color(0xB2000000),
-      800: Color(0xCC000000),
-      900: Color(0xE5000000),
+      50: Color(0xFFFFFFFF),
+      100: Color(0xFFF0EFFF),
+      200: Color(0xFFBAC3FF),
+      300: Color(0xFF7789F0),
+      400: Color(0xFF5D6FD4),
+      500: Color(0xFF4355B9),
+      600: Color(0xFF293CA0),
+      700: Color(0xFF08218A),
+      800: Color(0xFF00105C),
+      900: Color(0xFF000000),
     },
   );
 
@@ -134,6 +113,5 @@ class App {
         ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
         whiteBlueBlack: 'White via Blue to Black',
         whiteToBlack: 'White to black',
-        blackTransparency: 'Black transparency',
       };
 }
