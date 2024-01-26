@@ -1085,7 +1085,7 @@ class ColorPicker extends StatefulWidget {
         from: context,
         to: Navigator.of(
           context,
-          rootNavigator: true,
+          rootNavigator: actionButtons.useRootNavigator,
         ).context,
       );
       if (useSafeArea) {
