@@ -77,7 +77,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **CHANGE**
 
-* Requires minimum Flutter 3.7.0 and Dart 2.19.0 that is used by Flutter 3.17. Version 3.7.0 of Flutter broke the nullable `Overlay.of` API. The new API is `Overlay.maybeOf`. This forced a new release of **FlexColorPicker** that requires minimum Flutter 3.7 that breaks compatibility with older versions of Flutter.
+* Requires minimum Flutter 3.7.0 and Dart 2.19.0 that Flutter 3.7.0 uses. Version 3.7.0 of Flutter broke the nullable `Overlay.of` API. The new API is `Overlay.maybeOf`. This forced a new release of **FlexColorPicker** that requires minimum Flutter 3.7 that breaks compatibility with older versions of Flutter.
 
 **FIX**
 
@@ -366,12 +366,12 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 * **Fix:** The `useRootNavigator` argument is now respected on all Navigator
   `pop` functions used in the `ColorPicker` widget itself and by
-  built-in dialogs used by the `ColorPicker`. In order to support this,
+  built-in dialogs used by the `ColorPicker`. To support this,
   the current `useRootNavigator` property in the `ColorPicker.showPickerDialog()` and
   in the function `showColorPickerDialog` had to be deprecated.
 
   The property has moved to become a configuration option in `ColorPickerActionButtons`
-  class in order to make it accessible to the Navigator pop functions both in
+  class to make it accessible to the Navigator pop functions both in
   the `ColorPicker` widget itself, as well as to built-in dialogs.
 
   The default behavior has not changed, the setting still defaults to using
