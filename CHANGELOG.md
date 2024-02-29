@@ -12,7 +12,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 - Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is no also a `ColorPickerType.customSecondary` picker selector. It gets its values `ColorPicker.customSecondaryColorSwatchesAndNames`. 
 
 **TODO**
-- Add transparent color options for custom colors, that can have opacity set in the picker in their source value even if opacity slider is not enabled. To enable support set `enableTransparentCustomColors` to true.
+- Add transparent color options for custom colors, that can have opacity in the picker in their custom source values, even if opacity slider is not enabled. To enable support for this set `enableTransparentCustomColors` in the `ColorPicker` to true.
 
 
 **FIX**
