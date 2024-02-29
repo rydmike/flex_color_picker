@@ -5,6 +5,7 @@ import '../../widgets/flex_app_bar.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
+import 'picker_switches/dialog_action_only_ok_button_switch.dart';
 import 'picker_switches/transparency_switch.dart';
 import 'picker_text_fields/text_field_focus_demo.dart';
 import 'picker_toggle_buttons/actions_order_switch.dart';
@@ -322,6 +323,7 @@ class _Column4 extends StatelessWidget {
         const OkButtonSwitch(),
         const CloseIsLastSwitch(),
         const DialogActionsButtonsSwitch(),
+        const DialogActionOnlyOkButtonSwitch(),
         const ActionsOrderSwitch(),
         const DialogActionIconsSwitch(),
         const Divider(),

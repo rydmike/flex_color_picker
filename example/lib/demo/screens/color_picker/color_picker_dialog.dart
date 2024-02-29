@@ -67,7 +67,7 @@ Future<bool> colorPickerDialog(
       closeButton: ref.watch(closeButtonPod),
       closeIsLast: ref.watch(closeIsLastPod),
       dialogActionButtons: ref.watch(dialogActionButtonsPod),
-      dialogActionOnlyOkButton: true,
+      dialogActionOnlyOkButton: ref.watch(dialogActionOnlyOkButtonPod),
       dialogActionOrder: ref.watch(dialogActionsOrderPod),
       dialogActionIcons: ref.watch(dialogActionIconsPod),
       dialogOkButtonType: ColorPickerActionButtonType.filled,
