@@ -2,23 +2,27 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.4.0 (WIP)
+## 3.4.0
 
 **Feb 29, 2024**
 
 **NEW**
-- Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and support for these styles as OK/Cancel buttons.
+
+- Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and added support for these button styles as OK/Cancel buttons in the ColorPicker dialog. 
 - Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
 - Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is no also a `ColorPickerType.customSecondary` picker selector. It gets its values `ColorPicker.customSecondaryColorSwatchesAndNames`. 
-
-**TODO**
-- Add transparent color options for custom colors, that can have opacity in the picker in their custom source values, even if opacity slider is not enabled. To enable support for this set `enableTransparentCustomColors` in the `ColorPicker` to true.
+- Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity slider `ColorPicker.enableOpacity` is not enabled. To enable support for opacity in custom colors, you must set `enableTransparentCustomColors` in the `ColorPicker` to true.
+- The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all swatch indexes.
 
 
 **FIX**
-- Fixed deprecated APIs in Flutter 3.19.0: Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with `Shortcut` APIs.
-- Web demo: Reset to defaults did not reset settings for wheelSquarePadding and wheelSquareBorderRadius. Fixed.
+
+Package
+- Fixed deprecated APIs in Flutter 3.19.0. Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with `Shortcut` APIs.
 - When using custom transitions the `InheritedTheme.capture ` should use `actionButtons.useRootNavigator` and not default it to true. Fixed.
+
+Web demo 
+- Reset to defaults did not reset settings for `wheelSquarePadding` and `wheelSquareBorderRadius`. Fixed.
 
 
 ## 3.3.1
@@ -27,7 +31,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 - FIX: Fixed issue [#71 _activeColorSwatchList init in Wheel with tonal palette case](https://github.com/rydmike/flex_color_picker/issues/71).
 - CHORE: Bump FlexSeedScheme to version 1.4.0.
-- TEST: Add tests, improve test coverage (65% -> 74%)
+- TEST: Improved test coverage (65% -> 74%)
 
 ## 3.3.0
 

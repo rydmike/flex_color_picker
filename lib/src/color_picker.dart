@@ -1351,7 +1351,9 @@ class _ColorPickerState extends State<ColorPicker> {
     bool shouldFindPickerAndSwatch = false;
 
     // Opacity enable/disable changed, update selected color and opacity.
-    if (widget.enableOpacity != oldWidget.enableOpacity) {
+    if (widget.enableOpacity != oldWidget.enableOpacity ||
+        widget.enableTransparentCustomColors !=
+            oldWidget.enableTransparentCustomColors) {
       if (_debug) {
         debugPrint('didUpdateWidget enableOpacity = '
             '${widget.enableOpacity == oldWidget.enableOpacity}');
@@ -1792,10 +1794,20 @@ class _ColorPickerState extends State<ColorPicker> {
                 runSpacing: widget.runSpacing,
                 columnSpacing: widget.columnSpacing,
                 activeColorSwatchList: _activeColorSwatchList,
-                selectedColor: _selectedColor.withAlpha(0xFF),
+                selectedColor: (widget.enableTransparentCustomColors ||
+                            widget.enableOpacity) &&
+                        (_activePicker == ColorPickerType.custom ||
+                            _activePicker == ColorPickerType.customSecondary)
+                    ? _selectedColor
+                    : _selectedColor.withAlpha(0xFF),
                 onSelectColor: (Color color) {
                   _tonalOperated = false;
-                  _onSelectColor(color);
+                  _onSelectColor(color,
+                      keepOpacity: (widget.enableTransparentCustomColors ||
+                              widget.enableOpacity) &&
+                          (_activePicker == ColorPickerType.custom ||
+                              _activePicker ==
+                                  ColorPickerType.customSecondary));
                 },
                 includeIndex850: widget.includeIndex850,
                 width: widget.width,
@@ -1877,10 +1889,20 @@ class _ColorPickerState extends State<ColorPicker> {
                 runSpacing: widget.runSpacing,
                 columnSpacing: widget.columnSpacing,
                 activeSwatch: _activeSwatch!,
-                selectedColor: _selectedColor.withAlpha(0xFF),
+                selectedColor: (widget.enableTransparentCustomColors ||
+                            widget.enableOpacity) &&
+                        (_activePicker == ColorPickerType.custom ||
+                            _activePicker == ColorPickerType.customSecondary)
+                    ? _selectedColor
+                    : _selectedColor.withAlpha(0xFF),
                 onSelectColor: (Color color) {
                   _tonalOperated = false;
-                  _onSelectColor(color);
+                  _onSelectColor(color,
+                      keepOpacity: (widget.enableTransparentCustomColors ||
+                              widget.enableOpacity) &&
+                          (_activePicker == ColorPickerType.custom ||
+                              _activePicker ==
+                                  ColorPickerType.customSecondary));
                   if (_activePicker == ColorPickerType.wheel) {
                     setState(() {
                       _selectedShouldFocus = true;

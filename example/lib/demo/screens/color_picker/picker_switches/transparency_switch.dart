@@ -11,9 +11,9 @@ class TransparencySwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
-      title: const Text('Enable transparency'),
-      subtitle: const Text('Enable transparent custom colors when not '
-          'using slider'),
+      title: const Text('Enable custom colors transparency'),
+      subtitle: const Text('Enable transparent colors on color values '
+          'in custom color palettes'),
       value: ref.watch(enableTransparencyPod),
       onChanged: (bool value) =>
           ref.read(enableTransparencyPod.notifier).state = value,

@@ -49,6 +49,9 @@ void resetSettings(WidgetRef ref) {
   ref.read(enableOpacityPod.notifier).state =
       Keys.defaults[Keys.enableOpacity]! as bool;
 
+  ref.read(enableTransparencyPod.notifier).state =
+      Keys.defaults[Keys.enableTransparency]! as bool;
+
   ref.read(showMaterialNamePod.notifier).state =
       Keys.defaults[Keys.showMaterialName]! as bool;
 
@@ -155,6 +158,9 @@ void resetSettings(WidgetRef ref) {
 
   ref.read(dialogActionButtonsPod.notifier).state =
       Keys.defaults[Keys.dialogActionButtons]! as bool;
+
+  ref.read(dialogActionOnlyOkButtonPod.notifier).state =
+      Keys.defaults[Keys.dialogActionOnlyOkButton]! as bool;
 
   ref.read(dialogActionsOrderPod.notifier).state =
       Keys.defaults[Keys.dialogActionOrder]! as ColorPickerActionButtonOrder;

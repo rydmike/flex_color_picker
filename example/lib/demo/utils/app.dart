@@ -59,6 +59,7 @@ class App {
   static const Color trendyPink = Color(0xFF9565A5);
   static const Color parsley = Color(0xFF16552C);
   static const Color walnut = Color(0xFF753D1F);
+  static const Color parsleyOpacity = Color(0x4416552C);
 
   // Add a custom white to black grey scale.
   static const MaterialColor whiteBlueBlack = MaterialColor(
@@ -115,6 +116,23 @@ class App {
     },
   );
 
+  // Add a custom white to black grey scale.
+  static const MaterialColor allSwatchParsleyTransparent = MaterialColor(
+    0x8830874C, // Set the 500 index value here.
+    <int, Color>{
+      50: Color(0x88ADF3B9),
+      100: Color(0x88ADF3B9),
+      200: Color(0x8882D995),
+      300: Color(0x8867BD7C),
+      400: Color(0x884CA164),
+      500: Color(0x8830874C),
+      600: Color(0x880C6D35),
+      700: Color(0x88005226),
+      800: Color(0x88003918),
+      900: Color(0x8800210B),
+    },
+  );
+
   // A custom color swatch, to name map, for the above custom colors.
   static Map<ColorSwatch<Object>, String> get colorsNameMap =>
       <ColorSwatch<Object>, String>{
@@ -148,5 +166,7 @@ class App {
         ColorTools.createPrimarySwatch(trendyPink): 'Trendy pink',
         ColorTools.createPrimarySwatch(parsley): 'Parsley',
         ColorTools.createPrimarySwatch(walnut): 'Walnut',
+        ColorTools.createPrimarySwatch(parsleyOpacity): 'Transparent parsley',
+        allSwatchParsleyTransparent: 'Parsley all indexes transparent',
       };
 }
