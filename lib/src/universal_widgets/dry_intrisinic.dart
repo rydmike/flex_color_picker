@@ -19,7 +19,7 @@ class DryIntrinsicWidth extends SingleChildRenderObjectWidget {
   /// Default const constructor.
   const DryIntrinsicWidth({
     super.key,
-    required Widget super.child,
+    required super.child,
   });
 
   @override
@@ -55,7 +55,7 @@ class DryIntrinsicHeight extends SingleChildRenderObjectWidget {
   /// Default const constructor.
   const DryIntrinsicHeight({
     super.key,
-    required Widget super.child,
+    required super.child,
   });
 
   @override

@@ -16,8 +16,8 @@ class App {
     host: 'pub.dev',
     path: 'packages/flex_color_picker',
   );
-  static const String flutterVersion = 'Channel stable 3.16.8 (canvaskit)';
-  static const String copyright = '© 2020 - 2023';
+  static const String flutterVersion = 'Channel stable 3.19.2 (canvaskit)';
+  static const String copyright = '© 2020 - 2024';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
   static const String icon = 'assets/images/app_icon.png';

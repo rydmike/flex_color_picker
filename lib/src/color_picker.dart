@@ -13,10 +13,9 @@ import 'functions/picker_functions.dart';
 import 'models/color_picker_action_buttons.dart';
 import 'models/color_picker_copy_paste_behavior.dart';
 import 'models/color_picker_type.dart';
-import 'universal_widgets/if_wrapper.dart';
 import 'widgets/color_code_field.dart';
 import 'widgets/color_picker_toolbar.dart';
-import 'widgets/context_copy_paste_menu.dart';
+import 'widgets/copy_paste_handler.dart';
 import 'widgets/main_colors.dart';
 import 'widgets/opacity/opacity_slider.dart';
 import 'widgets/picker_selector.dart';
@@ -33,7 +32,7 @@ part 'show_color_picker_dialog.dart';
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off here for just this feature. You can leave it true
 // below to see this feature's logs in debug mode.
-const bool _debug = !kReleaseMode && false;
+const bool _debug = !kReleaseMode && true;
 
 const int _minRecentColors = 2;
 const int _maxRecentColors = 20;
@@ -1560,517 +1559,499 @@ class _ColorPickerState extends State<ColorPicker> {
     final TextStyle effectiveGenericNameStyle =
         (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
-
     // Set the default integer code value text style to bodyMedium if not given.
     final TextStyle effectiveCodeStyle =
         (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
             const TextStyle();
-
     // The logic below is used to determine if we will have a context menu
     // present at all in the Widget tree.
     final bool useContextMenu = widget.copyPasteBehavior.longPressMenu ||
         widget.copyPasteBehavior.secondaryMenu ||
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice ||
         widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb;
-
     // Should keyboard listener grab focus? If neither copy and paste keyboard
     // shortcuts are enabled, there is no need to autofocus, so let's skip it
     // then too, regardless of autofocus setting.
     final bool autoFocus = widget.copyPasteBehavior.autoFocus &&
         (widget.copyPasteBehavior.ctrlC || widget.copyPasteBehavior.ctrlV);
-
-    // We start with a RawKeyboardListener that is used to handle keyboard
-    // copy and paste events.
-    return RawKeyboardListener(
+    // Use a copy paste handler to handle copy and paste keyboard shortcuts,
+    // and also to handle the context menu for copy and paste.
+    return CopyPasteHandler(
+      pasteFromClipboard: _getClipboard,
+      copyToClipboard: _setClipboard,
+      useContextMenu: useContextMenu,
+      useLongPress: widget.copyPasteBehavior.longPressMenu,
+      useSecondaryTapDown: widget.copyPasteBehavior.secondaryMenu,
+      useSecondaryOnDesktopLongOnDevice:
+          widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice,
+      useSecondaryOnDesktopLongOnDeviceAndWeb:
+          widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb,
+      onCopyPasteMenuOpened: () {
+        // If we were on the wheel when the menu got opened, it's
+        // operation got cancelled by the context menu and we need to
+        // call onColorChangeEnd event with the selected color.
+        if (_onWheel) {
+          // But only if there is call back for it.
+          widget.onColorChangeEnd?.call(_selectedColor);
+          // We set onWheel to false as well, as we are no longer on
+          // the wheel and we handled the event.
+          setState(() {
+            _onWheel = false;
+          });
+        }
+      },
       focusNode: _focusNode,
-      onKey: _handleKeyEvent,
-      autofocus: autoFocus,
-      // If the Copy-Paste context menu feature is enabled we wrap the
-      // entire color picker with a Copy-Paste context menu, if it is not
-      // enabled, it is not a part of the widget tree at all.
-      child: IfWrapper(
-        condition: useContextMenu,
-        builder: (BuildContext context, Widget child) {
-          return ContextCopyPasteMenu(
-            useLongPress: widget.copyPasteBehavior.longPressMenu,
-            useSecondaryTapDown: widget.copyPasteBehavior.secondaryMenu,
-            useSecondaryOnDesktopLongOnDevice:
-                widget.copyPasteBehavior.secondaryOnDesktopLongOnDevice,
-            useSecondaryOnDesktopLongOnDeviceAndWeb:
-                widget.copyPasteBehavior.secondaryOnDesktopLongOnDeviceAndWeb,
-            onSelected: (CopyPasteCommands? value) {
-              if (value == CopyPasteCommands.copy) unawaited(_setClipboard());
-              if (value == CopyPasteCommands.paste) unawaited(_getClipboard());
-            },
-            onOpen: () {
-              // If we were on the wheel when the menu got opened, it's
-              // operation got cancelled by the context menu and we need to
-              // call onColorChangeEnd event with the selected color.
-              if (_onWheel) {
-                // But only if there is call back for it.
-                widget.onColorChangeEnd?.call(_selectedColor);
-                // We set onWheel to false as well, as we are no longer on
-                // the wheel and we handled the event.
-                setState(() {
-                  _onWheel = false;
-                });
-              }
-            },
-            child: child,
-          );
-        },
-        child: Padding(
-          padding: widget.padding,
-          // The ColorPicker layout is a column. It is up to the user to ensure
-          // that it fits, or use a scrolling parent if it does not.
-          child: Column(
-            crossAxisAlignment: widget.crossAxisAlignment,
-            children: <Widget>[
-              // Show title bar widget if we have one.
-              if (widget.title != null ||
-                  widget.copyPasteBehavior.copyButton ||
-                  widget.copyPasteBehavior.pasteButton ||
-                  widget.actionButtons.okButton ||
-                  widget.actionButtons.closeButton)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: ColorPickerToolbar(
-                    title: widget.title,
-                    onCopy: widget.copyPasteBehavior.copyButton
-                        ? _setClipboard
-                        : null,
-                    onPaste: widget.copyPasteBehavior.pasteButton
-                        ? _getClipboard
-                        : null,
-                    onOk: widget.actionButtons.okButton
-                        ? () {
-                            // OK was pressed, we pop and return TRUE.
-                            // In case this was not used in a dialog the
-                            // canPop will at least avoid a crash, but may
-                            // still do the wrong thing.
-                            if (Navigator.of(context,
+      autoFocus: autoFocus,
+      child: Padding(
+        padding: widget.padding,
+        // The ColorPicker layout is a column. It is up to the user to ensure
+        // that it fits, or use a scrolling parent if it does not.
+        child: Column(
+          crossAxisAlignment: widget.crossAxisAlignment,
+          children: <Widget>[
+            // Show title bar widget if we have one.
+            if (widget.title != null ||
+                widget.copyPasteBehavior.copyButton ||
+                widget.copyPasteBehavior.pasteButton ||
+                widget.actionButtons.okButton ||
+                widget.actionButtons.closeButton)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: ColorPickerToolbar(
+                  title: widget.title,
+                  onCopy: widget.copyPasteBehavior.copyButton
+                      ? _setClipboard
+                      : null,
+                  onPaste: widget.copyPasteBehavior.pasteButton
+                      ? _getClipboard
+                      : null,
+                  onOk: widget.actionButtons.okButton
+                      ? () {
+                          // OK was pressed, we pop and return TRUE.
+                          // In case this was not used in a dialog the
+                          // canPop will at least avoid a crash, but may
+                          // still do the wrong thing.
+                          if (Navigator.of(context,
+                                  rootNavigator:
+                                      widget.actionButtons.useRootNavigator)
+                              .canPop()) {
+                            Navigator.of(context,
                                     rootNavigator:
                                         widget.actionButtons.useRootNavigator)
-                                .canPop()) {
-                              Navigator.of(context,
-                                      rootNavigator:
-                                          widget.actionButtons.useRootNavigator)
-                                  .pop(true);
-                            }
+                                .pop(true);
                           }
-                        : null,
-                    onClose: widget.actionButtons.closeButton
-                        ? () {
-                            // Cancel was pressed, we pop and return FALSE.
-                            // In case this was not used in a dialog the
-                            // canPop will at least avoid a crash, but may
-                            // still do the wrong thing.
-                            if (Navigator.of(context,
-                                    rootNavigator:
-                                        widget.actionButtons.useRootNavigator)
-                                .canPop()) {
-                              Navigator.of(context,
-                                      rootNavigator:
-                                          widget.actionButtons.useRootNavigator)
-                                  .pop(false);
-                            }
-                          }
-                        : null,
-                    toolIcons: widget.actionButtons,
-                    copyPasteBehavior: widget.copyPasteBehavior,
-                    enableTooltips: widget.enableTooltips,
-                  ),
-                ),
-              // Show heading widget if we have one.
-              if (widget.heading != null)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.heading,
-                ),
-              // Show picker selector, if more than one picker is enabled.
-              if (_usePickerSelector)
-                Focus(
-                  focusNode: _pickerFocusNode,
-                  onKey: (FocusNode node, RawKeyEvent event) {
-                    _handleKeyEvent(event);
-                    return KeyEventResult.ignored;
-                  },
-                  child: SelectPicker(
-                    pickers: _pickers,
-                    pickerLabels: _pickerLabels,
-                    picker: _activePicker,
-                    onPickerChanged: (ColorPickerType value) {
-                      // If there is no color in the picker that will grab
-                      // focus when we move to the picker, then the picker
-                      // selector itself will keep focus, and kick the key
-                      // events (copy/paste) to the handler, we can thus use
-                      // CTRL-C/V also when picker selector has focus.
-                      _pickerFocusNode.requestFocus();
-                      setState(() {
-                        _activePicker = value;
-                        // If there is a color indicator, it will grab focus.
-                        _selectedShouldFocus = true;
-                        // If we are on the wheel no shades selection is not
-                        // enabled, then the wheel will grab the focus.
-                        if (_activePicker == ColorPickerType.wheel &&
-                            !widget.enableShadesSelection &&
-                            !widget.enableTonalPalette) {
-                          _wheelShouldFocus = true;
                         }
-                        _tonalOperated = false;
-                        _updateActiveSwatch();
-                      });
-                    },
-                    thumbColor: widget.selectedPickerTypeColor,
-                    textStyle: widget.pickerTypeTextStyle,
-                    columnSpacing: widget.columnSpacing,
-                  ),
+                      : null,
+                  onClose: widget.actionButtons.closeButton
+                      ? () {
+                          // Cancel was pressed, we pop and return FALSE.
+                          // In case this was not used in a dialog the
+                          // canPop will at least avoid a crash, but may
+                          // still do the wrong thing.
+                          if (Navigator.of(context,
+                                  rootNavigator:
+                                      widget.actionButtons.useRootNavigator)
+                              .canPop()) {
+                            Navigator.of(context,
+                                    rootNavigator:
+                                        widget.actionButtons.useRootNavigator)
+                                .pop(false);
+                          }
+                        }
+                      : null,
+                  toolIcons: widget.actionButtons,
+                  copyPasteBehavior: widget.copyPasteBehavior,
+                  enableTooltips: widget.enableTooltips,
                 ),
-              // Add a tiny bit of extra hard coded space after the picker
-              // type selector if there was one.
-              if (_usePickerSelector) const SizedBox(height: 4),
-              // This is not the Wheel case, so we draw all the main colors
-              // for the active swatch list.
-              if (_activePicker != ColorPickerType.wheel)
-                MainColors(
-                  spacing: widget.spacing,
-                  runSpacing: widget.runSpacing,
-                  columnSpacing: widget.columnSpacing,
-                  activeColorSwatchList: _activeColorSwatchList,
-                  selectedColor: _selectedColor.withAlpha(0xFF),
-                  onSelectColor: (Color color) {
-                    _tonalOperated = false;
-                    _onSelectColor(color);
-                  },
-                  includeIndex850: widget.includeIndex850,
-                  width: widget.width,
-                  height: widget.height,
-                  borderRadius: widget.borderRadius,
-                  hasBorder: widget.hasBorder,
-                  borderColor: widget.borderColor,
-                  elevation: widget.elevation,
-                  selectedColorIcon: widget.selectedColorIcon,
-                  selectedRequestsFocus: _selectedShouldFocus,
-                ),
-              // This is the wheel case, draw the custom ColorWheelPicker.
-              if (_activePicker == ColorPickerType.wheel)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: SizedBox(
-                    height: widget.wheelDiameter,
-                    width: widget.wheelDiameter,
-                    child: ColorWheelPicker(
-                      color: _selectedColor.withAlpha(0xFF),
-                      wheelWidth: widget.wheelWidth,
-                      wheelSquarePadding: widget.wheelSquarePadding,
-                      wheelSquareBorderRadius: widget.wheelSquareBorderRadius,
-                      hasBorder: widget.wheelHasBorder,
-                      borderColor: widget.borderColor,
-                      shouldUpdate: _wheelShouldUpdate,
-                      shouldRequestsFocus: _wheelShouldFocus,
-                      onChangeStart: (Color color) {
-                        widget.onColorChangeStart
-                            ?.call(color.withOpacity(_opacity));
-                        _addToRecentColors(color.withOpacity(_opacity));
-                      },
-                      onChanged: (Color color) {
-                        setState(() {
-                          _selectedColor = color.withOpacity(_opacity);
-                          _wheelShouldUpdate = false;
-                          _editShouldUpdate = true;
-                          _tonalShouldUpdate = true;
-                          _tonalOperated = false;
-                          _selectedShouldFocus = true;
-                          _wheelShouldFocus = false;
-                          _updateActiveSwatch();
-                        });
-                        widget.onColorChanged(_selectedColor);
-                      },
-                      onChangeEnd: (Color color) {
-                        widget.onColorChangeEnd?.call(
-                          color.withOpacity(_opacity),
-                        );
-                      },
-                      onWheel: (bool value) {
-                        setState(() {
-                          _onWheel = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              // Show the sub-heading for the none wheel case.
-              if (widget.subheading != null &&
-                  widget.enableShadesSelection &&
-                  _activePicker != ColorPickerType.wheel)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.subheading,
-                ),
-              // Show the sub-heading for the wheel case.
-              if (widget.wheelSubheading != null &&
-                  widget.enableShadesSelection &&
-                  _activePicker == ColorPickerType.wheel)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.wheelSubheading,
-                ),
-              // Draw the shade colors for the selected main color.
-              if (widget.enableShadesSelection)
-                ShadeColors(
-                  spacing: widget.spacing,
-                  runSpacing: widget.runSpacing,
-                  columnSpacing: widget.columnSpacing,
-                  activeSwatch: _activeSwatch!,
-                  selectedColor: _selectedColor.withAlpha(0xFF),
-                  onSelectColor: (Color color) {
-                    _tonalOperated = false;
-                    _onSelectColor(color);
-                    if (_activePicker == ColorPickerType.wheel) {
-                      setState(() {
-                        _selectedShouldFocus = true;
-                        _tonalShouldUpdate = true;
-                      });
-                    }
-                  },
-                  includeIndex850: widget.includeIndex850,
-                  width: widget.width,
-                  height: widget.height,
-                  borderRadius: widget.borderRadius,
-                  hasBorder: widget.hasBorder,
-                  borderColor: widget.borderColor,
-                  elevation: widget.elevation,
-                  selectedColorIcon: widget.selectedColorIcon,
-                  selectedRequestsFocus: _selectedShouldFocus,
-                ),
-              // Show the tonal sub-heading
-              if (widget.tonalSubheading != null && widget.enableTonalPalette)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.tonalSubheading,
-                ),
-              // Draw the tonal palette.
-              if (widget.enableTonalPalette)
-                TonalPaletteColors(
-                  spacing: widget.spacing,
-                  runSpacing: widget.runSpacing,
-                  columnSpacing: widget.columnSpacing,
-                  selectedColor: _selectedColor.withAlpha(0xFF),
-                  onSelectColor: (Color color) {
-                    _tonalOperated = true;
-                    _onSelectColor(color);
+              ),
+            // Show heading widget if we have one.
+            if (widget.heading != null)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.heading,
+              ),
+            // Show picker selector, if more than one picker is enabled.
+            if (_usePickerSelector)
+              Focus(
+                focusNode: _pickerFocusNode,
+                child: SelectPicker(
+                  pickers: _pickers,
+                  pickerLabels: _pickerLabels,
+                  picker: _activePicker,
+                  onPickerChanged: (ColorPickerType value) {
+                    // If there is no color in the picker that will grab
+                    // focus when we move to the picker, then the picker
+                    // selector itself will keep focus, and kick the key
+                    // events (copy/paste) to the handler, we can thus use
+                    // CTRL-C/V also when picker selector has focus.
+                    _pickerFocusNode.requestFocus();
                     setState(() {
+                      _activePicker = value;
+                      // If there is a color indicator, it will grab focus.
                       _selectedShouldFocus = true;
-                      _tonalShouldUpdate = false;
+                      // If we are on the wheel no shades selection is not
+                      // enabled, then the wheel will grab the focus.
+                      if (_activePicker == ColorPickerType.wheel &&
+                          !widget.enableShadesSelection &&
+                          !widget.enableTonalPalette) {
+                        _wheelShouldFocus = true;
+                      }
+                      _tonalOperated = false;
+                      _updateActiveSwatch();
                     });
                   },
-                  tonalShouldUpdate: _tonalShouldUpdate,
-                  width: widget.tonalColorSameSize
-                      ? widget.width
-                      : (widget.width + widget.spacing) * 10 / 15 -
-                          widget.spacing,
-                  height: widget.tonalColorSameSize
-                      ? widget.width
-                      : (widget.width + widget.spacing) * 10 / 15 -
-                          widget.spacing,
-                  borderRadius: widget.borderRadius,
-                  hasBorder: widget.hasBorder,
-                  borderColor: widget.borderColor,
-                  elevation: widget.elevation,
-                  selectedColorIcon: widget.selectedColorIcon,
-                  selectedRequestsFocus: _selectedShouldFocus,
+                  thumbColor: widget.selectedPickerTypeColor,
+                  textStyle: widget.pickerTypeTextStyle,
+                  columnSpacing: widget.columnSpacing,
                 ),
-              // Show the sub-heading for the opacity control.
-              if (widget.opacitySubheading != null && widget.enableOpacity)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.opacitySubheading,
+              ),
+            // Add a tiny bit of extra hard coded space after the picker
+            // type selector if there was one.
+            if (_usePickerSelector) const SizedBox(height: 4),
+            // This is not the Wheel case, so we draw all the main colors
+            // for the active swatch list.
+            if (_activePicker != ColorPickerType.wheel)
+              MainColors(
+                spacing: widget.spacing,
+                runSpacing: widget.runSpacing,
+                columnSpacing: widget.columnSpacing,
+                activeColorSwatchList: _activeColorSwatchList,
+                selectedColor: _selectedColor.withAlpha(0xFF),
+                onSelectColor: (Color color) {
+                  _tonalOperated = false;
+                  _onSelectColor(color);
+                },
+                includeIndex850: widget.includeIndex850,
+                width: widget.width,
+                height: widget.height,
+                borderRadius: widget.borderRadius,
+                hasBorder: widget.hasBorder,
+                borderColor: widget.borderColor,
+                elevation: widget.elevation,
+                selectedColorIcon: widget.selectedColorIcon,
+                selectedRequestsFocus: _selectedShouldFocus,
+              ),
+            // This is the wheel case, draw the custom ColorWheelPicker.
+            if (_activePicker == ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: SizedBox(
+                  height: widget.wheelDiameter,
+                  width: widget.wheelDiameter,
+                  child: ColorWheelPicker(
+                    color: _selectedColor.withAlpha(0xFF),
+                    wheelWidth: widget.wheelWidth,
+                    wheelSquarePadding: widget.wheelSquarePadding,
+                    wheelSquareBorderRadius: widget.wheelSquareBorderRadius,
+                    hasBorder: widget.wheelHasBorder,
+                    borderColor: widget.borderColor,
+                    shouldUpdate: _wheelShouldUpdate,
+                    shouldRequestsFocus: _wheelShouldFocus,
+                    onChangeStart: (Color color) {
+                      widget.onColorChangeStart
+                          ?.call(color.withOpacity(_opacity));
+                      _addToRecentColors(color.withOpacity(_opacity));
+                    },
+                    onChanged: (Color color) {
+                      setState(() {
+                        _selectedColor = color.withOpacity(_opacity);
+                        _wheelShouldUpdate = false;
+                        _editShouldUpdate = true;
+                        _tonalShouldUpdate = true;
+                        _tonalOperated = false;
+                        _selectedShouldFocus = true;
+                        _wheelShouldFocus = false;
+                        _updateActiveSwatch();
+                      });
+                      widget.onColorChanged(_selectedColor);
+                    },
+                    onChangeEnd: (Color color) {
+                      widget.onColorChangeEnd?.call(
+                        color.withOpacity(_opacity),
+                      );
+                    },
+                    onWheel: (bool value) {
+                      setState(() {
+                        _onWheel = value;
+                      });
+                    },
+                  ),
                 ),
-              // Draw the opacity slider if enabled.
-              if (widget.enableOpacity)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: SizedBox(
-                    width: (widget.opacityTrackWidth ?? 0) < 150
-                        ? double.infinity
-                        : widget.opacityTrackWidth,
-                    child: RepaintBoundary(
-                      child: OpacitySlider(
-                        color: _selectedColor.withAlpha(0xFF),
-                        opacity: _opacity,
-                        trackHeight: widget.opacityTrackHeight,
-                        thumbRadius: widget.opacityThumbRadius,
-                        focusNode: _opacityFocusNode,
-                        onChangeStart: (double value) {
-                          if (widget.onColorChangeStart != null) {
-                            // Request focus when change starts.
-                            _opacityFocusNode.requestFocus();
-                            setState(() {
-                              _opacity = value;
-                              _selectedColor =
-                                  _selectedColor.withOpacity(_opacity);
-                            });
-                            widget.onColorChangeStart!(_selectedColor);
-                          }
-                          _addToRecentColors(_selectedColor);
-                        },
-                        onChanged: (double value) {
+              ),
+            // Show the sub-heading for the none wheel case.
+            if (widget.subheading != null &&
+                widget.enableShadesSelection &&
+                _activePicker != ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.subheading,
+              ),
+            // Show the sub-heading for the wheel case.
+            if (widget.wheelSubheading != null &&
+                widget.enableShadesSelection &&
+                _activePicker == ColorPickerType.wheel)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.wheelSubheading,
+              ),
+            // Draw the shade colors for the selected main color.
+            if (widget.enableShadesSelection)
+              ShadeColors(
+                spacing: widget.spacing,
+                runSpacing: widget.runSpacing,
+                columnSpacing: widget.columnSpacing,
+                activeSwatch: _activeSwatch!,
+                selectedColor: _selectedColor.withAlpha(0xFF),
+                onSelectColor: (Color color) {
+                  _tonalOperated = false;
+                  _onSelectColor(color);
+                  if (_activePicker == ColorPickerType.wheel) {
+                    setState(() {
+                      _selectedShouldFocus = true;
+                      _tonalShouldUpdate = true;
+                    });
+                  }
+                },
+                includeIndex850: widget.includeIndex850,
+                width: widget.width,
+                height: widget.height,
+                borderRadius: widget.borderRadius,
+                hasBorder: widget.hasBorder,
+                borderColor: widget.borderColor,
+                elevation: widget.elevation,
+                selectedColorIcon: widget.selectedColorIcon,
+                selectedRequestsFocus: _selectedShouldFocus,
+              ),
+            // Show the tonal sub-heading
+            if (widget.tonalSubheading != null && widget.enableTonalPalette)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.tonalSubheading,
+              ),
+            // Draw the tonal palette.
+            if (widget.enableTonalPalette)
+              TonalPaletteColors(
+                spacing: widget.spacing,
+                runSpacing: widget.runSpacing,
+                columnSpacing: widget.columnSpacing,
+                selectedColor: _selectedColor.withAlpha(0xFF),
+                onSelectColor: (Color color) {
+                  _tonalOperated = true;
+                  _onSelectColor(color);
+                  setState(() {
+                    _selectedShouldFocus = true;
+                    _tonalShouldUpdate = false;
+                  });
+                },
+                tonalShouldUpdate: _tonalShouldUpdate,
+                width: widget.tonalColorSameSize
+                    ? widget.width
+                    : (widget.width + widget.spacing) * 10 / 15 -
+                        widget.spacing,
+                height: widget.tonalColorSameSize
+                    ? widget.width
+                    : (widget.width + widget.spacing) * 10 / 15 -
+                        widget.spacing,
+                borderRadius: widget.borderRadius,
+                hasBorder: widget.hasBorder,
+                borderColor: widget.borderColor,
+                elevation: widget.elevation,
+                selectedColorIcon: widget.selectedColorIcon,
+                selectedRequestsFocus: _selectedShouldFocus,
+              ),
+            // Show the sub-heading for the opacity control.
+            if (widget.opacitySubheading != null && widget.enableOpacity)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.opacitySubheading,
+              ),
+            // Draw the opacity slider if enabled.
+            if (widget.enableOpacity)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: SizedBox(
+                  width: (widget.opacityTrackWidth ?? 0) < 150
+                      ? double.infinity
+                      : widget.opacityTrackWidth,
+                  child: RepaintBoundary(
+                    child: OpacitySlider(
+                      color: _selectedColor.withAlpha(0xFF),
+                      opacity: _opacity,
+                      trackHeight: widget.opacityTrackHeight,
+                      thumbRadius: widget.opacityThumbRadius,
+                      focusNode: _opacityFocusNode,
+                      onChangeStart: (double value) {
+                        if (widget.onColorChangeStart != null) {
+                          // Request focus when change starts.
+                          _opacityFocusNode.requestFocus();
                           setState(() {
                             _opacity = value;
                             _selectedColor =
                                 _selectedColor.withOpacity(_opacity);
-                            _wheelShouldUpdate = false;
-                            _editShouldUpdate = true;
-                            _selectedShouldFocus = true;
-                            _wheelShouldFocus = false;
                           });
-                          widget.onColorChanged(_selectedColor);
-                        },
-                        onChangeEnd: (double value) {
-                          if (widget.onColorChangeEnd != null) {
-                            setState(() {
-                              _opacity = value;
-                              _selectedColor =
-                                  _selectedColor.withOpacity(_opacity);
-                            });
-                            widget.onColorChangeEnd!(_selectedColor);
-                          }
-                        },
-                      ),
+                          widget.onColorChangeStart!(_selectedColor);
+                        }
+                        _addToRecentColors(_selectedColor);
+                      },
+                      onChanged: (double value) {
+                        setState(() {
+                          _opacity = value;
+                          _selectedColor = _selectedColor.withOpacity(_opacity);
+                          _wheelShouldUpdate = false;
+                          _editShouldUpdate = true;
+                          _selectedShouldFocus = true;
+                          _wheelShouldFocus = false;
+                        });
+                        widget.onColorChanged(_selectedColor);
+                      },
+                      onChangeEnd: (double value) {
+                        if (widget.onColorChangeEnd != null) {
+                          setState(() {
+                            _opacity = value;
+                            _selectedColor =
+                                _selectedColor.withOpacity(_opacity);
+                          });
+                          widget.onColorChangeEnd!(_selectedColor);
+                        }
+                      },
                     ),
                   ),
                 ),
-              // If we show material or generic name, we enclose them in a
-              // Wrap, they will be on same row nicely if there is room
-              // enough, but also wrap to two rows when so needed when both
-              // are shown at the same and they don't fit on one row.
-              if (widget.showMaterialName || widget.showColorName)
-                Wrap(
-                  children: <Widget>[
-                    // Show the Material color name, if enabled.
-                    if (widget.showMaterialName)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                        child: Text(
-                          ColorTools.materialName(
-                            _selectedColor.withAlpha(0xFF),
-                            colorSwatchNameMap:
-                                widget.customColorSwatchesAndNames,
-                          ),
-                          style: effectiveMaterialNameStyle,
+              ),
+            // If we show material or generic name, we enclose them in a
+            // Wrap, they will be on same row nicely if there is room
+            // enough, but also wrap to two rows when so needed when both
+            // are shown at the same and they don't fit on one row.
+            if (widget.showMaterialName || widget.showColorName)
+              Wrap(
+                children: <Widget>[
+                  // Show the Material color name, if enabled.
+                  if (widget.showMaterialName)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                      child: Text(
+                        ColorTools.materialName(
+                          _selectedColor.withAlpha(0xFF),
+                          colorSwatchNameMap:
+                              widget.customColorSwatchesAndNames,
                         ),
+                        style: effectiveMaterialNameStyle,
                       ),
-                    // If we show both material and generic name, add some
-                    // hard coded horizontal space between them.
-                    if (widget.showMaterialName && widget.showColorName)
+                    ),
+                  // If we show both material and generic name, add some
+                  // hard coded horizontal space between them.
+                  if (widget.showMaterialName && widget.showColorName)
+                    const SizedBox(width: 8),
+                  // Show the generic color name, if enabled.
+                  if (widget.showColorName)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                      child: Text(
+                        ColorTools.nameThatColor(
+                            _selectedColor.withAlpha(0xFF)),
+                        style: effectiveGenericNameStyle,
+                      ),
+                    ),
+                ],
+              ),
+            // If we show color code or its int value, we enclose them in a
+            // Wrap, they will be on same row nicely if there is room enough
+            // but also wrap to two rows when so needed when both are
+            // shown at the same and they don't fit on one row.
+            if (widget.showColorCode || widget.showColorValue)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runAlignment: WrapAlignment.center,
+                  alignment: WrapAlignment.center,
+                  children: <Widget>[
+                    // Show the color code view and edit field, if enabled.
+                    if (widget.showColorCode)
+                      ColorCodeField(
+                        color: _selectedColor,
+                        readOnly: _activePicker != ColorPickerType.wheel ||
+                            widget.colorCodeReadOnly,
+                        textStyle: widget.colorCodeTextStyle,
+                        prefixStyle: widget.colorCodePrefixStyle,
+                        colorCodeHasColor: widget.colorCodeHasColor,
+                        enableTooltips: widget.enableTooltips,
+                        shouldUpdate: _editShouldUpdate,
+                        onColorChanged: (Color color) {
+                          widget.onColorChangeStart?.call(_selectedColor);
+                          setState(() {
+                            _selectedColor = color.withOpacity(_opacity);
+                            // Color changed outside wheel picker, when the
+                            // code was edited, the wheel should update.
+                            _wheelShouldUpdate = true;
+                            _editShouldUpdate = false;
+                            _tonalOperated = false;
+                            _updateActiveSwatch();
+                          });
+                          widget.onColorChanged(_selectedColor);
+                          widget.onColorChangeEnd?.call(_selectedColor);
+                          _addToRecentColors(color);
+                        },
+                        onEditFocused: (bool editInFocus) {
+                          setState(() {
+                            _editCodeFocused = editInFocus;
+                            if (_editCodeFocused) {
+                              _selectedShouldFocus = false;
+                              _wheelShouldFocus = false;
+                            }
+                          });
+                        },
+                        toolIcons: widget.actionButtons,
+                        copyPasteBehavior: widget.copyPasteBehavior,
+                      ),
+                    // If we show both hex code and int value, add some
+                    // hardcoded horizontal space between them.
+                    if (widget.showColorCode && widget.showColorValue)
                       const SizedBox(width: 8),
-                    // Show the generic color name, if enabled.
-                    if (widget.showColorName)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                        child: Text(
-                          ColorTools.nameThatColor(
-                              _selectedColor.withAlpha(0xFF)),
-                          style: effectiveGenericNameStyle,
-                        ),
+                    if (widget.showColorValue)
+                      SelectableText(
+                        _selectedColor.value.toString(),
+                        style: effectiveCodeStyle,
                       ),
                   ],
                 ),
-              // If we show color code or its int value, we enclose them in a
-              // Wrap, they will be on same row nicely if there is room enough
-              // but also wrap to two rows when so needed when both are
-              // shown at the same and they don't fit on one row.
-              if (widget.showColorCode || widget.showColorValue)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    alignment: WrapAlignment.center,
-                    children: <Widget>[
-                      // Show the color code view and edit field, if enabled.
-                      if (widget.showColorCode)
-                        ColorCodeField(
-                          color: _selectedColor,
-                          readOnly: _activePicker != ColorPickerType.wheel ||
-                              widget.colorCodeReadOnly,
-                          textStyle: widget.colorCodeTextStyle,
-                          prefixStyle: widget.colorCodePrefixStyle,
-                          colorCodeHasColor: widget.colorCodeHasColor,
-                          enableTooltips: widget.enableTooltips,
-                          shouldUpdate: _editShouldUpdate,
-                          onColorChanged: (Color color) {
-                            widget.onColorChangeStart?.call(_selectedColor);
-                            setState(() {
-                              _selectedColor = color.withOpacity(_opacity);
-                              // Color changed outside wheel picker, when the
-                              // code was edited, the wheel should update.
-                              _wheelShouldUpdate = true;
-                              _editShouldUpdate = false;
-                              _tonalOperated = false;
-                              _updateActiveSwatch();
-                            });
-                            widget.onColorChanged(_selectedColor);
-                            widget.onColorChangeEnd?.call(_selectedColor);
-                            _addToRecentColors(color);
-                          },
-                          onEditFocused: (bool editInFocus) {
-                            setState(() {
-                              _editCodeFocused = editInFocus;
-                              if (_editCodeFocused) {
-                                _selectedShouldFocus = false;
-                                _wheelShouldFocus = false;
-                              }
-                            });
-                          },
-                          toolIcons: widget.actionButtons,
-                          copyPasteBehavior: widget.copyPasteBehavior,
-                        ),
-                      // If we show both hex code and int value, add some
-                      // hardcoded horizontal space between them.
-                      if (widget.showColorCode && widget.showColorValue)
-                        const SizedBox(width: 8),
-                      if (widget.showColorValue)
-                        SelectableText(
-                          _selectedColor.value.toString(),
-                          style: effectiveCodeStyle,
-                        ),
-                    ],
-                  ),
-                ),
-              // Show the sub-heading for recent colors.
-              if (widget.recentColorsSubheading != null &&
-                  widget.showRecentColors)
-                Padding(
-                  padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                  child: widget.recentColorsSubheading,
-                ),
-              // Show the color indicators for the recently used colors.
-              if (widget.showRecentColors)
-                RecentColors(
-                  spacing: widget.spacing,
-                  runSpacing: widget.runSpacing,
-                  columnSpacing: widget.columnSpacing,
-                  recentColors: _recentColors,
-                  selectedColor: _selectedColor,
-                  onSelectColor: (Color color) {
-                    _onSelectColor(color, keepOpacity: true, findPicker: true);
-                  },
-                  includeIndex850: widget.includeIndex850,
-                  width: widget.width,
-                  height: widget.height,
-                  borderRadius: widget.borderRadius,
-                  hasBorder: widget.hasBorder,
-                  borderColor: widget.borderColor,
-                  elevation: widget.elevation,
-                  selectedColorIcon: widget.selectedColorIcon,
-                  selectedRequestsFocus: _selectedShouldFocus,
-                ),
-            ],
-          ),
+              ),
+            // Show the sub-heading for recent colors.
+            if (widget.recentColorsSubheading != null &&
+                widget.showRecentColors)
+              Padding(
+                padding: EdgeInsets.only(bottom: widget.columnSpacing),
+                child: widget.recentColorsSubheading,
+              ),
+            // Show the color indicators for the recently used colors.
+            if (widget.showRecentColors)
+              RecentColors(
+                spacing: widget.spacing,
+                runSpacing: widget.runSpacing,
+                columnSpacing: widget.columnSpacing,
+                recentColors: _recentColors,
+                selectedColor: _selectedColor,
+                onSelectColor: (Color color) {
+                  _onSelectColor(color, keepOpacity: true, findPicker: true);
+                },
+                includeIndex850: widget.includeIndex850,
+                width: widget.width,
+                height: widget.height,
+                borderRadius: widget.borderRadius,
+                hasBorder: widget.hasBorder,
+                borderColor: widget.borderColor,
+                elevation: widget.elevation,
+                selectedColorIcon: widget.selectedColorIcon,
+                selectedRequestsFocus: _selectedShouldFocus,
+              ),
+          ],
         ),
       ),
     );
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   // A color was selected by tapping it, update state and notify via callbacks.
@@ -2150,67 +2131,6 @@ class _ColorPickerState extends State<ColorPicker> {
     });
     // Call callback for the handling recent colors, if there is one.
     widget.onRecentColorsChanged?.call(_recentColors);
-  }
-
-  // Handle the keyboard events from the RawKeyboardListener.
-  void _handleKeyEvent(RawKeyEvent event) {
-    // If edit color code is focused and we do not use the parsed paste feature,
-    // we exit out of here. The TextField's normal paste action will then handle
-    // the paste as before in v1.x and normally in a TextField.
-    if (_editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste) {
-      return;
-    }
-    // Make an OS independent copy/paste shortcut modifier key.
-    //
-    // Found the usage of these in the SDK TextField copy/paste implementation.
-    final bool isRawKeyMacOS = event.data is RawKeyEventDataMacOs;
-    if (_debug) {
-      debugPrint('KeyEvent isRawKeyMacOS: $isRawKeyMacOS');
-    }
-    final bool isRawKeyIos = event.data is RawKeyEventDataIos;
-    // **BUT**
-    // The above RawKeyEventData did not seem to work on Web when using an
-    // iPad+Safari and an Apple 10.5 Pro iPad keyboard, isRawKeyIos did not
-    // become true!
-    // So CMD modifier did not get used, only CTRL worked. We can use context
-    // based Theme.platform instead here and skip RawKeyEventData, or just
-    // combine it with RawKeyEventData. Since we have a context it works too.
-    final TargetPlatform platform = Theme.of(context).platform;
-    // Should COMMAND modifier be used instead of CTRL for keyboard COPY-PASTE?
-    // Use all sources we have to determine if it is iOS or macOS that should
-    // use CMD for copy/paste instead of CTRL.
-    final bool useCommandModifier = isRawKeyMacOS ||
-        isRawKeyIos ||
-        platform == TargetPlatform.iOS ||
-        platform == TargetPlatform.macOS;
-
-    // isModifierPressed will be true when COMMAND key is pressed on macOS/iOS
-    // OR when CTRL key is pressed on other platforms.
-    final bool isModifierPressed =
-        useCommandModifier ? event.isMetaPressed : event.isControlPressed;
-
-    // The raw keyboard listener reacts to both up and down events, we only use
-    // down, so that we only execute the copy and paste keyboard command once
-    // when the keys are pressed down. We do not want to do it 2nd time when
-    // the key goes up.
-    if (event.runtimeType == RawKeyDownEvent) {
-      // If logical key is paste OR modifier+V and we use ctrlV paste behavior,
-      // we get the latest clipboard data.
-      if ((event.logicalKey == LogicalKeyboardKey.paste ||
-              (isModifierPressed &&
-                  event.logicalKey == LogicalKeyboardKey.keyV)) &&
-          widget.copyPasteBehavior.ctrlV) {
-        unawaited(_getClipboard());
-      }
-      // If logical key is copy or modifier+C and we used ctrlC copy behavior,
-      // we set the current color to the clipboard data.
-      if ((event.logicalKey == LogicalKeyboardKey.copy ||
-              (isModifierPressed &&
-                  event.logicalKey == LogicalKeyboardKey.keyC)) &&
-          widget.copyPasteBehavior.ctrlC) {
-        unawaited(_setClipboard());
-      }
-    }
   }
 
   // Get the current clipboard data. Try to parse it to a Color object.

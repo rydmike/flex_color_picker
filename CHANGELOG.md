@@ -18,6 +18,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **FIX**
 
+- Fix deprecated APIs in Flutter 3.19.0: Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with newer APIs.
 - Web demo: Reset to defaults did not reset settings for wheelSquarePadding and wheelSquareBorderRadius. Fixed.
 - When using custom transitions the `InheritedTheme.capture ` should use `actionButtons.useRootNavigator` and not default it to true. Fixed.
 
