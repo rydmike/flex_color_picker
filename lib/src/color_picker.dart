@@ -1091,9 +1091,9 @@ class ColorPicker extends StatefulWidget {
           ? <Widget>[
               if (okIsLeft) ...<Widget>[
                 okButton,
-                if (!actionButtons.dialogActionButtons) cancelButton,
+                if (!actionButtons.dialogActionOnlyOkButton) cancelButton,
               ] else ...<Widget>[
-                if (!actionButtons.dialogActionButtons) cancelButton,
+                if (!actionButtons.dialogActionOnlyOkButton) cancelButton,
                 okButton,
               ]
             ]
