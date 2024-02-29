@@ -4,21 +4,19 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.4.0 (WIP)
 
-**Jan 26, 2024**
+**Feb 29, 2024**
 
 **NEW**
-
-- Add transparent color options (Work in progress, not yet fully implemented).
+- Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and support for these styles as OK/Cancel buttons.
+- Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
+- Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is no also a `ColorPickerType.customSecondary` picker selector. It gets its values `ColorPicker.customSecondaryColorSwatchesAndNames`. 
 
 **TODO**
-- Add enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and support for these styles as OK/Cancel buttons. 
-- Add `dialogActionOnlyOK` to `ColorPickerActionButtons`. Default to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
-- Add `OkButtonUseSelectedColor` to `ColorPickerActionButtons`. Defaults to false. If true, the OK button will use the selected color as its color, instead of the default color. This is useful if you want to use the OK button to show the selected color.
-- Consider: Maybe adding support for one additional custom palette.
+- Add transparent color options for custom colors, that can have opacity set in the picker in their source value even if opacity slider is not enabled. To enable support set `enableTransparentCustomColors` to true.
+
 
 **FIX**
-
-- Fix deprecated APIs in Flutter 3.19.0: Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with newer APIs.
+- Fixed deprecated APIs in Flutter 3.19.0: Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with `Shortcut` APIs.
 - Web demo: Reset to defaults did not reset settings for wheelSquarePadding and wheelSquareBorderRadius. Fixed.
 - When using custom transitions the `InheritedTheme.capture ` should use `actionButtons.useRootNavigator` and not default it to true. Fixed.
 

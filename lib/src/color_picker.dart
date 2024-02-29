@@ -80,6 +80,7 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.accent: true,
       ColorPickerType.bw: false,
       ColorPickerType.custom: false,
+      ColorPickerType.customSecondary: false,
       ColorPickerType.wheel: false,
     },
     this.enableShadesSelection = true,
@@ -153,11 +154,14 @@ class ColorPicker extends StatefulWidget {
       ColorPickerType.bw: _selectBlackWhiteLabel,
       ColorPickerType.both: _selectBothLabel,
       ColorPickerType.custom: _selectCustomLabel,
+      ColorPickerType.customSecondary: _selectCustomSecondaryLabel,
       ColorPickerType.wheel: _selectWheelAnyLabel,
     },
     // Custom color, swatches and name map for the custom color swatches.
     this.enableTransparentCustomColors = false,
     this.customColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
+    this.customSecondaryColorSwatchesAndNames =
+        const <ColorSwatch<Object>, String>{},
     //
   })  : assert(columnSpacing >= 0 && columnSpacing <= 300,
             'The picker item column spacing must be from 0 to max 300 dp.'),
@@ -667,6 +671,7 @@ class ColorPicker extends StatefulWidget {
   ///  * [ColorPickerType.accent] : 'Primary'
   ///  * [ColorPickerType.bw] : 'Black & White'
   ///  * [ColorPickerType.custom] : 'Custom'
+  ///  * [ColorPickerType.customSecondary] : 'Option'
   ///  * [ColorPickerType.wheel] : 'Wheel'
   final Map<ColorPickerType, String> pickerTypeLabels;
 
@@ -689,6 +694,17 @@ class ColorPicker extends StatefulWidget {
   /// will not be shown even if it is enabled in [pickersEnabled].
   final Map<ColorSwatch<Object>, String> customColorSwatchesAndNames;
 
+  /// Color swatch to name map, with custom swatches and their names.
+  ///
+  /// Used to provide custom [ColorSwatch] objects to the custom color picker,
+  /// including their custom name label. These colors, their swatch shades
+  /// and names, are shown and used when the picker type
+  /// [ColorPickerType.customSecondary] option is enabled in the color picker.
+  ///
+  /// Defaults to an empty map. If the map is empty, the custom colors picker
+  /// will not be shown even if it is enabled in [pickersEnabled].
+  final Map<ColorSwatch<Object>, String> customSecondaryColorSwatchesAndNames;
+
   /// English default label for picker with both primary and accent colors.
   static const String _selectBothLabel = 'Primary & Accent';
 
@@ -703,6 +719,9 @@ class ColorPicker extends StatefulWidget {
 
   /// English default label for picker with custom defined colors.
   static const String _selectCustomLabel = 'Custom';
+
+  /// English default label for picker with custom secondary defined colors.
+  static const String _selectCustomSecondaryLabel = 'Option';
 
   /// English default label for the HSV wheel picker that can select any color.
   static const String _selectWheelAnyLabel = 'Wheel';
@@ -960,6 +979,24 @@ class ColorPicker extends StatefulWidget {
           child: okButtonContent,
         );
         break;
+      case ColorPickerActionButtonType.filled:
+        okButton = FilledButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(true);
+          },
+          child: okButtonContent,
+        );
+        break;
+      case ColorPickerActionButtonType.filledTonal:
+        okButton = FilledButton.tonal(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(true);
+          },
+          child: okButtonContent,
+        );
+        break;
     }
 
     // Make the dialog OK button.
@@ -1006,6 +1043,24 @@ class ColorPicker extends StatefulWidget {
           child: cancelButtonContent,
         );
         break;
+      case ColorPickerActionButtonType.filled:
+        cancelButton = FilledButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(false);
+          },
+          child: cancelButtonContent,
+        );
+        break;
+      case ColorPickerActionButtonType.filledTonal:
+        cancelButton = FilledButton.tonal(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
+                .pop(false);
+          },
+          child: cancelButtonContent,
+        );
+        break;
     }
 
     // False if dialog cancelled, true if color selected
@@ -1036,9 +1091,9 @@ class ColorPicker extends StatefulWidget {
           ? <Widget>[
               if (okIsLeft) ...<Widget>[
                 okButton,
-                cancelButton,
+                if (!actionButtons.dialogActionButtons) cancelButton,
               ] else ...<Widget>[
-                cancelButton,
+                if (!actionButtons.dialogActionButtons) cancelButton,
                 okButton,
               ]
             ]
@@ -1224,6 +1279,9 @@ class _ColorPickerState extends State<ColorPicker> {
           ColorPicker._selectBlackWhiteLabel,
       ColorPickerType.custom: widget.pickerTypeLabels[ColorPickerType.custom] ??
           ColorPicker._selectCustomLabel,
+      ColorPickerType.customSecondary:
+          widget.pickerTypeLabels[ColorPickerType.customSecondary] ??
+              ColorPicker._selectCustomSecondaryLabel,
       ColorPickerType.wheel: widget.pickerTypeLabels[ColorPickerType.wheel] ??
           ColorPicker._selectWheelAnyLabel,
     };
@@ -1234,6 +1292,8 @@ class _ColorPickerState extends State<ColorPicker> {
       ColorPickerType.accent: ColorTools.accentColors,
       ColorPickerType.bw: ColorTools.blackAndWhite,
       ColorPickerType.custom: widget.customColorSwatchesAndNames.keys.toList(),
+      ColorPickerType.customSecondary:
+          widget.customSecondaryColorSwatchesAndNames.keys.toList(),
       ColorPickerType.wheel: <ColorSwatch<Object>>[
         // Make a swatch of the selected color in the wheel.
         ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
@@ -1252,6 +1312,10 @@ class _ColorPickerState extends State<ColorPicker> {
           // Custom picker is always disabled if no custom swatches are given.
           (widget.pickersEnabled[ColorPickerType.custom] ?? false) &&
               widget.customColorSwatchesAndNames.isNotEmpty,
+      ColorPickerType.customSecondary:
+          // Custom secondary is always disabled if no custom swatches are given
+          (widget.pickersEnabled[ColorPickerType.customSecondary] ?? false) &&
+              widget.customSecondaryColorSwatchesAndNames.isNotEmpty,
       ColorPickerType.wheel:
           widget.pickersEnabled[ColorPickerType.wheel] ?? false,
     };
@@ -1323,6 +1387,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.custom:
             widget.pickerTypeLabels[ColorPickerType.custom] ??
                 ColorPicker._selectCustomLabel,
+        ColorPickerType.customSecondary:
+            widget.pickerTypeLabels[ColorPickerType.customSecondary] ??
+                ColorPicker._selectCustomSecondaryLabel,
         ColorPickerType.wheel: widget.pickerTypeLabels[ColorPickerType.wheel] ??
             ColorPicker._selectWheelAnyLabel,
       };
@@ -1360,6 +1427,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ColorPickerType.bw: ColorTools.blackAndWhite,
         ColorPickerType.custom: widget.customColorSwatchesAndNames.keys
             .toList(), // Use empty map if no custom swatch given.
+        ColorPickerType.customSecondary: widget
+            .customSecondaryColorSwatchesAndNames.keys
+            .toList(), // Use empty map if no custom swatch given.
         ColorPickerType.wheel: <ColorSwatch<Object>>[
           // Make a swatch of the selected color in the wheel.
           ColorTools.primarySwatch(_selectedColor.withAlpha(0xFF))
@@ -1380,6 +1450,10 @@ class _ColorPickerState extends State<ColorPicker> {
             // Custom picker is always disabled if no custom swatches are given.
             (widget.pickersEnabled[ColorPickerType.custom] ?? false) &&
                 widget.customColorSwatchesAndNames.isNotEmpty,
+        ColorPickerType.customSecondary:
+            // Custom second is always disabled if no custom swatches are given.
+            (widget.pickersEnabled[ColorPickerType.customSecondary] ?? false) &&
+                widget.customSecondaryColorSwatchesAndNames.isNotEmpty,
         ColorPickerType.wheel:
             widget.pickersEnabled[ColorPickerType.wheel] ?? false,
       };
@@ -1476,6 +1550,8 @@ class _ColorPickerState extends State<ColorPicker> {
         _activePicker = ColorPickerType.bw;
       } else if (_pickers[ColorPickerType.custom]!) {
         _activePicker = ColorPickerType.custom;
+      } else if (_pickers[ColorPickerType.customSecondary]!) {
+        _activePicker = ColorPickerType.customSecondary;
       } else if (_pickers[ColorPickerType.wheel]!) {
         _activePicker = ColorPickerType.wheel;
       }

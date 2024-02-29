@@ -17,6 +17,10 @@ enum ColorPickerType {
   /// swatches and a custom name for each color swatch.
   custom,
 
+  /// A secondary color picker that shows custom provided colors and their
+  /// material like swatches and a custom name for each color swatch.
+  customSecondary,
+
   /// A HSV color wheel picker that can select any color.
   wheel,
 }

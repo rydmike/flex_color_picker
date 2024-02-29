@@ -55,6 +55,11 @@ class App {
   static const Color blueJean = Color(0xFF4f75b8);
   static const Color deepBlueSea = Color(0xFF132b80);
 
+  static const Color mojo = Color(0xFFC74141);
+  static const Color trendyPink = Color(0xFF9565A5);
+  static const Color parsley = Color(0xFF16552C);
+  static const Color walnut = Color(0xFF753D1F);
+
   // Add a custom white to black grey scale.
   static const MaterialColor whiteBlueBlack = MaterialColor(
     0xFF4355B9, // Set the 500 index value here.
@@ -135,5 +140,13 @@ class App {
         whiteBlueBlack: 'White via Blue to Black',
         whiteToBlack: 'White to black',
         blackTransparency: 'Black transparency',
+      };
+
+  static Map<ColorSwatch<Object>, String> get colorsOptionsMap =>
+      <ColorSwatch<Object>, String>{
+        ColorTools.createPrimarySwatch(mojo): 'Mojo',
+        ColorTools.createPrimarySwatch(trendyPink): 'Trendy pink',
+        ColorTools.createPrimarySwatch(parsley): 'Parsley',
+        ColorTools.createPrimarySwatch(walnut): 'Walnut',
       };
 }
