@@ -82,6 +82,7 @@ Future<bool> colorPickerDialog(
     hasBorder: ref.watch(hasBorderPod),
     borderRadius: ref.watch(borderRadiusPod),
     columnSpacing: ref.watch(columnSpacingPod),
+    toolbarSpacing: 0,
     wheelDiameter: ref.watch(wheelDiameterPod),
     wheelWidth: ref.watch(wheelWidthPod),
     wheelHasBorder: ref.watch(wheelHasBorderPod),
@@ -143,7 +144,6 @@ Future<bool> colorPickerDialog(
         ? ref.watch(cardRecentColorsPod)
         : ref.watch(dialogRecentColorsPod),
     maxRecentColors: cardRemote ? 8 : 5,
-    enableTransparentCustomColors: ref.watch(enableTransparencyPod),
     customColorSwatchesAndNames: App.colorsNameMap,
     customSecondaryColorSwatchesAndNames: App.colorsOptionsMap,
   ).showPickerDialog(

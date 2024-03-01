@@ -49,9 +49,6 @@ void resetSettings(WidgetRef ref) {
   ref.read(enableOpacityPod.notifier).state =
       Keys.defaults[Keys.enableOpacity]! as bool;
 
-  ref.read(enableTransparencyPod.notifier).state =
-      Keys.defaults[Keys.enableTransparency]! as bool;
-
   ref.read(showMaterialNamePod.notifier).state =
       Keys.defaults[Keys.showMaterialName]! as bool;
 

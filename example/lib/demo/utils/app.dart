@@ -59,7 +59,7 @@ class App {
   static const Color trendyPink = Color(0xFF9565A5);
   static const Color parsley = Color(0xFF16552C);
   static const Color walnut = Color(0xFF753D1F);
-  static const Color parsleyOpacity = Color(0x4416552C);
+  static const Color parsleyOpacity = Color(0x5516552C);
 
   // Add a custom white to black grey scale.
   static const MaterialColor whiteBlueBlack = MaterialColor(
@@ -116,20 +116,20 @@ class App {
     },
   );
 
-  // Add a custom white to black grey scale.
+  // Add a custom parsley swatch
   static const MaterialColor allSwatchParsleyTransparent = MaterialColor(
-    0x8830874C, // Set the 500 index value here.
+    0x9930874C, // Set the 500 index value here.
     <int, Color>{
-      50: Color(0x88ADF3B9),
-      100: Color(0x88ADF3B9),
-      200: Color(0x8882D995),
-      300: Color(0x8867BD7C),
-      400: Color(0x884CA164),
-      500: Color(0x8830874C),
-      600: Color(0x880C6D35),
-      700: Color(0x88005226),
-      800: Color(0x88003918),
-      900: Color(0x8800210B),
+      50: Color(0x99F5FFF2),
+      100: Color(0x99ADF3B9),
+      200: Color(0x9982D995),
+      300: Color(0x9967BD7C),
+      400: Color(0x994CA164),
+      500: Color(0x9930874C),
+      600: Color(0x990C6D35),
+      700: Color(0x99005226),
+      800: Color(0x99003918),
+      900: Color(0x9900210B),
     },
   );
 

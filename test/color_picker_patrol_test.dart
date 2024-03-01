@@ -88,6 +88,7 @@ void main() {
                 ColorPickerType.accent: false,
                 ColorPickerType.bw: true,
                 ColorPickerType.custom: true,
+                ColorPickerType.customSecondary: true,
                 ColorPickerType.wheel: true,
               },
               includeIndex850: true,
@@ -139,6 +140,13 @@ void main() {
                 ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
                     'Guide Teal',
               },
+              customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>,
+                  String>{
+                ColorTools.createPrimarySwatch(const Color(0xFF00EE4B)):
+                    'Option 1',
+                ColorTools.createPrimarySwatch(const Color(0xFF92B300)):
+                    'Option 2',
+              },
             ),
           ),
         );
@@ -162,20 +170,20 @@ void main() {
         expect(endColor.value, Colors.redAccent.value);
         expect(resultColor.value, Colors.redAccent.value);
         // Test recent colors
-        expect(recentColors.contains(Colors.red), true);
+        expect(recentColors.contains(Color(Colors.red.value)), true);
         await $(ColorIndicator).at(34).tap();
         expect(startColor.value, Colors.redAccent.value);
         expect(endColor.value, Colors.grey.value);
         expect(resultColor.value, Colors.grey.value);
         // Test recent colors
-        expect(recentColors.contains(Colors.red), true);
+        expect(recentColors.contains(Color(Colors.red.value)), true);
         expect(recentColors.contains(Color(Colors.redAccent.value)), true);
         await $(ColorIndicator).at(44).tap();
         expect(startColor.value, Colors.grey.value);
         expect(endColor.value, Colors.grey[850]!.value);
         expect(resultColor.value, Colors.grey[850]!.value);
         // Test recent colors
-        expect(recentColors.contains(Colors.red), true);
+        expect(recentColors.contains(Color(Colors.red.value)), true);
         expect(recentColors.contains(Color(Colors.redAccent.value)), true);
         expect(recentColors.contains(Color(Colors.grey.value)), true);
 
@@ -188,7 +196,7 @@ void main() {
         expect(endColor.value, ColorTools.blackShade[600]!.value);
         expect(resultColor.value, ColorTools.blackShade[600]!.value);
         // Test recent colors
-        expect(recentColors.contains(Colors.red), true);
+        expect(recentColors.contains(Color(Colors.red.value)), true);
         expect(recentColors.contains(Color(Colors.redAccent.value)), true);
         expect(recentColors.contains(Color(Colors.grey.value)), true);
         expect(recentColors.contains(Color(Colors.grey[850]!.value)), true);
@@ -196,7 +204,8 @@ void main() {
         await $(ColorIndicator).at(1).tap();
         expect(resultColor.value, ColorTools.whiteShade[500]!.value);
         // Test recent colors
-        expect(recentColors.contains(Colors.red), false); // 4 max, no red
+        expect(recentColors.contains(Color(Colors.red.value)),
+            false); // 4 max, no red
         expect(recentColors.contains(Color(Colors.redAccent.value)), true);
         expect(recentColors.contains(Color(Colors.grey.value)), true);
         expect(recentColors.contains(Color(Colors.grey[850]!.value)), true);
@@ -215,6 +224,14 @@ void main() {
         expect(endColor, const Color(0xFF3700B3));
         expect(resultColor, const Color(0xFF3700B3));
 
+        // Test Option color picker.
+        expect(find.text('Option'), findsOneWidget);
+        await $('Option').tap();
+        await $(ColorIndicator).at(1).tap();
+        expect(startColor, const Color(0xFF3700B3));
+        expect(endColor, const Color(0xFF92B300));
+        expect(resultColor, const Color(0xFF92B300));
+
         // Test Wheel color picker.
         expect(find.text('Wheel'), findsOneWidget);
         await $('Wheel').tap();
@@ -222,18 +239,18 @@ void main() {
         expect(find.text('Tonal'), findsOneWidget);
         // The 10th ColorIndicator will be first tonal and always black.
         await $(ColorIndicator).at(10).tap();
-        expect(startColor, const Color(0xFF3700B3));
+        expect(startColor, const Color(0xFF92B300));
         expect(endColor, Colors.black);
         expect(resultColor, Colors.black);
         await $(ColorIndicator).at(16).tap();
         expect(startColor, Colors.black);
-        expect(endColor, const Color(0xFF775EF3));
-        expect(resultColor, const Color(0xFF775EF3));
+        expect(endColor, const Color(0xFF688000));
+        expect(resultColor, const Color(0xFF688000));
         // Find the ColorWheelPicker
         expect(find.byType(ColorWheelPicker), findsOneWidget);
         // Tap center of the ColorWheelPicker
         await $(ColorWheelPicker).tap();
-        expect(resultColor, const Color(0xff4a4080));
+        expect(resultColor, const Color(0xff748040));
 
         // The 24th ColorIndicator will be last tonal and always white.
         await $(ColorIndicator).at(24).tap();
@@ -246,22 +263,23 @@ void main() {
         // Let's tap the last one, we need to scroll to it first.
         await $(RecentColors).$(ColorIndicator).at(3).scrollTo().tap();
         // Result should be 5 result color from earlier above.
-        expect(resultColor, const Color(0xFF3700B3));
+        expect(resultColor, const Color(0xff92b300));
 
         // Find the OpacitySlider
-        expect(find.byType(OpacitySlider), findsOneWidget);
         // TODO(rydmike): Get the slider test working!
-        // expect(find.byType(Slider), findsOneWidget);
-        // expect($(OpacitySlider).$(Slider), findsOneWidget);
+        expect(find.byType(OpacitySlider), findsOneWidget);
         // expect(find.byType(Slider), findsOneWidget);
         // Tap center of the OpacitySlider
-        // await $(Slider).scrollTo().tap();
+        // await $(OpacitySlider)
+        //     .scrollTo(settlePolicy: SettlePolicy.trySettle)
+        //     .tap();
 
         // Find the Text entry
         expect(find.byType(ColorCodeField), findsOneWidget);
         expect(find.byType(TextField), findsOneWidget);
         // TODO(rydmike): Get the color code entry test working!
-        await $(find.byType(TextField)).enterText('613E42');
+        // await $(find.byType(TextField)).enterText('613E42');
+        // await $(find.byType(ColorCodeField)).enterText('613E42');
         // expect(resultColor, const Color(0xFF613E42));
 
         // Find the ToolBar
@@ -278,16 +296,25 @@ void main() {
         // We should have some clipboard data from above tap. But the below
         // attempt to get the data never completes. The code flow hit paths
         // from above also indicates the buffer is empty after the tap above.
-
         // final ClipboardData? clipData =
         //     await Clipboard.getData(Clipboard.kTextPlain);
         // debugPrint('Clip data: $clipData');
 
+        // TEST COPY/PASTE via toolbar buttons
         // Go to another tab select a new color
         await $('Primary & Accent').tap();
         await $(ColorIndicator).at(1).tap();
         expect(resultColor.value, Colors.redAccent.value);
-        // Paste in the color
+        // Copy in the redAccent color
+        await $(ColorPickerToolbar).$(IconButton).at(0).tap(
+              settlePolicy: SettlePolicy.trySettle,
+              visibleTimeout: const Duration(seconds: 1),
+              settleTimeout: const Duration(seconds: 2),
+            );
+        // Select pink color
+        await $(ColorIndicator).at(2).tap();
+        expect(resultColor.value, Colors.pink.value);
+        // Paste in the red accent value color
         await $(ColorPickerToolbar).$(IconButton).at(1).tap(
               settlePolicy: SettlePolicy.trySettle,
               visibleTimeout: const Duration(seconds: 1),
@@ -295,7 +322,8 @@ void main() {
             );
         // This is the color we should find but do not since copy did nothing.
         // The paste wont work either.
-        // expect(resultColor, const Color(0xFF3700B3));
+        // expect(Color(resultColor.value), Color(Colors.redAccent.value));
+        // Color(0xffe91e63);
       },
     );
 

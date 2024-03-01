@@ -13,7 +13,6 @@ class RecentColors extends StatelessWidget {
     Key? key,
     required this.spacing,
     required this.runSpacing,
-    required this.columnSpacing,
     required this.recentColors,
     required this.selectedColor,
     required this.onSelectColor,
@@ -33,12 +32,6 @@ class RecentColors extends StatelessWidget {
 
   /// The run spacing between the color pick items when wrapped on several rows.
   final double runSpacing;
-
-  /// The spacing after the main colors.
-  final double columnSpacing;
-
-  // /// The currently active used list of color swatches we select color from.
-  // final List<ColorSwatch<Object>> activeColorSwatchList;
 
   /// List of recently selected colors.
   final List<Color> recentColors;
@@ -86,31 +79,28 @@ class RecentColors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double effectiveBorderRadius = borderRadius ?? width / 4.0;
-    return Padding(
-      padding: EdgeInsets.only(bottom: columnSpacing),
-      child: Wrap(
-        spacing: spacing,
-        runSpacing: runSpacing,
-        children: <Widget>[
-          for (final Color color in recentColors)
-            ColorIndicator(
-              isSelected:
-                  selectedColor == color || selectedColor.value == color.value,
-              color: color,
-              width: width,
-              height: height,
-              borderRadius: effectiveBorderRadius,
-              hasBorder: hasBorder,
-              borderColor: borderColor,
-              elevation: elevation,
-              selectedIcon: selectedColorIcon,
-              onSelect: () {
-                onSelectColor(color);
-              },
-              selectedRequestsFocus: selectedRequestsFocus,
-            ),
-        ],
-      ),
+    return Wrap(
+      spacing: spacing,
+      runSpacing: runSpacing,
+      children: <Widget>[
+        for (final Color color in recentColors)
+          ColorIndicator(
+            isSelected:
+                selectedColor == color || selectedColor.value == color.value,
+            color: color,
+            width: width,
+            height: height,
+            borderRadius: effectiveBorderRadius,
+            hasBorder: hasBorder,
+            borderColor: borderColor,
+            elevation: elevation,
+            selectedIcon: selectedColorIcon,
+            onSelect: () {
+              onSelectColor(color);
+            },
+            selectedRequestsFocus: selectedRequestsFocus,
+          ),
+      ],
     );
   }
 }
