@@ -1620,8 +1620,8 @@ class _ColorPickerState extends State<ColorPicker> {
         _activeSwatch = ColorTools.customSwatch(
             _tappedColor, widget.customSecondaryColorSwatchesAndNames);
       } else {
-        _activeSwatch = ColorTools.customSwatch(_tappedColor.withAlpha(0xFF),
-            widget.customSecondaryColorSwatchesAndNames);
+        _activeSwatch = ColorTools.customSwatch(
+            _tappedColor, widget.customSecondaryColorSwatchesAndNames);
       }
     }
     // We did not find the selected color in any active swatch list, in that

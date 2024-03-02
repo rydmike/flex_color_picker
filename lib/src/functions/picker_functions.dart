@@ -94,6 +94,20 @@ ColorPickerType findColorInSelector({
       }
     }
   }
+  // If we did not find the color, we try once more with any opacity.
+  for (final ColorPickerType key in typeToSwatchMap.keys) {
+    if (pickersEnabled[key]!) {
+      for (final ColorSwatch<Object> swatch in typeToSwatchMap[key]!) {
+        if (lookInShades) {
+          if (isShadeOfMain(swatch, color.withAlpha(0xFF), include850)) {
+            return key;
+          }
+        } else {
+          if (swatch.value == color.withAlpha(0xFF).value) return key;
+        }
+      }
+    }
+  }
   // If we did not find the color in any of the swatches in the selector, we
   // will just return the first swatch available in the selector.
   for (final ColorPickerType key in typeToSwatchMap.keys) {

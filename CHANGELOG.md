@@ -4,17 +4,18 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.4.0
 
-**Mar 1, 2024**
+**Mar 2, 2024**
 
+Requires min Flutter 3.16.0.
+ 
 **NEW**
-
 - Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and added support for these button styles as OK/Cancel buttons in the ColorPicker dialog. 
 - Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
-- Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is no also a `ColorPickerType.customSecondary` picker selector. It gets its values `ColorPicker.customSecondaryColorSwatchesAndNames`. 
-- Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity slider `ColorPicker.enableOpacity` is not enabled. Nothing new is needed to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
-- The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all created swatch indexes. Previously they set alpha to #FF, even if the value might have been something else. Creating palettes with very low alpha in the source color will not produce pretty palettes, but it is now possible to create them.
-- The Color picker received additional layout properties. Previously all vertical spacings between the column elements in the picker were controlled by the `ColorPicker` property `columnSpacing`. For two key elements, you can now override this spacing. 
-  - Use `toolbarSpacing` to adjust the vertical spacing below the top toolbar header and action buttons. The intent of this is to enable using e.g., zero so the top toolbar and action buttons are closer to the segmented color picker control than the rest of the spacing in the picker uses. For this look, the picker heading should not be used.
+- Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is now also a `ColorPickerType.customSecondary` picker selector. It gets its values from `ColorPicker.customSecondaryColorSwatchesAndNames`. 
+- Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity and slider in `ColorPicker.enableOpacity` is not enabled. Nothing new is needed to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
+- The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all created swatch indexes. Previously they set alpha to `#FF`, even if the value might have been something else. Creating palettes with very low alpha in the source color will not produce pretty palettes, but it is now possible to create them.
+- The Color picker received two new layout properties. Previously all vertical spacings between the column elements in the picker were controlled by the `ColorPicker` property `columnSpacing`. For two key elements, you can now override this spacing. 
+  - Use `toolbarSpacing` to adjust the vertical spacing below the top toolbar header and its action buttons. The intent of this is to enable using zero, so the top toolbar and action buttons are closer to the segmented color picker control, than the rest of the spacing in the picker uses.
   - Use `shadesSpacing` to adjust the vertical spacing after the Material-2 swatch palette. By setting it to zero or one, you can create a design where the Material-2 swatch-based palette is closer to or connected to the Material-3 tonal palette. As long as the tonal palette does not use a heading, of course.
   - Both `toolbarSpacing` and `shadesSpacing` default to `columnSpacing` if they are not defined.
   - More of these vertical spacing fine-tuning properties can be added if there is a need for them.
@@ -22,8 +23,8 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 **FIX**
 
 Package
-- Fixed deprecated APIs in Flutter 3.19.0. Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with `Shortcut` APIs.
-- When using custom transitions the `InheritedTheme.capture ` should use `actionButtons.useRootNavigator` and not default it to true. Fixed.
+- Replaced APIs deprecated in Flutter 3.19.0. Replaced internally used deprecated APIs `RawKeyboardListener`, `RawKeyEvent`, `RawKeyDownEvent`, `RawKeyEventDataMacOs`, `RawKeyEventDataIos` with `Shortcut` APIs.
+- When using custom transitions the `InheritedTheme.capture ` should use `actionButtons.useRootNavigator` value and not default it to true. Fixed.
 
 Web demo 
 - Reset to defaults did not reset settings for `wheelSquarePadding` and `wheelSquareBorderRadius`. Fixed.
