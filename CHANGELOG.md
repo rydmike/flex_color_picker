@@ -29,6 +29,10 @@ Package
 Web demo 
 - Reset to defaults did not reset settings for `wheelSquarePadding` and `wheelSquareBorderRadius`. Fixed.
 
+**TODO**
+
+TODO: Recent colors, should it switch opacity to what color it stored when selected? => YES!
+TODO: Opacity slider, sets Recent colors also on entry now, should only on exit.
 
 ## 3.3.1
 
