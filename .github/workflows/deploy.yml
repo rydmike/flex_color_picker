@@ -9,8 +9,6 @@
 #    Controversial but pub.dev penalizes you if dart format is not used.
 #  - Run all tests with coverage.
 #  - Upload code coverage output to Codecov for analysis.
-#  - Removed the usage of install linux rpl tool, not needed when using
-#    the --base-href build flag, we can set the folder correct on build now.
 #  - Build the WEB demo app for FlexColorPicker.
 #    - Flutter clean.
 #    - Flutter build web app, in release mode and with CanvasKit renderer.
