@@ -58,14 +58,10 @@ class PickersEnabledSwitch extends ConsumerWidget {
                 };
               },
               children: const <Widget>[
-                Text('Primary\nAccent',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('P & A', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Primary', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Accent', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Black\nWhite',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('B & W', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Custom', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Option', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Wheel', style: TextStyle(fontSize: _kToggleFontSize)),

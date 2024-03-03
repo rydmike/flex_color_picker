@@ -21,7 +21,7 @@ class ColorPickerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Used for a simple scrollable column based responsive layout
-    final double width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.sizeOf(context).width;
     // That can have 1 to max 4 columns
     int columns = width ~/ App.minColumnWidth;
     if (columns < 1) columns = 1;
