@@ -9,9 +9,9 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 Requires min Flutter 3.16.0 and Dart 3.0.0.
  
 **NEW**
+
 - Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and added support for these button styles as OK/Cancel buttons in the ColorPicker dialog. 
 - Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
-- Change: Dialog action buttons now use the button `.icon` variants when icon usage is enabled. Previously they baked in the icon into the button child Widget.
 - Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is now also a `ColorPickerType.customSecondary` picker selector. It gets its values from `ColorPicker.customSecondaryColorSwatchesAndNames`. 
 - Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity and slider in `ColorPicker.enableOpacity` is not enabled. Nothing new is needed to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
 - The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all created swatch indexes. Previously they set alpha to `#FF`, even if the value might have been something else. Creating palettes with very low alpha in the source color will not produce pretty palettes, but it is now possible to create them.
@@ -20,6 +20,11 @@ Requires min Flutter 3.16.0 and Dart 3.0.0.
   - Use `shadesSpacing` to adjust the vertical spacing after the Material-2 swatch palette. By setting it to zero or one, you can create a design where the Material-2 swatch-based palette is closer to or connected to the Material-3 tonal palette. As long as the tonal palette does not use a heading, of course.
   - Both `toolbarSpacing` and `shadesSpacing` default to `columnSpacing` if they are not defined.
   - More of these vertical spacing fine-tuning properties can be added if there is a need for them.
+
+**CHANGE**
+
+- Dialog **OK** and **Cancel** action buttons now use the `.icon` Material button variants, when icon usage is enabled. Previously they baked in the leading icon into the button child Widget. This version follows the Material design spec exactly. The visual change is minor, but it does look better now when icons are used.
+- Recent colors now also capture the opacity of a selected color as a different color, it does this also when you change opacity. Selecting a color with opacity in the recent colors list will set the picker's opacity to the opacity the color in the recent colors list has.
 
 **FIX**
 
