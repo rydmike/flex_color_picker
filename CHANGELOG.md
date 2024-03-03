@@ -699,12 +699,13 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 
 These are the topics I currently have on the TODO list for this package. Do you have a new suggestion and idea? Feel free to open a [suggestion or issue](https://github.com/rydmike/flex_color_picker/issues) in the repo.
 
-- [ ] Additional controls for selecting active picker, maybe a custom slider and ToggleButtons, probably also a dropdown.
+- [ ] Additional controls for selecting active picker, maybe a custom slider, ToggleButtons and probably also a compact dropdown.
 - [ ] Add one more color picker type _advanced_, using sliders as controls for the other formats. 
-- [ ] Add support for other color formats than RGB, HSL, HSV, CMYK, M3 HCT.
+- [ ] Add support for other color formats than RGB, HSL, HSV, CMYK, M3-HCT.
+- [ ] Add support for a pipette tool to pick colors from the screen.
 - [ ] Add possibility to in picker add selected colors to a custom picker.
 - [ ] Reactor the code to prepare for making a major new version 4.0.0. 
-- [x] Add more tests, now at 84%, pretty good now, but even more tests are always welcome.
+- [x] Add more tests. Done. Now at 84%, pretty OK now, but even more tests are always welcome.
 - [x] Release the stable version 2.0.0
 - [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.
 - [x] Add a simpler optional async dialog picker function that returns selected color.
