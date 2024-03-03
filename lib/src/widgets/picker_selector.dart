@@ -128,6 +128,17 @@ class SelectPicker extends StatelessWidget {
                       : segmentTextStyle,
                 ),
               ),
+            if (pickers[ColorPickerType.customSecondary]!)
+              ColorPickerType.customSecondary: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  pickerLabels[ColorPickerType.customSecondary] ?? '',
+                  textAlign: TextAlign.center,
+                  style: picker == ColorPickerType.customSecondary
+                      ? segmentTextStyle.copyWith(color: effectiveThumbOnColor)
+                      : segmentTextStyle,
+                ),
+              ),
             if (pickers[ColorPickerType.wheel]!)
               ColorPickerType.wheel: Padding(
                 padding: const EdgeInsets.all(5),

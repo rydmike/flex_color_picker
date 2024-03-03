@@ -443,6 +443,14 @@ final StateProvider<bool> dialogActionButtonsPod =
       defaultValue: Keys.defaults[Keys.dialogActionButtons]! as bool) as bool;
 }, name: Keys.dialogActionButtons);
 
+// State of having only OK bottom action in the dialog.
+final StateProvider<bool> dialogActionOnlyOkButtonPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.dialogActionOnlyOkButton,
+          defaultValue: Keys.defaults[Keys.dialogActionOnlyOkButton]! as bool)
+      as bool;
+}, name: Keys.dialogActionOnlyOkButton);
+
 // State of order OK cancel buttons in dialog actions
 final StateProvider<ColorPickerActionButtonOrder> dialogActionsOrderPod =
     StateProvider<ColorPickerActionButtonOrder>(

@@ -280,16 +280,17 @@ class ColorTools {
   /// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6002ee
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
+    final int a = color.alpha;
     final int r = color.red;
     final int g = color.green;
     final int b = color.blue;
     for (final int strength in _indexPrimary) {
       final double ds = 0.5 - strength / 1000;
-      swatch[strength] = Color.fromRGBO(
+      swatch[strength] = Color.fromARGB(
+        a,
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
         g + ((ds < 0 ? g : (255 - g)) * ds).round(),
         b + ((ds < 0 ? b : (255 - b)) * ds).round(),
-        1,
       );
     }
     // The above gives a starting point, this tunes it a bit better, still far
@@ -451,16 +452,17 @@ class ColorTools {
   /// for higher indexes.
   static MaterialAccentColor createAccentSwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
+    final int a = color.alpha;
     final int r = color.red;
     final int g = color.green;
     final int b = color.blue;
     for (final int strength in _indexAccent) {
       final double ds = 0.2 - strength / 1000;
-      swatch[strength] = Color.fromRGBO(
+      swatch[strength] = Color.fromARGB(
+          a,
           r + ((ds < 0 ? r : (255 - r)) * ds).round(),
           g + ((ds < 0 ? g : (255 - g)) * ds).round(),
-          b + ((ds < 0 ? b : (255 - b)) * ds).round(),
-          1);
+          b + ((ds < 0 ? b : (255 - b)) * ds).round());
     }
     // The above gives a starting point, this tunes it a bit better, still far
     // from the real algorithm.

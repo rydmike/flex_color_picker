@@ -59,6 +59,7 @@ class Keys {
   static const String okButton = 'okButton';
   static const String closeIsLast = 'closeIsLast';
   static const String dialogActionButtons = 'dialogActionButtons';
+  static const String dialogActionOnlyOkButton = 'dialogActionOnlyOkButton';
   static const String dialogActionOrder = 'dialogActionOrder';
   static const String dialogActionIcons = 'dialogActionIcons';
   // Copy Paste Actions Riverpod providers.
@@ -136,6 +137,7 @@ class Keys {
     okButton: true,
     closeIsLast: true,
     dialogActionButtons: true,
+    dialogActionOnlyOkButton: true,
     dialogActionOrder: ColorPickerActionButtonOrder.okIsRight,
     dialogActionIcons: true,
     // Copy Paste Actions Riverpod providers.

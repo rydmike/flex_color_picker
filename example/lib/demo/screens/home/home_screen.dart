@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLight = Theme.of(context).brightness == Brightness.light;
+    final ThemeData theme = Theme.of(context);
+    final bool isLight = theme.brightness == Brightness.light;
     // Use annotated region to style the status bar when there is no
     // AppBar and also style system navigation bar.
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -26,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: MediaQuery.of(context).padding.top),
+            SizedBox(height: MediaQuery.paddingOf(context).top),
             const Spacer(),
             Text(
               App.appName,
@@ -135,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(7),
                 child: Text(
                   'Try the color picker',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: theme.textTheme.titleLarge,
                 ),
               ),
             ),
@@ -154,11 +155,11 @@ class HomeScreen extends StatelessWidget {
             const Spacer(),
             Text(
               'Using flex_color_picker version ${App.version}',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: theme.textTheme.bodySmall,
             ),
             Text(
               'Web build with Flutter ${App.flutterVersion}',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 10),
           ],

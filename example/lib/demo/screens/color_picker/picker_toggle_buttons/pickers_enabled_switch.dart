@@ -19,6 +19,7 @@ class PickersEnabledSwitch extends ConsumerWidget {
       pickersEnabled[ColorPickerType.accent] ?? false,
       pickersEnabled[ColorPickerType.bw] ?? false,
       pickersEnabled[ColorPickerType.custom] ?? false,
+      pickersEnabled[ColorPickerType.customSecondary] ?? false,
       pickersEnabled[ColorPickerType.wheel] ?? false,
     ];
     return Column(
@@ -52,19 +53,17 @@ class PickersEnabledSwitch extends ConsumerWidget {
                   ColorPickerType.accent: isSelected[2],
                   ColorPickerType.bw: isSelected[3],
                   ColorPickerType.custom: isSelected[4],
-                  ColorPickerType.wheel: isSelected[5],
+                  ColorPickerType.customSecondary: isSelected[5],
+                  ColorPickerType.wheel: isSelected[6],
                 };
               },
               children: const <Widget>[
-                Text('Primary\nAccent',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('P & A', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Primary', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Accent', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Black\nWhite',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Custom ', style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('B & W', style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('Custom', style: TextStyle(fontSize: _kToggleFontSize)),
+                Text('Option', style: TextStyle(fontSize: _kToggleFontSize)),
                 Text('Wheel', style: TextStyle(fontSize: _kToggleFontSize)),
               ],
             ),

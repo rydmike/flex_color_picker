@@ -12,6 +12,12 @@ enum ColorPickerActionButtonType {
 
   /// Use [ElevatedButton] button.
   elevated,
+
+  /// Use [FilledButton] button.
+  filled,
+
+  /// Use [FilledButton.tonal] button.
+  filledTonal,
 }
 
 /// Used to define the order of OK and Cancel buttons on the FlexColorPicker
@@ -64,6 +70,7 @@ class ColorPickerActionButtons with Diagnosticable {
     this.splashRadius = 24,
     this.constraints = const BoxConstraints(minHeight: 42, minWidth: 42),
     this.dialogActionButtons = true,
+    this.dialogActionOnlyOkButton = false,
     this.dialogActionOrder = ColorPickerActionButtonOrder.okIsRight,
     this.dialogActionIcons = false,
     this.dialogCancelButtonLabel,
@@ -212,6 +219,10 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to true.
   final bool dialogActionButtons;
 
+  /// If set to true, the dialog will only have an OK button and no Cancel when
+  /// [dialogActionButtons] is true.
+  final bool dialogActionOnlyOkButton;
+
   /// Defines the order of the OK and Cancel actions buttons at the bottom
   /// of the dialog.
   ///
@@ -295,6 +306,7 @@ class ColorPickerActionButtons with Diagnosticable {
     double? splashRadius,
     BoxConstraints? constraints,
     bool? dialogActionButtons,
+    bool? dialogActionOnlyOkButton,
     ColorPickerActionButtonOrder? dialogActionOrder,
     bool? dialogActionIcons,
     String? dialogCancelButtonLabel,
@@ -319,6 +331,8 @@ class ColorPickerActionButtons with Diagnosticable {
       splashRadius: splashRadius ?? this.splashRadius,
       constraints: constraints ?? this.constraints,
       dialogActionButtons: dialogActionButtons ?? this.dialogActionButtons,
+      dialogActionOnlyOkButton:
+          dialogActionOnlyOkButton ?? this.dialogActionOnlyOkButton,
       dialogActionOrder: dialogActionOrder ?? this.dialogActionOrder,
       dialogActionIcons: dialogActionIcons ?? this.dialogActionIcons,
       dialogCancelButtonLabel:
@@ -352,6 +366,7 @@ class ColorPickerActionButtons with Diagnosticable {
         splashRadius == other.splashRadius &&
         constraints == other.constraints &&
         dialogActionButtons == other.dialogActionButtons &&
+        dialogActionOnlyOkButton == other.dialogActionOnlyOkButton &&
         dialogActionOrder == other.dialogActionOrder &&
         dialogActionIcons == other.dialogActionIcons &&
         dialogCancelButtonLabel == other.dialogCancelButtonLabel &&
@@ -378,6 +393,7 @@ class ColorPickerActionButtons with Diagnosticable {
         splashRadius,
         constraints,
         dialogActionButtons,
+        dialogActionOnlyOkButton,
         dialogActionOrder,
         dialogActionIcons,
         dialogCancelButtonLabel,
@@ -410,6 +426,8 @@ class ColorPickerActionButtons with Diagnosticable {
         .add(DiagnosticsProperty<BoxConstraints?>('constraints', constraints));
     properties.add(
         DiagnosticsProperty<bool>('dialogActionButtons', dialogActionButtons));
+    properties.add(DiagnosticsProperty<bool>(
+        'dialogActionOnlyOkButton', dialogActionOnlyOkButton));
     properties.add(EnumProperty<ColorPickerActionButtonOrder>(
         'dialogActionOrder', dialogActionOrder));
     properties

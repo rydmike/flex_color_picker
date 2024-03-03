@@ -94,6 +94,20 @@ ColorPickerType findColorInSelector({
       }
     }
   }
+  // If we did not find the color, we try once more with any opacity.
+  for (final ColorPickerType key in typeToSwatchMap.keys) {
+    if (pickersEnabled[key]!) {
+      for (final ColorSwatch<Object> swatch in typeToSwatchMap[key]!) {
+        if (lookInShades) {
+          if (isShadeOfMain(swatch, color.withAlpha(0xFF), include850)) {
+            return key;
+          }
+        } else {
+          if (swatch.value == color.withAlpha(0xFF).value) return key;
+        }
+      }
+    }
+  }
   // If we did not find the color in any of the swatches in the selector, we
   // will just return the first swatch available in the selector.
   for (final ColorPickerType key in typeToSwatchMap.keys) {
@@ -113,6 +127,24 @@ ColorSwatch<Object?>? findColorSwatch(
     }
   }
   return (color is ColorSwatch && swatches.contains(color)) ? color : null;
+
+  // final ColorSwatch<Object?>? foundSwatch =
+  //     (color is ColorSwatch && swatches.contains(color)) ? color : null;
+  //
+  // if (foundSwatch != null) {
+  //   debugPrint('findColorSwatch $foundSwatch');
+  //   return foundSwatch;
+  // }
+  //
+  // // We did not find any matching color. We try with no opacity, as well.
+  // for (final ColorSwatch<Object> mainColor in swatches) {
+  //   if (isShadeOfMain(mainColor, color.withAlpha(0xFF), include850)) {
+  //     return mainColor;
+  //   }
+  // }
+  // return (color is ColorSwatch && swatches.contains(color.withAlpha(0xFF)))
+  //     ? color
+  //     : null;
 }
 
 /// Check if a given color is a shade of the main color, return true if it is.

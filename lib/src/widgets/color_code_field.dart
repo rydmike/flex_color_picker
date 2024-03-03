@@ -310,19 +310,14 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     switch (widget.copyPasteBehavior.copyFormat) {
       case ColorPickerCopyFormat.dartCode:
         colorString = '0x${color.hexAlpha}';
-        break;
       case ColorPickerCopyFormat.hexRRGGBB:
         colorString = color.hex;
-        break;
       case ColorPickerCopyFormat.hexAARRGGBB:
         colorString = color.hexAlpha;
-        break;
       case ColorPickerCopyFormat.numHexRRGGBB:
         colorString = '#${color.hex}';
-        break;
       case ColorPickerCopyFormat.numHexAARRGGBB:
         colorString = '#${color.hexAlpha}';
-        break;
     }
     final ClipboardData data = ClipboardData(text: colorString);
     await Clipboard.setData(data);

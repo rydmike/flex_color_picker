@@ -12,7 +12,7 @@ class ColorPickerCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final ThemeData theme = Theme.of(context);
     return Card(
       elevation: 1,
       child: ColorPicker(
@@ -67,6 +67,7 @@ class ColorPickerCard extends ConsumerWidget {
         hasBorder: ref.watch(hasBorderPod),
         borderRadius: ref.watch(borderRadiusPod),
         columnSpacing: ref.watch(columnSpacingPod),
+        toolbarSpacing: 0,
         wheelDiameter: ref.watch(wheelDiameterPod),
         wheelWidth: ref.watch(wheelWidthPod),
         wheelSquarePadding: ref.watch(wheelSquarePaddingPod),
@@ -74,47 +75,51 @@ class ColorPickerCard extends ConsumerWidget {
         wheelHasBorder: ref.watch(wheelHasBorderPod),
         enableTooltips: ref.watch(enableTooltipsPod),
         pickersEnabled: ref.watch(pickersEnabledPod),
-        selectedPickerTypeColor: colorScheme.primary,
+        pickerTypeLabels: const <ColorPickerType, String>{
+          ColorPickerType.both: 'P & A',
+          ColorPickerType.bw: 'B & W',
+        },
+        selectedPickerTypeColor: theme.colorScheme.primary,
         title: ref.watch(showTitlePod)
             ? Text(
                 'ColorPicker',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: theme.textTheme.titleLarge,
               )
             : null,
         heading: ref.watch(showHeadingPod)
             ? Text(
                 'Select color',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: theme.textTheme.headlineSmall,
               )
             : null,
         subheading: ref.watch(showSubheadingPod)
             ? Text(
                 'Select color shade',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               )
             : null,
         tonalSubheading: ref.watch(showTonalSubheadingPod)
             ? Text(
                 'Material 3 tonal palette',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               )
             : null,
         wheelSubheading: ref.watch(showSubheadingPod)
             ? Text(
                 'Selected color and its color swatch',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               )
             : null,
         opacitySubheading: ref.watch(showOpacitySubheadingPod)
             ? Text(
                 'Opacity',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               )
             : null,
         recentColorsSubheading: ref.watch(showRecentSubheadingPod)
             ? Text(
                 'Recent colors',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               )
             : null,
         showMaterialName: ref.watch(showMaterialNamePod),
@@ -127,8 +132,9 @@ class ColorPickerCard extends ConsumerWidget {
         recentColors: ref.watch(cardRecentColorsPod),
         maxRecentColors: 8,
         customColorSwatchesAndNames: App.colorsNameMap,
-        colorCodeTextStyle: Theme.of(context).textTheme.titleMedium,
-        colorCodePrefixStyle: Theme.of(context).textTheme.bodySmall,
+        customSecondaryColorSwatchesAndNames: App.colorsOptionsMap,
+        colorCodeTextStyle: theme.textTheme.titleMedium,
+        colorCodePrefixStyle: theme.textTheme.bodySmall,
       ),
     );
   }

@@ -8,7 +8,7 @@ import '../functions/picker_functions.dart';
 /// Wrap a child with [ContextPopupMenu] and provide it a list of
 /// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item have a
 /// unique value. Often the [PopupMenuItem] has a child of type [ListTile], with
-/// and int as value for its list index. The child can also be a custom widget
+/// an int as value for its list index. The child can also be a custom widget
 /// with any type of row content or even images, their values could be an
 /// enum for its selection as well.
 ///

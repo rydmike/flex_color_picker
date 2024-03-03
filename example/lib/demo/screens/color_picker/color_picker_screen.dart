@@ -5,6 +5,7 @@ import '../../widgets/flex_app_bar.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
+import 'picker_switches/dialog_action_only_ok_button_switch.dart';
 import 'picker_text_fields/text_field_focus_demo.dart';
 import 'picker_toggle_buttons/actions_order_switch.dart';
 
@@ -20,7 +21,7 @@ class ColorPickerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Used for a simple scrollable column based responsive layout
-    final double width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.sizeOf(context).width;
     // That can have 1 to max 4 columns
     int columns = width ~/ App.minColumnWidth;
     if (columns < 1) columns = 1;
@@ -320,6 +321,7 @@ class _Column4 extends StatelessWidget {
         const OkButtonSwitch(),
         const CloseIsLastSwitch(),
         const DialogActionsButtonsSwitch(),
+        const DialogActionOnlyOkButtonSwitch(),
         const ActionsOrderSwitch(),
         const DialogActionIconsSwitch(),
         const Divider(),

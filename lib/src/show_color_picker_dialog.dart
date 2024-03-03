@@ -82,6 +82,18 @@ Future<Color> showColorPickerDialog(
   /// Defaults to 8 dp. Must be from 0 to 300 dp.
   double columnSpacing = 8,
 
+  /// Vertical spacing below the top toolbar header and action buttons.
+  ///
+  /// If not defined, defaults to [columnSpacing].
+  /// Must be null or from 0 to 300 dp.
+  final double? toolbarSpacing,
+
+  /// Vertical spacing below the material 2 based color shades palette.
+  ///
+  /// If not defined, defaults to [columnSpacing].
+  /// Must be null or from 0 to 300 dp.
+  final double? shadesSpacing,
+
   /// Enable the opacity control for the color value.
   ///
   /// Set to true to allow users to control the opacity value of the
@@ -140,6 +152,19 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defaults to 40 dp. Must be from 15 to 150 dp.
   double height = 40.0,
+
+  /// Set to true to make tonal color items same size as the size defined
+  /// for main and swatch shades indicator items.
+  ///
+  /// If false, the tonal color items will be smaller and auto sized for the
+  /// palette to be same width as the Material-2 Color palette.
+  ///
+  /// Defaults to false. The color boxes are smaller, but length of their
+  /// items is the same as MaterialColor swatch. You may prefer true to get
+  /// them to be same size, especially if you only use tonal palette.
+  ///
+  /// For legacy compatibility reasons, this property is false by default.
+  bool tonalColorSameSize = false,
 
   /// The horizontal spacing between the color picker indicator items.
   ///
@@ -449,6 +474,18 @@ Future<Color> showColorPickerDialog(
   Map<ColorSwatch<Object>, String> customColorSwatchesAndNames =
       const <ColorSwatch<Object>, String>{},
 
+  /// Color swatch to name map, with custom swatches and their names.
+  ///
+  /// Used to provide custom [ColorSwatch] objects to the custom color picker,
+  /// including their custom name label. These colors, their swatch shades
+  /// and names, are shown and used when the picker type
+  /// [ColorPickerType.customSecondary] option is enabled in the color picker.
+  ///
+  /// Defaults to an empty map. If the map is empty, the custom colors picker
+  /// will not be shown even if it is enabled in [pickersEnabled].
+  Map<ColorSwatch<Object>, String> customSecondaryColorSwatchesAndNames =
+      const <ColorSwatch<Object>, String>{},
+
   // ***************************************************************************
   // Below properties that refer to the dialog
   // ***************************************************************************
@@ -646,6 +683,8 @@ Future<Color> showColorPickerDialog(
     crossAxisAlignment: crossAxisAlignment,
     padding: padding,
     columnSpacing: columnSpacing,
+    toolbarSpacing: toolbarSpacing,
+    shadesSpacing: shadesSpacing,
     enableOpacity: enableOpacity,
     opacityTrackHeight: opacityTrackHeight,
     opacityTrackWidth: opacityTrackWidth,
@@ -656,6 +695,7 @@ Future<Color> showColorPickerDialog(
     width: width,
     height: height,
     spacing: spacing,
+    tonalColorSameSize: tonalColorSameSize,
     runSpacing: runSpacing,
     elevation: elevation,
     hasBorder: hasBorder,
@@ -690,6 +730,7 @@ Future<Color> showColorPickerDialog(
     pickerTypeTextStyle: pickerTypeTextStyle,
     pickerTypeLabels: pickerTypeLabels,
     customColorSwatchesAndNames: customColorSwatchesAndNames,
+    customSecondaryColorSwatchesAndNames: customSecondaryColorSwatchesAndNames,
   ).showPickerDialog(
     context,
     title: dialogTitle,
