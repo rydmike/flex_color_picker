@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 /// A custom slider track for the opacity slider.
@@ -127,11 +128,9 @@ class OpacitySliderTrack extends SliderTrackShape {
       case TextDirection.ltr:
         leftTrackPaint = activePaint;
         rightTrackPaint = inactivePaint;
-        break;
       case TextDirection.rtl:
         leftTrackPaint = inactivePaint;
         rightTrackPaint = activePaint;
-        break;
     }
 
     final RRect shapeRect = ui.RRect.fromLTRBAndCorners(

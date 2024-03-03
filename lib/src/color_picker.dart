@@ -32,7 +32,7 @@ part 'show_color_picker_dialog.dart';
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off here for just this feature. You can leave it true
 // below to see this feature's logs in debug mode.
-const bool _debug = !kReleaseMode && true;
+const bool _debug = !kReleaseMode && false;
 
 const int _minRecentColors = 2;
 const int _maxRecentColors = 20;
@@ -951,129 +951,207 @@ class ColorPicker extends StatefulWidget {
     // Make the dialog OK button.
     final String okButtonLabel =
         actionButtons.dialogOkButtonLabel ?? translate.okButtonLabel;
-    final Widget okButtonContent = Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: <Widget>[
-        if (actionButtons.dialogActionIcons)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 4),
-            child: Icon(actionButtons.okIcon),
-          ),
-        Text(okButtonLabel),
-      ],
-    );
+    final Text okButtonContent = Text(okButtonLabel);
     Widget okButton;
     switch (actionButtons.dialogOkButtonType) {
       case ColorPickerActionButtonType.text:
-        okButton = TextButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(true);
-          },
-          child: okButtonContent,
-        );
-        break;
+        okButton = actionButtons.dialogActionIcons
+            ? TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                icon: Icon(actionButtons.okIcon),
+                label: okButtonContent,
+              )
+            : TextButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                child: okButtonContent,
+              );
       case ColorPickerActionButtonType.outlined:
-        okButton = OutlinedButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(true);
-          },
-          child: okButtonContent,
-        );
-        break;
+        okButton = actionButtons.dialogActionIcons
+            ? OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                icon: Icon(actionButtons.okIcon),
+                label: okButtonContent,
+              )
+            : OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                child: okButtonContent,
+              );
       case ColorPickerActionButtonType.elevated:
-        okButton = ElevatedButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(true);
-          },
-          child: okButtonContent,
-        );
-        break;
+        okButton = actionButtons.dialogActionIcons
+            ? ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                icon: Icon(actionButtons.okIcon),
+                label: okButtonContent,
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                child: okButtonContent,
+              );
       case ColorPickerActionButtonType.filled:
-        okButton = FilledButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(true);
-          },
-          child: okButtonContent,
-        );
-        break;
+        okButton = actionButtons.dialogActionIcons
+            ? FilledButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                icon: Icon(actionButtons.okIcon),
+                label: okButtonContent,
+              )
+            : FilledButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                child: okButtonContent,
+              );
       case ColorPickerActionButtonType.filledTonal:
-        okButton = FilledButton.tonal(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(true);
-          },
-          child: okButtonContent,
-        );
-        break;
+        okButton = actionButtons.dialogActionIcons
+            ? FilledButton.tonalIcon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                icon: Icon(actionButtons.okIcon),
+                label: okButtonContent,
+              )
+            : FilledButton.tonal(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(true);
+                },
+                child: okButtonContent,
+              );
     }
 
     // Make the dialog OK button.
     final String cancelButtonLabel =
         actionButtons.dialogCancelButtonLabel ?? translate.cancelButtonLabel;
-    final Widget cancelButtonContent = Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: <Widget>[
-        if (actionButtons.dialogActionIcons)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 4),
-            child: Icon(actionButtons.closeIcon),
-          ),
-        Text(cancelButtonLabel),
-      ],
-    );
+    final Widget cancelButtonContent = Text(cancelButtonLabel);
     Widget cancelButton;
     switch (actionButtons.dialogCancelButtonType) {
       case ColorPickerActionButtonType.text:
-        cancelButton = TextButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(false);
-          },
-          child: cancelButtonContent,
-        );
-        break;
+        cancelButton = actionButtons.dialogActionIcons
+            ? TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                icon: Icon(actionButtons.closeIcon),
+                label: cancelButtonContent,
+              )
+            : TextButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                child: cancelButtonContent,
+              );
       case ColorPickerActionButtonType.outlined:
-        cancelButton = OutlinedButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(false);
-          },
-          child: cancelButtonContent,
-        );
-        break;
+        cancelButton = actionButtons.dialogActionIcons
+            ? OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                icon: Icon(actionButtons.closeIcon),
+                label: cancelButtonContent,
+              )
+            : OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                child: cancelButtonContent,
+              );
       case ColorPickerActionButtonType.elevated:
-        cancelButton = ElevatedButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(false);
-          },
-          child: cancelButtonContent,
-        );
-        break;
+        cancelButton = actionButtons.dialogActionIcons
+            ? ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                icon: Icon(actionButtons.closeIcon),
+                label: cancelButtonContent,
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                child: cancelButtonContent,
+              );
       case ColorPickerActionButtonType.filled:
-        cancelButton = FilledButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(false);
-          },
-          child: cancelButtonContent,
-        );
-        break;
+        cancelButton = actionButtons.dialogActionIcons
+            ? FilledButton.icon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                icon: Icon(actionButtons.closeIcon),
+                label: cancelButtonContent,
+              )
+            : FilledButton(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                child: cancelButtonContent,
+              );
       case ColorPickerActionButtonType.filledTonal:
-        cancelButton = FilledButton.tonal(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: actionButtons.useRootNavigator)
-                .pop(false);
-          },
-          child: cancelButtonContent,
-        );
-        break;
+        cancelButton = actionButtons.dialogActionIcons
+            ? FilledButton.tonalIcon(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                icon: Icon(actionButtons.closeIcon),
+                label: cancelButtonContent,
+              )
+            : FilledButton.tonal(
+                onPressed: () {
+                  Navigator.of(context,
+                          rootNavigator: actionButtons.useRootNavigator)
+                      .pop(false);
+                },
+                child: cancelButtonContent,
+              );
     }
 
     // False if dialog cancelled, true if color selected
@@ -1274,11 +1352,6 @@ class _ColorPickerState extends State<ColorPicker> {
   // with the default label strings in English applied as fallback.
   late Map<ColorPickerType, String> _pickerLabels;
 
-  // Is the active picker using any of the two custom color swatch maps.
-  bool get _isCustomColors =>
-      _activePicker == ColorPickerType.custom ||
-      _activePicker == ColorPickerType.customSecondary;
-
   @override
   void initState() {
     super.initState();
@@ -1368,20 +1441,16 @@ class _ColorPickerState extends State<ColorPicker> {
   void didUpdateWidget(ColorPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (_debug) {
-      debugPrint('didUpdateWidget called **********************************');
+      debugPrint('didUpdateWidget called: fromInternal: $_fromInternal'
+          ' ******************************');
     }
     // Set to true if a change was done where we need to find the picker again.
     bool shouldFindPickerAndSwatch = false;
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
-      // if (widget.color != _selectedColor && widget.color != _tappedColor) {
-      //   _opacity = widget.enableOpacity ? widget.color.opacity : 1;
-      // } else {
-      //   _opacity = widget.enableOpacity ? _selectedColor.opacity : 1;
-      // }
       if (_debug) {
-        debugPrint('didUpdateWidget enableOpacity = '
+        debugPrint('didUpdateWidget changed: enableOpacity = '
             '${widget.enableOpacity == oldWidget.enableOpacity}'
             ' opacity=$_opacity');
       }
@@ -1389,7 +1458,8 @@ class _ColorPickerState extends State<ColorPicker> {
     // The color was updated externally, update to new color and find picker.
     if (widget.color != _selectedColor || widget.color != _tappedColor) {
       if (_debug) {
-        debugPrint('didUpdateWidget external color update!');
+        debugPrint('didUpdateWidget changed color: '
+            'color=${widget.color} selectedColor=$_selectedColor');
       }
       _selectedColor = widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.opacity : 1;
@@ -1600,6 +1670,9 @@ class _ColorPickerState extends State<ColorPicker> {
         _activeColorSwatchList,
         widget.includeIndex850,
       ) as ColorSwatch<Object>?;
+      if (_debug) {
+        debugPrint('_updateActiveSwatch _activeSwatch= $_activeSwatch');
+      }
       // For the wheel picker we need to check if the selected color belongs to
       // a pre-defined swatch and if it does, return that as the active swatch.
       // If the selected color does not belong to any pre-defined color swatch,
@@ -1808,7 +1881,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 runSpacing: widget.runSpacing,
                 columnSpacing: widget.columnSpacing,
                 activeColorSwatchList: _activeColorSwatchList,
-                selectedColor: _tappedColor,
+                selectedColor:
+                    widget.enableOpacity ? _selectedColor : _tappedColor,
                 onSelectColor: (Color color) {
                   _tonalOperated = false;
                   _onSelectColor(color);
@@ -1895,7 +1969,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 runSpacing: widget.runSpacing,
                 columnSpacing: widget.shadesSpacing ?? widget.columnSpacing,
                 activeSwatch: _activeSwatch!,
-                selectedColor: _tappedColor,
+                selectedColor:
+                    widget.enableOpacity ? _selectedColor : _tappedColor,
                 onSelectColor: (Color color) {
                   _tonalOperated = false;
                   _onSelectColor(color);
@@ -2009,8 +2084,8 @@ class _ColorPickerState extends State<ColorPicker> {
                           });
                           widget.onColorChangeEnd!(
                               _selectedColor.withOpacity(_opacity));
-                          _addToRecentColors(
-                              _selectedColor.withOpacity(_opacity));
+                          // _addToRecentColors(
+                          //     _selectedColor.withOpacity(_opacity));
                         }
                       },
                     ),
@@ -2137,6 +2212,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 recentColors: _recentColors,
                 selectedColor: _tappedColor,
                 onSelectColor: (Color color) {
+                  _tonalOperated = false;
                   _onSelectColor(color, findPicker: true);
                 },
                 includeIndex850: widget.includeIndex850,
@@ -2166,6 +2242,13 @@ class _ColorPickerState extends State<ColorPicker> {
   }) {
     // Any callbacks that are called here, should set the _fromInternal flag.
     _fromInternal = true;
+
+    // If findPicker is true we came from RecentColors, it is the only one that
+    // uses this flag. If we use Recent colors, we should also extract the
+    // opacity from the selected color, and set it as the current opacity.
+    if (findPicker) {
+      _opacity = color.opacity;
+    }
     // Call start callback with current selectedColor before change.
     if (widget.enableOpacity) {
       widget.onColorChangeStart?.call(_selectedColor.withOpacity(_opacity));
@@ -2206,11 +2289,16 @@ class _ColorPickerState extends State<ColorPicker> {
       // of the current selected swatch, then update the active swatch.
       // This check eliminates a rebuild when the selected color is a member
       // of the currently displayed color swatch.
+      // Needed to update the active swatch when opacity is used on custom
+      // colors when opacity is not enabled.
       if ((_activePicker != ColorPickerType.wheel ||
               !ColorTools.swatchContainsColor(
                   _activeSwatch!, _selectedColor)) &&
           !_tonalOperated) {
         // Update the active swatch to match the selected color.
+        if (_debug) {
+          debugPrint('**** _onSelectColor calls _updateActiveSwatch ****');
+        }
         _updateActiveSwatch();
       }
     });
@@ -2346,19 +2434,14 @@ class _ColorPickerState extends State<ColorPicker> {
     switch (widget.copyPasteBehavior.copyFormat) {
       case ColorPickerCopyFormat.dartCode:
         colorString = '0x${_selectedColor.hexAlpha}';
-        break;
       case ColorPickerCopyFormat.hexRRGGBB:
         colorString = _selectedColor.hex;
-        break;
       case ColorPickerCopyFormat.hexAARRGGBB:
         colorString = _selectedColor.hexAlpha;
-        break;
       case ColorPickerCopyFormat.numHexRRGGBB:
         colorString = '#${_selectedColor.hex}';
-        break;
       case ColorPickerCopyFormat.numHexAARRGGBB:
         colorString = '#${_selectedColor.hexAlpha}';
-        break;
     }
     final ClipboardData data = ClipboardData(text: colorString);
     await Clipboard.setData(data);

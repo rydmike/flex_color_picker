@@ -127,6 +127,24 @@ ColorSwatch<Object?>? findColorSwatch(
     }
   }
   return (color is ColorSwatch && swatches.contains(color)) ? color : null;
+
+  // final ColorSwatch<Object?>? foundSwatch =
+  //     (color is ColorSwatch && swatches.contains(color)) ? color : null;
+  //
+  // if (foundSwatch != null) {
+  //   debugPrint('findColorSwatch $foundSwatch');
+  //   return foundSwatch;
+  // }
+  //
+  // // We did not find any matching color. We try with no opacity, as well.
+  // for (final ColorSwatch<Object> mainColor in swatches) {
+  //   if (isShadeOfMain(mainColor, color.withAlpha(0xFF), include850)) {
+  //     return mainColor;
+  //   }
+  // }
+  // return (color is ColorSwatch && swatches.contains(color.withAlpha(0xFF)))
+  //     ? color
+  //     : null;
 }
 
 /// Check if a given color is a shade of the main color, return true if it is.
