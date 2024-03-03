@@ -563,6 +563,14 @@ Future<Color> showColorPickerDialog(
   /// Defaults to 0.
   final double? dialogElevation,
 
+  /// The color used to paint a drop shadow under the dialog's Material,
+  /// which reflects the dialog's elevation.
+  final Color? shadowColor,
+
+  /// The color used as a surface tint overlay on the dialog's background
+  /// color, which reflects the dialog's elevation.
+  final Color? surfaceTintColor,
+
   /// The semantic label of the dialog used by accessibility frameworks to
   /// announce screen transitions when the dialog is opened and closed.
   ///
@@ -741,6 +749,8 @@ Future<Color> showColorPickerDialog(
     buttonPadding: buttonPadding,
     backgroundColor: backgroundColor,
     elevation: dialogElevation,
+    shadowColor: shadowColor,
+    surfaceTintColor: surfaceTintColor,
     semanticLabel: semanticLabel,
     insetPadding: insetPadding,
     clipBehavior: clipBehavior,
