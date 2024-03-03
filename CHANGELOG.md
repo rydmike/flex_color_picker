@@ -4,18 +4,19 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.4.0
 
-**Mar 2, 2024**
+**Mar 3, 2024**
 
-Requires min Flutter 3.16.0.
+Requires min Flutter 3.16.0 and Dart 3.0.0.
  
 **NEW**
 - Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and added support for these button styles as OK/Cancel buttons in the ColorPicker dialog. 
 - Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
+- Change: Dialog action buttons now use the button `.icon` variants when icon usage is enabled. Previously they baked in the icon into the button child Widget.
 - Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is now also a `ColorPickerType.customSecondary` picker selector. It gets its values from `ColorPicker.customSecondaryColorSwatchesAndNames`. 
 - Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity and slider in `ColorPicker.enableOpacity` is not enabled. Nothing new is needed to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
 - The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all created swatch indexes. Previously they set alpha to `#FF`, even if the value might have been something else. Creating palettes with very low alpha in the source color will not produce pretty palettes, but it is now possible to create them.
 - The Color picker received two new layout properties. Previously all vertical spacings between the column elements in the picker were controlled by the `ColorPicker` property `columnSpacing`. For two key elements, you can now override this spacing. 
-  - Use `toolbarSpacing` to adjust the vertical spacing below the top toolbar header and its action buttons. The intent of this is to enable using zero, so the top toolbar and action buttons are closer to the segmented color picker control, than the rest of the spacing in the picker uses.
+  - Use `toolbarSpacing` to adjust the vertical spacing below the top toolbar header and its action buttons. The purpose is to enable using zero space or close to it, so the top toolbar and action buttons can be closer to the picker selection control than the rest of the spacing in the picker uses.
   - Use `shadesSpacing` to adjust the vertical spacing after the Material-2 swatch palette. By setting it to zero or one, you can create a design where the Material-2 swatch-based palette is closer to or connected to the Material-3 tonal palette. As long as the tonal palette does not use a heading, of course.
   - Both `toolbarSpacing` and `shadesSpacing` default to `columnSpacing` if they are not defined.
   - More of these vertical spacing fine-tuning properties can be added if there is a need for them.
@@ -29,10 +30,6 @@ Package
 Web demo 
 - Reset to defaults did not reset settings for `wheelSquarePadding` and `wheelSquareBorderRadius`. Fixed.
 
-**TODO**
-
-TODO: Recent colors, should it switch opacity to what color it stored when selected? => YES!
-TODO: Opacity slider, sets Recent colors also on entry now, should only on exit.
 
 ## 3.3.1
 
@@ -197,14 +194,13 @@ TODO: Opacity slider, sets Recent colors also on entry now, should only on exit.
 
 * Updated material_color_utilities to ^0.2.0. This version constraint does not
   work with Flutter 3.0.x stable or beta 3.3.x, and their earlier versions.
-  This dev release is required to use Flutter SDK **master** 3.1.0-0.0.pre.2111 or later,
+  This dev release is required to use Flutter SDK **master** `3.1.0-0.0.pre.2111` or later,
   that uses material_color_utilities 0.2.0.  
 
 * For other (older) versions of Flutter SDK, you can use package version 2.5.0 that has a 
   material_color_utilities version constraint of ^0.1.3.
 
-* This release also updates Dart SDK constraint to '>=2.17.0 <3.0.0' and has Flutter listed as
-  '>=3.1.0-0.0.pre.2111'.  
+* This release also updates Dart SDK constraint to `'>=2.17.0 <3.0.0'` and has Flutter listed as `'>=3.1.0-0.0.pre.2111'`.  
 
 **DOCS**
 
@@ -343,7 +339,7 @@ TODO: Opacity slider, sets Recent colors also on entry now, should only on exit.
   It uses ColorScheme properties in its theme that were not available
   earlier and removed in 2.10.0 deprecated color properties from its theme.
   The color picker package itself still has the same version requirement as before
-  of Dart SDK: '>=2.14.0 < 3.0.0'.
+  of Dart SDK: `'>=2.14.0 < 3.0.0'`.
 
 ## 2.2.0
 
@@ -574,7 +570,7 @@ example folder, in "example/lib/demo/main.dart".
 
 * **New feature**: The picker can display recently used colors in a list of color indicators at the bottom of the picker. You can use the following properties to control it.
     * `showRecentColors` set to true/false to enable/disable the usage of the recent colors feature.
-    * `recentColorsSubheading` subheading widget for the recently used colors. Typically, a Text widget, e.g., Text('Recent colors'). If not provided, there is no sub heading for the recently used colors.
+    * `recentColorsSubheading` subheading widget for the recently used colors. Typically, a Text widget, e.g., `Text('Recent colors')`. If not provided, there is no sub heading for the recently used colors.
     * `maxRecentColors` number of recent colors to track, from 2 to 20 allowed.
     * `recentColors` a list with current recent color, defaults to empty. You can store the last list and use this list to restore the previous recent colors list.
     * `onRecentColorsChanged` optional value callback that returns a copy the current list of recently used colors. Use it to store a copy of the recent colors to be able to restore it later.
@@ -596,7 +592,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 
 * First version with null safety.
 * A workaround to issue [#71687](https://github.com/flutter/flutter/issues/71687) was introduced. The issue has not been solved. However, the workaround allows for the Wrap implementation, that was changed to a Row in version 1.1.2, to be used again.
-* The almost full API-configurable Web demo is included in the package in "example/lib/demo/main.dart" together with the previous default example in "example/lib/main.dart". Previously, this Web example was in a separate GitHub repository. The example was updated to make it responsive, to offer better usability on Web builds.
+* The almost full API-configurable Web demo is included in the package in "example/lib/demo/main.dart" together with the previous default example in `example/lib/main.dart`. Previously, this Web example was in a separate GitHub repository. The example was updated to make it responsive, to offer better usability on Web builds.
 
 ## 1.1.5
 
