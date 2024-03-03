@@ -15,7 +15,7 @@ import 'package:patrol_finders/patrol_finders.dart';
 void main() {
   const ValueKey<String> testKey = ValueKey<String>('test');
 
-  group('PAT1: Default ColorPicker', () {
+  group('PAT1: Patrol Finder ColorPicker Tests', () {
     debugDefaultTargetPlatformOverride = null;
 
     patrolWidgetTest(
@@ -412,9 +412,9 @@ void main() {
     );
 
     patrolWidgetTest(
-      'PAT1.4: Patrol test dialog - default labels, tex buttons',
+      'PAT1.4: Patrol test dialog - default labels, text buttons-no-icons',
       (PatrolTester $) async {
-        Color resultColor = Colors.blue;
+        Color resultColor = Colors.orange;
         await $.pumpWidgetAndSettle(
           TestPicker(
             widget: Builder(
@@ -487,9 +487,12 @@ void main() {
         await $(ColorIndicator).at(5).tap();
         // expect(resultColor.value, Colors.blueAccent.value);
         await $(ColorIndicator).at(18).tap();
-        expect(find.text('OK'), findsOneWidget);
-        await $('OK').tap();
-        expect(resultColor.value, Colors.blueAccent[400]!.value);
+
+        expect(find.byType(TextButton), findsExactly(2));
+        await $(TextButton).at(1).tap();
+        expect(Color(resultColor.value), Color(Colors.blueAccent[400]!.value));
+        const Color(0xff2979ff);
+        const Color(0xffff9800);
 
         // Open dialog again
         await $('Open').tap();
@@ -514,7 +517,113 @@ void main() {
     );
 
     patrolWidgetTest(
-      'PAT1.5: Patrol test dialog - custom labels, filled buttons',
+      'PAT1.4-icons: Patrol test dialog - default labels, text buttons-icons',
+      (PatrolTester $) async {
+        Color resultColor = Colors.orange;
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            widget: Builder(
+              builder: (BuildContext context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    resultColor = await showColorPickerDialog(
+                      context,
+                      resultColor,
+                      pickersEnabled: const <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: true,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: false,
+                      },
+                      includeIndex850: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      enableTonalPalette: true,
+                      enableOpacity: true,
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        okTooltip: 'OK NOW',
+                        closeTooltip: 'CLOSE NOW',
+                        toolIconsThemeData: IconThemeData(
+                          color: Colors.red,
+                          size: 20,
+                          opacity: 0.88,
+                        ),
+                        visualDensity: VisualDensity.comfortable,
+                        padding: EdgeInsets.all(2),
+                        splashRadius: 20,
+                        dialogActionIcons: true,
+                        dialogActionButtons: true,
+                        // dialogActionOnlyOkButton: false,
+                      ),
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        editFieldCopyButton: true,
+                      ),
+                    );
+                  },
+                  child: const Text('Open'),
+                );
+              },
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Open'), findsOneWidget);
+        await $('Open').tap();
+
+        expect(find.text('Primary'), findsOneWidget);
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(2).tap();
+        // expect(resultColor.value, Colors.purple.value);
+        await $(ColorIndicator).at(20).tap();
+        // expect(resultColor.value, Colors.purple[100]!.value);
+
+        // Test accent color picker.
+        expect(find.text('Accent'), findsOneWidget);
+        await $('Accent').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.redAccent.value);
+        await $(ColorIndicator).at(5).tap();
+        // expect(resultColor.value, Colors.blueAccent.value);
+        await $(ColorIndicator).at(18).tap();
+
+        expect(find.text('OK'), findsOneWidget);
+        await $('OK').tap();
+        expect(Color(resultColor.value), Color(Colors.blueAccent[400]!.value));
+        const Color(0xff2979ff);
+        const Color(0xffff9800);
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(2).tap();
+        // expect(resultColor.value, Colors.purple.value);
+        expect(find.text('OK'), findsOneWidget);
+        await $('OK').tap();
+        expect(resultColor.value, Colors.purple.value);
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        expect(find.text('Cancel'), findsOneWidget);
+        await $('Cancel').tap();
+        expect(resultColor.value, Colors.purple.value);
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.5: Patrol test dialog - custom labels, filled buttons-no-icons',
       (PatrolTester $) async {
         Color resultColor = Colors.blue;
         await $.pumpWidgetAndSettle(
@@ -534,6 +643,9 @@ void main() {
                         ColorPickerType.custom: false,
                         ColorPickerType.wheel: false,
                       },
+                      columnSpacing: 4,
+                      toolbarSpacing: 0,
+                      shadesSpacing: 0,
                       includeIndex850: true,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       enableTonalPalette: true,
@@ -601,7 +713,98 @@ void main() {
     );
 
     patrolWidgetTest(
-      'PAT1.6: Patrol test dialog - custom labels, filledTonal buttons',
+      'PAT1.5-icon: Patrol test dialog - custom labels, filled buttons-icons',
+      (PatrolTester $) async {
+        Color resultColor = Colors.blue;
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            widget: Builder(
+              builder: (BuildContext context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    resultColor = await showColorPickerDialog(
+                      context,
+                      resultColor,
+                      pickersEnabled: const <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: true,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: false,
+                      },
+                      columnSpacing: 4,
+                      toolbarSpacing: 0,
+                      shadesSpacing: 0,
+                      includeIndex850: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      enableTonalPalette: true,
+                      enableOpacity: true,
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        okTooltip: 'OK NOW',
+                        closeTooltip: 'CLOSE NOW',
+                        toolIconsThemeData: IconThemeData(
+                          color: Colors.red,
+                          size: 20,
+                          opacity: 0.88,
+                        ),
+                        visualDensity: VisualDensity.comfortable,
+                        padding: EdgeInsets.all(2),
+                        splashRadius: 20,
+                        dialogActionButtons: true,
+                        // dialogActionOnlyOkButton: false,
+                        dialogCancelButtonLabel: 'CLOSE',
+                        dialogOkButtonLabel: 'USE',
+                        dialogActionIcons: true,
+                        dialogOkButtonType: ColorPickerActionButtonType.filled,
+                        dialogCancelButtonType:
+                            ColorPickerActionButtonType.filled,
+                      ),
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        editFieldCopyButton: true,
+                        feedbackParseError: true,
+                        parseShortHexCode: true,
+                      ),
+                    );
+                  },
+                  child: const Text('Open'),
+                );
+              },
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Open'), findsOneWidget);
+        await $('Open').tap();
+
+        expect(find.text('Primary'), findsOneWidget);
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(2).tap();
+        // expect(resultColor.value, Colors.purple.value);
+        expect(find.text('USE'), findsOneWidget);
+        await $('USE').tap();
+        expect(Color(resultColor.value), Color(Colors.purple.value));
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        expect(find.text('CLOSE'), findsOneWidget);
+        await $('CLOSE').tap();
+        expect(resultColor.value, Colors.purple.value);
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.6: Patrol test dialog - custom labels, filledTonal-no-icons',
       (PatrolTester $) async {
         Color resultColor = Colors.blue;
         await $.pumpWidgetAndSettle(
@@ -641,7 +844,6 @@ void main() {
                         padding: EdgeInsets.all(2),
                         splashRadius: 20,
                         dialogActionButtons: true,
-                        // dialogActionOnlyOkButton: false,
                         dialogCancelButtonLabel: 'CLOSER',
                         dialogOkButtonLabel: 'USE',
                         dialogOkButtonType:
@@ -721,7 +923,127 @@ void main() {
     );
 
     patrolWidgetTest(
-      'PAT1.7: Patrol test dialog - custom labels, elevated buttons, '
+      'PAT1.6-icon: Patrol test dialog - custom labels, filledTonal-icons',
+      (PatrolTester $) async {
+        Color resultColor = Colors.blue;
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            platform: TargetPlatform.windows,
+            widget: Builder(
+              builder: (BuildContext context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    resultColor = await showColorPickerDialog(
+                      context,
+                      resultColor,
+                      pickersEnabled: const <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: true,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: false,
+                      },
+                      includeIndex850: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      enableTonalPalette: true,
+                      enableOpacity: true,
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        closeIsLast: false,
+                        okTooltip: 'OK NOW',
+                        closeTooltip: 'CLOSE NOW',
+                        toolIconsThemeData: IconThemeData(
+                          color: Colors.red,
+                          size: 20,
+                          opacity: 0.88,
+                        ),
+                        visualDensity: VisualDensity.comfortable,
+                        padding: EdgeInsets.all(2),
+                        splashRadius: 20,
+                        dialogActionButtons: true,
+                        dialogActionIcons: true,
+                        dialogCancelButtonLabel: 'CLOSER',
+                        dialogOkButtonLabel: 'USE',
+                        dialogOkButtonType:
+                            ColorPickerActionButtonType.filledTonal,
+                        dialogCancelButtonType:
+                            ColorPickerActionButtonType.filledTonal,
+                        dialogActionOrder:
+                            ColorPickerActionButtonOrder.adaptive,
+                      ),
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        editFieldCopyButton: true,
+                        feedbackParseError: true,
+                        parseShortHexCode: true,
+                      ),
+                    );
+                  },
+                  child: const Text('Open'),
+                );
+              },
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Open'), findsOneWidget);
+        await $('Open').tap();
+
+        expect(find.text('Primary'), findsOneWidget);
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(2).tap();
+        // expect(resultColor.value, Colors.purple.value);
+        expect(find.text('USE'), findsOneWidget);
+        await $('USE').tap();
+        expect(Color(resultColor.value), Color(Colors.purple.value));
+
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Open dialog again
+        await $('Open').tap();
+        // Close via Cancel button
+        expect(find.text('CLOSER'), findsOneWidget);
+        await $('CLOSER').tap();
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        // Find the ToolBar
+        expect(find.byType(ColorPickerToolbar), findsOneWidget);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 4th button is OK, since close is NOT last
+        await $(ColorPickerToolbar).$(IconButton).at(3).tap();
+        expect(resultColor.value, Colors.red.value);
+
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).at(3).tap();
+        // expect(resultColor.value, Colors.deepPurple.value);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 3rd button is Close, since close is NOT last
+        await $(ColorPickerToolbar).$(IconButton).at(2).tap();
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Expect no change in color
+        expect(resultColor.value, Colors.red.value);
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.7: Patrol test dialog - custom labels, elevated-no-icon, '
       'with constraints.',
       (PatrolTester $) async {
         Color resultColor = Colors.blue;
@@ -771,7 +1093,6 @@ void main() {
                             ColorPickerActionButtonType.elevated,
                         dialogActionOrder:
                             ColorPickerActionButtonOrder.okIsRight,
-                        dialogActionIcons: true,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -844,7 +1165,276 @@ void main() {
     );
 
     patrolWidgetTest(
-      'PAT1.8: Patrol test dialog - custom labels, outlined buttons, '
+      'PAT1.7-icon: Patrol test dialog - custom labels, elevated-icons, '
+      'with constraints.',
+      (PatrolTester $) async {
+        Color resultColor = Colors.blue;
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            widget: Builder(
+              builder: (BuildContext context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    resultColor = await showColorPickerDialog(
+                      context,
+                      resultColor,
+                      constraints: const BoxConstraints(
+                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      pickersEnabled: const <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: true,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: false,
+                      },
+                      includeIndex850: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      enableTonalPalette: true,
+                      enableOpacity: true,
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        okTooltip: 'OK NOW',
+                        closeTooltip: 'CLOSE NOW',
+                        toolIconsThemeData: IconThemeData(
+                          color: Colors.red,
+                          size: 20,
+                          opacity: 0.88,
+                        ),
+                        visualDensity: VisualDensity.comfortable,
+                        padding: EdgeInsets.all(2),
+                        splashRadius: 20,
+                        dialogActionButtons: true,
+                        dialogActionIcons: true,
+                        dialogCancelButtonLabel: 'CLOSE',
+                        dialogOkButtonLabel: 'Do',
+                        dialogOkButtonType:
+                            ColorPickerActionButtonType.elevated,
+                        dialogCancelButtonType:
+                            ColorPickerActionButtonType.elevated,
+                        dialogActionOrder:
+                            ColorPickerActionButtonOrder.okIsRight,
+                      ),
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        editFieldCopyButton: true,
+                        feedbackParseError: true,
+                        parseShortHexCode: true,
+                      ),
+                    );
+                  },
+                  child: const Text('Open'),
+                );
+              },
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Open'), findsOneWidget);
+        await $('Open').tap();
+
+        expect(find.text('Primary'), findsOneWidget);
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(6).tap();
+        // expect(resultColor.value, Colors.lightBlue.value);
+        expect(find.text('Do'), findsOneWidget);
+        await $('Do').tap();
+        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Open dialog again
+        await $('Open').tap();
+        // Close via Cancel button
+        expect(find.text('CLOSE'), findsOneWidget);
+        await $('CLOSE').tap();
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        // Find the ToolBar
+        expect(find.byType(ColorPickerToolbar), findsOneWidget);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 4th button is Close, since close is last
+        await $(ColorPickerToolbar).$(IconButton).at(3).tap();
+        expect(resultColor.value, Colors.lightBlue.value);
+
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).at(3).tap();
+        // expect(resultColor.value, Colors.deepPurple.value);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 3rd button is OK, since close is NOT last
+        await $(ColorPickerToolbar).$(IconButton).at(2).tap();
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Expect no change in color
+        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+        // Color(0xff673ab7);
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.8: Patrol test dialog - custom labels, outlined-no-icon, '
+      'with constraints and custom transition.',
+      (PatrolTester $) async {
+        Color resultColor = Colors.blue;
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            widget: Builder(
+              builder: (BuildContext context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    resultColor = await showColorPickerDialog(
+                      context,
+                      resultColor,
+                      constraints: const BoxConstraints(
+                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      pickersEnabled: const <ColorPickerType, bool>{
+                        ColorPickerType.both: false,
+                        ColorPickerType.primary: true,
+                        ColorPickerType.accent: true,
+                        ColorPickerType.bw: false,
+                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: true,
+                      },
+                      includeIndex850: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      enableTonalPalette: true,
+                      enableOpacity: true,
+                      actionButtons: const ColorPickerActionButtons(
+                        okButton: true,
+                        closeButton: true,
+                        okTooltip: 'OK NOW',
+                        closeTooltip: 'CLOSE NOW',
+                        toolIconsThemeData: IconThemeData(
+                          color: Colors.red,
+                          size: 20,
+                          opacity: 0.88,
+                        ),
+                        visualDensity: VisualDensity.comfortable,
+                        padding: EdgeInsets.all(2),
+                        splashRadius: 20,
+                        dialogCancelButtonLabel: 'CLOSE',
+                        dialogOkButtonLabel: 'OK',
+                        dialogOkButtonType:
+                            ColorPickerActionButtonType.outlined,
+                        dialogCancelButtonType:
+                            ColorPickerActionButtonType.outlined,
+                        dialogActionOrder:
+                            ColorPickerActionButtonOrder.okIsLeft,
+                      ),
+                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                        copyButton: true,
+                        pasteButton: true,
+                        editFieldCopyButton: true,
+                        feedbackParseError: true,
+                        parseShortHexCode: true,
+                      ),
+                      transitionBuilder: (BuildContext context,
+                          Animation<double> a1,
+                          Animation<double> a2,
+                          Widget widget) {
+                        final double curvedValue =
+                            Curves.easeInOutBack.transform(a1.value) - 1.0;
+                        return Transform(
+                          transform: Matrix4.translationValues(
+                              0.0, curvedValue * 200, 0.0),
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: widget,
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 400),
+                    );
+                  },
+                  child: const Text('Open'),
+                );
+              },
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Open'), findsOneWidget);
+        await $('Open').tap();
+
+        expect(find.text('Primary'), findsOneWidget);
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        await $(ColorIndicator).at(6).tap();
+        // expect(resultColor.value, Colors.lightBlue.value);
+        expect(find.text('OK'), findsOneWidget);
+        await $('OK').tap();
+        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).tap();
+        // expect(resultColor.value, Colors.red.value);
+        // Find the ToolBar
+        expect(find.byType(ColorPickerToolbar), findsOneWidget);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 4th button is Close, since close is last
+        await $(ColorPickerToolbar).$(IconButton).at(3).tap();
+        expect(resultColor.value, Colors.lightBlue.value);
+
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Open dialog again
+        await $('Open').tap();
+        // Close via Cancel button
+        expect(find.text('CLOSE'), findsOneWidget);
+        await $('CLOSE').tap();
+
+        // Open dialog again
+        await $('Open').tap();
+        await $('Primary').tap();
+        await $(ColorIndicator).at(3).tap();
+        // expect(resultColor.value, Colors.deepPurple.value);
+        // Find the ToolBar buttons, 4 of them configured.
+        expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
+        // Close via toolbar, 3rd button is OK, since close is NOT last
+        await $(ColorPickerToolbar).$(IconButton).at(2).tap();
+        // Dialog is closed
+        expect(find.text('Open'), findsOneWidget);
+        // Expect no change in color
+        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+
+        // Open dialog again
+        await $('Open').tap();
+        // Got to wheel picker
+        expect(find.text('Wheel'), findsOneWidget);
+        await $('Wheel').tap();
+        // Tap the center of the wheel picker
+        expect(find.byType(ColorWheelPicker), findsOneWidget);
+        await $(ColorWheelPicker).tap();
+        // Tap close button
+        expect(find.text('OK'), findsOneWidget);
+        await $('OK').tap();
+        // We get a purple color from smack in the middle
+        expect(Color(resultColor.value), const Color(0xff574080));
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.8-icon: Patrol test dialog - custom labels, outlined-icon, '
       'with constraints and custom transition.',
       (PatrolTester $) async {
         Color resultColor = Colors.blue;
@@ -885,6 +1475,7 @@ void main() {
                         padding: EdgeInsets.all(2),
                         splashRadius: 20,
                         dialogActionButtons: true,
+                        dialogActionIcons: true,
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'OK',
                         dialogOkButtonType:
