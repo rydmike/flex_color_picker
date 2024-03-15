@@ -131,8 +131,7 @@ Future<Color> showColorPickerDialog(
   /// Used to configure the copy paste behavior of the color picker.
   ///
   /// Defaults to [ColorPickerCopyPasteBehavior] ().
-  ColorPickerCopyPasteBehavior copyPasteBehavior =
-      const ColorPickerCopyPasteBehavior(),
+  ColorPickerCopyPasteBehavior copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
 
   /// Icon data for the icon used to indicate the selected color.
   ///
@@ -452,8 +451,7 @@ Future<Color> showColorPickerDialog(
   ///  * [ColorPickerType.bw] : 'Black & White'
   ///  * [ColorPickerType.custom] : 'Custom'
   ///  * [ColorPickerType.wheel] : 'Wheel'
-  Map<ColorPickerType, String> pickerTypeLabels =
-      const <ColorPickerType, String>{
+  Map<ColorPickerType, String> pickerTypeLabels = const <ColorPickerType, String>{
     ColorPickerType.primary: ColorPicker._selectPrimaryLabel,
     ColorPickerType.accent: ColorPicker._selectAccentLabel,
     ColorPickerType.bw: ColorPicker._selectBlackWhiteLabel,
@@ -471,8 +469,7 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defaults to an empty map. If the map is empty, the custom colors picker
   /// will not be shown even if it is enabled in `pickersEnabled`.
-  Map<ColorSwatch<Object>, String> customColorSwatchesAndNames =
-      const <ColorSwatch<Object>, String>{},
+  Map<ColorSwatch<Object>, String> customColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
 
   /// Color swatch to name map, with custom swatches and their names.
   ///
@@ -483,8 +480,7 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defaults to an empty map. If the map is empty, the custom colors picker
   /// will not be shown even if it is enabled in [pickersEnabled].
-  Map<ColorSwatch<Object>, String> customSecondaryColorSwatchesAndNames =
-      const <ColorSwatch<Object>, String>{},
+  Map<ColorSwatch<Object>, String> customSecondaryColorSwatchesAndNames = const <ColorSwatch<Object>, String>{},
 
   // ***************************************************************************
   // Below properties that refer to the dialog
@@ -591,8 +587,7 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defines the minimum space between the screen's edges and the dialog.
   /// Defaults to `EdgeInsets.symmetric(horizontal: 40, vertical: 24)`.
-  final EdgeInsets insetPadding =
-      const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+  final EdgeInsets insetPadding = const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
 
   /// Controls how the contents of the dialog are clipped (or not) to the
   /// given shape.
@@ -720,6 +715,7 @@ Future<Color> showColorPickerDialog(
     wheelSubheading: wheelSubheading,
     recentColorsSubheading: recentColorsSubheading,
     opacitySubheading: opacitySubheading,
+    tonalSubheading: tonalSubheading,
     showMaterialName: showMaterialName,
     materialNameTextStyle: materialNameTextStyle,
     showColorName: showColorName,
