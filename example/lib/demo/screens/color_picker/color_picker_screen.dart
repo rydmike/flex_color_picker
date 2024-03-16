@@ -1,4 +1,3 @@
-import 'package:color_picker_example/demo/screens/color_picker/picker_indicators/premade_dialog_picker_color_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app.dart';
@@ -6,6 +5,7 @@ import '../../widgets/flex_app_bar.dart';
 import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
+import 'picker_indicators/premade_dialog_picker_color_indicator.dart';
 import 'picker_switches/dialog_action_only_ok_button_switch.dart';
 import 'picker_text_fields/text_field_focus_demo.dart';
 import 'picker_toggle_buttons/actions_order_switch.dart';
