@@ -1,6 +1,6 @@
 name: color_picker_example
 description: Two examples of how to use the FlexColorPicker package.
-version: 3.4.0
+version: 3.4.1
 publish_to: 'none'
 environment:
   sdk: '>=2.19.0 <4.0.0'
@@ -15,10 +15,10 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^2.4.10
+  flutter_riverpod: ^2.5.1
 
   # https://pub.dev/packages/google_fonts
-  google_fonts: ^6.2.0
+  google_fonts: ^6.2.1
 
   # https://pub.dev/packages/hive
   hive: ^2.2.3

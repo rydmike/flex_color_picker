@@ -2,6 +2,26 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+
+## 3.4.1
+
+**Mar 16, 2024**
+
+
+**FIX**
+
+Package
+
+- Fixed [#81](https://github.com/rydmike/flex_color_picker/issues/81) The property `tonalSubheading` in the convenience dialog function `showColorPickerDialog` was never passed along to the `ColorPicker` used to construct the dialog, causing the tonal sub heading to never show up in the resulting dialog.
+
+
+**New** 
+ 
+Web demo
+
+- There is now a color picker in the web demo app also using and demonstrating the usage of the optional convenience `showColorPickerDialog` function.  
+
+
 ## 3.4.0
 
 **Mar 3, 2024**
