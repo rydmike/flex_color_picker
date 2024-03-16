@@ -1,3 +1,4 @@
+import 'package:color_picker_example/demo/screens/color_picker/picker_indicators/premade_dialog_picker_color_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app.dart';
@@ -165,6 +166,7 @@ class _Column1 extends StatelessWidget {
         ),
         // Show the color selected in a dialog and open a dialog to change it.
         const DialogPickerColorIndicator(),
+        const PremadeDialogPickerColorIndicator(),
         // Show the color selected in the picker in a Card below.
         const CardPickerColorIndicator(),
         // Show the picker meta remote control widget.
