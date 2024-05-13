@@ -82,15 +82,15 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           padding: roundButtonPadding,
         ).copyWith(
-          side: MaterialStateProperty.resolveWith<BorderSide?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
+          side: WidgetStateProperty.resolveWith<BorderSide?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
                 return BorderSide(
                   color: disabledColor,
                   width: 0.5,
                 );
               }
-              if (states.contains(MaterialState.error)) {
+              if (states.contains(WidgetState.error)) {
                 return BorderSide(
                   color: scheme.error,
                   width: App.outlineThickness,

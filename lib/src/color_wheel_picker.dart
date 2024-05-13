@@ -380,7 +380,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
         child: Focus(
           focusNode: _focusNode,
           child: MouseRegion(
-            cursor: MaterialStateMouseCursor.clickable,
+            cursor: WidgetStateMouseCursor.clickable,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
