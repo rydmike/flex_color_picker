@@ -203,17 +203,42 @@ class ColorPicker extends StatefulWidget {
             'The maxRecentColors must be >= $_minRecentColors '
             'and <= $_maxRecentColors.');
 
-  /// The active color selection when the color picker is created.
+  /// The active color selection in the color picker.
+  ///
+  /// Also used as initial value when the color picker is created.
+  ///
+  /// Use the callback [onColorChanged] to get the new color values from
+  /// the picker and update the [color] in the parent widget.
   final Color color;
 
   /// Required [ValueChanged] callback, called when user selects
   /// a new color with new color value.
+  ///
   ///
   /// Called every time the color value changes when operating thumbs on the
   /// color wheel or color or transparency sliders
   ///
   /// Changing which picker type is viewed does not trigger this callback, it
   /// is not triggered until a color in the viewed picker is selected.
+  ///
+  /// The picker passes the new value to the callback but does not actually
+  /// change state until the parent widget rebuilds the color picker with
+  /// the new value.
+  ///
+  /// The callback provided to [onColorChanged] should update the state of the
+  /// parent [StatefulWidget] using the [State.setState] method, so that the
+  /// parent gets rebuilt; for example:
+  ///
+  /// ```dart
+  /// ColorPicker(
+  ///   color: _pickerColor,
+  ///   onChanged: (Color color) {
+  ///     setState(() {
+  ///       _pickerColor = color;
+  ///     });
+  ///   },
+  /// )
+  /// ```
   final ValueChanged<Color> onColorChanged;
 
   /// Optional [ValueChanged] callback. Called when user starts color selection

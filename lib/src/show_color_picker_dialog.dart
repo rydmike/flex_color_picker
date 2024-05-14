@@ -8,7 +8,7 @@ Future<Color> showColorPickerDialog(
   /// Required build context for the dialog
   BuildContext context,
 
-  /// The active color selection when the color picker is created.
+  /// The active color selection when the color picker dialog is created.
   Color color, {
   /// A [ColorPickerType] to bool map. Defines which pickers are enabled in the
   /// color picker's sliding selector and thus available as color pickers.
