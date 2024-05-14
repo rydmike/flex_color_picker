@@ -4,7 +4,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.5.0
 
-**May 14, 2024**
+**May 15, 2024**
 
 Requires min Flutter 3.22.0.
 
@@ -20,6 +20,8 @@ The ColorPicker contains no breaking changes, but underlying Flutter does and th
 
 * Fix wheel picker jumping to BW or custom picker under certain conditions.
   * When the wheel picker's opacity value is not 100, moving the color picker cursor to the white corner or bottom black edge of the color box triggers a jump. It auto-selects BW or a custom picker containing black or white values. This is now fixed. The picker cursor will stay in the wheel picker, and the color box will not jump to BW or custom picker when the cursor is moved to the white corner or bottom black edge of the color box.
+* Improved and updated API documentation for `ColorPicker` properties `color` and `onColorChanged`.
+* Fixed typos and language in the readme.
 
 ## 3.4.1
 
