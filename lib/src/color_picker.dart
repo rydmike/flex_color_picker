@@ -1781,6 +1781,7 @@ class _ColorPickerState extends State<ColorPicker> {
       child: Padding(
         padding: widget.padding,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: widget.crossAxisAlignment,
           children: <Widget>[
             // Show title bar widget if we have one.
