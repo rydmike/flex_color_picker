@@ -1947,6 +1947,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     },
                     onChanged: (Color color) {
                       setState(() {
+                        _fromInternal = true;
                         _tappedColor = color;
                         _selectedColor = color;
                         _wheelShouldUpdate = false;
