@@ -2,16 +2,19 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.5.0-dev.1
+## 3.5.0
 
-**May 13, 2024**
+**May 14, 2024**
 
-Requires min Flutter 3.22.0 and Dart 3.4.0.
+Requires min Flutter 3.22.0.
 
 No new features or fixes in this release. A version bump to use FlexSeedScheme 2.0.0 compatible with Flutter version 3.22.0 and its new breaking ColorScheme.
 
 The ColorPicker contains no breaking changes, but underlying Flutter does and this version is only compatible with Flutter 3.22.0 and later.
 
+**NEW**
+
+* Added property `mainAxisSize` to `ColorPicker` and `showColorPickerDialog`, it controls the vertical axis size of the picker's column layout. Defaults to `MainAxisSize.max` as before, like `Columns` do by default. The property was added to enable setting the dialog to use `MainAxisSize.min` if needed.
 
 ## 3.4.1
 
