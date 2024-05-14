@@ -10,7 +10,7 @@ Requires min Flutter 3.22.0.
 
 No new features or fixes in this release. A version bump to use FlexSeedScheme 2.0.0 compatible with Flutter version 3.22.0 and its new breaking ColorScheme.
 
-The ColorPicker contains no breaking changes, but underlying Flutter does and this version is only compatible with Flutter 3.22.0 and later.
+The ColorPicker contains no breaking changes, but underlying Flutter does, and this version is only compatible with Flutter 3.22.0 and later.
 
 **NEW**
 
@@ -359,7 +359,7 @@ Web demo
   you can show an optional `tonalSubheading` widget above it.
 
   - When you click/select a color in the color picker, and tonal palette is
-  enabled, a 13 shade Material 3 tonal-palette for the selected color will be
+  enabled, a 13-shade Material 3 tonal-palette for the selected color will be
   generated. It always starts with black, tone 0 for the used seed color and
   ends in white, tone 100.
 
@@ -682,7 +682,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 
 **November 6, 2020**
 
-* New API: Added `showColorValue` to optionally display the int value of the selected color. This can be used to assist developers when they need to see or copy selected color values as int numbers.
+* New API: Added `showColorValue` to optionally display the int value of the selected color. This can be used to support developers when they need to see or copy selected color values as int numbers.
 * New APIs: Exposed previously missing static color names in the API for all the accent and B&W color names in `ColorTools`. All the color name values default to English color names, but can now be changed to translated strings to provide Material color names in other languages as well.
 * Updated the live Web demo to demonstrate the `showColorValue` property.
 * Example and documentation updated.
