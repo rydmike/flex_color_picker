@@ -87,6 +87,7 @@ class ColorPicker extends StatefulWidget {
     this.includeIndex850 = false,
     this.enableTonalPalette = false,
     // Layout
+    this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.padding = const EdgeInsets.all(16),
     this.columnSpacing = 8,
@@ -202,17 +203,42 @@ class ColorPicker extends StatefulWidget {
             'The maxRecentColors must be >= $_minRecentColors '
             'and <= $_maxRecentColors.');
 
-  /// The active color selection when the color picker is created.
+  /// The active color selection in the color picker.
+  ///
+  /// Also used as initial value when the color picker is created.
+  ///
+  /// Use the callback [onColorChanged] to get the new color values from
+  /// the picker and update the [color] in the parent widget.
   final Color color;
 
   /// Required [ValueChanged] callback, called when user selects
   /// a new color with new color value.
+  ///
   ///
   /// Called every time the color value changes when operating thumbs on the
   /// color wheel or color or transparency sliders
   ///
   /// Changing which picker type is viewed does not trigger this callback, it
   /// is not triggered until a color in the viewed picker is selected.
+  ///
+  /// The picker passes the new value to the callback but does not actually
+  /// change state until the parent widget rebuilds the color picker with
+  /// the new value.
+  ///
+  /// The callback provided to [onColorChanged] should update the state of the
+  /// parent [StatefulWidget] using the [State.setState] method, so that the
+  /// parent gets rebuilt; for example:
+  ///
+  /// ```dart
+  /// ColorPicker(
+  ///   color: _pickerColor,
+  ///   onChanged: (Color color) {
+  ///     setState(() {
+  ///       _pickerColor = color;
+  ///     });
+  ///   },
+  /// )
+  /// ```
   final ValueChanged<Color> onColorChanged;
 
   /// Optional [ValueChanged] callback. Called when user starts color selection
@@ -286,6 +312,21 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to CrossAxisAlignment.center.
   final CrossAxisAlignment crossAxisAlignment;
+
+  /// How much space should be occupied in the color picker's vertical axis.
+  ///
+  /// After allocating space to children, in the ColorPicker column there
+  /// might be some remaining free space. This value controls whether to
+  /// maximize or minimize the amount of
+  /// free space, subject to the incoming layout constraints.
+  ///
+  /// If some children have a non-zero flex factors (and none have a fit of
+  /// [FlexFit.loose]), they will expand to consume all the available space and
+  /// there will be no remaining free space to maximize or minimize, making this
+  /// value irrelevant to the final layout.
+  ///
+  /// Defaults to [MainAxisSize.max] like [Column] does as well.
+  final MainAxisSize mainAxisSize;
 
   /// Padding around the entire color picker content.
   ///
@@ -1781,7 +1822,7 @@ class _ColorPickerState extends State<ColorPicker> {
       child: Padding(
         padding: widget.padding,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: widget.mainAxisSize,
           crossAxisAlignment: widget.crossAxisAlignment,
           children: <Widget>[
             // Show title bar widget if we have one.
@@ -1931,6 +1972,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     },
                     onChanged: (Color color) {
                       setState(() {
+                        _fromInternal = true;
                         _tappedColor = color;
                         _selectedColor = color;
                         _wheelShouldUpdate = false;

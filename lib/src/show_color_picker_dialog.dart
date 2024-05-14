@@ -8,7 +8,7 @@ Future<Color> showColorPickerDialog(
   /// Required build context for the dialog
   BuildContext context,
 
-  /// The active color selection when the color picker is created.
+  /// The active color selection when the color picker dialog is created.
   Color color, {
   /// A [ColorPickerType] to bool map. Defines which pickers are enabled in the
   /// color picker's sliding selector and thus available as color pickers.
@@ -65,6 +65,21 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defaults to false.
   final bool enableTonalPalette = false,
+
+  /// How much space should be occupied in the color picker's vertical axis.
+  ///
+  /// After allocating space to children, in the ColorPicker column there
+  /// might be some remaining free space. This value controls whether to
+  /// maximize or minimize the amount of
+  /// free space, subject to the incoming layout constraints.
+  ///
+  /// If some children have a non-zero flex factors (and none have a fit of
+  /// [FlexFit.loose]), they will expand to consume all the available space and
+  /// there will be no remaining free space to maximize or minimize, making this
+  /// value irrelevant to the final layout.
+  ///
+  /// Defaults to `MainAxisSize.max` like Column does as well.
+  final MainAxisSize mainAxisSize = MainAxisSize.max,
 
   /// Cross axis alignment used to layout the main content of the
   /// color picker in its column layout.
@@ -689,6 +704,7 @@ Future<Color> showColorPickerDialog(
     includeIndex850: includeIndex850,
     enableTonalPalette: enableTonalPalette,
     crossAxisAlignment: crossAxisAlignment,
+    mainAxisSize: mainAxisSize,
     padding: padding,
     columnSpacing: columnSpacing,
     toolbarSpacing: toolbarSpacing,

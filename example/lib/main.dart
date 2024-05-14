@@ -226,7 +226,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               child: Card(
                 elevation: 2,
                 child: ColorPicker(
-                  // Use the screenPickerColor as start color.
+                  // Use the screenPickerColor as color.
                   color: screenPickerColor,
                   // Update the screenPickerColor using the callback.
                   onColorChanged: (Color color) =>

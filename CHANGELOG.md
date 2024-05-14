@@ -2,16 +2,26 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.5.0-dev.1
+## 3.5.0
 
-**May 13, 2024**
+**May 15, 2024**
 
-Requires min Flutter 3.22.0 and Dart 3.4.0.
+Requires min Flutter 3.22.0.
 
 No new features or fixes in this release. A version bump to use FlexSeedScheme 2.0.0 compatible with Flutter version 3.22.0 and its new breaking ColorScheme.
 
 The ColorPicker contains no breaking changes, but underlying Flutter does and this version is only compatible with Flutter 3.22.0 and later.
 
+**NEW**
+
+* Added property `mainAxisSize` to `ColorPicker` and `showColorPickerDialog`, it controls the vertical axis size of the picker's column layout. Defaults to `MainAxisSize.max` as before, like `Columns` do by default. The property was added to enable setting the dialog to use `MainAxisSize.min` if needed.
+
+**FIX**
+
+* Fix wheel picker jumping to BW or custom picker under certain conditions.
+  * When the wheel picker's opacity value is not 100, moving the color picker cursor to the white corner or bottom black edge of the color box triggers a jump. It auto-selects BW or a custom picker containing black or white values. This is now fixed. The picker cursor will stay in the wheel picker, and the color box will not jump to BW or custom picker when the cursor is moved to the white corner or bottom black edge of the color box.
+* Improved and updated API documentation for `ColorPicker` properties `color` and `onColorChanged`.
+* Fixed typos and language in the readme.
 
 ## 3.4.1
 
@@ -22,7 +32,7 @@ The ColorPicker contains no breaking changes, but underlying Flutter does and th
 
 Package
 
-- Fixed [#81](https://github.com/rydmike/flex_color_picker/issues/81) The property `tonalSubheading` in the convenience dialog function `showColorPickerDialog` was never passed along to the `ColorPicker` used to construct the dialog, causing the tonal sub heading to never show up in the resulting dialog.
+- Fixed [#81](https://github.com/rydmike/flex_color_picker/issues/81) The property `tonalSubheading` in the convenience dialog function `showColorPickerDialog` was never passed along to the `ColorPicker` used to construct the dialog, causing the tonal subheading to never show up in the resulting dialog.
 
 
 **New** 
