@@ -24,6 +24,7 @@ class ColorCodeField extends StatefulWidget {
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.enableTooltips = true,
     this.shouldUpdate = false,
+    this.decoration = const InputDecoration(),
   });
 
   /// Current color value for the field.
@@ -87,6 +88,14 @@ class ColorCodeField extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool shouldUpdate;
+
+  /// The decoration to show around the color code field.
+  ///
+  /// Although this value defaults to an empty [InputDecoration] instance, the
+  /// [ColorCodeField] widget uses it's own input decoration internally. So,
+  /// the value you provide will override the default values of the internal
+  /// input decoration.
+  final InputDecoration decoration;
 
   @override
   State<ColorCodeField> createState() => _ColorCodeFieldState();
@@ -188,6 +197,118 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     final double borderRadius = fontSize * 1.2;
     final double fieldWidth = fontSize * 10;
 
+    final InputDecoration decoration = InputDecoration(
+      suffixIcon: widget.copyPasteBehavior.editFieldCopyButton
+          ? IconButton(
+              icon: Icon(widget.copyPasteBehavior.copyIcon),
+              padding: EdgeInsets.zero,
+              tooltip: copyTooltip,
+              iconSize: iconSize,
+              splashRadius: borderRadius,
+              color: effectiveStyle.color,
+              constraints: const BoxConstraints(),
+              onPressed: _setClipboard,
+            )
+          : SizedBox(height: borderRadius * 2),
+      suffixIconConstraints: BoxConstraints(
+        minHeight: borderRadius * 2,
+        minWidth: borderRadius * 2,
+      ),
+      isDense: true,
+      contentPadding: EdgeInsetsDirectional.only(start: fontSize),
+      prefixText: _editColorPrefix,
+      prefixStyle: effectivePrefixStyle,
+      filled: true,
+      fillColor: fieldBackground,
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: fieldBorder,
+        ),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: fieldBorder,
+        ),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: fieldBorder,
+        ),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: fieldBorder,
+        ),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: fieldBorder,
+        ),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+    ).copyWith(
+      alignLabelWithHint: widget.decoration.alignLabelWithHint,
+      errorMaxLines: widget.decoration.errorMaxLines,
+      errorStyle: widget.decoration.errorStyle,
+      errorText: widget.decoration.errorText,
+      floatingLabelBehavior: widget.decoration.floatingLabelBehavior,
+      floatingLabelStyle: widget.decoration.floatingLabelStyle,
+      helperMaxLines: widget.decoration.helperMaxLines,
+      helperStyle: widget.decoration.helperStyle,
+      helperText: widget.decoration.helperText,
+      hintMaxLines: widget.decoration.hintMaxLines,
+      hintStyle: widget.decoration.hintStyle,
+      hintText: widget.decoration.hintText,
+      isCollapsed: widget.decoration.isCollapsed,
+      isDense: widget.decoration.isDense,
+      labelStyle: widget.decoration.labelStyle,
+      labelText: widget.decoration.labelText,
+      semanticCounterText: widget.decoration.semanticCounterText,
+      suffix: widget.decoration.suffix,
+      suffixIcon: widget.decoration.suffixIcon,
+      suffixIconConstraints: widget.decoration.suffixIconConstraints,
+      suffixStyle: widget.decoration.suffixStyle,
+      suffixText: widget.decoration.suffixText,
+      constraints: widget.decoration.constraints,
+      counter: widget.decoration.counter,
+      counterStyle: widget.decoration.counterStyle,
+      counterText: widget.decoration.counterText,
+      filled: widget.decoration.filled,
+      focusColor: widget.decoration.focusColor,
+      focusedBorder: widget.decoration.focusedBorder,
+      focusedErrorBorder: widget.decoration.focusedErrorBorder,
+      hoverColor: widget.decoration.hoverColor,
+      icon: widget.decoration.icon,
+      iconColor: widget.decoration.iconColor,
+      contentPadding: widget.decoration.contentPadding,
+      disabledBorder: widget.decoration.disabledBorder,
+      enabled: widget.decoration.enabled,
+      enabledBorder: widget.decoration.enabledBorder,
+      errorBorder: widget.decoration.errorBorder,
+      fillColor: widget.decoration.fillColor,
+      error: widget.decoration.error,
+      floatingLabelAlignment: widget.decoration.floatingLabelAlignment,
+      hintFadeDuration: widget.decoration.hintFadeDuration,
+      hintTextDirection: widget.decoration.hintTextDirection,
+      label: widget.decoration.label,
+      prefix: widget.decoration.prefix,
+      prefixIcon: widget.decoration.prefixIcon,
+      prefixIconColor: widget.decoration.prefixIconColor,
+      prefixIconConstraints: widget.decoration.prefixIconConstraints,
+      prefixStyle: widget.decoration.prefixStyle,
+      prefixText: widget.decoration.prefixText,
+      suffixIconColor: widget.decoration.suffixIconColor,
+      border: widget.decoration.border,
+    );
+
     return SizedBox(
       width: fieldWidth,
       // The custom DryIntrinsicWidth layout widget is used due to issue:
@@ -220,64 +341,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               FilteringTextInputFormatter.allow(RegExp('[a-fA-F0-9]')),
               _UpperCaseTextFormatter(),
             ],
-            decoration: InputDecoration(
-              suffixIcon: widget.copyPasteBehavior.editFieldCopyButton
-                  ? IconButton(
-                      icon: Icon(widget.copyPasteBehavior.copyIcon),
-                      padding: EdgeInsets.zero,
-                      tooltip: copyTooltip,
-                      iconSize: iconSize,
-                      splashRadius: borderRadius,
-                      color: effectiveStyle.color,
-                      constraints: const BoxConstraints(),
-                      onPressed: _setClipboard,
-                    )
-                  : SizedBox(height: borderRadius * 2),
-              suffixIconConstraints: BoxConstraints(
-                minHeight: borderRadius * 2,
-                minWidth: borderRadius * 2,
-              ),
-              isDense: true,
-              contentPadding: EdgeInsetsDirectional.only(start: fontSize),
-              prefixText: _editColorPrefix,
-              prefixStyle: effectivePrefixStyle,
-              filled: true,
-              fillColor: fieldBackground,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: fieldBorder,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: fieldBorder,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: fieldBorder,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: fieldBorder,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: fieldBorder,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-            ),
+            decoration: decoration,
             //
             onChanged: (String textColor) {
               setState(() {
