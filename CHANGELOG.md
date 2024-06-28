@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.5.1
+
+**June 28, 2024**
+
+**CHORE**
+
+* Update FlexSeedScheme to min version 3.0.0.
+* Update example app dependencies to latest versions.
+
 ## 3.5.0
 
 **May 15, 2024**
