@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,6 +7,13 @@ import '../functions/picker_functions.dart';
 import '../models/color_picker_action_buttons.dart';
 import '../models/color_picker_copy_paste_behavior.dart';
 import '../universal_widgets/dry_intrisinic.dart';
+
+// Set the bool flag to true to show debug prints. Even if you forgot
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off here for just this feature. You can leave it true
+// below to see this feature's logs in debug mode.
+const bool _debug = !kReleaseMode && false;
 
 /// Color code entry and display field used by the FlexColorPicker.
 @immutable
@@ -17,6 +25,8 @@ class ColorCodeField extends StatefulWidget {
     this.readOnly = false,
     required this.onColorChanged,
     required this.onEditFocused,
+    required this.requestFocus,
+    required this.focusedEditHasNoColor,
     this.textStyle,
     this.prefixStyle,
     this.colorCodeHasColor = false,
@@ -39,6 +49,22 @@ class ColorCodeField extends StatefulWidget {
 
   /// The Color code editing field has focus.
   final ValueChanged<bool> onEditFocused;
+
+  /// Request focus on the color code editing field.
+  final bool requestFocus;
+
+  /// Weather the color code entry field should have no color when focused.
+  ///
+  /// If the option to make the color code field have the same color as the
+  /// selected color is enabled via [colorCodeHasColor], it makes it look
+  /// and double like a big color indicator that shows the selected color.
+  ///
+  /// It can also make the edit of the color code confusing, as its color on
+  /// purpose also changes as you edit and enter a new color value. If you
+  /// find this behavior confusing and want to make the color code field
+  /// always have no color, regardless of the selected color, then set
+  /// this option to true.
+  final bool focusedEditHasNoColor;
 
   /// TextStyle of the color code display and edit field.
   ///
@@ -122,16 +148,23 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
       color = widget.color;
       textController.text = color.hex;
     }
+    if (widget.requestFocus) {
+      FocusScope.of(context).requestFocus(textFocusNode);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme scheme = theme.colorScheme;
+    final bool isLight = theme.brightness == Brightness.light;
+
     // The tooltip for copying the color code via the icon button
     String? copyTooltip;
 
     if (widget.enableTooltips) {
       // Get current platform.
-      final TargetPlatform platform = Theme.of(context).platform;
+      final TargetPlatform platform = theme.platform;
       // Get the Material localizations.
       final MaterialLocalizations translate = MaterialLocalizations.of(context);
       // If shortcut key enabled, make a shortcut platform aware info tooltip.
@@ -146,26 +179,39 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     }
 
     // Define opinionated styles for the color code display and entry field.
-    final bool isLight = Theme.of(context).brightness == Brightness.light;
-    final Color fieldBackground = widget.colorCodeHasColor
+    final Color unfocusedBackground = widget.colorCodeHasColor
         ? color
         : isLight
             ? Colors.black.withAlpha(11)
             : Colors.white.withAlpha(33);
 
+    final bool focusedIsNotColored = (textFocusNode.hasFocus &&
+            !widget.readOnly &&
+            widget.focusedEditHasNoColor) ||
+        !widget.colorCodeHasColor;
+    final Color focusedBackground = focusedIsNotColored
+        ? isLight
+            ? Colors.black.withAlpha(11)
+            : Colors.white.withAlpha(33)
+        : color;
+
     final bool isLightBackground =
-        ThemeData.estimateBrightnessForColor(fieldBackground) ==
+        ThemeData.estimateBrightnessForColor(unfocusedBackground) ==
             Brightness.light;
     final Color textColor = isLight
-        ? (isLightBackground || fieldBackground.opacity < 0.5)
+        ? (isLightBackground || unfocusedBackground.opacity < 0.5)
             ? Colors.black
             : Colors.white
-        : (!isLightBackground || fieldBackground.opacity < 0.5)
+        : (!isLightBackground || unfocusedBackground.opacity < 0.5)
             ? Colors.white
             : Colors.black;
 
+    final Color focusedTextColor =
+        focusedIsNotColored ? scheme.onSurface : textColor;
+
     final Color fieldBorder =
         isLight ? Colors.black.withAlpha(33) : Colors.white.withAlpha(55);
+    final Color focusedBorder = theme.colorScheme.onSurface;
 
     // Set the default text style to bodyMedium if not given.
     TextStyle effectiveStyle = widget.textStyle ??
@@ -174,9 +220,14 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
 
     TextStyle effectivePrefixStyle = widget.prefixStyle ?? effectiveStyle;
 
-    if (widget.colorCodeHasColor) {
+    if (widget.colorCodeHasColor && !textFocusNode.hasFocus) {
       effectiveStyle = effectiveStyle.copyWith(color: textColor);
       effectivePrefixStyle = effectivePrefixStyle.copyWith(color: textColor);
+    }
+    if (widget.colorCodeHasColor && textFocusNode.hasFocus) {
+      effectiveStyle = effectiveStyle.copyWith(color: focusedTextColor);
+      effectivePrefixStyle =
+          effectivePrefixStyle.copyWith(color: focusedTextColor);
     }
 
     // Compute color code field size based on the used font size. Might not
@@ -188,6 +239,12 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     final double borderRadius = fontSize * 1.2;
     final double fieldWidth = fontSize * 10;
 
+    if (_debug) {
+      debugPrint('TextField: Build color               =${widget.color}');
+      debugPrint('TextField: Build unfocusedBackground =$unfocusedBackground');
+      debugPrint('TextField: Build focusedBackground   =$focusedBackground');
+    }
+
     return SizedBox(
       width: fieldWidth,
       // The custom DryIntrinsicWidth layout widget is used due to issue:
@@ -195,7 +252,14 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
       child: DryIntrinsicWidth(
         child: Focus(
           // Tell the parent when the text edit field has focus.
-          onFocusChange: widget.onEditFocused,
+          onFocusChange: (bool focus) {
+            widget.onEditFocused(focus);
+            if (!focus) {
+              // Call setState when unfocused to set the TextField color
+              // back to the unfocused color.
+              setState(() {});
+            }
+          },
           child: TextField(
             enabled: true,
             readOnly: widget.readOnly,
@@ -242,14 +306,18 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               prefixText: _editColorPrefix,
               prefixStyle: effectivePrefixStyle,
               filled: true,
-              fillColor: fieldBackground,
+              fillColor: textFocusNode.hasFocus
+                  ? focusedBackground
+                  : unfocusedBackground,
+              hoverColor: widget.readOnly ? Colors.transparent : null,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: fieldBorder,
+                  color: widget.readOnly ? fieldBorder : focusedBorder,
+                  width: widget.readOnly ? 1 : 1.5,
                 ),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),

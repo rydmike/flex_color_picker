@@ -2,6 +2,41 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.6.0 - DRAFT NOT YET RELEASED 
+
+
+
+**September 25, 2024**
+
+**NEW**
+
+The ColorPicker got the following new properties and features:
+
+* Boolean `showEditIconButton`, defaults to `false`.
+  * Whether to show an edit icon button before the color code field. The edit icon button can be used to give users a visual que that the color code field can be edited. When set to true, the icon button is only shown when the wheel picker is active and `colorCodeReadOnly` is false. Tapping the icon button will focus the color code entry field.
+  * Feature included in updated web demo app: **YES**
+
+
+* IconData `editIcon`, defaults to `Icons.edit`.
+  * The icon to use on the edit icon button.
+  * Feature included in updated web demo app: **NO**, only default icon used.
+
+
+* Boolean `focusedEditHasNoColor`, defaults to `false`.
+  * Whether the color code entry field should have no color when focused. If the option to make the color code field have the same color as the selected color is enabled via `colorCodeHasColor`, it makes it look and double like a big color indicator that shows the selected color. This can also make the edit of the color code confusing, as its color on purpose also changes as you edit and enter a new color value. If you find this behavior confusing and want to make the color code field always have no color during value entry, regardless of the selected color, then set this option to true.
+  * Feature included in updated web demo app: **YES**
+
+
+* Boolean `tonalPaletteFixedMinChroma`, defaults to `false`.
+  * Whether the tonal palette uses a fixed minimum chroma value for all tones, or if it uses the chroma value of the selected color. Prior to version 3.6.0, the tonal palette used minimum chroma value of 48 or chroma of the selected color. This was the default primary tonal palette behavior in Flutter's ColorScheme.fromSeed method before Flutter version 3.22.0. Starting from FlexColorPicker version 3.6.0, the picker creates a HCT color space tonal palette using whatever hue and chroma is in the selected color. If you for some reason want to use the old behavior, set this property to true. This will make the tonal palette use the fixed minimum chroma value of 48 for all tones.
+  * Feature included in updated web demo app: **YES**
+
+**FIX**
+
+* Since version 3.4.0 the value of property `ColorPickerCopyPasteBehavior.editUsesParsedPaste` had no impact on the picker's paste behavior when the color code text field was focused. The color picker always behaved as if this property was true. Which incidentally is the behavior that pretty much all uses cases should use. This feature now again works as stated in its doc comments. However, the default value was changed from `false` to `true`, to match the actual default behavior it has had since version 3.4.0, and the behavior that should be preferred. The `false` setting was there to provide color code text field paste behavior backwards compatibility with versions before 2.0.0. We may deprecate this property in a future version, as it is not really recommended to use `false` at all, but for now it is fixed again.  
+
+
+
 ## 3.5.1
 
 **June 28, 2024**

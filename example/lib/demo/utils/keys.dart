@@ -19,6 +19,7 @@ class Keys {
   static const String pickersEnabled = 'pickersEnabled';
   static const String enableShadesSelection = 'enableShadesSelection';
   static const String enableTonesSelection = 'enableTonesSelection';
+  static const String tonalPaletteFixedMinChroma = 'tonalPaletteFixedMinChroma';
   static const String tonalSameSize = 'tonalSameSize';
   static const String includeIndex850 = 'includeIndex850';
   static const String enableOpacity = 'enableOpacity';
@@ -35,6 +36,8 @@ class Keys {
   static const String showTonalSubheading = 'showTonalSubheading';
   static const String showOpacitySubheading = 'showOpacitySubheading';
   static const String showRecentSubheading = 'showRecentSubheading';
+  static const String showEditIconButton = 'showEditIconButton';
+  static const String focusedEditHasNoColor = 'focusedEditHasNoColor';
   // Picker Design Riverpod providers.
   static const String size = 'size';
   static const String borderRadius = 'borderRadius';
@@ -97,6 +100,7 @@ class Keys {
     },
     enableShadesSelection: true,
     enableTonesSelection: true,
+    tonalPaletteFixedMinChroma: false,
     tonalSameSize: false,
     includeIndex850: false,
     enableOpacity: true,
@@ -113,6 +117,8 @@ class Keys {
     showTonalSubheading: true,
     showOpacitySubheading: false,
     showRecentSubheading: true,
+    showEditIconButton: true,
+    focusedEditHasNoColor: true,
     // Picker Design Riverpod providers.
     size: 40.0,
     borderRadius: 4.0,

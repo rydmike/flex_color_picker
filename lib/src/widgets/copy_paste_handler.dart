@@ -26,6 +26,7 @@ class CopyPasteHandler extends StatelessWidget {
     required this.onCopyPasteMenuOpened,
     required this.focusNode,
     required this.autoFocus,
+    required this.noPasteIntent,
     required this.child,
   });
 
@@ -40,11 +41,6 @@ class CopyPasteHandler extends StatelessWidget {
   /// The function should copy from the clipboard, including any custom
   /// logic needed.
   final VoidClipboard copyToClipboard;
-
-  /// The child that will use the keyboard shortcuts.
-  ///
-  /// Should wrap the entire color picker.
-  final Widget child;
 
   /// Use the context menu for copy and paste.
   final bool useContextMenu;
@@ -71,6 +67,31 @@ class CopyPasteHandler extends StatelessWidget {
   /// A boolean that determines if the child should be focused.
   final bool autoFocus;
 
+  /// Typically the custom past intent is used, but when [noPasteIntent]
+  /// is set to `true` it is not.
+  ///
+  /// This is only done when widget sets `copyPasteBehavior.editUsesParsedPaste`
+  /// to `false` true and the color code entry field is focused.
+  ///
+  /// This results in that the paste intent's color code parser is not used
+  /// and that text is pasted into the ColorCode entry field as is.
+  ///
+  /// The color code TextField still has supported hex RGB character and max
+  /// length validation, so anything not adhering to that will still be
+  /// silently filtered out of the paster result, but the paste will not be
+  /// validate via the supported multiple RGB color code RGB parser.
+  ///
+  /// Typically you want to use the paste intent and set
+  /// `copyPasteBehavior.editUsesParsedPaste` to `true` to get the full
+  /// color code parsing support. Setting it to false is supported for
+  /// legacy compatibility with FlexColorPicker before 2.0.0.
+  final bool noPasteIntent;
+
+  /// The child that will use the keyboard shortcuts.
+  ///
+  /// Should wrap the entire color picker.
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
     final TargetPlatform platform = Theme.of(context).platform;
@@ -93,7 +114,7 @@ class CopyPasteHandler extends StatelessWidget {
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
-          PasteIntent: PasteAction(pasteFromClipboard),
+          if (!noPasteIntent) PasteIntent: PasteAction(pasteFromClipboard),
           CopyIntent: CopyAction(copyToClipboard),
         },
         child: Builder(builder: (BuildContext context) {

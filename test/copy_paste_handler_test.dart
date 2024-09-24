@@ -30,6 +30,7 @@ void main() {
             onCopyPasteMenuOpened: () {},
             focusNode: focusNode,
             autoFocus: true,
+            noPasteIntent: false,
             child: Container(),
           ),
         ),

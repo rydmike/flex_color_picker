@@ -66,6 +66,24 @@ Future<Color> showColorPickerDialog(
   /// Defaults to false.
   final bool enableTonalPalette = false,
 
+  /// Whether the tonal palette uses a fixed minimum chroma value for all
+  /// tones or if it uses the chroma value of the selected color.
+  ///
+  /// Prior to version 3.6.0 the tonal palette used minimum chroma value of 48
+  /// or chroma of the selected color. This was the default primary tonal
+  /// palette behavior in Flutter's ColorScheme.fromSeed method before
+  /// Flutter version 3.22.0.
+  ///
+  /// Starting from version 3.6.0 the FlexColorPicker creates a HCT color space
+  /// tonal palette using whatever hue and chroma is in the selected color.
+  ///
+  /// If you for some reason want to use the old behavior, set this property to
+  /// true. This will make the tonal palette use the fixed minimum chroma value
+  /// of 48 for all tones.
+  ///
+  /// Defaults to false.
+  final bool tonalPaletteFixedMinChroma = false,
+
   /// How much space should be occupied in the color picker's vertical axis.
   ///
   /// After allocating space to children, in the ColorPicker column there
@@ -360,6 +378,39 @@ Future<Color> showColorPickerDialog(
   ///
   /// Defaults to false.
   bool colorCodeHasColor = false,
+
+  /// Whether to show an edit icon button before the color code field.
+  ///
+  /// The edit icon button can be used to give users a visual que that the
+  /// color code field can be edited.
+  ///
+  /// When set to true, the icon button is only shown when the wheel picker is
+  /// active and [colorCodeReadOnly] is false.
+  ///
+  /// Tapping the icon button will focus the color code entry field.
+  ///
+  /// Defaults to false.
+  bool showEditIconButton = false,
+
+  /// The icon to use on the edit icon button.
+  ///
+  /// Defaults to [Icons.edit].
+  IconData editIcon = Icons.edit,
+
+  /// Whether the color code entry field should have no color when focused.
+  ///
+  /// If the option to make the color code field have the same color as the
+  /// selected color is enabled via [colorCodeHasColor], it makes it look
+  /// and double like a big color indicator that shows the selected color.
+  ///
+  /// It can also make the edit of the color code confusing, as its color on
+  /// purpose also changes as you edit and enter a new color value. If you
+  /// find this behavior confusing and want to make the color code field
+  /// always have no color during value entry, regardless of the selected color,
+  /// then set this option to true.
+  ///
+  /// Defaults to false.
+  bool focusedEditHasNoColor = false,
 
   /// Text style for the displayed generic color name in the picker.
   ///
@@ -703,6 +754,7 @@ Future<Color> showColorPickerDialog(
     enableShadesSelection: enableShadesSelection,
     includeIndex850: includeIndex850,
     enableTonalPalette: enableTonalPalette,
+    tonalPaletteFixedMinChroma: tonalPaletteFixedMinChroma,
     crossAxisAlignment: crossAxisAlignment,
     mainAxisSize: mainAxisSize,
     padding: padding,
@@ -743,6 +795,9 @@ Future<Color> showColorPickerDialog(
     colorNameTextStyle: colorNameTextStyle,
     showColorCode: showColorCode,
     colorCodeHasColor: colorCodeHasColor,
+    showEditIconButton: showEditIconButton,
+    editIcon: editIcon,
+    focusedEditHasNoColor: focusedEditHasNoColor,
     colorCodeTextStyle: colorCodeTextStyle,
     colorCodePrefixStyle: colorCodePrefixStyle,
     colorCodeReadOnly: colorCodeReadOnly,

@@ -355,6 +355,7 @@ void main() {
               key: testKey,
               color: resultColor,
               enableTonalPalette: true,
+              tonalPaletteFixedMinChroma: true,
               onColorChanged: (Color color) {
                 resultColor = color;
               },
@@ -409,12 +410,81 @@ void main() {
         // The 14th ColorIndicator will be 5th tonal
         await $(ColorIndicator).at(14).tap();
         expect(resultColor, const Color(0xFF7D2939));
+        // NEW TONAL PALETTE RESULT if not tonalPaletteFixedMinChroma: true set
+        // expect(resultColor, const Color(0xff603d41));
 
         // Tap primary slider, no crash! This crashed without the FIX for #71
         await $('Primary').tap();
         // Tap a Material red shade color
         await $(ColorIndicator).at(22).tap();
         expect(resultColor.value, Colors.red[300]!.value);
+      },
+    );
+
+    patrolWidgetTest(
+      'PAT1.3-new: Patrol widget test with new chroma using tonals ',
+      (PatrolTester $) async {
+        Color resultColor = const Color(0xFF613E42);
+        await $.pumpWidgetAndSettle(
+          TestPicker(
+            widget: ColorPicker(
+              key: testKey,
+              color: resultColor,
+              enableTonalPalette: true,
+              onColorChanged: (Color color) {
+                resultColor = color;
+              },
+              width: 40,
+              height: 40,
+              borderRadius: 4,
+              spacing: 5,
+              runSpacing: 5,
+              wheelDiameter: 155,
+              showMaterialName: true,
+              showColorName: true,
+              showColorCode: true,
+              pickersEnabled: const <ColorPickerType, bool>{
+                ColorPickerType.both: false,
+                ColorPickerType.primary: true,
+                ColorPickerType.accent: true,
+                ColorPickerType.bw: false,
+                ColorPickerType.custom: true,
+                ColorPickerType.wheel: true,
+              },
+              actionButtons: const ColorPickerActionButtons(
+                okButton: false,
+                closeButton: true,
+                okTooltip: 'DO',
+                closeTooltipIsClose: false,
+                toolIconsThemeData: IconThemeData(
+                  color: Colors.blue,
+                  size: 20,
+                  opacity: 0.95,
+                ),
+                visualDensity: VisualDensity.comfortable,
+                padding: EdgeInsets.all(2),
+                splashRadius: 20,
+                dialogActionButtons: true,
+                dialogActionOnlyOkButton: true,
+              ),
+            ),
+          ),
+        );
+
+        // Test primary color picker.
+        expect(find.text('Primary'), findsOneWidget);
+        expect(find.text('Accent'), findsOneWidget);
+        expect(find.text('Custom'), findsNothing); // We gave no custom colors
+        expect(find.text('Wheel'), findsOneWidget);
+
+        // Find the ColorWheelPicker, we are on it by default
+        expect(find.byType(ColorWheelPicker), findsOneWidget);
+        // Tap sliding selector on wheel
+        await $('Wheel').tap();
+
+        // The 14th ColorIndicator will be 5th tonal
+        await $(ColorIndicator).at(14).tap();
+        expect(resultColor, const Color(0xff603d41));
       },
     );
 

@@ -6,7 +6,10 @@ import 'about.dart';
 import 'all_control_widgets.dart';
 import 'color_picker_card.dart';
 import 'picker_indicators/premade_dialog_picker_color_indicator.dart';
+import 'picker_switches/color_code_focus_no_color_switch.dart';
+import 'picker_switches/color_edit_icon_button_switch.dart';
 import 'picker_switches/dialog_action_only_ok_button_switch.dart';
+import 'picker_switches/tonal_legacy_switch.dart';
 import 'picker_text_fields/text_field_focus_demo.dart';
 import 'picker_toggle_buttons/actions_order_switch.dart';
 
@@ -235,13 +238,16 @@ class _Column2 extends StatelessWidget {
         const ShadesSwitch(),
         const Index850Switch(),
         const TonalSwitch(),
+        const TonalLegacySwitch(),
         const OpacitySwitch(),
         const Divider(),
         //
         const MaterialNameSwitch(),
         const ColorNameSwitch(),
         const ColorCodeSwitch(),
+        const ColorEditIconButtonSwitch(),
         const ColorCodeHasColorSwitch(),
+        const ColorCodeFocusNoColorSwitch(),
         const ColorCodeReadOnlySwitch(),
         const ColorValueSwitch(),
         const RecentColorsSwitch(),

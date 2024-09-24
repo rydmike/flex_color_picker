@@ -80,7 +80,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       this.snackBarDuration = const Duration(milliseconds: 1800),
       this.feedbackParseError = false,
       this.parseShortHexCode = false,
-      this.editUsesParsedPaste = false});
+      this.editUsesParsedPaste = true});
 
   /// A keyboard CMD/CTRL-C press will copy the clipboard into the picker.
   ///
@@ -337,11 +337,23 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// pasting on desktops. The paste on Android and iOS are not intercepted
   /// when this setting is true.
   ///
-  /// Defaults to false.
+  /// Defaults to true.
+  ///
+  /// **ERRATA INFO:**
+  ///
+  /// This setting was in version 3.6.0 changed to be true by default. The
+  /// feature had been broken and missing since version 3.4.0 and the default
+  /// behavior from 3.4.0 and forward was the same as setting this to true,
+  /// there was no false feature. Generally it is recommended to keep this
+  /// setting true for a more consistent and better paste experience. Thus
+  /// decided to make it true by default, which matches the behavior of the
+  /// past versions 3.4.0 and 3.5.0. The true behavior is also what pretty
+  /// much all uses cases should use. Was about to deprecate this setting
+  /// and remove it in version 4.0.0, but decided to keep it undeprecated for
+  /// now since it works as stated again.
   ///
   /// The false setting is equivalent to past versions (1.x) default behavior
-  /// when pasting strings into the code entry field. Setting the value to true
-  /// may be preferred for a more consistent paste experience.
+  /// when pasting strings into the code entry field.
   final bool editUsesParsedPaste;
 
   /// Copy the object with one or more provided properties changed.

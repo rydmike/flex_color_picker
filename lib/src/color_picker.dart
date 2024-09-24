@@ -86,6 +86,7 @@ class ColorPicker extends StatefulWidget {
     this.enableShadesSelection = true,
     this.includeIndex850 = false,
     this.enableTonalPalette = false,
+    this.tonalPaletteFixedMinChroma = false,
     // Layout
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -132,6 +133,9 @@ class ColorPicker extends StatefulWidget {
     this.colorNameTextStyle,
     this.showColorCode = false,
     this.colorCodeHasColor = false,
+    this.showEditIconButton = false,
+    this.editIcon = Icons.edit,
+    this.focusedEditHasNoColor = false,
     this.colorCodeTextStyle,
     @Deprecated('This property is deprecated and no longer has any function. '
         'It was removed in v2.0.0. To modify the copy icon on the color code '
@@ -306,6 +310,24 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool enableTonalPalette;
+
+  /// Whether the tonal palette uses a fixed minimum chroma value for all
+  /// tones or if it uses the chroma value of the selected color.
+  ///
+  /// Prior to version 3.6.0 the tonal palette used minimum chroma value of 48
+  /// or chroma of the selected color. This was the default primary tonal
+  /// palette behavior in Flutter's ColorScheme.fromSeed method before
+  /// Flutter version 3.22.0.
+  ///
+  /// Starting from version 3.6.0 the FlexColorPicker creates a HCT color space
+  /// tonal palette using whatever hue and chroma is in the selected color.
+  ///
+  /// If you for some reason want to use the old behavior, set this property to
+  /// true. This will make the tonal palette use the fixed minimum chroma value
+  /// of 48 for all tones.
+  ///
+  /// Defaults to false.
+  final bool tonalPaletteFixedMinChroma;
 
   /// Cross axis alignment used to layout the main content of the
   /// color picker in its column layout.
@@ -605,6 +627,39 @@ class ColorPicker extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool colorCodeHasColor;
+
+  /// Whether to show an edit icon button before the color code field.
+  ///
+  /// The edit icon button can be used to give users a visual que that the
+  /// color code field can be edited.
+  ///
+  /// When set to true, the icon button is only shown when the wheel picker is
+  /// active and [colorCodeReadOnly] is false.
+  ///
+  /// Tapping the icon button will focus the color code entry field.
+  ///
+  /// Defaults to false.
+  final bool showEditIconButton;
+
+  /// The icon to use on the edit icon button.
+  ///
+  /// Defaults to [Icons.edit].
+  final IconData editIcon;
+
+  /// Whether the color code entry field should have no color when focused.
+  ///
+  /// If the option to make the color code field have the same color as the
+  /// selected color is enabled via [colorCodeHasColor], it makes it look
+  /// and double like a big color indicator that shows the selected color.
+  ///
+  /// It can also make the edit of the color code confusing, as its color on
+  /// purpose also changes as you edit and enter a new color value. If you
+  /// find this behavior confusing and want to make the color code field
+  /// always have no color during value entry, regardless of the selected color,
+  /// then set this option to true.
+  ///
+  /// Defaults to false.
+  final bool focusedEditHasNoColor;
 
   /// Text style for the displayed generic color name in the picker.
   ///
@@ -1347,9 +1402,10 @@ class _ColorPickerState extends State<ColorPicker> {
   // Color picker indicator selected item should request focus.
   bool _selectedShouldFocus = true;
 
-  // The edit code field has focus. When it does, double tap
-  // for the gesture detector will not be used, nor will paste entries
+  // The edit code field has focus. When it does, paste entries
   // use the parse and paste logic if `codeEntryParsedPaste` is false.
+  // This ColorCodeField focus status is used together with the
+  // `codeEntryParsedPaste` to determine if we should paste with parser or not.
   bool _editCodeFocused = false;
 
   // Edit color code field should update? Whenever the edit code field is
@@ -1381,6 +1437,9 @@ class _ColorPickerState extends State<ColorPicker> {
 
   // Set to true when we are drag and operating the wheel picker.
   bool _onWheel = false;
+
+  // Set to true when edit icon is taped and edit field shuld focus
+  bool _requestEditFocus = false;
 
   // Becomes true when we have more than one ColorPickerType available in
   // the `widget.pickersEnabled` property. If there is just one picker enabled
@@ -1792,6 +1851,17 @@ class _ColorPickerState extends State<ColorPicker> {
     // then too, regardless of autofocus setting.
     final bool autoFocus = widget.copyPasteBehavior.autoFocus &&
         (widget.copyPasteBehavior.ctrlC || widget.copyPasteBehavior.ctrlV);
+
+    // Weather to show the edit icon button, if color code is enabled and
+    // not read only, and the wheel picker is active.
+    final bool showEditIconButton = widget.showEditIconButton &&
+        widget.showColorCode &&
+        !widget.colorCodeReadOnly &&
+        _activePicker == ColorPickerType.wheel;
+
+    if (_debug) {
+      debugPrint('Build color=${widget.color} selectedColor=$_selectedColor');
+    }
     // Use a copy paste handler to handle copy and paste keyboard shortcuts,
     // and also to handle the context menu for copy and paste.
     return CopyPasteHandler(
@@ -1819,6 +1889,14 @@ class _ColorPickerState extends State<ColorPicker> {
       },
       focusNode: _focusNode,
       autoFocus: autoFocus,
+      // If edit color code is focused and we do not use the parsed paste
+      // feature, pass in that info and will not use the color code paste
+      // parser. The TextField's normal paste action will then handle
+      // the paste as before in v1.x and normally in a TextField. With the
+      // difference that this particular TextField will still filter out
+      // all none valid RGB color code chars and limit the length.
+      noPasteIntent:
+          _editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste,
       child: Padding(
         padding: widget.padding,
         child: Column(
@@ -2079,6 +2157,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 elevation: widget.elevation,
                 selectedColorIcon: widget.selectedColorIcon,
                 selectedRequestsFocus: _selectedShouldFocus,
+                tonalPaletteFixedMinChroma: widget.tonalPaletteFixedMinChroma,
               ),
               SizedBox(height: widget.columnSpacing),
             ],
@@ -2188,66 +2267,93 @@ class _ColorPickerState extends State<ColorPicker> {
             if (widget.showColorCode || widget.showColorValue)
               Padding(
                 padding: EdgeInsets.only(bottom: widget.columnSpacing),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  alignment: WrapAlignment.center,
-                  children: <Widget>[
-                    // Show the color code view and edit field, if enabled.
-                    if (widget.showColorCode)
-                      ColorCodeField(
-                        color: widget.enableOpacity
-                            ? _selectedColor.withOpacity(_opacity)
-                            : _tappedColor,
-                        readOnly: _activePicker != ColorPickerType.wheel ||
-                            widget.colorCodeReadOnly,
-                        textStyle: widget.colorCodeTextStyle,
-                        prefixStyle: widget.colorCodePrefixStyle,
-                        colorCodeHasColor: widget.colorCodeHasColor,
-                        enableTooltips: widget.enableTooltips,
-                        shouldUpdate: _editShouldUpdate,
-                        onColorChanged: (Color color) {
-                          widget.onColorChangeStart
-                              ?.call(_selectedColor.withOpacity(_opacity));
-                          setState(() {
-                            _tappedColor = color;
-                            _selectedColor = color;
-                            // Color changed outside wheel picker, when the
-                            // code was edited, the wheel should update.
-                            _wheelShouldUpdate = true;
-                            _editShouldUpdate = false;
-                            _tonalOperated = false;
-                            _updateActiveSwatch();
-                          });
-                          widget.onColorChanged(
-                              _selectedColor.withOpacity(_opacity));
-                          widget.onColorChangeEnd
-                              ?.call(_selectedColor.withOpacity(_opacity));
-                          _addToRecentColors(
-                              _selectedColor.withOpacity(_opacity));
-                        },
-                        onEditFocused: (bool editInFocus) {
-                          setState(() {
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    // Padding to offset the edit icon button.
+                    end: showEditIconButton ? 40.0 : 0,
+                  ),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    runAlignment: WrapAlignment.center,
+                    alignment: WrapAlignment.center,
+                    children: <Widget>[
+                      if (showEditIconButton)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 4),
+                          child: IconButton(
+                            constraints: const BoxConstraints(
+                              minWidth: 36,
+                              minHeight: 36,
+                            ),
+                            padding: const EdgeInsets.all(6),
+                            splashRadius: 36,
+                            icon: Icon(widget.editIcon, size: 24),
+                            onPressed: () {
+                              setState(() {
+                                _requestEditFocus = true;
+                              });
+                            },
+                          ),
+                        ),
+                      // Show the color code view and edit field, if enabled.
+                      if (widget.showColorCode)
+                        ColorCodeField(
+                          color: widget.enableOpacity
+                              ? _selectedColor.withOpacity(_opacity)
+                              : _tappedColor,
+                          readOnly: _activePicker != ColorPickerType.wheel ||
+                              widget.colorCodeReadOnly,
+                          textStyle: widget.colorCodeTextStyle,
+                          requestFocus: _requestEditFocus,
+                          focusedEditHasNoColor: widget.focusedEditHasNoColor,
+                          prefixStyle: widget.colorCodePrefixStyle,
+                          colorCodeHasColor: widget.colorCodeHasColor,
+                          enableTooltips: widget.enableTooltips,
+                          shouldUpdate: _editShouldUpdate,
+                          onColorChanged: (Color color) {
+                            widget.onColorChangeStart
+                                ?.call(_selectedColor.withOpacity(_opacity));
+                            setState(() {
+                              _tappedColor = color;
+                              _selectedColor = color;
+                              // Color changed outside wheel picker, when the
+                              // code was edited, the wheel should update.
+                              _wheelShouldUpdate = true;
+                              _editShouldUpdate = false;
+                              _tonalOperated = false;
+                              _updateActiveSwatch();
+                            });
+                            widget.onColorChanged(
+                                _selectedColor.withOpacity(_opacity));
+                            widget.onColorChangeEnd
+                                ?.call(_selectedColor.withOpacity(_opacity));
+                            _addToRecentColors(
+                                _selectedColor.withOpacity(_opacity));
+                          },
+                          onEditFocused: (bool editInFocus) {
+                            _requestEditFocus = false;
                             _editCodeFocused = editInFocus;
-                            if (_editCodeFocused) {
-                              _selectedShouldFocus = false;
-                              _wheelShouldFocus = false;
+                            if (editInFocus) {
+                              setState(() {
+                                _selectedShouldFocus = false;
+                                _wheelShouldFocus = false;
+                              });
                             }
-                          });
-                        },
-                        toolIcons: widget.actionButtons,
-                        copyPasteBehavior: widget.copyPasteBehavior,
-                      ),
-                    // If we show both hex code and int value, add some
-                    // hardcoded horizontal space between them.
-                    if (widget.showColorCode && widget.showColorValue)
-                      const SizedBox(width: 8),
-                    if (widget.showColorValue)
-                      SelectableText(
-                        _selectedColor.value.toString(),
-                        style: effectiveCodeStyle,
-                      ),
-                  ],
+                          },
+                          toolIcons: widget.actionButtons,
+                          copyPasteBehavior: widget.copyPasteBehavior,
+                        ),
+                      // If we show both hex code and int value, add some
+                      // hardcoded horizontal space between them.
+                      if (widget.showColorCode && widget.showColorValue)
+                        const SizedBox(width: 8),
+                      if (widget.showColorValue)
+                        SelectableText(
+                          _selectedColor.value.toString(),
+                          style: effectiveCodeStyle,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             // Show the sub-heading for recent colors.
@@ -2392,6 +2498,7 @@ class _ColorPickerState extends State<ColorPicker> {
     final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     // Clipboard data was null, exit.
     if (data == null) return;
+
     // Try to parse the clipboard data for a valid color value
     final Color? clipColor = data.text
         .toColorShortMaybeNull(widget.copyPasteBehavior.parseShortHexCode);

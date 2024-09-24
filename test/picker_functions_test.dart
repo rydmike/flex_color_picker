@@ -252,7 +252,7 @@ void main() {
 
   // Test isDesktop.
   group('Test getTonalColors', () {
-    final List<Color> blueTonals = getTonalColors(Colors.blue[500]!);
+    final List<Color> blueTonals = getTonalColors(Colors.blue[500]!, true);
 
     test('Verify that blue Tonal Palette index 0, tone 0 of is black', () {
       expect(blueTonals[0], equals(Colors.black));

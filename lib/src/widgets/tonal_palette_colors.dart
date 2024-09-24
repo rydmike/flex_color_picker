@@ -25,6 +25,7 @@ class TonalPaletteColors extends StatefulWidget {
     required this.elevation,
     required this.selectedColorIcon,
     required this.selectedRequestsFocus,
+    required this.tonalPaletteFixedMinChroma,
   }) : super(key: key);
 
   /// The spacing between the color pick items.
@@ -73,6 +74,9 @@ class TonalPaletteColors extends StatefulWidget {
   /// Defaults to false.
   final bool selectedRequestsFocus;
 
+  /// Weather to use fixed min chroma for tonal palette.
+  final bool tonalPaletteFixedMinChroma;
+
   @override
   State<TonalPaletteColors> createState() => _TonalPaletteColorsState();
 }
@@ -83,13 +87,19 @@ class _TonalPaletteColorsState extends State<TonalPaletteColors> {
   @override
   void initState() {
     super.initState();
-    tonalColors = getTonalColors(widget.selectedColor);
+    tonalColors = getTonalColors(
+      widget.selectedColor,
+      widget.tonalPaletteFixedMinChroma,
+    );
   }
 
   @override
   void didUpdateWidget(TonalPaletteColors oldWidget) {
     if (widget.tonalShouldUpdate) {
-      tonalColors = getTonalColors(widget.selectedColor);
+      tonalColors = getTonalColors(
+        widget.selectedColor,
+        widget.tonalPaletteFixedMinChroma,
+      );
     }
     super.didUpdateWidget(oldWidget);
   }

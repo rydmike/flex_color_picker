@@ -163,6 +163,14 @@ final StateProvider<bool> enableTonesSelectionPod =
       defaultValue: Keys.defaults[Keys.enableTonesSelection]! as bool) as bool;
 }, name: Keys.enableTonesSelection);
 
+// State of min chroma legacy usage.
+final StateProvider<bool> tonalPaletteFixedMinChromaPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.tonalPaletteFixedMinChroma,
+          defaultValue: Keys.defaults[Keys.tonalPaletteFixedMinChroma]! as bool)
+      as bool;
+}, name: Keys.tonalPaletteFixedMinChroma);
+
 // State of using same size tonal color items.
 final StateProvider<bool> tonalSameSizePod =
     StateProvider<bool>((StateProviderRef<bool> ref) {
@@ -274,6 +282,20 @@ final StateProvider<bool> showRecentSubheadingPod =
   return hiveStore.get(Keys.showRecentSubheading,
       defaultValue: Keys.defaults[Keys.showRecentSubheading]! as bool) as bool;
 }, name: Keys.showRecentSubheading);
+
+// State of showing edit icon button.
+final StateProvider<bool> showEditIconButtonPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.showEditIconButton,
+      defaultValue: Keys.defaults[Keys.showEditIconButton]! as bool) as bool;
+}, name: Keys.showEditIconButton);
+
+// State of focused edit not having any color.
+final StateProvider<bool> focusedEditHasNoColorPod =
+    StateProvider<bool>((StateProviderRef<bool> ref) {
+  return hiveStore.get(Keys.focusedEditHasNoColor,
+      defaultValue: Keys.defaults[Keys.focusedEditHasNoColor]! as bool) as bool;
+}, name: Keys.focusedEditHasNoColor);
 
 // ****************************************************************************
 //  Picker Design Riverpod "Pod" providers.
