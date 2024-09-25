@@ -174,14 +174,14 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
   static double squareRadius(double radius, double wheelSquarePadding) =>
       (radius - wheelSquarePadding) / math.sqrt(2);
 
-  Offset getOffset(Offset ratio) {
-    // This is bang and cast is not pretty, but SDK does it this way too.
-    final RenderBox renderBox =
-        renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
-
-    final Offset startPosition = renderBox.localToGlobal(Offset.zero);
-    return ratio - startPosition;
-  }
+  // Offset getOffset(Offset ratio) {
+  //   // This is bang and cast is not pretty, but SDK does it this way too.
+  //   final RenderBox renderBox =
+  //       renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
+  //
+  //   final Offset startPosition = renderBox.localToGlobal(Offset.zero);
+  //   return ratio - startPosition;
+  // }
 
   // Called when we start dragging any of the thumbs on the wheel or square
   void onStart(Offset offset) {
@@ -343,6 +343,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final Color dividerColor = Theme.of(context).dividerColor;
     return GestureDetector(
       dragStartBehavior: DragStartBehavior.down,
 
@@ -391,8 +392,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
                       colorSaturation: colorSaturation,
                       colorValue: colorValue,
                       hasBorder: widget.hasBorder,
-                      borderColor:
-                          widget.borderColor ?? Theme.of(context).dividerColor,
+                      borderColor: widget.borderColor ?? dividerColor,
                       wheelWidth: widget.wheelWidth,
                       wheelSquarePadding: widget.wheelSquarePadding,
                       wheelBorderRadius: widget.wheelSquareBorderRadius,
@@ -411,8 +411,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
                   child: CustomPaint(
                     painter: _WheelPainter(
                       hasBorder: widget.hasBorder,
-                      borderColor:
-                          widget.borderColor ?? Theme.of(context).dividerColor,
+                      borderColor: widget.borderColor ?? dividerColor,
                       wheelWidth: widget.wheelWidth,
                       ticks: 360,
                     ),

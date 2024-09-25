@@ -1,6 +1,7 @@
-import 'package:flex_color_picker/src/universal_widgets/dry_intrisinic.dart';
+import 'package:flex_color_picker/src/universal_widgets/dry_intrinsic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 //****************************************************************************
@@ -122,6 +123,76 @@ void main() {
     final RenderBox dryIntrinsicHeight =
         tester.renderObject<RenderBox>(find.byType(DryIntrinsicHeight));
     expect(dryIntrinsicHeight.size, equals(Size.zero));
+  });
+
+  testWidgets('DryIntrinsicWidth computes intrinsic width correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DryIntrinsicWidth(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Test',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final RenderBox box = tester.renderObject(find.byType(DryIntrinsicWidth));
+    expect(box.size.width, greaterThan(0));
+    expect(box.size.height, greaterThan(0));
+  });
+
+  testWidgets('DryIntrinsicHeight computes intrinsic height correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DryIntrinsicHeight(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Test',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final RenderBox box = tester.renderObject(find.byType(DryIntrinsicHeight));
+    expect(box.size.width, greaterThan(0));
+    expect(box.size.height, greaterThan(0));
+  });
+
+  test('RenderDryIntrinsicWidth computes dry layout correctly', () {
+    final RenderDryIntrinsicWidth renderObject = RenderDryIntrinsicWidth();
+    final RenderBox child = RenderConstrainedBox(
+      additionalConstraints: BoxConstraints.tight(const Size(100, 50)),
+    );
+    renderObject.child = child;
+
+    const BoxConstraints constraints = BoxConstraints();
+    final Size size = renderObject.computeDryLayout(constraints);
+
+    expect(size.width, 100);
+    expect(size.height, 50);
+  });
+
+  test('RenderDryIntrinsicHeight computes dry layout correctly', () {
+    final RenderDryIntrinsicHeight renderObject = RenderDryIntrinsicHeight();
+    final RenderBox child = RenderConstrainedBox(
+      additionalConstraints: BoxConstraints.tight(const Size(100, 50)),
+    );
+    renderObject.child = child;
+
+    const BoxConstraints constraints = BoxConstraints();
+    final Size size = renderObject.computeDryLayout(constraints);
+
+    expect(size.width, 100);
+    expect(size.height, 50);
   });
 }
 

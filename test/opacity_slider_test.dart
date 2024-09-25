@@ -14,14 +14,14 @@ void main() {
             opacity: opacity,
             color: Colors.red,
             onChanged: (double value) {
-              debugPrint('onChanged: $value');
+              // debugPrint('onChanged: $value');
               opacity = value;
             },
             onChangeStart: (double value) {
-              debugPrint('onChangeStart: $value');
+              // debugPrint('onChangeStart: $value');
             },
             onChangeEnd: (double value) {
-              debugPrint('onChangeEnd: $value');
+              // debugPrint('onChangeEnd: $value');
             },
           ),
         ),

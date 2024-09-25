@@ -138,6 +138,7 @@ void main() {
               okTooltip: 'OK NOW',
               closeTooltip: 'CLOSE NOW',
             ),
+            width: 39,
             hasBorder: true,
             borderRadius: 10,
             borderColor: Colors.black,
@@ -217,7 +218,7 @@ void main() {
               ) &&
           widget.copyPasteBehavior == const ColorPickerCopyPasteBehavior() &&
           widget.selectedColorIcon == Icons.check &&
-          widget.width == 40 &&
+          widget.width == 39 &&
           widget.height == 40 &&
           widget.spacing == 4 &&
           widget.runSpacing == 4 &&

@@ -1,20 +1,16 @@
-// TODO(rydmike): patrol_tester.dart seem to be broken on Flutter 3.22-> SKIP!
-// Come back to this later!
-
-// ignore_for_file: flutter_style_todos
-
-// void main() {}
-
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flex_color_picker/src/widgets/color_picker_toolbar.dart';
 import 'package:flex_color_picker/src/widgets/opacity/opacity_slider.dart';
 import 'package:flex_color_picker/src/widgets/recent_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol_finders/patrol_finders.dart';
 
-// ignore_for_file: unnecessary_null_comparison
+import 'clipboard_utils.dart';
+
+// --- ignore_for_file: unnecessary_null_comparison
 
 //****************************************************************************
 // FlexColorPicker ColorPicker Widget tests
@@ -67,9 +63,16 @@ void main() {
     //
 
     patrolWidgetTest(
-      'PAT1.2: Patrol test configured pickers and colors',
-      // config: PatrolTestConfig(findTimeout: const Duration(seconds: 10)),
+      'PAT1.2: Patrol test configured pickers and colors use ClipBoard too',
       (PatrolTester $) async {
+        // Make a mock Clipboard, got this from Flutter SDK ClipBoard setup
+        // Clipboard testing does not work without this.
+        final MockClipboard mockClipboard = MockClipboard();
+        TestWidgetsFlutterBinding.ensureInitialized()
+            .defaultBinaryMessenger
+            .setMockMethodCallHandler(
+                SystemChannels.platform, mockClipboard.handleMethodCall);
+
         Color resultColor = Colors.blue;
         Color startColor = Colors.blue;
         Color endColor = Colors.blue;
@@ -79,6 +82,11 @@ void main() {
           TestPicker(
             widget: ColorPicker(
               key: testKey,
+              padding: EdgeInsets.zero,
+              spacing: 0,
+              runSpacing: 0,
+              wheelDiameter: 150,
+              columnSpacing: 0,
               color: Colors.red, // Primary picker s default selected
               onColorChanged: (Color color) {
                 resultColor = color;
@@ -290,6 +298,11 @@ void main() {
         // await $(OpacitySlider)
         //     .scrollTo(settlePolicy: SettlePolicy.trySettle)
         //     .tap();
+        // await $(OpacitySlider)
+        //     .scrollTo(
+        //         view: $(#scroll).$(Scrollable),
+        //         settlePolicy: SettlePolicy.trySettle)
+        //     .tap();
 
         // Find the Text entry
         expect(find.byType(ColorCodeField), findsOneWidget);
@@ -309,13 +322,12 @@ void main() {
               visibleTimeout: const Duration(seconds: 1),
               settleTimeout: const Duration(seconds: 2),
             );
-        // TODO(rydmike): Figure out how to test clipboard copy/paste.
-        // We should have some clipboard data from above tap. But the below
-        // attempt to get the data never completes. The code flow hit paths
-        // from above also indicates the buffer is empty after the tap above.
-        // final ClipboardData? clipData =
-        //     await Clipboard.getData(Clipboard.kTextPlain);
-        // debugPrint('Clip data: $clipData');
+        // Use the mock Clipboard, got this from Flutter SDK ClipBoard setup
+        final ClipboardData? clipData =
+            await Clipboard.getData(Clipboard.kTextPlain);
+        debugPrint('Clip data: ${clipData?.text}');
+        // We should find the last color we had copied to the mock clipboard:
+        expect(clipData?.text, '0xFF92B300');
 
         // TEST COPY/PASTE via toolbar buttons
         // Go to another tab select a new color
@@ -337,16 +349,14 @@ void main() {
               visibleTimeout: const Duration(seconds: 1),
               settleTimeout: const Duration(seconds: 2),
             );
-        // This is the color we should find but do not since copy did nothing.
-        // The paste wont work either.
-        // expect(Color(resultColor.value), Color(Colors.redAccent.value));
-        // Color(0xffe91e63);
+        // We pasted the redAccent color, we copied earlier back
+        expect(Color(resultColor.value), Color(Colors.redAccent.value));
       },
     );
 
     // Test issue https://github.com/rydmike/flex_color_picker/issues/71
     patrolWidgetTest(
-      'PAT1.3: Patrol widget test for issue #71 ',
+      'PAT1.3: Patrol widget test for issue #71 and legacy tonal chroma',
       (PatrolTester $) async {
         Color resultColor = const Color(0xFF613E42);
         await $.pumpWidgetAndSettle(
@@ -355,6 +365,7 @@ void main() {
               key: testKey,
               color: resultColor,
               enableTonalPalette: true,
+              // Set legacy tonal style, used before version 3.6.0
               tonalPaletteFixedMinChroma: true,
               onColorChanged: (Color color) {
                 resultColor = color;
@@ -380,7 +391,7 @@ void main() {
                 okButton: false,
                 closeButton: true,
                 okTooltip: 'DO',
-                closeTooltipIsClose: false,
+                closeTooltipIsClose: true,
                 toolIconsThemeData: IconThemeData(
                   color: Colors.blue,
                   size: 20,
@@ -410,8 +421,6 @@ void main() {
         // The 14th ColorIndicator will be 5th tonal
         await $(ColorIndicator).at(14).tap();
         expect(resultColor, const Color(0xFF7D2939));
-        // NEW TONAL PALETTE RESULT if not tonalPaletteFixedMinChroma: true set
-        // expect(resultColor, const Color(0xff603d41));
 
         // Tap primary slider, no crash! This crashed without the FIX for #71
         await $('Primary').tap();
@@ -427,6 +436,10 @@ void main() {
         Color resultColor = const Color(0xFF613E42);
         await $.pumpWidgetAndSettle(
           TestPicker(
+            // TODO(rydmike): Do not see RTL hit test result, why?
+            // Testing RTL Directionality but not getting hits on RTL
+            // version OpacitySliderTrack, should get it! Why not?
+            directionality: TextDirection.rtl,
             widget: ColorPicker(
               key: testKey,
               color: resultColor,
@@ -795,6 +808,7 @@ void main() {
         Color resultColor = Colors.blue;
         await $.pumpWidgetAndSettle(
           TestPicker(
+            platform: TargetPlatform.macOS,
             widget: Builder(
               builder: (BuildContext context) {
                 return ElevatedButton(
@@ -886,7 +900,6 @@ void main() {
         Color resultColor = Colors.blue;
         await $.pumpWidgetAndSettle(
           TestPicker(
-            platform: TargetPlatform.windows,
             widget: Builder(
               builder: (BuildContext context) {
                 return ElevatedButton(
@@ -1664,9 +1677,15 @@ void main() {
 }
 
 class TestPicker extends StatelessWidget {
-  const TestPicker({super.key, required this.widget, this.platform});
+  const TestPicker({
+    super.key,
+    required this.widget,
+    this.platform,
+    this.directionality = TextDirection.ltr,
+  });
   final Widget widget;
   final TargetPlatform? platform;
+  final TextDirection directionality;
 
   @override
   Widget build(BuildContext context) {
@@ -1676,13 +1695,16 @@ class TestPicker extends StatelessWidget {
       theme: ThemeData(
         platform: platform,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('TestWidget'),
-        ),
-        body: SingleChildScrollView(
-          child: widget,
-        ),
+      home: Directionality(
+        textDirection: directionality,
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: widget,
+            ),
+          );
+        }),
       ),
     );
   }

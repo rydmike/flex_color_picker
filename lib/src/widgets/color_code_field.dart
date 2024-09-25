@@ -6,7 +6,7 @@ import '../color_picker_extensions.dart';
 import '../functions/picker_functions.dart';
 import '../models/color_picker_action_buttons.dart';
 import '../models/color_picker_copy_paste_behavior.dart';
-import '../universal_widgets/dry_intrisinic.dart';
+import '../universal_widgets/dry_intrinsic.dart';
 
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.

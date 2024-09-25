@@ -1,110 +1,200 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore_for_file: unnecessary_null_comparison
-
-//****************************************************************************
-// FlexColorPicker ColorWheelPicker Widget tests
-//****************************************************************************
 void main() {
-  const ValueKey<String> testKey = ValueKey<String>('test');
+  testWidgets('ColorWheelPicker widget test', (WidgetTester tester) async {
+    // Define variables to hold callback results
+    Color selectedColor = Colors.red;
+    bool isWheelActive = false;
+    Color? startColor;
+    Color? endColor;
 
-  group('CWP1: In App With ColorWheelPicker', () {
-    debugDefaultTargetPlatformOverride = null;
-    testWidgets('CWP1.1: Finds default ColorWheelPicker()',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
-          widget: ColorWheelPicker(
-        key: testKey,
-        color: Colors.blue,
-        onChanged: (Color color) {},
-        onWheel: (bool wheel) {},
-      )));
-      final Finder widget = find.byKey(testKey);
-      expect(widget, findsOneWidget);
-
-      // ignore: prefer_function_declarations_over_variables
-      final WidgetPredicate defaultWheel = (Widget widget) =>
-          widget is ColorWheelPicker &&
-          widget.color == Colors.blue &&
-          widget.onChanged != null &&
-          widget.onChangeStart == null &&
-          widget.onChangeEnd == null &&
-          widget.onWheel != null &&
-          widget.wheelWidth == 16 &&
-          widget.wheelSquarePadding == 0 &&
-          widget.wheelSquareBorderRadius == 4 &&
-          !widget.hasBorder &&
-          widget.borderColor == null &&
-          !widget.shouldUpdate &&
-          !widget.shouldRequestsFocus;
-      expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
-    });
-
-    testWidgets('CWP1.1: Finds custom-1 ColorWheelPicker()',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
-          widget: ColorWheelPicker(
-        key: testKey,
-        color: Colors.blue,
-        onChanged: (Color color) {},
-        onChangeStart: (Color color) {},
-        onChangeEnd: (Color color) {},
-        onWheel: (bool wheel) {},
-        wheelWidth: 20,
-        wheelSquarePadding: 4,
-        wheelSquareBorderRadius: 6,
-        hasBorder: true,
-        borderColor: Colors.black,
-        shouldUpdate: true,
-        shouldRequestsFocus: true,
-      )));
-      final Finder widget = find.byKey(testKey);
-      expect(widget, findsOneWidget);
-
-      // ignore: prefer_function_declarations_over_variables
-      final WidgetPredicate defaultWheel = (Widget widget) =>
-          widget is ColorWheelPicker &&
-          widget.color == Colors.blue &&
-          widget.onChanged != null &&
-          widget.onChangeStart != null &&
-          widget.onChangeEnd != null &&
-          widget.onWheel != null &&
-          widget.wheelWidth == 20 &&
-          widget.wheelSquarePadding == 4 &&
-          widget.wheelSquareBorderRadius == 6 &&
-          widget.hasBorder &&
-          widget.borderColor == Colors.black &&
-          widget.shouldUpdate &&
-          widget.shouldRequestsFocus;
-      expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
-    });
-  });
-}
-
-class TestWidget extends StatelessWidget {
-  const TestWidget({super.key, required this.widget});
-  final Widget widget;
-
-  @override
-  Widget build(BuildContext context) {
-    debugDefaultTargetPlatformOverride = null;
-    return MaterialApp(
-      title: 'TestWidget',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('TestWidget'),
-        ),
-        body: Center(
-          child: SizedBox(
-            width: 300,
-            height: 300,
-            child: widget,
+    // Function to build the widget with the current selected color
+    Widget buildWidget(Color color) {
+      return MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200,
+            height: 200,
+            child: ColorWheelPicker(
+              color: color,
+              onChanged: (Color color) {
+                selectedColor = color;
+                // print('onChanged: $color');
+              },
+              onChangeStart: (Color color) {
+                startColor = color;
+                // print('onChangeStart: $color');
+              },
+              onChangeEnd: (Color color) {
+                endColor = color;
+                // print('onChangeEnd: $color');
+              },
+              onWheel: (bool active) {
+                isWheelActive = active;
+                // print('onWheel: $active');
+              },
+              wheelWidth: 20.0,
+              wheelSquarePadding: 0.0,
+              wheelSquareBorderRadius: 2.0,
+              hasBorder: true,
+              borderColor: Colors.black,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
+
+    // Initial build
+    await tester.pumpWidget(buildWidget(selectedColor));
+
+    // Verify initial state
+    expect(isWheelActive, isFalse);
+    expect(startColor, isNull);
+    expect(endColor, isNull);
+    expect(selectedColor, Colors.red);
+
+    // Simulate a drag on the color wheel square
+    final Offset center = tester.getCenter(find.byType(ColorWheelPicker));
+    await tester.timedDragFrom(
+        center, const Offset(50, 20), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the callbacks are triggered for the square
+    expect(isWheelActive, isFalse); // Stops being active as soon as drag stops
+    expect(startColor, Colors.red);
+    expect(selectedColor, const Color(0xff520a05));
+    expect(endColor, Colors.red);
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+
+    // Simulate a diagonal drag on the color wheel square
+    await tester.timedDragFrom(
+        center, const Offset(20, 30), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Verify the callbacks are triggered for the square
+    expect(startColor, const Color(0xff520a05));
+    expect(endColor, const Color(0xff520a05));
+    expect(selectedColor, const Color(0xff3c1613));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Calculate a starting point on the wheel's circumference
+    const double wheelRadius = 95.0; // 200/2 - 20/2
+    final Offset startPoint = Offset(center.dx + wheelRadius, center.dy);
+
+    // Simulate a short horizontal drag on the color wheel
+    await tester.timedDragFrom(
+        startPoint, const Offset(70, -100), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Verify the callbacks are triggered for the wheel
+    expect(startColor, const Color(0xff3c1613));
+    expect(endColor, const Color(0xff3c1613));
+    expect(selectedColor, const Color(0xff3c1328));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Simulate vertical drag update
+    await tester.timedDragFrom(
+        startPoint, const Offset(30, 10), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the callbacks are triggered for vertical drag update
+    expect(startColor, const Color(0xff3c1328));
+    expect(endColor, const Color(0xff3c1328));
+    expect(selectedColor, const Color(0xff3c1613));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Simulate horizontal drag update
+    await tester.timedDragFrom(
+        startPoint, const Offset(40, 40), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the callbacks are triggered for horizontal drag update
+    expect(startColor, const Color(0xff3c1613));
+    expect(endColor, const Color(0xff3c1613));
+    expect(selectedColor, const Color(0xff3c1f13));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Simulate end of vertical drag
+    await tester.timedDragFrom(
+        startPoint, const Offset(-100, 90), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the end callback is triggered for vertical drag
+    expect(startColor, const Color(0xff3c1f13));
+    expect(endColor, const Color(0xff3c1f13));
+    expect(selectedColor, const Color(0xff253c13));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Simulate end of horizontal drag
+    await tester.timedDragFrom(
+        startPoint, const Offset(-150, -55), const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the end callback is triggered for horizontal drag
+    expect(startColor, const Color(0xff253c13));
+    expect(endColor, const Color(0xff253c13));
+    expect(selectedColor, const Color(0xff131d3c));
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Calculate a starting point NOT on the wheel's circumference
+    final Offset noWheelPoint =
+        Offset(center.dx + wheelRadius, center.dy + wheelRadius);
+
+    // Simulate end of horizontal drag
+    await tester.timedDragFrom(noWheelPoint, const Offset(-20, -20),
+        const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
+    // Update the widget with the new color
+    await tester.pumpWidget(buildWidget(selectedColor));
+    await tester.pumpAndSettle();
+
+    // Verify the callback results, color should not change from previous
+    // value since we start outside the wheel
+    expect(startColor, const Color(0xff253c13));
+    expect(endColor, const Color(0xff131d3c));
+    expect(selectedColor, const Color(0xff131d3c));
+  });
 }

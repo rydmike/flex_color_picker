@@ -2,9 +2,7 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.6.0 - DRAFT NOT YET RELEASED 
-
-
+## 3.6.0 
 
 **September 25, 2024**
 
@@ -23,19 +21,21 @@ The ColorPicker got the following new properties and features:
 
 
 * Boolean `focusedEditHasNoColor`, defaults to `false`.
-  * Whether the color code entry field should have no color when focused. If the option to make the color code field have the same color as the selected color is enabled via `colorCodeHasColor`, it makes it look and double like a big color indicator that shows the selected color. This can also make the edit of the color code confusing, as its color on purpose also changes as you edit and enter a new color value. If you find this behavior confusing and want to make the color code field always have no color during value entry, regardless of the selected color, then set this option to true.
+  * Whether the color code entry field should have no color when focused. If the option, to make the color code field have the same color as the selected color is enabled via `colorCodeHasColor`, it makes it look and double like a big color indicator that shows the selected color. This can also make the edit of the color code confusing, as its color on purpose also changes as you edit and enter a new color value. If you find this behavior confusing and want to make the color code field always have no color during value entry, regardless of the selected color, then set this option to true.
   * Feature included in updated web demo app: **YES**
 
 
 * Boolean `tonalPaletteFixedMinChroma`, defaults to `false`.
-  * Whether the tonal palette uses a fixed minimum chroma value for all tones, or if it uses the chroma value of the selected color. Prior to version 3.6.0, the tonal palette used minimum chroma value of 48 or chroma of the selected color. This was the default primary tonal palette behavior in Flutter's ColorScheme.fromSeed method before Flutter version 3.22.0. Starting from FlexColorPicker version 3.6.0, the picker creates a HCT color space tonal palette using whatever hue and chroma is in the selected color. If you for some reason want to use the old behavior, set this property to true. This will make the tonal palette use the fixed minimum chroma value of 48 for all tones.
+  * Whether the tonal palette uses a fixed minimum chroma value for all tones, or if it uses the chroma value of the selected color. Prior to version 3.6.0, the tonal palette used minimum chroma value of 48 or chroma of the selected color. This was the default primary tonal palette behavior in Flutter's ColorScheme.fromSeed method before Flutter version 3.22.0. Starting from FlexColorPicker version 3.6.0, the picker creates a HCT color space tonal palette using whatever hue and chroma the selected color has. If you for some reason want to use the old behavior, set this property to true. This will make the tonal palette use the fixed minimum chroma value of 48 for all tones.
   * Feature included in updated web demo app: **YES**
 
 **FIX**
 
 * Since version 3.4.0 the value of property `ColorPickerCopyPasteBehavior.editUsesParsedPaste` had no impact on the picker's paste behavior when the color code text field was focused. The color picker always behaved as if this property was true. Which incidentally is the behavior that pretty much all uses cases should use. This feature now again works as stated in its doc comments. However, the default value was changed from `false` to `true`, to match the actual default behavior it has had since version 3.4.0, and the behavior that should be preferred. The `false` setting was there to provide color code text field paste behavior backwards compatibility with versions before 2.0.0. We may deprecate this property in a future version, as it is not really recommended to use `false` at all, but for now it is fixed again.  
 
+**TESTS**
 
+* Improved the test coverage of the ColorPicker.
 
 ## 3.5.1
 
@@ -63,7 +63,7 @@ The ColorPicker contains no breaking changes, but underlying Flutter does, and t
 **FIX**
 
 * Fix wheel picker jumping to BW or custom picker under certain conditions.
-  * When the wheel picker's opacity value is not 100, moving the color picker cursor to the white corner or bottom black edge of the color box triggers a jump. It auto-selects BW or a custom picker containing black or white values. This is now fixed. The picker cursor will stay in the wheel picker, and the color box will not jump to BW or custom picker when the cursor is moved to the white corner or bottom black edge of the color box.
+  * When the wheel picker's opacity value is not 100, moving the color picker cursor to the white corner or bottom black edge of the color box triggers a jump. It automatically selects BW or a custom picker containing black or white values. This is now fixed. The picker cursor will stay in the wheel picker, and the color box will not jump to BW or custom picker when the cursor is moved to the white corner or bottom black edge of the color box.
 * Improved and updated API documentation for `ColorPicker` properties `color` and `onColorChanged`.
 * Fixed typos and language in the readme.
 
@@ -97,7 +97,7 @@ Requires min Flutter 3.16.0 and Dart 3.0.0.
 - Added enum values `filled` and `filledTonal` to `ColorPickerActionButtonType` and added support for these button styles as OK/Cancel buttons in the ColorPicker dialog. 
 - Added `dialogActionOnlyOkButton` to `ColorPickerActionButtons`. Defaults to false. If set to true and `dialogActionButtons` is true, only the OK button will be shown.
 - Added support for a second custom color palette to the picker. In addition to `ColorPickerType.custom` there is now also a `ColorPickerType.customSecondary` picker selector. It gets its values from `ColorPicker.customSecondaryColorSwatchesAndNames`. 
-- Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity and slider in `ColorPicker.enableOpacity` is not enabled. Nothing new is needed to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
+- Added support for transparent colors for both custom color palette pickers. They can now have opacity in the picker in their custom color values. This also works if the opacity and slider in `ColorPicker.enableOpacity` is not enabled. Nothing new is required to use this feature. It works automatically when custom color palettes are used that have partially transparent colors in them. 
 - Added `shadowColor` and `surfaceTintColor` to the dialog properties to enable control of the shadow color and surface tint color of the color picker dialog.
 - The color utilities `ColorTools.createPrimarySwatch` and `ColorTools.createAccentSwatch` now create color swatches with alpha channel value kept at its input values for all created swatch indexes. Previously they set alpha to `#FF`, even if the value might have been something else. Creating palettes with very low alpha in the source color will not produce pretty palettes, but it is now possible to create them.
 - The Color picker received two new layout properties. Previously all vertical spacings between the column elements in the picker were controlled by the `ColorPicker` property `columnSpacing`. For two key elements, you can now override this spacing. 
@@ -127,7 +127,7 @@ Web demo
 
 - FIX: Fixed issue [#71 _activeColorSwatchList init in Wheel with tonal palette case](https://github.com/rydmike/flex_color_picker/issues/71).
 - CHORE: Bump FlexSeedScheme to version 1.4.0.
-- TEST: Improved test coverage (65% -> 74%)
+- TEST: Improved test coverage from 65% to 74%.
 
 ## 3.3.0
 
@@ -712,14 +712,14 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 **December 5, 2020**
 
 * Temporary: The Wrap implementation for showing the color code and integer value was changed to a Row due to a regression in Flutter SDK causing a crash issue on channels dev and master when showing the ColorPicker in a Dialog. For more info see here: https://github.com/flutter/flutter/issues/71687 
-  * When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the benefit of breaking the color code display+input field and the rarely used int value, into two rows in case a large font is used in a narrow view. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling, it is typically not needed.
+  * When the issue is resolved, the implementation will be reverted to Wrap again. Using a Wrap has the benefit of breaking the color code display+input field and the rarely used int value, into two rows in case a large font is used in a narrow view. The Row may overflow in some rare cases. If you do not plan to use the ColorPicker with channels and versions affected by the issue, you can still use the previous version 1.1.1 to keep using the Wrap implementation if you need it. With normal styling, it is typically unnecessary.
 * Fixed that the provided `TextStyle` via property `colorCodeTextStyle` was not also applied to the shown color integer value when `showColorValue` was set to `true`, as stated in API doc and intended.
 
 ## 1.1.1
 
 **November 11, 2020**
 
-* Updated the example app and documentation. The update includes updated screenshots and updated animated gifs.
+* Updated the example app and documentation. The update includes updated screenshots and updated animated GIFs.
 * Unit tests for ColorTools added. Widget tests are still pending for later updates.
 
 ## 1.1.0
@@ -738,7 +738,7 @@ The following are **minor breaking changes** from version 1.1.5, they mostly con
 * First official release.
 * Example and documentation updated.
 * Updated the live Web demo version to use the released package.
-* New API: Added `shouldUpdate` to the color-wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API. It is not needed unless you make your own picker from scratch, and you want to use the wheel picker in your own picker.
+* New API: Added `shouldUpdate` to the color-wheel picker, as a fix for an issue where black selection changed hue to red. This is a lower level API. You do not need to use it unless you make your own picker from scratch, and you want to use the wheel picker in your own picker.
 * Final API name tweaks before version 1.0.0 release:
 * Renamed: API `createPrimaryColor` -> `createPrimarySwatch`
 * Renamed: API `createAccentColor` -> `createAccentSwatch`
