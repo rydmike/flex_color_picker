@@ -281,9 +281,9 @@ class ColorTools {
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
     final int a = color.alpha;
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
     for (final int strength in _indexPrimary) {
       final double ds = 0.5 - strength / 1000;
       swatch[strength] = Color.fromARGB(
@@ -453,9 +453,9 @@ class ColorTools {
   static MaterialAccentColor createAccentSwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
     final int a = color.alpha;
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
     for (final int strength in _indexAccent) {
       final double ds = 0.2 - strength / 1000;
       swatch[strength] = Color.fromARGB(
@@ -847,9 +847,9 @@ class _ColorName {
   // Error handling show problematic color codes by returning white color.
   factory _ColorName.fromColor(Color color) {
     final String decodeColor = color.value32bit.toRadixString(16);
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
 
     final HSLColor hsl = HSLColor.fromColor(color);
     final int h = hsl.hue.toInt();
@@ -885,13 +885,13 @@ class _ColorName {
   final String _name;
 
   HSLColor get _hslColor => HSLColor.fromColor(_color);
-  int get getBlue => _color.blue;
+  int get getBlue => _color.blue8bit;
   String get getCode => _color.value32bit.toRadixString(16);
-  int get getGreen => _color.green;
+  int get getGreen => _color.green8bit;
   int get getHue => _hslColor.hue.toInt();
   int get getLightness => (_hslColor.lightness * 100).toInt();
   String get getName => _name;
-  int get getRed => _color.red;
+  int get getRed => _color.red8bit;
   int get getSaturation => (_hslColor.saturation * 100).toInt();
 
   // A const list of 1566 named colors

@@ -1101,11 +1101,11 @@ void main() {
 // A custom color code modifier that changes the RGB value up a bit, but not
 // enough to result in a different color
 Color colorPlusOneRGB(Color color) {
-  int red = color.red;
+  int red = color.red8bit;
   if (red > 0x10 && red < 0xEF) red++;
-  int green = color.green;
+  int green = color.green8bit;
   if (green > 0x10 && green < 0xEF) green++;
-  int blue = color.blue;
+  int blue = color.blue8bit;
   if (blue > 0x11 && blue < 0xEE) blue++;
   return Color.fromARGB(0xFF, red, green, blue);
 }
