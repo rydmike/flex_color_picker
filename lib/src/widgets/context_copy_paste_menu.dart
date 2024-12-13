@@ -151,7 +151,7 @@ class ContextCopyPasteMenu extends StatelessWidget {
     final PopupMenuThemeData effectiveMenuTheme = theme.popupMenuTheme.copyWith(
       color: menuThemeData?.color ??
           theme.popupMenuTheme.color ??
-          theme.cardColor.withOpacity(0.9),
+          theme.cardColor.withValues(alpha: 0.9),
       shape: menuThemeData?.shape ??
           theme.popupMenuTheme.shape ??
           RoundedRectangleBorder(

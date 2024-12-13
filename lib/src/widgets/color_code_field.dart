@@ -351,7 +351,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               setState(() {
                 color = textColor
                     .toColorShort(widget.copyPasteBehavior.parseShortHexCode)
-                    .withOpacity(color.opacity);
+                    .withValues(alpha: color.a);
               });
               widget.onColorChanged(color);
             },
@@ -359,7 +359,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
               setState(() {
                 color = textController.text
                     .toColorShort(widget.copyPasteBehavior.parseShortHexCode)
-                    .withOpacity(color.opacity);
+                    .withValues(alpha: color.a);
               });
               textController.text = color.hex;
               widget.onColorChanged(color);

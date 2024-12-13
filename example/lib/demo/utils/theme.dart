@@ -124,8 +124,8 @@ class AppTheme {
         color: colorScheme.onSurface,
         selectedColor: colorScheme.onPrimaryContainer,
         fillColor: colorScheme.primaryContainer,
-        hoverColor: colorScheme.primary.withOpacity(0.2),
-        focusColor: colorScheme.primary.withOpacity(0.3),
+        hoverColor: colorScheme.primary.withValues(alpha: 0.2),
+        focusColor: colorScheme.primary.withValues(alpha: 0.3),
         borderWidth: App.outlineThickness,
         borderColor: colorScheme.primary,
         selectedBorderColor: colorScheme.primary,
@@ -147,8 +147,8 @@ class AppTheme {
         ),
         decoration: BoxDecoration(
           color: isDark
-              ? const Color(0xFFCFCFCF).withOpacity(0.94)
-              : const Color(0xFF444444).withOpacity(0.93),
+              ? const Color(0xFFCFCFCF).withValues(alpha: 0.94)
+              : const Color(0xFF444444).withValues(alpha: 0.93),
           borderRadius: const BorderRadius.all(Radius.circular(6)),
           border: Border.all(
             color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000),

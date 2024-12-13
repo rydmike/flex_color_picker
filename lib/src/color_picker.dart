@@ -2045,8 +2045,8 @@ class _ColorPickerState extends State<ColorPicker> {
                     shouldRequestsFocus: _wheelShouldFocus,
                     onChangeStart: (Color color) {
                       widget.onColorChangeStart
-                          ?.call(color.withOpacity(_opacity));
-                      _addToRecentColors(color.withOpacity(_opacity));
+                          ?.call(color.withValues(alpha: _opacity));
+                      _addToRecentColors(color.withValues(alpha: _opacity));
                     },
                     onChanged: (Color color) {
                       setState(() {
@@ -2061,12 +2061,12 @@ class _ColorPickerState extends State<ColorPicker> {
                         _wheelShouldFocus = false;
                         _updateActiveSwatch();
                       });
-                      widget
-                          .onColorChanged(_selectedColor.withOpacity(_opacity));
+                      widget.onColorChanged(
+                          _selectedColor.withValues(alpha: _opacity));
                     },
                     onChangeEnd: (Color color) {
                       widget.onColorChangeEnd?.call(
-                        color.withOpacity(_opacity),
+                        color.withValues(alpha: _opacity),
                       );
                     },
                     onWheel: (bool value) {
@@ -2191,9 +2191,9 @@ class _ColorPickerState extends State<ColorPicker> {
                             _opacity = value;
                           });
                           widget.onColorChangeStart!(
-                              _selectedColor.withOpacity(_opacity));
+                              _selectedColor.withValues(alpha: _opacity));
                           _addToRecentColors(
-                              _selectedColor.withOpacity(_opacity));
+                              _selectedColor.withValues(alpha: _opacity));
                         }
                       },
                       onChanged: (double value) {
@@ -2206,7 +2206,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           _wheelShouldFocus = false;
                         });
                         widget.onColorChanged(
-                            _selectedColor.withOpacity(_opacity));
+                            _selectedColor.withValues(alpha: _opacity));
                       },
                       onChangeEnd: (double value) {
                         if (widget.onColorChangeEnd != null) {
@@ -2215,7 +2215,7 @@ class _ColorPickerState extends State<ColorPicker> {
                             _opacity = value;
                           });
                           widget.onColorChangeEnd!(
-                              _selectedColor.withOpacity(_opacity));
+                              _selectedColor.withValues(alpha: _opacity));
                           // _addToRecentColors(
                           //     _selectedColor.withOpacity(_opacity));
                         }
@@ -2299,7 +2299,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       if (widget.showColorCode)
                         ColorCodeField(
                           color: widget.enableOpacity
-                              ? _selectedColor.withOpacity(_opacity)
+                              ? _selectedColor.withValues(alpha: _opacity)
                               : _tappedColor,
                           readOnly: _activePicker != ColorPickerType.wheel ||
                               widget.colorCodeReadOnly,
@@ -2311,8 +2311,8 @@ class _ColorPickerState extends State<ColorPicker> {
                           enableTooltips: widget.enableTooltips,
                           shouldUpdate: _editShouldUpdate,
                           onColorChanged: (Color color) {
-                            widget.onColorChangeStart
-                                ?.call(_selectedColor.withOpacity(_opacity));
+                            widget.onColorChangeStart?.call(
+                                _selectedColor.withValues(alpha: _opacity));
                             setState(() {
                               _tappedColor = color;
                               _selectedColor = color;
@@ -2324,11 +2324,11 @@ class _ColorPickerState extends State<ColorPicker> {
                               _updateActiveSwatch();
                             });
                             widget.onColorChanged(
-                                _selectedColor.withOpacity(_opacity));
-                            widget.onColorChangeEnd
-                                ?.call(_selectedColor.withOpacity(_opacity));
+                                _selectedColor.withValues(alpha: _opacity));
+                            widget.onColorChangeEnd?.call(
+                                _selectedColor.withValues(alpha: _opacity));
                             _addToRecentColors(
-                                _selectedColor.withOpacity(_opacity));
+                                _selectedColor.withValues(alpha: _opacity));
                           },
                           onEditFocused: (bool editInFocus) {
                             _requestEditFocus = false;
@@ -2410,8 +2410,9 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     // Call start callback with current selectedColor before change.
     if (widget.enableOpacity) {
-      widget.onColorChangeStart?.call(_selectedColor.withOpacity(_opacity));
-      _addToRecentColors(_selectedColor.withOpacity(_opacity));
+      widget.onColorChangeStart
+          ?.call(_selectedColor.withValues(alpha: _opacity));
+      _addToRecentColors(_selectedColor.withValues(alpha: _opacity));
     } else {
       // This is to allow custom colors with opacity to callback with their
       // in-built opacity, when opacity is control is not enabled.
@@ -2463,8 +2464,8 @@ class _ColorPickerState extends State<ColorPicker> {
     });
     // Call the change call back with the new color.
     if (widget.enableOpacity) {
-      widget.onColorChanged(_selectedColor.withOpacity(_opacity));
-      widget.onColorChangeEnd?.call(_selectedColor.withOpacity(_opacity));
+      widget.onColorChanged(_selectedColor.withValues(alpha: _opacity));
+      widget.onColorChangeEnd?.call(_selectedColor.withValues(alpha: _opacity));
     } else {
       // This is to allow custom colors with opacity to callback with their
       // in-built opacity, when opacity is control is not enabled.
@@ -2521,7 +2522,7 @@ class _ColorPickerState extends State<ColorPicker> {
         _selectedColor = clipColor.withAlpha(0xFF);
         // If opacity is enabled, we capture the opacity from the pasted color.
         _opacity = widget.enableOpacity ? clipColor.opacity : 1;
-        _addToRecentColors(_selectedColor.withOpacity(_opacity));
+        _addToRecentColors(_selectedColor.withValues(alpha: _opacity));
         // Color changed outside wheel and edit field, a new shade or color was
         // selected outside the wheel and edit, they should update!
         _wheelShouldUpdate = true;
