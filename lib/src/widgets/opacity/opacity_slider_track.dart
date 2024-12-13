@@ -37,15 +37,6 @@ class OpacitySliderTrack extends SliderTrackShape {
   /// Paint used to draw the background image on the slider track.
   final Paint bgImagePaint;
 
-  // This override is need to allow the thumb to be drawn all the way to the e
-  // edge of the rounded track. We can kind of have to lie to it to say it is
-  // not rounded, even if it is, so that the thumb can be drawn all the way to
-  // the edge. This became necessary when in Flutter version 3.27.0.
-  // Unfortunately it does not, respect this when Slider is discrete.
-  // A fix is in progress in Flutter to support this.
-  @override
-  bool get isRounded => false;
-
   /// Returns a rect that represents the track bounds that fits within the
   /// [Slider].
   ///
