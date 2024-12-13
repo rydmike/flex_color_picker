@@ -22,7 +22,7 @@ import 'functions/picker_functions.dart';
 /// setup a function that modifies them as needed in your app,
 /// something simple like this may be all you need:
 ///
-/// ```
+/// ```dart
 /// void main() {
 ///   translateColorNames();
 ///   runApp(const ColorPickerDemo());

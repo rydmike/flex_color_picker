@@ -227,7 +227,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// property values from surrounding `Theme.of(context).iconTheme` if they
   /// are defined. For any values that remain null value, the following
   /// fallback defaults are used:
-  /// ```
+  /// ```dart
   ///   color: remains null, so default [IconThemeData] color behavior is kept.
   ///   size: 16
   ///   opacity: 0.90
@@ -240,7 +240,7 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// null or any property in it is null, then it uses property values from
   /// `Theme.of(context).popupMenuTheme` if they are not null, for any null
   /// value the following fallback defaults are used:
-  /// ```
+  /// ```dart
   ///   color: theme.cardColor.withOpacity(0.9)
   ///   shape: RoundedRectangleBorder(
   ///            borderRadius: BorderRadius.circular(8),
