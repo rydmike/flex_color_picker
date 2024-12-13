@@ -280,7 +280,7 @@ class ColorTools {
   /// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6002ee
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int a = color.alpha;
+    final int a = color.alpha8bit;
     final int r = color.red8bit;
     final int g = color.green8bit;
     final int b = color.blue8bit;
@@ -452,7 +452,7 @@ class ColorTools {
   /// for higher indexes.
   static MaterialAccentColor createAccentSwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int a = color.alpha;
+    final int a = color.alpha8bit;
     final int r = color.red8bit;
     final int g = color.green8bit;
     final int b = color.blue8bit;
