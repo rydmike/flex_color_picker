@@ -31,42 +31,40 @@ class PickersEnabledSwitch extends ConsumerWidget {
           condition: ref.watch(enableTooltipsPod),
           tooltip: 'ColorPicker(pickersEnabled:\n'
               '  ${ref.read(pickersEnabledPod)})',
-          child: ListTile(
-            trailing: ToggleButtons(
-              isSelected: isSelected,
-              onPressed: (int index) {
-                isSelected[index] = !isSelected[index];
-                // If 'Both' turned ON, then 'primary' and 'Accent' is OFF.
-                if (index == 0 && isSelected[0]) {
-                  isSelected[1] = false;
-                  isSelected[2] = false;
-                }
-                // If 'primary' turned ON, then 'Both' is turned OFF.
-                if (index == 1 && isSelected[1]) isSelected[0] = false;
-                // If 'accent' turned ON, then 'Both' is turned OFF.
-                if (index == 2 && isSelected[2]) isSelected[0] = false;
-                // Assign new state to enabled pickers.
-                ref.read(pickersEnabledPod.notifier).state =
-                    <ColorPickerType, bool>{
-                  ColorPickerType.both: isSelected[0],
-                  ColorPickerType.primary: isSelected[1],
-                  ColorPickerType.accent: isSelected[2],
-                  ColorPickerType.bw: isSelected[3],
-                  ColorPickerType.custom: isSelected[4],
-                  ColorPickerType.customSecondary: isSelected[5],
-                  ColorPickerType.wheel: isSelected[6],
-                };
-              },
-              children: const <Widget>[
-                Text('P & A', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Primary', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Accent', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('B & W', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Custom', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Option', style: TextStyle(fontSize: _kToggleFontSize)),
-                Text('Wheel', style: TextStyle(fontSize: _kToggleFontSize)),
-              ],
-            ),
+          child: ToggleButtons(
+            isSelected: isSelected,
+            onPressed: (int index) {
+              isSelected[index] = !isSelected[index];
+              // If 'Both' turned ON, then 'primary' and 'Accent' is OFF.
+              if (index == 0 && isSelected[0]) {
+                isSelected[1] = false;
+                isSelected[2] = false;
+              }
+              // If 'primary' turned ON, then 'Both' is turned OFF.
+              if (index == 1 && isSelected[1]) isSelected[0] = false;
+              // If 'accent' turned ON, then 'Both' is turned OFF.
+              if (index == 2 && isSelected[2]) isSelected[0] = false;
+              // Assign new state to enabled pickers.
+              ref.read(pickersEnabledPod.notifier).state =
+                  <ColorPickerType, bool>{
+                ColorPickerType.both: isSelected[0],
+                ColorPickerType.primary: isSelected[1],
+                ColorPickerType.accent: isSelected[2],
+                ColorPickerType.bw: isSelected[3],
+                ColorPickerType.custom: isSelected[4],
+                ColorPickerType.customSecondary: isSelected[5],
+                ColorPickerType.wheel: isSelected[6],
+              };
+            },
+            children: const <Widget>[
+              Text('P & A', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('Primary', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('Accent', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('B & W', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('Custom', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('Option', style: TextStyle(fontSize: _kToggleFontSize)),
+              Text('Wheel', style: TextStyle(fontSize: _kToggleFontSize)),
+            ],
           ),
         ),
       ],
