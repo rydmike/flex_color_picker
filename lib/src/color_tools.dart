@@ -804,6 +804,15 @@ extension FlexColorPickerColorExtensions on Color {
         _floatToInt8(b) << 0;
   }
 
+  /// The alpha channel of this color in an 8 bit value.
+  ///
+  /// A value of 0 means this color is fully transparent. A value of 255 means
+  /// this color is fully opaque.
+  ///
+  /// This feature brings back the Color.alpha API in a way that is not and
+  /// will not be deprecated.
+  int get alpha8bit => (0xff000000 & value32bit) >> 24;
+
   /// The red channel of this color in an 8 bit value.
   ///
   /// This feature brings back the Color.red API in a way that is not and
