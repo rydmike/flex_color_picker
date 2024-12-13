@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flex_seed_scheme/flex_seed_scheme.dart';
 import 'package:flutter/material.dart';
 
+import '../color_tools.dart';
 import '../models/color_picker_type.dart';
 
 /// These functions are not library exposed, they are private to the library.
@@ -89,7 +90,7 @@ ColorPickerType findColorInSelector({
         if (lookInShades) {
           if (isShadeOfMain(swatch, color, include850)) return key;
         } else {
-          if (swatch.value == color.value) return key;
+          if (swatch.value32bit == color.value32bit) return key;
         }
       }
     }
@@ -103,7 +104,7 @@ ColorPickerType findColorInSelector({
             return key;
           }
         } else {
-          if (swatch.value == color.withAlpha(0xFF).value) return key;
+          if (swatch.value32bit == color.withAlpha(0xFF).value32bit) return key;
         }
       }
     }
@@ -140,7 +141,9 @@ bool isShadeOfMain(
   bool include850,
 ) {
   for (final Color shade in getMaterialColorShades(mainColor, include850)) {
-    if (shade == shadeColor || shade.value == shadeColor.value) return true;
+    if (shade == shadeColor || shade.value32bit == shadeColor.value32bit) {
+      return true;
+    }
   }
   return false;
 }
@@ -168,7 +171,7 @@ List<Color> getMaterialColorShades(ColorSwatch<Object> color, bool include850) {
 
 /// Return the M3 tonal palette for a passed in color as a list of Colors.
 List<Color> getTonalColors(Color color, bool fixedMinChroma) {
-  final Cam16 camColor = Cam16.fromInt(color.value);
+  final Cam16 camColor = Cam16.fromInt(color.value32bit);
   final FlexTonalPalette tonalColors = FlexTonalPalette.of(camColor.hue,
       fixedMinChroma ? math.max(48, camColor.chroma) : camColor.chroma);
 

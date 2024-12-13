@@ -193,7 +193,7 @@ class ColorTools {
   static bool isPrimaryColor(Color color) {
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -212,7 +212,7 @@ class ColorTools {
     // in any swatch/ use case that might be used. This covers normal primary,
     // primaries with the 850 index, and via primary also accent index.
     for (final int i in _indexPrimaryWith850) {
-      if (swatch[i] == color || swatch[i]?.value == color.value) {
+      if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
         return true;
       }
     }
@@ -231,7 +231,7 @@ class ColorTools {
   static MaterialColor primarySwatch(Color color) {
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch as MaterialColor; // Color found in a swatch, return it.
         }
       }
@@ -303,7 +303,7 @@ class ColorTools {
     swatch[700] = swatch[700]!.darken(2);
     swatch[800] = swatch[800]!.darken(3);
     swatch[900] = swatch[900]!.darken(4);
-    return MaterialColor(color.value, swatch);
+    return MaterialColor(color.value32bit, swatch);
   }
 
   /// List of all the standard Material accent color swatches.
@@ -410,7 +410,7 @@ class ColorTools {
   static bool isAccentColor(Color color) {
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -431,7 +431,7 @@ class ColorTools {
   static MaterialAccentColor accentSwatch(Color color) {
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch as MaterialAccentColor; // Found in a swatch, return it.
         }
       }
@@ -468,7 +468,7 @@ class ColorTools {
     // from the real algorithm.
     swatch[100] = swatch[100]!.lighten(14);
     swatch[700] = swatch[700]!.lighten(2);
-    return MaterialAccentColor(color.value, swatch);
+    return MaterialAccentColor(color.value32bit, swatch);
   }
 
   /// A list with both primary and accent color Material color swatches.
@@ -588,7 +588,7 @@ class ColorTools {
   static bool isBlackAndWhiteColor(Color color) {
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -608,7 +608,7 @@ class ColorTools {
   static ColorSwatch<Object> blackAndWhiteSwatch(Color color) {
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch; // Color found in a swatch, return it.
         }
       }
@@ -626,7 +626,7 @@ class ColorTools {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             return true; // Color found in a swatch, return true.
           }
         }
@@ -649,7 +649,7 @@ class ColorTools {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             return swatch; // Color found in a swatch so we return it
           }
         }
@@ -708,7 +708,7 @@ class ColorTools {
     // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${blackAndWhiteNames[swatch]} [$i]';
           } else {
@@ -720,7 +720,7 @@ class ColorTools {
     // If it is a primary color, return name, shade and and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${primaryColorNames[swatch]} [$i]';
           } else {
@@ -733,7 +733,7 @@ class ColorTools {
     // index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColorsNames.keys) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${accentColorsNames[swatch]} [$i]';
           } else {
@@ -748,7 +748,7 @@ class ColorTools {
     if (colorSwatchNameMap != null) {
       for (final ColorSwatch<Object> swatch in colorSwatchNameMap.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             if (withIndex) {
               return '${colorSwatchNameMap[swatch]} [$i]';
             } else {
@@ -765,7 +765,7 @@ class ColorTools {
 
   /// Return the color value as a HexCode string in uppercase.
   static String colorCode(Color color) {
-    return color.value.toRadixString(16).toUpperCase();
+    return color.value32bit.toRadixString(16).toUpperCase();
   }
 
   /// Returns a String name of the color passed to it.
@@ -846,7 +846,7 @@ class _ColorName {
 
   // Error handling show problematic color codes by returning white color.
   factory _ColorName.fromColor(Color color) {
-    final String decodeColor = color.value.toRadixString(16);
+    final String decodeColor = color.value32bit.toRadixString(16);
     final int r = color.red;
     final int g = color.green;
     final int b = color.blue;
@@ -886,7 +886,7 @@ class _ColorName {
 
   HSLColor get _hslColor => HSLColor.fromColor(_color);
   int get getBlue => _color.blue;
-  String get getCode => _color.value.toRadixString(16);
+  String get getCode => _color.value32bit.toRadixString(16);
   int get getGreen => _color.green;
   int get getHue => _hslColor.hue.toInt();
   int get getLightness => (_hslColor.lightness * 100).toInt();

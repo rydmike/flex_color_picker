@@ -30,7 +30,7 @@ class ColorAdapter extends TypeAdapter<Color> {
 
   @override
   void write(BinaryWriter writer, Color obj) {
-    writer.writeInt(obj.value);
+    writer.writeInt(obj.value32bit);
   }
 
   @override

@@ -96,8 +96,8 @@ class ShadeColors extends StatelessWidget {
           for (final Color color
               in getMaterialColorShades(activeSwatch, includeIndex850))
             ColorIndicator(
-              isSelected:
-                  selectedColor == color || selectedColor.value == color.value,
+              isSelected: selectedColor == color ||
+                  selectedColor.value32bit == color.value32bit,
               color: color,
               width: width,
               height: height,

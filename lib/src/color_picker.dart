@@ -702,7 +702,7 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool colorCodeReadOnly;
 
-  /// Set to true to show the int [Color.value] of the selected [color].
+  /// Set to true to show the int [Color] value of the selected [color].
   ///
   /// This is a developer feature, showing the int color value can be
   /// useful during software development. If enabled the value is shown after
@@ -2349,7 +2349,7 @@ class _ColorPickerState extends State<ColorPicker> {
                         const SizedBox(width: 8),
                       if (widget.showColorValue)
                         SelectableText(
-                          _selectedColor.value.toString(),
+                          _selectedColor.value32bit.toString(),
                           style: effectiveCodeStyle,
                         ),
                     ],

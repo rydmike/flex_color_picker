@@ -115,7 +115,7 @@ class _TonalPaletteColorsState extends State<TonalPaletteColors> {
         for (final Color color in tonalColors)
           ColorIndicator(
             isSelected: widget.selectedColor == color ||
-                widget.selectedColor.value == color.value,
+                widget.selectedColor.value32bit == color.value32bit,
             color: color,
             width: widget.width,
             height: widget.height,

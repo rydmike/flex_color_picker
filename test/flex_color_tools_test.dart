@@ -208,7 +208,7 @@ void main() {
             expect(
                 ColorTools.materialNameAndCode(swatch[i]!),
                 '${ColorTools.primaryColorNames[swatch]} [$i] '
-                '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+                '(0x${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
           });
           test(
               'ColorTools.materialNameAndARGBCode '
@@ -218,7 +218,7 @@ void main() {
             expect(
                 ColorTools.materialNameAndARGBCode(swatch[i]!),
                 '${ColorTools.primaryColorNames[swatch]} [$i] '
-                '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+                '(${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
           });
         }
       }
@@ -360,7 +360,7 @@ void main() {
     final MaterialColor refColor =
         ColorTools.createPrimarySwatch(const Color(0xFF132B80));
     test('Test swatch value is provided Color value 0xFF132B80', () {
-      expect(refColor.value, 0xFF132B80);
+      expect(refColor.value32bit, 0xFF132B80);
     });
     test('Test swatch index [50] reference value 0xffb9c0d9', () {
       expect(refColor[50], const Color(0xffb9c0d9));
@@ -563,7 +563,7 @@ void main() {
           expect(
               ColorTools.materialNameAndCode(swatch[i]!),
               '${ColorTools.accentColorsNames[swatch]} [$i] '
-              '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+              '(0x${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
         });
         test(
             'ColorTools.materialNameAndARGBCode '
@@ -573,7 +573,7 @@ void main() {
           expect(
               ColorTools.materialNameAndARGBCode(swatch[i]!),
               '${ColorTools.accentColorsNames[swatch]} [$i] '
-              '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+              '(${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
         });
       }
     }
@@ -630,7 +630,7 @@ void main() {
     final MaterialAccentColor refColor =
         ColorTools.createAccentSwatch(const Color(0xFF03DAC6));
     test('Test swatch value is provided Color value 0xFF03DAC6', () {
-      expect(refColor.value, 0xFF03DAC6);
+      expect(refColor.value32bit, 0xFF03DAC6);
     });
     test('Test swatch index [100] reference value 0xff58eadc', () {
       expect(refColor[100], const Color(0xff58eadc));
@@ -791,7 +791,7 @@ void main() {
           expect(
               ColorTools.materialNameAndCode(swatch[i]!),
               '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
-              '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+              '(0x${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
         });
         test(
             'ColorTools.materialNameAndARGBCode '
@@ -801,7 +801,7 @@ void main() {
           expect(
               ColorTools.materialNameAndARGBCode(swatch[i]!),
               '${ColorTools.blackAndWhiteNames[swatch]} [$i] '
-              '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+              '(${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
         });
       }
     }
@@ -1030,7 +1030,7 @@ void main() {
                 ColorTools.materialNameAndCode(swatch[i]!,
                     colorSwatchNameMap: refCustomColors),
                 '${refCustomColors[swatch]} [$i] '
-                '(0x${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+                '(0x${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
           });
           test(
               'ColorTools.materialNameAndARGBCode '
@@ -1043,7 +1043,7 @@ void main() {
                 ColorTools.materialNameAndARGBCode(swatch[i]!,
                     colorSwatchNameMap: refCustomColors),
                 '${refCustomColors[swatch]} [$i] '
-                '(${swatch[i]!.value.toRadixString(16).toUpperCase()})');
+                '(${swatch[i]!.value32bit.toRadixString(16).toUpperCase()})');
           });
         }
       }
