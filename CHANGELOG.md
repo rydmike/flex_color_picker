@@ -2,13 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
-## 3.7.0 WIP/DRAFT
+## 3.7.0
 
-**Dec 12, 2024**
+**Dec 13, 2024**
 
 **PACKAGE**
 
-* First prep for Flutter 3.27.0 update with new Color features that supports wide gamut. In total, 243 deprecations will have to be replaced with the new Color features.
+* Updated the package to support and require min Flutter v3.27.0.
+* Fixed all new analyzer lint warnings and removed usage of all deprecated `Color` properties.
+  * While the package now uses the updated `Color` class with support for wide gamut, the color inputs and outputs are still 32-bit RGB color values. A future update may add support for more and new color formats.
 
 
 ## 3.6.0 
