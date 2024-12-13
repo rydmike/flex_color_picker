@@ -1469,7 +1469,7 @@ class _ColorPickerState extends State<ColorPicker> {
     _selectedColor = widget.color.withAlpha(0xFF);
     _tappedColor = widget.color;
     // Opacity is captured in _opacity if enabled.
-    _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+    _opacity = widget.enableOpacity ? widget.color.a : 1;
     // Picker labels, use english fallbacks if none provided.
     _pickerLabels = <ColorPickerType, String>{
       ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ??
@@ -1558,7 +1558,7 @@ class _ColorPickerState extends State<ColorPicker> {
     bool shouldFindPickerAndSwatch = false;
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
-      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+      _opacity = widget.enableOpacity ? widget.color.a : 1;
       if (_debug) {
         debugPrint('didUpdateWidget changed: enableOpacity = '
             '${widget.enableOpacity == oldWidget.enableOpacity}'
@@ -1572,7 +1572,7 @@ class _ColorPickerState extends State<ColorPicker> {
             'color=${widget.color} selectedColor=$_selectedColor');
       }
       _selectedColor = widget.color.withAlpha(0xFF);
-      _opacity = widget.enableOpacity ? widget.color.opacity : 1;
+      _opacity = widget.enableOpacity ? widget.color.a : 1;
       // Make a swatch too be to find it on wheel, if color is there.
       _typeToSwatchMap[ColorPickerType.wheel] = <ColorSwatch<Object>>[
         ColorTools.createPrimarySwatch(_selectedColor),
@@ -2406,7 +2406,7 @@ class _ColorPickerState extends State<ColorPicker> {
     // uses this flag. If we use Recent colors, we should also extract the
     // opacity from the selected color, and set it as the current opacity.
     if (findPicker) {
-      _opacity = color.opacity;
+      _opacity = color.a;
     }
     // Call start callback with current selectedColor before change.
     if (widget.enableOpacity) {
@@ -2521,7 +2521,7 @@ class _ColorPickerState extends State<ColorPicker> {
         // We always remove any alpha from pasted colors.
         _selectedColor = clipColor.withAlpha(0xFF);
         // If opacity is enabled, we capture the opacity from the pasted color.
-        _opacity = widget.enableOpacity ? clipColor.opacity : 1;
+        _opacity = widget.enableOpacity ? clipColor.a : 1;
         _addToRecentColors(_selectedColor.withValues(alpha: _opacity));
         // Color changed outside wheel and edit field, a new shade or color was
         // selected outside the wheel and edit, they should update!

@@ -175,10 +175,10 @@ class AppTheme {
     final bool isLightBackground =
         ThemeData.estimateBrightnessForColor(background) == Brightness.light;
     return isLight
-        ? (isLightBackground || background.opacity < 0.5)
+        ? (isLightBackground || background.a < 0.5)
             ? Colors.black
             : Colors.white
-        : (!isLightBackground || background.opacity < 0.5)
+        : (!isLightBackground || background.a < 0.5)
             ? Colors.white
             : Colors.black;
   }

@@ -199,10 +199,10 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
         ThemeData.estimateBrightnessForColor(unfocusedBackground) ==
             Brightness.light;
     final Color textColor = isLight
-        ? (isLightBackground || unfocusedBackground.opacity < 0.5)
+        ? (isLightBackground || unfocusedBackground.a < 0.5)
             ? Colors.black
             : Colors.white
-        : (!isLightBackground || unfocusedBackground.opacity < 0.5)
+        : (!isLightBackground || unfocusedBackground.a < 0.5)
             ? Colors.white
             : Colors.black;
 
