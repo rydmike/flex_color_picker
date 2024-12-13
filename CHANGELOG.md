@@ -10,8 +10,11 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 * Updated the package to support and require min Flutter v3.27.0.
 * Fixed all new analyzer lint warnings and removed usage of all deprecated `Color` properties.
-  * While the package now uses the updated `Color` class with support for wide gamut, the color inputs and outputs are still 32-bit RGB color values. A future update may add support for more and new color formats.
+  * While the package now uses the updated `Color` class with support for wide color gamut, the color inputs and outputs are still 32-bit RGB color values. A future feature update may add support for more and new color formats.
 
+**KNOWN ISSUES**
+
+* There style breaking issue on the padding around the custom opacity `Slider`. The thumb also jumps towards the center when pressed. These issues did not exist in Flutter 3.24.x and earlier versions. It seems like the issue cannot be completely solved in custom Slider implementation. The extra padding and thumb jumping towards the center seem related to `Slider` changes introduced in Flutter 3.27.0. Those changes were made in preparation for releasing support for the updated Material-3 slider styles. For more information, see issue https://github.com/rydmike/flex_color_picker/issues/90. A fix in Flutter SDK may be needed to solve this issue.   
 
 ## 3.6.0 
 
