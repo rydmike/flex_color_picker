@@ -67,7 +67,7 @@ void showAppAboutDialog(BuildContext context) {
               ),
               TextSpan(
                 style: footerStyle,
-                text: 'Live Web demo built with ${App.flutterVersion}, '
+                text: 'Built with Flutter ${App.flutterVersion}, '
                     'using ${App.packageVersion}\n\n',
               ),
             ],
