@@ -4,7 +4,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 ## 3.7.0
 
-**Dec 28, 2024**
+**Dec 29, 2024**
 
 **PACKAGE**
 
