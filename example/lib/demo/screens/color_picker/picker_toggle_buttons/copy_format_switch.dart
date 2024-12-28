@@ -23,9 +23,8 @@ class CopyFormatSwitch extends ConsumerWidget {
       tooltip: 'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(copyFormat:\n'
           '    $copyFormat))',
-      child: ListTile(
-        title: const Text('Copy format'),
-        trailing: ToggleButtons(
+      child: Center(
+        child: ToggleButtons(
           isSelected: isSelected,
           onPressed: (int newIndex) {
             ref.read(copyFormatPod.notifier).state =

@@ -1155,7 +1155,7 @@ class FlexAppBarStyling extends StatelessWidget {
                     effectiveTopPadding -
                     (floatAppBar ? floatPadding.bottom : 0),
                 decoration: BoxDecoration(
-                  color: gradient ? null : color.withOpacity(opacity),
+                  color: gradient ? null : color.withValues(alpha: opacity),
                   borderRadius: effectiveBorderRadius,
                   border: effectiveBorder,
                   gradient: gradient
@@ -1164,13 +1164,13 @@ class FlexAppBarStyling extends StatelessWidget {
                           end: AlignmentDirectional.centerEnd,
                           colors: <Color>[
                             if (reverseGradient)
-                              endColor.withOpacity(opacity)
+                              endColor.withValues(alpha: opacity)
                             else
-                              color.withOpacity(startOpacity),
+                              color.withValues(alpha: startOpacity),
                             if (reverseGradient)
-                              color.withOpacity(startOpacity)
+                              color.withValues(alpha: startOpacity)
                             else
-                              endColor.withOpacity(opacity),
+                              endColor.withValues(alpha: opacity),
                           ],
                         )
                       : null,

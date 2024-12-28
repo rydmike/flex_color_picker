@@ -40,21 +40,21 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        expect(resultColor.value, Colors.red.value);
+        expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        expect(resultColor.value, Colors.purple[100]!.value);
+        expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
         await $('Accent').tap();
         await $(ColorIndicator).tap();
-        expect(resultColor.value, Colors.redAccent.value);
+        expect(resultColor.value32bit, Colors.redAccent.value32bit);
         await $(ColorIndicator).at(5).tap();
-        expect(resultColor.value, Colors.blueAccent.value);
+        expect(resultColor.value32bit, Colors.blueAccent.value32bit);
         await $(ColorIndicator).at(18).tap();
-        expect(resultColor.value, Colors.blueAccent[400]!.value);
+        expect(resultColor.value32bit, Colors.blueAccent[400]!.value32bit);
       },
     );
 
@@ -191,61 +191,65 @@ void main() {
         expect(find.text('Primary & Accent'), findsOneWidget);
         await $('Primary & Accent').tap();
         await $(ColorIndicator).at(1).tap();
-        expect(startColor.value, Colors.red.value);
-        expect(endColor.value, Colors.redAccent.value);
-        expect(resultColor.value, Colors.redAccent.value);
+        expect(startColor.value32bit, Colors.red.value32bit);
+        expect(endColor.value32bit, Colors.redAccent.value32bit);
+        expect(resultColor.value32bit, Colors.redAccent.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value)), true);
+        expect(recentColors.contains(Color(Colors.red.value32bit)), true);
         await $(ColorIndicator).at(34).tap();
-        expect(startColor.value, Colors.redAccent.value);
-        expect(endColor.value, Colors.grey.value);
-        expect(resultColor.value, Colors.grey.value);
+        expect(startColor.value32bit, Colors.redAccent.value32bit);
+        expect(endColor.value32bit, Colors.grey.value32bit);
+        expect(resultColor.value32bit, Colors.grey.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value)), true);
-        expect(recentColors.contains(Color(Colors.redAccent.value)), true);
+        expect(recentColors.contains(Color(Colors.red.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
         await $(ColorIndicator).at(44).tap();
-        expect(startColor.value, Colors.grey.value);
-        expect(endColor.value, Colors.grey[850]!.value);
-        expect(resultColor.value, Colors.grey[850]!.value);
+        expect(startColor.value32bit, Colors.grey.value32bit);
+        expect(endColor.value32bit, Colors.grey[850]!.value32bit);
+        expect(resultColor.value32bit, Colors.grey[850]!.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value)), true);
-        expect(recentColors.contains(Color(Colors.redAccent.value)), true);
-        expect(recentColors.contains(Color(Colors.grey.value)), true);
+        expect(recentColors.contains(Color(Colors.red.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.grey.value32bit)), true);
 
         // Test black & white color picker.
         expect(find.text('Black & White'), findsOneWidget);
         await $('Black & White').tap();
         // Black shade color test
         await $(ColorIndicator).at(8).tap();
-        expect(startColor.value, Colors.grey[850]!.value);
-        expect(endColor.value, ColorTools.blackShade[600]!.value);
-        expect(resultColor.value, ColorTools.blackShade[600]!.value);
+        expect(startColor.value32bit, Colors.grey[850]!.value32bit);
+        expect(endColor.value32bit, ColorTools.blackShade[600]!.value32bit);
+        expect(resultColor.value32bit, ColorTools.blackShade[600]!.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value)), true);
-        expect(recentColors.contains(Color(Colors.redAccent.value)), true);
-        expect(recentColors.contains(Color(Colors.grey.value)), true);
-        expect(recentColors.contains(Color(Colors.grey[850]!.value)), true);
+        expect(recentColors.contains(Color(Colors.red.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.grey.value32bit)), true);
+        expect(
+            recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
         // White shade color test
         await $(ColorIndicator).at(1).tap();
-        expect(resultColor.value, ColorTools.whiteShade[500]!.value);
+        expect(resultColor.value32bit, ColorTools.whiteShade[500]!.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value)),
+        expect(recentColors.contains(Color(Colors.red.value32bit)),
             false); // 4 max, no red
-        expect(recentColors.contains(Color(Colors.redAccent.value)), true);
-        expect(recentColors.contains(Color(Colors.grey.value)), true);
-        expect(recentColors.contains(Color(Colors.grey[850]!.value)), true);
-        expect(recentColors.contains(Color(ColorTools.blackShade[600]!.value)),
+        expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.grey.value32bit)), true);
+        expect(
+            recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
+        expect(
+            recentColors
+                .contains(Color(ColorTools.blackShade[600]!.value32bit)),
             true);
         await $(ColorIndicator).at(2).tap();
         expect(resultColor, Colors.white);
         await $(ColorIndicator).at(11).tap();
-        expect(resultColor.value, ColorTools.whiteShade[900]!.value);
+        expect(resultColor.value32bit, ColorTools.whiteShade[900]!.value32bit);
 
         // Test Custom color picker.
         expect(find.text('Custom'), findsOneWidget);
         await $('Custom').tap();
         await $(ColorIndicator).at(1).tap();
-        expect(startColor.value, ColorTools.whiteShade[900]!.value);
+        expect(startColor.value32bit, ColorTools.whiteShade[900]!.value32bit);
         expect(endColor, const Color(0xFF3700B3));
         expect(resultColor, const Color(0xFF3700B3));
 
@@ -333,7 +337,7 @@ void main() {
         // Go to another tab select a new color
         await $('Primary & Accent').tap();
         await $(ColorIndicator).at(1).tap();
-        expect(resultColor.value, Colors.redAccent.value);
+        expect(resultColor.value32bit, Colors.redAccent.value32bit);
         // Copy in the redAccent color
         await $(ColorPickerToolbar).$(IconButton).at(0).tap(
               settlePolicy: SettlePolicy.trySettle,
@@ -342,7 +346,7 @@ void main() {
             );
         // Select pink color
         await $(ColorIndicator).at(2).tap();
-        expect(resultColor.value, Colors.pink.value);
+        expect(resultColor.value32bit, Colors.pink.value32bit);
         // Paste in the red accent value color
         await $(ColorPickerToolbar).$(IconButton).at(1).tap(
               settlePolicy: SettlePolicy.trySettle,
@@ -350,7 +354,8 @@ void main() {
               settleTimeout: const Duration(seconds: 2),
             );
         // We pasted the redAccent color, we copied earlier back
-        expect(Color(resultColor.value), Color(Colors.redAccent.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.redAccent.value32bit));
       },
     );
 
@@ -426,7 +431,7 @@ void main() {
         await $('Primary').tap();
         // Tap a Material red shade color
         await $(ColorIndicator).at(22).tap();
-        expect(resultColor.value, Colors.red[300]!.value);
+        expect(resultColor.value32bit, Colors.red[300]!.value32bit);
       },
     );
 
@@ -563,24 +568,25 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        // expect(resultColor.value, Colors.purple[100]!.value);
+        // expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
         await $('Accent').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.redAccent.value);
+        // expect(resultColor.value32bit, Colors.redAccent.value32bit);
         await $(ColorIndicator).at(5).tap();
-        // expect(resultColor.value, Colors.blueAccent.value);
+        // expect(resultColor.value32bit, Colors.blueAccent.value32bit);
         await $(ColorIndicator).at(18).tap();
 
         expect(find.byType(TextButton), findsExactly(2));
         await $(TextButton).at(1).tap();
-        expect(Color(resultColor.value), Color(Colors.blueAccent[400]!.value));
+        expect(Color(resultColor.value32bit),
+            Color(Colors.blueAccent[400]!.value32bit));
         const Color(0xff2979ff);
         const Color(0xffff9800);
 
@@ -588,21 +594,21 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         expect(find.text('Cancel'), findsOneWidget);
         await $('Cancel').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
       },
     );
 
@@ -669,24 +675,25 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        // expect(resultColor.value, Colors.purple[100]!.value);
+        // expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
         await $('Accent').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.redAccent.value);
+        // expect(resultColor.value32bit, Colors.redAccent.value32bit);
         await $(ColorIndicator).at(5).tap();
-        // expect(resultColor.value, Colors.blueAccent.value);
+        // expect(resultColor.value32bit, Colors.blueAccent.value32bit);
         await $(ColorIndicator).at(18).tap();
 
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(Color(resultColor.value), Color(Colors.blueAccent[400]!.value));
+        expect(Color(resultColor.value32bit),
+            Color(Colors.blueAccent[400]!.value32bit));
         const Color(0xff2979ff);
         const Color(0xffff9800);
 
@@ -694,21 +701,21 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         expect(find.text('Cancel'), findsOneWidget);
         await $('Cancel').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
       },
     );
 
@@ -784,21 +791,21 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('USE'), findsOneWidget);
         await $('USE').tap();
-        expect(Color(resultColor.value), Color(Colors.purple.value));
+        expect(Color(resultColor.value32bit), Color(Colors.purple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         expect(find.text('CLOSE'), findsOneWidget);
         await $('CLOSE').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
       },
     );
 
@@ -876,21 +883,21 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('USE'), findsOneWidget);
         await $('USE').tap();
-        expect(Color(resultColor.value), Color(Colors.purple.value));
+        expect(Color(resultColor.value32bit), Color(Colors.purple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         expect(find.text('CLOSE'), findsOneWidget);
         await $('CLOSE').tap();
-        expect(resultColor.value, Colors.purple.value);
+        expect(resultColor.value32bit, Colors.purple.value32bit);
       },
     );
 
@@ -966,12 +973,12 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('USE'), findsOneWidget);
         await $('USE').tap();
-        expect(Color(resultColor.value), Color(Colors.purple.value));
+        expect(Color(resultColor.value32bit), Color(Colors.purple.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -985,14 +992,14 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is OK, since close is NOT last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.red.value);
+        expect(resultColor.value32bit, Colors.red.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1000,7 +1007,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is Close, since close is NOT last
@@ -1008,7 +1015,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(resultColor.value, Colors.red.value);
+        expect(resultColor.value32bit, Colors.red.value32bit);
       },
     );
 
@@ -1086,12 +1093,12 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(2).tap();
-        // expect(resultColor.value, Colors.purple.value);
+        // expect(resultColor.value32bit, Colors.purple.value32bit);
         expect(find.text('USE'), findsOneWidget);
         await $('USE').tap();
-        expect(Color(resultColor.value), Color(Colors.purple.value));
+        expect(Color(resultColor.value32bit), Color(Colors.purple.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1105,14 +1112,14 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is OK, since close is NOT last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.red.value);
+        expect(resultColor.value32bit, Colors.red.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1120,7 +1127,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is Close, since close is NOT last
@@ -1128,7 +1135,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(resultColor.value, Colors.red.value);
+        expect(resultColor.value32bit, Colors.red.value32bit);
       },
     );
 
@@ -1207,12 +1214,13 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(6).tap();
-        // expect(resultColor.value, Colors.lightBlue.value);
+        // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('Do'), findsOneWidget);
         await $('Do').tap();
-        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1226,14 +1234,14 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is Close, since close is last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.lightBlue.value);
+        expect(resultColor.value32bit, Colors.lightBlue.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1241,7 +1249,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is OK, since close is NOT last
@@ -1249,7 +1257,8 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
         // Color(0xff673ab7);
       },
     );
@@ -1329,12 +1338,13 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(6).tap();
-        // expect(resultColor.value, Colors.lightBlue.value);
+        // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('Do'), findsOneWidget);
         await $('Do').tap();
-        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1348,14 +1358,14 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is Close, since close is last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.lightBlue.value);
+        expect(resultColor.value32bit, Colors.lightBlue.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1363,7 +1373,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is OK, since close is NOT last
@@ -1371,7 +1381,8 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
         // Color(0xff673ab7);
       },
     );
@@ -1465,25 +1476,26 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(6).tap();
-        // expect(resultColor.value, Colors.lightBlue.value);
+        // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is Close, since close is last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.lightBlue.value);
+        expect(resultColor.value32bit, Colors.lightBlue.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1497,7 +1509,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is OK, since close is NOT last
@@ -1505,7 +1517,8 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1519,7 +1532,7 @@ void main() {
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
         // We get a purple color from smack in the middle
-        expect(Color(resultColor.value), const Color(0xff574080));
+        expect(Color(resultColor.value32bit), const Color(0xff574080));
       },
     );
 
@@ -1614,25 +1627,26 @@ void main() {
         expect(find.text('Primary'), findsOneWidget);
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         await $(ColorIndicator).at(6).tap();
-        // expect(resultColor.value, Colors.lightBlue.value);
+        // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(Color(resultColor.value), Color(Colors.lightBlue.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Open dialog again
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).tap();
-        // expect(resultColor.value, Colors.red.value);
+        // expect(resultColor.value32bit, Colors.red.value32bit);
         // Find the ToolBar
         expect(find.byType(ColorPickerToolbar), findsOneWidget);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 4th button is Close, since close is last
         await $(ColorPickerToolbar).$(IconButton).at(3).tap();
-        expect(resultColor.value, Colors.lightBlue.value);
+        expect(resultColor.value32bit, Colors.lightBlue.value32bit);
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1646,7 +1660,7 @@ void main() {
         await $('Open').tap();
         await $('Primary').tap();
         await $(ColorIndicator).at(3).tap();
-        // expect(resultColor.value, Colors.deepPurple.value);
+        // expect(resultColor.value32bit, Colors.deepPurple.value32bit);
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Close via toolbar, 3rd button is OK, since close is NOT last
@@ -1654,7 +1668,8 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(Color(resultColor.value), Color(Colors.deepPurple.value));
+        expect(
+            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1668,7 +1683,7 @@ void main() {
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
         // We get a purple color from smack in the middle
-        expect(Color(resultColor.value), const Color(0xff574080));
+        expect(Color(resultColor.value32bit), const Color(0xff574080));
       },
     );
 

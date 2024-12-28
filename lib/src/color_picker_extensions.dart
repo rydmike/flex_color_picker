@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'color_tools.dart';
+
 /// Extensions on non nullable [Color] to return it's color value as strings.
 ///
 /// The color extension also include getting a color's RGB hex code as a string
@@ -10,12 +12,16 @@ import 'package:flutter/material.dart';
 extension FlexPickerNoNullColorExtensions on Color {
   /// Return color's uppercase RGB hex string, including alpha channel.
   String get hexAlpha {
-    return value.toRadixString(16).toUpperCase().padLeft(8, '0');
+    return value32bit.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
   /// Return color's uppercase RGB hex string, excluding alpha channel.
   String get hex {
-    return value.toRadixString(16).toUpperCase().padLeft(8, '0').substring(2);
+    return value32bit
+        .toRadixString(16)
+        .toUpperCase()
+        .padLeft(8, '0')
+        .substring(2);
   }
 }
 

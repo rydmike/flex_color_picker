@@ -22,7 +22,7 @@ import 'functions/picker_functions.dart';
 /// setup a function that modifies them as needed in your app,
 /// something simple like this may be all you need:
 ///
-/// ```
+/// ```dart
 /// void main() {
 ///   translateColorNames();
 ///   runApp(const ColorPickerDemo());
@@ -193,7 +193,7 @@ class ColorTools {
   static bool isPrimaryColor(Color color) {
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -212,7 +212,7 @@ class ColorTools {
     // in any swatch/ use case that might be used. This covers normal primary,
     // primaries with the 850 index, and via primary also accent index.
     for (final int i in _indexPrimaryWith850) {
-      if (swatch[i] == color || swatch[i]?.value == color.value) {
+      if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
         return true;
       }
     }
@@ -231,7 +231,7 @@ class ColorTools {
   static MaterialColor primarySwatch(Color color) {
     for (final ColorSwatch<Object> swatch in primaryColors) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch as MaterialColor; // Color found in a swatch, return it.
         }
       }
@@ -280,10 +280,10 @@ class ColorTools {
   /// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=6002ee
   static MaterialColor createPrimarySwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int a = color.alpha;
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final int a = color.alpha8bit;
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
     for (final int strength in _indexPrimary) {
       final double ds = 0.5 - strength / 1000;
       swatch[strength] = Color.fromARGB(
@@ -303,7 +303,7 @@ class ColorTools {
     swatch[700] = swatch[700]!.darken(2);
     swatch[800] = swatch[800]!.darken(3);
     swatch[900] = swatch[900]!.darken(4);
-    return MaterialColor(color.value, swatch);
+    return MaterialColor(color.value32bit, swatch);
   }
 
   /// List of all the standard Material accent color swatches.
@@ -410,7 +410,7 @@ class ColorTools {
   static bool isAccentColor(Color color) {
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -431,7 +431,7 @@ class ColorTools {
   static MaterialAccentColor accentSwatch(Color color) {
     for (final ColorSwatch<Object> swatch in accentColors) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch as MaterialAccentColor; // Found in a swatch, return it.
         }
       }
@@ -452,10 +452,10 @@ class ColorTools {
   /// for higher indexes.
   static MaterialAccentColor createAccentSwatch(Color color) {
     final Map<int, Color> swatch = <int, Color>{};
-    final int a = color.alpha;
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final int a = color.alpha8bit;
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
     for (final int strength in _indexAccent) {
       final double ds = 0.2 - strength / 1000;
       swatch[strength] = Color.fromARGB(
@@ -468,7 +468,7 @@ class ColorTools {
     // from the real algorithm.
     swatch[100] = swatch[100]!.lighten(14);
     swatch[700] = swatch[700]!.lighten(2);
-    return MaterialAccentColor(color.value, swatch);
+    return MaterialAccentColor(color.value32bit, swatch);
   }
 
   /// A list with both primary and accent color Material color swatches.
@@ -588,7 +588,7 @@ class ColorTools {
   static bool isBlackAndWhiteColor(Color color) {
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return true; // Color found in a swatch, return true.
         }
       }
@@ -608,7 +608,7 @@ class ColorTools {
   static ColorSwatch<Object> blackAndWhiteSwatch(Color color) {
     for (final ColorSwatch<Object> swatch in blackAndWhite) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           return swatch; // Color found in a swatch, return it.
         }
       }
@@ -626,7 +626,7 @@ class ColorTools {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             return true; // Color found in a swatch, return true.
           }
         }
@@ -649,7 +649,7 @@ class ColorTools {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             return swatch; // Color found in a swatch so we return it
           }
         }
@@ -708,7 +708,7 @@ class ColorTools {
     // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
       for (final int i in _indexPrimary) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${blackAndWhiteNames[swatch]} [$i]';
           } else {
@@ -720,7 +720,7 @@ class ColorTools {
     // If it is a primary color, return name, shade and and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
       for (final int i in _indexPrimaryWith850) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${primaryColorNames[swatch]} [$i]';
           } else {
@@ -733,7 +733,7 @@ class ColorTools {
     // index = <int>[100, 200, 400, 700];
     for (final ColorSwatch<Object> swatch in accentColorsNames.keys) {
       for (final int i in _indexAccent) {
-        if (swatch[i] == color || swatch[i]?.value == color.value) {
+        if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
           if (withIndex) {
             return '${accentColorsNames[swatch]} [$i]';
           } else {
@@ -748,7 +748,7 @@ class ColorTools {
     if (colorSwatchNameMap != null) {
       for (final ColorSwatch<Object> swatch in colorSwatchNameMap.keys) {
         for (final int i in _indexPrimary) {
-          if (swatch[i] == color || swatch[i]?.value == color.value) {
+          if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
             if (withIndex) {
               return '${colorSwatchNameMap[swatch]} [$i]';
             } else {
@@ -765,7 +765,7 @@ class ColorTools {
 
   /// Return the color value as a HexCode string in uppercase.
   static String colorCode(Color color) {
-    return color.value.toRadixString(16).toUpperCase();
+    return color.value32bit.toRadixString(16).toUpperCase();
   }
 
   /// Returns a String name of the color passed to it.
@@ -782,6 +782,59 @@ class ColorTools {
   /// about it can be found here http://chir.ag/projects/ntc.
   static String nameThatColor(Color color) =>
       _ColorName.fromColor(color).getName;
+}
+
+/// Public extensions on [Color].
+extension FlexColorPickerColorExtensions on Color {
+  /// A 32 bit value representing this color.
+  ///
+  /// This feature brings back the Color.value API in a way that is not and
+  /// will not be deprecated.
+  ///
+  /// The bits are assigned as follows:
+  ///
+  /// * Bits 24-31 are the alpha value.
+  /// * Bits 16-23 are the red value.
+  /// * Bits 8-15 are the green value.
+  /// * Bits 0-7 are the blue value.
+  int get value32bit {
+    return _floatToInt8(a) << 24 |
+        _floatToInt8(r) << 16 |
+        _floatToInt8(g) << 8 |
+        _floatToInt8(b) << 0;
+  }
+
+  /// The alpha channel of this color in an 8 bit value.
+  ///
+  /// A value of 0 means this color is fully transparent. A value of 255 means
+  /// this color is fully opaque.
+  ///
+  /// This feature brings back the Color.alpha API in a way that is not and
+  /// will not be deprecated.
+  int get alpha8bit => (0xff000000 & value32bit) >> 24;
+
+  /// The red channel of this color in an 8 bit value.
+  ///
+  /// This feature brings back the Color.red API in a way that is not and
+  /// will not be deprecated.
+  int get red8bit => (0x00ff0000 & value32bit) >> 16;
+
+  /// The green channel of this color in an 8 bit value.
+  ///
+  /// This feature brings back the Color.green API in a way that is not and
+  /// will not be deprecated.
+  int get green8bit => (0x0000ff00 & value32bit) >> 8;
+
+  /// The blue channel of this color in an 8 bit value.
+  ///
+  /// This feature brings back the Color.blue API in a way that is not and
+  /// will not be deprecated.
+  int get blue8bit => (0x000000ff & value32bit) >> 0;
+
+  // Convert float to 8 bit integer.
+  int _floatToInt8(double x) {
+    return (x * 255.0).round() & 0xff;
+  }
 }
 
 // Private class for storing and getting the name of a given color.
@@ -802,10 +855,10 @@ class _ColorName {
 
   // Error handling show problematic color codes by returning white color.
   factory _ColorName.fromColor(Color color) {
-    final String decodeColor = color.value.toRadixString(16);
-    final int r = color.red;
-    final int g = color.green;
-    final int b = color.blue;
+    final String decodeColor = color.value32bit.toRadixString(16);
+    final int r = color.red8bit;
+    final int g = color.green8bit;
+    final int b = color.blue8bit;
 
     final HSLColor hsl = HSLColor.fromColor(color);
     final int h = hsl.hue.toInt();
@@ -841,13 +894,13 @@ class _ColorName {
   final String _name;
 
   HSLColor get _hslColor => HSLColor.fromColor(_color);
-  int get getBlue => _color.blue;
-  String get getCode => _color.value.toRadixString(16);
-  int get getGreen => _color.green;
+  int get getBlue => _color.blue8bit;
+  String get getCode => _color.value32bit.toRadixString(16);
+  int get getGreen => _color.green8bit;
   int get getHue => _hslColor.hue.toInt();
   int get getLightness => (_hslColor.lightness * 100).toInt();
   String get getName => _name;
-  int get getRed => _color.red;
+  int get getRed => _color.red8bit;
   int get getSaturation => (_hslColor.saturation * 100).toInt();
 
   // A const list of 1566 named colors

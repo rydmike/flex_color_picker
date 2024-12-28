@@ -195,6 +195,7 @@ class _Column1 extends StatelessWidget {
               'during change and when change ended.'),
         ),
         const Divider(),
+        const ListTile(title: Text('Copy format')),
         const CopyFormatSwitch(),
         const SizedBox(height: 8),
         const ListTile(
