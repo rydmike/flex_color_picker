@@ -27,7 +27,7 @@ class App {
           ? ', JS'
           : ', native VM';
 
-  static const String flutterVersion = 'stable 3.27.0 (canvaskit$buildType)';
+  static const String flutterVersion = 'stable 3.27.1 (canvaskit$buildType)';
   static const String copyright = '© 2020 - 2024';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
