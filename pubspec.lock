@@ -79,13 +79,13 @@ packages:
     source: hosted
     version: "3.1.1"
   coverage:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: coverage
-      sha256: c1fb2dce3c0085f39dc72668e85f8e0210ec7de05345821ff58530567df345a5
+      sha256: e3493833ea012784c740e341952298f1cc77f1f01b1bbc3eb4eecf6984fb7f43
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.2"
+    version: "1.11.1"
   crypto:
     dependency: transitive
     description:
@@ -94,6 +94,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.5"
+  dispose_scope:
+    dependency: transitive
+    description:
+      name: dispose_scope
+      sha256: "48ec38ca2631c53c4f8fa96b294c801e55c335db5e3fb9f82cede150cfe5a2af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -114,10 +130,10 @@ packages:
     dependency: "direct main"
     description:
       name: flex_seed_scheme
-      sha256: ffd0b93ed7303ccb65c3be709c8d0cada277eadba9ec3193f2267942ea6d0c79
+      sha256: d3ba3c5c92d2d79d45e94b4c6c71d01fac3c15017da1545880c53864da5dfeb0
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.0"
+    version: "3.5.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -176,6 +192,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.1"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -276,10 +300,18 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol_finders
-      sha256: "6bf2c3093fbccd02f80f73fafc1bd021d76410cbab6e329be220b5e3bc58f072"
+      sha256: "5a1e2b4c6636e89645fc596d68224cfe6cca28e11c855b98dd0df9bed0d80405"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.6.0"
+  patrol_log:
+    dependency: transitive
+    description:
+      name: patrol_log
+      sha256: ad5d7b759d16071ca16aa9b27eb4f106ce23079792d4312941874dbc33e795cb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   pool:
     dependency: transitive
     description:
@@ -486,5 +518,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.4.0 <4.0.0"
+  dart: ">=3.5.0 <4.0.0"
   flutter: ">=3.27.0"

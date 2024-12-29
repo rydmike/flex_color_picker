@@ -30,16 +30,17 @@ environment:
 dependencies:
   # FlexSeedScheme package, by Mike Rydstrom, rydmike.com (@rydmike).
   # https://pub.dev/packages/flex_seed_scheme
-  flex_seed_scheme: ^3.4.0
+  flex_seed_scheme: ^3.5.0
 
   flutter:
     sdk: flutter
 
 dev_dependencies:
   collection:
+  coverage: ^1.11.1
   flutter_test:
     sdk: flutter
-  patrol_finders: 2.1.2
+  patrol_finders: 2.6.0
   test:
 
 flutter:
