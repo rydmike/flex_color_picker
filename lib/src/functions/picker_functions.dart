@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flex_seed_scheme/flex_seed_scheme.dart';
 import 'package:flutter/material.dart';
 
-import '../color_tools.dart';
 import '../models/color_picker_type.dart';
 
 /// These functions are not library exposed, they are private to the library.
