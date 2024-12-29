@@ -785,6 +785,11 @@ class ColorTools {
 }
 
 /// Public extensions on [Color].
+///
+/// Convenience [Color] sRGB extensions that can be used as none deprecated
+/// replacements for `alpha`, `red`, `green`, `blue` and `value` they are
+/// called [alpha8bit], [red8bit], [green8bit], [blue8bit] and [value32bit].
+/// FlexSeedScheme uses them to avoid using the deprecated color properties.
 extension FlexColorPickerColorExtensions on Color {
   /// A 32 bit value representing this color.
   ///
