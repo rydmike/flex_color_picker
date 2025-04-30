@@ -71,14 +71,14 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: EXAMPLE WEB release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/main.dart
+        run: cd example && flutter build web --release --target=lib/main.dart
 
       # Web Build and deploy
       - name: WEB EXAMPLE START BUILD - Flutter clean before build
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
 
       - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4

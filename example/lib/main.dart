@@ -150,8 +150,14 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     context,
                     // We use the dialogSelectColor, as its starting color.
                     dialogSelectColor,
-                    title: Text('ColorPicker',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    // If no style is specified, the default is used, which
+                    // is Theme.of(context).textTheme.titleLarge for the title
+                    // as in a Material 3 default for an AppBar.
+                    title: const Text(
+                      'ColorPicker with very long title',
+                      // Use another TextStyle if you so prefer:
+                      // style: Theme.of(context).textTheme.titleSmall,
+                    ),
                     width: 40,
                     height: 40,
                     spacing: 0,
@@ -191,7 +197,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     },
                     transitionDuration: const Duration(milliseconds: 400),
                     constraints: const BoxConstraints(
-                        minHeight: 480, minWidth: 320, maxWidth: 320),
+                        minHeight: 480, minWidth: 550, maxWidth: 550),
                   );
                   // We update the dialogSelectColor, to the returned result
                   // color. If the dialog was dismissed it actually returns
