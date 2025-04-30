@@ -102,12 +102,12 @@ class ColorPickerToolbar extends StatelessWidget {
       data: theme.copyWith(iconTheme: effectiveIconTheme),
       child: Row(
         children: <Widget>[
-          if (title != null) title!,
-          if (title != null ||
-              onCopy != null ||
-              onPaste != null ||
-              onOk != null ||
-              onClose != null)
+          if (title != null) Expanded(child: title!),
+          if (title == null &&
+              (onCopy != null ||
+                  onPaste != null ||
+                  onOk != null ||
+                  onClose != null))
             const Spacer(),
           if (onCopy != null)
             IconButton(

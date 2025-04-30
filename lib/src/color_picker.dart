@@ -527,6 +527,13 @@ class ColorPicker extends StatefulWidget {
   /// This widget can be used instead of [heading] or with it, depends on design
   /// need.
   ///
+  /// If no [TextStyle] is provided in the [Text] widget, then it uses
+  /// Theme.of(context).textTheme.titleLarge as default, same as the default
+  /// style in a Material3 app bar title.
+  ///
+  /// If the [Text] widget does not fit in the available space, it will be
+  /// truncated with an ellipsis.
+  ///
   /// The title widget is like an app bar title in the sense that at
   /// the end of it, 1 to 4 actions buttons may also be present for copy, paste,
   /// select-close and cancel-close. The select-close and cancel-close actions
@@ -1828,17 +1835,18 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     // The effective used text style, if null was passed in we assign defaults.
     final TextStyle effectiveMaterialNameStyle =
-        (widget.materialNameTextStyle ??
-                Theme.of(context).textTheme.bodyMedium) ??
+        (widget.materialNameTextStyle ?? theme.textTheme.bodyMedium) ??
             const TextStyle();
     final TextStyle effectiveGenericNameStyle =
-        (widget.colorNameTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
+        (widget.colorNameTextStyle ?? theme.textTheme.bodyMedium) ??
             const TextStyle();
     // Set the default integer code value text style to bodyMedium if not given.
     final TextStyle effectiveCodeStyle =
-        (widget.colorCodeTextStyle ?? Theme.of(context).textTheme.bodyMedium) ??
+        (widget.colorCodeTextStyle ?? theme.textTheme.bodyMedium) ??
             const TextStyle();
     // The logic below is used to determine if we will have a context menu
     // present at all in the Widget tree.
@@ -1858,6 +1866,32 @@ class _ColorPickerState extends State<ColorPicker> {
         widget.showColorCode &&
         !widget.colorCodeReadOnly &&
         _activePicker == ColorPickerType.wheel;
+
+    Widget? toolbarTitle = widget.title;
+    TextStyle? toolbarTitleTextStyle;
+    if (toolbarTitle != null) {
+      if (toolbarTitle is Text) {
+        toolbarTitleTextStyle = toolbarTitle.style;
+      } else if (widget.title is TextSpan) {
+        toolbarTitleTextStyle = (toolbarTitle as TextSpan).style;
+      } else {
+        toolbarTitleTextStyle = null;
+      }
+      toolbarTitle = DefaultTextStyle(
+        style: toolbarTitleTextStyle ?? theme.textTheme.titleLarge!,
+        softWrap: false,
+        overflow: TextOverflow.ellipsis,
+        child: toolbarTitle,
+      );
+      // Set maximum text scale factor to [_kMaxTitleTextScaleFactor] for the
+      // title to keep the visual hierarchy the same even with larger font
+      // sizes. To opt out, wrap the [title] widget in a [MediaQuery] widget
+      // with a different `TextScaler`.
+      toolbarTitle = MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.34,
+        child: toolbarTitle,
+      );
+    }
 
     if (_debug) {
       debugPrint('Build color=${widget.color} selectedColor=$_selectedColor');
@@ -1913,7 +1947,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 padding: EdgeInsets.only(
                     bottom: widget.toolbarSpacing ?? widget.columnSpacing),
                 child: ColorPickerToolbar(
-                  title: widget.title,
+                  title: toolbarTitle,
                   onCopy: widget.copyPasteBehavior.copyButton
                       ? _setClipboard
                       : null,

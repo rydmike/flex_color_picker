@@ -2,6 +2,15 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.7.1
+
+**April 30, 2025**
+
+**FIX**
+
+* FIX: [Color code truncated #92](https://github.com/rydmike/flex_color_picker/issues/92)
+* FIX: [Long title overflows, pushes action buttons off screen #93](https://github.com/rydmike/flex_color_picker/issues/93)
+
 ## 3.7.0
 
 **Dec 29, 2024**
