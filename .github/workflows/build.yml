@@ -78,7 +78,7 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: EXAMPLE WEB release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --release --target=lib/main.dart
+        run: cd example && flutter build web --release --target=lib/main.dart
 
       # Web Example Build
 
@@ -86,4 +86,4 @@ jobs:
         run: flutter clean && cd example && flutter clean
 
       - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
+        run: cd example && flutter build web --base-href "/flexcolorpicker/" --release --target=lib/demo/main.dart
