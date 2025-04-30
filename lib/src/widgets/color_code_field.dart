@@ -237,7 +237,7 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     final double fontSize = effectiveStyle.fontSize ?? 14.0;
     final double iconSize = fontSize * 1.1;
     final double borderRadius = fontSize * 1.2;
-    final double fieldWidth = fontSize * 10;
+    final double fieldWidth = fontSize * 10.5;
 
     if (_debug) {
       debugPrint('TextField: Build color               =${widget.color}');
