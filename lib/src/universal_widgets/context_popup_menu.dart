@@ -15,9 +15,9 @@ import '../functions/picker_functions.dart';
 /// The popup menu with the provided entries will show up next to the long press
 /// location on the child in a way that fits best on the screen and child.
 ///
-/// The [onSelected] returns the associated value of the selected
+/// The `onSelected` callback returns the associated value of the selected
 /// [PopupMenuEntry]. If the menu is closed without selection, which happens
-/// when user clicks outside it, null is returned. In all cases an [onSelected]
+/// when user clicks outside it, null is returned. In all cases the callback
 /// event also signals that the menu was closed.
 ///
 /// The optional [onOpen] callback event is triggered when the menu is opened.
@@ -35,21 +35,21 @@ class ContextPopupMenu<T> extends StatefulWidget {
   const ContextPopupMenu({
     super.key,
     required this.items,
-    required this.onSelected,
+    required ValueChanged<T?> onSelected,
     this.onOpen,
     required this.child,
     this.useLongPress = false,
     this.useSecondaryTapDown = false,
     this.useSecondaryOnDesktopLongOnDevice = false,
     this.useSecondaryOnDesktopLongOnDeviceAndWeb = true,
-  });
+  }) : _onSelected = onSelected;
 
   /// The popup menu entries for the long press menu.
   final List<PopupMenuEntry<T>> items;
 
   /// ValueChanged callback with selected item in the long press menu.
   /// Is null if menu closed without selection by clicking outside the menu.
-  final ValueChanged<T?> onSelected;
+  final Function _onSelected;
 
   /// Optional void callback, called when the long press menu is opened.
   /// A way to tell when a long press opened the menu.
@@ -132,20 +132,20 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
 
   Future<void> _showMenu(Offset position) async {
     widget.onOpen?.call();
-    final RenderBox? overlay =
-        Overlay.maybeOf(context)?.context.findRenderObject() as RenderBox?;
-    if (overlay != null) {
+    final RenderObject? renderObject =
+        Overlay.maybeOf(context)?.context.findRenderObject();
+    if (renderObject is RenderBox) {
       final T? value = await showMenu<T>(
         context: context,
         items: widget.items,
         position: RelativeRect.fromLTRB(
           position.dx,
           position.dy,
-          overlay.size.width - position.dx,
-          overlay.size.height - position.dy,
+          renderObject.size.width - position.dx,
+          renderObject.size.height - position.dy,
         ),
       );
-      widget.onSelected(value);
+      (widget._onSelected as ValueChanged<T?>)(value);
     }
   }
 }
