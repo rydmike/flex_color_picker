@@ -140,7 +140,7 @@ class SwitchListTileAdaptive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SwitchListTile.adaptive(
-      activeColor: activeColor ?? activeThumbColor(context),
+      activeThumbColor: activeColor ?? activeThumbColor(context),
       value: value,
       onChanged: onChanged,
       title: title,
