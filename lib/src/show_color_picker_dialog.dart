@@ -1,5 +1,3 @@
-// ignore_for_file: comment_references
-
 part of 'color_picker.dart';
 
 /// Define a color picker, show its dialog and wait for it to return a color.
@@ -385,7 +383,7 @@ Future<Color> showColorPickerDialog(
   /// color code field can be edited.
   ///
   /// When set to true, the icon button is only shown when the wheel picker is
-  /// active and [colorCodeReadOnly] is false.
+  /// active and `colorCodeReadOnly` is false.
   ///
   /// Tapping the icon button will focus the color code entry field.
   ///
@@ -400,7 +398,7 @@ Future<Color> showColorPickerDialog(
   /// Whether the color code entry field should have no color when focused.
   ///
   /// If the option to make the color code field have the same color as the
-  /// selected color is enabled via [colorCodeHasColor], it makes it look
+  /// selected color is enabled via `colorCodeHasColor`, it makes it look
   /// and double like a big color indicator that shows the selected color.
   ///
   /// It can also make the edit of the color code confusing, as its color on
@@ -548,7 +546,7 @@ Future<Color> showColorPickerDialog(
   /// [ColorPickerType.customSecondary] option is enabled in the color picker.
   ///
   /// Defaults to an empty map. If the map is empty, the custom colors picker
-  /// will not be shown even if it is enabled in [pickersEnabled].
+  /// will not be shown even if it is enabled in parameter `pickersEnabled`.
   Map<ColorSwatch<Object>, String> customSecondaryColorSwatchesAndNames =
       const <ColorSwatch<Object>, String>{},
 
@@ -712,14 +710,14 @@ Future<Color> showColorPickerDialog(
   /// Offset anchorPoint for the dialog.
   Offset? anchorPoint,
 
-  /// The [transitionBuilder] argument is used to define how the route
+  /// The `transitionBuilder` argument is used to define how the route
   /// arrives on and leaves off the screen.
   ///
   /// If this transition is not specified, the default Material platform
   /// transition builder for [showDialog] is used.
   RouteTransitionsBuilder? transitionBuilder,
 
-  /// The [transitionDuration] argument is used to determine how long it takes
+  /// The `transitionDuration` argument is used to determine how long it takes
   /// for the route to arrive on or leave off the screen.
   ///
   /// It only has any effect when a custom `transitionBuilder`is used.

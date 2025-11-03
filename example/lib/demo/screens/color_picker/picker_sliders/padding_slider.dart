@@ -12,7 +12,7 @@ class PaddingSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      // ignore: missing_whitespace_between_adjacent_strings
+      // ignore: missing_whitespace_between_adjacent_strings, intended here.
       tooltip: 'ColorPicker(padding: EdgeInsets.all'
           '(${ref.read(paddingPod).floor()}))',
       child: ListTile(

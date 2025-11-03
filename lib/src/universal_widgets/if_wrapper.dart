@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 /// A potential Widget builder function.
@@ -30,12 +28,12 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 class IfWrapper extends StatelessWidget {
   /// Default const constructor.
   const IfWrapper({
-    Key? key,
+    super.key,
     required this.condition,
     required this.builder,
     required this.child,
     this.ifFalse,
-  }) : super(key: key);
+  });
 
   /// if [condition] evaluates to true, the builder will be run and the child
   /// will be wrapped. If false, only the child is returned.

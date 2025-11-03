@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +10,7 @@ import '../models/color_picker_type.dart';
 class SelectPicker extends StatelessWidget {
   /// Default const constructor.
   const SelectPicker({
-    Key? key,
+    super.key,
     required this.pickers,
     required this.pickerLabels,
     required this.picker,
@@ -20,7 +18,7 @@ class SelectPicker extends StatelessWidget {
     this.thumbColor,
     this.textStyle,
     this.columnSpacing = 8,
-  }) : super(key: key);
+  });
 
   /// A map of used picker types to select which segments to show and use.
   final Map<ColorPickerType, bool> pickers;

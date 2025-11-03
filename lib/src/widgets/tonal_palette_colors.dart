@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 import '../../flex_color_picker.dart';
@@ -11,7 +9,7 @@ import '../functions/picker_functions.dart';
 class TonalPaletteColors extends StatefulWidget {
   /// Default const constructor.
   const TonalPaletteColors({
-    Key? key,
+    super.key,
     required this.spacing,
     required this.runSpacing,
     required this.selectedColor,
@@ -26,7 +24,7 @@ class TonalPaletteColors extends StatefulWidget {
     required this.selectedColorIcon,
     required this.selectedRequestsFocus,
     required this.tonalPaletteFixedMinChroma,
-  }) : super(key: key);
+  });
 
   /// The spacing between the color pick items.
   final double spacing;

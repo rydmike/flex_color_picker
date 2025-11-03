@@ -2,7 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore_for_file: unnecessary_nullable_for_final_variable_declarations
+// ignore_for_file: unnecessary_nullable_for_final_variable_declarations, tests.
 
 void main() {
   //****************************************************************************

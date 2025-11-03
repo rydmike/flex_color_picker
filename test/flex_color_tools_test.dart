@@ -1023,7 +1023,7 @@ void main() {
               'ColorTools.materialNameAndCode '
               '${refCustomColors[swatch]} '
               '[$i] (${swatch[i]}) returns '
-              // ignore: lines_longer_than_80_chars
+              // ignore: lines_longer_than_80_chars, for tests.
               '${ColorTools.materialNameAndCode(swatch[i]!, colorSwatchNameMap: refCustomColors)}',
               () {
             expect(
@@ -1036,7 +1036,7 @@ void main() {
               'ColorTools.materialNameAndARGBCode '
               '${refCustomColors[swatch]} '
               '[$i] (${swatch[i]}) returns '
-              // ignore: lines_longer_than_80_chars
+              // ignore: lines_longer_than_80_chars, for tests.
               '${ColorTools.materialNameAndARGBCode(swatch[i]!, colorSwatchNameMap: refCustomColors)}',
               () {
             expect(

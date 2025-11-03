@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore_for_file: comment_references
-
 /// A theme following wrapper for [SwitchListTileAdaptive].
 ///
 /// This wrapper sets the active thumb color for the switch in iOS or macOS
@@ -65,8 +63,8 @@ class SwitchListTileAdaptive extends StatelessWidget {
   /// The color to use when this switch is on.
   ///
   /// If not provided, defaults to selected thumb color of SwitchTheme, and if
-  /// not defined to [Colorscheme.secondary] in M2 and via M3 Switch theme
-  /// implementation to [Colorscheme.primary] in M3, of the current [Theme].
+  /// not defined to `Colorscheme.secondary` in M2 and via M3 Switch theme
+  /// implementation to `Colorscheme.primary` in M3, of the current [Theme].
   ///
   /// The Material mode of this switch does this by default, but the iOS remain
   /// iOS active green despite the theme, unless explicitly set via the

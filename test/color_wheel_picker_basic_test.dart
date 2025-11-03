@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, for clarity in tests.
 
 //****************************************************************************
 // FlexColorPicker ColorWheelPicker Widget tests
@@ -25,7 +25,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate defaultWheel = (Widget widget) =>
           widget is ColorWheelPicker &&
           widget.color == Colors.blue &&
@@ -64,7 +64,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate defaultWheel = (Widget widget) =>
           widget is ColorWheelPicker &&
           widget.color == Colors.blue &&

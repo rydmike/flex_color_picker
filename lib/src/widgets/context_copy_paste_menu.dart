@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 import '../universal_widgets/context_popup_menu.dart';
@@ -22,7 +20,7 @@ enum CopyPasteCommands {
 class ContextCopyPasteMenu extends StatelessWidget {
   /// Default const constructor.
   const ContextCopyPasteMenu({
-    Key? key,
+    super.key,
     this.useLongPress = false,
     this.useSecondaryTapDown = false,
     this.useSecondaryOnDesktopLongOnDevice = false,
@@ -38,7 +36,7 @@ class ContextCopyPasteMenu extends StatelessWidget {
     required this.onSelected,
     this.onOpen,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// Use long press to show context menu.
   ///

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, for clarity in tests.
 
 //****************************************************************************
 // FlexColorPicker ColorPicker Widget tests
@@ -26,7 +26,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests.
       final WidgetPredicate defaultPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.blue &&
@@ -184,7 +184,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.red &&
@@ -346,7 +346,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == const Color(0xF03295C1) &&
@@ -536,7 +536,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == const Color(0xFA6200EE) &&
@@ -743,7 +743,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.red.shade200 &&
@@ -950,7 +950,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate customPicker = (Widget widget) =>
           widget is ColorPicker &&
           widget.color == Colors.pinkAccent.shade700 &&

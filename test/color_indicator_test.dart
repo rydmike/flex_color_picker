@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flex_color_picker/src/color_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect == null &&
@@ -59,7 +57,7 @@ void main() {
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
-      // ignore: prefer_function_declarations_over_variables
+      // ignore: prefer_function_declarations_over_variables, use in tests ok.
       final WidgetPredicate defaultIndicator = (Widget widget) =>
           widget is ColorIndicator &&
           widget.onSelect != null &&
@@ -80,7 +78,7 @@ void main() {
 }
 
 class TestWidget extends StatelessWidget {
-  const TestWidget({Key? key, required this.widget}) : super(key: key);
+  const TestWidget({super.key, required this.widget});
   final Widget widget;
 
   @override

@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import '../utils/color_extensions.dart';
 import 'if_wrapper.dart';
 
-// ignore_for_file: comment_references
-
 // Material dark default surface color
 const Color _kMaterialDarkSurface = Color(0xff121212);
 
@@ -54,14 +52,14 @@ const Color _kMaterialDarkSurface = Color(0xff121212);
 @immutable
 class FlexAppBar {
   /// Creates a property holder for a Material design app bar that will be
-  /// constructed by [Flexfold].
+  /// constructed by `Flexfold`.
   ///
   /// The arguments [primary], [toolbarOpacity], [bottomOpacity]
   /// and [automaticallyImplyLeading] must not be null. Additionally, if
   /// [elevation] is specified, it must be non-negative.
   ///
-  /// If [backgroundColor], [elevation], [shadowColor], [brightness],
-  /// [iconTheme], [actionsIconTheme], [textTheme] or [centerTitle] are null,
+  /// If [backgroundColor], [elevation], [shadowColor], `brightness`,
+  /// [iconTheme], [actionsIconTheme], `textTheme` or [centerTitle] are null,
   /// then their [AppBarTheme] values will be used. If the corresponding
   /// [AppBarTheme] property is null, then the default specified in the
   /// property's documentation will be used.
@@ -93,7 +91,7 @@ class FlexAppBar {
     this.toolbarTextStyle,
     this.titleTextStyle,
     this.systemOverlayStyle,
-    // ignore: prefer_asserts_with_message
+    // ignore: prefer_asserts_with_message, auto explanation is fine here.
   }) : assert(elevation == null || elevation >= 0.0);
 
   /// Key that gets passed to super key, when converted to an actual app bar.
@@ -127,7 +125,7 @@ class FlexAppBar {
   /// is given to [title]. If leading widget is not null, this parameter has
   /// no effect.
   ///
-  /// The parameter has no effect when [FlexAppBar] is consumed by [Flexfold].
+  /// The parameter has no effect when [FlexAppBar] is consumed by `Flexfold`.
   /// Flexfold will create leading and action widget as needed based on its
   /// current navigation. In effect one could say that it always uses a form
   /// of advanced [automaticallyImplyLeading] and imply last actions widget.
@@ -229,7 +227,7 @@ class FlexAppBar {
   /// If null, then the [AppBarTheme.backgroundColor] is used. If that value is
   /// also null, then [AppBar] uses the overall theme's [ColorScheme.primary]
   /// if the overall theme's brightness is [Brightness.light], and
-  /// [ColorScheme.surface] if the overall theme's [brightness] is
+  /// [ColorScheme.surface] if the overall theme's brightness is
   /// [Brightness.dark].
   ///
   /// See also:
@@ -250,7 +248,7 @@ class FlexAppBar {
   /// value is also null, then [AppBar] uses the overall theme's
   /// [ColorScheme.onPrimary] if the overall theme's brightness is
   /// [Brightness.light], and [ColorScheme.onSurface] if the overall
-  /// theme's [brightness] is [Brightness.dark].
+  /// theme's brightness is [Brightness.dark].
   ///
   /// This color is used to configure [DefaultTextStyle] that contains
   /// the toolbar's children, and the default [IconTheme] widgets that

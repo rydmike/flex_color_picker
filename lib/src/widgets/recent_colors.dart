@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 import '../../flex_color_picker.dart';
@@ -10,7 +8,7 @@ import '../../flex_color_picker.dart';
 class RecentColors extends StatelessWidget {
   /// Default const constructor.
   const RecentColors({
-    Key? key,
+    super.key,
     required this.spacing,
     required this.runSpacing,
     required this.recentColors,
@@ -25,7 +23,7 @@ class RecentColors extends StatelessWidget {
     required this.elevation,
     required this.selectedColorIcon,
     this.selectedRequestsFocus = false,
-  }) : super(key: key);
+  });
 
   /// The spacing between the color pick items.
   final double spacing;

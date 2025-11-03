@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 import '../../flex_color_picker.dart';
@@ -11,7 +9,7 @@ import '../functions/picker_functions.dart';
 class ShadeColors extends StatelessWidget {
   /// Default const constructor.
   const ShadeColors({
-    Key? key,
+    super.key,
     required this.spacing,
     required this.runSpacing,
     required this.columnSpacing,
@@ -27,7 +25,7 @@ class ShadeColors extends StatelessWidget {
     required this.elevation,
     required this.selectedColorIcon,
     required this.selectedRequestsFocus,
-  }) : super(key: key);
+  });
 
   /// The spacing between the color pick items.
   final double spacing;

@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'dart:async';
 import 'dart:ui' as ui;
 
@@ -29,7 +27,7 @@ import 'opacity_slider_track.dart';
 class OpacitySlider extends StatelessWidget {
   /// Create the opacity slider.
   const OpacitySlider({
-    Key? key,
+    super.key,
     required this.opacity,
     required this.color,
     required this.onChanged,
@@ -41,8 +39,7 @@ class OpacitySlider extends StatelessWidget {
   })  : assert(thumbRadius >= 12 && thumbRadius <= 30,
             'The thumbRadius must be 12 to 30.'),
         assert(trackHeight >= 10 && trackHeight <= 50,
-            'The trackHeight must be 10 to 50.'),
-        super(key: key);
+            'The trackHeight must be 10 to 50.');
 
   /// Current opacity value.
   final double opacity;

@@ -104,7 +104,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                 'The color is modified while dialog is open, but returns '
                 'to previous value if dialog is cancelled'),
             subtitle: Text(
-              // ignore: lines_longer_than_80_chars
+              // ignore: lines_longer_than_80_chars, cannot break earlier.
               '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
               'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
             ),
@@ -132,7 +132,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                 'that uses custom open/close animation. The color is only '
                 'modified after dialog is closed with OK'),
             subtitle: Text(
-              // ignore: lines_longer_than_80_chars
+              // ignore: lines_longer_than_80_chars, cannot break earlier.
               '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
               'aka ${ColorTools.nameThatColor(dialogSelectColor)}',
             ),

@@ -174,6 +174,6 @@ List<Color> getTonalColors(Color color, bool fixedMinChroma) {
   final FlexTonalPalette tonalColors = FlexTonalPalette.of(camColor.hue,
       fixedMinChroma ? math.max(48, camColor.chroma) : camColor.chroma);
 
-  // ignore: unnecessary_lambdas
+  // ignore: unnecessary_lambdas, clearer this way.
   return tonalColors.asList.map((int e) => Color(e)).toList();
 }

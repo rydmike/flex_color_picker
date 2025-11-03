@@ -134,7 +134,7 @@ void main() {
         'CPCPB2.1: Test toString implemented via debugFillProperties '
         'EXPECT exact print string value.', () {
       expect(m4.toString(), equalsIgnoringHashCodes(
-          // ignore: lines_longer_than_80_chars
+          // ignore: lines_longer_than_80_chars, use in tests.
           'ColorPickerCopyPasteBehavior#1d1a2(ctrlC: false, ctrlV: false, autoFocus: true, copyButton: true, pasteButton: true, copyIcon: IconData(U+0E085), pasteIcon: IconData(U+0E16A), copyTooltip: "COPY", pasteTooltip: "PASTE", copyFormat: numHexAARRGGBB, longPressMenu: true, secondaryMenu: true, secondaryOnDesktopLongOnDevice: true, secondaryOnDesktopLongOnDeviceAndWeb: true, editFieldCopyButton: false, menuIconThemeData: IconThemeData#6d8b7(size: 30.0, color: Color(alpha: 1.0000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB), opacity: 1.0), menuThemeData: PopupMenuThemeData#30106(color: Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), shape: RoundedRectangleBorder(BorderSide(width: 0.0, style: none), BorderRadius.zero), elevation: 3.0, text style: TextStyle(inherit: true, size: 12.0), enableFeedback: true), menuWidth: 85.0, menuItemHeight: 35.0, snackBarParseError: true, snackBarMessage: "Something went wrong", snackBarDuration: 0:00:01.500000, feedbackParseError: true, parseShortHexCode: true, editUsesParsedPaste: true)'));
     });
     test(

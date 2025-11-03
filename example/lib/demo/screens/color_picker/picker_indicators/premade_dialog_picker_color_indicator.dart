@@ -15,7 +15,7 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
       title: const Text('Click to update only when dialog is closed. '
           'Uses `showColorPickerDialog`.'),
       subtitle: Text(
-          // ignore: lines_longer_than_80_chars
+          // ignore: lines_longer_than_80_chars, cannot break earlier.
           '${ColorTools.materialNameAndARGBCode(ref.watch(dialogPickerColorPod), colorSwatchNameMap: App.colorsNameMap)} '
           'aka ${ColorTools.nameThatColor(ref.watch(dialogPickerColorPod))}'),
       trailing: ColorIndicator(

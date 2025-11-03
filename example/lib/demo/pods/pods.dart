@@ -109,7 +109,7 @@ final StateProvider<Color> onColorChangeEndPod =
 final StateProvider<List<Color>> cardRecentColorsPod =
     StateProvider<List<Color>>(
   (Ref<List<Color>> ref) {
-    // ignore: avoid_dynamic_calls
+    // ignore: avoid_dynamic_calls, dynamic used here for the list
     return hiveStore
         .get(Keys.cardRecentColors,
             defaultValue: Keys.defaults[Keys.cardRecentColors]! as List<Color>)
@@ -121,7 +121,7 @@ final StateProvider<List<Color>> cardRecentColorsPod =
 // StateProvider for the recently used colors for color picker in the dialog.
 final StateProvider<List<Color>> dialogRecentColorsPod =
     StateProvider<List<Color>>((Ref<List<Color>> ref) {
-  // ignore: avoid_dynamic_calls
+  // ignore: avoid_dynamic_calls, dynamic used here for the list
   return hiveStore
       .get(Keys.dialogRecentColors,
           defaultValue: Keys.defaults[Keys.dialogRecentColors]! as List<Color>)
@@ -141,7 +141,7 @@ final StateProvider<List<Color>> dialogRecentColorsPod =
 final StateProvider<Map<ColorPickerType, bool>> pickersEnabledPod =
     StateProvider<Map<ColorPickerType, bool>>(
         (Ref<Map<ColorPickerType, bool>> ref) {
-  // ignore: avoid_dynamic_calls
+  // ignore: avoid_dynamic_calls, dynamic used for the map
   return hiveStore
       .get(Keys.pickersEnabled,
           defaultValue:

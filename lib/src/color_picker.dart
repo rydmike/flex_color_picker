@@ -25,8 +25,6 @@ import 'widgets/tonal_palette_colors.dart';
 
 part 'show_color_picker_dialog.dart';
 
-// ignore_for_file: comment_references
-
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
@@ -383,9 +381,7 @@ class ColorPicker extends StatefulWidget {
   /// the onColor callbacks.
   ///
   /// When false, colors that has any other alpha value than 0xFF are changed
-  /// to 0xFF. To allow custom colors and pasted in color values without
-  /// setting [enableOpacity] to true and showing the opacity slider, set
-  /// [enableTransparentCustomColors] to true.
+  /// to 0xFF.
   ///
   /// Defaults to false.
   final bool enableOpacity;
@@ -1026,14 +1022,14 @@ class ColorPicker extends StatefulWidget {
     /// Offset anchorPoint for the dialog.
     Offset? anchorPoint,
 
-    /// The [transitionBuilder] argument is used to define how the route
+    /// The `transitionBuilder` argument is used to define how the route
     /// arrives on and leaves off the screen.
     ///
     /// If this transition is not specified, the default Material platform
     /// transition builder for [showDialog] is used.
     RouteTransitionsBuilder? transitionBuilder,
 
-    /// The [transitionDuration] argument is used to determine how long it takes
+    /// The `transitionDuration` argument is used to determine how long it takes
     /// for the route to arrive on or leave off the screen.
     ///
     /// It only has any effect when a custom `transitionBuilder`is used.

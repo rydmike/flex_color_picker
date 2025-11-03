@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'package:flutter/material.dart';
 
 import '../functions/picker_functions.dart';
@@ -12,7 +10,7 @@ import '../models/color_picker_copy_paste_behavior.dart';
 class ColorPickerToolbar extends StatelessWidget {
   /// Default const constructor.
   const ColorPickerToolbar({
-    Key? key,
+    super.key,
     this.title,
     this.onCopy,
     this.onPaste,
@@ -21,7 +19,7 @@ class ColorPickerToolbar extends StatelessWidget {
     this.toolIcons = const ColorPickerActionButtons(),
     this.copyPasteBehavior = const ColorPickerCopyPasteBehavior(),
     this.enableTooltips = true,
-  }) : super(key: key);
+  });
 
   /// A title widget, usually a Text widget.
   final Widget? title;

@@ -91,7 +91,7 @@ void main() {
         'CPAB2.1: Test toString implemented via debugFillProperties '
         'EXPECT exact print string value.', () {
       expect(m4.toString(), equalsIgnoringHashCodes(
-          // ignore: lines_longer_than_80_chars
+          // ignore: lines_longer_than_80_chars, use in tests.
           'ColorPickerActionButtons#7bd82(okButton: true, closeButton: true, okIcon: IconData(U+0E085), closeIcon: IconData(U+0E139), closeIsLast: false, okTooltip: "GO", closeTooltip: "OFF", closeTooltipIsClose: false, toolIconsThemeData: IconThemeData#f1304(size: 30.0, color: Color(alpha: 1.0000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB), opacity: 1.0), visualDensity: VisualDensity#b6c96(h: -1.0, v: -1.0)(horizontal: -1.0, vertical: -1.0), alignment: Alignment.topLeft, splashRadius: 30.0, constraints: BoxConstraints(46.0<=w<=Infinity, 46.0<=h<=Infinity), dialogActionButtons: false, dialogActionOnlyOkButton: true, dialogActionOrder: adaptive, dialogActionIcons: true, dialogCancelButtonLabel: "DONE", dialogCancelButtonType: outlined, dialogOkButtonLabel: "OKAY", dialogOkButtonType: elevated, useRootNavigator: false)'));
     });
     test(
