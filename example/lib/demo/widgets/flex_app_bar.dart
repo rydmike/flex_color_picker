@@ -713,7 +713,7 @@ class FlexAppBar {
         'looseScrim must be >= 0 and <= 255');
 
     final ThemeData theme = Theme.of(context);
-    final AppBarTheme appBarTheme = AppBarTheme.of(context);
+    final AppBarThemeData appBarTheme = AppBarTheme.of(context);
     final Color appBarColor =
         backgroundColor ?? appBarTheme.backgroundColor ?? theme.primaryColor;
 
