@@ -1,6 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Contains used constants for doubles, strings and colors.
 class App {
@@ -10,7 +11,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '3.7.1';
+  static const String version = '3.7.2';
   static const String packageVersion = 'FlexColorPicker package $version';
   static final Uri packageUri = Uri(
     scheme: 'https',
@@ -19,15 +20,19 @@ class App {
   );
 
   // Check if this is a Web-WASM build, Web-JS build or native VM build.
-  static const bool isRunningWithWasm =
-      bool.fromEnvironment('dart.tool.dart2wasm');
+  static const bool isRunningWithWasm = bool.fromEnvironment(
+    'dart.tool.dart2wasm',
+  );
   static const String buildType = isRunningWithWasm
-      ? ', WasmGC'
+      ? 'WasmGC'
       : kIsWeb
-          ? ', JS'
-          : ', native VM';
+          ? 'JS'
+          : 'native VM';
 
-  static const String flutterVersion = 'stable 3.29.3 (canvaskit$buildType)';
+  static const String flutterVersionNum = FlutterVersion.version ?? '';
+  static const String flutterChannel = FlutterVersion.channel ?? '';
+  static const String flutterVersion =
+      '$flutterChannel $flutterVersionNum ($buildType)';
   static const String copyright = '© 2020 - 2025';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
