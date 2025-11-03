@@ -762,7 +762,6 @@ class FlexAppBar {
     // Effective center title logic is from the Flutter app bar source, so we
     // can get same logic also for the styled app bar when screen size is shown.
     bool effectiveCenterTitle() {
-      // ignore: always_put_control_body_on_new_line
       if (centerTitle != null) return centerTitle;
       if (theme.appBarTheme.centerTitle != null) {
         return theme.appBarTheme.centerTitle!;

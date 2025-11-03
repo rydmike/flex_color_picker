@@ -36,7 +36,6 @@ class MetaPickerColorIndicator extends ConsumerWidget {
         onSelectFocus: false,
         onSelect: () async {
           final Color colorBeforeDialog = ref.read(cardPickerColorPod);
-          // ignore: use_build_context_synchronously
           if (!(await colorPickerDialog(
             context,
             ref,

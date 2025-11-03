@@ -270,7 +270,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     );
   }
 
-  Future<bool> colorPickerDialog() async {
+  Future<bool> colorPickerDialog() {
     return ColorPicker(
       color: dialogPickerColor,
       onColorChanged: (Color color) =>

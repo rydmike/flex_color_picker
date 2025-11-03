@@ -10,7 +10,7 @@ Future<bool> colorPickerDialog(
   BuildContext context,
   WidgetRef ref, {
   bool cardRemote = false,
-}) async {
+}) {
   final ThemeData theme = Theme.of(context);
   return ColorPicker(
     color: cardRemote

@@ -277,7 +277,6 @@ void main() {
     const Color black = Color(0xFF000000);
     // const Color? nullColor = null;
     test('FCE2.01: GIVEN lighten() EXPECT default lighten(10).', () {
-      // ignore: avoid_redundant_argument_values
       expect(col.lighten(), col.lighten(10));
     });
     test('FCE2.02: GIVEN lighten(0) EXPECT no change.', () {
@@ -310,7 +309,6 @@ void main() {
     const Color white = Color(0xFFFFFFFF);
     const Color black = Color(0xFF000000);
     test('FCE3.01: GIVEN darken() EXPECT default darken(10).', () {
-      // ignore: avoid_redundant_argument_values
       expect(col.darken(), col.darken(10));
     });
     test('FCE3.02: GIVEN darken(0) EXPECT no change.', () {

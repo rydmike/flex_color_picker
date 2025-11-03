@@ -744,7 +744,6 @@ Future<Color> showColorPickerDialog(
     /// Picker properties
     ) async {
   Color selectedColor = color;
-  // ignore: use_build_context_synchronously
   if (!(await ColorPicker(
     color: color,
     onColorChanged: (Color newColor) {

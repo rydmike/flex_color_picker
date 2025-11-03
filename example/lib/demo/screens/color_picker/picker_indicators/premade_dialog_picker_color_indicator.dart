@@ -35,8 +35,7 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
   }
 
   // Wait for the dialog to return color selection result.
-  Future<Color> dialogColor(
-      BuildContext context, WidgetRef ref, Color color) async {
+  Future<Color> dialogColor(BuildContext context, WidgetRef ref, Color color) {
     final ThemeData theme = Theme.of(context);
     return showColorPickerDialog(
       // The dialog needs a context, we pass it in.
