@@ -6,14 +6,17 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 
 **November 3, 2025**
 
+Requires min Flutter 3.35.0, due to Flutter API change in ThemeData used in WEB example.
+ 
 **CHORE**
 
 * Update dev dependencies for Flutter 3.35.x
-* Update to RydMike lints 2.4.0 and fix lints.
+* Update to RydMike lints to 2.4.0 and fix lints.
 * WEB example: FIX broken and deprecated Flutter APIs in Flutter 3.35.x
 * WEB example: Migrate from hive to hive_ce
 * WEB example: Use flutter version info from services
 
+ 
 
 ## 3.7.1
 
