@@ -571,7 +571,7 @@ linter:
     # Flutter repo   disabled : https://github.com/flutter/flutter/blob/master/analysis_options.yaml
     # VG Analysis    enabled  : https://pub.dev/packages/very_good_analysis
     # RydMike        disabled : https://gist.github.com/rydmike/fdb53ddd933c37d20e6f3188a936cd4c
-    document_ignores: false
+    document_ignores: true
 
     # DO Use Flutter TO-DO format.
     #
