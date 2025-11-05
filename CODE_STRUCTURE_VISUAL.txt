@@ -1,0 +1,336 @@
+================================================================================
+                    FLEXCOLORPICKER - CODE STRUCTURE VISUAL
+================================================================================
+
+PROJECT LAYOUT
+==============
+
+flex_color_picker/
+├── lib/
+│   └── src/                          [25 Dart files, ~7,100 lines]
+│       ├── color_picker.dart         [MAIN: ~3,300 lines, StatefulWidget]
+│       ├── color_picker_extensions.dart
+│       ├── color_indicator.dart
+│       ├── color_wheel_picker.dart
+│       ├── color_tools.dart          [Color utilities & Material data]
+│       ├── show_color_picker_dialog.dart [Part file]
+│       │
+│       ├── models/                   [3 configuration files]
+│       │   ├── color_picker_type.dart
+│       │   ├── color_picker_action_buttons.dart
+│       │   └── color_picker_copy_paste_behavior.dart
+│       │
+│       ├── widgets/                  [UI Components: 10 files]
+│       │   ├── color_code_field.dart
+│       │   ├── color_picker_toolbar.dart
+│       │   ├── copy_paste_handler.dart
+│       │   ├── context_copy_paste_menu.dart
+│       │   ├── main_colors.dart
+│       │   ├── shade_colors.dart
+│       │   ├── recent_colors.dart
+│       │   ├── picker_selector.dart
+│       │   ├── tonal_palette_colors.dart
+│       │   └── opacity/
+│       │       ├── opacity_slider.dart
+│       │       ├── opacity_slider_track.dart
+│       │       └── opacity_slider_thumb.dart
+│       │
+│       ├── universal_widgets/        [Utility Widgets: 3 files]
+│       │   ├── if_wrapper.dart
+│       │   ├── dry_intrinsic.dart
+│       │   └── context_popup_menu.dart
+│       │
+│       └── functions/
+│           └── picker_functions.dart [Algorithms]
+│
+├── test/                             [21 test files]
+├── example/                          [100+ Dart files]
+├── pubspec.yaml                      [Dart 3.0+, Flutter 3.35+]
+├── analysis_options.yaml             [Strict linting]
+├── ARCHITECTURE.md                   [NEW: Comprehensive guide]
+└── QUICK_REFERENCE.md                [NEW: Quick lookup]
+
+
+WIDGET HIERARCHY
+================
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         ColorPicker (Main)                              │
+│                    [StatefulWidget, 50+ params]                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌─ Picker Selector ─────────────────────────────────────────────┐     │
+│  │  CupertinoSegmentedControl                                     │     │
+│  │  [Switches between: Primary, Accent, Both, B&W, Custom, Wheel] │     │
+│  └────────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+│  ┌─ Active Picker View ──────────────────────────────────────────┐     │
+│  │                                                                 │     │
+│  │  ┌─ For Main Color Types (Primary/Accent/Custom) ──┐         │     │
+│  │  │  MainColors                                      │         │     │
+│  │  │  [ColorIndicator Grid: 19 swatches]             │         │     │
+│  │  │  └─ ShadeColors (when selected)                 │         │     │
+│  │  │     [ColorIndicator Grid: shade palette]        │         │     │
+│  │  └──────────────────────────────────────────────────┘         │     │
+│  │                                                                 │     │
+│  │  ┌─ For B&W Picker ─────────────────────────────────┐         │     │
+│  │  │  MainColors                                      │         │     │
+│  │  │  [6 shades of black/white]                       │         │     │
+│  │  └──────────────────────────────────────────────────┘         │     │
+│  │                                                                 │     │
+│  │  ┌─ For Wheel Picker ─────────────────────────────┐           │     │
+│  │  │  ColorWheelPicker                               │           │     │
+│  │  │  [HSV Wheel + SV Rectangle, CustomPainter]     │           │     │
+│  │  │  └─ ShadeColors (if standard color detected)   │           │     │
+│  │  └────────────────────────────────────────────────┘           │     │
+│  │                                                                 │     │
+│  │  ┌─ Optional Tonal Palette ──────────────────────┐            │     │
+│  │  │  TonalPaletteColors                            │            │     │
+│  │  │  [13-tone Material 3 palette]                  │            │     │
+│  │  └───────────────────────────────────────────────┘            │     │
+│  │                                                                 │     │
+│  │  ┌─ Optional Recent Colors ──────────────────────┐            │     │
+│  │  │  RecentColors                                  │            │     │
+│  │  │  [ColorIndicator Grid: up to 20 colors]       │            │     │
+│  │  └───────────────────────────────────────────────┘            │     │
+│  │                                                                 │     │
+│  └─────────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+│  ┌─ Optional Opacity Control ────────────────────────────────────┐     │
+│  │  OpacitySlider                                                │     │
+│  │  ├─ OpacitySliderTrack [CustomPainter gradient]             │     │
+│  │  └─ OpacitySliderThumb [CustomPainter circle]               │     │
+│  └───────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+│  ┌─ Optional Color Code Field ───────────────────────────────────┐     │
+│  │  ColorCodeField                                               │     │
+│  │  ├─ TextField [Hex input]                                    │     │
+│  │  └─ Copy Button (optional)                                   │     │
+│  └───────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+│  ┌─ Optional Toolbar ────────────────────────────────────────────┐     │
+│  │  ColorPickerToolbar                                           │     │
+│  │  ├─ OK Button (icon or text)                                 │     │
+│  │  ├─ Cancel Button (icon or text)                             │     │
+│  │  ├─ Copy Button (optional)                                   │     │
+│  │  └─ Paste Button (optional)                                  │     │
+│  └───────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+│  ┌─ Context Menus (Optional) ────────────────────────────────────┐     │
+│  │  ContextCopyPasteMenu                                         │     │
+│  │  ├─ Right-click on desktop                                   │     │
+│  │  └─ Long-press on mobile                                     │     │
+│  └───────────────────────────────────────────────────────────────┘     │
+│                                                                           │
+└─────────────────────────────────────────────────────────────────────────┘
+
+                            ↓ Dialog Wrapper ↓
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      showColorPickerDialog()                            │
+│                   [Future<Color> function]                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│  Creates AlertDialog with:                                              │
+│  - Title (configurable)                                                 │
+│  - ColorPicker widget (centered)                                        │
+│  - Action buttons (OK/Cancel, configurable)                             │
+│  - Dialog theme (ColorPickerActionButtons config)                       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+DATA FLOW
+=========
+
+User Action                Method Called           State Update
+─────────────              ─────────────           ────────────
+
+Tap ColorIndicator  →  onSelect callback  →  setState() in ColorPicker
+                         ↓
+                    _ColorPickerState updates internal color
+                         ↓
+                    Calls onColorChanged callback to parent
+                         ↓
+                    Parent responsible for state management
+
+Copy Color     →  Copy Handler Widget  →  Clipboard.setData()
+                                            ↓
+                                      Formatted by ColorPickerCopyFormat
+
+Paste Color    →  Paste Handler Widget  →  Clipboard.getData()
+                                            ↓
+                                      Parsed by toColorMaybeNull()
+                                            ↓
+                                      setState() if valid color
+
+Change Opacity  →  OpacitySlider onChanged  →  setState() in ColorPicker
+                                                   ↓
+                                                Updates alpha value
+                                                   ↓
+                                                Calls onColorChanged
+
+
+CONFIGURATION OBJECTS
+=====================
+
+ColorPickerType Enum
+├── primary          - Material primary colors
+├── accent           - Material accent colors
+├── both             - Primary + Accent together
+├── bw               - Black, white, near shades
+├── custom           - Developer-defined colors
+├── customSecondary  - Secondary custom collection
+└── wheel            - HSV color wheel
+
+ColorPickerActionButtons
+├── Dialog buttons (OK/Cancel styling)
+├── Toolbar buttons (Icon-only buttons)
+├── Button labels and icons
+└── Theme data for buttons
+
+ColorPickerCopyPasteBehavior
+├── Keyboard shortcuts (Ctrl-C/V, Cmd-C/V)
+├── UI buttons (Copy/Paste in toolbar)
+├── Context menus (Right-click/Long-press)
+├── Copy format (Dart hex, Web hex, etc.)
+└── Paste parsing options (Short RGB codes, etc.)
+
+ColorPickerCopyFormat Enum
+├── dartCode      - 0xAARRGGBB
+├── hexRRGGBB     - RRGGBB
+├── hexAARRGGBB   - AARRGGBB
+├── numHexRRGGBB  - #RRGGBB
+└── numHexAARRGGBB - #AARRGGBB
+
+
+EXTENSION METHODS
+=================
+
+Color Extensions
+├── hexAlpha       → Returns "0xAARRGGBB"
+├── hex            → Returns "RRGGBB"
+├── lighten(amt)   → Lighter HSL color
+└── darken(amt)    → Darker HSL color
+
+String Extensions
+├── toColor                → Parse hex → Color (or black)
+├── toColorMaybeNull       → Parse hex → Color? (null on error)
+├── toColorShort(bool)     → Parse with CSS 3-char RGB support
+├── capitalize             → Uppercase first letter
+└── dotTail                → Part after last dot
+
+
+CODE METRICS
+============
+
+Size & Scope:
+  - Main library:      25 files,  ~7,100 lines
+  - Tests:             21 files, ~2,500+ lines
+  - Example app:      100+ files
+  - Documentation:    2 new files (this analysis)
+
+Complexity:
+  - Main widget:       ~3,300 lines (ColorPicker class)
+  - Parameters:        50+ configuration options
+  - Sub-widgets:       10+ composed widgets
+  - Test coverage:     Comprehensive (21 test files)
+
+Performance:
+  - CustomPainter:     Used for wheel and slider (efficiency)
+  - Immutability:      All public classes marked @immutable
+  - Rebuilds:          Minimal via state segmentation
+  - Memory:            Proper FocusNode disposal
+
+
+KEY PRINCIPLES
+==============
+
+1. COMPOSITION    - Build complex UI from simple reusable parts
+2. IMMUTABILITY   - All public classes are immutable
+3. CALLBACKS      - State management via callbacks to parent
+4. CONFIGURATION  - Use objects for complex settings
+5. ACCESSIBILITY  - Full keyboard nav, focus management
+6. PLATFORM AWARE - Different UI/behavior per platform
+7. TESTING        - 21 test files for thorough coverage
+8. EXTENSION USE  - Utility methods via extensions
+9. LINTING STRICT - strict-casts, strict-inference, strict-raw-types
+10. DOCUMENTATION - Comprehensive dartdoc and README
+
+
+NAVIGATION GUIDE
+================
+
+To understand:                           Start with:
+────────────────────────────────────    ───────────────────────────
+How color selection works               color_picker.dart (main widget)
+Dialog functionality                    show_color_picker_dialog.dart
+Color tools & utilities                 color_tools.dart
+Copy-paste features                     models/color_picker_copy_paste_behavior.dart
+Opacity control                         widgets/opacity_slider.dart
+Hex color parsing                       color_picker_extensions.dart
+HSV wheel implementation                color_wheel_picker.dart
+Copy-paste handling                     widgets/copy_paste_handler.dart
+Test patterns                           test/color_picker_test.dart
+Material color swatches                 ColorTools.primaryColors constant
+Tonal palette generation                functions/picker_functions.dart (getTonalColors)
+
+
+FILE SIZE REFERENCE
+===================
+
+Large Files:
+  color_picker.dart                    ~3,300 lines
+  color_tools.dart                     ~2,500 lines
+  color_wheel_picker.dart              ~600 lines
+  color_code_field.dart                ~400 lines
+  color_picker_extensions.dart         ~200 lines
+
+Small Files:
+  color_indicator.dart                 ~200 lines
+  color_picker_type.dart               ~30 lines (enum)
+  if_wrapper.dart                      ~60 lines (utility)
+  dry_intrinsic.dart                   ~80 lines (workaround)
+
+
+DEVELOPMENT WORKFLOW
+====================
+
+1. MODIFY CODE
+   └─ Edit .dart file in lib/src/
+
+2. RUN TESTS
+   └─ flutter test (runs all 21 test files)
+   
+3. CHECK LINT
+   └─ flutter analyze (uses analysis_options.yaml)
+   
+4. BUILD EXAMPLE
+   └─ flutter run example/ (desktop or mobile)
+   
+5. COVERAGE
+   └─ flutter test --coverage
+   
+6. COMMIT
+   └─ git add, git commit (check git status first)
+
+
+DOCUMENTATION FILES (NEW)
+==========================
+
+ARCHITECTURE.md          - Full architectural analysis (552 lines, 19KB)
+                         - Directory structure, patterns, design decisions
+                         - Component relationships, feature implementations
+                         - Testing strategy, code quality standards
+                         - Build workflow, API surface, special patterns
+                         - Performance considerations, future enhancements
+
+QUICK_REFERENCE.md      - Quick lookup guide (316 lines, 9.3KB)
+                         - File organization map
+                         - Common tasks and code locations
+                         - Key classes and extensions
+                         - Testing patterns and configuration examples
+                         - Common pitfalls and performance checklist
+
+
+================================================================================
+                              END OF VISUAL GUIDE
+================================================================================
