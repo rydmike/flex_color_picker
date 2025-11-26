@@ -75,8 +75,10 @@ class ColorPickerActionButtons with Diagnosticable {
     this.dialogActionIcons = false,
     this.dialogCancelButtonLabel,
     this.dialogCancelButtonType = ColorPickerActionButtonType.text,
+    this.dialogCancelButtonStyle,
     this.dialogOkButtonLabel,
     this.dialogOkButtonType = ColorPickerActionButtonType.text,
+    this.dialogOkButtonStyle,
     this.useRootNavigator = true,
   });
 
@@ -262,6 +264,28 @@ class ColorPickerActionButtons with Diagnosticable {
   /// Defaults to [ColorPickerActionButtonType.text] resulting in [TextButton].
   final ColorPickerActionButtonType dialogCancelButtonType;
 
+  /// Optional custom [ButtonStyle] for the Cancel button.
+  ///
+  /// If provided, this style will be applied to the cancel button, allowing
+  /// full customization of its appearance including foreground color,
+  /// background color, padding, elevation, shape, and more.
+  ///
+  /// This style will override the default theme styling for the button type.
+  /// You can use [TextButton.styleFrom], [OutlinedButton.styleFrom],
+  /// [ElevatedButton.styleFrom], [FilledButton.styleFrom], etc. to create
+  /// the style easily.
+  ///
+  /// If null, the button uses the default theme styling.
+  ///
+  /// Example:
+  /// ```dart
+  /// dialogCancelButtonStyle: TextButton.styleFrom(
+  ///   foregroundColor: Colors.white,
+  ///   backgroundColor: Colors.red,
+  /// )
+  /// ```
+  final ButtonStyle? dialogCancelButtonStyle;
+
   /// Color picker dialog OK button label.
   ///
   /// Label shown on bottom action button for selecting the current color in
@@ -276,6 +300,28 @@ class ColorPickerActionButtons with Diagnosticable {
   ///
   /// Defaults to [ColorPickerActionButtonType.text] resulting in [TextButton].
   final ColorPickerActionButtonType dialogOkButtonType;
+
+  /// Optional custom [ButtonStyle] for the OK button.
+  ///
+  /// If provided, this style will be applied to the OK button, allowing
+  /// full customization of its appearance including foreground color,
+  /// background color, padding, elevation, shape, and more.
+  ///
+  /// This style will override the default theme styling for the button type.
+  /// You can use [TextButton.styleFrom], [OutlinedButton.styleFrom],
+  /// [ElevatedButton.styleFrom], [FilledButton.styleFrom], etc. to create
+  /// the style easily.
+  ///
+  /// If null, the button uses the default theme styling.
+  ///
+  /// Example:
+  /// ```dart
+  /// dialogOkButtonStyle: ElevatedButton.styleFrom(
+  ///   foregroundColor: Colors.white,
+  ///   backgroundColor: Colors.blue,
+  /// )
+  /// ```
+  final ButtonStyle? dialogOkButtonStyle;
 
   /// The `useRootNavigator` argument is used to determine whether to push the
   /// ColorPicker dialog to the [Navigator] furthest from or nearest to the
@@ -311,8 +357,10 @@ class ColorPickerActionButtons with Diagnosticable {
     bool? dialogActionIcons,
     String? dialogCancelButtonLabel,
     ColorPickerActionButtonType? dialogCancelButtonType,
+    ButtonStyle? dialogCancelButtonStyle,
     String? dialogOkButtonLabel,
     ColorPickerActionButtonType? dialogOkButtonType,
+    ButtonStyle? dialogOkButtonStyle,
     bool? useRootNavigator,
   }) {
     return ColorPickerActionButtons(
@@ -339,8 +387,11 @@ class ColorPickerActionButtons with Diagnosticable {
           dialogCancelButtonLabel ?? this.dialogCancelButtonLabel,
       dialogCancelButtonType:
           dialogCancelButtonType ?? this.dialogCancelButtonType,
+      dialogCancelButtonStyle:
+          dialogCancelButtonStyle ?? this.dialogCancelButtonStyle,
       dialogOkButtonLabel: dialogOkButtonLabel ?? this.dialogOkButtonLabel,
       dialogOkButtonType: dialogOkButtonType ?? this.dialogOkButtonType,
+      dialogOkButtonStyle: dialogOkButtonStyle ?? this.dialogOkButtonStyle,
       useRootNavigator: useRootNavigator ?? this.useRootNavigator,
     );
   }
@@ -371,8 +422,10 @@ class ColorPickerActionButtons with Diagnosticable {
         dialogActionIcons == other.dialogActionIcons &&
         dialogCancelButtonLabel == other.dialogCancelButtonLabel &&
         dialogCancelButtonType == other.dialogCancelButtonType &&
+        dialogCancelButtonStyle == other.dialogCancelButtonStyle &&
         dialogOkButtonLabel == other.dialogOkButtonLabel &&
         dialogOkButtonType == other.dialogOkButtonType &&
+        dialogOkButtonStyle == other.dialogOkButtonStyle &&
         useRootNavigator == other.useRootNavigator;
   }
 
@@ -398,8 +451,10 @@ class ColorPickerActionButtons with Diagnosticable {
         dialogActionIcons,
         dialogCancelButtonLabel,
         dialogCancelButtonType,
+        dialogCancelButtonStyle,
         dialogOkButtonLabel,
         dialogOkButtonType,
+        dialogOkButtonStyle,
         useRootNavigator,
       ]);
 
@@ -436,9 +491,13 @@ class ColorPickerActionButtons with Diagnosticable {
         StringProperty('dialogCancelButtonLabel', dialogCancelButtonLabel));
     properties.add(EnumProperty<ColorPickerActionButtonType>(
         'dialogCancelButtonType', dialogCancelButtonType));
+    properties.add(DiagnosticsProperty<ButtonStyle?>(
+        'dialogCancelButtonStyle', dialogCancelButtonStyle));
     properties.add(StringProperty('dialogOkButtonLabel', dialogOkButtonLabel));
     properties.add(EnumProperty<ColorPickerActionButtonType>(
         'dialogOkButtonType', dialogOkButtonType));
+    properties.add(DiagnosticsProperty<ButtonStyle?>(
+        'dialogOkButtonStyle', dialogOkButtonStyle));
     properties
         .add(DiagnosticsProperty<bool>('useRootNavigator', useRootNavigator));
   }
