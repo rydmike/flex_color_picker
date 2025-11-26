@@ -197,4 +197,116 @@ void main() {
     expect(endColor, const Color(0xff131d3c));
     expect(selectedColor, const Color(0xff131d3c));
   });
+
+  testWidgets('ColorWheelPicker didUpdateWidget test',
+      (WidgetTester tester) async {
+    Color selectedColor = Colors.red;
+    bool isWheelActive = false;
+
+    // Build widget with shouldRequestsFocus = false
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200,
+            height: 200,
+            child: ColorWheelPicker(
+              color: selectedColor,
+              onChanged: (Color color) {
+                selectedColor = color;
+              },
+              onWheel: (bool active) {
+                isWheelActive = active;
+              },
+              shouldRequestsFocus: false,
+              shouldUpdate: false,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Update widget with shouldRequestsFocus = true (changed)
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200,
+            height: 200,
+            child: ColorWheelPicker(
+              color: selectedColor,
+              onChanged: (Color color) {
+                selectedColor = color;
+              },
+              onWheel: (bool active) {
+                isWheelActive = active;
+              },
+              shouldRequestsFocus: true,
+              shouldUpdate: false,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ColorWheelPicker), findsOneWidget);
+  });
+
+  testWidgets('ColorWheelPicker didUpdateWidget with shouldUpdate test',
+      (WidgetTester tester) async {
+    Color selectedColor = Colors.red;
+    bool isWheelActive = false;
+
+    // Build widget with shouldUpdate = false
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200,
+            height: 200,
+            child: ColorWheelPicker(
+              color: selectedColor,
+              onChanged: (Color color) {
+                selectedColor = color;
+              },
+              onWheel: (bool active) {
+                isWheelActive = active;
+              },
+              shouldUpdate: false,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Update widget with shouldUpdate = true and different color
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200,
+            height: 200,
+            child: ColorWheelPicker(
+              color: Colors.blue,
+              onChanged: (Color color) {
+                selectedColor = color;
+              },
+              onWheel: (bool active) {
+                isWheelActive = active;
+              },
+              shouldUpdate: true,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ColorWheelPicker), findsOneWidget);
+  });
 }

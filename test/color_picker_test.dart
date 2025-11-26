@@ -1058,6 +1058,251 @@ void main() {
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
   });
+
+  group('CPI2: ColorPicker didUpdateWidget tests', () {
+    testWidgets('CPI2.1: ColorPicker didUpdateWidget with enableOpacity change',
+        (WidgetTester tester) async {
+      Color pickedColor = Colors.blue;
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            enableOpacity: false,
+          ),
+        ),
+      );
+
+      expect(find.byType(ColorPicker), findsOneWidget);
+
+      // Update widget with enableOpacity changed to true
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue.withOpacity(0.5),
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            enableOpacity: true,
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byType(ColorPicker), findsOneWidget);
+    });
+
+    testWidgets('CPI2.2: ColorPicker didUpdateWidget with color change',
+        (WidgetTester tester) async {
+      Color pickedColor = Colors.blue;
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+          ),
+        ),
+      );
+
+      expect(find.byType(ColorPicker), findsOneWidget);
+
+      // Update widget with different color
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.red,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byType(ColorPicker), findsOneWidget);
+    });
+
+    testWidgets('CPI2.3: ColorPicker didUpdateWidget with pickerTypeLabels change',
+        (WidgetTester tester) async {
+      Color pickedColor = Colors.blue;
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: true,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: true,
+              ColorPickerType.bw: true,
+              ColorPickerType.custom: false,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: false,
+            },
+            pickerTypeLabels: const <ColorPickerType, String>{
+              ColorPickerType.primary: 'Primary Colors',
+              ColorPickerType.accent: 'Accent Colors',
+            },
+          ),
+        ),
+      );
+
+      expect(find.byType(ColorPicker), findsOneWidget);
+
+      // Update widget with different pickerTypeLabels
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: true,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: true,
+              ColorPickerType.bw: true,
+              ColorPickerType.custom: false,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: false,
+            },
+            pickerTypeLabels: const <ColorPickerType, String>{
+              ColorPickerType.primary: 'Main Colors',
+              ColorPickerType.accent: 'Secondary Colors',
+              ColorPickerType.both: 'All Colors',
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byType(ColorPicker), findsOneWidget);
+    });
+
+    testWidgets('CPI2.4: ColorPicker didUpdateWidget with customColorSwatchesAndNames change',
+        (WidgetTester tester) async {
+      Color pickedColor = Colors.blue;
+
+      final Map<ColorSwatch<Object>, String> customSwatches1 =
+          <ColorSwatch<Object>, String>{
+        ColorTools.createPrimarySwatch(Colors.purple): 'Purple',
+      };
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: false,
+              ColorPickerType.primary: false,
+              ColorPickerType.accent: false,
+              ColorPickerType.bw: false,
+              ColorPickerType.custom: true,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: false,
+            },
+            customColorSwatchesAndNames: customSwatches1,
+          ),
+        ),
+      );
+
+      expect(find.byType(ColorPicker), findsOneWidget);
+
+      // Update widget with different customColorSwatchesAndNames
+      final Map<ColorSwatch<Object>, String> customSwatches2 =
+          <ColorSwatch<Object>, String>{
+        ColorTools.createPrimarySwatch(Colors.orange): 'Orange',
+        ColorTools.createPrimarySwatch(Colors.pink): 'Pink',
+      };
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: false,
+              ColorPickerType.primary: false,
+              ColorPickerType.accent: false,
+              ColorPickerType.bw: false,
+              ColorPickerType.custom: true,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: false,
+            },
+            customColorSwatchesAndNames: customSwatches2,
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byType(ColorPicker), findsOneWidget);
+    });
+
+    testWidgets('CPI2.5: ColorPicker didUpdateWidget with pickersEnabled change',
+        (WidgetTester tester) async {
+      Color pickedColor = Colors.blue;
+
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: false,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: true,
+              ColorPickerType.bw: false,
+              ColorPickerType.custom: false,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: false,
+            },
+          ),
+        ),
+      );
+
+      expect(find.byType(ColorPicker), findsOneWidget);
+
+      // Update widget with different pickersEnabled
+      await tester.pumpWidget(
+        TestWidget(
+          widget: ColorPicker(
+            color: Colors.blue,
+            onColorChanged: (Color color) {
+              pickedColor = color;
+            },
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: true,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: true,
+              ColorPickerType.bw: true,
+              ColorPickerType.custom: false,
+              ColorPickerType.customSecondary: false,
+              ColorPickerType.wheel: true,
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      expect(find.byType(ColorPicker), findsOneWidget);
+    });
+  });
 }
 
 class TestWidget extends StatelessWidget {
