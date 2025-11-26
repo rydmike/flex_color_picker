@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore_for_file: unnecessary_null_comparison, for clarity in tests.
+// ignore_for_file: unused_local_variable, Calude's test, we will fix later.
 
 //****************************************************************************
 // FlexColorPicker ColorPicker Widget tests
@@ -1082,7 +1083,7 @@ void main() {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
-            color: Colors.blue.withOpacity(0.5),
+            color: Colors.blue.withValues(alpha: 0.5),
             onColorChanged: (Color color) {
               pickedColor = color;
             },
@@ -1190,8 +1191,8 @@ void main() {
     });
 
     testWidgets(
-        'CPI2.4: ColorPicker didUpdateWidget with customColorSwatchesAndNames change',
-        (WidgetTester tester) async {
+        'CPI2.4: ColorPicker didUpdateWidget with '
+        'customColorSwatchesAndNames change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
       final Map<ColorSwatch<Object>, String> customSwatches1 =
