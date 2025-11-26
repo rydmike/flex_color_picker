@@ -275,6 +275,13 @@ class ColorPickerActionButtons with Diagnosticable {
   /// [ElevatedButton.styleFrom], [FilledButton.styleFrom], etc. to create
   /// the style easily.
   ///
+  /// The [dialogCancelButtonType] controls which button class is used. Just
+  /// like on the buttons types, you can use a raw [ButtonStyle] or any of
+  /// the `.styleFrom` factories from any button class to create the style,
+  /// regardless of what [ColorPickerActionButtonType] is used. Prefer
+  /// however to use matching button types and styles for easier to reason
+  /// about results.
+  ///
   /// If null, the button uses the default theme styling.
   ///
   /// Example:
@@ -311,6 +318,13 @@ class ColorPickerActionButtons with Diagnosticable {
   /// You can use [TextButton.styleFrom], [OutlinedButton.styleFrom],
   /// [ElevatedButton.styleFrom], [FilledButton.styleFrom], etc. to create
   /// the style easily.
+  ///
+  /// The [dialogOkButtonStyle] controls which button class is used. Just
+  /// like on the buttons types, you can use a raw [ButtonStyle] or any of
+  /// the `.styleFrom` factories from any button class to create the style,
+  /// regardless of what [ColorPickerActionButtonType] is used. Prefer
+  /// however to use matching button types and styles for easier to reason
+  /// about results.
   ///
   /// If null, the button uses the default theme styling.
   ///
