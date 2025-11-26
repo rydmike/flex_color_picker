@@ -30,6 +30,7 @@ part 'show_color_picker_dialog.dart';
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off here for just this feature. You can leave it true
 // below to see this feature's logs in debug mode.
+// ignore: no_literal_bool_comparisons, it is a debug flag
 const bool _debug = !kReleaseMode && false;
 
 const int _minRecentColors = 2;
