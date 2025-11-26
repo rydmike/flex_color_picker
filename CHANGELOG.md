@@ -9,7 +9,7 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 Requires min Flutter 3.38.0.
 
 **NEW**
-* Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example.
+* Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example. Customization was possible before to be wrapping with a theme, but now it is easier to do so via these properties. See issue [#95](https://github.com/rydmike/flex_color_picker/issues/95)
 
 
 **CHORE**
