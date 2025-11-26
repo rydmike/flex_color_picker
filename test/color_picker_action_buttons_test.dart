@@ -364,7 +364,8 @@ void main() {
         dialogOkButtonStyle: style2,
       );
 
-      expect(buttons1.dialogOkButtonStyle, equals(buttons2.dialogOkButtonStyle));
+      expect(
+          buttons1.dialogOkButtonStyle, equals(buttons2.dialogOkButtonStyle));
     });
 
     test(
