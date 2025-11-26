@@ -1,5 +1,4 @@
 import 'package:flex_color_picker/src/widgets/copy_paste_handler.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
