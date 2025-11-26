@@ -23,7 +23,7 @@ Added more tests for:
 - ColorWheelPicker didUpdateWidget tests
 - CopyPasteHandler configuration tests
 
-Coverage Statistics
+**Coverage Statistics**
 
 Before:
 - Overall Coverage: 91.07% (2,171/2,384 lines)
@@ -33,7 +33,9 @@ After:
 
 Improvement: +2.34 percentage points (+56 lines covered)
 
-Remaining Coverage Gaps, files still below 100% coverage:
+**Remaining Coverage Gaps**
+
+Files still below 100% coverage:
 
 1. color_picker.dart (84.53%) - 129 uncovered lines
    - Mostly complex conditional branches in internal state management
@@ -47,7 +49,7 @@ Remaining Coverage Gaps, files still below 100% coverage:
 6. dry_intrinsic.dart (93.75%) - 1 uncovered line
 7. color_tools.dart (99.38%) - 1 uncovered line
 
-Test Summary
+**Test Summary**
 
 The test suite now has 93.41% coverage, up from 91.07%. The most significant improvement was in color_picker.dart,
 where I added comprehensive tests for the didUpdateWidget lifecycle method, covering scenarios like:
