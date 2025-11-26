@@ -13,7 +13,7 @@ Requires min Flutter 3.38.0.
 
 
 **CHORE**
-* Update dev dependencies for Flutter 3.38.x
+* Bump dependencies
 * Update to RydMike lints to 2.6.0 and fix lints.
 
 
