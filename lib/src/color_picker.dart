@@ -1169,7 +1169,7 @@ class ColorPicker extends StatefulWidget {
               );
     }
 
-    // Make the dialog OK button.
+    // Make the dialog Cancel button.
     final String cancelButtonLabel =
         actionButtons.dialogCancelButtonLabel ?? translate.cancelButtonLabel;
     final Widget cancelButtonContent = Text(cancelButtonLabel);
@@ -1462,7 +1462,7 @@ class _ColorPickerState extends State<ColorPicker> {
   // Set to true when we are drag and operating the wheel picker.
   bool _onWheel = false;
 
-  // Set to true when edit icon is taped and edit field shuld focus
+  // Set to true when edit icon is taped and edit field should focus
   bool _requestEditFocus = false;
 
   // Becomes true when we have more than one ColorPickerType available in
