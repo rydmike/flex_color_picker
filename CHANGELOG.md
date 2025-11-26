@@ -25,13 +25,10 @@ Added more tests for:
 
 **Coverage Statistics**
 
-Before:
-- Overall Coverage: 91.07% (2,171/2,384 lines)
+- **Before:** Overall Coverage: 91.07% (2,171/2,384 lines)
+- **After:** Overall Coverage: 93.41% (2,227/2,384 lines)
 
-After:
-- Overall Coverage: 93.41% (2,227/2,384 lines)
-
-Improvement: +2.34 percentage points (+56 lines covered)
+Improvement: **+2.34** percentage points (+56 lines covered)
 
 **Remaining Coverage Gaps**
 
