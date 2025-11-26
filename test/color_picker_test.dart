@@ -1128,7 +1128,8 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets('CPI2.3: ColorPicker didUpdateWidget with pickerTypeLabels change',
+    testWidgets(
+        'CPI2.3: ColorPicker didUpdateWidget with pickerTypeLabels change',
         (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
@@ -1188,7 +1189,8 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets('CPI2.4: ColorPicker didUpdateWidget with customColorSwatchesAndNames change',
+    testWidgets(
+        'CPI2.4: ColorPicker didUpdateWidget with customColorSwatchesAndNames change',
         (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
@@ -1252,7 +1254,8 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets('CPI2.5: ColorPicker didUpdateWidget with pickersEnabled change',
+    testWidgets(
+        'CPI2.5: ColorPicker didUpdateWidget with pickersEnabled change',
         (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 

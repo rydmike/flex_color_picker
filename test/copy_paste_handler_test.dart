@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('CPH1: CopyPasteHandler Widget Test', (WidgetTester tester) async {
+  testWidgets('CPH1: CopyPasteHandler Widget Test',
+      (WidgetTester tester) async {
     Future<void> mockCopyToClipboard() async {
       await Clipboard.setData(const ClipboardData(text: 'Copied Text'));
     }
