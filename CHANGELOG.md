@@ -2,6 +2,21 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 3.8.0
+
+**November 26, 2025**
+
+Requires min Flutter 3.38.0.
+
+**NEW**
+* Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example.
+
+
+**CHORE**
+* Update dev dependencies for Flutter 3.38.x
+* Update to RydMike lints to 2.6.0 and fix lints.
+
+
 ## 3.7.2
 
 **November 3, 2025**
@@ -9,7 +24,6 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 Requires min Flutter 3.35.0, due to Flutter API change in ThemeData used in WEB example.
  
 **CHORE**
-
 * Update dev dependencies for Flutter 3.35.x
 * Update to RydMike lints to 2.4.0 and fix lints.
 * WEB example: FIX broken and deprecated Flutter APIs in Flutter 3.35.x
