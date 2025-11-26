@@ -1069,6 +1069,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 icon: Icon(actionButtons.okIcon),
                 label: okButtonContent,
               )
@@ -1078,6 +1079,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 child: okButtonContent,
               );
       case ColorPickerActionButtonType.outlined:
@@ -1088,6 +1090,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 icon: Icon(actionButtons.okIcon),
                 label: okButtonContent,
               )
@@ -1097,6 +1100,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 child: okButtonContent,
               );
       case ColorPickerActionButtonType.elevated:
@@ -1107,6 +1111,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 icon: Icon(actionButtons.okIcon),
                 label: okButtonContent,
               )
@@ -1116,6 +1121,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 child: okButtonContent,
               );
       case ColorPickerActionButtonType.filled:
@@ -1126,6 +1132,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 icon: Icon(actionButtons.okIcon),
                 label: okButtonContent,
               )
@@ -1135,6 +1142,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 child: okButtonContent,
               );
       case ColorPickerActionButtonType.filledTonal:
@@ -1145,6 +1153,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 icon: Icon(actionButtons.okIcon),
                 label: okButtonContent,
               )
@@ -1154,6 +1163,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(true);
                 },
+                style: actionButtons.dialogOkButtonStyle,
                 child: okButtonContent,
               );
     }
@@ -1172,6 +1182,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 icon: Icon(actionButtons.closeIcon),
                 label: cancelButtonContent,
               )
@@ -1181,6 +1192,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 child: cancelButtonContent,
               );
       case ColorPickerActionButtonType.outlined:
@@ -1191,6 +1203,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 icon: Icon(actionButtons.closeIcon),
                 label: cancelButtonContent,
               )
@@ -1200,6 +1213,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 child: cancelButtonContent,
               );
       case ColorPickerActionButtonType.elevated:
@@ -1210,6 +1224,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 icon: Icon(actionButtons.closeIcon),
                 label: cancelButtonContent,
               )
@@ -1219,6 +1234,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 child: cancelButtonContent,
               );
       case ColorPickerActionButtonType.filled:
@@ -1229,6 +1245,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 icon: Icon(actionButtons.closeIcon),
                 label: cancelButtonContent,
               )
@@ -1238,6 +1255,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 child: cancelButtonContent,
               );
       case ColorPickerActionButtonType.filledTonal:
@@ -1248,6 +1266,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 icon: Icon(actionButtons.closeIcon),
                 label: cancelButtonContent,
               )
@@ -1257,6 +1276,7 @@ class ColorPicker extends StatefulWidget {
                           rootNavigator: actionButtons.useRootNavigator)
                       .pop(false);
                 },
+                style: actionButtons.dialogCancelButtonStyle,
                 child: cancelButtonContent,
               );
     }

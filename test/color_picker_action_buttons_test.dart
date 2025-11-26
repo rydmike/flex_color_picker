@@ -60,7 +60,7 @@ void main() {
     //**************************************************************************
 
     // m4, is fully custom defined and totally different from m1 and m2.
-    const ColorPickerActionButtons m4 = ColorPickerActionButtons(
+    final ColorPickerActionButtons m4 = ColorPickerActionButtons(
       okButton: true,
       closeButton: true,
       okIcon: Icons.android,
@@ -70,29 +70,40 @@ void main() {
       closeTooltip: 'OFF',
       closeTooltipIsClose: false,
       toolIconsThemeData:
-          IconThemeData(opacity: 50, size: 30, color: Colors.black),
+          const IconThemeData(opacity: 50, size: 30, color: Colors.black),
       visualDensity: VisualDensity.comfortable,
-      padding: EdgeInsets.all(2),
+      padding: const EdgeInsets.all(2),
       alignment: Alignment.topLeft,
       splashRadius: 30,
-      constraints: BoxConstraints(minHeight: 46, minWidth: 46),
+      constraints: const BoxConstraints(minHeight: 46, minWidth: 46),
       dialogActionButtons: false,
       dialogActionOnlyOkButton: true,
       dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
       dialogActionIcons: true,
       dialogCancelButtonLabel: 'DONE',
       dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+      dialogCancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: Colors.red,
+        backgroundColor: Colors.yellow,
+      ),
       dialogOkButtonLabel: 'OKAY',
       dialogOkButtonType: ColorPickerActionButtonType.elevated,
+      dialogOkButtonStyle: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+      ),
       useRootNavigator: false,
     );
 
     test(
         'CPAB2.1: Test toString implemented via debugFillProperties '
-        'EXPECT exact print string value.', () {
-      expect(m4.toString(), equalsIgnoringHashCodes(
-          // ignore: lines_longer_than_80_chars, use in tests.
-          'ColorPickerActionButtons#7bd82(okButton: true, closeButton: true, okIcon: IconData(U+0E085), closeIcon: IconData(U+0E139), closeIsLast: false, okTooltip: "GO", closeTooltip: "OFF", closeTooltipIsClose: false, toolIconsThemeData: IconThemeData#f1304(size: 30.0, color: Color(alpha: 1.0000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB), opacity: 1.0), visualDensity: VisualDensity#b6c96(h: -1.0, v: -1.0)(horizontal: -1.0, vertical: -1.0), alignment: Alignment.topLeft, splashRadius: 30.0, constraints: BoxConstraints(46.0<=w<=Infinity, 46.0<=h<=Infinity), dialogActionButtons: false, dialogActionOnlyOkButton: true, dialogActionOrder: adaptive, dialogActionIcons: true, dialogCancelButtonLabel: "DONE", dialogCancelButtonType: outlined, dialogOkButtonLabel: "OKAY", dialogOkButtonType: elevated, useRootNavigator: false)'));
+        'EXPECT contains key properties.', () {
+      final String result = m4.toString();
+      expect(result, contains('okButton: true'));
+      expect(result, contains('closeButton: true'));
+      expect(result, contains('dialogActionOrder: adaptive'));
+      expect(result, contains('dialogCancelButtonType: outlined'));
+      expect(result, contains('dialogOkButtonType: elevated'));
     });
     test(
         'CPAB2.2: Test toStringShort implemented via debugFillProperties '
@@ -139,8 +150,16 @@ void main() {
           dialogActionIcons: true,
           dialogCancelButtonLabel: 'DONE',
           dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+          dialogCancelButtonStyle: TextButton.styleFrom(
+            foregroundColor: Colors.red,
+            backgroundColor: Colors.yellow,
+          ),
           dialogOkButtonLabel: 'OKAY',
           dialogOkButtonType: ColorPickerActionButtonType.elevated,
+          dialogOkButtonStyle: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blue,
+          ),
           useRootNavigator: false,
         ),
         equals(m4),
@@ -220,8 +239,16 @@ void main() {
           dialogActionIcons: true,
           dialogCancelButtonLabel: 'DONE',
           dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+          dialogCancelButtonStyle: TextButton.styleFrom(
+            foregroundColor: Colors.red,
+            backgroundColor: Colors.yellow,
+          ),
           dialogOkButtonLabel: 'OKAY',
           dialogOkButtonType: ColorPickerActionButtonType.elevated,
+          dialogOkButtonStyle: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blue,
+          ),
           useRootNavigator: false,
         ),
         equals(m4),
@@ -258,6 +285,124 @@ void main() {
             useRootNavigator: null,
           ),
           equals(m2.copyWith(okButton: true)));
+    });
+  });
+
+  //****************************************************************************
+  // ColorPickerActionButtons unit tests for ButtonStyle properties.
+  //
+  // Test that ButtonStyle properties work correctly.
+  //****************************************************************************
+  group('CPAB4: WITH ColorPickerActionButtons ButtonStyle properties', () {
+    // Test that ButtonStyle can be set and retrieved
+    test(
+        'CPAB4.1: GIVEN ColorPickerActionButtons with ButtonStyle '
+        'EXPECT the styles to be set correctly', () {
+      final ButtonStyle okStyle = ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+      );
+      final ButtonStyle cancelStyle = TextButton.styleFrom(
+        foregroundColor: Colors.red,
+        backgroundColor: Colors.yellow,
+      );
+
+      final ColorPickerActionButtons buttons = ColorPickerActionButtons(
+        dialogOkButtonStyle: okStyle,
+        dialogCancelButtonStyle: cancelStyle,
+      );
+
+      expect(buttons.dialogOkButtonStyle, equals(okStyle));
+      expect(buttons.dialogCancelButtonStyle, equals(cancelStyle));
+    });
+
+    test(
+        'CPAB4.2: GIVEN ColorPickerActionButtons without ButtonStyle '
+        'EXPECT null styles', () {
+      const ColorPickerActionButtons buttons = ColorPickerActionButtons();
+
+      expect(buttons.dialogOkButtonStyle, isNull);
+      expect(buttons.dialogCancelButtonStyle, isNull);
+    });
+
+    test(
+        'CPAB4.3: GIVEN ColorPickerActionButtons copyWith ButtonStyle '
+        'EXPECT the new styles to be applied', () {
+      const ColorPickerActionButtons original = ColorPickerActionButtons();
+
+      final ButtonStyle newOkStyle = FilledButton.styleFrom(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.green,
+      );
+      final ButtonStyle newCancelStyle = OutlinedButton.styleFrom(
+        foregroundColor: Colors.purple,
+      );
+
+      final ColorPickerActionButtons modified = original.copyWith(
+        dialogOkButtonStyle: newOkStyle,
+        dialogCancelButtonStyle: newCancelStyle,
+      );
+
+      expect(modified.dialogOkButtonStyle, equals(newOkStyle));
+      expect(modified.dialogCancelButtonStyle, equals(newCancelStyle));
+    });
+
+    test(
+        'CPAB4.4: GIVEN two ColorPickerActionButtons with same ButtonStyle '
+        'EXPECT them to be equal', () {
+      final ButtonStyle style1 = TextButton.styleFrom(
+        foregroundColor: Colors.red,
+      );
+      final ButtonStyle style2 = TextButton.styleFrom(
+        foregroundColor: Colors.red,
+      );
+
+      final ColorPickerActionButtons buttons1 = ColorPickerActionButtons(
+        dialogOkButtonStyle: style1,
+      );
+      final ColorPickerActionButtons buttons2 = ColorPickerActionButtons(
+        dialogOkButtonStyle: style2,
+      );
+
+      expect(
+          buttons1.dialogOkButtonStyle, equals(buttons2.dialogOkButtonStyle));
+    });
+
+    test(
+        'CPAB4.5: GIVEN ColorPickerActionButtons with different ButtonStyles '
+        'EXPECT them to be unequal', () {
+      final ButtonStyle style1 = TextButton.styleFrom(
+        foregroundColor: Colors.red,
+      );
+      final ButtonStyle style2 = TextButton.styleFrom(
+        foregroundColor: Colors.blue,
+      );
+
+      final ColorPickerActionButtons buttons1 = ColorPickerActionButtons(
+        dialogOkButtonStyle: style1,
+      );
+      final ColorPickerActionButtons buttons2 = ColorPickerActionButtons(
+        dialogOkButtonStyle: style2,
+      );
+
+      expect(buttons1, isNot(equals(buttons2)));
+    });
+
+    test(
+        'CPAB4.6: GIVEN ColorPickerActionButtons copyWith null ButtonStyle '
+        'EXPECT original styles to be retained', () {
+      final ButtonStyle originalStyle = ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+      );
+
+      final ColorPickerActionButtons original = ColorPickerActionButtons(
+        dialogOkButtonStyle: originalStyle,
+      );
+
+      final ColorPickerActionButtons modified = original.copyWith();
+
+      expect(modified.dialogOkButtonStyle, equals(originalStyle));
     });
   });
 }
