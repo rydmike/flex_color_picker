@@ -175,11 +175,39 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                       pasteButton: true,
                       longPressMenu: true,
                     ),
-                    actionButtons: const ColorPickerActionButtons(
+                    actionButtons: ColorPickerActionButtons(
+                      // Show the dialog bottom action buttons.
+                      dialogActionButtons: true,
+                      // Show the dialog OK button
                       okButton: true,
+                      // Type of OK button, here ElevatedButton
+                      dialogOkButtonType: ColorPickerActionButtonType.elevated,
+                      // This style will be applied to the ElevatedButton and
+                      // combined with the default style for it button type.
+                      // to avoid confusing results maybe not use both or at
+                      // least not conflicting styleFrom class to the chosen
+                      // button type.
+                      dialogOkButtonStyle: TextButton.styleFrom(
+                        foregroundColor: Colors.yellow,
+                        backgroundColor: Colors.red,
+                      ),
+                      // Show the dialog Cancel/Close button
                       closeButton: true,
-                      dialogActionButtons: false,
+                      // Type of OK button, here OutlinedButton.
+                      dialogCancelButtonType:
+                          ColorPickerActionButtonType.outlined,
+                      // As a demo we style the Cancel OutlinedButton with
+                      // ElevatedButton.styleFrom, normally you would
+                      // use OutlinedButton.styleFrom to avoid confusing
+                      // results. Here we set elevation to 0.
+                      dialogCancelButtonStyle: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.green,
+                        elevation: 0,
+                      ),
                     ),
+                    // Custom transition builder to open the dialog with
+                    // a slide down and fade in.
                     transitionBuilder: (BuildContext context,
                         Animation<double> a1,
                         Animation<double> a2,
