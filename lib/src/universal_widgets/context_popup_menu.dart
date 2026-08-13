@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../functions/picker_functions.dart';
 
@@ -35,14 +35,14 @@ class ContextPopupMenu<T> extends StatefulWidget {
   const ContextPopupMenu({
     super.key,
     required this.items,
-    required ValueChanged<T?> onSelected,
+    required ValueChanged<T?> this._onSelected,
     this.onOpen,
     required this.child,
     this.useLongPress = false,
     this.useSecondaryTapDown = false,
     this.useSecondaryOnDesktopLongOnDevice = false,
     this.useSecondaryOnDesktopLongOnDeviceAndWeb = true,
-  }) : _onSelected = onSelected;
+  });
 
   /// The popup menu entries for the long press menu.
   final List<PopupMenuEntry<T>> items;

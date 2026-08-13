@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The [OpacitySliderThumb] is a custom version of [RoundSliderThumbShape]
 /// that draws a circle as thumb, with [color] as color inside the thumb.

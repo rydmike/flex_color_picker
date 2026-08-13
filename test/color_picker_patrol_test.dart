@@ -3,9 +3,9 @@ import 'package:flex_color_picker/src/widgets/color_picker_toolbar.dart';
 import 'package:flex_color_picker/src/widgets/opacity/opacity_slider.dart';
 import 'package:flex_color_picker/src/widgets/recent_colors.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:patrol_finders/patrol_finders.dart';
 
 import 'clipboard_utils.dart';

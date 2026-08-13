@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/src/functions/picker_functions.dart';
 import 'package:flex_color_picker/src/models/color_picker_type.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// An abstraction to build platform adaptive Widgets.
 abstract class PlatformWidget extends StatelessWidget {

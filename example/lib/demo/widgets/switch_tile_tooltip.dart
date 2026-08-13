@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'maybe_tooltip.dart';
 import 'switch_list_tile_adaptive.dart';

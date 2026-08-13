@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Hive box name, used for the Hive box that store all settings.
 const String kHiveBox = 'picker_settings';

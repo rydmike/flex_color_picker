@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A Material widget used as a color indicator and color selector by the
 /// FlexColorPicker package's `ColorPicker` widget.

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../flex_color_picker.dart';
 import '../functions/picker_functions.dart';

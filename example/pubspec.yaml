@@ -30,6 +30,8 @@ dependencies:
   # Used for launching a WEB URL (by Google flutter.dev).
   url_launcher: ^6.3.2
 
+  material_ui: any
+  cupertino_ui: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

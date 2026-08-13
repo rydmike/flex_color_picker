@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/src/color_indicator.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 //****************************************************************************
 // FlexColorPicker ColorIndicator Widget tests

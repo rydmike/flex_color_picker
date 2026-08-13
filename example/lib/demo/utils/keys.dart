@@ -1,5 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Key constants for key-value pairs for storing the settings as well
 /// as a map with default value for each key-value pair settings.
