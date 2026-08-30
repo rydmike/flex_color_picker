@@ -3,8 +3,8 @@ description: Two examples of how to use the FlexColorPicker package.
 version: 3.8.0
 publish_to: 'none'
 environment:
-  sdk: '>=3.6.0 <4.0.0'
-  flutter: '>=3.38.0'
+  sdk: '>=3.12.0 <4.0.0'
+  flutter: '>=3.44.0'
 
 dependencies:
   # https://pub.dev/packages/flex_color_picker
