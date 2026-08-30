@@ -47,7 +47,7 @@ dev_dependencies:
   coverage: ^1.15.0
   flutter_test:
     sdk: flutter
-  patrol_finders: ^2.9.0
+  patrol_finders: ^3.6.0
   test:
 
 flutter:
