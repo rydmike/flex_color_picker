@@ -53,4 +53,71 @@ void main() {
     // Check if the slider is found by the test
     expect(find.byType(Slider), findsOneWidget);
   });
+
+  testWidgets('OpacitySliderTrack paints RTL and no-ops when trackHeight is 0', (WidgetTester tester) async {
+    const AssetImage assetImage = AssetImage('assets/opacity.png');
+    late ui.Image image;
+    final Completer<void> completer = Completer<void>();
+
+    await tester.runAsync(() async {
+      final ByteData data = await rootBundle.load(assetImage.keyName);
+      final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+      final ui.FrameInfo frameInfo = await codec.getNextFrame();
+      image = frameInfo.image;
+      completer.complete();
+    });
+    await completer.future;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: Center(
+              child: SliderTheme(
+                data: SliderThemeData(
+                  trackShape: OpacitySliderTrack(
+                    color: Colors.blue,
+                    thumbRadius: 14,
+                    image: image,
+                  ),
+                ),
+                child: Slider(
+                  value: 0.4,
+                  onChanged: (double value) {},
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(Slider), findsOneWidget);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SliderTheme(
+              data: SliderThemeData(
+                trackHeight: 0,
+                trackShape: OpacitySliderTrack(
+                  color: Colors.blue,
+                  thumbRadius: 14,
+                  image: image,
+                ),
+              ),
+              child: Slider(
+                value: 0.4,
+                onChanged: (double value) {},
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(Slider), findsOneWidget);
+  });
 }

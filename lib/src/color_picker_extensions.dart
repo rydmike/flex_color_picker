@@ -1,14 +1,6 @@
 import 'dart:ui' show Color;
 
-import 'package:cupertino_ui/cupertino_ui.dart' show Color;
 import 'package:flex_color_picker/src/color_tools.dart';
-import 'package:flutter/animation.dart' show Color;
-import 'package:flutter/painting.dart' show Color;
-import 'package:flutter/rendering.dart' show Color;
-import 'package:flutter/services.dart' show Color;
-import 'package:flutter/widgets.dart' show Color;
-import 'package:material_ui/material_ui.dart' show Color;
-import 'package:material_ui/material_ui.dart';
 
 /// Extensions on non-nullable [Color] to return its color value as strings.
 ///

@@ -51,10 +51,13 @@ class RenderDryIntrinsicWidth extends RenderIntrinsicWidth {
 @immutable
 class DryIntrinsicHeight extends SingleChildRenderObjectWidget {
   /// Default const constructor.
+  // coverage:ignore-start
+  // Dart coverage does not instrument this super-initializer constructor line.
   const DryIntrinsicHeight({
     super.key,
     required super.child,
   });
+  // coverage:ignore-end
 
   @override
   RenderDryIntrinsicHeight createRenderObject(BuildContext context) => RenderDryIntrinsicHeight();

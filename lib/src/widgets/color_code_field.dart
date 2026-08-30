@@ -229,11 +229,14 @@ class _ColorCodeFieldState extends State<ColorCodeField> {
     final double borderRadius = fontSize * 1.2;
     final double fieldWidth = fontSize * 10.5;
 
+    // coverage:ignore-start
+    // `_debug` is `const … && false`, so this block never runs.
     if (_debug) {
       debugPrint('TextField: Build color               =${widget.color}');
       debugPrint('TextField: Build unfocusedBackground =$unfocusedBackground');
       debugPrint('TextField: Build focusedBackground   =$focusedBackground');
     }
+    // coverage:ignore-end
 
     return SizedBox(
       width: fieldWidth,

@@ -187,6 +187,16 @@ void main() {
     expect(size.width, 100);
     expect(size.height, 50);
   });
+
+  test('RenderDryIntrinsicWidth computeDryLayout with no child is Size.zero', () {
+    final RenderDryIntrinsicWidth renderObject = RenderDryIntrinsicWidth();
+    expect(renderObject.computeDryLayout(const BoxConstraints()), Size.zero);
+  });
+
+  test('RenderDryIntrinsicHeight computeDryLayout with no child is Size.zero', () {
+    final RenderDryIntrinsicHeight renderObject = RenderDryIntrinsicHeight();
+    expect(renderObject.computeDryLayout(const BoxConstraints()), Size.zero);
+  });
 }
 
 class TestWidget extends StatelessWidget {

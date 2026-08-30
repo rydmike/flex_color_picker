@@ -249,4 +249,86 @@ void main() {
 
     focusNode.dispose();
   });
+
+  testWidgets('CPH7: Long press context menu copy and paste', (WidgetTester tester) async {
+    int copyCount = 0;
+    int pasteCount = 0;
+    int openCount = 0;
+    final FocusNode focusNode = FocusNode();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CopyPasteHandler(
+            pasteFromClipboard: () async {
+              pasteCount++;
+            },
+            copyToClipboard: () async {
+              copyCount++;
+            },
+            useContextMenu: true,
+            useLongPress: true,
+            useSecondaryTapDown: false,
+            useSecondaryOnDesktopLongOnDevice: false,
+            useSecondaryOnDesktopLongOnDeviceAndWeb: false,
+            onCopyPasteMenuOpened: () {
+              openCount++;
+            },
+            focusNode: focusNode,
+            autoFocus: true,
+            noPasteIntent: false,
+            child: const SizedBox(
+              width: 120,
+              height: 120,
+              child: Text('Menu target'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.longPress(find.text('Menu target'));
+    await tester.pumpAndSettle();
+    // Default copy/paste menu width is 80dp and overflows the Copy/Paste labels
+    // in tests; swallow that layout exception so we can still select items.
+    tester.takeException();
+    expect(openCount, greaterThanOrEqualTo(1));
+    expect(find.text('Copy'), findsOneWidget);
+    expect(find.text('Paste'), findsOneWidget);
+
+    await tester.tap(find.text('Copy'));
+    await tester.pumpAndSettle();
+    tester.takeException();
+    expect(copyCount, 1);
+    expect(pasteCount, 0);
+
+    await tester.longPress(find.text('Menu target'));
+    await tester.pumpAndSettle();
+    tester.takeException();
+    await tester.tap(find.text('Paste'));
+    await tester.pumpAndSettle();
+    tester.takeException();
+    expect(copyCount, 1);
+    expect(pasteCount, 1);
+
+    focusNode.dispose();
+  });
+
+  test('CPH8: CopyAction and PasteAction invoke the clipboard callbacks', () async {
+    int copyCount = 0;
+    int pasteCount = 0;
+    final CopyAction copyAction = CopyAction(() async {
+      copyCount++;
+    });
+    final PasteAction pasteAction = PasteAction(() async {
+      pasteCount++;
+    });
+
+    copyAction.invoke(const CopyIntent());
+    pasteAction.invoke(const PasteIntent());
+    await Future<void>.delayed(Duration.zero);
+    expect(copyCount, 1);
+    expect(pasteCount, 1);
+  });
 }

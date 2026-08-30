@@ -23,15 +23,18 @@ The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled 
 - Setup package for agentic development and usage use with git worktrees.
 - Added a skill for agents that consume this package, see `.agents/skills/flex-color-picker/SKILL.md`.
 - Updated API docs, typos and language and some stale docs.
+- Refreshed the README for 4.0: Flutter 3.47 and `material_ui` / `cupertino_ui` highlight, stale claims and typos, undocumented APIs as text, a simpler heading structure, and prose that is not hard-wrapped. Screenshots are unchanged.
 
 **TESTS**
 - Added `CopyPasteHandler` shortcut tests for Ctrl-C / Ctrl-V on Windows and Cmd-C / Cmd-V on macOS.
+- Raised package test coverage to 100% of instrumented lines. Added `color_picker_coverage_test.dart` for single-picker modes, clipboard formats/errors, toolbar OK/Close, opacity slider drags, and color-code editing. Compile-time-false `_debug` print blocks are excluded with documented `coverage:ignore` comments.
 
 **CHORE**
 - Bump dependencies
 - Update to RydMike lints to 3.0.0 and fix lints.
 - Example iOS and macOS builds: removed CocoaPods integration so the runners use Swift Package Manager only.
 - Example web demo: replaced the deprecated Flutter service-worker bootstrap with `flutter_bootstrap.js`.
+- Agent docs (`AGENTS.md` and skills) and CONTRIBUTING: package `lib/` coverage must stay at 100% of instrumented lines.
 
 
 ## 3.8.0

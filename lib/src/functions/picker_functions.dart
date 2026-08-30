@@ -4,8 +4,6 @@ import 'package:flex_color_picker/src/models/color_picker_type.dart';
 import 'package:flex_seed_scheme/flex_seed_scheme.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// These functions are not library exposed, they are private to the library.
-
 /// Privately used extensions on [Color] to lighten a color.
 extension FlexPickerColorExtensions on Color {
   /// Lightens the color with the given integer percentage amount.

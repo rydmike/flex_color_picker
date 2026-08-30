@@ -1569,17 +1569,22 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void didUpdateWidget(ColorPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
+    // coverage:ignore-start
+    // `_debug` is `const … && false`, so this block never runs.
     if (_debug) {
       debugPrint(
         'didUpdateWidget called: fromInternal: $_fromInternal'
         ' ******************************',
       );
     }
+    // coverage:ignore-end
     // Set to true if a change was done where we need to find the picker again.
     bool shouldFindPickerAndSwatch = false;
     // Opacity enable/disable changed, update selected color and opacity.
     if (widget.enableOpacity != oldWidget.enableOpacity) {
       _opacity = widget.enableOpacity ? widget.color.a : 1;
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint(
           'didUpdateWidget changed: enableOpacity = '
@@ -1587,15 +1592,19 @@ class _ColorPickerState extends State<ColorPicker> {
           ' opacity=$_opacity',
         );
       }
+      // coverage:ignore-end
     }
     // The color was updated externally, update to new color and find picker.
     if (widget.color != _selectedColor || widget.color != _tappedColor) {
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint(
           'didUpdateWidget changed color: '
           'color=${widget.color} selectedColor=$_selectedColor',
         );
       }
+      // coverage:ignore-end
       _selectedColor = widget.color.withAlpha(0xFF);
       _opacity = widget.enableOpacity ? widget.color.a : 1;
       // Make a swatch too be to find it on wheel, if color is there.
@@ -1616,12 +1625,15 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     // Picker labels map changed, update used one, with its default fallbacks.
     if (!mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)) {
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint(
           'didUpdateWidget pickerTypeLabels mapEquals: '
           '${mapEquals(widget.pickerTypeLabels, oldWidget.pickerTypeLabels)}',
         );
       }
+      // coverage:ignore-end
       _pickerLabels = <ColorPickerType, String>{
         ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ?? ColorPicker._selectBothLabel,
         ColorPickerType.primary: widget.pickerTypeLabels[ColorPickerType.primary] ?? ColorPicker._selectPrimaryLabel,
@@ -1651,9 +1663,12 @@ class _ColorPickerState extends State<ColorPicker> {
       // problem use cases, while the [mapEquals] or == operator was not.
       // Therefore using `toString` comparisons for now to get around the issue,
       // not ideal, but it works OK.
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint('didUpdateWidget pickersEnabled or custom swatch updated!');
       }
+      // coverage:ignore-end
       // Update _typeToSwatchMap, because custom color swatches were updated.
       _typeToSwatchMap = <ColorPickerType, List<ColorSwatch<Object>>>{
         ColorPickerType.both: ColorTools.primaryAndAccentColors,
@@ -1688,10 +1703,13 @@ class _ColorPickerState extends State<ColorPicker> {
             widget.customSecondaryColorSwatchesAndNames.isNotEmpty,
         ColorPickerType.wheel: widget.pickersEnabled[ColorPickerType.wheel] ?? false,
       };
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint('${widget.customColorSwatchesAndNames}');
         debugPrint('${oldWidget.customColorSwatchesAndNames}');
       }
+      // coverage:ignore-end
       // We should find picker and swatch after above updates.
       shouldFindPickerAndSwatch = true;
     }
@@ -1705,7 +1723,10 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     // Last find picker and swatch, if the flag to do so is set.
     if (shouldFindPickerAndSwatch) {
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this line never runs.
       if (_debug) debugPrint('didUpdateWidget shouldFindPickerAndSwatch');
+      // coverage:ignore-end
       _findPicker();
       _updateActiveSwatch();
     }
@@ -1775,9 +1796,12 @@ class _ColorPickerState extends State<ColorPicker> {
       // Get list of color swatches from the map for the active picker.
       _activeColorSwatchList = _typeToSwatchMap[_activePicker]!;
 
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint('_updateActiveSwatch _tappedColor= $_tappedColor');
       }
+      // coverage:ignore-end
       // Find the swatch that selected color belongs to from the swatches in
       // the active picker and set this swatch as _activeSwatch.
       _activeSwatch = findColorSwatch(
@@ -1785,9 +1809,12 @@ class _ColorPickerState extends State<ColorPicker> {
         _activeColorSwatchList,
         widget.includeIndex850,
       ) as ColorSwatch<Object>?;
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so this block never runs.
       if (_debug) {
         debugPrint('_updateActiveSwatch _activeSwatch= $_activeSwatch');
       }
+      // coverage:ignore-end
       // For the wheel picker we need to check if the selected color belongs to
       // a pre-defined swatch and if it does, return that as the active swatch.
       // If the selected color does not belong to any pre-defined color swatch,
@@ -1864,7 +1891,11 @@ class _ColorPickerState extends State<ColorPicker> {
       if (toolbarTitle is Text) {
         toolbarTitleTextStyle = toolbarTitle.style;
       } else if (widget.title is TextSpan) {
+        // coverage:ignore-start
+        // `title` is a `Widget?`; `TextSpan` is not a Widget, so this branch
+        // cannot run. Kept for historical API compatibility with a span title.
         toolbarTitleTextStyle = (toolbarTitle as TextSpan).style;
+        // coverage:ignore-end
       } else {
         toolbarTitleTextStyle = null;
       }
@@ -1884,9 +1915,12 @@ class _ColorPickerState extends State<ColorPicker> {
       );
     }
 
+    // coverage:ignore-start
+    // `_debug` is `const … && false`, so this block never runs.
     if (_debug) {
       debugPrint('Build color=${widget.color} selectedColor=$_selectedColor');
     }
+    // coverage:ignore-end
     // Use a copy paste handler to handle copy and paste keyboard shortcuts,
     // and also to handle the context menu for copy and paste.
     return CopyPasteHandler(
@@ -2402,8 +2436,11 @@ class _ColorPickerState extends State<ColorPicker> {
       // Set selected color to the one that was "clicked"
       _tappedColor = color;
       _selectedColor = _tappedColor.withAlpha(0xFF);
+      // coverage:ignore-start
+      // `_debug` is `const … && false`, so these lines never run.
       if (_debug) debugPrint('_onSelectColor _tappedColor: $_tappedColor');
       if (_debug) debugPrint('_onSelectColor _selectedColor: $_selectedColor');
+      // coverage:ignore-end
       // When the a color was clicked and selected, the right item is already
       // focused an other selected color indicators and wheel should not focus.
       _selectedShouldFocus = false;
@@ -2431,9 +2468,12 @@ class _ColorPickerState extends State<ColorPicker> {
               !ColorTools.swatchContainsColor(_activeSwatch ?? _kFallbackSwatch, _selectedColor)) &&
           !_tonalOperated) {
         // Update the active swatch to match the selected color.
+        // coverage:ignore-start
+        // `_debug` is `const … && false`, so this block never runs.
         if (_debug) {
           debugPrint('**** _onSelectColor calls _updateActiveSwatch ****');
         }
+        // coverage:ignore-end
         _updateActiveSwatch();
       }
     });
@@ -2472,7 +2512,13 @@ class _ColorPickerState extends State<ColorPicker> {
   Future<void> _getClipboard() async {
     final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     // Clipboard data was null, exit.
-    if (data == null) return;
+    // coverage:ignore-start
+    // Dart coverage does not instrument this trivial null-return. A widget
+    // test pastes when `Clipboard.getData` returns null.
+    if (data == null) {
+      return;
+    }
+    // coverage:ignore-end
 
     // Try to parse the clipboard data for a valid color value
     final Color? clipColor = data.text.toColorShortMaybeNull(widget.copyPasteBehavior.parseShortHexCode);

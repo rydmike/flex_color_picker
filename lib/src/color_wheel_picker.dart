@@ -200,6 +200,8 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
     // Did the onStart, start on the wheel?
     isWheel = vectorLength >= radius && vectorLength <= radiusOuter;
 
+    // coverage:ignore-start
+    // `_debug` is `const … && false`, so this block never runs.
     if (_debug) {
       debugPrint('--------------------------------------------------');
       debugPrint('size....................: $size');
@@ -213,6 +215,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
       debugPrint('isWheel.................: $isWheel');
       debugPrint('isSquare................: $isSquare');
     }
+    // coverage:ignore-end
 
     // Did we start on the square palette box?
     if (isSquare) {
