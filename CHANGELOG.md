@@ -2,6 +2,11 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## Unreleased
+
+**CHORE**
+- CI: `codecov/codecov-action` v5 now uses `files:` (the v3 `file:` input is ignored), `fail_ci_if_error: true`, and `disable_search: true`. The Test workflow uploads coverage on push to `master` as well as on pull requests. The Deploy Web workflow sets `override_branch: master` so GitHub release uploads attach to the default branch.
+
 ## 4.0.0
 
 **Aug 30, 2026**

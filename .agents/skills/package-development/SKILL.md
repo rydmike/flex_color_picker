@@ -95,7 +95,7 @@ On macOS, `example/lib/demo/pods/` is Dart Riverpod state, not CocoaPods. Keep `
 
 - CHANGELOG tags: `BREAKING`, `FIX`, `CHANGE`, `NEW`, `TESTS`, `CHORE` (also `PACKAGE`, `WEB DEMO` when those apply).
 - Web demo deploys from `.github/workflows/deploy.yml` on GitHub **release**, not from `dart pub publish`. Publishing to pub.dev is manual.
-- CI (PRs to `master`): `dart analyze`, `dart format --output=none --set-exit-if-changed .`, `flutter test --coverage` → Codecov.
+- CI (pull requests and pushes to `master`): `dart analyze`, `dart format --output=none --set-exit-if-changed .`, `flutter test --coverage` → Codecov. Release deploys also upload coverage with `override_branch: master`.
 
 ## Lint config is published externally
 
