@@ -2,6 +2,26 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 4.0.0
+
+**Aug 30, 2026**
+
+The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled Material and Cupertino libraries.
+
+**BREAKING**
+- This version requires Flutter 3.47.0 or higher
+- It also opts in on Dart 3.13.0 language features and lints.
+- This release brings full support for the standalone `material_ui` and `cupertino_ui` packages.
+- Per **Flutter's official recommendation** the package is released as a **major breaking** release.
+- Removed deprecated property `colorCodeIcon`. It had been deprecated already in v2.0.0, and no longer had any function since then. Use property [copyPasteBehavior] and [ColorPickerCopyPasteBehavior.copyIcon] instead.
+
+**DOCS**
+- Dart docs for `showColorPickerDialog` and `ColorPicker.showPickerDialog` now list parameters on the member page instead of inside the signature.
+
+**CHORE**
+* Bump dependencies
+* Update to RydMike lints to 3.0.0 and fix lints.
+
 ## 3.8.0
 
 **November 26, 2025**
@@ -887,7 +907,7 @@ These are the topics I currently have on the TODO list for this package. Do you 
 - [ ] Add support for other color formats than RGB, HSL, HSV, CMYK, M3-HCT.
 - [ ] Add support for a pipette tool to pick colors from the screen.
 - [ ] Add possibility to in picker add selected colors to a custom picker.
-- [ ] Reactor the code to prepare for making a major new version 4.0.0. 
+- [ ] Refactor the code to prepare for making a major new version 4.0.0. 
 - [x] Add more tests. Done. Now at 84%, pretty OK now, but even more tests are always welcome.
 - [x] Release the stable version 2.0.0
 - [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.

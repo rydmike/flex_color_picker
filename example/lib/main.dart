@@ -1,7 +1,6 @@
+import 'package:color_picker_example/demo/utils/app_scroll_behavior.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
-
-import 'demo/utils/app_scroll_behavior.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const ColorPickerDemo());
 
@@ -67,8 +66,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   static const Color blueBlues = Color(0xFF174378);
 
   // Make a custom ColorSwatch to name map from the above custom colors.
-  final Map<ColorSwatch<Object>, String> colorsNameMap =
-      <ColorSwatch<Object>, String>{
+  final Map<ColorSwatch<Object>, String> colorsNameMap = <ColorSwatch<Object>, String>{
     ColorTools.createPrimarySwatch(guidePrimary): 'Guide Purple',
     ColorTools.createPrimarySwatch(guidePrimaryVariant): 'Guide Purple Variant',
     ColorTools.createAccentSwatch(guideSecondary): 'Guide Teal',
@@ -100,11 +98,13 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           const SizedBox(height: 16),
           // Pick color in a dialog.
           ListTile(
-            title: const Text('Click this color to modify it in a dialog. '
-                'The color is modified while dialog is open, but returns '
-                'to previous value if dialog is cancelled'),
+            title: const Text(
+              'Click this color to modify it in a dialog. '
+              'The color is modified while dialog is open, but returns '
+              'to previous value if dialog is cancelled',
+            ),
             subtitle: Text(
-              // ignore: lines_longer_than_80_chars, cannot break earlier.
+              // ignore: cannot break earlier.
               '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
               'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
             ),
@@ -128,122 +128,119 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
             ),
           ),
           ListTile(
-            title: const Text('Click to select a new color from a dialog '
-                'that uses custom open/close animation. The color is only '
-                'modified after dialog is closed with OK'),
+            title: const Text(
+              'Click to select a new color from a dialog '
+              'that uses custom open/close animation. The color is only '
+              'modified after dialog is closed with OK',
+            ),
             subtitle: Text(
-              // ignore: lines_longer_than_80_chars, cannot break earlier.
+              // ignore: cannot break earlier.
               '${ColorTools.materialNameAndCode(dialogSelectColor, colorSwatchNameMap: colorsNameMap)} '
               'aka ${ColorTools.nameThatColor(dialogSelectColor)}',
             ),
             trailing: ColorIndicator(
-                width: 40,
-                height: 40,
-                borderRadius: 0,
-                color: dialogSelectColor,
-                elevation: 1,
-                onSelectFocus: false,
-                onSelect: () async {
-                  // Wait for the dialog to return color selection result.
-                  final Color newColor = await showColorPickerDialog(
-                    // The dialog needs a context, we pass it in.
-                    context,
-                    // We use the dialogSelectColor, as its starting color.
-                    dialogSelectColor,
-                    // If no style is specified, the default is used, which
-                    // is Theme.of(context).textTheme.titleLarge for the title
-                    // as in a Material 3 default for an AppBar.
-                    title: const Text(
-                      'ColorPicker with very long title',
-                      // Use another TextStyle if you so prefer:
-                      // style: Theme.of(context).textTheme.titleSmall,
+              width: 40,
+              height: 40,
+              borderRadius: 0,
+              color: dialogSelectColor,
+              elevation: 1,
+              onSelectFocus: false,
+              onSelect: () async {
+                // Wait for the dialog to return color selection result.
+                final Color newColor = await showColorPickerDialog(
+                  // The dialog needs a context, we pass it in.
+                  context,
+                  // We use the dialogSelectColor, as its starting color.
+                  dialogSelectColor,
+                  // If no style is specified, the default is used, which
+                  // is Theme.of(context).textTheme.titleLarge for the title
+                  // as in a Material 3 default for an AppBar.
+                  title: const Text(
+                    'ColorPicker with very long title',
+                    // Use another TextStyle if you so prefer:
+                    // style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  width: 40,
+                  height: 40,
+                  spacing: 0,
+                  runSpacing: 0,
+                  borderRadius: 0,
+                  wheelDiameter: 165,
+                  enableOpacity: true,
+                  showColorCode: true,
+                  colorCodeHasColor: true,
+                  pickersEnabled: <ColorPickerType, bool>{
+                    ColorPickerType.wheel: true,
+                  },
+                  copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                    copyButton: true,
+                    pasteButton: true,
+                    longPressMenu: true,
+                  ),
+                  actionButtons: ColorPickerActionButtons(
+                    // Show the dialog bottom action buttons.
+                    dialogActionButtons: true,
+                    // Show the dialog OK button
+                    okButton: true,
+                    // Type of OK button, here ElevatedButton
+                    dialogOkButtonType: ColorPickerActionButtonType.elevated,
+                    // This style will be applied to the ElevatedButton and
+                    // combined with the default style for it button type.
+                    // to avoid confusing results maybe not use both or at
+                    // least not conflicting styleFrom class to the chosen
+                    // button type.
+                    dialogOkButtonStyle: TextButton.styleFrom(
+                      foregroundColor: Colors.yellow,
+                      backgroundColor: Colors.red,
                     ),
-                    width: 40,
-                    height: 40,
-                    spacing: 0,
-                    runSpacing: 0,
-                    borderRadius: 0,
-                    wheelDiameter: 165,
-                    enableOpacity: true,
-                    showColorCode: true,
-                    colorCodeHasColor: true,
-                    pickersEnabled: <ColorPickerType, bool>{
-                      ColorPickerType.wheel: true,
-                    },
-                    copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-                      copyButton: true,
-                      pasteButton: true,
-                      longPressMenu: true,
+                    // Show the dialog Cancel/Close button
+                    closeButton: true,
+                    // Type of OK button, here OutlinedButton.
+                    dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+                    // As a demo we style the Cancel OutlinedButton with
+                    // ElevatedButton.styleFrom, normally you would
+                    // use OutlinedButton.styleFrom to avoid confusing
+                    // results. Here we set elevation to 0.
+                    dialogCancelButtonStyle: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                      elevation: 0,
                     ),
-                    actionButtons: ColorPickerActionButtons(
-                      // Show the dialog bottom action buttons.
-                      dialogActionButtons: true,
-                      // Show the dialog OK button
-                      okButton: true,
-                      // Type of OK button, here ElevatedButton
-                      dialogOkButtonType: ColorPickerActionButtonType.elevated,
-                      // This style will be applied to the ElevatedButton and
-                      // combined with the default style for it button type.
-                      // to avoid confusing results maybe not use both or at
-                      // least not conflicting styleFrom class to the chosen
-                      // button type.
-                      dialogOkButtonStyle: TextButton.styleFrom(
-                        foregroundColor: Colors.yellow,
-                        backgroundColor: Colors.red,
+                  ),
+                  // Custom transition builder to open the dialog with
+                  // a slide down and fade in.
+                  transitionBuilder: (BuildContext context, Animation<double> a1, Animation<double> a2, Widget widget) {
+                    final double curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                    return Transform(
+                      transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                      child: Opacity(
+                        opacity: a1.value,
+                        child: widget,
                       ),
-                      // Show the dialog Cancel/Close button
-                      closeButton: true,
-                      // Type of OK button, here OutlinedButton.
-                      dialogCancelButtonType:
-                          ColorPickerActionButtonType.outlined,
-                      // As a demo we style the Cancel OutlinedButton with
-                      // ElevatedButton.styleFrom, normally you would
-                      // use OutlinedButton.styleFrom to avoid confusing
-                      // results. Here we set elevation to 0.
-                      dialogCancelButtonStyle: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
-                        elevation: 0,
-                      ),
-                    ),
-                    // Custom transition builder to open the dialog with
-                    // a slide down and fade in.
-                    transitionBuilder: (BuildContext context,
-                        Animation<double> a1,
-                        Animation<double> a2,
-                        Widget widget) {
-                      final double curvedValue =
-                          Curves.easeInOutBack.transform(a1.value) - 1.0;
-                      return Transform(
-                        transform: Matrix4.translationValues(
-                            0.0, curvedValue * 200, 0.0),
-                        child: Opacity(
-                          opacity: a1.value,
-                          child: widget,
-                        ),
-                      );
-                    },
-                    transitionDuration: const Duration(milliseconds: 400),
-                    constraints: const BoxConstraints(
-                        minHeight: 480, minWidth: 550, maxWidth: 550),
-                  );
-                  // We update the dialogSelectColor, to the returned result
-                  // color. If the dialog was dismissed it actually returns
-                  // the color we started with. The extra update for that
-                  // below does not really matter, but if you want you can
-                  // check if they are equal and skip the update below.
-                  setState(() {
-                    dialogSelectColor = newColor;
-                  });
-                }),
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 400),
+                  constraints: const BoxConstraints(minHeight: 480, minWidth: 550, maxWidth: 550),
+                );
+                // We update the dialogSelectColor, to the returned result
+                // color. If the dialog was dismissed it actually returns
+                // the color we started with. The extra update for that
+                // below does not really matter, but if you want you can
+                // check if they are equal and skip the update below.
+                setState(() {
+                  dialogSelectColor = newColor;
+                });
+              },
+            ),
           ),
 
           // Show the selected color.
           ListTile(
             title: const Text('Select color below to change this color'),
-            subtitle:
-                Text('${ColorTools.materialNameAndCode(screenPickerColor)} '
-                    'aka ${ColorTools.nameThatColor(screenPickerColor)}'),
+            subtitle: Text(
+              '${ColorTools.materialNameAndCode(screenPickerColor)} '
+              'aka ${ColorTools.nameThatColor(screenPickerColor)}',
+            ),
             trailing: ColorIndicator(
               width: 44,
               height: 44,
@@ -263,8 +260,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                   // Use the screenPickerColor as color.
                   color: screenPickerColor,
                   // Update the screenPickerColor using the callback.
-                  onColorChanged: (Color color) =>
-                      setState(() => screenPickerColor = color),
+                  onColorChanged: (Color color) => setState(() => screenPickerColor = color),
                   width: 44,
                   height: 44,
                   borderRadius: 22,
@@ -292,7 +288,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                 widget.themeMode(isDark ? ThemeMode.dark : ThemeMode.light);
               });
             },
-          )
+          ),
         ],
       ),
     );
@@ -301,8 +297,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   Future<bool> colorPickerDialog() {
     return ColorPicker(
       color: dialogPickerColor,
-      onColorChanged: (Color color) =>
-          setState(() => dialogPickerColor = color),
+      onColorChanged: (Color color) => setState(() => dialogPickerColor = color),
       width: 40,
       height: 40,
       borderRadius: 4,
@@ -344,8 +339,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     ).showPickerDialog(
       context,
       actionsPadding: const EdgeInsets.all(16),
-      constraints:
-          const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
+      constraints: const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
     );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
-// ignore_for_file: unnecessary_null_comparison, for clarity in tests.
-// ignore_for_file: unused_local_variable, Calude's test, we will fix later.
+// ignore_for_file: for clarity in tests.
+// ignore_for_file: unused_local_variable, Claude's test, we will fix later.
+// ignore_for_file: unnecessary_null_comparison, part of the tests for clarity.
 
 //****************************************************************************
 // FlexColorPicker ColorPicker Widget tests
@@ -14,8 +15,7 @@ void main() {
 
   group('CPI1: In App With ColorPicker', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('CPI1.1: Finds default ColorPicker()',
-        (WidgetTester tester) async {
+    testWidgets('CPI1.1: Finds default ColorPicker()', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -102,18 +102,15 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames ==
-              const <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames ==
-              const <ColorSwatch<Object>, String>{};
+          widget.customColorSwatchesAndNames == const <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames == const <ColorSwatch<Object>, String>{};
 
       expect(find.byWidgetPredicate(defaultPicker), findsOneWidget);
     });
     //
     // *************************************************************************
     //
-    testWidgets('CPI1.2: Finds custom-1 ColorPicker() with both picker',
-        (WidgetTester tester) async {
+    testWidgets('CPI1.2: Finds custom-1 ColorPicker() with both picker', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -164,20 +161,14 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
             customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
           ),
         ),
@@ -265,18 +256,14 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{};
-      expect(find.byWidgetPredicate(customPicker, skipOffstage: false),
-          findsOneWidget);
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
+      expect(find.byWidgetPredicate(customPicker, skipOffstage: false), findsOneWidget);
     });
     //
     // *************************************************************************
     //
-    testWidgets('CPI1.3: Finds custom-2 ColorPicker() using wheel',
-        (WidgetTester tester) async {
+    testWidgets('CPI1.3: Finds custom-2 ColorPicker() using wheel', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -326,20 +313,14 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
             customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
           ),
         ),
@@ -427,18 +408,15 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{};
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
     //
     // *************************************************************************
     //
-    testWidgets(
-        'CPI1.4: Finds custom-3 ColorPicker() using custom colors '
+    testWidgets('CPI1.4: Finds custom-3 ColorPicker() using custom colors '
         'and tonal palette and same size tonal', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
@@ -516,20 +494,14 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
             customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
           ),
         ),
@@ -638,18 +610,15 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{};
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
     //
     // *************************************************************************
     //
-    testWidgets('CPI1.5: Finds custom-3 ColorPicker() using primary colors',
-        (WidgetTester tester) async {
+    testWidgets('CPI1.5: Finds custom-3 ColorPicker() using primary colors', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -723,20 +692,14 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
             customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
           ),
         ),
@@ -845,18 +808,15 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{};
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
 
     //
     // *************************************************************************
     //
-    testWidgets('CPI1.6: Finds custom-3 ColorPicker() using accent colors',
-        (WidgetTester tester) async {
+    testWidgets('CPI1.6: Finds custom-3 ColorPicker() using accent colors', (WidgetTester tester) async {
       await tester.pumpWidget(
         TestWidget(
           widget: ColorPicker(
@@ -930,20 +890,14 @@ void main() {
             onRecentColorsChanged: (List<Color> colors) {},
             selectedPickerTypeColor: Colors.white,
             customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
             customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                  'Guide Purple',
-              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                  'Guide Purple Variant',
-              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                  'Guide Teal',
+              ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+              ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+              ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
             },
           ),
         ),
@@ -1052,17 +1006,14 @@ void main() {
                 ColorPickerType.customSecondary: 'Option',
                 ColorPickerType.wheel: 'Wheel',
               } &&
-          widget.customColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{} &&
-          widget.customSecondaryColorSwatchesAndNames !=
-              <ColorSwatch<Object>, String>{};
+          widget.customColorSwatchesAndNames != <ColorSwatch<Object>, String>{} &&
+          widget.customSecondaryColorSwatchesAndNames != <ColorSwatch<Object>, String>{};
       expect(find.byWidgetPredicate(customPicker), findsOneWidget);
     });
   });
 
   group('CPI2: ColorPicker didUpdateWidget tests', () {
-    testWidgets('CPI2.1: ColorPicker didUpdateWidget with enableOpacity change',
-        (WidgetTester tester) async {
+    testWidgets('CPI2.1: ColorPicker didUpdateWidget with enableOpacity change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
       await tester.pumpWidget(
@@ -1096,8 +1047,7 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets('CPI2.2: ColorPicker didUpdateWidget with color change',
-        (WidgetTester tester) async {
+    testWidgets('CPI2.2: ColorPicker didUpdateWidget with color change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
       await tester.pumpWidget(
@@ -1129,9 +1079,7 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets(
-        'CPI2.3: ColorPicker didUpdateWidget with pickerTypeLabels change',
-        (WidgetTester tester) async {
+    testWidgets('CPI2.3: ColorPicker didUpdateWidget with pickerTypeLabels change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
       await tester.pumpWidget(
@@ -1190,13 +1138,11 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets(
-        'CPI2.4: ColorPicker didUpdateWidget with '
+    testWidgets('CPI2.4: ColorPicker didUpdateWidget with '
         'customColorSwatchesAndNames change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
-      final Map<ColorSwatch<Object>, String> customSwatches1 =
-          <ColorSwatch<Object>, String>{
+      final Map<ColorSwatch<Object>, String> customSwatches1 = <ColorSwatch<Object>, String>{
         ColorTools.createPrimarySwatch(Colors.purple): 'Purple',
       };
 
@@ -1224,8 +1170,7 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
 
       // Update widget with different customColorSwatchesAndNames
-      final Map<ColorSwatch<Object>, String> customSwatches2 =
-          <ColorSwatch<Object>, String>{
+      final Map<ColorSwatch<Object>, String> customSwatches2 = <ColorSwatch<Object>, String>{
         ColorTools.createPrimarySwatch(Colors.orange): 'Orange',
         ColorTools.createPrimarySwatch(Colors.pink): 'Pink',
       };
@@ -1255,9 +1200,7 @@ void main() {
       expect(find.byType(ColorPicker), findsOneWidget);
     });
 
-    testWidgets(
-        'CPI2.5: ColorPicker didUpdateWidget with pickersEnabled change',
-        (WidgetTester tester) async {
+    testWidgets('CPI2.5: ColorPicker didUpdateWidget with pickersEnabled change', (WidgetTester tester) async {
       Color pickedColor = Colors.blue;
 
       await tester.pumpWidget(

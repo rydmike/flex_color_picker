@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ItemSizeSlider extends ConsumerWidget {
@@ -15,7 +14,8 @@ class ItemSizeSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker('
+      tooltip:
+          'ColorPicker('
           'width: ${ref.read(sizePod).floor()}, '
           'height: ${ref.read(sizePod).floor()})',
       child: ListTile(

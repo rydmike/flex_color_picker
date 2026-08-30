@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flex_color_picker/src/universal_widgets/if_wrapper.dart';
+import 'package:flex_color_picker/src/widgets/context_copy_paste_menu.dart';
 import 'package:flutter/services.dart';
-
-import '../universal_widgets/if_wrapper.dart';
-import 'context_copy_paste_menu.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A function that returns a future with no return value.
 ///
@@ -95,30 +94,26 @@ class CopyPasteHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TargetPlatform platform = Theme.of(context).platform;
-    final bool useMetaCommand =
-        platform == TargetPlatform.iOS || platform == TargetPlatform.macOS;
+    final bool useMetaCommand = platform == TargetPlatform.iOS || platform == TargetPlatform.macOS;
     return Shortcuts(
       shortcuts: <ShortcutActivator, Intent>{
         if (useMetaCommand)
-          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyC):
-              const CopyIntent()
+          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyC): const CopyIntent()
         else
-          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC):
-              const CopyIntent(),
+          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC): const CopyIntent(),
         if (useMetaCommand)
-          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyV):
-              const PasteIntent()
+          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyV): const PasteIntent()
         else
-          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC):
-              const PasteIntent(),
+          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC): const PasteIntent(),
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
           if (!noPasteIntent) PasteIntent: PasteAction(pasteFromClipboard),
           CopyIntent: CopyAction(copyToClipboard),
         },
-        child: Builder(builder: (BuildContext context) {
-          return Focus(
+        child: Builder(
+          builder: (BuildContext context) {
+            return Focus(
               focusNode: focusNode,
               autofocus: autoFocus,
               canRequestFocus: true,
@@ -126,30 +121,31 @@ class CopyPasteHandler extends StatelessWidget {
                 behavior: HitTestBehavior.translucent,
                 onTap: focusNode.requestFocus,
                 child: IfWrapper(
-                    condition: useContextMenu,
-                    builder: (BuildContext context, Widget child) {
-                      return ContextCopyPasteMenu(
-                        useLongPress: useLongPress,
-                        useSecondaryTapDown: useSecondaryTapDown,
-                        useSecondaryOnDesktopLongOnDevice:
-                            useSecondaryOnDesktopLongOnDevice,
-                        useSecondaryOnDesktopLongOnDeviceAndWeb:
-                            useSecondaryOnDesktopLongOnDeviceAndWeb,
-                        onSelected: (CopyPasteCommands? value) {
-                          if (value == CopyPasteCommands.copy) {
-                            unawaited(copyToClipboard());
-                          }
-                          if (value == CopyPasteCommands.paste) {
-                            unawaited(pasteFromClipboard());
-                          }
-                        },
-                        onOpen: onCopyPasteMenuOpened,
-                        child: child,
-                      );
-                    },
-                    child: child),
-              ));
-        }),
+                  condition: useContextMenu,
+                  builder: (BuildContext context, Widget child) {
+                    return ContextCopyPasteMenu(
+                      useLongPress: useLongPress,
+                      useSecondaryTapDown: useSecondaryTapDown,
+                      useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
+                      useSecondaryOnDesktopLongOnDeviceAndWeb: useSecondaryOnDesktopLongOnDeviceAndWeb,
+                      onSelected: (CopyPasteCommands? value) {
+                        if (value == CopyPasteCommands.copy) {
+                          unawaited(copyToClipboard());
+                        }
+                        if (value == CopyPasteCommands.paste) {
+                          unawaited(pasteFromClipboard());
+                        }
+                      },
+                      onOpen: onCopyPasteMenuOpened,
+                      child: child,
+                    );
+                  },
+                  child: child,
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

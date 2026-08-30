@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
-
-import 'functions/picker_functions.dart';
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Static color tool functions used internally by FlexColorPicker.
 ///
@@ -131,8 +130,7 @@ class ColorTools {
   /// Map of Material primary color swatches and their names.
   ///
   /// Use a primary [ColorSwatch] as key, to get its current name string.
-  static Map<ColorSwatch<Object>, String> primaryColorNames =
-      <ColorSwatch<Object>, String>{
+  static Map<ColorSwatch<Object>, String> primaryColorNames = <ColorSwatch<Object>, String>{
     Colors.red: redName,
     Colors.pink: pinkName,
     Colors.purple: purpleName,
@@ -384,8 +382,7 @@ class ColorTools {
   /// Map of Material accent color swatches and their names.
   ///
   /// Use a primary [ColorSwatch] as key to get its current name string.
-  static Map<ColorSwatch<Object>, String> accentColorsNames =
-      <ColorSwatch<Object>, String>{
+  static Map<ColorSwatch<Object>, String> accentColorsNames = <ColorSwatch<Object>, String>{
     Colors.redAccent: redAccentName,
     Colors.pinkAccent: pinkAccentName,
     Colors.purpleAccent: purpleAccentName,
@@ -459,10 +456,11 @@ class ColorTools {
     for (final int strength in _indexAccent) {
       final double ds = 0.2 - strength / 1000;
       swatch[strength] = Color.fromARGB(
-          a,
-          r + ((ds < 0 ? r : (255 - r)) * ds).round(),
-          g + ((ds < 0 ? g : (255 - g)) * ds).round(),
-          b + ((ds < 0 ? b : (255 - b)) * ds).round());
+        a,
+        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+      );
     }
     // The above gives a starting point, this tunes it a bit better, still far
     // from the real algorithm.
@@ -477,8 +475,7 @@ class ColorTools {
   /// the primary material colors and the accent colors in the same picker.
   /// The related colors are grouped after each other so that they come in
   /// related color order, not in primary and accent order.
-  static const List<ColorSwatch<Object>> primaryAndAccentColors =
-      <ColorSwatch<Object>>[
+  static const List<ColorSwatch<Object>> primaryAndAccentColors = <ColorSwatch<Object>>[
     Colors.red,
     Colors.redAccent,
     Colors.pink,
@@ -576,8 +573,7 @@ class ColorTools {
   ///
   /// Use [blackShade] or [whiteShade] swatch as key to get its current
   /// name string.
-  static Map<ColorSwatch<Object>, String> blackAndWhiteNames =
-      <ColorSwatch<Object>, String>{
+  static Map<ColorSwatch<Object>, String> blackAndWhiteNames = <ColorSwatch<Object>, String>{
     blackShade: blackShadeName,
     whiteShade: whiteShadeName,
   };
@@ -621,8 +617,7 @@ class ColorTools {
   /// Check if a color is included in a custom color swatches.
   ///
   /// Returns true if the color is a custom swatch, otherwise false.
-  static bool isCustomColor(
-      Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
+  static bool isCustomColor(Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
@@ -644,8 +639,7 @@ class ColorTools {
   /// primary material swatch for the given color using the given color
   /// as the mid 500 value and return this created custom primary color Swatch.
   /// This color swatch can then be used as a primary Material color swatch.
-  static ColorSwatch<Object> customSwatch(
-      Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
+  static ColorSwatch<Object> customSwatch(Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
     if (customSwatch != null) {
       for (final ColorSwatch<Object> swatch in customSwatch.keys) {
         for (final int i in _indexPrimary) {
@@ -665,10 +659,8 @@ class ColorTools {
   ///
   /// If it is not a Material color or one of the Accents colors, only the
   /// Flutter style Hex code is returned.
-  static String materialNameAndCode(Color color,
-      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
-    final String name =
-        materialName(color, colorSwatchNameMap: colorSwatchNameMap);
+  static String materialNameAndCode(Color color, {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
+    final String name = materialName(color, colorSwatchNameMap: colorSwatchNameMap);
     if (name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(0x${colorCode(color)})';
@@ -682,10 +674,8 @@ class ColorTools {
   ///
   /// If it is not a Material color or one of the Accents colors, only the
   /// ARGB style Hex code is returned.
-  static String materialNameAndARGBCode(Color color,
-      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
-    final String name =
-        materialName(color, colorSwatchNameMap: colorSwatchNameMap);
+  static String materialNameAndARGBCode(Color color, {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
+    final String name = materialName(color, colorSwatchNameMap: colorSwatchNameMap);
     if (name == '') {
       // This is not a material color, we just return it's Flutter like HEX code
       return '(${colorCode(color)})';
@@ -702,9 +692,11 @@ class ColorTools {
   /// an empty string is returned. The function can also take as input an
   /// optional custom color swatch to name map and return a custom name for any
   /// color found in any of the custom color swatches in the map.
-  static String materialName(Color color,
-      {Map<ColorSwatch<Object>, String>? colorSwatchNameMap,
-      bool withIndex = true}) {
+  static String materialName(
+    Color color, {
+    Map<ColorSwatch<Object>, String>? colorSwatchNameMap,
+    bool withIndex = true,
+  }) {
     // If it is a black or white shade, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in blackAndWhiteNames.keys) {
       for (final int i in _indexPrimary) {
@@ -780,8 +772,7 @@ class ColorTools {
   /// The returned color name is based on a Dart port of a JavaScript tool
   /// called 'ntc', short for "Name That Color". The javascript project and info
   /// about it can be found here http://chir.ag/projects/ntc.
-  static String nameThatColor(Color color) =>
-      _ColorName.fromColor(color).getName;
+  static String nameThatColor(Color color) => _ColorName.fromColor(color).getName;
 }
 
 /// Public extensions on [Color].
@@ -803,10 +794,7 @@ extension FlexColorPickerColorExtensions on Color {
   /// * Bits 8-15 are the green value.
   /// * Bits 0-7 are the blue value.
   int get value32bit {
-    return _floatToInt8(a) << 24 |
-        _floatToInt8(r) << 16 |
-        _floatToInt8(g) << 8 |
-        _floatToInt8(b) << 0;
+    return _floatToInt8(a) << 24 | _floatToInt8(r) << 16 | _floatToInt8(g) << 8 | _floatToInt8(b) << 0;
   }
 
   /// The alpha channel of this color in an 8 bit value.
@@ -878,10 +866,12 @@ class _ColorName {
     for (int i = 0; i < colorNames.length; i++) {
       if (decodeColor == colorNames[i].getCode) return colorNames[i];
 
-      ndf1 = math.pow(r - colorNames[i].getRed, 2).toInt() +
+      ndf1 =
+          math.pow(r - colorNames[i].getRed, 2).toInt() +
           math.pow(g - colorNames[i].getGreen, 2).toInt() +
           math.pow(b - colorNames[i].getBlue, 2).toInt();
-      ndf2 = math.pow(h - colorNames[i].getHue, 2).toInt() +
+      ndf2 =
+          math.pow(h - colorNames[i].getHue, 2).toInt() +
           math.pow(s - colorNames[i].getSaturation, 2).toInt() +
           math.pow(l - colorNames[i].getLightness, 2).toInt();
       ndf = ndf1 + ndf2 * 2;
@@ -890,9 +880,7 @@ class _ColorName {
         cl = i;
       }
     }
-    return cl < 0
-        ? _ColorName(Colors.white, 'Color [$decodeColor] not found!')
-        : colorNames[cl];
+    return cl < 0 ? _ColorName(Colors.white, 'Color [$decodeColor] not found!') : colorNames[cl];
   }
 
   final Color _color;

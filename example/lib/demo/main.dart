@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/conditionals/dart_io_conditional.dart' as folder;
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/pods/pods_observer.dart';
+import 'package:color_picker_example/demo/screens/home/home_screen.dart';
+import 'package:color_picker_example/demo/store/hive_store.dart';
+import 'package:color_picker_example/demo/utils/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce/hive.dart';
-
-import 'conditionals/dart_io_conditional.dart' as folder;
-import 'pods/pods.dart';
-import 'pods/pods_observer.dart';
-import 'screens/home/home_screen.dart';
-import 'store/hive_store.dart';
-import 'utils/theme.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Extensive web and desktop demo of FlexColorPicker.
 ///

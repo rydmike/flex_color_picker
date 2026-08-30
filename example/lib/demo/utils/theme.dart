@@ -1,8 +1,7 @@
+import 'package:color_picker_example/demo/utils/app.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'app.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The theme for this app.
 class AppTheme {
@@ -10,8 +9,7 @@ class AppTheme {
 
   /// The used light theme.
   static ThemeData get light {
-    final ColorScheme colorSchemeLight =
-        ColorScheme.fromSeed(seedColor: App.seedColor);
+    final ColorScheme colorSchemeLight = ColorScheme.fromSeed(seedColor: App.seedColor);
     return ThemeData.from(
       colorScheme: ColorScheme.fromSeed(seedColor: App.seedColor),
       useMaterial3: true,
@@ -28,8 +26,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: elevatedButtonTheme,
-      outlinedButtonTheme:
-          outlinedButtonTheme(colorSchemeLight, Colors.black38),
+      outlinedButtonTheme: outlinedButtonTheme(colorSchemeLight, Colors.black38),
       textButtonTheme: textButtonTheme,
       toggleButtonsTheme: toggleButtonsThemeData(colorSchemeLight),
       tooltipTheme: tooltipTheme(false),
@@ -40,8 +37,7 @@ class AppTheme {
 
   /// The used dark theme.
   static ThemeData get dark {
-    final ColorScheme colorSchemeDark = ColorScheme.fromSeed(
-        seedColor: App.seedColor, brightness: Brightness.dark);
+    final ColorScheme colorSchemeDark = ColorScheme.fromSeed(seedColor: App.seedColor, brightness: Brightness.dark);
     return ThemeData.from(
       colorScheme: colorSchemeDark,
       useMaterial3: true,
@@ -69,92 +65,88 @@ class AppTheme {
   }
 
   /// Theme definitions give ElevatedButton a Stadium rounded design.
-  static ElevatedButtonThemeData get elevatedButtonTheme =>
-      ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-        padding: roundButtonPadding,
-      ));
+  static ElevatedButtonThemeData get elevatedButtonTheme => ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      padding: roundButtonPadding,
+    ),
+  );
 
   /// Theme definitions give OutlinedButton a Stadium rounded design.
-  static OutlinedButtonThemeData outlinedButtonTheme(
-          ColorScheme scheme, Color disabledColor) =>
+  static OutlinedButtonThemeData outlinedButtonTheme(ColorScheme scheme, Color disabledColor) =>
       OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          padding: roundButtonPadding,
-        ).copyWith(
-          side: WidgetStateProperty.resolveWith<BorderSide?>(
-            (Set<WidgetState> states) {
-              if (states.contains(WidgetState.disabled)) {
-                return BorderSide(
-                  color: disabledColor,
-                  width: 0.5,
-                );
-              }
-              if (states.contains(WidgetState.error)) {
-                return BorderSide(
-                  color: scheme.error,
-                  width: App.outlineThickness,
-                );
-              }
-              return BorderSide(
-                color: scheme.primary,
-                width: App.outlineThickness,
-              );
-            },
-          ),
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              padding: roundButtonPadding,
+            ).copyWith(
+              side: WidgetStateProperty.resolveWith<BorderSide?>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
+                    return BorderSide(
+                      color: disabledColor,
+                      width: 0.5,
+                    );
+                  }
+                  if (states.contains(WidgetState.error)) {
+                    return BorderSide(
+                      color: scheme.error,
+                      width: App.outlineThickness,
+                    );
+                  }
+                  return BorderSide(
+                    color: scheme.primary,
+                    width: App.outlineThickness,
+                  );
+                },
+              ),
+            ),
       );
 
   /// Theme definitions give TextButton a Stadium rounded design.
   static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
-          style: TextButton.styleFrom(
-        // shape: const StadiumBorder(),
-        padding: roundButtonPadding,
-      ));
+    style: TextButton.styleFrom(
+      // shape: const StadiumBorder(),
+      padding: roundButtonPadding,
+    ),
+  );
 
   /// The stadium rounded buttons generally need a bit more padding to look
   /// good, adjust here to tune the padding for all of them globally in the app.
-  static const EdgeInsets roundButtonPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 4);
+  static const EdgeInsets roundButtonPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 4);
 
   /// ToggleButtons theme
-  static ToggleButtonsThemeData toggleButtonsThemeData(
-          ColorScheme colorScheme) =>
-      ToggleButtonsThemeData(
-        color: colorScheme.onSurface,
-        selectedColor: colorScheme.onPrimaryContainer,
-        fillColor: colorScheme.primaryContainer,
-        hoverColor: colorScheme.primary.withValues(alpha: 0.2),
-        focusColor: colorScheme.primary.withValues(alpha: 0.3),
-        borderWidth: App.outlineThickness,
-        borderColor: colorScheme.primary,
-        selectedBorderColor: colorScheme.primary,
-        constraints: const BoxConstraints(
-          minWidth: App.borderRadius,
-          maxWidth: App.borderRadius * 2,
-          minHeight: App.borderRadius,
-          maxHeight: App.borderRadius,
-        ),
-        borderRadius: BorderRadius.circular(App.borderRadius),
-      );
+  static ToggleButtonsThemeData toggleButtonsThemeData(ColorScheme colorScheme) => ToggleButtonsThemeData(
+    color: colorScheme.onSurface,
+    selectedColor: colorScheme.onPrimaryContainer,
+    fillColor: colorScheme.primaryContainer,
+    hoverColor: colorScheme.primary.withValues(alpha: 0.2),
+    focusColor: colorScheme.primary.withValues(alpha: 0.3),
+    borderWidth: App.outlineThickness,
+    borderColor: colorScheme.primary,
+    selectedBorderColor: colorScheme.primary,
+    constraints: const BoxConstraints(
+      minWidth: App.borderRadius,
+      maxWidth: App.borderRadius * 2,
+      minHeight: App.borderRadius,
+      maxHeight: App.borderRadius,
+    ),
+    borderRadius: BorderRadius.circular(App.borderRadius),
+  );
 
   /// Use an alternative tooltip style.
   static TooltipThemeData tooltipTheme(bool isDark) => TooltipThemeData(
-        waitDuration: const Duration(milliseconds: 1200),
-        textStyle: TextStyle(
-          color: isDark ? Colors.black : Colors.white,
-          fontSize: tooltipFontSize,
-        ),
-        decoration: BoxDecoration(
-          color: isDark
-              ? const Color(0xFFCFCFCF).withValues(alpha: 0.94)
-              : const Color(0xFF444444).withValues(alpha: 0.93),
-          borderRadius: const BorderRadius.all(Radius.circular(6)),
-          border: Border.all(
-            color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000),
-          ),
-        ),
-      );
+    waitDuration: const Duration(milliseconds: 1200),
+    textStyle: TextStyle(
+      color: isDark ? Colors.black : Colors.white,
+      fontSize: tooltipFontSize,
+    ),
+    decoration: BoxDecoration(
+      color: isDark ? const Color(0xFFCFCFCF).withValues(alpha: 0.94) : const Color(0xFF444444).withValues(alpha: 0.93),
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
+      border: Border.all(
+        color: isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000),
+      ),
+    ),
+  );
 
   /// Custom tooltip font size.
   static double get tooltipFontSize {
@@ -172,26 +164,22 @@ class AppTheme {
 
   // Compute text color for the three 'OnChange' chips.
   static Color getChipTextColor(Color background, bool isLight) {
-    final bool isLightBackground =
-        ThemeData.estimateBrightnessForColor(background) == Brightness.light;
+    final bool isLightBackground = ThemeData.estimateBrightnessForColor(background) == Brightness.light;
     return isLight
         ? (isLightBackground || background.a < 0.5)
-            ? Colors.black
-            : Colors.white
+              ? Colors.black
+              : Colors.white
         : (!isLightBackground || background.a < 0.5)
-            ? Colors.white
-            : Colors.black;
+        ? Colors.white
+        : Colors.black;
   }
 
   // Helper for system overlay style for AnnotatedRegion.
-  static SystemUiOverlayStyle overlayStyle(bool isLight) =>
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: isLight ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness: isLight ? Brightness.dark : Brightness.light,
-        systemNavigationBarColor:
-            isLight ? App.scaffoldBackgroundLight : App.scaffoldBackgroundDark,
-        systemNavigationBarIconBrightness:
-            isLight ? Brightness.dark : Brightness.light,
-      );
+  static SystemUiOverlayStyle overlayStyle(bool isLight) => SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: isLight ? Brightness.light : Brightness.dark,
+    statusBarIconBrightness: isLight ? Brightness.dark : Brightness.light,
+    systemNavigationBarColor: isLight ? App.scaffoldBackgroundLight : App.scaffoldBackgroundDark,
+    systemNavigationBarIconBrightness: isLight ? Brightness.dark : Brightness.light,
+  );
 }

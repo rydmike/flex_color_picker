@@ -1,6 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' show Color;
 
-import 'color_tools.dart';
+import 'package:cupertino_ui/cupertino_ui.dart' show Color;
+import 'package:flex_color_picker/src/color_tools.dart';
+import 'package:flutter/animation.dart' show Color;
+import 'package:flutter/painting.dart' show Color;
+import 'package:flutter/rendering.dart' show Color;
+import 'package:flutter/services.dart' show Color;
+import 'package:flutter/widgets.dart' show Color;
+import 'package:material_ui/material_ui.dart' show Color;
+import 'package:material_ui/material_ui.dart';
 
 /// Extensions on non nullable [Color] to return it's color value as strings.
 ///
@@ -17,11 +25,7 @@ extension FlexPickerNoNullColorExtensions on Color {
 
   /// Return color's uppercase RGB hex string, excluding alpha channel.
   String get hex {
-    return value32bit
-        .toRadixString(16)
-        .toUpperCase()
-        .padLeft(8, '0')
-        .substring(2);
+    return value32bit.toRadixString(16).toUpperCase().padLeft(8, '0').substring(2);
   }
 }
 
@@ -70,12 +74,7 @@ extension FlexPickerNoNullStringExtensions on String {
     // If the input is exactly 3 chars long, we may have a short Web hex code,
     // let's make the potential 'RGB' code to a 'RRGGBB' code.
     if (hexColor.length == 3 && enableShortRGB) {
-      hexColor = hexColor[0] +
-          hexColor[0] +
-          hexColor[1] +
-          hexColor[1] +
-          hexColor[2] +
-          hexColor[2];
+      hexColor = hexColor[0] + hexColor[0] + hexColor[1] + hexColor[1] + hexColor[2] + hexColor[2];
     }
     // Pad anything shorter than 7 with left 0 -> fill non spec channels with 0.
     hexColor = hexColor.padLeft(6, '0');
@@ -85,8 +84,7 @@ extension FlexPickerNoNullStringExtensions on String {
     // We only try to parse the last 8 chars in the remaining string, rest can
     // still be whatever.
     final int length = hexColor.length;
-    return Color(int.tryParse('0x${hexColor.substring(length - 8, length)}') ??
-        0xFF000000);
+    return Color(int.tryParse('0x${hexColor.substring(length - 8, length)}') ?? 0xFF000000);
   }
 
   /// Returns [toColorShort] with `enableShortRGB` set to true.
@@ -148,12 +146,7 @@ extension FlexPickerNullableStringExtensions on String? {
     // If the input is exactly 3 chars long, we may have a short Web hex code,
     // let's make the potential 'RGB' code to a 'RRGGBB' code.
     if (hexColor.length == 3 && enableShortRGB) {
-      hexColor = hexColor[0] +
-          hexColor[0] +
-          hexColor[1] +
-          hexColor[1] +
-          hexColor[2] +
-          hexColor[2];
+      hexColor = hexColor[0] + hexColor[0] + hexColor[1] + hexColor[1] + hexColor[2] + hexColor[2];
     }
     // Pad anything shorter than 7 with left 0 -> fill non spec channels with 0.
     hexColor = hexColor.padLeft(6, '0');
@@ -163,8 +156,7 @@ extension FlexPickerNullableStringExtensions on String? {
     // We only try to parse the last 8 chars in the remaining string, rest can
     // still be whatever.
     final int length = hexColor.length;
-    final int? intColor =
-        int.tryParse('0x${hexColor.substring(length - 8, length)}');
+    final int? intColor = int.tryParse('0x${hexColor.substring(length - 8, length)}');
     return intColor != null ? Color(intColor) : null;
   }
 

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class SecondaryMenuSwitch extends ConsumerWidget {
@@ -14,10 +13,10 @@ class SecondaryMenuSwitch extends ConsumerWidget {
       title: const Text('Secondary click COPY-PASTE menu'),
       subtitle: const Text('Typically mouse right click.'),
       value: ref.watch(secondaryMenuPod),
-      onChanged: (bool value) =>
-          ref.read(secondaryMenuPod.notifier).state = value,
+      onChanged: (bool value) => ref.read(secondaryMenuPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(copyPasteBehavior:\n'
+      tooltip:
+          'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(secondaryMenu: '
           '${ref.read(secondaryMenuPod)}))',
     );

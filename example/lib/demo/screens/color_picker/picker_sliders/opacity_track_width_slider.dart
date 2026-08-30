@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class OpacityTrackWidthSlider extends ConsumerWidget {
@@ -21,7 +20,8 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
 
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(opacityTrackWidth: '
+      tooltip:
+          'ColorPicker(opacityTrackWidth: '
           '${usedOpacityTrackWidth?.floor()})',
       child: ListTile(
         title: const Text('Opacity slider width'),
@@ -31,8 +31,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
           divisions: 700 - 150,
           label: trackWidth.floor().toString(),
           value: ref.watch(opacityTrackWidthPod),
-          onChanged: (double value) =>
-              ref.read(opacityTrackWidthPod.notifier).state = value,
+          onChanged: (double value) => ref.read(opacityTrackWidthPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -44,9 +43,7 @@ class OpacityTrackWidthSlider extends ConsumerWidget {
                 style: TextStyle(fontSize: 11),
               ),
               Text(
-                usedOpacityTrackWidth == null
-                    ? 'full'
-                    : usedOpacityTrackWidth.floor().toString(),
+                usedOpacityTrackWidth == null ? 'full' : usedOpacityTrackWidth.floor().toString(),
                 style: const TextStyle(fontSize: 15),
               ),
             ],

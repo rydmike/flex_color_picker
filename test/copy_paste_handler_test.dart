@@ -1,11 +1,10 @@
 import 'package:flex_color_picker/src/widgets/copy_paste_handler.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('CPH1: CopyPasteHandler Widget Test',
-      (WidgetTester tester) async {
+  testWidgets('CPH1: CopyPasteHandler Widget Test', (WidgetTester tester) async {
     Future<void> mockCopyToClipboard() async {
       await Clipboard.setData(const ClipboardData(text: 'Copied Text'));
     }
@@ -51,8 +50,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('CPH2: CopyPasteHandler with different configurations',
-      (WidgetTester tester) async {
+  testWidgets('CPH2: CopyPasteHandler with different configurations', (WidgetTester tester) async {
     final FocusNode focusNode = FocusNode();
 
     await tester.pumpWidget(
@@ -84,8 +82,7 @@ void main() {
     expect(find.byType(CopyPasteHandler), findsOneWidget);
   });
 
-  testWidgets('CPH4: CopyPasteHandler without context menu test',
-      (WidgetTester tester) async {
+  testWidgets('CPH4: CopyPasteHandler without context menu test', (WidgetTester tester) async {
     Future<void> mockCopyToClipboard() async {
       await Clipboard.setData(const ClipboardData(text: 'Copied Text'));
     }

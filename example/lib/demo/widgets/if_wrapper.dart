@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Type definition for a builder function used by IfWrapper.
 typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
@@ -41,7 +41,7 @@ class IfWrapper extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     if (condition) {
       return builder(context, child);
     } else if (ifFalse != null) {

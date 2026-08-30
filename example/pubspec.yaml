@@ -7,10 +7,14 @@ environment:
   flutter: '>=3.47.0'
 
 dependencies:
+  # The official Flutter Cupertino Design Library.
+  cupertino_ui: ^1.0.0
+
   # https://pub.dev/packages/flex_color_picker
   flex_color_picker:
     path: ../
 
+  # The flutter library itself
   flutter:
     sdk: flutter
 
@@ -22,6 +26,9 @@ dependencies:
 
   # https://pub.dev/packages/hive_ce
   hive_ce: ^2.15.1
+
+  # The official Flutter Material UI Library.
+  material_ui: ^1.0.0  
 
   # https://pub.dev/packages/path_provider:
   path_provider: ^2.1.5

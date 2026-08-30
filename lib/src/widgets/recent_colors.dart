@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import '../../flex_color_picker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Draws recently used colors.
 ///
@@ -83,8 +82,7 @@ class RecentColors extends StatelessWidget {
       children: <Widget>[
         for (final Color color in recentColors)
           ColorIndicator(
-            isSelected: selectedColor == color ||
-                selectedColor.value32bit == color.value32bit,
+            isSelected: selectedColor == color || selectedColor.value32bit == color.value32bit,
             color: color,
             width: width,
             height: height,

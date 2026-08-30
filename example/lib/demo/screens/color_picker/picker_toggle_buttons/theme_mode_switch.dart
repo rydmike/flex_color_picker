@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ThemeModeSwitch extends ConsumerWidget {

@@ -1,8 +1,8 @@
 import 'package:flex_color_picker/src/universal_widgets/dry_intrinsic.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 //****************************************************************************
 // FlexColorPicker DryIntrinsicWidth and Height Widget tests
@@ -12,25 +12,27 @@ void main() {
 
   group('DINT1: In App With DryIntrinsicWidth  ', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('DINT1.1: Finds DryIntrinsicWidth',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(const TestWidget(
-          widget: DryIntrinsicWidth(key: testKey, child: Text('HELLO WORLD'))));
+    testWidgets('DINT1.1: Finds DryIntrinsicWidth', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const TestWidget(
+          widget: DryIntrinsicWidth(key: testKey, child: Text('HELLO WORLD')),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
     });
-    testWidgets('DINT1.2: Finds DryIntrinsicHeight',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(const TestWidget(
-          widget:
-              DryIntrinsicHeight(key: testKey, child: Text('HELLO WORLD'))));
+    testWidgets('DINT1.2: Finds DryIntrinsicHeight', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const TestWidget(
+          widget: DryIntrinsicHeight(key: testKey, child: Text('HELLO WORLD')),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
     });
   });
 
-  testWidgets('DryIntrinsicWidth computes dry layout correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicWidth computes dry layout correctly', (WidgetTester tester) async {
     // Build the DryIntrinsicWidth with a child widget
     await tester.pumpWidget(
       const MaterialApp(
@@ -48,13 +50,11 @@ void main() {
     expect(find.byType(DryIntrinsicWidth), findsOneWidget);
 
     // Verify that the DryIntrinsicWidth has the correct size
-    final RenderBox dryIntrinsicWidth =
-        tester.renderObject<RenderBox>(find.byType(DryIntrinsicWidth));
+    final RenderBox dryIntrinsicWidth = tester.renderObject<RenderBox>(find.byType(DryIntrinsicWidth));
     expect(dryIntrinsicWidth.size, equals(const Size(50, 100)));
   });
 
-  testWidgets('DryIntrinsicWidth computes zero dry layout correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicWidth computes zero dry layout correctly', (WidgetTester tester) async {
     // Build the DryIntrinsicWidth with a child widget
     await tester.pumpWidget(
       const MaterialApp(
@@ -72,13 +72,11 @@ void main() {
     expect(find.byType(DryIntrinsicWidth), findsOneWidget);
 
     // Verify that the DryIntrinsicWidth has the correct size
-    final RenderBox dryIntrinsicWidth =
-        tester.renderObject<RenderBox>(find.byType(DryIntrinsicWidth));
+    final RenderBox dryIntrinsicWidth = tester.renderObject<RenderBox>(find.byType(DryIntrinsicWidth));
     expect(dryIntrinsicWidth.size, equals(Size.zero));
   });
 
-  testWidgets('DryIntrinsicHeight computes dry layout correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicHeight computes dry layout correctly', (WidgetTester tester) async {
     // Build the DryIntrinsicHeight with a child widget
     await tester.pumpWidget(
       const MaterialApp(
@@ -96,13 +94,11 @@ void main() {
     expect(find.byType(DryIntrinsicHeight), findsOneWidget);
 
     // Verify that the DryIntrinsicHeight has the correct size
-    final RenderBox dryIntrinsicHeight =
-        tester.renderObject<RenderBox>(find.byType(DryIntrinsicHeight));
+    final RenderBox dryIntrinsicHeight = tester.renderObject<RenderBox>(find.byType(DryIntrinsicHeight));
     expect(dryIntrinsicHeight.size, equals(const Size(100, 50)));
   });
 
-  testWidgets('DryIntrinsicHeight computes zero dry layout correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicHeight computes zero dry layout correctly', (WidgetTester tester) async {
     // Build the DryIntrinsicHeight with a child widget
     await tester.pumpWidget(
       const MaterialApp(
@@ -120,13 +116,11 @@ void main() {
     expect(find.byType(DryIntrinsicHeight), findsOneWidget);
 
     // Verify that the DryIntrinsicHeight has the correct size
-    final RenderBox dryIntrinsicHeight =
-        tester.renderObject<RenderBox>(find.byType(DryIntrinsicHeight));
+    final RenderBox dryIntrinsicHeight = tester.renderObject<RenderBox>(find.byType(DryIntrinsicHeight));
     expect(dryIntrinsicHeight.size, equals(Size.zero));
   });
 
-  testWidgets('DryIntrinsicWidth computes intrinsic width correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicWidth computes intrinsic width correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -146,8 +140,7 @@ void main() {
     expect(box.size.height, greaterThan(0));
   });
 
-  testWidgets('DryIntrinsicHeight computes intrinsic height correctly',
-      (WidgetTester tester) async {
+  testWidgets('DryIntrinsicHeight computes intrinsic height correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(

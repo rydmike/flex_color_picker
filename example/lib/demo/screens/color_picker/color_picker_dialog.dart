@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/utils/app.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../pods/pods.dart';
-import '../../utils/app.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The ColorPicker shown in a dialog that is opened from the ColorPickerScreen.
 Future<bool> colorPickerDialog(
@@ -13,9 +12,7 @@ Future<bool> colorPickerDialog(
 }) {
   final ThemeData theme = Theme.of(context);
   return ColorPicker(
-    color: cardRemote
-        ? ref.watch(cardPickerColorPod)
-        : ref.watch(dialogPickerColorPod),
+    color: cardRemote ? ref.watch(cardPickerColorPod) : ref.watch(dialogPickerColorPod),
     onColorChangeStart: (Color color) {
       ref.read(onColorChangeStartPod.notifier).state = color;
     },
@@ -53,8 +50,7 @@ Future<bool> colorPickerDialog(
       longPressMenu: ref.watch(longPressMenuPod),
       secondaryMenu: ref.watch(secondaryMenuPod),
       secondaryOnDesktopLongOnDevice: ref.watch(secondaryDesktopOtherLongPod),
-      secondaryOnDesktopLongOnDeviceAndWeb:
-          ref.watch(secondaryDesktopWebLongPod),
+      secondaryOnDesktopLongOnDeviceAndWeb: ref.watch(secondaryDesktopWebLongPod),
       editFieldCopyButton: ref.watch(editFieldCopyButtonPod),
       parseShortHexCode: ref.watch(parseShortHexCodePod),
       editUsesParsedPaste: ref.watch(editUsesParsedPastePod),
@@ -147,9 +143,7 @@ Future<bool> colorPickerDialog(
     colorCodeReadOnly: ref.watch(colorCodeReadOnlyPod),
     showColorValue: ref.watch(showColorValuePod),
     showRecentColors: ref.watch(showRecentColorsPod),
-    recentColors: cardRemote
-        ? ref.watch(cardRecentColorsPod)
-        : ref.watch(dialogRecentColorsPod),
+    recentColors: cardRemote ? ref.watch(cardRecentColorsPod) : ref.watch(dialogRecentColorsPod),
     maxRecentColors: cardRemote ? 8 : 5,
     customColorSwatchesAndNames: App.colorsNameMap,
     customSecondaryColorSwatchesAndNames: App.colorsOptionsMap,
@@ -158,7 +152,6 @@ Future<bool> colorPickerDialog(
     elevation: 2,
     // Let's make an even more transparent barrier color than black12
     barrierColor: const Color(0x33000000), // 6% opacity black
-    constraints:
-        const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
+    constraints: const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
   );
 }

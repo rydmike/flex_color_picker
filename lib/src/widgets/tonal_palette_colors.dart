@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
-import '../../flex_color_picker.dart';
-import '../functions/picker_functions.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// TonalPaletteColors widget.
 ///
@@ -104,16 +103,14 @@ class _TonalPaletteColorsState extends State<TonalPaletteColors> {
 
   @override
   Widget build(BuildContext context) {
-    final double effectiveBorderRadius =
-        widget.borderRadius ?? widget.width / 4.0;
+    final double effectiveBorderRadius = widget.borderRadius ?? widget.width / 4.0;
     return Wrap(
       spacing: widget.spacing,
       runSpacing: widget.runSpacing,
       children: <Widget>[
         for (final Color color in tonalColors)
           ColorIndicator(
-            isSelected: widget.selectedColor == color ||
-                widget.selectedColor.value32bit == color.value32bit,
+            isSelected: widget.selectedColor == color || widget.selectedColor.value32bit == color.value32bit,
             color: color,
             width: widget.width,
             height: widget.height,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A theme following wrapper for [SwitchListTileAdaptive].
 ///
@@ -123,13 +123,9 @@ class SwitchListTileAdaptive extends StatelessWidget {
     // if (theme.platform == TargetPlatform.iOS ||
     //     theme.platform == TargetPlatform.macOS) {
     if (theme.useMaterial3) {
-      color = theme.switchTheme.thumbColor
-              ?.resolve(<WidgetState>{WidgetState.selected}) ??
-          theme.colorScheme.primary;
+      color = theme.switchTheme.thumbColor?.resolve(<WidgetState>{WidgetState.selected}) ?? theme.colorScheme.primary;
     } else {
-      color = theme.switchTheme.thumbColor
-              ?.resolve(<WidgetState>{WidgetState.selected}) ??
-          theme.colorScheme.secondary;
+      color = theme.switchTheme.thumbColor?.resolve(<WidgetState>{WidgetState.selected}) ?? theme.colorScheme.secondary;
     }
     // }
     return color;

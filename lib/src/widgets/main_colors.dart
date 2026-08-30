@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import '../../flex_color_picker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// MainColors widget.
 ///
@@ -89,10 +88,9 @@ class MainColors extends StatelessWidget {
         children: <Widget>[
           for (final ColorSwatch<Object> colorSwatch in activeColorSwatchList)
             ColorIndicator(
-              isSelected: (selectedColor == colorSwatch[500] &&
-                      colorSwatch is MaterialColor) ||
-                  (selectedColor == colorSwatch[200] &&
-                      colorSwatch is MaterialAccentColor),
+              isSelected:
+                  (selectedColor == colorSwatch[500] && colorSwatch is MaterialColor) ||
+                  (selectedColor == colorSwatch[200] && colorSwatch is MaterialAccentColor),
               color: colorSwatch,
               width: width,
               height: height,
@@ -102,8 +100,7 @@ class MainColors extends StatelessWidget {
               elevation: elevation,
               selectedIcon: selectedColorIcon,
               onSelect: () {
-                onSelectColor(
-                    colorSwatch[500] ?? colorSwatch[200] ?? Colors.black);
+                onSelectColor(colorSwatch[500] ?? colorSwatch[200] ?? Colors.black);
               },
               selectedRequestsFocus: selectedRequestsFocus,
             ),

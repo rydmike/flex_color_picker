@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Enum that controls the RGB string format of the copied color value.
 ///
@@ -55,32 +55,33 @@ enum ColorPickerCopyFormat {
 @immutable
 class ColorPickerCopyPasteBehavior with Diagnosticable {
   /// Default constructor
-  const ColorPickerCopyPasteBehavior(
-      {this.ctrlC = true,
-      this.ctrlV = true,
-      this.autoFocus = true,
-      this.copyButton = false,
-      this.pasteButton = false,
-      this.copyIcon = Icons.copy,
-      this.pasteIcon = Icons.paste,
-      this.copyTooltip,
-      this.pasteTooltip,
-      this.copyFormat = ColorPickerCopyFormat.dartCode,
-      this.longPressMenu = false,
-      this.secondaryMenu = false,
-      this.secondaryOnDesktopLongOnDevice = false,
-      this.secondaryOnDesktopLongOnDeviceAndWeb = false,
-      this.editFieldCopyButton = true,
-      this.menuIconThemeData,
-      this.menuThemeData,
-      this.menuWidth = 80,
-      this.menuItemHeight = 30,
-      this.snackBarParseError = false,
-      this.snackBarMessage,
-      this.snackBarDuration = const Duration(milliseconds: 1800),
-      this.feedbackParseError = false,
-      this.parseShortHexCode = false,
-      this.editUsesParsedPaste = true});
+  const ColorPickerCopyPasteBehavior({
+    this.ctrlC = true,
+    this.ctrlV = true,
+    this.autoFocus = true,
+    this.copyButton = false,
+    this.pasteButton = false,
+    this.copyIcon = Icons.copy,
+    this.pasteIcon = Icons.paste,
+    this.copyTooltip,
+    this.pasteTooltip,
+    this.copyFormat = ColorPickerCopyFormat.dartCode,
+    this.longPressMenu = false,
+    this.secondaryMenu = false,
+    this.secondaryOnDesktopLongOnDevice = false,
+    this.secondaryOnDesktopLongOnDeviceAndWeb = false,
+    this.editFieldCopyButton = true,
+    this.menuIconThemeData,
+    this.menuThemeData,
+    this.menuWidth = 80,
+    this.menuItemHeight = 30,
+    this.snackBarParseError = false,
+    this.snackBarMessage,
+    this.snackBarDuration = const Duration(milliseconds: 1800),
+    this.feedbackParseError = false,
+    this.parseShortHexCode = false,
+    this.editUsesParsedPaste = true,
+  });
 
   /// A keyboard CMD/CTRL-C press will copy the clipboard into the picker.
   ///
@@ -397,11 +398,9 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
       copyFormat: copyFormat ?? this.copyFormat,
       longPressMenu: longPressMenu ?? this.longPressMenu,
       secondaryMenu: secondaryMenu ?? this.secondaryMenu,
-      secondaryOnDesktopLongOnDevice:
-          secondaryOnDesktopLongOnDevice ?? this.secondaryOnDesktopLongOnDevice,
+      secondaryOnDesktopLongOnDevice: secondaryOnDesktopLongOnDevice ?? this.secondaryOnDesktopLongOnDevice,
       secondaryOnDesktopLongOnDeviceAndWeb:
-          secondaryOnDesktopLongOnDeviceAndWeb ??
-              this.secondaryOnDesktopLongOnDeviceAndWeb,
+          secondaryOnDesktopLongOnDeviceAndWeb ?? this.secondaryOnDesktopLongOnDeviceAndWeb,
       editFieldCopyButton: editFieldCopyButton ?? this.editFieldCopyButton,
       menuIconThemeData: menuIconThemeData ?? this.menuIconThemeData,
       menuThemeData: menuThemeData ?? this.menuThemeData,
@@ -433,10 +432,8 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
         copyFormat == other.copyFormat &&
         longPressMenu == other.longPressMenu &&
         secondaryMenu == other.secondaryMenu &&
-        secondaryOnDesktopLongOnDevice ==
-            other.secondaryOnDesktopLongOnDevice &&
-        secondaryOnDesktopLongOnDeviceAndWeb ==
-            other.secondaryOnDesktopLongOnDeviceAndWeb &&
+        secondaryOnDesktopLongOnDevice == other.secondaryOnDesktopLongOnDevice &&
+        secondaryOnDesktopLongOnDeviceAndWeb == other.secondaryOnDesktopLongOnDeviceAndWeb &&
         editFieldCopyButton == other.editFieldCopyButton &&
         menuIconThemeData == other.menuIconThemeData &&
         menuThemeData == other.menuThemeData &&
@@ -452,32 +449,32 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
 
   @override
   int get hashCode => Object.hashAll(<Object?>[
-        ctrlC,
-        ctrlV,
-        autoFocus,
-        copyButton,
-        pasteButton,
-        copyIcon,
-        pasteIcon,
-        copyTooltip,
-        pasteTooltip,
-        copyFormat,
-        longPressMenu,
-        secondaryMenu,
-        secondaryOnDesktopLongOnDevice,
-        secondaryOnDesktopLongOnDeviceAndWeb,
-        editFieldCopyButton,
-        menuIconThemeData,
-        menuThemeData,
-        menuWidth,
-        menuItemHeight,
-        snackBarParseError,
-        snackBarMessage,
-        snackBarDuration,
-        feedbackParseError,
-        parseShortHexCode,
-        editUsesParsedPaste,
-      ]);
+    ctrlC,
+    ctrlV,
+    autoFocus,
+    copyButton,
+    pasteButton,
+    copyIcon,
+    pasteIcon,
+    copyTooltip,
+    pasteTooltip,
+    copyFormat,
+    longPressMenu,
+    secondaryMenu,
+    secondaryOnDesktopLongOnDevice,
+    secondaryOnDesktopLongOnDeviceAndWeb,
+    editFieldCopyButton,
+    menuIconThemeData,
+    menuThemeData,
+    menuWidth,
+    menuItemHeight,
+    snackBarParseError,
+    snackBarMessage,
+    snackBarDuration,
+    feedbackParseError,
+    parseShortHexCode,
+    editUsesParsedPaste,
+  ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -491,33 +488,23 @@ class ColorPickerCopyPasteBehavior with Diagnosticable {
     properties.add(DiagnosticsProperty<IconData>('pasteIcon', pasteIcon));
     properties.add(StringProperty('copyTooltip', copyTooltip));
     properties.add(StringProperty('pasteTooltip', pasteTooltip));
-    properties
-        .add(EnumProperty<ColorPickerCopyFormat>('copyFormat', copyFormat));
+    properties.add(EnumProperty<ColorPickerCopyFormat>('copyFormat', copyFormat));
     properties.add(DiagnosticsProperty<bool>('longPressMenu', longPressMenu));
     properties.add(DiagnosticsProperty<bool>('secondaryMenu', secondaryMenu));
-    properties.add(DiagnosticsProperty<bool>(
-        'secondaryOnDesktopLongOnDevice', secondaryOnDesktopLongOnDevice));
-    properties.add(DiagnosticsProperty<bool>(
-        'secondaryOnDesktopLongOnDeviceAndWeb',
-        secondaryOnDesktopLongOnDeviceAndWeb));
+    properties.add(DiagnosticsProperty<bool>('secondaryOnDesktopLongOnDevice', secondaryOnDesktopLongOnDevice));
     properties.add(
-        DiagnosticsProperty<bool>('editFieldCopyButton', editFieldCopyButton));
-    properties.add(DiagnosticsProperty<IconThemeData?>(
-        'menuIconThemeData', menuIconThemeData));
-    properties.add(DiagnosticsProperty<PopupMenuThemeData?>(
-        'menuThemeData', menuThemeData));
+      DiagnosticsProperty<bool>('secondaryOnDesktopLongOnDeviceAndWeb', secondaryOnDesktopLongOnDeviceAndWeb),
+    );
+    properties.add(DiagnosticsProperty<bool>('editFieldCopyButton', editFieldCopyButton));
+    properties.add(DiagnosticsProperty<IconThemeData?>('menuIconThemeData', menuIconThemeData));
+    properties.add(DiagnosticsProperty<PopupMenuThemeData?>('menuThemeData', menuThemeData));
     properties.add(DoubleProperty('menuWidth', menuWidth));
     properties.add(DoubleProperty('menuItemHeight', menuItemHeight));
-    properties.add(
-        DiagnosticsProperty<bool>('snackBarParseError', snackBarParseError));
+    properties.add(DiagnosticsProperty<bool>('snackBarParseError', snackBarParseError));
     properties.add(StringProperty('snackBarMessage', snackBarMessage));
-    properties.add(
-        DiagnosticsProperty<Duration>('snackBarDuration', snackBarDuration));
-    properties.add(
-        DiagnosticsProperty<bool>('feedbackParseError', feedbackParseError));
-    properties
-        .add(DiagnosticsProperty<bool>('parseShortHexCode', parseShortHexCode));
-    properties.add(
-        DiagnosticsProperty<bool>('editUsesParsedPaste', editUsesParsedPaste));
+    properties.add(DiagnosticsProperty<Duration>('snackBarDuration', snackBarDuration));
+    properties.add(DiagnosticsProperty<bool>('feedbackParseError', feedbackParseError));
+    properties.add(DiagnosticsProperty<bool>('parseShortHexCode', parseShortHexCode));
+    properties.add(DiagnosticsProperty<bool>('editUsesParsedPaste', editUsesParsedPaste));
   }
 }

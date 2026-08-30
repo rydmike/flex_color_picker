@@ -1,10 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/utils/color_extensions.dart';
+import 'package:color_picker_example/demo/widgets/if_wrapper.dart';
 import 'package:flutter/services.dart';
-
-import '../utils/color_extensions.dart';
-import 'if_wrapper.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Material dark default surface color
 const Color _kMaterialDarkSurface = Color(0xff121212);
@@ -406,119 +405,602 @@ class FlexAppBar {
   //  **************************************************************************
 
   /// Creates an opinionated styled app bar that may use gradient primary
-  /// color and gradually increasing transparency and blur effect, as well as a
+  /// color and gradually increasing transparency and blur effect, as well as an
   /// optional from screen or window edges floating app bar.
   ///
-  /// The status bar scrim can also be removed with a singe toggle.
+  /// The status bar scrim can also be removed with a single toggle.
   ///
   /// The default configuration creates a stylish gradient app bar with no
   /// status bar scrim and a light transparency towards the end, and uses
   /// frosted glass effect for the transparency.
-  // ignore: sort_constructors_first
+  ///
+  /// ## [context]
+  ///
+  /// Current [BuildContext]. Required so [FlexAppBar.styled] can read the
+  /// theme used for styling.
+  ///
+  /// ## [key]
+  ///
+  /// Key that gets passed to super key, when converted to an actual app bar.
+  ///
+  /// ## [leading]
+  ///
+  /// A widget to display before the toolbar's [title].
+  ///
+  /// Typically the [leading] widget is an [Icon] or an [IconButton].
+  ///
+  /// Becomes the leading component of the [NavigationToolbar] built by this
+  /// widget. The [leading] widget's width and height are constrained to be no
+  /// bigger than [leadingWidth] and [toolbarHeight] respectively.
+  ///
+  /// If this is null and [automaticallyImplyLeading] is set to true, the
+  /// [AppBar] will imply an appropriate widget. For example, if the [AppBar] is
+  /// in a [Scaffold] that also has a [Drawer], the [Scaffold] will fill this
+  /// widget with an [IconButton] that opens the drawer (using [Icons.menu]). If
+  /// there's no [Drawer] and the parent [Navigator] can go back, the [AppBar]
+  /// will use a [BackButton] that calls [Navigator.maybePop].
+  ///
+  /// See also:
+  ///
+  ///  * [Scaffold.appBar], in which an [AppBar] is usually placed.
+  ///  * [Scaffold.drawer], in which the [Drawer] is usually placed.
+  ///
+  /// ## [automaticallyImplyLeading]
+  ///
+  /// Controls whether we should try to imply the leading widget if null.
+  ///
+  /// If true and [leading] is null, automatically try to deduce what the
+  /// leading widget should be. If false and [leading] is null, leading space
+  /// is given to [title]. If leading widget is not null, this parameter has
+  /// no effect.
+  ///
+  /// The parameter has no effect when [FlexAppBar] is consumed by `Flexfold`.
+  /// Flexfold will create leading and action widget as needed based on its
+  /// current navigation. In effect one could say that it always uses a form
+  /// of advanced [automaticallyImplyLeading] and imply last actions widget.
+  ///
+  /// ## [title]
+  ///
+  /// The primary widget displayed in the app bar.
+  ///
+  /// Becomes the middle component of the [NavigationToolbar] built by this
+  /// widget. Typically a [Text] widget that contains a description of the
+  /// current contents of the app.
+  ///
+  /// The [title]'s width is constrained to fit within the remaining space
+  /// between the toolbar's [leading] and [actions] widgets. Its height is
+  /// _not_ constrained. The [title] is vertically centered and clipped to fit
+  /// within the toolbar, whose height is [toolbarHeight]. Typically this
+  /// isn't noticeable because a simple [Text] [title] will fit within the
+  /// toolbar by default. On the other hand, it is noticeable when a
+  /// widget with an intrinsic height that is greater than [toolbarHeight]
+  /// is used as the [title]. For example, when the height of an Image used
+  /// as the [title] exceeds [toolbarHeight], it will be centered and
+  /// clipped (top and bottom), which may be undesirable. In cases like this
+  /// the height of the [title] widget can be constrained.
+  ///
+  /// ## [actions]
+  ///
+  /// A list of Widgets to display in a row after the [title] widget.
+  ///
+  /// Typically these widgets are [IconButton]s representing common operations.
+  /// For less common operations, consider using a [PopupMenuButton] as the
+  /// last action.
+  ///
+  /// The [actions] become the trailing component of the [NavigationToolbar]
+  /// built by this widget. The height of each action is constrained to be no
+  /// bigger than the [toolbarHeight].
+  ///
+  /// ## [bottom]
+  ///
+  /// This widget appears across the bottom of the app bar.
+  ///
+  /// Typically a [TabBar]. Only widgets that implement [PreferredSizeWidget]
+  /// can be used at the bottom of an app bar.
+  ///
+  /// See also:
+  ///
+  ///  * [PreferredSize], which can be used to give an arbitrary widget a
+  ///    preferred size.
+  ///
+  /// ## [elevation]
+  ///
+  /// The z-coordinate at which to place this app bar relative to its parent.
+  ///
+  /// This property controls the size of the shadow below the app bar.
+  ///
+  /// The value must be non-negative.
+  ///
+  /// If this property is null, then [AppBarTheme.elevation] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, the
+  /// default value is 0.
+  ///
+  /// See also:
+  ///
+  ///  * [shadowColor], which is the color of the shadow below the app bar.
+  ///  * [shape], which defines the shape of the app bar's [Material] and its
+  ///    shadow.
+  ///
+  /// ## [shadowColor]
+  ///
+  /// The color of the shadow below the app bar.
+  ///
+  /// If this property is null, then [AppBarTheme.shadowColor] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, the default value
+  /// is fully opaque black.
+  ///
+  /// See also:
+  ///
+  ///  * [elevation], which defines the size of the shadow below the app bar.
+  ///  * [shape], which defines the shape of the app bar and its shadow.
+  ///
+  /// ## [shape]
+  ///
+  /// The shape of the app bar's material's shape as well as its shadow.
+  ///
+  /// A shadow is only displayed if the [elevation] is greater than
+  /// zero.
+  ///
+  /// See also:
+  ///
+  ///  * [elevation], which defines the size of the shadow below the app bar.
+  ///  * [shadowColor], which is the color of the shadow below the app bar.
+  ///
+  /// ## [backgroundColor]
+  ///
+  /// The fill color to use for an app bar's [Material].
+  ///
+  /// If null, then the [AppBarTheme.backgroundColor] is used. If that value is
+  /// also null, then [AppBar] uses the overall theme's [ColorScheme.primary]
+  /// if the overall theme's brightness is [Brightness.light], and
+  /// [ColorScheme.surface] if the overall theme's brightness is
+  /// [Brightness.dark].
+  ///
+  /// See also:
+  ///
+  ///  * [foregroundColor], which specifies the color for icons and text within
+  ///    the app bar.
+  ///  * [Theme.of], which returns the current overall Material theme as
+  ///    a [ThemeData].
+  ///  * [ThemeData.colorScheme], the thirteen colors that most Material widget
+  ///    default colors are based on.
+  ///  * [ColorScheme.brightness], which indicates if the overall [Theme]
+  ///    is light or dark.
+  ///
+  /// ## [foregroundColor]
+  ///
+  /// The default color for [Text] and [Icon]s within the app bar.
+  ///
+  /// If null, then [AppBarTheme.foregroundColor] is used. If that
+  /// value is also null, then [AppBar] uses the overall theme's
+  /// [ColorScheme.onPrimary] if the overall theme's brightness is
+  /// [Brightness.light], and [ColorScheme.onSurface] if the overall
+  /// theme's brightness is [Brightness.dark].
+  ///
+  /// This color is used to configure [DefaultTextStyle] that contains
+  /// the toolbar's children, and the default [IconTheme] widgets that
+  /// are created if [iconTheme] and [actionsIconTheme] are null.
+  ///
+  /// See also:
+  ///
+  ///  * [backgroundColor], which specifies the app bar's background color.
+  ///  * [Theme.of], which returns the current overall Material theme as
+  ///    a [ThemeData].
+  ///  * [ThemeData.colorScheme], the thirteen colors that most Material widget
+  ///    default colors are based on.
+  ///  * [ColorScheme.brightness], which indicates if the overall [Theme]
+  ///    is light or dark.
+  ///
+  /// ## [iconTheme]
+  ///
+  /// The color, opacity, and size to use for toolbar icons.
+  ///
+  /// If this property is null, then a copy of [ThemeData.iconTheme]
+  /// is used, with the [IconThemeData.color] set to the
+  /// app bar's [foregroundColor].
+  ///
+  /// See also:
+  ///
+  ///  * [actionsIconTheme], which defines the appearance of icons in
+  ///    the [actions] list.
+  ///
+  /// ## [actionsIconTheme]
+  ///
+  /// The color, opacity, and size to use for the icons that appear in the app
+  /// bar's [actions].
+  ///
+  /// This property should only be used when the [actions] should be
+  /// themed differently than the icon that appears in the app bar's [leading]
+  /// widget.
+  ///
+  /// If this property is null, then [AppBarTheme.actionsIconTheme] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, then the value of
+  /// [iconTheme] is used.
+  ///
+  /// See also:
+  ///
+  ///  * [iconTheme], which defines the appearance of all of the toolbar icons.
+  ///
+  /// ## [primary]
+  ///
+  /// Whether this app bar is being displayed at the top of the screen.
+  ///
+  /// If true, the app bar's toolbar elements and [bottom] widget will be
+  /// padded on top by the height of the system status bar. The layout
+  /// of [FlexAppBar.flexibleSpace] is not affected by the [primary] property.
+  ///
+  /// ## [centerTitle]
+  ///
+  /// Whether the title should be centered.
+  ///
+  /// If this property is null, then [AppBarTheme.centerTitle] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, then value is
+  /// adapted to the current [TargetPlatform].
+  ///
+  /// ## [excludeHeaderSemantics]
+  ///
+  /// Whether the title should be wrapped with header [Semantics].
+  ///
+  /// Defaults to false.
+  ///
+  /// ## [titleSpacing]
+  ///
+  /// The spacing around [title] content on the horizontal axis. This spacing is
+  /// applied even if there is no [leading] content or [actions]. If you want
+  /// [title] to take all the space available, set this value to 0.0.
+  ///
+  /// If this property is null, then [AppBarTheme.titleSpacing] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, then the
+  /// default value is [NavigationToolbar.kMiddleSpacing].
+  ///
+  /// ## [toolbarOpacity]
+  ///
+  /// How opaque the toolbar part of the app bar is.
+  ///
+  /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
+  ///
+  /// Typically, this value is not changed from its default value (1.0). It is
+  /// used by [SliverAppBar] to animate the opacity of the toolbar when the app
+  /// bar is scrolled.
+  ///
+  /// ## [bottomOpacity]
+  ///
+  /// How opaque the bottom part of the app bar is.
+  ///
+  /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
+  ///
+  /// Typically, this value is not changed from its default value (1.0). It is
+  /// used by [SliverAppBar] to animate the opacity of the toolbar when the app
+  /// bar is scrolled.
+  ///
+  /// ## [toolbarHeight]
+  ///
+  /// Defines the height of the toolbar component of an [AppBar].
+  ///
+  /// By default, the value of `toolbarHeight` is [kToolbarHeight].
+  ///
+  /// ## [leadingWidth]
+  ///
+  /// Defines the width of [leading] widget.
+  ///
+  /// By default, the value of `leadingWidth` is 56.0.
+  ///
+  /// ## [toolbarTextStyle]
+  ///
+  /// The default text style for the AppBar's [leading], and
+  /// [actions] widgets, but not its [title].
+  ///
+  /// If this property is null, then [AppBarTheme.toolbarTextStyle] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, the default
+  /// value is a copy of the overall theme's [TextTheme.bodyMedium]
+  /// [TextStyle], with color set to the app bar's [foregroundColor].
+  ///
+  /// See also:
+  ///
+  ///  * [titleTextStyle], which overrides the default text style for
+  ///    the [title].
+  ///  * [DefaultTextStyle], which overrides the default text style for all of
+  ///    the widgets in a subtree.
+  ///
+  /// ## [titleTextStyle]
+  ///
+  /// The default text style for the AppBar's [title] widget.
+  ///
+  /// If this property is null, then [AppBarTheme.titleTextStyle] of
+  /// [ThemeData.appBarTheme] is used. If that is also null, the default
+  /// value is a copy of the overall theme's [TextTheme.titleLarge]
+  /// [TextStyle], with color set to the app bar's [foregroundColor].
+  ///
+  /// See also:
+  ///
+  ///  * [toolbarTextStyle], which is the default text style for the AppBar's
+  ///    [title], [leading], and [actions] widgets, also known as the
+  ///    AppBar's "toolbar".
+  ///  * [DefaultTextStyle], which overrides the default text style for all of
+  ///    the widgets in a subtree.
+  ///
+  /// ## [systemOverlayStyle]
+  ///
+  /// Specifies the style to use for the system overlays that overlap the
+  /// AppBar.
+  ///
+  /// If this property is null, then [SystemUiOverlayStyle.light] is used if
+  /// the overall theme is dark, [SystemUiOverlayStyle.dark] otherwise. Theme
+  /// brightness is defined by [ColorScheme.brightness] for
+  /// [ThemeData.colorScheme].
+  ///
+  /// The AppBar's descendants are built within a
+  /// `AnnotatedRegion<SystemUiOverlayStyle>` widget, which causes
+  /// [SystemChrome.setSystemUIOverlayStyle] to be called
+  /// automatically. Apps should not enclose an AppBar with their
+  /// own [AnnotatedRegion].
+  ///
+  /// See also:
+  ///
+  ///  * [SystemChrome.setSystemUIOverlayStyle]
+  ///
+  /// ## [opacity]
+  ///
+  /// The amount of opacity to be used on the styled app bar.
+  ///
+  /// Defaults to 0.9. Must be from 0 to 1.
+  ///
+  /// ## [startOpacity]
+  ///
+  /// Opacity value for the start color. Defaults to 1. Must be from 0 to 1.
+  ///
+  /// This opacity value is only used when [gradient] is used. It is often set
+  /// to 1 for a fully opaque start of the gradient, beginning at the start
+  /// side of the app bar. This makes it easier to see the leading action
+  /// widget and the title, that is often also at the beginning of the app bar.
+  ///
+  /// ## [blurred]
+  ///
+  /// App bar has a frosted glass blur effect when it has any transparency.
+  ///
+  /// This applies the same blurring effect on the Material app bar that is
+  /// often used on Cupertino app bars when it has some transparency.
+  ///
+  /// This filter is a bit expensive and is only applied when [blurred] is true,
+  /// and when [opacity] or [startOpacity] is less than 1.
+  ///
+  /// Defaults to true.
+  ///
+  /// ## [gradient]
+  ///
+  /// The styled app bar is using a color gradient.
+  ///
+  /// The start color for the gradient is the app bar background color.
+  /// The color used for the end gradient is an automatically computed shade
+  /// of the app bar background color. The shade strength can be modified
+  /// with [gradientPercentage].
+  ///
+  /// Defaults to true.
+  ///
+  /// ## [gradientPercentage]
+  ///
+  /// The percentage of color change we should apply to the app bar color
+  /// in the gradient at the end of the app bar.
+  ///
+  /// In light theme the color hue will be made lighter by the given
+  /// percentage value. In dark theme the app bar color hue will be made
+  /// darker by the same percentage amount. The gradient is only applied
+  /// if [gradient] is true.
+  ///
+  /// Defaults to 10 (%). Must be from 0 to 100.
+  ///
+  /// ## [reverseGradient]
+  ///
+  /// Reverse the gradient and transparency direction.
+  ///
+  /// The normal direction starts with app bar color from the start of the
+  /// app bar and ends in the computed gradient color. Setting
+  /// [reverseGradient] to true reverses the order.
+  ///
+  /// This is useful when multiple styled app bars are used in a row layout
+  /// and we want the gradients to flow from one to the next app bar by
+  /// reversing the order of the gradient color for each alternating app bar.
+  ///
+  /// Defaults to false.
+  ///
+  /// ## [scrim]
+  ///
+  /// Use a standard scrim on the top status bar when [floatAppBar] is false.
+  ///
+  /// By default, the styled app bar does not use a scrim on the status bar
+  /// when [floatAppBar] is false. If set to true, the default scrim of alpha
+  /// (0x40) and black color will be added to the styled app bar, provided
+  /// [floatAppBar] is false and [statusBarColor] is null. If [statusBarColor]
+  /// is specified, it is up to the used color to include the desired alpha
+  /// value for the status bar as well.
+  ///
+  /// ## [floatScrim]
+  ///
+  /// The scrim alpha value used when [floatAppBar] is true.
+  ///
+  /// Defaults to hex `CC`. Value must be from hex 00 (0) to hex FF (255).
+  ///
+  /// ## [floatAppBar]
+  ///
+  /// The styled app bar is floating and not connected to screen edges.
+  ///
+  /// This type of app bar works best on devices that have a system status
+  /// bar on top of the app bar, like iOS and Android.
+  ///
+  /// Defaults to false.
+  ///
+  /// ## [statusBarColor]
+  ///
+  /// The color of the status bar of the styled app bar.
+  ///
+  /// By default the top [statusBarColor] is null and its color is determined
+  /// by the app bar background [backgroundColor] and [floatAppBar].
+  ///
+  /// If the styled app bar has [floatAppBar] set to false, meaning it is a
+  /// normal app bar that touches the edges of the screen, then the
+  /// [statusBarColor] will be equal to the current app bar background
+  /// [backgroundColor]. If [floatAppBar] is true, then the [statusBarColor]
+  /// will be equal to current theme scaffold background color.
+  ///
+  /// If a [statusBarColor] is provided, then that color will always override
+  /// the built-in default color behavior and be used.
+  ///
+  /// ## [floatPadding]
+  ///
+  /// Padding for the float styled app bar.
+  ///
+  /// The padding above and below the styled app bar is removed from the app
+  /// bar height and needs to be small; values from 0 to 4 can work OK for
+  /// top and bottom. Setting top and bottom to a value other than 0 is
+  /// typically only needed for a floating effect on devices that do not
+  /// have a status bar, like desktop and web.
+  ///
+  /// Top and bottom values default to 0.
+  ///
+  /// The padding for start and end defaults to 3 and can look OK all the
+  /// way up to 6. For a drawer app bar you should set end to 0 and for an
+  /// end drawer app bar you should set start to 0. For the main app bar
+  /// you will need symmetric values from 2 to 6 for a nice floating and
+  /// from-the-sides disconnected look.
+  ///
+  /// Defaults to `EdgeInsetsDirectional.fromSTEB(3, 0, 3, 0)`.
+  ///
+  /// ## [hasBorder]
+  ///
+  /// Draw a border on the styled app bar.
+  ///
+  /// If [floatAppBar] is true, the border will be a border all around the
+  /// styled app bar. If [floatAppBar] is false, the border will just be a
+  /// bottom border line on the styled app bar.
+  ///
+  /// Defaults to false.
+  ///
+  /// ## [hasBorderOnSurface]
+  ///
+  /// Identical in behavior to [hasBorder], but the border is only drawn when
+  /// the app bar is dark/black or white, or uses surface or background color.
+  ///
+  /// A colored app bar usually does not need any border, but one that is the
+  /// same color as the background, or very close to it, looks better when
+  /// there is some separation between it and the background.
+  ///
+  /// Defaults to true.
+  ///
+  /// ## [border]
+  ///
+  /// The border to use on the styled app bar.
+  ///
+  /// The border is only drawn when [hasBorder] is true or
+  /// [hasBorderOnSurface] is true and app bar color has a surface-like
+  /// color.
+  ///
+  /// If [border] is null and [floatAppBar] is false, then it defaults to a
+  /// 1 dp bottom border line using [borderColor].
+  /// If [border] is null and [floatAppBar] is true, it defaults to a 1 dp
+  /// rectangle with rounded corners with a border radius of [borderRadius]
+  /// using [borderColor].
+  ///
+  /// ## [borderRadius]
+  ///
+  /// The border radius geometry used for the app bar border when
+  /// [floatAppBar] is true.
+  ///
+  /// If [floatAppBar] is true, then it defaults to
+  /// `BorderRadius.circular(8)`, otherwise it defaults to null.
+  ///
+  /// ## [borderColor]
+  ///
+  /// The color of the styled app bar border.
+  ///
+  /// If null, it defaults to `theme.dividerTheme.color`, and if that is null
+  /// it uses `theme.dividerColor`.
+  ///
+  /// ## [showScreenSize]
+  ///
+  /// Show the current screen size in the app bar.
+  ///
+  /// This property is mostly intended as a quick and easy way to show the
+  /// current screen media size in the app bar. It is intended as a quick
+  /// helper when developing a responsive UI to see current screen size and
+  /// that the design responds correctly at desired breakpoints.
+  // ignore: sort_constructors_first, this is the main thing we want to see first here.
   factory FlexAppBar.styled(
-    /// The context is needed because the [FlexAppBar.styled] needs to know
-    /// the theme for its styling, we must pass in current build context.
-    final BuildContext context, {
+    /// Current build context; required to read the theme for styling.
+    BuildContext context, {
     // AppBar properties, see AppBar for documentation
-    final Key? key,
+    /// Key passed through when converted to an actual app bar.
+    Key? key,
 
-    /// See [AppBar] or [FlexAppBar] for full docs on properties.
+    /// Widget before the toolbar `title`.
+    Widget? leading,
 
-    /// A widget to display before the toolbar's [title].
-    final Widget? leading,
+    /// Imply a leading widget when `leading` is null. Defaults to true.
+    bool automaticallyImplyLeading = true,
 
-    /// Controls whether we should try to imply the leading widget if null.
-    final bool automaticallyImplyLeading = true,
+    /// Primary widget displayed in the app bar.
+    Widget? title,
 
-    /// The primary widget displayed in the app bar.
-    final Widget? title,
+    /// Widgets after `title` (typically [IconButton]s).
+    List<Widget>? actions,
 
-    /// A list of Widgets to display in a row after the [title] widget.
-    final List<Widget>? actions,
-
-    /// This widget is stacked behind the toolbar and the tab bar. Its height
-    /// will be the same as the app bar's overall height.
     // Widget flexibleSpace,
 
-    /// This widget appears across the bottom of the app bar.
-    final PreferredSizeWidget? bottom,
+    /// Widget across the bottom of the app bar. Typically a [TabBar].
+    PreferredSizeWidget? bottom,
 
-    /// The z-coordinate at which to place this app bar relative to its parent.
-    final double? elevation,
+    /// App bar elevation. Null or >= 0; null uses theme, else default 0.
+    double? elevation,
 
-    /// The color to paint the shadow below the app bar.
-    final Color? shadowColor,
+    /// Color of the shadow below the app bar.
+    Color? shadowColor,
 
-    /// The shape of the app bar's material's shape as well as its shadow.
-    final ShapeBorder? shape,
+    /// Shape of the app bar material and its shadow.
+    ShapeBorder? shape,
 
-    /// The fill color to use for an app bar's [Material].
-    final Color? backgroundColor,
+    /// App bar [Material] fill color.
+    Color? backgroundColor,
 
-    /// The default color for [Text] and [Icon]s within the app bar.
-    final Color? foregroundColor,
+    /// Default color for [Text] and [Icon]s in the app bar.
+    Color? foregroundColor,
 
-    /// The color, opacity, and size to use for toolbar icons.
-    final IconThemeData? iconTheme,
+    /// Theme for toolbar icons.
+    IconThemeData? iconTheme,
 
-    /// The color, opacity, and size to use for the icons that appear in the app
-    /// bar's [actions].
-    final IconThemeData? actionsIconTheme,
+    /// Theme for icons in `actions`.
+    IconThemeData? actionsIconTheme,
 
-    /// Whether this app bar is being displayed at the top of the screen.
-    final bool primary = true,
+    /// Whether the app bar is at the top of the screen. Defaults to true.
+    bool primary = true,
 
-    /// Whether the title should be centered.
-    final bool? centerTitle,
+    /// Whether the title should be centered. Null uses theme/platform.
+    bool? centerTitle,
 
-    /// Whether the title should be wrapped with header [Semantics].
-    final bool excludeHeaderSemantics = false,
+    /// Wrap the title with header [Semantics]. Defaults to false.
+    bool excludeHeaderSemantics = false,
 
-    /// The spacing around [title] content on the horizontal axis. This spacing
-    /// is applied even if there is no [leading] content or [actions]. If you
-    /// want [title] to take all the space available, set this value to 0.0.
-    ///
-    /// Defaults to [NavigationToolbar.kMiddleSpacing].
-    final double? titleSpacing,
+    /// Horizontal spacing around `title`. Null uses [NavigationToolbar.kMiddleSpacing].
+    double? titleSpacing,
 
-    /// How opaque the toolbar part of the app bar is.
-    ///
-    /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
-    ///
-    /// Typically, this value is not changed from its default value (1.0). It is
-    /// used by [SliverAppBar] to animate the opacity of the toolbar when the
-    /// app bar is scrolled.
-    final double toolbarOpacity = 1.0,
+    /// Toolbar opacity, 0.0 to 1.0. Defaults to 1.0.
+    double toolbarOpacity = 1.0,
 
-    /// How opaque the bottom part of the app bar is.
-    ///
-    /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
-    ///
-    /// Typically, this value is not changed from its default value (1.0). It is
-    /// used by [SliverAppBar] to animate the opacity of the toolbar when the
-    /// app bar is scrolled.
-    final double bottomOpacity = 1.0,
+    /// Bottom widget opacity, 0.0 to 1.0. Defaults to 1.0.
+    double bottomOpacity = 1.0,
 
-    /// Defines the height of the toolbar component of an [AppBar].
-    ///
-    /// By default, the value of `toolbarHeight` is [kToolbarHeight].
-    final double? toolbarHeight,
+    /// Toolbar height. Defaults to [kToolbarHeight].
+    double? toolbarHeight,
 
-    /// Defines the width of [leading] widget.
-    ///
-    /// By default, the value of `leadingWidth` is 56.0.
-    final double? leadingWidth,
+    /// Width of the `leading` widget. Defaults to 56.0.
+    double? leadingWidth,
 
-    /// The default text style for the AppBar's [leading], and
-    /// [actions] widgets, but not its [title].
-    final TextStyle? toolbarTextStyle,
+    /// Text style for `leading` and `actions`, not `title`.
+    TextStyle? toolbarTextStyle,
 
-    /// The default text style for the AppBar's [title] widget.
-    final TextStyle? titleTextStyle,
+    /// Text style for the AppBar `title`.
+    TextStyle? titleTextStyle,
 
-    /// Specifies the style to use for the system overlays that overlap the
-    /// AppBar.
-    final SystemUiOverlayStyle? systemOverlayStyle,
+    /// System overlay style for status bar and similar.
+    SystemUiOverlayStyle? systemOverlayStyle,
 
     // *************************************************************************
     // *************************************************************************
@@ -526,210 +1008,84 @@ class FlexAppBar {
     // *************************************************************************
     // *************************************************************************
 
-    /// The amount of [opacity] to be used on the styled app bar.
-    ///
-    /// Defaults to 0.9.
-    final double opacity = 0.9,
+    /// Overall app bar opacity, 0 to 1. Defaults to 0.9.
+    double opacity = 0.9,
 
-    /// Opacity value for the start color, defaults to 1.
-    ///
-    /// This opacity value is only used when [gradient] is used, it is often set
-    /// to 1 for fully opaque value for the start of the gradient, beginning at
-    /// the start side of the app bar. This makes it easier to see the leading
-    /// action widget and the title, that is often also at the beginning of
-    /// the app bar.
-    final double startOpacity = 1,
+    /// Start-of-gradient opacity when `gradient` is true. Defaults to 1.
+    double startOpacity = 1,
 
-    /// App bar has a frosted glass blur effect when it has any transparency.
-    ///
-    /// This applies the same blurring effect on the Material app bar
-    /// that is often used on Cupertino app bars when it has some transparency.
-    ///
-    /// This filter is bit expensive and is only applied when [blurred] is true,
-    /// and when [opacity] or [startOpacity] is less than 1.
-    ///
-    /// Defaults to true.
-    final bool blurred = true,
+    /// Frosted glass blur when there is transparency. Defaults to true.
+    bool blurred = true,
 
-    /// The styled app bar is using a color gradient.
-    ///
-    /// The start color for the gradient is the app bar background color.
-    /// The color used for the end gradient is an automatically computed shade
-    /// of the app bar background color. The shade strength can be modified
-    /// with [gradientPercentage].
-    ///
-    /// Defaults to true.
-    final bool gradient = true,
+    /// Apply a background color gradient. Defaults to true.
+    bool gradient = true,
 
-    /// The percentage of color change we should apply to the app bar color
-    /// in the gradient at the end of the appbar.
-    ///
-    /// In light theme the color hue will be made lighter by the given
-    /// percentage value. In dark theme the app bar color hue will be made
-    /// darker by the same percentage amount. The gradient is only applied
-    /// if [gradient] is true.
-    ///
-    /// Defaults to 10 (%).
-    final int gradientPercentage = 10,
+    /// End-of-bar gradient shade percent, 0 to 100. Defaults to 10.
+    int gradientPercentage = 10,
 
-    /// Reverse the gradient and transparency direction.
-    ///
-    /// The normal direction starts with app bar color from the start of the
-    /// app bar and ends in the computed gradient color. Setting
-    /// [reverseGradient] to true reverses the order.
-    ///
-    /// This is useful when multiple styled app bars are used in a row layout
-    /// and we want the gradients to flow from one to the next app bar by
-    /// reversing the order of the gradient color for each alternating app bar.
-    ///
-    /// Defaults to false.
-    final bool reverseGradient = false,
+    /// Reverse gradient and transparency direction. Defaults to false.
+    bool reverseGradient = false,
 
-    /// Use a standard scrim on the top status bar when [floatAppBar] is false.
-    ///
-    /// By default, the styled app bar does not use a scrim on the status bar
-    /// when [floatAppBar] is false.
-    /// If set to true, the default scrim of alpha (0x40) and black color will
-    /// will be added to the styled app bar, provided [floatAppBar] is false
-    ///  and [statusBarColor] is null. If [statusBarColor] is
-    /// specified, it is up to the used color to include the desired alpha value
-    /// for the status bar as well.
-    final bool scrim = false,
+    /// Standard status-bar scrim when `floatAppBar` is false. Defaults to false.
+    bool scrim = false,
 
-    /// The scrim alpha value used when [floatAppBar] is true.
-    ///
-    /// Defaults to Hex CC. Value must be from hex 00 (0) to hex FF (255).
-    final int floatScrim = 0xCC,
+    /// Status-bar scrim alpha when `floatAppBar` is true. 0 to 255, default `0xCC`.
+    int floatScrim = 0xCC,
 
-    /// The styled app bar is floating and not connected to screen edges.
-    ///
-    /// This type of app bar works best on devices that have a system status
-    /// bar on top of the app bar, like iOS and Android has.
-    ///
-    /// Defaults to false.
-    final bool floatAppBar = false,
+    /// Float the app bar away from screen edges. Defaults to false.
+    bool floatAppBar = false,
 
-    /// The color of the status bar of the style app bar.
-    ///
-    /// By default the top [statusBarColor] is null and its color is
-    /// determined by the app bar background [color] and [floatAppBar]
-    /// property.
-    ///
-    /// If the styled app bar has [floatAppBar] set to false,
-    /// meaning it is a normal app bar that touches the edges of the screen,
-    /// then the [statusBarColor] will be equal to the current app bar
-    /// background [color]. If [floatAppBar] is true, then the [statusBarColor]
-    /// will be equal to current theme scaffold background color.
-    ///
-    /// If a [statusBarColor] is is provided, then that color will always
-    /// override the built in default color behavior and be used.
-    final Color? statusBarColor,
+    /// Status bar color override. Null uses `backgroundColor` or scaffold.
+    Color? statusBarColor,
 
-    /// Padding for the float styled app bar.
-    ///
-    /// The padding above and below the styled app bar is removed from the app
-    /// bar height and needs to be small, values from 0 to 4 can work OK for
-    /// top and bottom. Setting top and bottom to other value than 0 is
-    /// typically only needed for a floating effect on devices that dos not
-    /// have a status bar, like desktop and web.
-    ///
-    /// Top and bottom values defaults to 0.
-    ///
-    /// The padding for start and end defaults to 3 and can look OK all the
-    /// way up to 6. For a drawer app bar you should set end to 0 and for an
-    /// end drawer app bar you should set to start to 0. For the main app bar
-    /// you will need symmetric values from 2 to 6 for a nice floating and
-    /// form the sides disconnected look.
-    ///
-    /// Defaults to EdgeInsetsDirectional.fromSTEB(3, 0, 3, 0).
-    final EdgeInsetsDirectional floatPadding =
-        const EdgeInsetsDirectional.fromSTEB(3, 0, 3, 0),
+    /// Padding around a floating app bar. Default STEB(3, 0, 3, 0).
+    EdgeInsetsDirectional floatPadding = const EdgeInsetsDirectional.fromSTEB(3, 0, 3, 0),
 
-    /// Draw a border on the styled app bar.
-    ///
-    /// If [floatAppBar] is true, the border will be a border all around the
-    /// styled app bar, if [floatAppBar] is false, the border will just be a
-    /// bottom border line on the styled app bar.
-    ///
-    /// defaults to false.
-    final bool hasBorder = false,
+    /// Draw a border (around if floating, else bottom). Defaults to false.
+    bool hasBorder = false,
 
-    /// Identical in behavior to [hasBorder], but the border is only drawn when
-    /// the app bar is dark/black or white, or uses surface or background color.
-    ///
-    /// A colored app bar usually does not need any border, but one that is the
-    /// same color as the background, or very close to it, looks better when
-    /// there is some separation between it and the background.
-    ///
-    /// Defaults to true.
-    final bool hasBorderOnSurface = true,
+    /// Draw a border only on surface-like app bar colors. Defaults to true.
+    bool hasBorderOnSurface = true,
 
-    /// The border to use on the styled app bar.
-    ///
-    /// The border is only drawn when [hasBorder] is true or
-    /// [hasBorderOnSurface] is true and app bar color has a surface like
-    /// color.
-    ///
-    /// If [border] is null and [floatAppBar] is false, then it defaults to a
-    /// 1 dp bottom border line using [borderColor].
-    /// If [border] is null and [floatAppBar] is true, it defaults to a 1 dp
-    /// rectangle with rounded corners with a border radius of [borderRadius]
-    /// using [borderColor].
-    final Border? border,
+    /// Custom [Border]. Null uses a 1 dp line/`borderRadius` with `borderColor`.
+    Border? border,
 
-    /// The border radius geometry used for the app bar border when
-    /// [floatAppBar] is true.
-    ///
-    /// If [floatAppBar] is true, then it defaults to
-    /// BorderRadius.circular(8), otherwise it defaults to null.
-    final BorderRadiusGeometry? borderRadius,
+    /// Corner radius when `floatAppBar` is true. Default `BorderRadius.circular(8)`.
+    BorderRadiusGeometry? borderRadius,
 
-    /// The color of the style app bar border.
-    ///
-    /// If null, it defaults to theme.dividerTheme.color, if it is null it
-    /// uses theme.dividerColor.
-    final Color? borderColor,
+    /// Border color. Null uses theme divider color.
+    Color? borderColor,
 
-    /// Show the current screen size in the app bar
-    ///
-    /// This property is mostly intended as quick and easy way to show the
-    /// current screen media size in the app bar. It is intended to as quick
-    /// helper when developing responsive UI to see current screen size and
-    /// that the design responds correctly at desired breakpoints.
-    final bool showScreenSize = false,
+    /// Show current screen size in the app bar (dev helper). Defaults to false.
+    bool showScreenSize = false,
   }) {
     // Make some input assertions, these are same as on the standard AppBar
-    assert(elevation == null || elevation >= 0.0,
-        'Elevation must be null or >= 0');
+    assert(elevation == null || elevation >= 0.0, 'Elevation must be null or >= 0');
     // These are extra assertions for the styled AppBar
     assert(opacity >= 0 && opacity <= 1.0, 'Opacity must be >= 0 and <= 1');
-    assert(startOpacity >= 0 && startOpacity <= 1.0,
-        'Start opacity must be from 0 to 1.');
-    assert(gradientPercentage >= 0 && gradientPercentage <= 100,
-        'endPercentage must be >= 0 and <= 100');
-    assert(floatScrim >= 0 && floatScrim <= 255,
-        'looseScrim must be >= 0 and <= 255');
+    assert(startOpacity >= 0 && startOpacity <= 1.0, 'Start opacity must be from 0 to 1.');
+    assert(gradientPercentage >= 0 && gradientPercentage <= 100, 'endPercentage must be >= 0 and <= 100');
+    assert(floatScrim >= 0 && floatScrim <= 255, 'looseScrim must be >= 0 and <= 255');
 
     final ThemeData theme = Theme.of(context);
     final AppBarThemeData appBarTheme = AppBarTheme.of(context);
-    final Color appBarColor =
-        backgroundColor ?? appBarTheme.backgroundColor ?? theme.primaryColor;
+    final Color appBarColor = backgroundColor ?? appBarTheme.backgroundColor ?? theme.primaryColor;
 
     final Color endColor = theme.brightness == Brightness.light
         ? appBarColor.lighten(gradient ? gradientPercentage : 0)
         : appBarColor.darken(gradient ? gradientPercentage : 0);
 
-    final Color endTextColor =
-        ThemeData.estimateBrightnessForColor(appBarColor) == Brightness.light
-            ? Colors.black87
-            : Colors.white;
+    final Color endTextColor = ThemeData.estimateBrightnessForColor(appBarColor) == Brightness.light
+        ? Colors.black87
+        : Colors.white;
 
     // Determine if we should draw a bottom border. TRUE if the
     // flag to use it is true OR if the flag to use it on dark, black or white
     // app bars is true and we have dark, black or white color in the app bar.
     final Color schemeSurface = theme.colorScheme.surface;
     final Color schemeBackground = theme.colorScheme.surface;
-    final bool effectiveBottomBorder = hasBorder ||
+    final bool effectiveBottomBorder =
+        hasBorder ||
         (hasBorderOnSurface &&
             (appBarColor == Colors.black ||
                 appBarColor == _kMaterialDarkSurface ||
@@ -743,15 +1099,13 @@ class FlexAppBar {
                 endColor == schemeBackground));
 
     // User provided border color, if none use theme divider color.
-    final Color bottomBorderColor =
-        borderColor ?? theme.dividerTheme.color ?? theme.dividerColor;
+    final Color bottomBorderColor = borderColor ?? theme.dividerTheme.color ?? theme.dividerColor;
 
     // Needed for the height of the flexible space, we need to pass it to
     // gradient container to know how high to make it to fill the AppBar.
     final double height =
-        Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0))
-                .height +
-            MediaQuery.of(context).padding.top;
+        Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0)).height +
+        MediaQuery.of(context).padding.top;
 
     // Get current screen size that we will show on the screen's app bar, if
     // [showScreenSize] is true.
@@ -776,21 +1130,23 @@ class FlexAppBar {
       }
     }
 
-    final Color effectiveStatusBarColor = statusBarColor ??
+    final Color effectiveStatusBarColor =
+        statusBarColor ??
         (floatAppBar
             ? theme.scaffoldBackgroundColor.withAlpha(floatScrim)
             : scrim
-                ? const Color(0x40000000)
-                : Colors.transparent);
+            ? const Color(0x40000000)
+            : Colors.transparent);
     final Brightness statusBarBrightness = ThemeData.estimateBrightnessForColor(
-        floatAppBar ? theme.scaffoldBackgroundColor : appBarColor);
-    final Brightness statusBarIconBrightness =
-        statusBarBrightness == Brightness.light
-            ? Brightness.dark
-            : Brightness.light;
+      floatAppBar ? theme.scaffoldBackgroundColor : appBarColor,
+    );
+    final Brightness statusBarIconBrightness = statusBarBrightness == Brightness.light
+        ? Brightness.dark
+        : Brightness.light;
 
     // Make the system overlay for the styled app bar.
-    final SystemUiOverlayStyle effectiveOverlay = systemOverlayStyle ??
+    final SystemUiOverlayStyle effectiveOverlay =
+        systemOverlayStyle ??
         SystemUiOverlayStyle(
           statusBarColor: effectiveStatusBarColor,
           statusBarBrightness: statusBarBrightness,
@@ -811,23 +1167,24 @@ class FlexAppBar {
       leading: leading,
       automaticallyImplyLeading: automaticallyImplyLeading,
       title: showScreenSize
-          ? Row(children: <Widget>[
-              // This spacer together with the expanded for the screen size will
-              // center the title well enough also when screen size is shown.
-              // The effective function is for theme and automatic
-              // platform centering logic if the value is null.
-              if (effectiveCenterTitle()) const Spacer(),
-              title ?? const SizedBox.shrink(),
-              if (actions == null) const SizedBox(width: 56),
-              Expanded(
-                child: Text(
-                  ' ${size.width.round()}x${size.height.round()}',
-                  style:
-                      theme.textTheme.bodySmall!.copyWith(color: endTextColor),
-                  textAlign: TextAlign.end,
+          ? Row(
+              children: <Widget>[
+                // This spacer together with the expanded for the screen size will
+                // center the title well enough also when screen size is shown.
+                // The effective function is for theme and automatic
+                // platform centering logic if the value is null.
+                if (effectiveCenterTitle()) const Spacer(),
+                title ?? const SizedBox.shrink(),
+                if (actions == null) const SizedBox(width: 56),
+                Expanded(
+                  child: Text(
+                    ' ${size.width.round()}x${size.height.round()}',
+                    style: theme.textTheme.bodySmall!.copyWith(color: endTextColor),
+                    textAlign: TextAlign.end,
+                  ),
                 ),
-              ),
-            ])
+              ],
+            )
           // No screen size shown, just include the title, nothing else
           : title,
 
@@ -879,39 +1236,38 @@ class FlexAppBar {
   /// leading and actions widget's functionality before it constructs its
   /// actual app bars.
   AppBar toAppBar({
-    final Key? key,
-    final Widget? leading,
-    final bool? automaticallyImplyLeading,
-    final Widget? title,
-    final List<Widget>? actions,
-    final Widget? flexibleSpace,
-    final PreferredSizeWidget? bottom,
-    final double? elevation,
-    final Color? shadowColor,
-    final ShapeBorder? shape,
-    final Color? backgroundColor,
-    final Color? foregroundColor,
-    final IconThemeData? iconTheme,
-    final IconThemeData? actionsIconTheme,
-    final TextTheme? textTheme,
-    final bool? primary,
-    final bool? centerTitle,
-    final bool? excludeHeaderSemantics,
-    final double? titleSpacing,
-    final double? toolbarOpacity,
-    final double? bottomOpacity,
-    final double? toolbarHeight,
-    final double? leadingWidth,
-    final bool? backwardsCompatibility,
-    final TextStyle? toolbarTextStyle,
-    final TextStyle? titleTextStyle,
-    final SystemUiOverlayStyle? systemOverlayStyle,
+    Key? key,
+    Widget? leading,
+    bool? automaticallyImplyLeading,
+    Widget? title,
+    List<Widget>? actions,
+    Widget? flexibleSpace,
+    PreferredSizeWidget? bottom,
+    double? elevation,
+    Color? shadowColor,
+    ShapeBorder? shape,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    IconThemeData? iconTheme,
+    IconThemeData? actionsIconTheme,
+    TextTheme? textTheme,
+    bool? primary,
+    bool? centerTitle,
+    bool? excludeHeaderSemantics,
+    double? titleSpacing,
+    double? toolbarOpacity,
+    double? bottomOpacity,
+    double? toolbarHeight,
+    double? leadingWidth,
+    bool? backwardsCompatibility,
+    TextStyle? toolbarTextStyle,
+    TextStyle? titleTextStyle,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) {
     return AppBar(
       key: key ?? this.key,
       leading: leading ?? this.leading,
-      automaticallyImplyLeading:
-          automaticallyImplyLeading ?? this.automaticallyImplyLeading,
+      automaticallyImplyLeading: automaticallyImplyLeading ?? this.automaticallyImplyLeading,
       title: title ?? this.title,
       actions: actions ?? this.actions,
       flexibleSpace: flexibleSpace ?? this.flexibleSpace,
@@ -925,8 +1281,7 @@ class FlexAppBar {
       actionsIconTheme: actionsIconTheme ?? this.actionsIconTheme,
       primary: primary ?? this.primary,
       centerTitle: centerTitle ?? this.centerTitle,
-      excludeHeaderSemantics:
-          excludeHeaderSemantics ?? this.excludeHeaderSemantics,
+      excludeHeaderSemantics: excludeHeaderSemantics ?? this.excludeHeaderSemantics,
       titleSpacing: titleSpacing ?? this.titleSpacing,
       toolbarOpacity: toolbarOpacity ?? this.toolbarOpacity,
       bottomOpacity: bottomOpacity ?? this.bottomOpacity,
@@ -969,11 +1324,9 @@ class FlexAppBarStyling extends StatelessWidget {
     this.borderColor,
     this.elevation,
     this.child,
-  })  : assert(startOpacity >= 0 && startOpacity <= 1.0,
-            'Start opacity must be from 0 to 1.'),
-        assert(opacity >= 0 && opacity <= 1.0, 'Opacity must be from 0 to 1.'),
-        assert(elevation == null || elevation >= 0.0,
-            'Elevation must be null or >= 0');
+  }) : assert(startOpacity >= 0 && startOpacity <= 1.0, 'Start opacity must be from 0 to 1.'),
+       assert(opacity >= 0 && opacity <= 1.0, 'Opacity must be from 0 to 1.'),
+       assert(elevation == null || elevation >= 0.0, 'Elevation must be null or >= 0');
 
   /// The flexible container height
   ///
@@ -1106,22 +1459,19 @@ class FlexAppBarStyling extends StatelessWidget {
   final Widget? child;
 
   @override
-  Widget build(final BuildContext context) {
-    final double effectiveTopPadding =
-        floatAppBar ? MediaQuery.of(context).padding.top + floatPadding.top : 0;
+  Widget build(BuildContext context) {
+    final double effectiveTopPadding = floatAppBar ? MediaQuery.of(context).padding.top + floatPadding.top : 0;
 
     final ThemeData theme = Theme.of(context);
-    final Color effectiveBorderColor =
-        borderColor ?? theme.dividerTheme.color ?? theme.dividerColor;
+    final Color effectiveBorderColor = borderColor ?? theme.dividerTheme.color ?? theme.dividerColor;
 
-    final BorderRadiusGeometry? effectiveBorderRadius =
-        borderRadius ?? (floatAppBar ? BorderRadius.circular(8) : null);
+    final BorderRadiusGeometry? effectiveBorderRadius = borderRadius ?? (floatAppBar ? BorderRadius.circular(8) : null);
 
     final Border? effectiveBorder = hasBorder
         ? border ??
-            (floatAppBar
-                ? Border.all(color: effectiveBorderColor)
-                : Border(bottom: BorderSide(color: effectiveBorderColor)))
+              (floatAppBar
+                  ? Border.all(color: effectiveBorderColor)
+                  : Border(bottom: BorderSide(color: effectiveBorderColor)))
         : null;
 
     return Column(
@@ -1129,8 +1479,7 @@ class FlexAppBarStyling extends StatelessWidget {
         SizedBox(height: effectiveTopPadding),
         Padding(
           padding: floatAppBar
-              ? EdgeInsetsDirectional.fromSTEB(
-                  floatPadding.start, 0, floatPadding.end, floatPadding.bottom)
+              ? EdgeInsetsDirectional.fromSTEB(floatPadding.start, 0, floatPadding.end, floatPadding.bottom)
               : EdgeInsets.zero,
           child: Material(
             color: Colors.transparent,
@@ -1139,7 +1488,7 @@ class FlexAppBarStyling extends StatelessWidget {
             borderRadius: effectiveBorderRadius,
             child: IfWrapper(
               condition: blurred && (opacity < 1 || startOpacity < 1),
-              builder: (final BuildContext context, final Widget child) {
+              builder: (BuildContext context, Widget child) {
                 return ClipRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -1148,9 +1497,7 @@ class FlexAppBarStyling extends StatelessWidget {
                 );
               },
               child: Container(
-                height: height -
-                    effectiveTopPadding -
-                    (floatAppBar ? floatPadding.bottom : 0),
+                height: height - effectiveTopPadding - (floatAppBar ? floatPadding.bottom : 0),
                 decoration: BoxDecoration(
                   color: gradient ? null : color.withValues(alpha: opacity),
                   borderRadius: effectiveBorderRadius,

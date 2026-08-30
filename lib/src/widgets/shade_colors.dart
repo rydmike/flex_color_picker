@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
-import '../../flex_color_picker.dart';
-import '../functions/picker_functions.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// ShadeColors widget.
 ///
@@ -91,11 +90,9 @@ class ShadeColors extends StatelessWidget {
         spacing: spacing,
         runSpacing: runSpacing,
         children: <Widget>[
-          for (final Color color
-              in getMaterialColorShades(activeSwatch, includeIndex850))
+          for (final Color color in getMaterialColorShades(activeSwatch, includeIndex850))
             ColorIndicator(
-              isSelected: selectedColor == color ||
-                  selectedColor.value32bit == color.value32bit,
+              isSelected: selectedColor == color || selectedColor.value32bit == color.value32bit,
               color: color,
               width: width,
               height: height,

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ColorCodeReadOnlySwitch extends ConsumerWidget {
@@ -12,13 +11,15 @@ class ColorCodeReadOnlySwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Color code display and entry is read only'),
-      subtitle: const Text('Normally color code field can be edited on '
-          'Wheel picker. Set this to ON to make it read only.'),
+      subtitle: const Text(
+        'Normally color code field can be edited on '
+        'Wheel picker. Set this to ON to make it read only.',
+      ),
       value: ref.watch(colorCodeReadOnlyPod),
-      onChanged: (bool value) =>
-          ref.read(colorCodeReadOnlyPod.notifier).state = value,
+      onChanged: (bool value) => ref.read(colorCodeReadOnlyPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(colorCodeReadOnly: '
+      tooltip:
+          'ColorPicker(colorCodeReadOnly: '
           '${ref.read(colorCodeReadOnlyPod)})',
     );
   }

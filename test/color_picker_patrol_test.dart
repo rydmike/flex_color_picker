@@ -3,14 +3,12 @@ import 'package:flex_color_picker/src/widgets/color_picker_toolbar.dart';
 import 'package:flex_color_picker/src/widgets/opacity/opacity_slider.dart';
 import 'package:flex_color_picker/src/widgets/recent_colors.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:patrol_finders/patrol_finders.dart';
 
 import 'clipboard_utils.dart';
-
-// --- ignore_for_file: unnecessary_null_comparison
 
 //****************************************************************************
 // FlexColorPicker ColorPicker Widget tests
@@ -44,7 +42,7 @@ void main() {
         await $(ColorIndicator).at(2).tap();
         expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
+        expect(resultColor.value32bit, Colors.purple.shade100.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
@@ -54,7 +52,7 @@ void main() {
         await $(ColorIndicator).at(5).tap();
         expect(resultColor.value32bit, Colors.blueAccent.value32bit);
         await $(ColorIndicator).at(18).tap();
-        expect(resultColor.value32bit, Colors.blueAccent[400]!.value32bit);
+        expect(resultColor.value32bit, Colors.blueAccent.shade400.value32bit);
       },
     );
 
@@ -68,10 +66,10 @@ void main() {
         // Make a mock Clipboard, got this from Flutter SDK ClipBoard setup
         // Clipboard testing does not work without this.
         final MockClipboard mockClipboard = MockClipboard();
-        TestWidgetsFlutterBinding.ensureInitialized()
-            .defaultBinaryMessenger
-            .setMockMethodCallHandler(
-                SystemChannels.platform, mockClipboard.handleMethodCall);
+        TestWidgetsFlutterBinding.ensureInitialized().defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          mockClipboard.handleMethodCall,
+        );
 
         Color resultColor = Colors.blue;
         Color startColor = Colors.blue;
@@ -158,19 +156,13 @@ void main() {
               },
               selectedPickerTypeColor: Colors.white,
               customColorSwatchesAndNames: <ColorSwatch<Object>, String>{
-                ColorTools.createPrimarySwatch(const Color(0xFF6200EE)):
-                    'Guide Purple',
-                ColorTools.createPrimarySwatch(const Color(0xFF3700B3)):
-                    'Guide Purple Variant',
-                ColorTools.createAccentSwatch(const Color(0xFF03DAC6)):
-                    'Guide Teal',
+                ColorTools.createPrimarySwatch(const Color(0xFF6200EE)): 'Guide Purple',
+                ColorTools.createPrimarySwatch(const Color(0xFF3700B3)): 'Guide Purple Variant',
+                ColorTools.createAccentSwatch(const Color(0xFF03DAC6)): 'Guide Teal',
               },
-              customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>,
-                  String>{
-                ColorTools.createPrimarySwatch(const Color(0xFF00EE4B)):
-                    'Option 1',
-                ColorTools.createPrimarySwatch(const Color(0xFF92B300)):
-                    'Option 2',
+              customSecondaryColorSwatchesAndNames: <ColorSwatch<Object>, String>{
+                ColorTools.createPrimarySwatch(const Color(0xFF00EE4B)): 'Option 1',
+                ColorTools.createPrimarySwatch(const Color(0xFF92B300)): 'Option 2',
               },
             ),
           ),
@@ -224,22 +216,16 @@ void main() {
         expect(recentColors.contains(Color(Colors.red.value32bit)), true);
         expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
         expect(recentColors.contains(Color(Colors.grey.value32bit)), true);
-        expect(
-            recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
+        expect(recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
         // White shade color test
         await $(ColorIndicator).at(1).tap();
         expect(resultColor.value32bit, ColorTools.whiteShade[500]!.value32bit);
         // Test recent colors
-        expect(recentColors.contains(Color(Colors.red.value32bit)),
-            false); // 4 max, no red
+        expect(recentColors.contains(Color(Colors.red.value32bit)), false); // 4 max, no red
         expect(recentColors.contains(Color(Colors.redAccent.value32bit)), true);
         expect(recentColors.contains(Color(Colors.grey.value32bit)), true);
-        expect(
-            recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
-        expect(
-            recentColors
-                .contains(Color(ColorTools.blackShade[600]!.value32bit)),
-            true);
+        expect(recentColors.contains(Color(Colors.grey[850]!.value32bit)), true);
+        expect(recentColors.contains(Color(ColorTools.blackShade[600]!.value32bit)), true);
         await $(ColorIndicator).at(2).tap();
         expect(resultColor, Colors.white);
         await $(ColorIndicator).at(11).tap();
@@ -321,14 +307,16 @@ void main() {
         // Find the ToolBar buttons, 4 of them configured.
         expect($(ColorPickerToolbar).$(IconButton), findsNWidgets(4));
         // Copy the Color
-        await $(ColorPickerToolbar).$(IconButton).at(0).tap(
+        await $(ColorPickerToolbar)
+            .$(IconButton)
+            .at(0)
+            .tap(
               settlePolicy: SettlePolicy.trySettle,
               visibleTimeout: const Duration(seconds: 1),
               settleTimeout: const Duration(seconds: 2),
             );
         // Use the mock Clipboard, got this from Flutter SDK ClipBoard setup
-        final ClipboardData? clipData =
-            await Clipboard.getData(Clipboard.kTextPlain);
+        final ClipboardData? clipData = await Clipboard.getData(Clipboard.kTextPlain);
         debugPrint('Clip data: ${clipData?.text}');
         // We should find the last color we had copied to the mock clipboard:
         expect(clipData?.text, '0xFF92B300');
@@ -339,7 +327,10 @@ void main() {
         await $(ColorIndicator).at(1).tap();
         expect(resultColor.value32bit, Colors.redAccent.value32bit);
         // Copy in the redAccent color
-        await $(ColorPickerToolbar).$(IconButton).at(0).tap(
+        await $(ColorPickerToolbar)
+            .$(IconButton)
+            .at(0)
+            .tap(
               settlePolicy: SettlePolicy.trySettle,
               visibleTimeout: const Duration(seconds: 1),
               settleTimeout: const Duration(seconds: 2),
@@ -348,14 +339,16 @@ void main() {
         await $(ColorIndicator).at(2).tap();
         expect(resultColor.value32bit, Colors.pink.value32bit);
         // Paste in the red accent value color
-        await $(ColorPickerToolbar).$(IconButton).at(1).tap(
+        await $(ColorPickerToolbar)
+            .$(IconButton)
+            .at(1)
+            .tap(
               settlePolicy: SettlePolicy.trySettle,
               visibleTimeout: const Duration(seconds: 1),
               settleTimeout: const Duration(seconds: 2),
             );
         // We pasted the redAccent color, we copied earlier back
-        expect(
-            Color(resultColor.value32bit), Color(Colors.redAccent.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.redAccent.value32bit));
       },
     );
 
@@ -431,7 +424,7 @@ void main() {
         await $('Primary').tap();
         // Tap a Material red shade color
         await $(ColorIndicator).at(22).tap();
-        expect(resultColor.value32bit, Colors.red[300]!.value32bit);
+        expect(resultColor.value32bit, Colors.red.shade300.value32bit);
       },
     );
 
@@ -572,7 +565,7 @@ void main() {
         await $(ColorIndicator).at(2).tap();
         // expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        // expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
+        // expect(resultColor.value32bit, Colors.purple.shade100.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
@@ -585,8 +578,7 @@ void main() {
 
         expect(find.byType(TextButton), findsExactly(2));
         await $(TextButton).at(1).tap();
-        expect(Color(resultColor.value32bit),
-            Color(Colors.blueAccent[400]!.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.blueAccent.shade400.value32bit));
         const Color(0xff2979ff);
         const Color(0xffff9800);
 
@@ -679,7 +671,7 @@ void main() {
         await $(ColorIndicator).at(2).tap();
         // expect(resultColor.value32bit, Colors.purple.value32bit);
         await $(ColorIndicator).at(20).tap();
-        // expect(resultColor.value32bit, Colors.purple[100]!.value32bit);
+        // expect(resultColor.value32bit, Colors.purple.shade100.value32bit);
 
         // Test accent color picker.
         expect(find.text('Accent'), findsOneWidget);
@@ -692,8 +684,7 @@ void main() {
 
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(Color(resultColor.value32bit),
-            Color(Colors.blueAccent[400]!.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.blueAccent.shade400.value32bit));
         const Color(0xff2979ff);
         const Color(0xffff9800);
 
@@ -765,8 +756,7 @@ void main() {
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'USE',
                         dialogOkButtonType: ColorPickerActionButtonType.filled,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.filled,
+                        dialogCancelButtonType: ColorPickerActionButtonType.filled,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -857,8 +847,7 @@ void main() {
                         dialogOkButtonLabel: 'USE',
                         dialogActionIcons: true,
                         dialogOkButtonType: ColorPickerActionButtonType.filled,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.filled,
+                        dialogCancelButtonType: ColorPickerActionButtonType.filled,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -943,12 +932,9 @@ void main() {
                         dialogActionButtons: true,
                         dialogCancelButtonLabel: 'CLOSER',
                         dialogOkButtonLabel: 'USE',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.filledTonal,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.filledTonal,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.adaptive,
+                        dialogOkButtonType: ColorPickerActionButtonType.filledTonal,
+                        dialogCancelButtonType: ColorPickerActionButtonType.filledTonal,
+                        dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1063,12 +1049,9 @@ void main() {
                         dialogActionIcons: true,
                         dialogCancelButtonLabel: 'CLOSER',
                         dialogOkButtonLabel: 'USE',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.filledTonal,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.filledTonal,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.adaptive,
+                        dialogOkButtonType: ColorPickerActionButtonType.filledTonal,
+                        dialogCancelButtonType: ColorPickerActionButtonType.filledTonal,
+                        dialogActionOrder: ColorPickerActionButtonOrder.adaptive,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1153,8 +1136,7 @@ void main() {
                     resultColor = await showColorPickerDialog(
                       context,
                       resultColor,
-                      constraints: const BoxConstraints(
-                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      constraints: const BoxConstraints(minHeight: 480, minWidth: 320, maxWidth: 320),
                       pickersEnabled: const <ColorPickerType, bool>{
                         ColorPickerType.both: false,
                         ColorPickerType.primary: true,
@@ -1184,12 +1166,9 @@ void main() {
                         // dialogActionOnlyOkButton: false,
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'Do',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.elevated,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.elevated,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.okIsRight,
+                        dialogOkButtonType: ColorPickerActionButtonType.elevated,
+                        dialogCancelButtonType: ColorPickerActionButtonType.elevated,
+                        dialogActionOrder: ColorPickerActionButtonOrder.okIsRight,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1219,8 +1198,7 @@ void main() {
         // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('Do'), findsOneWidget);
         await $('Do').tap();
-        expect(
-            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1257,8 +1235,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(
-            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
         // Color(0xff673ab7);
       },
     );
@@ -1277,8 +1254,7 @@ void main() {
                     resultColor = await showColorPickerDialog(
                       context,
                       resultColor,
-                      constraints: const BoxConstraints(
-                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      constraints: const BoxConstraints(minHeight: 480, minWidth: 320, maxWidth: 320),
                       pickersEnabled: const <ColorPickerType, bool>{
                         ColorPickerType.both: false,
                         ColorPickerType.primary: true,
@@ -1308,12 +1284,9 @@ void main() {
                         dialogActionIcons: true,
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'Do',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.elevated,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.elevated,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.okIsRight,
+                        dialogOkButtonType: ColorPickerActionButtonType.elevated,
+                        dialogCancelButtonType: ColorPickerActionButtonType.elevated,
+                        dialogActionOrder: ColorPickerActionButtonOrder.okIsRight,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1343,8 +1316,7 @@ void main() {
         // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('Do'), findsOneWidget);
         await $('Do').tap();
-        expect(
-            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
@@ -1381,8 +1353,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(
-            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
         // Color(0xff673ab7);
       },
     );
@@ -1401,8 +1372,7 @@ void main() {
                     resultColor = await showColorPickerDialog(
                       context,
                       resultColor,
-                      constraints: const BoxConstraints(
-                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      constraints: const BoxConstraints(minHeight: 480, minWidth: 320, maxWidth: 320),
                       pickersEnabled: const <ColorPickerType, bool>{
                         ColorPickerType.both: false,
                         ColorPickerType.primary: true,
@@ -1430,12 +1400,9 @@ void main() {
                         splashRadius: 20,
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'OK',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.outlined,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.outlined,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.okIsLeft,
+                        dialogOkButtonType: ColorPickerActionButtonType.outlined,
+                        dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+                        dialogActionOrder: ColorPickerActionButtonOrder.okIsLeft,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1444,21 +1411,17 @@ void main() {
                         feedbackParseError: true,
                         parseShortHexCode: true,
                       ),
-                      transitionBuilder: (BuildContext context,
-                          Animation<double> a1,
-                          Animation<double> a2,
-                          Widget widget) {
-                        final double curvedValue =
-                            Curves.easeInOutBack.transform(a1.value) - 1.0;
-                        return Transform(
-                          transform: Matrix4.translationValues(
-                              0.0, curvedValue * 200, 0.0),
-                          child: Opacity(
-                            opacity: a1.value,
-                            child: widget,
-                          ),
-                        );
-                      },
+                      transitionBuilder:
+                          (BuildContext context, Animation<double> a1, Animation<double> a2, Widget widget) {
+                            final double curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                            return Transform(
+                              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: widget,
+                              ),
+                            );
+                          },
                       transitionDuration: const Duration(milliseconds: 400),
                     );
                   },
@@ -1481,8 +1444,7 @@ void main() {
         // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(
-            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1517,8 +1479,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(
-            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1550,8 +1511,7 @@ void main() {
                     resultColor = await showColorPickerDialog(
                       context,
                       resultColor,
-                      constraints: const BoxConstraints(
-                          minHeight: 480, minWidth: 320, maxWidth: 320),
+                      constraints: const BoxConstraints(minHeight: 480, minWidth: 320, maxWidth: 320),
                       pickersEnabled: const <ColorPickerType, bool>{
                         ColorPickerType.both: false,
                         ColorPickerType.primary: true,
@@ -1581,12 +1541,9 @@ void main() {
                         dialogActionIcons: true,
                         dialogCancelButtonLabel: 'CLOSE',
                         dialogOkButtonLabel: 'OK',
-                        dialogOkButtonType:
-                            ColorPickerActionButtonType.outlined,
-                        dialogCancelButtonType:
-                            ColorPickerActionButtonType.outlined,
-                        dialogActionOrder:
-                            ColorPickerActionButtonOrder.okIsLeft,
+                        dialogOkButtonType: ColorPickerActionButtonType.outlined,
+                        dialogCancelButtonType: ColorPickerActionButtonType.outlined,
+                        dialogActionOrder: ColorPickerActionButtonOrder.okIsLeft,
                       ),
                       copyPasteBehavior: const ColorPickerCopyPasteBehavior(
                         copyButton: true,
@@ -1595,21 +1552,17 @@ void main() {
                         feedbackParseError: true,
                         parseShortHexCode: true,
                       ),
-                      transitionBuilder: (BuildContext context,
-                          Animation<double> a1,
-                          Animation<double> a2,
-                          Widget widget) {
-                        final double curvedValue =
-                            Curves.easeInOutBack.transform(a1.value) - 1.0;
-                        return Transform(
-                          transform: Matrix4.translationValues(
-                              0.0, curvedValue * 200, 0.0),
-                          child: Opacity(
-                            opacity: a1.value,
-                            child: widget,
-                          ),
-                        );
-                      },
+                      transitionBuilder:
+                          (BuildContext context, Animation<double> a1, Animation<double> a2, Widget widget) {
+                            final double curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                            return Transform(
+                              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: widget,
+                              ),
+                            );
+                          },
                       transitionDuration: const Duration(milliseconds: 400),
                     );
                   },
@@ -1632,8 +1585,7 @@ void main() {
         // expect(resultColor.value32bit, Colors.lightBlue.value32bit);
         expect(find.text('OK'), findsOneWidget);
         await $('OK').tap();
-        expect(
-            Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.lightBlue.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1668,8 +1620,7 @@ void main() {
         // Dialog is closed
         expect(find.text('Open'), findsOneWidget);
         // Expect no change in color
-        expect(
-            Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
+        expect(Color(resultColor.value32bit), Color(Colors.deepPurple.value32bit));
 
         // Open dialog again
         await $('Open').tap();
@@ -1713,13 +1664,14 @@ class TestPicker extends StatelessWidget {
       home: Directionality(
         textDirection: directionality,
         child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: widget,
-            ),
-          );
-        }),
+          builder: (BuildContext context, StateSetter setState) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: widget,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

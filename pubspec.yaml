@@ -28,12 +28,19 @@ environment:
   flutter: '>=3.47.0'
 
 dependencies:
+  # The official Flutter Cupertino Design Library.
+  cupertino_ui: ^1.0.0
+
   # FlexSeedScheme package, by Mike Rydstrom, rydmike.com (@rydmike).
   # https://pub.dev/packages/flex_seed_scheme
   flex_seed_scheme: ^4.0.0
 
+  # The flutter library itself
   flutter:
     sdk: flutter
+
+  # The official Flutter Material UI Library.
+  material_ui: ^1.0.0
 
 dev_dependencies:
   collection:

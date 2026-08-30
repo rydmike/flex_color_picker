@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/utils/app.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../pods/pods.dart';
-import '../../utils/app.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The ColorPicker shown in a card on the ColorPickerScreen.
 @immutable
@@ -49,10 +48,8 @@ class ColorPickerCard extends ConsumerWidget {
           copyFormat: ref.watch(copyFormatPod),
           longPressMenu: ref.watch(longPressMenuPod),
           secondaryMenu: ref.watch(secondaryMenuPod),
-          secondaryOnDesktopLongOnDevice:
-              ref.watch(secondaryDesktopOtherLongPod),
-          secondaryOnDesktopLongOnDeviceAndWeb:
-              ref.watch(secondaryDesktopWebLongPod),
+          secondaryOnDesktopLongOnDevice: ref.watch(secondaryDesktopOtherLongPod),
+          secondaryOnDesktopLongOnDeviceAndWeb: ref.watch(secondaryDesktopWebLongPod),
           editFieldCopyButton: ref.watch(editFieldCopyButtonPod),
           parseShortHexCode: ref.watch(parseShortHexCodePod),
           editUsesParsedPaste: ref.watch(editUsesParsedPastePod),

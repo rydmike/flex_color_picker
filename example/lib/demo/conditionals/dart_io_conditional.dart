@@ -4,5 +4,4 @@
 /// then we export 'dart_io_supported.dart' instead.
 library;
 
-export 'dart_io_not_supported.dart'
-    if (dart.library.io) 'dart_io_supported.dart';
+export 'dart_io_not_supported.dart' if (dart.library.io) 'dart_io_supported.dart';

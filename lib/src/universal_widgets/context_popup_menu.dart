@@ -1,7 +1,8 @@
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-import '../functions/picker_functions.dart';
+import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart'
+    show ListTile, PopupMenuEntry, PopupMenuItem, PopupMenuThemeData, Theme, showMenu;
 
 /// A context popup menu.
 ///
@@ -101,14 +102,14 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
   @override
   Widget build(BuildContext context) {
     final TargetPlatform platform = Theme.of(context).platform;
-    final bool useLongPress = widget.useLongPress ||
+    final bool useLongPress =
+        widget.useLongPress ||
         (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(platform) ||
-            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (!isDesktop(platform) || kIsWeb)));
-    final bool useSecondaryClick = widget.useSecondaryTapDown ||
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb && (!isDesktop(platform) || kIsWeb)));
+    final bool useSecondaryClick =
+        widget.useSecondaryTapDown ||
         (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(platform) ||
-            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (isDesktop(platform) && !kIsWeb)));
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb && (isDesktop(platform) && !kIsWeb)));
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -132,8 +133,7 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
 
   Future<void> _showMenu(Offset position) async {
     widget.onOpen?.call();
-    final RenderObject? renderObject =
-        Overlay.maybeOf(context)?.context.findRenderObject();
+    final RenderObject? renderObject = Overlay.maybeOf(context)?.context.findRenderObject();
     if (renderObject is RenderBox) {
       final T? value = await showMenu<T>(
         context: context,

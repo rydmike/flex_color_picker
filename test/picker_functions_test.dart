@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/src/functions/picker_functions.dart';
 import 'package:flex_color_picker/src/models/color_picker_type.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -61,28 +61,25 @@ void main() {
       700,
       800,
       850, // Only used by grey swatch
-      900
+      900,
     ];
 
     for (final int i in index) {
       if (Colors.grey[i] != null) {
-        test(
-            'Verify that color ${Colors.grey[i]}[$i] is a '
+        test('Verify that color ${Colors.grey[i]}[$i] is a '
             'shade of ${Colors.grey}', () {
           expect(isShadeOfMain(Colors.grey, Colors.grey[i]!, true), true);
         });
       }
     }
-    test(
-        'Verify that color index 850 is NOT a '
+    test('Verify that color index 850 is NOT a '
         'shade of ${Colors.grey} when 850 disabled', () {
       expect(isShadeOfMain(Colors.grey, Colors.grey[850]!, false), false);
     });
 
     for (final int i in index) {
       if (Colors.blue[i] != null) {
-        test(
-            'Verify that color ${Colors.blue[i]}[$i] is a '
+        test('Verify that color ${Colors.blue[i]}[$i] is a '
             'shade of ${Colors.blue}', () {
           expect(isShadeOfMain(Colors.blue, Colors.blue[i]!, false), true);
         });
@@ -91,8 +88,7 @@ void main() {
 
     for (final int i in index) {
       if (Colors.red[i] != null) {
-        test(
-            'Verify that color ${Colors.red[i]}[$i] is NOT a '
+        test('Verify that color ${Colors.red[i]}[$i] is NOT a '
             'shade of ${Colors.red}', () {
           expect(isShadeOfMain(Colors.red, Colors.blue[i]!, false), false);
         });
@@ -109,34 +105,28 @@ void main() {
       Colors.grey,
     ];
 
-    test(
-        'Verify that color ${Colors.red[200]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.red.shade200} in red, green, blue, grey '
         'swatches return ${Colors.red}', () {
-      expect(findColorSwatch(Colors.red[200]!, swatches, true), Colors.red);
+      expect(findColorSwatch(Colors.red.shade200, swatches, true), Colors.red);
     });
-    test(
-        'Verify that color ${Colors.blue[50]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.blue.shade50} in red, green, blue, grey '
         'swatches return ${Colors.blue}', () {
-      expect(findColorSwatch(Colors.blue[50]!, swatches, true), Colors.blue);
+      expect(findColorSwatch(Colors.blue.shade50, swatches, true), Colors.blue);
     });
-    test(
-        'Verify that color ${Colors.green[900]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.green.shade900} in red, green, blue, grey '
         'swatches return ${Colors.blue}', () {
-      expect(findColorSwatch(Colors.green[900]!, swatches, true), Colors.green);
+      expect(findColorSwatch(Colors.green.shade900, swatches, true), Colors.green);
     });
-    test(
-        'Verify that color ${Colors.purple[500]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.purple.shade500} in red, green, blue, grey '
         'swatches return null', () {
-      expect(findColorSwatch(Colors.purple[500]!, swatches, true), null);
+      expect(findColorSwatch(Colors.purple.shade500, swatches, true), null);
     });
-    test(
-        'Verify that color ${Colors.grey[850]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.grey[850]!} in red, green, blue, grey '
         'swatches return ${Colors.grey} '
         'with enable 850 set to true', () {
       expect(findColorSwatch(Colors.grey[850]!, swatches, true), Colors.grey);
     });
-    test(
-        'Verify that color ${Colors.grey[850]!} in red, green, blue, grey '
+    test('Verify that color ${Colors.grey[850]!} in red, green, blue, grey '
         'swatches return null '
         'with enable 850 set to false', () {
       expect(findColorSwatch(Colors.grey[850]!, swatches, false), null);
@@ -155,8 +145,7 @@ void main() {
       Colors.greenAccent,
     ];
 
-    final Map<ColorPickerType, List<ColorSwatch<Object>>> typeMap =
-        <ColorPickerType, List<ColorSwatch<Object>>>{
+    final Map<ColorPickerType, List<ColorSwatch<Object>>> typeMap = <ColorPickerType, List<ColorSwatch<Object>>>{
       ColorPickerType.primary: swatches,
       ColorPickerType.accent: accSwatches,
     };
@@ -166,93 +155,98 @@ void main() {
       ColorPickerType.accent: true,
     };
 
-    test(
-        'Test that color ${Colors.red[200]!} return primary when lookInShades '
+    test('Test that color ${Colors.red.shade200} return primary when lookInShades '
         'is true in defined map and ColorPickerType primary is enabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.red[200]!,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: bothEnabled,
-              lookInShades: true,
-              include850: true),
-          equals(ColorPickerType.primary));
+        findColorInSelector(
+          color: Colors.red.shade200,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: bothEnabled,
+          lookInShades: true,
+          include850: true,
+        ),
+        equals(ColorPickerType.primary),
+      );
     });
-    test(
-        'Test that color ${Colors.blue[800]!} return primary when lookInShades '
+    test('Test that color ${Colors.blue.shade800} return primary when lookInShades '
         'is true in defined map and ColorPickerType primary is enabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.blue[800]!,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: bothEnabled,
-              lookInShades: true,
-              include850: true),
-          equals(ColorPickerType.primary));
+        findColorInSelector(
+          color: Colors.blue.shade800,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: bothEnabled,
+          lookInShades: true,
+          include850: true,
+        ),
+        equals(ColorPickerType.primary),
+      );
     });
-    test(
-        'Test that color ${Colors.redAccent[100]!} returns accent when '
+    test('Test that color ${Colors.redAccent.shade100} returns accent when '
         'lookInShades is true in defined map and ColorPickerType accent '
         'is enabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.redAccent[100]!,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: bothEnabled,
-              lookInShades: true,
-              include850: true),
-          equals(ColorPickerType.accent));
+        findColorInSelector(
+          color: Colors.redAccent.shade100,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: bothEnabled,
+          lookInShades: true,
+          include850: true,
+        ),
+        equals(ColorPickerType.accent),
+      );
     });
-    test(
-        'Test that color ${Colors.redAccent[100]!} returns primary when '
+    test('Test that color ${Colors.redAccent.shade100} returns primary when '
         'lookInShades is false in defined map and ColorPickerType accent '
         'is enabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.redAccent[100]!,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: bothEnabled,
-              lookInShades: false,
-              include850: true),
-          equals(ColorPickerType.primary));
+        findColorInSelector(
+          color: Colors.redAccent.shade100,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: bothEnabled,
+          lookInShades: false,
+          include850: true,
+        ),
+        equals(ColorPickerType.primary),
+      );
     });
-    test(
-        'Test that color ${Colors.black} returns primary when '
+    test('Test that color ${Colors.black} returns primary when '
         'lookInShades is true in defined map and ColorPickerType accent '
         'and primary are is enabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.black,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: bothEnabled,
-              lookInShades: true,
-              include850: true),
-          equals(ColorPickerType.primary));
+        findColorInSelector(
+          color: Colors.black,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: bothEnabled,
+          lookInShades: true,
+          include850: true,
+        ),
+        equals(ColorPickerType.primary),
+      );
     });
-    final Map<ColorPickerType, bool> onlyPrimaryEnabled =
-        <ColorPickerType, bool>{
+    final Map<ColorPickerType, bool> onlyPrimaryEnabled = <ColorPickerType, bool>{
       ColorPickerType.primary: true,
       ColorPickerType.accent: false,
     };
 
-    test(
-        'Test that color ${Colors.redAccent[100]!} returns primary when '
+    test('Test that color ${Colors.redAccent.shade100} returns primary when '
         'lookInShades is true in defined map and ColorPickerType accent '
         'is disabled.', () {
       expect(
-          findColorInSelector(
-              color: Colors.redAccent[100]!,
-              typeToSwatchMap: typeMap,
-              pickersEnabled: onlyPrimaryEnabled,
-              lookInShades: true,
-              include850: true),
-          equals(ColorPickerType.primary));
+        findColorInSelector(
+          color: Colors.redAccent.shade100,
+          typeToSwatchMap: typeMap,
+          pickersEnabled: onlyPrimaryEnabled,
+          lookInShades: true,
+          include850: true,
+        ),
+        equals(ColorPickerType.primary),
+      );
     });
   });
 
   // Test isDesktop.
   group('Test getTonalColors', () {
-    final List<Color> blueTonals = getTonalColors(Colors.blue[500]!, true);
+    final List<Color> blueTonals = getTonalColors(Colors.blue.shade500, true);
 
     test('Verify that blue Tonal Palette index 0, tone 0 of is black', () {
       expect(blueTonals[0], equals(Colors.black));

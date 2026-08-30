@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Type of button used for OK or Cancel action button on a FlexColorPicker
 /// dialog.
@@ -393,16 +393,12 @@ class ColorPickerActionButtons with Diagnosticable {
       splashRadius: splashRadius ?? this.splashRadius,
       constraints: constraints ?? this.constraints,
       dialogActionButtons: dialogActionButtons ?? this.dialogActionButtons,
-      dialogActionOnlyOkButton:
-          dialogActionOnlyOkButton ?? this.dialogActionOnlyOkButton,
+      dialogActionOnlyOkButton: dialogActionOnlyOkButton ?? this.dialogActionOnlyOkButton,
       dialogActionOrder: dialogActionOrder ?? this.dialogActionOrder,
       dialogActionIcons: dialogActionIcons ?? this.dialogActionIcons,
-      dialogCancelButtonLabel:
-          dialogCancelButtonLabel ?? this.dialogCancelButtonLabel,
-      dialogCancelButtonType:
-          dialogCancelButtonType ?? this.dialogCancelButtonType,
-      dialogCancelButtonStyle:
-          dialogCancelButtonStyle ?? this.dialogCancelButtonStyle,
+      dialogCancelButtonLabel: dialogCancelButtonLabel ?? this.dialogCancelButtonLabel,
+      dialogCancelButtonType: dialogCancelButtonType ?? this.dialogCancelButtonType,
+      dialogCancelButtonStyle: dialogCancelButtonStyle ?? this.dialogCancelButtonStyle,
       dialogOkButtonLabel: dialogOkButtonLabel ?? this.dialogOkButtonLabel,
       dialogOkButtonType: dialogOkButtonType ?? this.dialogOkButtonType,
       dialogOkButtonStyle: dialogOkButtonStyle ?? this.dialogOkButtonStyle,
@@ -445,32 +441,32 @@ class ColorPickerActionButtons with Diagnosticable {
 
   @override
   int get hashCode => Object.hashAll(<Object?>[
-        okButton,
-        closeButton,
-        okIcon,
-        closeIcon,
-        closeIsLast,
-        okTooltip,
-        closeTooltip,
-        closeTooltipIsClose,
-        toolIconsThemeData,
-        visualDensity,
-        padding,
-        alignment,
-        splashRadius,
-        constraints,
-        dialogActionButtons,
-        dialogActionOnlyOkButton,
-        dialogActionOrder,
-        dialogActionIcons,
-        dialogCancelButtonLabel,
-        dialogCancelButtonType,
-        dialogCancelButtonStyle,
-        dialogOkButtonLabel,
-        dialogOkButtonType,
-        dialogOkButtonStyle,
-        useRootNavigator,
-      ]);
+    okButton,
+    closeButton,
+    okIcon,
+    closeIcon,
+    closeIsLast,
+    okTooltip,
+    closeTooltip,
+    closeTooltipIsClose,
+    toolIconsThemeData,
+    visualDensity,
+    padding,
+    alignment,
+    splashRadius,
+    constraints,
+    dialogActionButtons,
+    dialogActionOnlyOkButton,
+    dialogActionOrder,
+    dialogActionIcons,
+    dialogCancelButtonLabel,
+    dialogCancelButtonType,
+    dialogCancelButtonStyle,
+    dialogOkButtonLabel,
+    dialogOkButtonType,
+    dialogOkButtonStyle,
+    useRootNavigator,
+  ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -482,37 +478,22 @@ class ColorPickerActionButtons with Diagnosticable {
     properties.add(DiagnosticsProperty<bool>('closeIsLast', closeIsLast));
     properties.add(StringProperty('okTooltip', okTooltip));
     properties.add(StringProperty('closeTooltip', closeTooltip));
-    properties.add(
-        DiagnosticsProperty<bool>('closeTooltipIsClose', closeTooltipIsClose));
-    properties.add(DiagnosticsProperty<IconThemeData?>(
-        'toolIconsThemeData', toolIconsThemeData));
-    properties.add(
-        DiagnosticsProperty<VisualDensity?>('visualDensity', visualDensity));
-    properties
-        .add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment));
+    properties.add(DiagnosticsProperty<bool>('closeTooltipIsClose', closeTooltipIsClose));
+    properties.add(DiagnosticsProperty<IconThemeData?>('toolIconsThemeData', toolIconsThemeData));
+    properties.add(DiagnosticsProperty<VisualDensity?>('visualDensity', visualDensity));
+    properties.add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment));
     properties.add(DoubleProperty('splashRadius', splashRadius));
-    properties
-        .add(DiagnosticsProperty<BoxConstraints?>('constraints', constraints));
-    properties.add(
-        DiagnosticsProperty<bool>('dialogActionButtons', dialogActionButtons));
-    properties.add(DiagnosticsProperty<bool>(
-        'dialogActionOnlyOkButton', dialogActionOnlyOkButton));
-    properties.add(EnumProperty<ColorPickerActionButtonOrder>(
-        'dialogActionOrder', dialogActionOrder));
-    properties
-        .add(DiagnosticsProperty<bool>('dialogActionIcons', dialogActionIcons));
-    properties.add(
-        StringProperty('dialogCancelButtonLabel', dialogCancelButtonLabel));
-    properties.add(EnumProperty<ColorPickerActionButtonType>(
-        'dialogCancelButtonType', dialogCancelButtonType));
-    properties.add(DiagnosticsProperty<ButtonStyle?>(
-        'dialogCancelButtonStyle', dialogCancelButtonStyle));
+    properties.add(DiagnosticsProperty<BoxConstraints?>('constraints', constraints));
+    properties.add(DiagnosticsProperty<bool>('dialogActionButtons', dialogActionButtons));
+    properties.add(DiagnosticsProperty<bool>('dialogActionOnlyOkButton', dialogActionOnlyOkButton));
+    properties.add(EnumProperty<ColorPickerActionButtonOrder>('dialogActionOrder', dialogActionOrder));
+    properties.add(DiagnosticsProperty<bool>('dialogActionIcons', dialogActionIcons));
+    properties.add(StringProperty('dialogCancelButtonLabel', dialogCancelButtonLabel));
+    properties.add(EnumProperty<ColorPickerActionButtonType>('dialogCancelButtonType', dialogCancelButtonType));
+    properties.add(DiagnosticsProperty<ButtonStyle?>('dialogCancelButtonStyle', dialogCancelButtonStyle));
     properties.add(StringProperty('dialogOkButtonLabel', dialogOkButtonLabel));
-    properties.add(EnumProperty<ColorPickerActionButtonType>(
-        'dialogOkButtonType', dialogOkButtonType));
-    properties.add(DiagnosticsProperty<ButtonStyle?>(
-        'dialogOkButtonStyle', dialogOkButtonStyle));
-    properties
-        .add(DiagnosticsProperty<bool>('useRootNavigator', useRootNavigator));
+    properties.add(EnumProperty<ColorPickerActionButtonType>('dialogOkButtonType', dialogOkButtonType));
+    properties.add(DiagnosticsProperty<ButtonStyle?>('dialogOkButtonStyle', dialogOkButtonStyle));
+    properties.add(DiagnosticsProperty<bool>('useRootNavigator', useRootNavigator));
   }
 }

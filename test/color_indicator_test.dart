@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/src/color_indicator.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 //****************************************************************************
 // FlexColorPicker ColorIndicator Widget tests
@@ -11,10 +11,8 @@ void main() {
 
   group('CIND1: In App With ColorIndicator ', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('CIND1.1: Finds default ColorIndicator()',
-        (WidgetTester tester) async {
-      await tester
-          .pumpWidget(const TestWidget(widget: ColorIndicator(key: testKey)));
+    testWidgets('CIND1.1: Finds default ColorIndicator()', (WidgetTester tester) async {
+      await tester.pumpWidget(const TestWidget(widget: ColorIndicator(key: testKey)));
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -36,24 +34,26 @@ void main() {
       expect(find.byWidgetPredicate(defaultIndicator), findsOneWidget);
     });
 
-    testWidgets('CIND1.2: Finds custom-1 ColorIndicator()',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
+    testWidgets('CIND1.2: Finds custom-1 ColorIndicator()', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        TestWidget(
           widget: ColorIndicator(
-        key: testKey,
-        onSelect: () {},
-        onSelectFocus: false,
-        isSelected: true,
-        selectedRequestsFocus: true,
-        elevation: 2,
-        selectedIcon: Icons.circle,
-        color: Colors.red,
-        width: 50,
-        height: 35,
-        borderRadius: 5,
-        hasBorder: true,
-        borderColor: Colors.black,
-      )));
+            key: testKey,
+            onSelect: () {},
+            onSelectFocus: false,
+            isSelected: true,
+            selectedRequestsFocus: true,
+            elevation: 2,
+            selectedIcon: Icons.circle,
+            color: Colors.red,
+            width: 50,
+            height: 35,
+            borderRadius: 5,
+            hasBorder: true,
+            borderColor: Colors.black,
+          ),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 

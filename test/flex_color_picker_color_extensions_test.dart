@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   //****************************************************************************
@@ -8,8 +8,7 @@ void main() {
   //****************************************************************************
   group('FCPCE01: WITH Color Black ', () {
     const Color blackInt = Color(0xFF000000);
-    const Color blackDouble =
-        Color.from(alpha: 1.0, red: 0.0, green: 0.0, blue: 0.0);
+    const Color blackDouble = Color.from(alpha: 1.0, red: 0.0, green: 0.0, blue: 0.0);
 
     test('FCPCE01.01: GIVEN blackInt EXPECT equal to blackDouble', () {
       expect(blackInt, equals(blackDouble));
@@ -47,8 +46,7 @@ void main() {
   });
   group('FCPCE02: WITH Color White ', () {
     const Color whiteInt = Color(0xFFFFFFFF);
-    const Color whiteDouble =
-        Color.from(alpha: 1.0, red: 1.0, green: 1.0, blue: 1.0);
+    const Color whiteDouble = Color.from(alpha: 1.0, red: 1.0, green: 1.0, blue: 1.0);
 
     test('FCPCE02.01: GIVEN whiteInt EXPECT equal to blackDouble', () {
       expect(whiteInt, equals(whiteDouble));
@@ -87,8 +85,7 @@ void main() {
 
   group('FCPCE02: WITH Color Grey 40% and translucent 40% ', () {
     const Color grey40Int = Color(0x66666666);
-    const Color grey40Double =
-        Color.from(alpha: 0.4, red: 0.4, green: 0.4, blue: 0.4);
+    const Color grey40Double = Color.from(alpha: 0.4, red: 0.4, green: 0.4, blue: 0.4);
 
     test('FCPCE02.01: GIVEN grey40Int EXPECT equal to grey40Double', () {
       expect(grey40Int, equals(grey40Double));

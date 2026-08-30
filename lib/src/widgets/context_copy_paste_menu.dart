@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import '../universal_widgets/context_popup_menu.dart';
+import 'package:flex_color_picker/src/universal_widgets/context_popup_menu.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Enum to handle copy and paste commands.
 ///
@@ -147,23 +146,21 @@ class ContextCopyPasteMenu extends StatelessWidget {
     // This is a merge of provided menuThemeData, with surrounding theme, with
     // fallback to default values.
     final PopupMenuThemeData effectiveMenuTheme = theme.popupMenuTheme.copyWith(
-      color: menuThemeData?.color ??
-          theme.popupMenuTheme.color ??
-          theme.cardColor.withValues(alpha: 0.9),
-      shape: menuThemeData?.shape ??
+      color: menuThemeData?.color ?? theme.popupMenuTheme.color ?? theme.cardColor.withValues(alpha: 0.9),
+      shape:
+          menuThemeData?.shape ??
           theme.popupMenuTheme.shape ??
           RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(color: theme.dividerColor)),
-      elevation:
-          menuThemeData?.elevation ?? theme.popupMenuTheme.elevation ?? 3,
-      textStyle: menuThemeData?.textStyle ??
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(color: theme.dividerColor),
+          ),
+      elevation: menuThemeData?.elevation ?? theme.popupMenuTheme.elevation ?? 3,
+      textStyle:
+          menuThemeData?.textStyle ??
           theme.popupMenuTheme.textStyle ??
           theme.textTheme.bodyMedium ??
           const TextStyle(fontSize: 14),
-      enableFeedback: menuThemeData?.enableFeedback ??
-          theme.popupMenuTheme.enableFeedback ??
-          true,
+      enableFeedback: menuThemeData?.enableFeedback ?? theme.popupMenuTheme.enableFeedback ?? true,
     );
     // This is a merge of provided iconThemeData, with surrounding theme, with
     // fallback to default values, color has no default, remains as null.
@@ -175,14 +172,12 @@ class ContextCopyPasteMenu extends StatelessWidget {
     // Get the Material localizations.
     final MaterialLocalizations translate = MaterialLocalizations.of(context);
     return Theme(
-      data: theme.copyWith(
-          popupMenuTheme: effectiveMenuTheme, iconTheme: effectiveIconTheme),
+      data: theme.copyWith(popupMenuTheme: effectiveMenuTheme, iconTheme: effectiveIconTheme),
       child: ContextPopupMenu<CopyPasteCommands>(
         useLongPress: useLongPress,
         useSecondaryTapDown: useSecondaryTapDown,
         useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
-        useSecondaryOnDesktopLongOnDeviceAndWeb:
-            useSecondaryOnDesktopLongOnDeviceAndWeb,
+        useSecondaryOnDesktopLongOnDeviceAndWeb: useSecondaryOnDesktopLongOnDeviceAndWeb,
         items: <PopupMenuEntry<CopyPasteCommands>>[
           PopupMenuItem<CopyPasteCommands>(
             value: CopyPasteCommands.copy,

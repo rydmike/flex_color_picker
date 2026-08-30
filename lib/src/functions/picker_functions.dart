@@ -1,9 +1,8 @@
 import 'dart:math' as math;
 
+import 'package:flex_color_picker/src/models/color_picker_type.dart';
 import 'package:flex_seed_scheme/flex_seed_scheme.dart';
-import 'package:flutter/material.dart';
-
-import '../models/color_picker_type.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// These functions are not library exposed, they are private to the library.
 
@@ -11,7 +10,7 @@ import '../models/color_picker_type.dart';
 extension FlexPickerColorExtensions on Color {
   /// Lightens the color with the given integer percentage amount.
   /// Defaults to 10%.
-  Color lighten([final int amount = 10]) {
+  Color lighten([int amount = 10]) {
     if (amount <= 0) return this;
     if (amount > 100) return Colors.white;
     // HSLColor returns saturation 1 for black, we want 0 instead to be able
@@ -19,20 +18,16 @@ extension FlexPickerColorExtensions on Color {
     final HSLColor hsl = this == const Color(0xFF000000)
         ? HSLColor.fromColor(this).withSaturation(0)
         : HSLColor.fromColor(this);
-    return hsl
-        .withLightness(math.min(1, math.max(0, hsl.lightness + amount / 100)))
-        .toColor();
+    return hsl.withLightness(math.min(1, math.max(0, hsl.lightness + amount / 100))).toColor();
   }
 
   /// Darkens the color with the given integer percentage amount.
   /// Defaults to 10%.
-  Color darken([final int amount = 10]) {
+  Color darken([int amount = 10]) {
     if (amount <= 0) return this;
     if (amount > 100) return Colors.black;
     final HSLColor hsl = HSLColor.fromColor(this);
-    return hsl
-        .withLightness(math.min(1, math.max(0, hsl.lightness - amount / 100)))
-        .toColor();
+    return hsl.withLightness(math.min(1, math.max(0, hsl.lightness - amount / 100))).toColor();
   }
 }
 
@@ -119,8 +114,7 @@ ColorPickerType findColorInSelector({
 
 /// Find and return the ColorSwatch in a List of ColorSwatches that contains
 /// a given color.
-ColorSwatch<Object?>? findColorSwatch(
-    Color color, List<ColorSwatch<Object>> swatches, bool include850) {
+ColorSwatch<Object?>? findColorSwatch(Color color, List<ColorSwatch<Object>> swatches, bool include850) {
   for (final ColorSwatch<Object> mainColor in swatches) {
     if (isShadeOfMain(mainColor, color, include850)) {
       return mainColor;
@@ -171,8 +165,10 @@ List<Color> getMaterialColorShades(ColorSwatch<Object> color, bool include850) {
 /// Return the M3 tonal palette for a passed in color as a list of Colors.
 List<Color> getTonalColors(Color color, bool fixedMinChroma) {
   final Cam16 camColor = Cam16.fromInt(color.value32bit);
-  final FlexTonalPalette tonalColors = FlexTonalPalette.of(camColor.hue,
-      fixedMinChroma ? math.max(48, camColor.chroma) : camColor.chroma);
+  final FlexTonalPalette tonalColors = FlexTonalPalette.of(
+    camColor.hue,
+    fixedMinChroma ? math.max(48, camColor.chroma) : camColor.chroma,
+  );
 
   // ignore: unnecessary_lambdas, clearer this way.
   return tonalColors.asList.map((int e) => Color(e)).toList();

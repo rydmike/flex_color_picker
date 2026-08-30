@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ActionsOrderSwitch extends ConsumerWidget {
   const ActionsOrderSwitch({super.key});
@@ -19,7 +18,8 @@ class ActionsOrderSwitch extends ConsumerWidget {
     ];
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(actionButtons:\n'
+      tooltip:
+          'ColorPicker(actionButtons:\n'
           '  ColorPickerActionButtons(dialogActionOrder: '
           '$order))',
       child: ListTile(
@@ -29,14 +29,11 @@ class ActionsOrderSwitch extends ConsumerWidget {
           isSelected: isSelected,
           onPressed: (int newIndex) {
             if (newIndex == 0) {
-              ref.read(dialogActionsOrderPod.notifier).state =
-                  ColorPickerActionButtonOrder.okIsLeft;
+              ref.read(dialogActionsOrderPod.notifier).state = ColorPickerActionButtonOrder.okIsLeft;
             } else if (newIndex == 1) {
-              ref.read(dialogActionsOrderPod.notifier).state =
-                  ColorPickerActionButtonOrder.adaptive;
+              ref.read(dialogActionsOrderPod.notifier).state = ColorPickerActionButtonOrder.adaptive;
             } else {
-              ref.read(dialogActionsOrderPod.notifier).state =
-                  ColorPickerActionButtonOrder.okIsRight;
+              ref.read(dialogActionsOrderPod.notifier).state = ColorPickerActionButtonOrder.okIsRight;
             }
           },
           children: const <Widget>[

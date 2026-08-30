@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PickersEnabledSwitch extends ConsumerWidget {
   const PickersEnabledSwitch({super.key});
@@ -11,8 +10,7 @@ class PickersEnabledSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Map<ColorPickerType, bool> pickersEnabled =
-        ref.watch(pickersEnabledPod);
+    final Map<ColorPickerType, bool> pickersEnabled = ref.watch(pickersEnabledPod);
     final List<bool> isSelected = <bool>[
       pickersEnabled[ColorPickerType.both] ?? false,
       pickersEnabled[ColorPickerType.primary] ?? false,
@@ -29,7 +27,8 @@ class PickersEnabledSwitch extends ConsumerWidget {
         ),
         MaybeTooltip(
           condition: ref.watch(enableTooltipsPod),
-          tooltip: 'ColorPicker(pickersEnabled:\n'
+          tooltip:
+              'ColorPicker(pickersEnabled:\n'
               '  ${ref.read(pickersEnabledPod)})',
           child: ToggleButtons(
             isSelected: isSelected,
@@ -45,8 +44,7 @@ class PickersEnabledSwitch extends ConsumerWidget {
               // If 'accent' turned ON, then 'Both' is turned OFF.
               if (index == 2 && isSelected[2]) isSelected[0] = false;
               // Assign new state to enabled pickers.
-              ref.read(pickersEnabledPod.notifier).state =
-                  <ColorPickerType, bool>{
+              ref.read(pickersEnabledPod.notifier).state = <ColorPickerType, bool>{
                 ColorPickerType.both: isSelected[0],
                 ColorPickerType.primary: isSelected[1],
                 ColorPickerType.accent: isSelected[2],

@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/screens/color_picker/color_picker_dialog.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../color_picker_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class MetaPickerColorIndicator extends ConsumerWidget {

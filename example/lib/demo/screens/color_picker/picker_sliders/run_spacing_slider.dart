@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class RunSpacingSlider extends ConsumerWidget {
@@ -12,17 +11,18 @@ class RunSpacingSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(runSpacing: '
+      tooltip:
+          'ColorPicker(runSpacing: '
           '${ref.read(runSpacingPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item run spacing'),
         subtitle: Slider(
-            max: 25,
-            divisions: 25,
-            label: ref.watch(runSpacingPod).floor().toString(),
-            value: ref.watch(runSpacingPod),
-            onChanged: (double value) =>
-                ref.read(runSpacingPod.notifier).state = value),
+          max: 25,
+          divisions: 25,
+          label: ref.watch(runSpacingPod).floor().toString(),
+          value: ref.watch(runSpacingPod),
+          onChanged: (double value) => ref.read(runSpacingPod.notifier).state = value,
+        ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),
           child: Column(

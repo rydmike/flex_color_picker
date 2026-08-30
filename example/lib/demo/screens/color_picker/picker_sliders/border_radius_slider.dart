@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class BorderRadiusSlider extends ConsumerWidget {
@@ -12,7 +11,8 @@ class BorderRadiusSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(borderRadius: '
+      tooltip:
+          'ColorPicker(borderRadius: '
           '${ref.read(borderRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Color picker item border radius'),
@@ -21,8 +21,7 @@ class BorderRadiusSlider extends ConsumerWidget {
           divisions: (ref.read(sizePod) / 2).floor(),
           label: ref.watch(borderRadiusPod).floor().toString(),
           value: ref.watch(borderRadiusPod),
-          onChanged: (double value) =>
-              ref.read(borderRadiusPod.notifier).state = value,
+          onChanged: (double value) => ref.read(borderRadiusPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

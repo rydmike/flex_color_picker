@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class WheelSquarePaddingSlider extends ConsumerWidget {
@@ -12,7 +11,8 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(wheelSquarePadding: '
+      tooltip:
+          'ColorPicker(wheelSquarePadding: '
           '${ref.read(wheelSquarePaddingPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel shade square padding'),
@@ -22,8 +22,7 @@ class WheelSquarePaddingSlider extends ConsumerWidget {
           divisions: 20,
           label: ref.watch(wheelSquarePaddingPod).floor().toString(),
           value: ref.watch(wheelSquarePaddingPod),
-          onChanged: (double value) =>
-              ref.read(wheelSquarePaddingPod.notifier).state = value,
+          onChanged: (double value) => ref.read(wheelSquarePaddingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

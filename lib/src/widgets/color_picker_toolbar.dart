@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
-import '../functions/picker_functions.dart';
-import '../models/color_picker_action_buttons.dart';
-import '../models/color_picker_copy_paste_behavior.dart';
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
+import 'package:flex_color_picker/src/models/color_picker_action_buttons.dart';
+import 'package:flex_color_picker/src/models/color_picker_copy_paste_behavior.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A top toolbar with title and action buttons for the color picker.
 ///
@@ -73,17 +72,12 @@ class ColorPickerToolbar extends StatelessWidget {
         pasteKeyTooltip = platformControlKey(platform, 'V');
       }
       // Make the Copy, Paste, OK and close tooltips.
-      copyTooltip =
-          (copyPasteBehavior.copyTooltip ?? translate.copyButtonLabel) +
-              copyKeyTooltip;
-      pasteTooltip =
-          (copyPasteBehavior.pasteTooltip ?? translate.pasteButtonLabel) +
-              pasteKeyTooltip;
+      copyTooltip = (copyPasteBehavior.copyTooltip ?? translate.copyButtonLabel) + copyKeyTooltip;
+      pasteTooltip = (copyPasteBehavior.pasteTooltip ?? translate.pasteButtonLabel) + pasteKeyTooltip;
       okTooltip = toolIcons.okTooltip ?? translate.okButtonLabel;
-      closeTooltip = toolIcons.closeTooltip ??
-          (toolIcons.closeTooltipIsClose
-              ? translate.closeButtonTooltip
-              : translate.cancelButtonLabel);
+      closeTooltip =
+          toolIcons.closeTooltip ??
+          (toolIcons.closeTooltipIsClose ? translate.closeButtonTooltip : translate.cancelButtonLabel);
     }
     // Get current theme and passed in icon theme.
     final ThemeData theme = Theme.of(context);
@@ -101,12 +95,7 @@ class ColorPickerToolbar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           if (title != null) Expanded(child: title!),
-          if (title == null &&
-              (onCopy != null ||
-                  onPaste != null ||
-                  onOk != null ||
-                  onClose != null))
-            const Spacer(),
+          if (title == null && (onCopy != null || onPaste != null || onOk != null || onClose != null)) const Spacer(),
           if (onCopy != null)
             IconButton(
               icon: Icon(copyPasteBehavior.copyIcon),
