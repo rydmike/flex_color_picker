@@ -40,6 +40,7 @@ The root [.pubignore](../../../.pubignore) controls what is published:
 - **Never exclude `assets/`**: `assets/opacity.png` is a runtime asset (`AssetImage(..., package: 'flex_color_picker')`).
 - **Never exclude `example/screenshots/`**: those files are declared in the pubspec `screenshots:` section and MUST be in the archive. The pub.dev SERVER rejects the upload if one is missing ("Screenshot ... is missing from archive") — the local dry run does NOT check this. Server-only checks like this are what "The server may enforce additional checks" means; a clean dry run is necessary but not sufficient.
 - Hidden dot-directories (`.agents/`, `.github/`, `.claude/`, …) are always excluded by pub; they need no rules.
+- The Flutter tool generated example platform files (`generated_plugin_registrant.*`, `generated_plugins.cmake`, `GeneratedPluginRegistrant.swift`) and `coverage/lcov.info` are deliberately untracked. `flutter pub get` regenerates the example files. Do not re-add them to git — pub warns (and dry-run fails) on checked-in files that `.gitignore` also ignores.
 
 ## Publish
 
