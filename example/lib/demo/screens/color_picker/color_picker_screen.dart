@@ -1,22 +1,21 @@
-import 'package:flutter/material.dart';
-
-import '../../utils/app.dart';
-import '../../widgets/flex_app_bar.dart';
-import 'about.dart';
-import 'all_control_widgets.dart';
-import 'color_picker_card.dart';
-import 'picker_indicators/premade_dialog_picker_color_indicator.dart';
-import 'picker_switches/color_code_focus_no_color_switch.dart';
-import 'picker_switches/color_edit_icon_button_switch.dart';
-import 'picker_switches/dialog_action_only_ok_button_switch.dart';
-import 'picker_switches/tonal_legacy_switch.dart';
-import 'picker_text_fields/text_field_focus_demo.dart';
-import 'picker_toggle_buttons/actions_order_switch.dart';
+import 'package:color_picker_example/demo/screens/color_picker/about.dart';
+import 'package:color_picker_example/demo/screens/color_picker/all_control_widgets.dart';
+import 'package:color_picker_example/demo/screens/color_picker/color_picker_card.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_indicators/premade_dialog_picker_color_indicator.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_switches/color_code_focus_no_color_switch.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_switches/color_edit_icon_button_switch.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_switches/dialog_action_only_ok_button_switch.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_switches/tonal_legacy_switch.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_text_fields/text_field_focus_demo.dart';
+import 'package:color_picker_example/demo/screens/color_picker/picker_toggle_buttons/actions_order_switch.dart';
+import 'package:color_picker_example/demo/utils/app.dart';
+import 'package:color_picker_example/demo/widgets/flex_app_bar.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Screen with the two ColorPickers and all controls and settings we use to
 /// manipulate their design and behavior.
 ///
-/// The layout is responsive and can have 1 to 4 columns that contains the
+/// The layout is responsive and can have 1 to 4 columns that contain the
 /// ColorPicker and the controls, each column when visible has its own
 /// ListView, so the columns can be scrolled individually when they are visible.
 class ColorPickerScreen extends StatelessWidget {
@@ -67,9 +66,7 @@ class ColorPickerScreen extends StatelessWidget {
                     controller: scrollOne,
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     children: <Widget>[
-                      SizedBox(
-                          height: MediaQuery.of(context).padding.top +
-                              kToolbarHeight),
+                      SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
                       const _Column1(),
                       if (columns < 3) const _Column2(),
                       if (columns < 2) const _Column3(),
@@ -91,9 +88,7 @@ class ColorPickerScreen extends StatelessWidget {
                       controller: scrollTwo,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
-                        SizedBox(
-                            height: MediaQuery.of(context).padding.top +
-                                kToolbarHeight),
+                        SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
                         if (columns == 3 || columns == 4) const _Column2(),
                         if (columns < 3) const _Column3(),
                         if (columns < 3) const _Column4(),
@@ -114,9 +109,7 @@ class ColorPickerScreen extends StatelessWidget {
                       controller: scrollThree,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
-                        SizedBox(
-                            height: MediaQuery.of(context).padding.top +
-                                kToolbarHeight),
+                        SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
                         // Show the selected color in a dialog
                         const _Column3(),
                         if (columns < 4) const _Column4(),
@@ -136,9 +129,7 @@ class ColorPickerScreen extends StatelessWidget {
                       controller: scrollFour,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       children: <Widget>[
-                        SizedBox(
-                            height: MediaQuery.of(context).padding.top +
-                                kToolbarHeight),
+                        SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
                         const _Column4(),
                       ],
                     ),
@@ -181,32 +172,41 @@ class _Column1 extends StatelessWidget {
         ),
 
         const ListTile(
-          subtitle: Wrap(runSpacing: 8, children: <Widget>[
-            OnStartColorIndicator(),
-            SizedBox(width: 8),
-            OnChangedColorIndicator(),
-            SizedBox(width: 8),
-            OnEndColorIndicator(),
-          ]),
+          subtitle: Wrap(
+            runSpacing: 8,
+            children: <Widget>[
+              OnStartColorIndicator(),
+              SizedBox(width: 8),
+              OnChangedColorIndicator(),
+              SizedBox(width: 8),
+              OnEndColorIndicator(),
+            ],
+          ),
         ),
         const ListTile(
           title: Text('Color change callbacks'),
-          subtitle: Text('Above callbacks are color before change started, '
-              'during change and when change ended.'),
+          subtitle: Text(
+            'Above callbacks are color before change started, '
+            'during change and when change ended.',
+          ),
         ),
         const Divider(),
         const ListTile(title: Text('Copy format')),
         const CopyFormatSwitch(),
         const SizedBox(height: 8),
         const ListTile(
-          title: Text('Select and COPY a color value. PASTE it into the picker '
-              'with toolbar buttons, context menu or keyboard shortcuts.\n'
-              'Try these:'),
-          subtitle: SelectableText('Primary FF7B1FA2  Accent FFCCFF90  '
-              'BW FFF9F9F9\n'
-              'Custom #014443  Wheel 0xFF6E55C4  ShortWeb 5EC\n'
-              'Partial #DDFF  Opacity #99FF9800  Fail 94G02\n'
-              'PASTE supports all above formats. COPY in selected format.'),
+          title: Text(
+            'Select and COPY a color value. PASTE it into the picker '
+            'with toolbar buttons, context menu or keyboard shortcuts.\n'
+            'Try these:',
+          ),
+          subtitle: SelectableText(
+            'Primary FF7B1FA2  Accent FFCCFF90  '
+            'BW FFF9F9F9\n'
+            'Custom #014443  Wheel 0xFF6E55C4  ShortWeb 5EC\n'
+            'Partial #DDFF  Opacity #99FF9800  Fail 94G02\n'
+            'PASTE supports all above formats. COPY in selected format.',
+          ),
         ),
         const ParseShortHexCodeSwitch(),
         const Divider(),

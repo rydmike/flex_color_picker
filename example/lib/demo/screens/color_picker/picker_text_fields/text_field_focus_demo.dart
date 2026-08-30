@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class TextFieldFocusDemo extends StatefulWidget {
   const TextFieldFocusDemo({super.key});
@@ -30,10 +30,12 @@ class _TextFieldFocusDemoState extends State<TextFieldFocusDemo> {
       children: <Widget>[
         const ListTile(
           title: Text('Demo of picker auto focus setting'),
-          subtitle: Text('If picker auto focus is OFF or if neither keyboard '
-              'copy-paste shortcut is enabled, this field will be autofocused. '
-              'To try it, change settings, go back to main screen '
-              'and come back to this screen, to see the focus result.'),
+          subtitle: Text(
+            'If picker auto focus is OFF or if neither keyboard '
+            'copy-paste shortcut is enabled, this field will be autofocused. '
+            'To try it, change settings, go back to main screen '
+            'and come back to this screen, to see the focus result.',
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -51,12 +53,11 @@ class _TextFieldFocusDemoState extends State<TextFieldFocusDemo> {
             controller: _textController,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: 'If Picker autofocus is OFF, '
+              hintText:
+                  'If Picker autofocus is OFF, '
                   'this field will have focus',
               labelText: 'Focus demo entry',
-              errorText: _errorState
-                  ? "Any entry without an 'a' will trigger this error"
-                  : null,
+              errorText: _errorState ? "Any entry without an 'a' will trigger this error" : null,
             ),
           ),
         ),

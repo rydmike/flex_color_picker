@@ -3,10 +3,10 @@ enum ColorPickerType {
   /// A color picker that contains both primary and accent Material colors.
   both,
 
-  /// A color picker that contain the primary Material color swatches.
+  /// A color picker that contains the primary Material color swatches.
   primary,
 
-  /// A color picker that contain the accent Material color swatches.
+  /// A color picker that contains the accent Material color swatches.
   accent,
 
   /// A color picker that offers black and white and their very near shades

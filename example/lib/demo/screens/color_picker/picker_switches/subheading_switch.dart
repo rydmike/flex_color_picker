@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class SubheadingSwitch extends ConsumerWidget {
@@ -12,11 +11,12 @@ class SubheadingSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Shades selection subheading'),
-      subtitle: const Text('You can provide your own subheading widget, if '
-          'it is null there is no sub heading.'),
+      subtitle: const Text(
+        'You can provide your own subheading widget, if '
+        'it is null there is no sub heading.',
+      ),
       value: ref.watch(showSubheadingPod),
-      onChanged: (bool value) =>
-          ref.read(showSubheadingPod.notifier).state = value,
+      onChanged: (bool value) => ref.read(showSubheadingPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
       tooltip: ref.read(showSubheadingPod)
           ? "ColorPicker(subheading: Text('Select color shade'))"

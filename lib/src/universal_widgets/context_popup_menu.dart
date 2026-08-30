@@ -1,12 +1,13 @@
+import 'package:flex_color_picker/src/functions/picker_functions.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-import '../functions/picker_functions.dart';
+import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart'
+    show ListTile, PopupMenuEntry, PopupMenuItem, PopupMenuThemeData, Theme, showMenu;
 
 /// A context popup menu.
 ///
 /// Wrap a child with [ContextPopupMenu] and provide it a list of
-/// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item have a
+/// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item has a
 /// unique value. Often the [PopupMenuItem] has a child of type [ListTile], with
 /// an int as value for its list index. The child can also be a custom widget
 /// with any type of row content or even images, their values could be an
@@ -23,7 +24,7 @@ import '../functions/picker_functions.dart';
 /// The optional [onOpen] callback event is triggered when the menu is opened.
 ///
 /// The menu can be styled with [PopupMenuThemeData] either via
-/// Theme.of(context).PopupMenuThemeData globally for the app and all other
+/// `Theme.of(context).popupMenuTheme` globally for the app and all other
 /// popup menus in it, or you can wrap just your custom popup widget that
 /// composes its content using [ContextPopupMenu] with a [Theme] that defines
 /// the [PopupMenuThemeData] just for that popup menu widget.
@@ -101,14 +102,14 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
   @override
   Widget build(BuildContext context) {
     final TargetPlatform platform = Theme.of(context).platform;
-    final bool useLongPress = widget.useLongPress ||
+    final bool useLongPress =
+        widget.useLongPress ||
         (widget.useSecondaryOnDesktopLongOnDevice && !isDesktop(platform) ||
-            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (!isDesktop(platform) || kIsWeb)));
-    final bool useSecondaryClick = widget.useSecondaryTapDown ||
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb && (!isDesktop(platform) || kIsWeb)));
+    final bool useSecondaryClick =
+        widget.useSecondaryTapDown ||
         (widget.useSecondaryOnDesktopLongOnDevice && isDesktop(platform) ||
-            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb &&
-                (isDesktop(platform) && !kIsWeb)));
+            (widget.useSecondaryOnDesktopLongOnDeviceAndWeb && (isDesktop(platform) && !kIsWeb)));
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -132,8 +133,7 @@ class _ContextPopupMenuState<T> extends State<ContextPopupMenu<T>> {
 
   Future<void> _showMenu(Offset position) async {
     widget.onOpen?.call();
-    final RenderObject? renderObject =
-        Overlay.maybeOf(context)?.context.findRenderObject();
+    final RenderObject? renderObject = Overlay.maybeOf(context)?.context.findRenderObject();
     if (renderObject is RenderBox) {
       final T? value = await showMenu<T>(
         context: context,

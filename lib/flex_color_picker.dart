@@ -1,5 +1,6 @@
-/// A customizable Flutter primary, accent and custom color picker. Includes
-/// an optional HSV wheel color picker.
+/// A customizable Flutter color picker with Material primary, accent and
+/// custom swatches, an optional HSV wheel, Material 3 tonal palettes,
+/// opacity, and desktop-aware copy-paste.
 library;
 
 export 'src/color_indicator.dart' show ColorIndicator;

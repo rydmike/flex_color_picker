@@ -1,30 +1,38 @@
 name: color_picker_example
 description: Two examples of how to use the FlexColorPicker package.
-version: 3.8.0
+version: 4.0.0
 publish_to: 'none'
 environment:
-  sdk: '>=3.6.0 <4.0.0'
-  flutter: '>=3.38.0'
+  sdk: '>=3.13.0 <4.0.0'
+  flutter: '>=3.47.0'
 
 dependencies:
+  # The official Flutter Cupertino Design Library.
+  cupertino_ui: ^1.0.0
+
   # https://pub.dev/packages/flex_color_picker
   flex_color_picker:
     path: ../
 
+  # The flutter library itself
   flutter:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_riverpod
+  # Last version of Riverpod 2. Plan is to move the example away from Riverpod.
   flutter_riverpod: ^2.6.1
 
   # https://pub.dev/packages/google_fonts
-  google_fonts: ^6.3.2
+  google_fonts: ^2.2.1
 
   # https://pub.dev/packages/hive_ce
-  hive_ce: ^2.15.1
+  hive_ce: ^2.19.3
+
+  # The official Flutter Material UI Library.
+  material_ui: ^1.0.0  
 
   # https://pub.dev/packages/path_provider:
-  path_provider: ^2.1.5
+  path_provider: ^2.1.6
 
   # https://pub.dev/packages/url_launcher
   # Used for launching a WEB URL (by Google flutter.dev).

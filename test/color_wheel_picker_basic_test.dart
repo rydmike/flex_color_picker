@@ -1,9 +1,9 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
-// ignore_for_file: unnecessary_null_comparison, for clarity in tests.
+// ignore_for_file: unnecessary_null_comparison, part of the tests for clarity.
 
 //****************************************************************************
 // FlexColorPicker ColorWheelPicker Widget tests
@@ -13,15 +13,17 @@ void main() {
 
   group('CWP1: In App With ColorWheelPicker', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('CWP1.1: Finds default ColorWheelPicker()',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
+    testWidgets('CWP1.1: Finds default ColorWheelPicker()', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        TestWidget(
           widget: ColorWheelPicker(
-        key: testKey,
-        color: Colors.blue,
-        onChanged: (Color color) {},
-        onWheel: (bool wheel) {},
-      )));
+            key: testKey,
+            color: Colors.blue,
+            onChanged: (Color color) {},
+            onWheel: (bool wheel) {},
+          ),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 
@@ -43,24 +45,26 @@ void main() {
       expect(find.byWidgetPredicate(defaultWheel), findsOneWidget);
     });
 
-    testWidgets('CWP1.1: Finds custom-1 ColorWheelPicker()',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(TestWidget(
+    testWidgets('CWP1.1: Finds custom-1 ColorWheelPicker()', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        TestWidget(
           widget: ColorWheelPicker(
-        key: testKey,
-        color: Colors.blue,
-        onChanged: (Color color) {},
-        onChangeStart: (Color color) {},
-        onChangeEnd: (Color color) {},
-        onWheel: (bool wheel) {},
-        wheelWidth: 20,
-        wheelSquarePadding: 4,
-        wheelSquareBorderRadius: 6,
-        hasBorder: true,
-        borderColor: Colors.black,
-        shouldUpdate: true,
-        shouldRequestsFocus: true,
-      )));
+            key: testKey,
+            color: Colors.blue,
+            onChanged: (Color color) {},
+            onChangeStart: (Color color) {},
+            onChangeEnd: (Color color) {},
+            onWheel: (bool wheel) {},
+            wheelWidth: 20,
+            wheelSquarePadding: 4,
+            wheelSquareBorderRadius: 6,
+            hasBorder: true,
+            borderColor: Colors.black,
+            shouldUpdate: true,
+            shouldRequestsFocus: true,
+          ),
+        ),
+      );
       final Finder widget = find.byKey(testKey);
       expect(widget, findsOneWidget);
 

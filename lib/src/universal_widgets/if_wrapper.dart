@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A potential Widget builder function.
 typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
@@ -12,16 +12,19 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 /// condition is true. With the IfWrapper you can do this directly in the
 /// Widget tree.
 ///
+/// ```dart
 /// Widget widgetA = WidgetX(...);
 /// if (condition) widgetA = WidgetY(child: widgetA);
 ///
-/// Becomes:
-///
-/// IfWrapper(condition: condition,
+/// // Becomes:
+/// IfWrapper(
+///   condition: condition,
 ///   builder: (context, child) {
-///     return WidgetY(child: child); },
-///   child: child
+///     return WidgetY(child: child);
+///   },
+///   child: child,
 /// );
+/// ```
 ///
 /// Not library exposed, private to the library.
 @immutable

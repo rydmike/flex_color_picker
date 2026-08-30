@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CopyFormatSwitch extends ConsumerWidget {
   const CopyFormatSwitch({super.key});
@@ -20,15 +19,15 @@ class CopyFormatSwitch extends ConsumerWidget {
     ];
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(copyPasteBehavior:\n'
+      tooltip:
+          'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(copyFormat:\n'
           '    $copyFormat))',
       child: Center(
         child: ToggleButtons(
           isSelected: isSelected,
           onPressed: (int newIndex) {
-            ref.read(copyFormatPod.notifier).state =
-                ColorPickerCopyFormat.values[newIndex];
+            ref.read(copyFormatPod.notifier).state = ColorPickerCopyFormat.values[newIndex];
           },
           children: const <Widget>[
             Padding(

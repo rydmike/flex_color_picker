@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class OpacityThumbRadiusSlider extends ConsumerWidget {
@@ -12,7 +11,8 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(opacityThumbRadius: '
+      tooltip:
+          'ColorPicker(opacityThumbRadius: '
           '${ref.read(opacityThumbRadiusPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider thumb radius'),
@@ -22,8 +22,7 @@ class OpacityThumbRadiusSlider extends ConsumerWidget {
           divisions: 30 - 12,
           label: ref.watch(opacityThumbRadiusPod).floor().toString(),
           value: ref.watch(opacityThumbRadiusPod),
-          onChanged: (double value) =>
-              ref.read(opacityThumbRadiusPod.notifier).state = value,
+          onChanged: (double value) => ref.read(opacityThumbRadiusPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

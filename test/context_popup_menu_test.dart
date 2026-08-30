@@ -1,11 +1,10 @@
 import 'package:flex_color_picker/src/universal_widgets/context_popup_menu.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('ContextPopupMenu platform and property test',
-      (WidgetTester tester) async {
+  testWidgets('ContextPopupMenu platform and property test', (WidgetTester tester) async {
     // Define a variable to hold the selected value
     int? selectedValue;
 
@@ -31,10 +30,8 @@ void main() {
               },
               useLongPress: useLongPress,
               useSecondaryTapDown: useSecondaryTapDown,
-              useSecondaryOnDesktopLongOnDevice:
-                  useSecondaryOnDesktopLongOnDevice,
-              useSecondaryOnDesktopLongOnDeviceAndWeb:
-                  useSecondaryOnDesktopLongOnDeviceAndWeb,
+              useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
+              useSecondaryOnDesktopLongOnDeviceAndWeb: useSecondaryOnDesktopLongOnDeviceAndWeb,
               child: const Text('Open Menu'),
             ),
           ),
@@ -46,22 +43,14 @@ void main() {
     for (final TargetPlatform platform in TargetPlatform.values) {
       for (final bool useLongPress in <bool>[true, false]) {
         for (final bool useSecondaryTapDown in <bool>[true, false]) {
-          for (final bool useSecondaryOnDesktopLongOnDevice in <bool>[
-            true,
-            false
-          ]) {
-            for (final bool useSecondaryOnDesktopLongOnDeviceAndWeb in <bool>[
-              true,
-              false
-            ]) {
+          for (final bool useSecondaryOnDesktopLongOnDevice in <bool>[true, false]) {
+            for (final bool useSecondaryOnDesktopLongOnDeviceAndWeb in <bool>[true, false]) {
               await buildWidget(
                 platform: platform,
                 useLongPress: useLongPress,
                 useSecondaryTapDown: useSecondaryTapDown,
-                useSecondaryOnDesktopLongOnDevice:
-                    useSecondaryOnDesktopLongOnDevice,
-                useSecondaryOnDesktopLongOnDeviceAndWeb:
-                    useSecondaryOnDesktopLongOnDeviceAndWeb,
+                useSecondaryOnDesktopLongOnDevice: useSecondaryOnDesktopLongOnDevice,
+                useSecondaryOnDesktopLongOnDeviceAndWeb: useSecondaryOnDesktopLongOnDeviceAndWeb,
               );
 
               // Verify the menu is not visible initially
@@ -81,8 +70,7 @@ void main() {
 
               // Secondary tap to open the menu if useSecondaryTapDown is true
               if (useSecondaryTapDown) {
-                await tester.tap(find.text('Open Menu'),
-                    buttons: kSecondaryButton);
+                await tester.tap(find.text('Open Menu'), buttons: kSecondaryButton);
                 await tester.pumpAndSettle();
                 expect(find.text('Item 1'), findsOneWidget);
                 expect(find.text('Item 2'), findsOneWidget);

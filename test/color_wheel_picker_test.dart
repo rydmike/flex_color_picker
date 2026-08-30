@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 // ignore_for_file: unused_local_variable, Claude added not used vars, fix later
 
@@ -59,8 +59,7 @@ void main() {
 
     // Simulate a drag on the color wheel square
     final Offset center = tester.getCenter(find.byType(ColorWheelPicker));
-    await tester.timedDragFrom(
-        center, const Offset(50, 20), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(center, const Offset(50, 20), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -77,8 +76,7 @@ void main() {
     await tester.pumpWidget(buildWidget(selectedColor));
 
     // Simulate a diagonal drag on the color wheel square
-    await tester.timedDragFrom(
-        center, const Offset(20, 30), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(center, const Offset(20, 30), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Verify the callbacks are triggered for the square
@@ -95,8 +93,7 @@ void main() {
     final Offset startPoint = Offset(center.dx + wheelRadius, center.dy);
 
     // Simulate a short horizontal drag on the color wheel
-    await tester.timedDragFrom(
-        startPoint, const Offset(70, -100), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(startPoint, const Offset(70, -100), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Verify the callbacks are triggered for the wheel
@@ -109,8 +106,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Simulate vertical drag update
-    await tester.timedDragFrom(
-        startPoint, const Offset(30, 10), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(startPoint, const Offset(30, 10), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -127,8 +123,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Simulate horizontal drag update
-    await tester.timedDragFrom(
-        startPoint, const Offset(40, 40), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(startPoint, const Offset(40, 40), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -145,8 +140,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Simulate end of vertical drag
-    await tester.timedDragFrom(
-        startPoint, const Offset(-100, 90), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(startPoint, const Offset(-100, 90), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -163,8 +157,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Simulate end of horizontal drag
-    await tester.timedDragFrom(
-        startPoint, const Offset(-150, -55), const Duration(milliseconds: 100));
+    await tester.timedDragFrom(startPoint, const Offset(-150, -55), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -181,12 +174,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // Calculate a starting point NOT on the wheel's circumference
-    final Offset noWheelPoint =
-        Offset(center.dx + wheelRadius, center.dy + wheelRadius);
+    final Offset noWheelPoint = Offset(center.dx + wheelRadius, center.dy + wheelRadius);
 
     // Simulate end of horizontal drag
-    await tester.timedDragFrom(noWheelPoint, const Offset(-20, -20),
-        const Duration(milliseconds: 100));
+    await tester.timedDragFrom(noWheelPoint, const Offset(-20, -20), const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     // Update the widget with the new color
@@ -200,8 +191,7 @@ void main() {
     expect(selectedColor, const Color(0xff131d3c));
   });
 
-  testWidgets('ColorWheelPicker didUpdateWidget test',
-      (WidgetTester tester) async {
+  testWidgets('ColorWheelPicker didUpdateWidget test', (WidgetTester tester) async {
     Color selectedColor = Colors.red;
     bool isWheelActive = false;
 
@@ -257,8 +247,7 @@ void main() {
     expect(find.byType(ColorWheelPicker), findsOneWidget);
   });
 
-  testWidgets('ColorWheelPicker didUpdateWidget with shouldUpdate test',
-      (WidgetTester tester) async {
+  testWidgets('ColorWheelPicker didUpdateWidget with shouldUpdate test', (WidgetTester tester) async {
     Color selectedColor = Colors.red;
     bool isWheelActive = false;
 

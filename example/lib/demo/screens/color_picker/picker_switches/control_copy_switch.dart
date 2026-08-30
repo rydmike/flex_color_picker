@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ControlCopySwitch extends ConsumerWidget {
@@ -16,7 +15,8 @@ class ControlCopySwitch extends ConsumerWidget {
       value: ref.watch(ctrlCPod),
       onChanged: (bool value) => ref.read(ctrlCPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(copyPasteBehavior:\n'
+      tooltip:
+          'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(ctrlC: '
           '${ref.read(ctrlCPod)}))',
     );

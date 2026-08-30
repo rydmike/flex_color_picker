@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ParseShortHexCodeSwitch extends ConsumerWidget {
@@ -12,13 +11,15 @@ class ParseShortHexCodeSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Parse 3-char code as WEB 3-char hex RGB format'),
-      subtitle: const Text('Applies to both paste action and color '
-          'code entry.'),
+      subtitle: const Text(
+        'Applies to both paste action and color '
+        'code entry.',
+      ),
       value: ref.watch(parseShortHexCodePod),
-      onChanged: (bool value) =>
-          ref.read(parseShortHexCodePod.notifier).state = value,
+      onChanged: (bool value) => ref.read(parseShortHexCodePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(copyPasteBehavior:\n'
+      tooltip:
+          'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(parseShortHexCode: '
           '${ref.read(parseShortHexCodePod)}))',
     );

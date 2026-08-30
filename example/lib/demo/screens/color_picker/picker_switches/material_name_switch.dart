@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class MaterialNameSwitch extends ConsumerWidget {
@@ -12,13 +11,15 @@ class MaterialNameSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Material color name'),
-      subtitle: const Text('If selected color is a standard Material color, '
-          'its name is shown together with its shade index.'),
+      subtitle: const Text(
+        'If selected color is a standard Material color, '
+        'its name is shown together with its shade index.',
+      ),
       value: ref.watch(showMaterialNamePod),
-      onChanged: (bool value) =>
-          ref.read(showMaterialNamePod.notifier).state = value,
+      onChanged: (bool value) => ref.read(showMaterialNamePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(showMaterialName: '
+      tooltip:
+          'ColorPicker(showMaterialName: '
           '${ref.read(showMaterialNamePod)})',
     );
   }

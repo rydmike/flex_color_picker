@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class SecondaryDesktopLongDeviceSwitch extends ConsumerWidget {
@@ -11,13 +10,15 @@ class SecondaryDesktopLongDeviceSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
-      title: const Text('Long press COPY-PASTE menu on Android/iOS, '
-          'right click on desktops and web desktop'),
+      title: const Text(
+        'Long press COPY-PASTE menu on Android/iOS, '
+        'right click on desktops and web desktop',
+      ),
       value: ref.watch(secondaryDesktopOtherLongPod),
-      onChanged: (bool value) =>
-          ref.read(secondaryDesktopOtherLongPod.notifier).state = value,
+      onChanged: (bool value) => ref.read(secondaryDesktopOtherLongPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(copyPasteBehavior:\n'
+      tooltip:
+          'ColorPicker(copyPasteBehavior:\n'
           '  ColorPickerCopyPasteBehavior(\n'
           '    secondaryOnDesktopLongOnDevice: '
           '${ref.read(secondaryDesktopOtherLongPod)}))',

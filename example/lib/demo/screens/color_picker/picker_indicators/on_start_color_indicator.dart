@@ -1,10 +1,9 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/utils/theme.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../utils/theme.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class OnStartColorIndicator extends ConsumerWidget {
@@ -16,13 +15,14 @@ class OnStartColorIndicator extends ConsumerWidget {
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(onColorChangeStart: '
+      tooltip:
+          'ColorPicker(onColorChangeStart: '
           '(Color ${background.hexAlpha}) { ... } )',
       child: Chip(
-        label: Text('Start ${ref.watch(onColorChangeStartPod).hexAlpha}',
-            style: TextStyle(
-                color: AppTheme.getChipTextColor(background, isLight),
-                fontSize: 12)),
+        label: Text(
+          'Start ${ref.watch(onColorChangeStartPod).hexAlpha}',
+          style: TextStyle(color: AppTheme.getChipTextColor(background, isLight), fontSize: 12),
+        ),
         backgroundColor: background,
       ),
     );

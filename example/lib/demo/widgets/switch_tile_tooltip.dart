@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
+import 'package:color_picker_example/demo/widgets/switch_list_tile_adaptive.dart';
+import 'package:material_ui/material_ui.dart';
 
-import 'maybe_tooltip.dart';
-import 'switch_list_tile_adaptive.dart';
-
-/// This simple wrapper of the SwitchListTile.adaptive widget, is used to
+/// This simple wrapper of the [SwitchListTile.adaptive] widget is used to
 /// wrap it with a tooltip and show the provided tooltip if one is provided
 /// and tooltipEnabled is true.
 class SwitchTileTooltip extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Wrap the [child] with a [Tooltip] if [condition] is true and [tooltip] is
 /// not null and [tooltip] is not empty, otherwise just return the [child].

@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'clipboard_utils.dart';
 
@@ -9,10 +9,10 @@ void main() {
   testWidgets('ColorCodeField widget test', (WidgetTester tester) async {
     // Clipboard testing does not work without this.
     final MockClipboard mockClipboard = MockClipboard();
-    TestWidgetsFlutterBinding.ensureInitialized()
-        .defaultBinaryMessenger
-        .setMockMethodCallHandler(
-            SystemChannels.platform, mockClipboard.handleMethodCall);
+    TestWidgetsFlutterBinding.ensureInitialized().defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      mockClipboard.handleMethodCall,
+    );
 
     bool focusChanged = false;
     Color changedColor = Colors.transparent;
@@ -79,8 +79,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify clipboard content
-      final ClipboardData? clipData =
-          await Clipboard.getData(Clipboard.kTextPlain);
+      final ClipboardData? clipData = await Clipboard.getData(Clipboard.kTextPlain);
       String expectedClipboardContent;
       switch (copyFormat) {
         case ColorPickerCopyFormat.dartCode:

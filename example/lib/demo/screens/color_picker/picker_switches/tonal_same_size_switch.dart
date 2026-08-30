@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class TonalSameSizeSwitch extends ConsumerWidget {
@@ -12,13 +11,15 @@ class TonalSameSizeSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Tonal color items same size'),
-      subtitle: const Text('When OFF tonal color items are smaller and same '
-          'width as the items making up a Material swatch color palette.'),
+      subtitle: const Text(
+        'When OFF tonal color items are smaller and same '
+        'width as the items making up a Material swatch color palette.',
+      ),
       value: ref.watch(tonalSameSizePod),
-      onChanged: (bool value) =>
-          ref.read(tonalSameSizePod.notifier).state = value,
+      onChanged: (bool value) => ref.read(tonalSameSizePod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(tonalColorSameSize: '
+      tooltip:
+          'ColorPicker(tonalColorSameSize: '
           '${ref.read(tonalSameSizePod)})',
     );
   }

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A Material widget used as a color indicator and color selector by the
 /// FlexColorPicker package's `ColorPicker` widget.
 ///
 /// The color indicator can also be used on its own as a color label, e.g.
-/// in a ListTile widget. It has adjustable, height, width, selection indicator
+/// in a ListTile widget. It has adjustable height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
 @immutable
 class ColorIndicator extends StatefulWidget {
@@ -23,11 +23,10 @@ class ColorIndicator extends StatefulWidget {
     this.borderRadius = 10,
     this.hasBorder = false,
     this.borderColor,
-  })  : assert(elevation >= 0, 'Elevation must be greater or equal to 0.'),
-        assert(width > 0, 'Width must be positive.'),
-        assert(height > 0, 'Height must be positive.'),
-        assert(borderRadius >= 0,
-            'The border radius must be greater or equal to 0.');
+  }) : assert(elevation >= 0, 'Elevation must be greater or equal to 0.'),
+       assert(width > 0, 'Width must be positive.'),
+       assert(height > 0, 'Height must be positive.'),
+       assert(borderRadius >= 0, 'The border radius must be greater or equal to 0.');
 
   /// Optional void callback, called when the color indicator is tapped.
   ///
@@ -38,9 +37,9 @@ class ColorIndicator extends StatefulWidget {
   /// on it.
   ///
   /// By default the indicator gets focus when it is clicked, by setting this
-  /// to false it remains un-focused. This is useful eg when it is used as
+  /// to false it remains un-focused. This is useful e.g. when it is used as
   /// a tap area that should always show the correct color. If it is focused,
-  /// the correct color get obscured by the focus color.
+  /// the correct color gets obscured by the focus color.
   ///
   /// Defaults to true.
   final bool onSelectFocus;
@@ -52,7 +51,7 @@ class ColorIndicator extends StatefulWidget {
 
   /// Set to true, if an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected.
+  /// The indicator will always request focus when it is clicked and selected.
   /// Setting this value to true is to make it request focus when it is drawn,
   /// but only if its value has just changed so that its [isSelected] is now
   /// true and if this flag is true. The extra flag gives us a mechanism to
@@ -70,7 +69,7 @@ class ColorIndicator extends StatefulWidget {
   ///
   /// The size of the [selectedIcon] is 60% of the smaller of [width]
   /// and [height]. The color of indicator icon is black or white based on
-  /// on what contrast best fits on the selected color.
+  /// what contrast best fits on the selected color.
   ///
   /// Defaults to a check mark [Icons.check].
   final IconData selectedIcon;
@@ -123,9 +122,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   void didUpdateWidget(covariant ColorIndicator oldWidget) {
     // The widget requests focus when its value was updated, is selected
     // and the flag 'selectedRequestsFocus' is true.
-    if (widget.isSelected &&
-        widget.selectedRequestsFocus &&
-        widget.isSelected != oldWidget.isSelected) {
+    if (widget.isSelected && widget.selectedRequestsFocus && widget.isSelected != oldWidget.isSelected) {
       _focusNode.requestFocus();
     }
     super.didUpdateWidget(oldWidget);
@@ -140,14 +137,12 @@ class _ColorIndicatorState extends State<ColorIndicator> {
   @override
   Widget build(BuildContext context) {
     // The indicator color is a "light" color.
-    final bool isLight =
-        ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
+    final bool isLight = ThemeData.estimateBrightnessForColor(widget.color) == Brightness.light;
     // Set icon color to black on light color and to white on dark color.
     final Color iconColor = isLight ? Colors.black : Colors.white;
     // If no border color is given, we use the theme divider color as
     // border color, it is typically a suitable grey color.
-    final Color borderColor =
-        widget.borderColor ?? Theme.of(context).dividerColor;
+    final Color borderColor = widget.borderColor ?? Theme.of(context).dividerColor;
 
     return Material(
       type: MaterialType.card,
@@ -155,10 +150,9 @@ class _ColorIndicatorState extends State<ColorIndicator> {
       elevation: widget.elevation,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          side: widget.hasBorder
-              ? BorderSide(color: borderColor)
-              : BorderSide.none),
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        side: widget.hasBorder ? BorderSide(color: borderColor) : BorderSide.none,
+      ),
       child: SizedBox(
         width: widget.width,
         height: widget.height,
@@ -180,12 +174,10 @@ class _ColorIndicatorState extends State<ColorIndicator> {
           focusColor: widget.isSelected
               ? Colors.transparent
               : isLight
-                  ? Colors.black26
-                  : Colors.white30,
+              ? Colors.black26
+              : Colors.white30,
           // Only use highlightColor color when in focus, but not selected.
-          highlightColor: widget.isSelected
-              ? Colors.transparent
-              : Theme.of(context).highlightColor,
+          highlightColor: widget.isSelected ? Colors.transparent : Theme.of(context).highlightColor,
           hoverColor: isLight ? Colors.black26 : Colors.white30,
           onTap: widget.onSelect != null
               ? () {
@@ -199,9 +191,7 @@ class _ColorIndicatorState extends State<ColorIndicator> {
                   color: iconColor,
                   // Size the select icon so it always fits nicely.
                   // The 0.6 value is just based on what looked good enough.
-                  size: widget.width < widget.height
-                      ? widget.width * 0.6
-                      : widget.height * 0.6,
+                  size: widget.width < widget.height ? widget.width * 0.6 : widget.height * 0.6,
                 )
               : null,
         ),

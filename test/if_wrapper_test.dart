@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/src/universal_widgets/if_wrapper.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 //****************************************************************************
 // FlexColorPicker IFWrapper Widget tests
@@ -11,14 +11,12 @@ void main() {
 
   group('IFWR1: In App With IfWrapper ', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('IFWR1.1: Finds Center when IfWrapper wrap condition is true',
-        (WidgetTester tester) async {
+    testWidgets('IFWR1.1: Finds Center when IfWrapper wrap condition is true', (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget(wrap: true));
       final Finder widget = find.byType(Center);
       expect(widget, findsOneWidget);
     });
-    testWidgets('IFWR1.2: Finds No Center when IfWrapper condition is false',
-        (WidgetTester tester) async {
+    testWidgets('IFWR1.2: Finds No Center when IfWrapper condition is false', (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget(wrap: false));
       final Finder widget = find.byType(Center);
       expect(widget, findsNothing);
@@ -27,14 +25,12 @@ void main() {
 
   group('IFWR2: In App With IfWrapper, with ifFalse wrapper ', () {
     debugDefaultTargetPlatformOverride = null;
-    testWidgets('IFWR2.1: Finds Center when IfWrapper wrap condition is true',
-        (WidgetTester tester) async {
+    testWidgets('IFWR2.1: Finds Center when IfWrapper wrap condition is true', (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget2(wrap: true));
       final Finder widget = find.byType(Center);
       expect(widget, findsOneWidget);
     });
-    testWidgets('IFWR2.2: Finds No Center when IfWrapper condition is false',
-        (WidgetTester tester) async {
+    testWidgets('IFWR2.2: Finds No Center when IfWrapper condition is false', (WidgetTester tester) async {
       await tester.pumpWidget(const TestWidget2(wrap: false));
       final Finder widget = find.byType(Center);
       expect(widget, findsNothing);

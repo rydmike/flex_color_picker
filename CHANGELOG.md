@@ -2,6 +2,41 @@
 
 All notable changes to the **FlexColorPicker** package are documented in this file.
 
+## 4.0.0-dev.1
+
+**Aug 30, 2026**
+
+The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled Material and Cupertino libraries.
+
+**BREAKING**
+- This version requires Flutter 3.47.0 or higher
+- It also opts in on Dart 3.13.0 language features and lints.
+- This release brings full support for the standalone `material_ui` and `cupertino_ui` packages.
+- Per **Flutter's official recommendation** the package is released as a **major breaking** release.
+- Removed deprecated property `colorCodeIcon`. It had been deprecated already in v2.0.0, and no longer had any function since then. Use property [copyPasteBehavior] and [ColorPickerCopyPasteBehavior.copyIcon] instead.
+
+**FIX**
+- Keyboard paste on Windows, Linux, Android and Fuchsia used Ctrl-C instead of Ctrl-V, so paste overwrote the copy shortcut. Paste is now Ctrl-V. Cmd-C / Cmd-V on macOS and iOS were already correct.
+
+**DOCS**
+- Dart docs for `showColorPickerDialog` and `ColorPicker.showPickerDialog` now list parameters on the member page instead of inside the signature.
+- Setup package for agentic development and usage use with git worktrees.
+- Added a skill for agents that consume this package, see `.agents/skills/flex-color-picker/SKILL.md`.
+- Updated API docs, typos and language and some stale docs.
+- Refreshed the README for 4.0: Flutter 3.47 and `material_ui` / `cupertino_ui` highlight, stale claims and typos, undocumented APIs as text, a simpler heading structure, and prose that is not hard-wrapped. Screenshots are unchanged.
+
+**TESTS**
+- Added `CopyPasteHandler` shortcut tests for Ctrl-C / Ctrl-V on Windows and Cmd-C / Cmd-V on macOS.
+- Raised package test coverage to 100% of instrumented lines. Added `color_picker_coverage_test.dart` for single-picker modes, clipboard formats/errors, toolbar OK/Close, opacity slider drags, and color-code editing. Compile-time-false `_debug` print blocks are excluded with documented `coverage:ignore` comments.
+
+**CHORE**
+- Bump dependencies
+- Update to RydMike lints to 3.0.0 and fix lints.
+- Example iOS and macOS builds: removed CocoaPods integration so the runners use Swift Package Manager only.
+- Example web demo: replaced the deprecated Flutter service-worker bootstrap with `flutter_bootstrap.js`.
+- Agent docs (`AGENTS.md` and skills) and CONTRIBUTING: package `lib/` coverage must stay at 100% of instrumented lines.
+
+
 ## 3.8.0
 
 **November 26, 2025**
@@ -9,12 +44,12 @@ All notable changes to the **FlexColorPicker** package are documented in this fi
 Requires min Flutter 3.38.0.
 
 **NEW**
-* Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example. Customization was possible before to be wrapping with a theme, but now it is easier to do so via these properties. See issue [#95](https://github.com/rydmike/flex_color_picker/issues/95)
+- Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example. Customization was possible before to be wrapping with a theme, but now it is easier to do so via these properties. See issue [#95](https://github.com/rydmike/flex_color_picker/issues/95)
 
 
 **CHORE**
-* Bump dependencies
-* Update to RydMike lints to 2.6.0 and fix lints.
+- Bump dependencies
+- Update to RydMike lints to 2.6.0 and fix lints.
 
 **TEST IMPROVEMENTS**
 
@@ -887,7 +922,7 @@ These are the topics I currently have on the TODO list for this package. Do you 
 - [ ] Add support for other color formats than RGB, HSL, HSV, CMYK, M3-HCT.
 - [ ] Add support for a pipette tool to pick colors from the screen.
 - [ ] Add possibility to in picker add selected colors to a custom picker.
-- [ ] Reactor the code to prepare for making a major new version 4.0.0. 
+- [ ] Refactor the code to prepare for making a major new version 4.0.0. 
 - [x] Add more tests. Done. Now at 84%, pretty OK now, but even more tests are always welcome.
 - [x] Release the stable version 2.0.0
 - [x] Add GitHub actions for test, analyze, coverage, build and web demo deployment.

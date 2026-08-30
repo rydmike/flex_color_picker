@@ -1,18 +1,19 @@
 {
-    "cSpell.words": [
-        "AABBCC",
-        "Astra",
-        "CPAB",
-        "CPCPB",
-        "FFRRGGBB",
-        "flexcolorpicker",
-        "focusable",
-        "interps",
-        "Koivisto"
-    ],
-    "cSpell.ignoreWords": [
-        "masala",
-        "paco"
-    ],
-    "dart.flutterSdkPath": "C:\\Users\\mryds\\fvm\\versions\\dev"
+  "cSpell.words": [
+    "AABBCC",
+    "Astra",
+    "CPAB",
+    "CPCPB",
+    "FFRRGGBB",
+    "flexcolorpicker",
+    "focusable",
+    "interps",
+    "Koivisto",
+    "Tonals"
+  ],
+  "cSpell.ignoreWords": [
+    "masala",
+    "paco"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class OpacityTrackHeightSlider extends ConsumerWidget {
@@ -12,7 +11,8 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(opacityTrackHeight: '
+      tooltip:
+          'ColorPicker(opacityTrackHeight: '
           '${ref.read(opacityTrackHeightPod).floor()})',
       child: ListTile(
         title: const Text('Opacity slider height'),
@@ -22,8 +22,7 @@ class OpacityTrackHeightSlider extends ConsumerWidget {
           divisions: 50 - 10,
           label: ref.watch(opacityTrackHeightPod).floor().toString(),
           value: ref.watch(opacityTrackHeightPod.notifier).state,
-          onChanged: (double value) =>
-              ref.read(opacityTrackHeightPod.notifier).state = value,
+          onChanged: (double value) => ref.read(opacityTrackHeightPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

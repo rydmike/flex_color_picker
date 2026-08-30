@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class WheelWidthSlider extends ConsumerWidget {
@@ -12,7 +11,8 @@ class WheelWidthSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(wheelWidth: '
+      tooltip:
+          'ColorPicker(wheelWidth: '
           '${ref.read(wheelWidthPod).floor()})',
       child: ListTile(
         title: const Text('Color wheel hue circle width'),
@@ -22,8 +22,7 @@ class WheelWidthSlider extends ConsumerWidget {
           divisions: 50 - 4,
           label: ref.watch(wheelWidthPod).floor().toString(),
           value: ref.watch(wheelWidthPod),
-          onChanged: (double value) =>
-              ref.read(wheelWidthPod.notifier).state = value,
+          onChanged: (double value) => ref.read(wheelWidthPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

@@ -1,7 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Contains used constants for doubles, strings and colors.
 class App {
@@ -11,7 +11,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '3.8.0';
+  static const String version = '4.0.0';
   static const String packageVersion = 'FlexColorPicker package $version';
   static final Uri packageUri = Uri(
     scheme: 'https',
@@ -26,14 +26,13 @@ class App {
   static const String buildType = isRunningWithWasm
       ? 'WasmGC'
       : kIsWeb
-          ? 'JS'
-          : 'native VM';
+      ? 'JS'
+      : 'native VM';
 
   static const String flutterVersionNum = FlutterVersion.version ?? '';
   static const String flutterChannel = FlutterVersion.channel ?? '';
-  static const String flutterVersion =
-      '$flutterChannel $flutterVersionNum ($buildType)';
-  static const String copyright = '© 2020 - 2025';
+  static const String flutterVersion = '$flutterChannel $flutterVersionNum ($buildType)';
+  static const String copyright = '© 2020 - 2026';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
   static const String icon = 'assets/images/app_icon.png';
@@ -150,39 +149,35 @@ class App {
   );
 
   // A custom color swatch, to name map, for the above custom colors.
-  static Map<ColorSwatch<Object>, String> get colorsNameMap =>
-      <ColorSwatch<Object>, String>{
-        ColorTools.createPrimarySwatch(guideNewPrimary): 'Guide Purple',
-        ColorTools.createPrimarySwatch(guideNewPrimaryVariant):
-            'Guide Purple Variant',
-        ColorTools.createAccentSwatch(guideNewSecondary): 'Guide Teal',
-        ColorTools.createAccentSwatch(guideNewSecondaryVariant):
-            'Guide Teal Variant',
-        ColorTools.createPrimarySwatch(guideNewError): 'Guide Error',
-        ColorTools.createPrimarySwatch(guideNewErrorDark): 'Guide Error Dark',
-        ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
-        ColorTools.createPrimarySwatch(clearBlue): 'Clear blue',
-        ColorTools.createPrimarySwatch(darkPink): 'Dark pink',
-        ColorTools.createPrimarySwatch(redWine): 'Red wine',
-        ColorTools.createPrimarySwatch(grassGreen): 'Grass green',
-        ColorTools.createPrimarySwatch(moneyGreen): 'Money green',
-        ColorTools.createPrimarySwatch(mandarinOrange): 'Mandarin orange',
-        ColorTools.createPrimarySwatch(brightOrange): 'Bright orange',
-        ColorTools.createPrimarySwatch(brightGreen): 'Bright green',
-        ColorTools.createPrimarySwatch(blueJean): 'Washed jean blue',
-        ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
-        whiteBlueBlack: 'White via Blue to Black',
-        whiteToBlack: 'White to black',
-        blackTransparency: 'Black transparency',
-      };
+  static Map<ColorSwatch<Object>, String> get colorsNameMap => <ColorSwatch<Object>, String>{
+    ColorTools.createPrimarySwatch(guideNewPrimary): 'Guide Purple',
+    ColorTools.createPrimarySwatch(guideNewPrimaryVariant): 'Guide Purple Variant',
+    ColorTools.createAccentSwatch(guideNewSecondary): 'Guide Teal',
+    ColorTools.createAccentSwatch(guideNewSecondaryVariant): 'Guide Teal Variant',
+    ColorTools.createPrimarySwatch(guideNewError): 'Guide Error',
+    ColorTools.createPrimarySwatch(guideNewErrorDark): 'Guide Error Dark',
+    ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
+    ColorTools.createPrimarySwatch(clearBlue): 'Clear blue',
+    ColorTools.createPrimarySwatch(darkPink): 'Dark pink',
+    ColorTools.createPrimarySwatch(redWine): 'Red wine',
+    ColorTools.createPrimarySwatch(grassGreen): 'Grass green',
+    ColorTools.createPrimarySwatch(moneyGreen): 'Money green',
+    ColorTools.createPrimarySwatch(mandarinOrange): 'Mandarin orange',
+    ColorTools.createPrimarySwatch(brightOrange): 'Bright orange',
+    ColorTools.createPrimarySwatch(brightGreen): 'Bright green',
+    ColorTools.createPrimarySwatch(blueJean): 'Washed jean blue',
+    ColorTools.createPrimarySwatch(deepBlueSea): 'Deep blue sea',
+    whiteBlueBlack: 'White via Blue to Black',
+    whiteToBlack: 'White to black',
+    blackTransparency: 'Black transparency',
+  };
 
-  static Map<ColorSwatch<Object>, String> get colorsOptionsMap =>
-      <ColorSwatch<Object>, String>{
-        ColorTools.createPrimarySwatch(mojo): 'Mojo',
-        ColorTools.createPrimarySwatch(trendyPink): 'Trendy pink',
-        ColorTools.createPrimarySwatch(parsley): 'Parsley',
-        ColorTools.createPrimarySwatch(walnut): 'Walnut',
-        ColorTools.createPrimarySwatch(parsleyOpacity): 'Transparent parsley',
-        allSwatchParsleyTransparent: 'Parsley all indexes transparent',
-      };
+  static Map<ColorSwatch<Object>, String> get colorsOptionsMap => <ColorSwatch<Object>, String>{
+    ColorTools.createPrimarySwatch(mojo): 'Mojo',
+    ColorTools.createPrimarySwatch(trendyPink): 'Trendy pink',
+    ColorTools.createPrimarySwatch(parsley): 'Parsley',
+    ColorTools.createPrimarySwatch(walnut): 'Walnut',
+    ColorTools.createPrimarySwatch(parsleyOpacity): 'Transparent parsley',
+    allSwatchParsleyTransparent: 'Parsley all indexes transparent',
+  };
 }

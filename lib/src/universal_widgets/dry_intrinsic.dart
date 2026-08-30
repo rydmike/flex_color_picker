@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 // These two classes are a workaround to issue:
 // https://github.com/flutter/flutter/issues/71687
@@ -23,8 +23,7 @@ class DryIntrinsicWidth extends SingleChildRenderObjectWidget {
   });
 
   @override
-  RenderDryIntrinsicWidth createRenderObject(BuildContext context) =>
-      RenderDryIntrinsicWidth();
+  RenderDryIntrinsicWidth createRenderObject(BuildContext context) => RenderDryIntrinsicWidth();
 }
 
 /// Compute dry layout for DryIntrinsicWidth.
@@ -32,8 +31,7 @@ class RenderDryIntrinsicWidth extends RenderIntrinsicWidth {
   @override
   Size computeDryLayout(BoxConstraints constraints) {
     if (child != null) {
-      final double? width =
-          child?.computeMinIntrinsicWidth(constraints.maxHeight);
+      final double? width = child?.computeMinIntrinsicWidth(constraints.maxHeight);
       final double? height = child?.computeMinIntrinsicHeight(width ?? 0);
       return Size(width ?? 0, height ?? 0);
     } else {
@@ -53,14 +51,16 @@ class RenderDryIntrinsicWidth extends RenderIntrinsicWidth {
 @immutable
 class DryIntrinsicHeight extends SingleChildRenderObjectWidget {
   /// Default const constructor.
+  // coverage:ignore-start
+  // Dart coverage does not instrument this super-initializer constructor line.
   const DryIntrinsicHeight({
     super.key,
     required super.child,
   });
+  // coverage:ignore-end
 
   @override
-  RenderDryIntrinsicHeight createRenderObject(BuildContext context) =>
-      RenderDryIntrinsicHeight();
+  RenderDryIntrinsicHeight createRenderObject(BuildContext context) => RenderDryIntrinsicHeight();
 }
 
 /// Compute dry layout for DryIntrinsicHeight.
@@ -68,8 +68,7 @@ class RenderDryIntrinsicHeight extends RenderIntrinsicHeight {
   @override
   Size computeDryLayout(BoxConstraints constraints) {
     if (child != null) {
-      final double? height =
-          child?.computeMinIntrinsicHeight(constraints.maxWidth);
+      final double? height = child?.computeMinIntrinsicHeight(constraints.maxWidth);
       final double? width = child?.computeMinIntrinsicWidth(height ?? 0);
       return Size(width ?? 0, height ?? 0);
     } else {

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/switch_tile_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/switch_tile_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class RecentColorsSwitch extends ConsumerWidget {
@@ -12,13 +11,15 @@ class RecentColorsSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchTileTooltip(
       title: const Text('Recent colors'),
-      subtitle: const Text('Show a list of recently selected colors. You '
-          'can also control how many colors are kept with the API.'),
+      subtitle: const Text(
+        'Show a list of recently selected colors. You '
+        'can also control how many colors are kept with the API.',
+      ),
       value: ref.watch(showRecentColorsPod),
-      onChanged: (bool value) =>
-          ref.read(showRecentColorsPod.notifier).state = value,
+      onChanged: (bool value) => ref.read(showRecentColorsPod.notifier).state = value,
       tooltipEnabled: ref.watch(enableTooltipsPod),
-      tooltip: 'ColorPicker(showRecentColors: '
+      tooltip:
+          'ColorPicker(showRecentColors: '
           '${ref.read(showRecentColorsPod)})',
     );
   }

@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The [OpacitySliderThumb] is a custom version of [RoundSliderThumbShape]
 /// that draws a circle as thumb, with [color] as color inside the thumb.
-/// It also display's slider value inside the thumb.
+/// It also displays the slider value inside the thumb.
 ///
 /// The slider thumb theme color is used for the circle outline and text color
 /// for the displayed value.
@@ -47,8 +47,7 @@ class OpacitySliderThumb extends RoundSliderThumbShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    assert(sliderTheme.disabledThumbColor != null,
-        'disabledThumbColor cannot be null');
+    assert(sliderTheme.disabledThumbColor != null, 'disabledThumbColor cannot be null');
     assert(sliderTheme.thumbColor != null, 'thumbColor cannot be null');
 
     final Canvas canvas = context.canvas;

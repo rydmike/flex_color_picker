@@ -1,9 +1,8 @@
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/utils/app.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../utils/app.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class PremadeDialogPickerColorIndicator extends ConsumerWidget {
@@ -12,12 +11,15 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: const Text('Click to update only when dialog is closed. '
-          'Uses `showColorPickerDialog`.'),
+      title: const Text(
+        'Click to update only when dialog is closed. '
+        'Uses `showColorPickerDialog`.',
+      ),
       subtitle: Text(
-          // ignore: lines_longer_than_80_chars, cannot break earlier.
-          '${ColorTools.materialNameAndARGBCode(ref.watch(dialogPickerColorPod), colorSwatchNameMap: App.colorsNameMap)} '
-          'aka ${ColorTools.nameThatColor(ref.watch(dialogPickerColorPod))}'),
+        // ignore: cannot break earlier.
+        '${ColorTools.materialNameAndARGBCode(ref.watch(dialogPickerColorPod), colorSwatchNameMap: App.colorsNameMap)} '
+        'aka ${ColorTools.nameThatColor(ref.watch(dialogPickerColorPod))}',
+      ),
       trailing: ColorIndicator(
         height: ref.watch(sizePod),
         width: ref.watch(sizePod),
@@ -27,8 +29,11 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
         hasBorder: ref.watch(hasBorderPod),
         onSelectFocus: false,
         onSelect: () async {
-          ref.read(dialogPickerColorPod.notifier).state =
-              await dialogColor(context, ref, ref.read(dialogPickerColorPod));
+          ref.read(dialogPickerColorPod.notifier).state = await dialogColor(
+            context,
+            ref,
+            ref.read(dialogPickerColorPod),
+          );
         },
       ),
     );
@@ -62,8 +67,7 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
         longPressMenu: ref.watch(longPressMenuPod),
         secondaryMenu: ref.watch(secondaryMenuPod),
         secondaryOnDesktopLongOnDevice: ref.watch(secondaryDesktopOtherLongPod),
-        secondaryOnDesktopLongOnDeviceAndWeb:
-            ref.watch(secondaryDesktopWebLongPod),
+        secondaryOnDesktopLongOnDeviceAndWeb: ref.watch(secondaryDesktopWebLongPod),
         editFieldCopyButton: ref.watch(editFieldCopyButtonPod),
         parseShortHexCode: ref.watch(parseShortHexCodePod),
         editUsesParsedPaste: ref.watch(editUsesParsedPastePod),
@@ -163,8 +167,7 @@ class PremadeDialogPickerColorIndicator extends ConsumerWidget {
       dialogElevation: 2,
       // Let's make an even more transparent barrier color than black12
       barrierColor: const Color(0x33000000), // 6% opacity black
-      constraints:
-          const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
+      constraints: const BoxConstraints(minHeight: 580, minWidth: 480, maxWidth: 480),
     );
   }
 }

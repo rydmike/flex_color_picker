@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 // ignore_for_file: unnecessary_nullable_for_final_variable_declarations, tests.
 
@@ -304,8 +304,7 @@ void main() {
     test('FSE3.22: GIVEN "$blankStr".toColor EXPECT "Color(0xFF000000)".', () {
       expect(blankStr.toColor, const Color(0xFF000000));
     });
-    test(
-        'FSE3.24: GIVEN "${tooLongStr.length}" chars, too '
+    test('FSE3.24: GIVEN "${tooLongStr.length}" chars, too '
         'long input EXPECT "Color(0x00000000)".', () {
       expect(tooLongStr.toColor, const Color(0xFF000000));
     });
@@ -319,18 +318,15 @@ void main() {
   //
   // Color.toColorShort(bool) function tests.
   //****************************************************************************
-  group(
-      'FSE3maybe: WITH non nullable String extension '
+  group('FSE3maybe: WITH non nullable String extension '
       'String.toColorShort', () {
     const String str1 = 'A2C';
 
-    test(
-        'FSE3maybe.1: GIVEN "$str1".toColorShort(true) '
+    test('FSE3maybe.1: GIVEN "$str1".toColorShort(true) '
         'EXPECT "Color(0xFFAA22CC)".', () {
       expect(str1.toColorShort(true), const Color(0xFFAA22CC));
     });
-    test(
-        'FSE3maybe.2: GIVEN "$str1".toColorShort(false) '
+    test('FSE3maybe.2: GIVEN "$str1".toColorShort(false) '
         'EXPECT "Color(0xFF000A2C)".', () {
       expect(str1.toColorShort(false), const Color(0xFF000A2C));
     });
@@ -438,8 +434,7 @@ void main() {
     test('FSE3n.23: GIVEN "$zeroX".toColor EXPECT "null".', () {
       expect(zeroX.toColorMaybeNull, isNull);
     });
-    test(
-        'FSE3n.24: GIVEN "${tooLongStr?.length}" chars, too '
+    test('FSE3n.24: GIVEN "${tooLongStr?.length}" chars, too '
         'long input EXPECT "null".', () {
       expect(tooLongStr.toColorMaybeNull, isNull);
     });
@@ -453,18 +448,15 @@ void main() {
   //
   // Color.toColorShortMaybeNull(bool) function tests.
   //****************************************************************************
-  group(
-      'FSE3n-maybe: WITH non nullable String extension '
+  group('FSE3n-maybe: WITH non nullable String extension '
       'String.toColorShortMaybeNull', () {
     const String str1 = 'A2C';
 
-    test(
-        'FSEn-3maybe.1: GIVEN "$str1".toColorShortMaybeNull(true) '
+    test('FSEn-3maybe.1: GIVEN "$str1".toColorShortMaybeNull(true) '
         'EXPECT "Color(0xFFAA22CC)".', () {
       expect(str1.toColorShortMaybeNull(true), const Color(0xFFAA22CC));
     });
-    test(
-        'FSE3n-maybe.2: GIVEN "$str1".toColorShortMaybeNull(false) '
+    test('FSE3n-maybe.2: GIVEN "$str1".toColorShortMaybeNull(false) '
         'EXPECT "Color(0xFF000A2C)".', () {
       expect(str1.toColorShortMaybeNull(false), const Color(0xFF000A2C));
     });

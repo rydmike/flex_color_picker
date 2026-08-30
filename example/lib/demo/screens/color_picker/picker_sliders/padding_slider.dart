@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods.dart';
+import 'package:color_picker_example/demo/widgets/maybe_tooltip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../pods/pods.dart';
-import '../../../widgets/maybe_tooltip.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class PaddingSlider extends ConsumerWidget {
@@ -12,9 +11,7 @@ class PaddingSlider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaybeTooltip(
       condition: ref.watch(enableTooltipsPod),
-      // ignore: missing_whitespace_between_adjacent_strings, intended here.
-      tooltip: 'ColorPicker(padding: EdgeInsets.all'
-          '(${ref.read(paddingPod).floor()}))',
+      tooltip: 'ColorPicker(padding: EdgeInsets.all(${ref.read(paddingPod).floor()}))',
       child: ListTile(
         title: const Text('Color picker content padding'),
         subtitle: Slider(
@@ -22,8 +19,7 @@ class PaddingSlider extends ConsumerWidget {
           divisions: 40,
           label: ref.watch(paddingPod).floor().toString(),
           value: ref.watch(paddingPod),
-          onChanged: (double value) =>
-              ref.read(paddingPod.notifier).state = value,
+          onChanged: (double value) => ref.read(paddingPod.notifier).state = value,
         ),
         trailing: Padding(
           padding: const EdgeInsets.only(right: 12),

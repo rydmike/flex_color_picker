@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import 'platform_widget.dart';
+import 'package:color_picker_example/demo/widgets/platform_widget.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A platform adaptive implementation of an AlertDialog.
 class PlatformAlertDialog extends PlatformWidget {
@@ -18,8 +17,7 @@ class PlatformAlertDialog extends PlatformWidget {
   final String defaultActionText;
   final String? cancelActionText;
 
-  Future<bool?> show(BuildContext context,
-      {bool useRootNavigator = false}) async {
+  Future<bool?> show(BuildContext context, {bool useRootNavigator = false}) async {
     final TargetPlatform platform = Theme.of(context).platform;
 
     return (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS)

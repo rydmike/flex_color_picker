@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:color_picker_example/demo/pods/pods_reset.dart';
+import 'package:color_picker_example/demo/widgets/platform_alert_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../pods/pods_reset.dart';
-import '../../widgets/platform_alert_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ResetSettingsButton extends ConsumerWidget {
   const ResetSettingsButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    assert(debugCheckHasMaterialLocalizations(context),
-        'A context with Material localizations is required');
+    assert(debugCheckHasMaterialLocalizations(context), 'A context with Material localizations is required');
     // Get the Material localizations.
     final MaterialLocalizations translate = MaterialLocalizations.of(context);
     return OutlinedButton(
