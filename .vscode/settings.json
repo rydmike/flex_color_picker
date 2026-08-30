@@ -14,5 +14,5 @@
     "masala",
     "paco"
   ],
-  "dart.flutterSdkPath": ".fvm/versions/3.44.8"
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }
