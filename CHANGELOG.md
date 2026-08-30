@@ -21,6 +21,8 @@ The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled 
 **CHORE**
 * Bump dependencies
 * Update to RydMike lints to 3.0.0 and fix lints.
+* Example iOS and macOS builds: removed CocoaPods integration so the runners use Swift Package Manager only.
+* Example web demo: replaced the deprecated Flutter service-worker bootstrap with `flutter_bootstrap.js`.
 
 ## 3.8.0
 
