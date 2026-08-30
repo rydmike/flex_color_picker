@@ -1,0 +1,9 @@
+# Gitignored files copied into every new worktree by Claude Code and Codex.
+# Only gitignored files are copied; tracked files come along with the checkout,
+# so never list them here.
+#
+# Cursor uses .cursor/worktrees.json instead, which runs scripts/setup_worktree.sh.
+# That script copies the same files, so keep the two lists in sync.
+
+# Local Android SDK paths for the example app. Flutter can regenerate this file.
+example/android/local.properties

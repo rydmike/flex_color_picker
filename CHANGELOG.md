@@ -17,12 +17,15 @@ The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled 
 
 **DOCS**
 - Dart docs for `showColorPickerDialog` and `ColorPicker.showPickerDialog` now list parameters on the member page instead of inside the signature.
-
+- Setup package for agentic development and usage use with git worktrees.
+- Added a skill for agents that consume this package, see `.agents/skills/flex-color-picker/SKILL.md`.
+ 
 **CHORE**
-* Bump dependencies
-* Update to RydMike lints to 3.0.0 and fix lints.
-* Example iOS and macOS builds: removed CocoaPods integration so the runners use Swift Package Manager only.
-* Example web demo: replaced the deprecated Flutter service-worker bootstrap with `flutter_bootstrap.js`.
+- Bump dependencies
+- Update to RydMike lints to 3.0.0 and fix lints.
+- Example iOS and macOS builds: removed CocoaPods integration so the runners use Swift Package Manager only.
+- Example web demo: replaced the deprecated Flutter service-worker bootstrap with `flutter_bootstrap.js`.
+
 
 ## 3.8.0
 
@@ -31,12 +34,12 @@ The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled 
 Requires min Flutter 3.38.0.
 
 **NEW**
-* Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example. Customization was possible before to be wrapping with a theme, but now it is easier to do so via these properties. See issue [#95](https://github.com/rydmike/flex_color_picker/issues/95)
+- Added `ColorPickerActionButtons.dialogCancelButtonStyle` and `ColorPickerActionButtons.dialogOkButtonStyle` to enable customizing the style of the dialog action buttons. Usage demo added to default example. Customization was possible before to be wrapping with a theme, but now it is easier to do so via these properties. See issue [#95](https://github.com/rydmike/flex_color_picker/issues/95)
 
 
 **CHORE**
-* Bump dependencies
-* Update to RydMike lints to 2.6.0 and fix lints.
+- Bump dependencies
+- Update to RydMike lints to 2.6.0 and fix lints.
 
 **TEST IMPROVEMENTS**
 
