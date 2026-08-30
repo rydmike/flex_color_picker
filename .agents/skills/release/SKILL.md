@@ -27,7 +27,7 @@ dart pub publish --dry-run
 Also verify:
 
 - CHANGELOG top section: correct version, date, and tags (`BREAKING`, `FIX`, `CHANGE`, `NEW`, `TESTS`, `CHORE`; `PACKAGE`, `WEB DEMO` when they apply).
-- Coverage still near the Codecov baseline (~93%). Explain any dip; this is not a 100% gate.
+- Package `lib/` coverage is **100%** of instrumented lines (`fvm flutter test --coverage`, example excluded). Do not publish with a dip unless it is only documented `coverage:ignore` for code that cannot run or that Dart omits from the hitmap.
 - README and `example/` updated for any user-facing change; README web-demo links point at https://rydmike.com/flexcolorpicker (`/flexcolorpicker/` on GitHub Pages).
 - No dry-run warnings you cannot explain, and review the dry-run archive file tree. A **multi-MB jump** means `resources/` or other internal docs leaked in. Expect a small archive: package + example + the five pubspec-declared screenshots, plus `assets/opacity.png`.
 
@@ -55,7 +55,7 @@ The root [.pubignore](../../../.pubignore) controls what is published:
 
 ## Do not
 
-- Publish with failing/red CI or an unexplained coverage collapse.
+- Publish with failing/red CI or package `lib/` coverage below 100% of instrumented lines (except documented `coverage:ignore` for code that cannot run or that Dart omits from the hitmap).
 - Create the GitHub release before pub publish succeeded (the demo would advertise an unpublished version).
 - Edit released CHANGELOG sections later — corrections get a new entry.
 - Exclude `assets/` or `example/screenshots/` from `.pubignore`.

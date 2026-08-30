@@ -28,8 +28,10 @@ Document intent and purpose so humans and agents can maintain this package. The 
 
 ### Language
 
+- Use US English.
 - Use simple, direct language. Avoid jargon that does not help.
 - Short `dart` snippets on `ColorPicker`, dialogs, and `pickersEnabled` are welcome when they show a default, an interaction, or a migration. Do not paste the README.
+- README, skills, and `docs/` follow [AGENTS.md](../../../AGENTS.md) Markdown Style: one paragraph or bullet per line; do not hard-wrap prose. Leave fenced code, tables, and headings as they are.
 
 ### Magic numbers
 
@@ -51,7 +53,7 @@ Historic traps — claims that keep resurfacing stale:
 - Relative imports / `always_specify_types`: lint v3.0 uses **package imports** and `always_specify_types` is **off**.
 - Material/Cupertino widgets come from `material_ui` / `cupertino_ui` (Flutter 3.47), not `package:flutter/material.dart`.
 - FlexSeedScheme is a **tonal-palette** dependency, not a `ColorScheme.fromSeed` replacement inside this package.
-- Coverage is a **~93% baseline**, not a 100% requirement.
+- Coverage is **100%** of instrumented package `lib/` lines. Documented `coverage:ignore` is only for code that cannot run, or that Dart omits from the hitmap.
 
 ## Public API docs
 

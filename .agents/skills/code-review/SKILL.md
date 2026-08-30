@@ -35,7 +35,7 @@ Unused variables, functions, classes, consts, and commented-out blocks.
 
 - This package has no app logging stack. Do not ask for log statements. The `_debug` flag in `ColorPicker` (`const bool _debug = !kReleaseMode && false`) is intentional; do not turn it on in commits.
 - Documentation: public `///` on `lib/` API; comments on non-obvious paths. Path moves must update imports, comments, README, and example — not only Dart imports.
-- Testing: where coverage is strong vs weak; whether new branches need widget, Patrol, or util tests. See [.agents/skills/package-development/SKILL.md](../package-development/SKILL.md).
+- Testing: package `lib/` must stay at **100%** instrumented coverage. Flag missing branches (both sides of conditions, IDE-visible hits). See [.agents/skills/package-development/SKILL.md](../package-development/SKILL.md).
 
 Ignore generated file churn (`coverage/`, `build/`, `.dart_tool/`).
 
@@ -51,14 +51,13 @@ Classify by real impact (major / medium / minor).
 
 ### Coverage
 
-- New public and private branches should be tested. Codecov baseline is **~93%**; an unexplained drop is major. A small dip with a written justification can be acceptable — this is not a 100% gate.
+- New public and private branches should be tested. Package `lib/` coverage must stay at **100%** of instrumented lines; an unexplained drop is major. Documented `coverage:ignore` is acceptable only for code that cannot execute (compile-time-false `_debug`, unused private constructors) or that Dart omits from the hitmap (super-initializer constructors, trivial null-returns). Cover both sides of conditions so IDE/branch coverage matches lcov.
 - Unexplained churn in wheel/opacity painters or the `ColorTools` named-color table is major.
 
 ### Flutter 3.47 / color values
 
 - Material/Cupertino widgets stay on `material_ui` / `cupertino_ui`. Rewriting to `package:flutter/material.dart` is major.
 - Do not reintroduce deprecated `Color.value` or `.red` / `.green` / `.blue` / `.alpha`. Use `value32bit` / `*8bit`.
-- Do not “clean up” the multi-`show Color` imports in `color_picker_extensions.dart`.
 
 ### Widgets and platform
 
@@ -74,10 +73,10 @@ Classify by real impact (major / medium / minor).
 ### Analyzer and format
 
 - `dart format` and `dart analyze` clean. New `// ignore:` needs a reason that survives being read aloud.
-
+  
 ## Reporting
 
-Use GitHub-friendly markdown: `#` / `##` / `###` headings, numbered lists. Do not hard-wrap paragraphs. Do **not** use wide tables or `::code-comment` fences (GitHub cannot parse the latter).
+Use GitHub-friendly markdown: `#` / `##` / `###` headings, numbered lists. Follow [AGENTS.md](../../../AGENTS.md) Markdown Style (one paragraph or bullet per line; do not hard-wrap prose). Do **not** use wide tables or `::code-comment` fences (GitHub cannot parse the latter).
 
 ### Implementation analysis
 

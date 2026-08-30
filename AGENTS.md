@@ -1,6 +1,6 @@
 # FlexColorPicker
 
-FlexColorPicker (FCP) is a published Flutter color picker: Material primary/accent/custom swatches, an HSV wheel, optional Material 3 tonal palettes, opacity, and desktop-aware copy-paste. Breaking public API changes need discussion. Documentation quality and tests are required; Codecov is a **baseline (~93%)**, not a 100% gate.
+FlexColorPicker (FCP) is a published Flutter color picker: Material primary/accent/custom swatches, an HSV wheel, optional Material 3 tonal palettes, opacity, and desktop-aware copy-paste. Breaking public API changes need discussion. Documentation quality and tests are required. Package `lib/` coverage (example excluded) must stay at **100%** of instrumented lines.
 
 SDK constraints live in `pubspec.yaml`. Use `fvm flutter` locally (`.fvmrc` tracks `stable`).
 
@@ -57,7 +57,7 @@ CI also runs `dart format --output=none --set-exit-if-changed .`. Optional local
 
 ## Quality bar
 
-- **Coverage:** hold the Codecov baseline (~93%). Add tests for new branches. Justify any dip; do not invent a 100% gate.
+- **Coverage:** keep package `lib/` at **100%** of instrumented lines (`fvm flutter test --coverage`, example excluded). Cover new branches, including both sides of conditions (IDE/branch coverage). Use documented `coverage:ignore` only for code that cannot run (compile-time-false `_debug` prints, unused private constructors) or that Dart omits from the hitmap (super-initializer constructors, trivial null-returns). An unexplained dip is a defect.
 - **Docs:** `public_member_api_docs` is on for `lib/`. Unresolved dartdoc `[Type]` references fail CI. Explain *why* and how parameters interact; usage tutorials belong in README and the consume skill.
 - **API:** no breaking public API without discussion. See [CONTRIBUTING.md](CONTRIBUTING.md). Do not expand the barrel without intent.
 - **User-facing changes:** update `example/` (especially `example/lib/demo/`) and README. CHANGELOG sections: `BREAKING`, `FIX`, `CHANGE`, `NEW`, `TESTS`, `CHORE`.
@@ -70,9 +70,24 @@ Material and Cupertino widgets come from `package:material_ui/material_ui.dart` 
 
 `///` on public API; `//` on private helpers. In `//`, wrap names in backticks — never `[Type]`. In `///`, use `[Type]` only when the symbol is in dartdoc scope.
 
+## Formatting Scope
+
+- Do not run `dart format .` — it does not honor `.gitignore` or `analyzer: exclude` and may fail inside `build/` (see [dart-lang/dart_style#1840](https://github.com/dart-lang/dart_style/issues/1840)).
+- Do not run formatting across the entire repo unless explicitly requested.
+- Prefer formatting only the files you changed to keep diffs reviewable.
+
+## Markdown Style
+
+Applies to every markdown file in this repo (skills, `docs/`, README files) and to issue, PR, and review text you write:
+- Use US English.
+- Never insert line breaks inside a paragraph or a bullet item. One paragraph = one line. One bullet = one line.
+- Let the IDE, GitHub, Slack, and agent previews wrap to the viewport; do not hard-wrap at 80/100 columns.
+- Never reflow fenced code blocks, tables, or headings — the rule is about prose lines only.
+- Avoid wide tables in anything rendered on GitHub; prefer compact lists. Tables are fine for short enumerable facts.
+
 ## Tests
 
-Suites use numbered group names (`CPI1`, `PAT1`, `CWP1`, `FCE5`, …). Widget tests use `flutter_test`; large UI flows use `patrol_finders`. Tests may import `package:flex_color_picker/src/...` — that is existing practice, not a public API. Recipes: [package-development](.agents/skills/package-development/SKILL.md).
+Suites use numbered group names (`CPI1`, `PAT1`, `CWP1`, `FCE5`, …). Widget tests use `flutter_test`; large UI flows use `patrol_finders`. Tests may import `package:flex_color_picker/src/...` — that is existing practice, not a public API. Keep `lib/` at 100% instrumented coverage. Recipes: [package-development](.agents/skills/package-development/SKILL.md).
 
 ## Git and PRs
 

@@ -1,6 +1,6 @@
 ---
 name: package-development
-description: Develop and maintain FlexColorPicker: public ColorPicker API, tests, coverage baseline, example apps, material_ui/cupertino_ui. Use when editing this package's source, tests, example, or CI.
+description: Develop and maintain FlexColorPicker: public ColorPicker API, tests, 100% package coverage, example apps, material_ui/cupertino_ui. Use when editing this package's source, tests, example, or CI.
 ---
 
 # Package development
@@ -61,23 +61,24 @@ Used only to build the optional tonal row (`Cam16.fromInt` + `FlexTonalPalette.o
 
 ## Testing
 
-Hold Codecov around **~93%**. New branches need tests. A dip needs a justification in the PR; this is not a 100% gate. `fvm flutter test --coverage` at the repo root.
+Hold package `lib/` coverage at **100%** of instrumented lines. New branches need tests, including both sides of conditions so IDE/branch coverage stays green. Document `coverage:ignore` only when the code cannot run (compile-time-false `_debug` prints, unused private constructors) or Dart omits lines from the hitmap (super-initializer constructors, trivial null-returns). An unexplained dip is a defect. `fvm flutter test --coverage` at the repo root; do not include `example/`.
 
 - `flutter_test` widget tests; numbered groups: `group('CPI1: In App With ColorPicker', …)`, `PAT1` (Patrol), `CWP1`, `FCE5`, `CPAB1`, …
 - Large interaction flows: [`test/color_picker_patrol_test.dart`](../../../test/color_picker_patrol_test.dart) with `patrol_finders`
 - Clipboard: [`test/clipboard_utils.dart`](../../../test/clipboard_utils.dart)
+- Prefer a braced `if` body over `if (cond) return;` so lcov and the IDE both record the taken branch. If Dart still omits a trivial null-return from the hitmap (the lines never appear in lcov), wrap it in a documented `coverage:ignore` and keep a test that exercises the path.
 - No golden/`test/golden/` suite. Do not add screenshot goldens unless the maintainers ask.
 - Tests importing `src/` are fine. Prefer public barrel imports when testing exported API.
 
 `example/test/widget_test.dart` is smoke only. It does not replace package unit tests.
 
-| Change                          | Tests                                               |
-| ------------------------------- | --------------------------------------------------- |
-| `ColorPicker` param / lifecycle | `color_picker_test.dart` (`CPI1` / `CPI2`)          |
-| Dialog APIs                     | `show_color_picker_dialog_test.dart`                |
-| Copy-paste                      | `copy_paste_handler_test.dart`, behavior tests      |
-| Wheel / opacity painters        | matching `color_wheel_*` / `opacity_slider_*` tests |
-| `ColorTools` / extensions       | `flex_color_tools_test.dart`, extension tests       |
+| Change                          | Tests                                                                                         |
+| ------------------------------- | --------------------------------------------------------------------------------------------- |
+| `ColorPicker` param / lifecycle | `color_picker_test.dart` (`CPI1` / `CPI2`), `color_picker_coverage_test.dart` (`CPI3`–`CPI8`) |
+| Dialog APIs                     | `show_color_picker_dialog_test.dart`                                                          |
+| Copy-paste                      | `copy_paste_handler_test.dart`, behavior tests                                                |
+| Wheel / opacity painters        | matching `color_wheel_*` / `opacity_slider_*` tests                                           |
+| `ColorTools` / extensions       | `flex_color_tools_test.dart`, extension tests                                                 |
 
 ## Example
 
