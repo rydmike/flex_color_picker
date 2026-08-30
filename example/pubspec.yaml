@@ -1,6 +1,6 @@
 name: color_picker_example
 description: Two examples of how to use the FlexColorPicker package.
-version: 3.8.0
+version: 4.0.0
 publish_to: 'none'
 environment:
   sdk: '>=3.12.0 <4.0.0'
