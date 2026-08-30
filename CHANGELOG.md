@@ -15,11 +15,18 @@ The version requires Flutter 3.47.0 or higher. Offers support for SDK decoupled 
 - Per **Flutter's official recommendation** the package is released as a **major breaking** release.
 - Removed deprecated property `colorCodeIcon`. It had been deprecated already in v2.0.0, and no longer had any function since then. Use property [copyPasteBehavior] and [ColorPickerCopyPasteBehavior.copyIcon] instead.
 
+**FIX**
+- Keyboard paste on Windows, Linux, Android and Fuchsia used Ctrl-C instead of Ctrl-V, so paste overwrote the copy shortcut. Paste is now Ctrl-V. Cmd-C / Cmd-V on macOS and iOS were already correct.
+
 **DOCS**
 - Dart docs for `showColorPickerDialog` and `ColorPicker.showPickerDialog` now list parameters on the member page instead of inside the signature.
 - Setup package for agentic development and usage use with git worktrees.
 - Added a skill for agents that consume this package, see `.agents/skills/flex-color-picker/SKILL.md`.
- 
+- Updated API docs, typos and language and some stale docs.
+
+**TESTS**
+- Added `CopyPasteHandler` shortcut tests for Ctrl-C / Ctrl-V on Windows and Cmd-C / Cmd-V on macOS.
+
 **CHORE**
 - Bump dependencies
 - Update to RydMike lints to 3.0.0 and fix lints.

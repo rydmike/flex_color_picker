@@ -104,7 +104,7 @@ class CopyPasteHandler extends StatelessWidget {
         if (useMetaCommand)
           LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyV): const PasteIntent()
         else
-          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC): const PasteIntent(),
+          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyV): const PasteIntent(),
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
