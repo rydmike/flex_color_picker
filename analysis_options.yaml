@@ -809,7 +809,7 @@ linter:
 
     # DON'T use unnecessary type name in a constructor.
     #
-    # https://dart.dev/tools/linter-rules/unnecessary_final.html
+    # https://dart.dev/tools/linter-rules/unnecessary_type_name_in_constructor.html
     #
     # Don't include the type name in a constructor declaration. 
     # It isn't necessary, and the code is shorter and cleaner without it.
@@ -820,13 +820,13 @@ linter:
     #
     # Other known linters use:
     #
-    # Core           tbd   : https://pub.dev/packages/lints
-    # Recommended    tbd   : https://pub.dev/packages/lints
-    # Flutter Lints  tbd   : https://pub.dev/packages/flutter_lints
-    # Flutter repo   tbd   : https://github.com/flutter/flutter/blob/master/analysis_options_common.yaml
-    # Lint           tbd   : https://pub.dev/packages/lint
-    # VG Analysis    tbd   : https://pub.dev/packages/very_good_analysis
-    # Riverpod/Remi  tbd   : https://github.com/rrousselGit/riverpod/blob/master/analysis_options.yaml
+    # Core           false : https://pub.dev/packages/lints
+    # Recommended    false : https://pub.dev/packages/lints
+    # Flutter Lints  false : https://pub.dev/packages/flutter_lints
+    # Flutter repo   false : https://github.com/flutter/flutter/blob/master/analysis_options_common.yaml
+    # Lint           false : https://pub.dev/packages/lint
+    # VG Analysis    false : https://pub.dev/packages/very_good_analysis
+    # Riverpod/Remi  false : https://github.com/rrousselGit/riverpod/blob/master/analysis_options.yaml
     unnecessary_type_name_in_constructor: false
 
     # DO use DecoratedBox when a Container has only a Decoration.
