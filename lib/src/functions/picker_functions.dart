@@ -14,7 +14,7 @@ extension FlexPickerColorExtensions on Color {
     if (amount <= 0) return this;
     if (amount > 100) return Colors.white;
     // HSLColor returns saturation 1 for black, we want 0 instead to be able
-    // lighten black color up along the grey scale from black.
+    // to lighten black color up along the grey scale from black.
     final HSLColor hsl = this == const Color(0xFF000000)
         ? HSLColor.fromColor(this).withSaturation(0)
         : HSLColor.fromColor(this);
@@ -65,7 +65,7 @@ bool isDesktop(TargetPlatform platform) {
 }
 
 /// Locate in which available picker with its color swatches a
-/// given color can be found in and return that pickers enum type.
+/// given color can be found and return that picker's enum type.
 /// This is used to activate the correct Cupertino segment for the provided
 /// color, so that it can be selected and shown as selected.
 ColorPickerType findColorInSelector({

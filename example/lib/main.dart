@@ -185,9 +185,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     // Type of OK button, here ElevatedButton
                     dialogOkButtonType: ColorPickerActionButtonType.elevated,
                     // This style will be applied to the ElevatedButton and
-                    // combined with the default style for it button type.
-                    // to avoid confusing results maybe not use both or at
-                    // least not conflicting styleFrom class to the chosen
+                    // combined with the default style for its button type.
+                    // To avoid confusing results maybe not use both, or at
+                    // least not a conflicting styleFrom class for the chosen
                     // button type.
                     dialogOkButtonStyle: TextButton.styleFrom(
                       foregroundColor: Colors.yellow,
@@ -195,7 +195,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     ),
                     // Show the dialog Cancel/Close button
                     closeButton: true,
-                    // Type of OK button, here OutlinedButton.
+                    // Type of Cancel button, here OutlinedButton.
                     dialogCancelButtonType: ColorPickerActionButtonType.outlined,
                     // As a demo we style the Cancel OutlinedButton with
                     // ElevatedButton.styleFrom, normally you would

@@ -255,13 +255,13 @@ class ColorTools {
   /// This function is an approximation and gives an automated way of creating
   /// a material like primary swatch.
   ///
-  /// The official Material colors contain hand picked references colors.
+  /// The official Material colors contain hand-picked reference colors.
   /// To get an official Material swatch from a color use [primarySwatch] that
   /// returns the real Material swatch first for a color, if it is a standard
   /// Material primary color, and then creates a Material like swatch with this
   /// function, if it was not a standard material primary color hue.
   ///
-  /// There are reversed engineered JS versions of the official Material Color
+  /// There are reverse engineered JS versions of the official Material Color
   /// algorithm made from the Material Guide web tools. If anybody has the
   /// energy to make a Dart version of it, that would be fabulous.
   /// SO discussion here:
@@ -515,7 +515,7 @@ class ColorTools {
 
   /// A color swatch for almost black colors, ending in black.
   ///
-  /// These are none transparent shades of close to black values, useful when
+  /// These are non-transparent shades of close to black values, useful when
   /// you want slightly off black values that are not transparent.
   static const ColorSwatch<Object> blackShade = ColorSwatch<Object>(
     0xFF0A0A0A,
@@ -535,7 +535,7 @@ class ColorTools {
 
   /// A color swatch for almost white colors, starting with white.
   ///
-  /// These are none transparent shades of close to white values, useful when
+  /// These are non-transparent shades of close to white values, useful when
   /// you want slightly off white values that are not transparent.
   static const ColorSwatch<Object> whiteShade = ColorSwatch<Object>(
     0xFFFAFAFB,
@@ -614,7 +614,7 @@ class ColorTools {
     return createPrimarySwatch(color);
   }
 
-  /// Check if a color is included in a custom color swatches.
+  /// Check if a color is included in custom color swatches.
   ///
   /// Returns true if the color is a custom swatch, otherwise false.
   static bool isCustomColor(Color color, Map<ColorSwatch<Object>, String>? customSwatch) {
@@ -657,12 +657,12 @@ class ColorTools {
   /// Returns the official Material color name for the color passed to it,
   /// including the shade index and Flutter style HexCode.
   ///
-  /// If it is not a Material color or one of the Accents colors, only the
+  /// If it is not a Material color or one of the Accent colors, only the
   /// Flutter style Hex code is returned.
   static String materialNameAndCode(Color color, {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String name = materialName(color, colorSwatchNameMap: colorSwatchNameMap);
     if (name == '') {
-      // This is not a material color, we just return it's Flutter like HEX code
+      // This is not a material color, we just return its Flutter like HEX code
       return '(0x${colorCode(color)})';
     } else {
       return '$name (0x${colorCode(color)})';
@@ -672,12 +672,12 @@ class ColorTools {
   /// Returns the official Material color name for the color passed to it,
   /// including the shade index and ARGB style HexCode.
   ///
-  /// If it is not a Material color or one of the Accents colors, only the
+  /// If it is not a Material color or one of the Accent colors, only the
   /// ARGB style Hex code is returned.
   static String materialNameAndARGBCode(Color color, {Map<ColorSwatch<Object>, String>? colorSwatchNameMap}) {
     final String name = materialName(color, colorSwatchNameMap: colorSwatchNameMap);
     if (name == '') {
-      // This is not a material color, we just return it's Flutter like HEX code
+      // This is not a material color, we just return its Flutter like HEX code
       return '(${colorCode(color)})';
     } else {
       return '$name (${colorCode(color)})';
@@ -709,7 +709,7 @@ class ColorTools {
         }
       }
     }
-    // If it is a primary color, return name, shade and and optional index.
+    // If it is a primary color, return name, shade and optional index.
     for (final ColorSwatch<Object> swatch in primaryColorNames.keys) {
       for (final int i in _indexPrimaryWith850) {
         if (swatch[i] == color || swatch[i]?.value32bit == color.value32bit) {
@@ -770,22 +770,21 @@ class ColorTools {
   /// or name random colors or colors given as input by users.
   ///
   /// The returned color name is based on a Dart port of a JavaScript tool
-  /// called 'ntc', short for "Name That Color". The javascript project and info
+  /// called 'ntc', short for "Name That Color". The JavaScript project and info
   /// about it can be found here http://chir.ag/projects/ntc.
   static String nameThatColor(Color color) => _ColorName.fromColor(color).getName;
 }
 
 /// Public extensions on [Color].
 ///
-/// Convenience [Color] sRGB extensions that can be used as none deprecated
-/// replacements for `alpha`, `red`, `green`, `blue` and `value` they are
+/// Convenience [Color] sRGB extensions that can be used as non-deprecated
+/// replacements for `alpha`, `red`, `green`, `blue` and `value`. They are
 /// called [alpha8bit], [red8bit], [green8bit], [blue8bit] and [value32bit].
-/// FlexSeedScheme uses them to avoid using the deprecated color properties.
+/// FlexColorPicker uses them to avoid using the deprecated color properties.
 extension FlexColorPickerColorExtensions on Color {
   /// A 32 bit value representing this color.
   ///
-  /// This feature brings back the Color.value API in a way that is not and
-  /// will not be deprecated.
+  /// This brings back the `Color.value` API in a way that is not deprecated.
   ///
   /// The bits are assigned as follows:
   ///
@@ -802,26 +801,22 @@ extension FlexColorPickerColorExtensions on Color {
   /// A value of 0 means this color is fully transparent. A value of 255 means
   /// this color is fully opaque.
   ///
-  /// This feature brings back the Color.alpha API in a way that is not and
-  /// will not be deprecated.
+  /// This brings back the `Color.alpha` API in a way that is not deprecated.
   int get alpha8bit => (0xff000000 & value32bit) >> 24;
 
   /// The red channel of this color in an 8 bit value.
   ///
-  /// This feature brings back the Color.red API in a way that is not and
-  /// will not be deprecated.
+  /// This brings back the `Color.red` API in a way that is not deprecated.
   int get red8bit => (0x00ff0000 & value32bit) >> 16;
 
   /// The green channel of this color in an 8 bit value.
   ///
-  /// This feature brings back the Color.green API in a way that is not and
-  /// will not be deprecated.
+  /// This brings back the `Color.green` API in a way that is not deprecated.
   int get green8bit => (0x0000ff00 & value32bit) >> 8;
 
   /// The blue channel of this color in an 8 bit value.
   ///
-  /// This feature brings back the Color.blue API in a way that is not and
-  /// will not be deprecated.
+  /// This brings back the `Color.blue` API in a way that is not deprecated.
   int get blue8bit => (0x000000ff & value32bit) >> 0;
 
   // Convert float to 8 bit integer.

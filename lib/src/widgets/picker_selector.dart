@@ -22,7 +22,7 @@ class SelectPicker extends StatelessWidget {
   /// A map of used picker types to select which segments to show and use.
   final Map<ColorPickerType, bool> pickers;
 
-  /// THe labels for the picker segments.
+  /// The labels for the picker segments.
   final Map<ColorPickerType, String> pickerLabels;
 
   /// Current active picker.
@@ -36,9 +36,9 @@ class SelectPicker extends StatelessWidget {
   /// Uses cupertino default light and dark style if not provided.
   final Color? thumbColor;
 
-  /// Text style of the text items in the picker
+  /// Text style of the text items in the picker.
   ///
-  /// If not provided, default to `Theme.of(context).textTheme.bodySmall`.
+  /// If not provided, defaults to `Theme.of(context).textTheme.bodySmall`.
   final TextStyle? textStyle;
 
   /// The spacing after the picker. Defaults to 8.

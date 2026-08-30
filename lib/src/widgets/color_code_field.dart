@@ -41,7 +41,7 @@ class ColorCodeField extends StatefulWidget {
 
   /// Is in read only mode.
   ///
-  /// Default to false.
+  /// Defaults to false.
   final bool readOnly;
 
   /// Color code of the entered color string is returned back in this callback.
@@ -53,11 +53,11 @@ class ColorCodeField extends StatefulWidget {
   /// Request focus on the color code editing field.
   final bool requestFocus;
 
-  /// Weather the color code entry field should have no color when focused.
+  /// Whether the color code entry field should have no color when focused.
   ///
   /// If the option to make the color code field have the same color as the
   /// selected color is enabled via [colorCodeHasColor], it makes it look
-  /// and double like a big color indicator that shows the selected color.
+  /// and function like a big color indicator that shows the selected color.
   ///
   /// It can also make the edit of the color code confusing, as its color on
   /// purpose also changes as you edit and enter a new color value. If you
@@ -81,7 +81,7 @@ class ColorCodeField extends StatefulWidget {
   ///
   /// This makes the color code entry field a larger current color indicator
   /// area that changes color as the color value is changed.
-  /// The text color of the filed will adjust to for best contrast as will
+  /// The text color of the field will adjust for best contrast as will
   /// the opacity indicator text. Enabling this feature will override any
   /// color specified in [textStyle] and [prefixStyle] but
   /// their styles will otherwise be kept as specified.
@@ -91,15 +91,15 @@ class ColorCodeField extends StatefulWidget {
 
   /// Defines icons for the color picker title bar and its actions.
   ///
-  /// Defaults to ColorPickerToolIcons().
+  /// Defaults to [ColorPickerActionButtons].
   final ColorPickerActionButtons toolIcons;
 
   /// Defines the color picker's copy and paste behavior.
   ///
-  /// Defaults to ColorPickerPasteBehavior().
+  /// Defaults to [ColorPickerCopyPasteBehavior].
   final ColorPickerCopyPasteBehavior copyPasteBehavior;
 
-  /// Controls if tooltips are shown or not
+  /// Controls if tooltips are shown or not.
   ///
   /// Defaults to true.
   final bool enableTooltips;
@@ -108,7 +108,7 @@ class ColorCodeField extends StatefulWidget {
   ///
   /// If we are just editing text in the control it should not, we just send
   /// the data out to update any widget using the [color].
-  /// However, when we get a new color due to external action is should update.
+  /// However, when we get a new color due to external action it should update.
   /// This is similar to the same property on the wheel.
   ///
   /// Defaults to false.

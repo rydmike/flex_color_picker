@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 /// FlexColorPicker package's `ColorPicker` widget.
 ///
 /// The color indicator can also be used on its own as a color label, e.g.
-/// in a ListTile widget. It has adjustable, height, width, selection indicator
+/// in a ListTile widget. It has adjustable height, width, selection indicator
 /// icon and convenience properties for rounded corners and optional border.
 @immutable
 class ColorIndicator extends StatefulWidget {
@@ -37,9 +37,9 @@ class ColorIndicator extends StatefulWidget {
   /// on it.
   ///
   /// By default the indicator gets focus when it is clicked, by setting this
-  /// to false it remains un-focused. This is useful eg when it is used as
+  /// to false it remains un-focused. This is useful e.g. when it is used as
   /// a tap area that should always show the correct color. If it is focused,
-  /// the correct color get obscured by the focus color.
+  /// the correct color gets obscured by the focus color.
   ///
   /// Defaults to true.
   final bool onSelectFocus;
@@ -51,7 +51,7 @@ class ColorIndicator extends StatefulWidget {
 
   /// Set to true, if an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected.
+  /// The indicator will always request focus when it is clicked and selected.
   /// Setting this value to true is to make it request focus when it is drawn,
   /// but only if its value has just changed so that its [isSelected] is now
   /// true and if this flag is true. The extra flag gives us a mechanism to
@@ -69,7 +69,7 @@ class ColorIndicator extends StatefulWidget {
   ///
   /// The size of the [selectedIcon] is 60% of the smaller of [width]
   /// and [height]. The color of indicator icon is black or white based on
-  /// on what contrast best fits on the selected color.
+  /// what contrast best fits on the selected color.
   ///
   /// Defaults to a check mark [Icons.check].
   final IconData selectedIcon;

@@ -14,7 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 const bool _debug = !kReleaseMode && true;
 
 /// Provider "Pods" observer used to store the state of selected Riverpod
-/// providers with Hive and debugPrint changes to them in none release mode.
+/// providers with Hive and debugPrint changes to them in non-release mode.
 class PodsObserver extends ProviderObserver {
   @override
   void didUpdateProvider(

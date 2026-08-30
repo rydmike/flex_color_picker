@@ -37,7 +37,7 @@ class CopyPasteHandler extends StatelessWidget {
 
   /// A function that is called when the copy action is invoked.
   ///
-  /// The function should copy from the clipboard, including any custom
+  /// The function should copy to the clipboard, including any custom
   /// logic needed.
   final VoidClipboard copyToClipboard;
 
@@ -66,24 +66,24 @@ class CopyPasteHandler extends StatelessWidget {
   /// A boolean that determines if the child should be focused.
   final bool autoFocus;
 
-  /// Typically the custom past intent is used, but when [noPasteIntent]
+  /// Typically the custom paste intent is used, but when [noPasteIntent]
   /// is set to `true` it is not.
   ///
-  /// This is only done when widget sets `copyPasteBehavior.editUsesParsedPaste`
-  /// to `false` true and the color code entry field is focused.
+  /// This is only done when the widget sets `copyPasteBehavior.editUsesParsedPaste`
+  /// to `false` and the color code entry field is focused.
   ///
   /// This results in that the paste intent's color code parser is not used
   /// and that text is pasted into the ColorCode entry field as is.
   ///
   /// The color code TextField still has supported hex RGB character and max
   /// length validation, so anything not adhering to that will still be
-  /// silently filtered out of the paster result, but the paste will not be
-  /// validate via the supported multiple RGB color code RGB parser.
+  /// silently filtered out of the paste result, but the paste will not be
+  /// validated via the supported multiple RGB color code parser.
   ///
   /// Typically you want to use the paste intent and set
   /// `copyPasteBehavior.editUsesParsedPaste` to `true` to get the full
   /// color code parsing support. Setting it to false is supported for
-  /// legacy compatibility with FlexColorPicker before 2.0.0.
+  /// legacy compatibility with FlexColorPicker 1.x.
   final bool noPasteIntent;
 
   /// The child that will use the keyboard shortcuts.
@@ -188,7 +188,7 @@ class CopyAction extends Action<CopyIntent> {
 
   /// A function that is called when the copy action is invoked.
   ///
-  /// The function should copy from the clipboard, including any custom
+  /// The function should copy to the clipboard, including any custom
   /// logic needed.
   final VoidClipboard copyToClipboard;
 

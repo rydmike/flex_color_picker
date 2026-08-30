@@ -6,7 +6,7 @@ import 'package:material_ui/material_ui.dart';
 /// A custom slider track for the opacity slider.
 ///
 /// Has rounded edges and a background image that repeats to show the common
-/// image pattern used as background on images that has transparency. It
+/// image pattern used as background on images that have transparency. It
 /// results in a nice effect where we can better judge visually how transparent
 /// the current opacity value is directly on the slider.
 class OpacitySliderTrack extends SliderTrackShape {
@@ -31,7 +31,7 @@ class OpacitySliderTrack extends SliderTrackShape {
   /// Defaults to 14.
   final double thumbRadius;
 
-  /// The image used a background image in the slider track.
+  /// The image used as a background image in the slider track.
   final ui.Image image;
 
   /// Paint used to draw the background image on the slider track.

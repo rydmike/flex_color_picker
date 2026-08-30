@@ -15,7 +15,7 @@ import 'package:material_ui/material_ui.dart';
 /// Screen with the two ColorPickers and all controls and settings we use to
 /// manipulate their design and behavior.
 ///
-/// The layout is responsive and can have 1 to 4 columns that contains the
+/// The layout is responsive and can have 1 to 4 columns that contain the
 /// ColorPicker and the controls, each column when visible has its own
 /// ListView, so the columns can be scrolled individually when they are visible.
 class ColorPickerScreen extends StatelessWidget {

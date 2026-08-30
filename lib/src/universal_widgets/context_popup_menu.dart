@@ -7,7 +7,7 @@ import 'package:material_ui/material_ui.dart'
 /// A context popup menu.
 ///
 /// Wrap a child with [ContextPopupMenu] and provide it a list of
-/// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item have a
+/// [PopupMenuEntry], typically it is a [PopupMenuItem] where each item has a
 /// unique value. Often the [PopupMenuItem] has a child of type [ListTile], with
 /// an int as value for its list index. The child can also be a custom widget
 /// with any type of row content or even images, their values could be an
@@ -24,7 +24,7 @@ import 'package:material_ui/material_ui.dart'
 /// The optional [onOpen] callback event is triggered when the menu is opened.
 ///
 /// The menu can be styled with [PopupMenuThemeData] either via
-/// Theme.of(context).PopupMenuThemeData globally for the app and all other
+/// `Theme.of(context).popupMenuTheme` globally for the app and all other
 /// popup menus in it, or you can wrap just your custom popup widget that
 /// composes its content using [ContextPopupMenu] with a [Theme] that defines
 /// the [PopupMenuThemeData] just for that popup menu widget.

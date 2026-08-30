@@ -44,31 +44,27 @@ const ColorSwatch<Object> _kFallbackSwatch = ColorSwatch<Object>(
   },
 );
 
-/// A customizable Material primary color, accent color and custom colors,
-/// color picker.
+/// A customizable Material primary, accent, and custom color picker.
 ///
-/// You can configure which Material color swatches can be used for color
-/// selection, any combination of both primary/accent in same picker or in
-/// separate groups. There is an almost black and white shades picker and
-/// it is possible to include a page with custom material and accent swatches
-/// using custom names for the custom swatches.
-/// It is possible to specify if only the main color in a swatch should be
-/// selectable or its shades as well.
+/// You can configure which Material color swatches are available for selection,
+/// either as separate primary and accent groups or combined in one picker.
+/// There is also a near-black and near-white shades picker, and you can
+/// include one or two custom pages with Material-like swatches and custom
+/// names.
+/// You can choose whether only the main color in a swatch is selectable, or
+/// its shades as well.
 ///
-/// There is also a color wheel picker that allows you to select any
-/// color and automatically generate a Material primary swatch for the
-/// selected color.
+/// There is also a color wheel picker that lets you select any color and
+/// automatically generates a Material-like primary swatch for it.
 ///
-/// If a selected color in the wheel picker belongs to any standard Material
-/// color, primary or accent, and any of its shades or any of the provided
-/// custom color swatches, then the wheel picker will not calculate swatch
-/// colors for such a color. It will instead show all the shades from the
-/// selected color's swatch. Selecting the shades on the wheel picker will then
-/// select the shade color and show where the color shade is on the HSV wheel.
+/// If a selected color on the wheel belongs to a standard Material primary or
+/// accent color, any of its shades, or any provided custom swatch, the wheel
+/// picker does not generate a new swatch. It shows the shades from that
+/// swatch instead. Selecting a shade then selects that color and shows where
+/// it sits on the HSV wheel.
 ///
-/// If a selected on the color wheel, is not any color or shade of the
-/// pre-defined ones, then the wheel picker will always generate a
-/// new swatch from the selected color, using the selected color as the new
+/// If the selected wheel color is not in any of those swatches, the wheel
+/// picker generates a new swatch from the selected color, using it as the
 /// primary swatch 500 index midpoint.
 @immutable
 class ColorPicker extends StatefulWidget {
@@ -220,13 +216,12 @@ class ColorPicker extends StatefulWidget {
   final Color color;
 
   /// Required [ValueChanged] callback, called when user selects
-  /// a new color with new color value.
-  ///
+  /// a new color with the new color value.
   ///
   /// Called every time the color value changes when operating thumbs on the
-  /// color wheel or color or transparency sliders
+  /// color wheel or color or transparency sliders.
   ///
-  /// Changing which picker type is viewed does not trigger this callback, it
+  /// Changing which picker type is viewed does not trigger this callback; it
   /// is not triggered until a color in the viewed picker is selected.
   ///
   /// The picker passes the new value to the callback but does not actually
@@ -240,7 +235,7 @@ class ColorPicker extends StatefulWidget {
   /// ```dart
   /// ColorPicker(
   ///   color: _pickerColor,
-  ///   onChanged: (Color color) {
+  ///   onColorChanged: (Color color) {
   ///     setState(() {
   ///       _pickerColor = color;
   ///     });
@@ -270,7 +265,8 @@ class ColorPicker extends StatefulWidget {
   /// color picker's sliding selector and thus available as color pickers.
   ///
   /// Available options are based on the [ColorPickerType] enum that
-  /// includes values `both`, `primary`, `accent`, `bw`, `custom` and `wheel`.
+  /// includes values `both`, `primary`, `accent`, `bw`, `custom`,
+  /// `customSecondary` and `wheel`.
   ///
   /// By default, a map that sets primary and accent pickers to true, and
   /// other pickers to false, is used.
@@ -284,8 +280,8 @@ class ColorPicker extends StatefulWidget {
   ///
   /// If false, only the main color from a swatch is shown and can be selected.
   /// This is index [500] for Material primary colors and index [200] for accent
-  /// colors. On the Wheel, only the selected color is shown there is no
-  /// color related color swatch of the selected color shown.
+  /// colors. On the wheel, only the selected color is shown; there is no
+  /// related color swatch of the selected color shown.
   ///
   /// Defaults to true.
   final bool enableShadesSelection;
@@ -307,10 +303,10 @@ class ColorPicker extends StatefulWidget {
   /// https://m3.material.io/styles/color/the-color-system/key-colors-tones
   ///
   /// The picker item size for tonal palette color indicator items is
-  /// 10/13 the size of defined width and height. This is done in order to
-  /// as far as possible try to match the width of the Primary Material Swatch
-  /// items total width, it has 10 colors, the M3 tonal palette has 13 colors.
-  /// The idea is try to match their width when they are both shown.
+  /// 10/13 the size of defined [width] and [height]. This is done in order to
+  /// match the total width of the Material primary swatch as far as possible;
+  /// that swatch has 10 colors, the Material 3 tonal palette has 13.
+  /// The idea is to match their width when they are both shown.
   ///
   /// Defaults to false.
   final bool enableTonalPalette;
@@ -318,17 +314,15 @@ class ColorPicker extends StatefulWidget {
   /// Whether the tonal palette uses a fixed minimum chroma value for all
   /// tones or if it uses the chroma value of the selected color.
   ///
-  /// Prior to version 3.6.0 the tonal palette used minimum chroma value of 48
-  /// or chroma of the selected color. This was the default primary tonal
-  /// palette behavior in Flutter's ColorScheme.fromSeed method before
-  /// Flutter version 3.22.0.
+  /// Prior to version 3.6.0 the tonal palette used a minimum chroma of 48 or
+  /// the chroma of the selected color. That matched Flutter's
+  /// [ColorScheme.fromSeed] primary tonal palette behavior before Flutter 3.22.0.
   ///
-  /// Starting from version 3.6.0 the FlexColorPicker creates a HCT color space
-  /// tonal palette using whatever hue and chroma is in the selected color.
+  /// Starting from version 3.6.0, FlexColorPicker creates an HCT tonal palette
+  /// using whatever hue and chroma is in the selected color.
   ///
-  /// If you for some reason want to use the old behavior, set this property to
-  /// true. This will make the tonal palette use the fixed minimum chroma value
-  /// of 48 for all tones.
+  /// Set this to true to restore the old behavior (fixed minimum chroma 48 for
+  /// all tones).
   ///
   /// Defaults to false.
   final bool tonalPaletteFixedMinChroma;
@@ -346,7 +340,7 @@ class ColorPicker extends StatefulWidget {
   /// maximize or minimize the amount of
   /// free space, subject to the incoming layout constraints.
   ///
-  /// If some children have a non-zero flex factors (and none have a fit of
+  /// If some children have a non-zero flex factor (and none have a fit of
   /// [FlexFit.loose]), they will expand to consume all the available space and
   /// there will be no remaining free space to maximize or minimize, making this
   /// value irrelevant to the final layout.
@@ -370,7 +364,7 @@ class ColorPicker extends StatefulWidget {
   /// Must be null or from 0 to 300 dp.
   final double? toolbarSpacing;
 
-  /// Vertical spacing below the Material-2 based color shades palette.
+  /// Vertical spacing below the Material 2 based color shades palette.
   ///
   /// If not defined, defaults to [columnSpacing].
   /// Must be null or from 0 to 300 dp.
@@ -379,14 +373,14 @@ class ColorPicker extends StatefulWidget {
   /// Enable the opacity control for the color value.
   ///
   /// Set to true to allow users to control the opacity value of the
-  /// selected color. The displayed Opacity value on the slider goes from 0%,
-  /// which is totally transparent, to 100%, which if fully opaque.
+  /// selected color. The displayed opacity value on the slider goes from 0%,
+  /// which is fully transparent, to 100%, which is fully opaque.
   ///
-  /// When enabled, the opacity value is not returned as a separate value,
+  /// When enabled, the opacity value is not returned as a separate value;
   /// it is returned in the alpha channel of the returned ARGB color value, in
   /// the onColor callbacks.
   ///
-  /// When false, colors that has any other alpha value than 0xFF are changed
+  /// When false, colors that have any other alpha value than 0xFF are changed
   /// to 0xFF.
   ///
   /// Defaults to false.
@@ -394,7 +388,7 @@ class ColorPicker extends StatefulWidget {
 
   /// The height of the opacity slider track.
   ///
-  /// Defaults to 36 dp
+  /// Defaults to 36 dp.
   final double opacityTrackHeight;
 
   /// The width of the opacity slider track.
@@ -410,12 +404,12 @@ class ColorPicker extends StatefulWidget {
 
   /// Used to configure action buttons for the color picker dialog.
   ///
-  /// Defaults to [ColorPickerActionButtons] ().
+  /// Defaults to [ColorPickerActionButtons].
   final ColorPickerActionButtons actionButtons;
 
   /// Used to configure the copy paste behavior of the color picker.
   ///
-  /// Defaults to [ColorPickerCopyPasteBehavior] ().
+  /// Defaults to [ColorPickerCopyPasteBehavior].
   final ColorPickerCopyPasteBehavior copyPasteBehavior;
 
   /// Icon data for the icon used to indicate the selected color.
@@ -440,12 +434,12 @@ class ColorPicker extends StatefulWidget {
   /// Set to true to make tonal color items same size as the size defined
   /// for main and swatch shades indicator items.
   ///
-  /// If false, the tonal color items will be smaller and auto sized for the
-  /// palette to be same width as the Material-2 Color palette.
+  /// If false, the tonal color items will be smaller and auto sized so the
+  /// palette is the same width as the Material 2 color palette.
   ///
-  /// Defaults to false. The color boxes are smaller, but length of their
-  /// items is the same as MaterialColor swatch. You may prefer true to get
-  /// them to be same size, especially if you only use tonal palette.
+  /// Defaults to false. The color boxes are smaller, but the length of the
+  /// palette matches a MaterialColor swatch. You may prefer true to get
+  /// matching item sizes, especially if you only use the tonal palette.
   ///
   /// For legacy compatibility reasons, this property is false by default.
   final bool tonalColorSameSize;
@@ -483,7 +477,7 @@ class ColorPicker extends StatefulWidget {
   /// [ColorWheelPicker], when each have their border toggle set to true.
   ///
   /// If no color is given, the border color defaults to
-  /// Theme.of(context).dividerColor.
+  /// `Theme.of(context).dividerColor`.
   final Color? borderColor;
 
   /// Diameter of the HSV based color wheel picker.
@@ -530,8 +524,8 @@ class ColorPicker extends StatefulWidget {
   /// need.
   ///
   /// If no [TextStyle] is provided in the [Text] widget, then it uses
-  /// Theme.of(context).textTheme.titleLarge as default, same as the default
-  /// style in a Material3 app bar title.
+  /// `Theme.of(context).textTheme.titleLarge` as default, same as the default
+  /// style in a Material 3 app bar title.
   ///
   /// If the [Text] widget does not fit in the available space, it will be
   /// truncated with an ellipsis.
@@ -612,14 +606,14 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to `Theme.of(context).textTheme.bodyMedium`, if not defined.
   final TextStyle? colorNameTextStyle;
 
-  /// Set to true to show the RGB Hex color code of the selected [color].
+  /// Set to true to show the RGB hex color code of the selected [color].
   ///
-  /// The color code can be copied with copy icon button or other enabled copy
-  /// actions in the color picker. On the wheel picker the color code can be
-  /// edited to enter and select a color of a known RGB hex value. If the
-  /// property [colorCodeReadOnly] has been set to false the color code field
-  /// can never be edited directly, it is then only used to display the code
-  /// of currently selected color.
+  /// The color code can be copied with the copy icon button or other enabled
+  /// copy actions in the color picker. On the wheel picker the color code can
+  /// be edited to enter and select a color of a known RGB hex value. If
+  /// [colorCodeReadOnly] is true, the color code field can never be edited
+  /// directly; it is then only used to display the code of the currently
+  /// selected color.
   ///
   /// Defaults to false.
   final bool showColorCode;
@@ -639,7 +633,7 @@ class ColorPicker extends StatefulWidget {
 
   /// Whether to show an edit icon button before the color code field.
   ///
-  /// The edit icon button can be used to give users a visual que that the
+  /// The edit icon button can be used to give users a visual cue that the
   /// color code field can be edited.
   ///
   /// When set to true, the icon button is only shown when the wheel picker is
@@ -659,7 +653,7 @@ class ColorPicker extends StatefulWidget {
   ///
   /// If the option to make the color code field have the same color as the
   /// selected color is enabled via [colorCodeHasColor], it makes it look
-  /// and double like a big color indicator that shows the selected color.
+  /// and function like a big color indicator that shows the selected color.
   ///
   /// It can also make the edit of the color code confusing, as its color on
   /// purpose also changes as you edit and enter a new color value. If you
@@ -677,8 +671,8 @@ class ColorPicker extends StatefulWidget {
 
   /// The TextStyle of the prefix of the color code.
   ///
-  /// The prefix always include the alpha value and may also include a num char
-  /// '#' or '0x' based on the `ColorPickerCopyPasteBehavior.copyFormat`
+  /// The prefix always includes the alpha value and may also include a num
+  /// char '#' or '0x' based on the [ColorPickerCopyPasteBehavior.copyFormat]
   /// setting.
   ///
   /// Defaults to [colorCodeTextStyle], if not defined.
@@ -688,16 +682,15 @@ class ColorPicker extends StatefulWidget {
   ///
   /// If set to true, the color code field cannot be edited. Normally it can
   /// be edited when used in a picker that can select and show any color.
-  /// Setting this to false makes it read only also on such pickers. This
+  /// Setting this to true makes it read only also on such pickers. This
   /// currently only applies to the wheel picker, but will also apply to
   /// future full color range pickers.
   ///
-  /// Pickers that only offer a fixed palette, that you can just offered colors
-  /// from always have the color code field in read only mode, this setting
-  /// does not affect them.
+  /// Pickers that only offer a fixed palette always have the color code field
+  /// in read only mode; this setting does not affect them.
   ///
   /// Regardless of the picker and [colorCodeReadOnly] value, you can change
-  /// color value by pasting in a new value, if your copy paste configuration
+  /// the color value by pasting in a new value, if your copy paste configuration
   /// allows it.
   ///
   /// Defaults to false.
@@ -709,13 +702,13 @@ class ColorPicker extends StatefulWidget {
   /// useful during software development. If enabled the value is shown after
   /// the color code. For text style it also uses the [colorCodeTextStyle].
   /// There is no copy button for the shown int value, but the value is
-  /// displayed with a [SelectableText] widget, so it can be select painted
-  /// and copied if so required.
+  /// displayed with a [SelectableText] widget, so it can be selected and
+  /// copied if so required.
   ///
   /// Defaults to false.
   final bool showColorValue;
 
-  /// Set to true to a list of recently selected colors selection at the bottom
+  /// Set to true to show a list of recently selected colors at the bottom
   /// of the picker.
   ///
   /// When `showRecentColors` is enabled, the color picker shows recently
@@ -727,12 +720,12 @@ class ColorPicker extends StatefulWidget {
   /// Defaults to false.
   final bool showRecentColors;
 
-  /// The maximum numbers of recent colors to show in the list of recent colors.
+  /// The maximum number of recent colors to show in the list of recent colors.
   ///
   /// The max recent colors must be from 2 to 20. Defaults to 5.
   final int maxRecentColors;
 
-  /// A list with the recently select colors.
+  /// A list with the recently selected colors.
   ///
   /// Defaults to an empty list of colors. You can provide a starting
   /// set from some stored state if so desired.
@@ -746,8 +739,8 @@ class ColorPicker extends StatefulWidget {
   ///
   /// If the optional callback is not provided, then it is not called. You can
   /// use this callback to save and restore the recently used colors. To
-  /// initialize the list when the color picker is created give it a starting
-  /// via [recentColors]. This could be a list kept just in state during
+  /// initialize the list when the color picker is created, give it a starting
+  /// set via [recentColors]. This could be a list kept just in state during
   /// the current app session, or it could have been persisted and restored
   /// from a previous session.
   final ValueChanged<List<Color>>? onRecentColorsChanged;
@@ -782,11 +775,11 @@ class ColorPicker extends StatefulWidget {
   /// A [ColorPickerType] to String map that contains labels for the picker
   /// type selector.
   ///
-  /// If not defined, or omitted in provided mpa, then the following default
+  /// If not defined, or omitted in the provided map, then the following default
   /// English labels are used:
-  ///  * [ColorPickerType.both] : 'Both'
-  ///  * [ColorPickerType.primary] : 'Primary & Accent'
-  ///  * [ColorPickerType.accent] : 'Primary'
+  ///  * [ColorPickerType.both] : 'Primary & Accent'
+  ///  * [ColorPickerType.primary] : 'Primary'
+  ///  * [ColorPickerType.accent] : 'Accent'
   ///  * [ColorPickerType.bw] : 'Black & White'
   ///  * [ColorPickerType.custom] : 'Custom'
   ///  * [ColorPickerType.customSecondary] : 'Option'
@@ -859,7 +852,7 @@ class ColorPicker extends StatefulWidget {
   /// closed with the OK action button, and to false if the cancel action was
   /// selected. Clicking outside the dialog also closes it and returns false.
   ///
-  /// The actual color selected in the dialog is handled via the `onChange`
+  /// The actual color selected in the dialog is handled via the `onColor`
   /// callbacks of the [ColorPicker] instance.
   ///
   /// ## [context]
@@ -1459,7 +1452,7 @@ class _ColorPickerState extends State<ColorPicker> {
   // should update.
   bool _wheelShouldUpdate = true;
 
-  // The tonal picker should only update its tonal palette whe we click on
+  // The tonal picker should only update its tonal palette when we click on
   // colors in other color picker, not when we select a color in the
   // tonal palette. This local state is used to send the update signal.
   bool _tonalShouldUpdate = true;
@@ -1467,7 +1460,7 @@ class _ColorPickerState extends State<ColorPicker> {
   // This is set to true when a tonal palette color is selected, ie operated on.
   // If one is selected, we do not get main color selection indicator
   // unless it also matches main color [500], if it is found in the
-  // sub palette, it is is not selected.
+  // sub palette, it is not selected.
   bool _tonalOperated = false;
 
   // Set to true when widget update triggered via internal state change.
@@ -1479,7 +1472,7 @@ class _ColorPickerState extends State<ColorPicker> {
   // Set to true when we are drag and operating the wheel picker.
   bool _onWheel = false;
 
-  // Set to true when edit icon is taped and edit field should focus
+  // Set to true when edit icon is tapped and edit field should focus
   bool _requestEditFocus = false;
 
   // Becomes true when we have more than one ColorPickerType available in
@@ -1511,7 +1504,7 @@ class _ColorPickerState extends State<ColorPicker> {
     _tappedColor = widget.color;
     // Opacity is captured in _opacity if enabled.
     _opacity = widget.enableOpacity ? widget.color.a : 1;
-    // Picker labels, use english fallbacks if none provided.
+    // Picker labels, use English fallbacks if none provided.
     _pickerLabels = <ColorPickerType, String>{
       ColorPickerType.both: widget.pickerTypeLabels[ColorPickerType.both] ?? ColorPicker._selectBothLabel,
       ColorPickerType.primary: widget.pickerTypeLabels[ColorPickerType.primary] ?? ColorPicker._selectPrimaryLabel,
@@ -1816,7 +1809,7 @@ class _ColorPickerState extends State<ColorPicker> {
     }
     // We did not find the selected color in any active swatch list, in that
     // case we set active swatch to the first swatch in active list, just
-    // to get an active swatch selection. This is a fall back from an error
+    // to get an active swatch selection. This is a fallback from an error
     // situation where a selected color was passed to the color picker that was
     // not found in any of the provided swatches in any enabled pickers.
     // If the wheel picker is enabled, then the color will always be found
@@ -1857,7 +1850,7 @@ class _ColorPickerState extends State<ColorPicker> {
     final bool autoFocus =
         widget.copyPasteBehavior.autoFocus && (widget.copyPasteBehavior.ctrlC || widget.copyPasteBehavior.ctrlV);
 
-    // Weather to show the edit icon button, if color code is enabled and
+    // Whether to show the edit icon button, if color code is enabled and
     // not read only, and the wheel picker is active.
     final bool showEditIconButton =
         widget.showEditIconButton &&
@@ -1924,7 +1917,7 @@ class _ColorPickerState extends State<ColorPicker> {
       // parser. The TextField's normal paste action will then handle
       // the paste as before in v1.x and normally in a TextField. With the
       // difference that this particular TextField will still filter out
-      // all none valid RGB color code chars and limit the length.
+      // all non-valid RGB color code chars and limit the length.
       noPasteIntent: _editCodeFocused && !widget.copyPasteBehavior.editUsesParsedPaste,
       child: Padding(
         padding: widget.padding,
@@ -2086,7 +2079,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   ),
                 ),
               ),
-            // Show the sub-heading for the none wheel case.
+            // Show the sub-heading for the non-wheel case.
             if (widget.subheading != null && widget.enableShadesSelection && _activePicker != ColorPickerType.wheel)
               Padding(
                 padding: EdgeInsets.only(bottom: widget.columnSpacing),

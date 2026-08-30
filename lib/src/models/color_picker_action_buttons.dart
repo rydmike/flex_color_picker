@@ -45,10 +45,11 @@ enum ColorPickerActionButtonOrder {
 ///
 /// You can define if action buttons are on a top toolbar or only
 /// in the dialog bottom. The toolbar buttons are plain icon only
-/// buttons. For the Dialog buttons you can choose between
-/// [TextButton], [OutlinedButton] and [ElevatedButton].
+/// buttons. For the dialog buttons you can choose between
+/// [TextButton], [OutlinedButton], [ElevatedButton], [FilledButton] and
+/// [FilledButton.tonal].
 ///
-/// The used icons can be changed form default ones, as can used tooltips.
+/// The used icons can be changed from default ones, as can used tooltips.
 ///
 /// Used by FlexColorPicker to define action buttons and their style.
 @immutable
@@ -148,8 +149,8 @@ class ColorPickerActionButtons with Diagnosticable {
   ///
   /// Provide your own or use the default material localization label.
   ///
-  /// Defaults to MaterialLocalizations.of(context).cancelButtonLabel if
-  /// closeTooltipIsClose is true. If false it defaults to
+  /// Defaults to MaterialLocalizations.of(context).closeButtonTooltip if
+  /// [closeTooltipIsClose] is true. If false it defaults to
   /// MaterialLocalizations.of(context).cancelButtonLabel.
   final String? closeTooltip;
 
@@ -170,7 +171,7 @@ class ColorPickerActionButtons with Diagnosticable {
   ///
   /// The toolbar is compact, so icons are small by design.
   ///
-  /// Effective style will uses any none null property in the passed in
+  /// Effective style will use any non-null property in the passed in
   /// [IconThemeData]. If the passed in theme data is null, or any property in
   /// it, is null, then the following fallback defaults are used:
   ///
@@ -194,7 +195,7 @@ class ColorPickerActionButtons with Diagnosticable {
   /// The padding around the toolbar icon buttons. The entire padded icon will
   /// react to input gestures.
   ///
-  /// Defaults to const EdgeInsets.all(0),
+  /// Defaults to [EdgeInsets.zero],
   final EdgeInsetsGeometry padding;
 
   /// Defines how the icon is positioned within the IconButton.
@@ -209,13 +210,13 @@ class ColorPickerActionButtons with Diagnosticable {
 
   /// Optional size constraints for the icon button.
   ///
-  /// Defaults to: const BoxConstraints(minHeight: 34, minWidth: 34),
+  /// Defaults to: const BoxConstraints(minHeight: 42, minWidth: 42),
   final BoxConstraints constraints;
 
-  /// If set to false, the bottom dialog action buttons att the bottom
+  /// If set to false, the dialog action buttons at the bottom
   /// are removed.
   ///
-  /// If you remove the bottom dialog action buttons, make sure to enabled the
+  /// If you remove the bottom dialog action buttons, make sure to enable the
   /// ones in the dialog toolbar.
   ///
   /// Defaults to true.
@@ -276,7 +277,7 @@ class ColorPickerActionButtons with Diagnosticable {
   /// the style easily.
   ///
   /// The [dialogCancelButtonType] controls which button class is used. Just
-  /// like on the buttons types, you can use a raw [ButtonStyle] or any of
+  /// like on the button types, you can use a raw [ButtonStyle] or any of
   /// the `.styleFrom` factories from any button class to create the style,
   /// regardless of what [ColorPickerActionButtonType] is used. Prefer
   /// however to use matching button types and styles for easier to reason
@@ -319,8 +320,8 @@ class ColorPickerActionButtons with Diagnosticable {
   /// [ElevatedButton.styleFrom], [FilledButton.styleFrom], etc. to create
   /// the style easily.
   ///
-  /// The [dialogOkButtonStyle] controls which button class is used. Just
-  /// like on the buttons types, you can use a raw [ButtonStyle] or any of
+  /// The [dialogOkButtonType] controls which button class is used. Just
+  /// like on the button types, you can use a raw [ButtonStyle] or any of
   /// the `.styleFrom` factories from any button class to create the style,
   /// regardless of what [ColorPickerActionButtonType] is used. Prefer
   /// however to use matching button types and styles for easier to reason
@@ -345,8 +346,8 @@ class ColorPickerActionButtons with Diagnosticable {
   /// by build of ColorPicker dialogs are on the root.
   ///
   /// This setting was moved here in version 2.1.0 in order to make the
-  /// property accessible by Navigator pop functions both in the ColorPicker
-  /// widget itself, as well as built-in dialogs that uses the ColorPicker.
+  /// property accessible via Navigator pop functions both in the ColorPicker
+  /// widget itself, as well as built-in dialogs that use the ColorPicker.
   final bool useRootNavigator;
 
   /// Copy the object with one or more provided properties changed.

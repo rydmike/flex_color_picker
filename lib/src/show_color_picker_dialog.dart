@@ -148,6 +148,9 @@ part of 'color_picker.dart';
 /// When enabled, opacity is not returned as a separate value; it is in the
 /// alpha channel of the returned ARGB color in the on-color callbacks.
 ///
+/// When false, colors that have any other alpha value than 0xFF are changed
+/// to 0xFF.
+///
 /// Defaults to false.
 ///
 /// ## [opacityTrackHeight]

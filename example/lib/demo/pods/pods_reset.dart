@@ -4,13 +4,13 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Rest all color picker settings to their default values.
+/// Reset all color picker settings to their default values.
 ///
-/// This changes all setting values to their defaults we defined in the
-/// [Keys.defaults] map, as that is done those updates are also persisted
-/// by the ProviderObserver and will be used next time app is started.
+/// This changes all setting values to their defaults defined in the
+/// [Keys.defaults] map. As that is done, those updates are also persisted
+/// by the ProviderObserver and will be used next time the app is started.
 ///
-/// There is just a lot of these (55 at the moment), so it easy to miss one
+/// There are a lot of these (55 at the moment), so it is easy to miss one
 /// and we have to remember to add any new tracked state provider property
 /// to the list to be reset.
 void resetSettings(WidgetRef ref) {

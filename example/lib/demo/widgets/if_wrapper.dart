@@ -10,15 +10,19 @@ typedef IfWrapBuilder = Widget Function(BuildContext context, Widget child);
 /// the condition is true. It can save you from having to define a large widget,
 /// assign it to a Widget itself wrapped with another widget.
 ///
+/// ```dart
 /// Widget widgetA = WidgetX(...);
 /// if (condition) widgetA = WidgetY(child: widgetA);
 ///
-/// Becomes:
-/// IfWrapper(condition: condition,
+/// // Becomes:
+/// IfWrapper(
+///   condition: condition,
 ///   builder: (context, child) {
-///     return WidgetY(child: child) }
-///   child: child
+///     return WidgetY(child: child);
+///   },
+///   child: child,
 /// );
+/// ```
 class IfWrapper extends StatelessWidget {
   const IfWrapper({
     super.key,

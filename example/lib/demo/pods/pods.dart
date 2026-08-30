@@ -24,7 +24,7 @@ import 'package:material_ui/material_ui.dart';
 // { string_key : default_value } Map. The string key has its own const value
 // as well and it is used both as key for the default value map and as name
 // of its StateProvider. By giving the StateProviders unique names, we can
-// find them in a ProviderObserver and store their new value in the the Hive
+// find them in a ProviderObserver and store their new value in the Hive
 // box when their state value changes.
 //
 // For more complex use cases and classes, use a StateNotifierProvider instead
@@ -45,20 +45,20 @@ import 'package:material_ui/material_ui.dart';
 // can be done like this and how it feels.
 //
 // With this amount of control value (there are 55 of them that are persisted)
-// it is becoming a bit tedious to do it this ways too. However, bare in mind
+// it is becoming a bit tedious to do it this way too. However, bear in mind
 // that with a ChangeNotifier, there would need to be a local property and
 // both a setter and getter for each StateProvider below. Plus a separate
 // Hive save (put) call for each setter.
 //
 // The Hive save is now a single line in the ProviderObserver, and the
 // StateProviders are initialized from the Hive box below, or via default
-// const map if the Hive box has no value fro the named StateProvider that uses
+// const map if the Hive box has no value for the named StateProvider that uses
 // the same const value as name as the key used in the Hive box. It is actually
 // quite compact considering  all it does.
 //
-// We do however have to deal with dynamic's and type casts to
-// make this work, but since it is all based type safe providers and const
-// values as keys we keep uniques in a const map, it is fairly safe as long as
+// We do however have to deal with dynamics and type casts to
+// make this work, but since it is all based on type-safe providers and const
+// values as keys we keep unique in a const map, it is fairly safe as long as
 // we don't use the wrong key for a provider when we get the value.
 
 // The themeModePod is a [StateProvider] to provide the state of
@@ -68,7 +68,7 @@ final StateProvider<ThemeMode> themeModePod = StateProvider<ThemeMode>((Ref<Them
 }, name: Keys.themeMode);
 
 // All the other state providers are all related to manipulating
-// input to to the FlexColorPicker and to track some output from it as well.
+// input to the FlexColorPicker and to track some output from it as well.
 
 // StateProvider for the color we give to the color picker on the card.
 final StateProvider<Color> cardPickerColorPod = StateProvider<Color>((Ref<Color> ref) {

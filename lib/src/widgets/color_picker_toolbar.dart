@@ -23,13 +23,13 @@ class ColorPickerToolbar extends StatelessWidget {
   /// A title widget, usually a Text widget.
   final Widget? title;
 
-  /// Optional close button, if null there is no close button.
+  /// Optional copy button, if null there is no copy button.
   final VoidCallback? onCopy;
 
-  /// Optional close button, if null there is no close button.
+  /// Optional paste button, if null there is no paste button.
   final VoidCallback? onPaste;
 
-  /// Optional Ok button, if null there is no close button.
+  /// Optional OK button, if null there is no OK button.
   final VoidCallback? onOk;
 
   /// Optional close button, if null there is no close button.
@@ -37,15 +37,15 @@ class ColorPickerToolbar extends StatelessWidget {
 
   /// Defines icons for the color picker title bar and its actions.
   ///
-  /// Defaults to ColorPickerToolIcons().
+  /// Defaults to [ColorPickerActionButtons].
   final ColorPickerActionButtons toolIcons;
 
   /// Defines the color picker's copy and paste behavior.
   ///
-  /// Defaults to ColorPickerPasteBehavior().
+  /// Defaults to [ColorPickerCopyPasteBehavior].
   final ColorPickerCopyPasteBehavior copyPasteBehavior;
 
-  /// Controls if tooltips are shown or not
+  /// Controls if tooltips are shown or not.
   ///
   /// Defaults to true.
   final bool enableTooltips;

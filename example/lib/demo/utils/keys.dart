@@ -1,8 +1,8 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Key constants for key-value pairs for storing the settings as well
-/// as a map with default value for each key-value pair settings.
+/// Key constants for key-value pairs used to store the settings, as well
+/// as a map with a default value for each key-value pair.
 /// The keys are also used as names for Riverpod "pod" StateProviders.
 class Keys {
   // This class is not meant to be instantiated or extended, this constructor

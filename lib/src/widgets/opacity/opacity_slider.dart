@@ -5,10 +5,10 @@ import 'package:flex_color_picker/src/widgets/opacity/opacity_slider_thumb.dart'
 import 'package:flex_color_picker/src/widgets/opacity/opacity_slider_track.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// A custom slider used adjust the opacity value of a RGB color.
+/// A custom slider used to adjust the opacity value of a RGB color.
 ///
-/// The slider has a typical checkered background often used in imaging
-/// editing program to show the degree of opacity an image has.
+/// The slider has a typical checkered background often used in image
+/// editing programs to show the degree of opacity an image has.
 ///
 /// The RGB [ui.Color] we are adjusting the opacity for, is passed in the
 /// [color] property and drawn as opacity gradient over the checkered
@@ -21,7 +21,7 @@ import 'package:material_ui/material_ui.dart';
 /// `withOpacity` and the alpha value displayed in the resulting color, this
 /// can be observed.
 ///
-/// The opacity value is returned via the onChanged called back. There are
+/// The opacity value is returned via the onChanged callback. There are
 /// also callbacks for [onChangeStart] and [onChangeEnd].
 class OpacitySlider extends StatelessWidget {
   /// Create the opacity slider.
@@ -71,7 +71,7 @@ class OpacitySlider extends StatelessWidget {
 
   /// The height of the slider track.
   ///
-  /// Defaults to 36
+  /// Defaults to 22.
   final double trackHeight;
 
   /// An optional focus node to use as the focus node for this widget.

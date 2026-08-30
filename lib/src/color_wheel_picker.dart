@@ -77,7 +77,7 @@ class ColorWheelPicker extends StatefulWidget {
   /// Defaults to false.
   final bool hasBorder;
 
-  /// Color of the border around around the circle and rectangle control.
+  /// Color of the border around the circle and rectangle control.
   ///
   /// Defaults to theme of context for the divider color.
   final Color? borderColor;
@@ -265,7 +265,7 @@ class _ColorWheelPickerState extends State<ColorWheelPicker> {
 
   // Called when we drag the thumb on the wheel or square.
   void onUpdate(Offset offset) {
-    // This is bang and cast is not pretty, but SDK does it this was too.
+    // This is bang and cast is not pretty, but SDK does it this way too.
     final RenderBox renderBox = renderBoxKey.currentContext!.findRenderObject()! as RenderBox;
 
     final Size size = renderBox.size;

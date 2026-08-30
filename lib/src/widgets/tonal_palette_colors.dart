@@ -61,9 +61,9 @@ class TonalPaletteColors extends StatefulWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
-  /// Set to true, if a an indicator should request focus if it is selected.
+  /// Set to true if an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected,
+  /// The indicator will always request focus when it is clicked and selected,
   /// setting this value to true is to make it request focus when it is drawn.
   /// This is used to set focus to the selected color, but only when
   /// the picker is redrawn.
@@ -71,7 +71,7 @@ class TonalPaletteColors extends StatefulWidget {
   /// Defaults to false.
   final bool selectedRequestsFocus;
 
-  /// Weather to use fixed min chroma for tonal palette.
+  /// Whether to use fixed min chroma for tonal palette.
   final bool tonalPaletteFixedMinChroma;
 
   @override

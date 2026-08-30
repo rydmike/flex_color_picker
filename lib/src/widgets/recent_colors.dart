@@ -39,7 +39,7 @@ class RecentColors extends StatelessWidget {
   /// Void callback called when a color is selected.
   final ValueChanged<Color> onSelectColor;
 
-  /// Set to trued if index 850 is to be included in the main shades.
+  /// Set to true if index 850 is to be included in the main shades.
   final bool includeIndex850;
 
   /// Width of the color pick item.
@@ -63,9 +63,9 @@ class RecentColors extends StatelessWidget {
   /// Icon used to mark selected color.
   final IconData selectedColorIcon;
 
-  /// Set to true, if a an indicator should request focus if it is selected.
+  /// Set to true if an indicator should request focus if it is selected.
   ///
-  /// The indicator will always request focus when it clicked and selected,
+  /// The indicator will always request focus when it is clicked and selected,
   /// setting this value to true is to make it request focus when it is drawn.
   /// This is used to set focus to the selected color, but only when
   /// the piker is redrawn.

@@ -12,7 +12,7 @@ enum CopyPasteCommands {
   paste,
 }
 
-/// A cut, copy paste long press menu.
+/// A copy and paste long press menu.
 ///
 /// Not library exposed, private to the library.
 @immutable
@@ -104,7 +104,7 @@ class ContextCopyPasteMenu extends StatelessWidget {
   ///
   /// The menu is compact, so icons are small by design.
   ///
-  /// Uses any none null property in passed in [IconThemeData]. If the
+  /// Uses any non-null property in passed in [IconThemeData]. If the
   /// passed value is null, or any property in it is null, then it uses
   /// property values from `Theme.of(context).iconTheme`, if they are not
   /// null. For any null value, the following fallback defaults are used:
@@ -115,11 +115,11 @@ class ContextCopyPasteMenu extends StatelessWidget {
 
   /// The theme of the popup menu.
   ///
-  /// Uses any none null property in passed in [PopupMenuThemeData]. If the
+  /// Uses any non-null property in passed in [PopupMenuThemeData]. If the
   /// passed value is null, or any property in it is null, then it uses
   /// property values from `Theme.of(context).popupMenuTheme`, if they are not
   /// null. For any null value, the following fallback defaults are used:
-  ///   color: theme.cardColor.withOpacity(0.9)
+  ///   color: theme.cardColor.withValues(alpha: 0.9)
   ///   shape: RoundedRectangleBorder(
   ///            borderRadius: BorderRadius.circular(8),
   ///            side: BorderSide(

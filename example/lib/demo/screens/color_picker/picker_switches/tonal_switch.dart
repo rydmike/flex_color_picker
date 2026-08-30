@@ -12,7 +12,7 @@ class TonalSwitch extends ConsumerWidget {
     return SwitchTileTooltip(
       title: const Text('Enable tonal palette'),
       subtitle: const Text(
-        'Turn ON to to show Material 3 tonal palette '
+        'Turn ON to show Material 3 tonal palette '
         'for selected color and enable color tone selection.',
       ),
       value: ref.watch(enableTonesSelectionPod),

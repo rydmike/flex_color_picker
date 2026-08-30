@@ -81,7 +81,7 @@ void showAppAboutDialog(BuildContext context) {
   );
 }
 
-/// An URL link TextSpan that contain an URL link that can be used as a
+/// A URL link [TextSpan] that contains a URL that can be used as a
 /// working URL link text when using it in a [Text.rich] or lower
 /// level [RichText] widget.
 class LinkTextSpan extends TextSpan {
