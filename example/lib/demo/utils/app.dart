@@ -11,7 +11,7 @@ class App {
   // Web demo with inside the app. Shown on the start screen in the demo,
   // so people testing it don't have to ask. Also info for the About screen.
   static const String appName = 'FlexColorPicker';
-  static const String version = '3.8.0';
+  static const String version = '4.0.0';
   static const String packageVersion = 'FlexColorPicker package $version';
   static final Uri packageUri = Uri(
     scheme: 'https',
@@ -32,7 +32,7 @@ class App {
   static const String flutterVersionNum = FlutterVersion.version ?? '';
   static const String flutterChannel = FlutterVersion.channel ?? '';
   static const String flutterVersion = '$flutterChannel $flutterVersionNum ($buildType)';
-  static const String copyright = '© 2020 - 2025';
+  static const String copyright = '© 2020 - 2026';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
   static const String icon = 'assets/images/app_icon.png';
